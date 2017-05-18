@@ -1,0 +1,111 @@
+
+ユーザーを追加
+
+# useradd huckle
+# passwd huckle
+(パスワードを入力)
+
+huckleでログイン
+
+
+
+ルートのパスワード変更
+
+# su
+(ルートのパスワード入力)
+
+ルートでSSHログインを禁止
+
+# vi /etc/ssh/sshd_config
+
+-#PermitRootLogin yes
++PermitRootLogin no
+
+# sshd -t
+(何も表示されないことを確認する)
+
+# service sshd restart
+
+
+sudoersに登録
+
+# su
+# visudo
+
+↓この行の下に追加
+# Allow members of group sudo to execute any command
+
+
+
+
+Apache インストール
+https://blog.apar.jp/linux/6476/ を参考に
+
+# yum install gcc gcc-c++ pcre-devel openssl-devel wget autoconf cmake zlib-devel git libev-devel python libev-devel c-ares-devel 
+# yum groupinstall development
+
+# cd /usr/local/src/
+
+
+wget https://www.openssl.org/source/openssl-1.0.2k.tar.gz
+tar xvzf openssl-1.0.2k.tar.gz
+cd openssl-1.0.2k/
+./config --prefix=/usr/local/openssl-1.0.2k shared zlib
+make depend
+make
+make test
+make install 
+
+echo /usr/local/openssl-1.0.2k/lib > /etc/ld.so.conf.d/openssl102k.conf
+ldconfig 
+
+
+cd /usr/local/src/
+wget https://github.com/nghttp2/nghttp2/releases/download/v1.22.0/nghttp2-1.22.0.tar.gz
+
+tar xvzf nghttp2-1.22.0.tar.gz
+cd nghttp2-1.22.0/
+env OPENSSL_CFLAGS="-I/usr/local/openssl-1.0.2k/include" OPENSSL_LIBS="-L/usr/local/openssl-1.0.2k/lib -lssl -lcrypto" ./configure -enable-app
+make
+make install 
+
+echo /usr/local/lib > /etc/ld.so.conf.d/usr-local-lib.conf
+ldconfig
+
+
+cd /usr/local/src/
+wget http://ftp.jaist.ac.jp/pub/apache//apr/apr-1.5.2.tar.gz
+tar xvzf apr-1.5.2.tar.gz
+cd apr-1.5.2/
+./configure
+make
+make install
+
+
+cd /usr/local/src/
+wget http://ftp.jaist.ac.jp/pub/apache//apr/apr-util-1.5.4.tar.gz
+tar xvzf apr-util-1.5.4.tar.gz
+cd apr-util-1.5.4/
+./configure --with-apr=/usr/local/apr
+make
+make install
+
+
+
+
+cd /usr/local/src/
+wget http://ftp.riken.jp/net/apache//httpd/httpd-2.4.25.tar.gz
+tar xvzf httpd-2.4.25.tar.gz
+cd httpd-2.4.25/
+./configure \
+--enable-http2 \
+--enable-ssl \
+--with-ssl=/usr/local/openssl-1.0.2k \
+--enable-so \
+--enable-rewrite \
+--enable-mods-shared=all \
+--enable-mpms-shared=all \
+--with-mpm=prefork
+
+make
+make install 
