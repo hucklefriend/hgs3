@@ -1,3 +1,9 @@
+VMWare toolsのインすt－る
+
+yum -y install open-vm-tools
+systemctl enable vmtoolsd.service
+systemctl start vmtoolsd.service
+
 
 ユーザーを追加
 
@@ -264,10 +270,50 @@ PHPIniDir /usr/local/php
 </FilesMatch>
 
 
-$ sudo vi /usr/local/php/php.ini
+$ vi /usr/local/php/php.ini
 
 -upload_max_filesize = 2M
 +upload_max_filesize = 8M
 
 -;date.timezone =
 +date.timezone = Asia/Tokyo
+
+
+
+
+
+Memcachedインストール
+http://www.hack-log.net/entry/2015/05/17/100000
+
+cd /usr/local/src
+wget http://www.memcached.org/files/memcached-1.4.36.tar.gz
+tar xvf memcached-1.4.36.tar.gz
+cd memcached-1.4.36
+yum -y install libevent-devel
+./configure --enable-64bit
+make
+make install
+
+cd /usr/local/src
+wget https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz
+tar xvf libmemcached-1.0.18.tar.gz
+cd libmemcached-1.0.18
+./configure
+make
+make install
+
+cd /usr/local/src
+wget http://pecl.php.net/get/memcached-3.0.3.tgz
+tar xvf memcached-3.0.3.tgz
+cd memcached-3.0.3
+phpize
+./configure --with-libmemcached-dir=/usr/local/ --disable-memcached-sasl
+make
+make install
+
+vi /usr/local/lib/php.ini
+extension=memcached.so
+
+
+TODO:
+・SSHのポート変更
