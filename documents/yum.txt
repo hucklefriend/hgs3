@@ -4,6 +4,12 @@
 
 全部yumでやるパターン
 
+# setenforce 0
+# vi /etc/selinux/config
+# SELINUX=disabled (値をenabledから変更)
+# reboot
+
+
 # yum groupinstall development
 # yum -y install epel-release
 # rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
@@ -36,6 +42,8 @@ http://www.ookawara.com/archives/3620
 # firewall-cmd --reload
 
 
+
+
 ・MariaDB (https://mariadb.com/kb/ja/yum/)
 # vi /etc/yum.repos.d/MariaDB.repo
 [mariadb]
@@ -50,6 +58,18 @@ gpgcheck=1
 # systemctl enable mariadb
 # mysql_secure_installation
 
+
+# mysql -u root
+
+
+アプリ用ユーザー追加
+CREATE USER 'hgs'@'localhost' IDENTIFIED BY '';
+GRANT select,update,insert,delete ON `hgs3`.* TO 'hgs'@'localhost'  IDENTIFIED BY '';
+
+
+
+
+
 ・Memcached
 # yum install memcached
 
@@ -62,4 +82,38 @@ gpgcheck=1
 
 
 
+
+・Apacheコンフィグ
+
+# vi /etc/httpd/conf.d/hgn.conf
+alias /hgn /var/hgs3/web/public
+<Directory /var/hgs3/web/public>
+    Options FollowSymLinks Indexes
+    AllowOverride All
+    Require all granted
+</Directory>
+
+
+# vi /etc/httpd/conf/httpd.conf
+-ErrorLog "logs/error_log"
++ErrorLog "|/usr/local/apache2/bin/rotatelogs /usr/local/apache2/logs/error_log.%Y-%m-%d 86400 540"
+
+-CustomLog "logs/access_log" common
++CustomLog "|/usr/local/apache2/bin/rotatelogs /usr/local/apache2/logs/access_log.%Y-%m-%d 86400 540" combined
+
+
+※ログの削除などをどうするかは今後検討
+
+
+
+
+・Laravel設定
+
+cd (laravel設置パス)
+chmod 777 -R storage
+chmod 777 -R bootstrap/cache
+
+
+php artisan key:generate
+php artisan config:clear
 
