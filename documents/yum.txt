@@ -1,0 +1,65 @@
+
+
+
+
+全部yumでやるパターン
+
+# yum groupinstall development
+# yum -y install epel-release
+# rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+
+
+・VmWare Tools
+http://moriya.xrea.jp/tdiary/20160305.html
+http://www.ookawara.com/archives/3620
+
+# yum install kernel-headers-$(uname -r) gcc
+# mkdir -p /usr/src/linux-headers-$(uname -r)/include/linux/
+# ln -s /usr/src/linux-headers-$(uname -r)/include/generated/uapi/linux/version.h /usr/src/linux-headers-$(uname -r)/include/linux/version.h
+# mkdir /mnt/cdrom
+# mount -o loop -t iso9660 /media/iso/XXX.iso /mnt/cdrom
+# cp /mnt/cdrom/VMwareTools-XXXX.tar.gz /tmp
+# cd /tmp
+# tar zxvf VMwareTools-XXXX.tar.gz
+# cd vmware-tools-distrib
+# ./vmware-install.pl --clobber-kernel-modules=vmhgfs --default
+
+
+・Apache
+# yum install httpd
+
+# systemctl start httpd.service
+# systemctl enable httpd.service
+
+# firewall-cmd --permanent --zone=public --add-service=http
+# firewall-cmd --permanent --zone=public --add-service=https
+# firewall-cmd --reload
+
+
+・MariaDB (https://mariadb.com/kb/ja/yum/)
+# vi /etc/yum.repos.d/MariaDB.repo
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+
+# yum install MariaDB-server MariaDB-client
+
+# systemctl start mariadb
+# systemctl enable mariadb
+# mysql_secure_installation
+
+・Memcached
+# yum install memcached
+
+# systemctl enable memcached
+# systemctl start memcached
+
+・PHP
+# yum install --enablerepo=remi,remi-php71 php php-devel php-mbstring php-pdo php-gd php-mysql php-memcached php-bcmath php-xml
+# yum install --enablerepo=remi,remi-php71 composer
+
+
+
+
