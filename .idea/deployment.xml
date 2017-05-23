@@ -5,7 +5,14 @@
       <paths name="comhgs">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$/sources/web" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="vm_hgs3">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
