@@ -117,3 +117,8 @@ chmod 777 -R bootstrap/cache
 php artisan key:generate
 php artisan config:clear
 
+
+
+
+・PhpStorm設定
+http://qiita.com/michiomochi@github/items/fc70230402972c99472f
