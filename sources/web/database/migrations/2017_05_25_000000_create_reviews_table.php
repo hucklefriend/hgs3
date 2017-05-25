@@ -18,14 +18,18 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('game_id');
-            $table->integer('package_id');
-            $table->integer('fear');
-            $table->integer('story');
-            $table->integer('game');
-            $table->string('name', 200);
-            $table->string('acronym', 30);
+            $table->unsignedInteger('user_id')->index();
+            $table->unsignedInteger('game_id')->index();
+            $table->unsignedInteger('package_id')->index();
+            $table->unsignedTinyInteger('fear');
+            $table->unsignedTinyInteger('story');
+            $table->unsignedTinyInteger('game');
+            $table->unsignedTinyInteger('sound');
+            $table->unsignedTinyInteger('game');
+            $table->unsignedTinyInteger('game');
+            $table->unsignedTinyInteger('recommend');
+            $table->text('thoughts');
+            $table->text('recommendatory');
             $table->integer('sort_order');
             $table->timestamps();
         });
@@ -38,6 +42,6 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('platforms');
+        Schema::dropIfExists('reviews');
     }
 }

@@ -1,13 +1,13 @@
 <?php
 /**
- * ゲームソフトテーブルの作成
+ * 仮登録ゲームテーブルの作成
  */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGamesTable extends Migration
+class CreateGameProvisionalRegistrationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +16,15 @@ class CreateGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('game_provisional_registrations', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->index();
             $table->string('name', 200);
+            $table->string('release_date', 100);
             $table->integer('company_id');
-            $table->integer('series_id')->nullable();
-            $table->integer('order_in_series')->index();
+            $table->integer('series_id');
+            $table->text('platform_list');
+            $table->text('other');
             $table->timestamps();
         });
     }
@@ -33,6 +36,6 @@ class CreateGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('games');
+        Schema::dropIfExists('game_provisional_registrations');
     }
 }

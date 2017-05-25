@@ -1,13 +1,13 @@
 <?php
 /**
- * プラットフォームテーブルの作成
+ * 会社テーブルの作成
  */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatformsTable extends Migration
+class CreateGameCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,11 +16,11 @@ class CreatePlatformsTable extends Migration
      */
     public function up()
     {
-        Schema::create('platforms', function (Blueprint $table) {
+        Schema::create('game_companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 200);
-            $table->string('acronym', 30);
-            $table->integer('sort_order');
+            $table->string('name', 200)->index();
+            $table->string('name_hiragana', 200)->index();
+            $table->text('url')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreatePlatformsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('platforms');
+        Schema::dropIfExists('game_companies');
     }
 }

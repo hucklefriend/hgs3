@@ -18,8 +18,8 @@ class CreateGamePackagesTable extends Migration
     {
         Schema::create('game_packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('game_id');
-            $table->integer('platform_id');
+            $table->integer('game_id')->index();
+            $table->integer('platform_id')->index();
             $table->integer('company_id');
             $table->string('name', 200);
             $table->text('url');
