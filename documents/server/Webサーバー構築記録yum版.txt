@@ -63,7 +63,7 @@ gpgcheck=1
 
 
 アプリ用ユーザー追加
-CREATE USER 'hgs'@'localhost' IDENTIFIED BY '';
+CREATE USER 'mysql'@'localhost' IDENTIFIED BY '';
 GRANT select,update,insert,delete ON `hgs3`.* TO 'hgs'@'localhost'  IDENTIFIED BY '';
 
 
