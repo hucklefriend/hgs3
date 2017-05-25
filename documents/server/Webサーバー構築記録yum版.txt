@@ -16,19 +16,9 @@
 
 
 ・VmWare Tools
-http://moriya.xrea.jp/tdiary/20160305.html
-http://www.ookawara.com/archives/3620
-
-# yum install kernel-headers-$(uname -r) gcc
-# mkdir -p /usr/src/linux-headers-$(uname -r)/include/linux/
-# ln -s /usr/src/linux-headers-$(uname -r)/include/generated/uapi/linux/version.h /usr/src/linux-headers-$(uname -r)/include/linux/version.h
-# mkdir /mnt/cdrom
-# mount -o loop -t iso9660 /media/iso/XXX.iso /mnt/cdrom
-# cp /mnt/cdrom/VMwareTools-XXXX.tar.gz /tmp
-# cd /tmp
-# tar zxvf VMwareTools-XXXX.tar.gz
-# cd vmware-tools-distrib
-# ./vmware-install.pl --clobber-kernel-modules=vmhgfs --default
+# yum -y install open-vm-tools
+# systemctl enable vmtoolsd.service
+# systemctl start vmtoolsd.service
 
 
 ・Apache
@@ -48,7 +38,7 @@ http://www.ookawara.com/archives/3620
 # vi /etc/yum.repos.d/MariaDB.repo
 [mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+baseurl = http://yum.mariadb.org/10.2/centos7-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 

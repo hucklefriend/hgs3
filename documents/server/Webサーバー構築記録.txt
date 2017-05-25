@@ -194,16 +194,16 @@ yum install gcc* make cmake ncurses-devel bison libxml2-devel pcre-devel openssl
 
 
 cd /usr/local/src
-wget --trust-server-names https://downloads.mariadb.org/interstitial/mariadb-10.1.23/source/mariadb-10.1.23.tar.gz/from/http%3A//ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/
-tar xvzf mariadb-10.1.23.tar.gz
-cd mariadb-10.1.23
+wget --trust-server-names https://downloads.mariadb.org/interstitial/mariadb-10.2.6/source/mariadb-10.2.6.tar.gz/from/http%3A//ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/
+tar xvzf mariadb-10.2.6.tar.gz
+cd mariadb-10.2.6
 BUILD/autorun.sh
 
 export OPENSSL_ROOT_DIR=/usr/local/openssl
 export OPENSSL_INCLUDE_DIR=/usr/local/openssl/include
 export OPENSSL_LIBRARIES=/usr/local/openssl/lib/
 
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/var/lib/mysql -DDEFAULT_CHARSET=utf8 -DWITH_EXTRA_CHARSETS=all -DDEFAULT_COLLATION=utf8_general_ci -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_PARTITION_STORAGE_ENGINE=1 -DWITH_PIC=1 -DWITHOUT_TOKUDB_STORAGE_ENGINE=ON
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/var/lib/mysql -DDEFAULT_CHARSET=utf8mb4 -DWITH_EXTRA_CHARSETS=all -DDEFAULT_COLLATION=utf8_general_ci -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_PARTITION_STORAGE_ENGINE=1 -DWITH_PIC=1 -DWITHOUT_TOKUDB_STORAGE_ENGINE=ON
 make
 make install
 
