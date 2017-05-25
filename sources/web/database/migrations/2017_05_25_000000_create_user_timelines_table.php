@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimelinesTable extends Migration
+class CreateUserTimelinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +16,12 @@ class CreateTimelinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('timelines', function (Blueprint $table) {
-            $table->integer('id');
-            $table->integer('sort');
-            $table->integer('action_date');
-            $table->integer('user_id');
-            $table->integer('text');
+        Schema::create('user_timelines', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedBigInteger('sort')->index();
+            $table->dateTime('action_date')->index();
+            $table->unsignedInteger('user_id')->index();
+            $table->text('text');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateTimelinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorite_games');
+        Schema::dropIfExists('user_timelines');
     }
 }

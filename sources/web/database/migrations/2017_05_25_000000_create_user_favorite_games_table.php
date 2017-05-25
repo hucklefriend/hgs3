@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFavoriteGamesTable extends Migration
+class CreateUserFavoriteGamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +16,12 @@ class CreateFavoriteGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorite_games', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('package_id');
-            $table->integer('open_type');
+        Schema::create('user_favorite_games', function (Blueprint $table) {
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('package_id');
+            $table->unsignedTinyInteger('open_type')->default(0);
+            $table->primary(['user_id', 'package_id']);
+            $table->index(['package_id', 'created_at']);
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ class CreateFavoriteGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorite_games');
+        Schema::dropIfExists('user_favorite_games');
     }
 }

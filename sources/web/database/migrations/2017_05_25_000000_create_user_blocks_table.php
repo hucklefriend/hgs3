@@ -1,13 +1,13 @@
 <?php
 /**
- * 所持ゲームテーブルの作成
+ * ブロックテーブルの作成
  */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOwnGamesTable extends Migration
+class CreateUserBlocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,11 +16,9 @@ class CreateOwnGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('own_games', function (Blueprint $table) {
+        Schema::create('user_blocks', function (Blueprint $table) {
             $table->integer('user_id');
-            $table->integer('package_id');
-            $table->integer('buy_date');
-            $table->integer('clear_date');
+            $table->integer('block_user_id');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateOwnGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('own_games');
+        Schema::dropIfExists('user_blocks');
     }
 }

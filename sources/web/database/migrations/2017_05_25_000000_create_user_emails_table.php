@@ -1,13 +1,13 @@
 <?php
 /**
- * ブロックテーブルの作成
+ * メール認証テーブルの作成
  */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlocksTable extends Migration
+class CreateUserEmailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,11 @@ class CreateBlocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('blocks', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('block_user_id');
+        Schema::create('user_emails', function (Blueprint $table) {
+            $table->unsignedInteger('user_id')->primary();
+            $table->string('email', 200)->unique();
+            $table->string('token', 50);
+            $table->string('password', 100);
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateBlocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blocks');
+        Schema::dropIfExists('user_emails');
     }
 }

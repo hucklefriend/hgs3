@@ -20,13 +20,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 200)->index();
-            $table->smallInteger('role')->default(1);
-            $table->string('email', 200)->unique();
-            $table->tinyInteger('adult')->default(0);
-            $table->integer('point')->default(0);
-            $table->dateTime('last_login_date');
+            $table->unsignedSmallInteger('role')->default(1);
+            $table->unsignedTinyInteger('adult')->default(0);
+            $table->unsignedInteger('point')->default(0);
+            $table->dateTime('last_login_date')->nullable();
+            $table->dateTime('sign_up_date')->nullable();
             $table->tinyInteger('hgs12_user')->default(0);
-            $table->rememberToken();
             $table->timestamps();
         });
     }
