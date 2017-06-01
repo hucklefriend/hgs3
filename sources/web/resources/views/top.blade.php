@@ -1,4 +1,4 @@
-@extends('layouts.alpha')
+@extends('layouts.app')
 
 @section('content')
     <ul class="list-group">

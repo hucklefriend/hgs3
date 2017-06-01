@@ -7,6 +7,8 @@ class TopController extends Controller
 {
     public function index()
     {
-        return view('alpha/top');
+        // ログイン中ならマイページ
+
+        return view('top');
     }
 }
