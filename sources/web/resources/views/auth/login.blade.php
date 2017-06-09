@@ -16,7 +16,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">メールアドレスでログイン</div>
         <div class="panel-body">
-            <form class="form-horizontal" method="POST" action="{{ route('login_mail_auth') }}}">
+            <form class="form-horizontal" method="GET" action="{{ route('mypage') }}}">
                 {{ csrf_field() }}
 
                 <label for="email" class="col-md-4 control-label">メールアドレス</label>
