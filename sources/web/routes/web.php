@@ -12,10 +12,14 @@
 */
 
 Route::get('/', 'TopController@index');
-Auth::routes();
+Route::get('/auth/login', 'AuthController@login');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('test', function (){ return 'aaa'; });
+//Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::post('/auth/login_mail_auth', 'AuthController@login_mail_auth')->name('login_mail_auth');
-Route::post('/auth/provisional_registration', 'RegistrationController@register')->name('provisional_registration');
+//Route::post('/auth/provisional_registration', 'RegistrationController@register')->name('provisional_registration');
