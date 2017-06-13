@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSiteDailyAccessesTable extends Migration
+class CreateSiteHandleGamesTable extends Migration
 {
     /**
      * Run the migrations.
