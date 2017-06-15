@@ -12,6 +12,20 @@
 */
 
 Route::get('/', 'TopController@index');
-Auth::routes();
+Route::get('/auth/login', 'AuthController@login');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('test', function (){ return 'aaa'; });
+
+Route::get('/master', 'Master\TopController@index')->name('master');
+Route::resource('master/game_company', 'Master\GameCompanyController');
+
+/*Route::get('/master/game_company', 'Master\GameCompanyController@list')->name('master_game_company_list');
+Route::get('/master/game_company/add', 'Master\GameCompanyController@add')->name('master_add_game_company');
+Route::post('/master/game_company/add', 'Master\GameCompanyController@postAdd')->name('master_post_add_game_company');
+*/
+//Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/auth/login_mail_auth', 'AuthController@login_mail_auth')->name('login_mail_auth');
+//Route::post('/auth/provisional_registration', 'RegistrationController@register')->name('provisional_registration');

@@ -1,13 +1,13 @@
 <?php
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Master;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class MyPageController extends Controller
+class TopController extends Controller
 {
     public function index()
     {
-        return view('alpha/top');
+        return view('master.index');
     }
 }

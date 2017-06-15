@@ -7,6 +7,6 @@ class TopController extends Controller
 {
     public function index()
     {
-        return view('alpha/top');
+        return view('top');
     }
 }

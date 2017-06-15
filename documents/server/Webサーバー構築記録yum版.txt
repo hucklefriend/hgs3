@@ -54,8 +54,7 @@ gpgcheck=1
 
 アプリ用ユーザー追加
 CREATE USER 'mysql'@'localhost' IDENTIFIED BY '';
-GRANT select,update,insert,delete ON `hgs3`.* TO 'hgs'@'localhost'  IDENTIFIED BY '';
-
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON `hgs3`.* TO 'hgs'@'localhost';
 
 
 
