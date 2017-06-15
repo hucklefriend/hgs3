@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Master;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Models\Orm;
+use App\Models\Orm\GameCompany;
 
 class GameCompanyController extends Controller
 {
-    public function list()
+    public function index()
     {
         $companies = GameCompany::All();
 
@@ -18,23 +18,63 @@ class GameCompanyController extends Controller
         ]);
     }
 
-    public function detail($id)
+    public function show(GameCompany $gameCompany)
     {
-
+        return view('master.game_company.detail')->with([
+            'gameCompany' => $gameCompany
+        ]);
     }
 
-    public function add()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        return view('master.game_company.add');
+        return view('master.game_company.create');
     }
 
-    public function edit()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
+        $gameCompany = new GameCompany;
+        $gameCompany->name = $request->input('name');
+        $gameCompany->name_hiragana = $request->input('name_hiragana');
+        $gameCompany->url = $request->input('url');
 
+        $gameCompany->save();
+
+        return $this->index();
     }
 
-    public function postAdd(AddGameCompanyRequest $request)
+    public function edit(GameCompany $gameCompany)
     {
+        return view('master.game_company.edit')->with([
+            'gameCompany' => $gameCompany
+        ]);
+    }
 
+    public function update(Request $request, GameCompany $gameCompany)
+    {
+        $gameCompany->name = $request->input('name');
+        $gameCompany->name_hiragana = $request->input('name_hiragana');
+        $gameCompany->url = $request->input('url');
+
+        $gameCompany->save();
+
+        return $this->edit($gameCompany);
+    }
+
+    public function destroy(GameCompany $gameCompany)
+    {
+        $gameCompany->delete();
+
+        return $this->index();
     }
 }

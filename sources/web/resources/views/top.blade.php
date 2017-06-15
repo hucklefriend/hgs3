@@ -13,7 +13,7 @@
     <hr>
     <h3>以下、仮で認証無し。いずれ正しい場所に移動。</h3>
     <ul class="list-group">
-        <li class="list-group-item"><a href="{{ route('master_game_company_list') }}">マスター</a></li>
+        <li class="list-group-item"><a href="{{ url('master/game_company') }}">マスター</a></li>
     </ul>
 
 @endsection

@@ -42,7 +42,7 @@ class GamePlatformsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\GamePlatform  $gamePlatform
+     * @param  \AppModels\Orm\GamePlatform  $gamePlatform
      * @return \Illuminate\Http\Response
      */
     public function show(GamePlatform $gamePlatform)
@@ -53,7 +53,7 @@ class GamePlatformsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\GamePlatform  $gamePlatform
+     * @param  \AppModels\Orm\GamePlatform  $gamePlatform
      * @return \Illuminate\Http\Response
      */
     public function edit(GamePlatform $gamePlatform)
@@ -65,7 +65,7 @@ class GamePlatformsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\GamePlatform  $gamePlatform
+     * @param  \AppModels\Orm\GamePlatform  $gamePlatform
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, GamePlatform $gamePlatform)
@@ -76,11 +76,11 @@ class GamePlatformsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\GamePlatform  $gamePlatform
+     * @param  \App\Models\Orm\GamePlatform  $gamePlatform
      * @return \Illuminate\Http\Response
      */
     public function destroy(GamePlatform $gamePlatform)
     {
-        //
+        return $this->index();
     }
 }

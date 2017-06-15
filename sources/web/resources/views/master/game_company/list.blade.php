@@ -3,15 +3,14 @@
 @section('content')
 
     <div>
-        <a href="{{ route('master_add_game_company') }}">新規登録</a>
+        <a href="{{ url('master/game_company/create') }}">新規登録</a>
     </div>
 
     <div>
-        <ul class="nav pull-right">
+        <ul class="">
             @foreach ($list as $company)
-                <li>{{ $company->name }}</li>
+                <li><a href="{{ url('master/game_company') }}/{{ $company->id }}">{{ $company->name }}</a></li>
             @endforeach
-
         </ul>
     </div>
 
