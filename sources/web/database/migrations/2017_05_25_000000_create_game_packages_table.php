@@ -17,19 +17,20 @@ class CreateGamePackagesTable extends Migration
     public function up()
     {
         Schema::create('game_packages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('game_id')->index();
-            $table->integer('platform_id')->index();
-            $table->integer('company_id');
-            $table->string('name', 200);
-            $table->text('url');
-            $table->string('release_date', 100);
-            $table->integer('release_int');
-            $table->string('asin', 200)->nullable();
-            $table->text('small_image_url')->nullable();
-            $table->text('medium_image_url')->nullable();
-            $table->text('large_image_url')->nullable();
+            $table->increments('id')->comment('ゲームパッケージID');
+            $table->integer('game_id')->comment('ゲームソフトID');
+            $table->integer('platform_id')->index()->comment('プラットフォームID');
+            $table->integer('company_id')->comment('ゲーム会社ID');
+            $table->string('name', 200)->comment('パッケージ名称');
+            $table->text('url')->comment('公式サイトURL');
+            $table->string('release_date', 100)->comment('発売日');
+            $table->integer('release_int')->comment('発売日（ソート用の数値）');
+            $table->string('asin', 200)->nullable()->comment('ASIN');
+            $table->text('small_image_url')->nullable()->comment('amazonの小画像URL');
+            $table->text('medium_image_url')->nullable()->comment('amazonの中画像URL');
+            $table->text('large_image_url')->nullable()->comment('amazonの大画像URL');
             $table->timestamps();
+            $table->index(['game_id', 'release_int']);
         });
     }
 

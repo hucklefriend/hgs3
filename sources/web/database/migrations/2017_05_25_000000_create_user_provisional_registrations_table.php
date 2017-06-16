@@ -18,11 +18,11 @@ class CreateUserProvisionalRegistrationsTable extends Migration
     public function up()
     {
         Schema::create('user_provisional_registrations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('email', 200)->unique();
-            $table->string('token', 50);
-            $table->dateTime('limit_date');
+            $table->string('email', 200)->comment('メールアドレス');
+            $table->string('token', 50)->comment('トークン');
+            $table->dateTime('limit_date')->comment('有効期限');
             $table->timestamps();
+            $table->primary('email');
         });
     }
 

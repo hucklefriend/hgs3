@@ -17,10 +17,10 @@ class CreateGameCompaniesTable extends Migration
     public function up()
     {
         Schema::create('game_companies', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 200)->index();
-            $table->string('name_hiragana', 200)->index();
-            $table->text('url')->nullable();
+            $table->increments('id')->comment('ゲーム会社ID');
+            $table->string('name', 200)->index()->comment('ゲーム会社名');
+            $table->string('name_hiragana', 200)->index()->comment('ゲーム会社名のよみがな');
+            $table->text('url')->nullable()->comment('サイトのURL');
             $table->timestamps();
         });
     }

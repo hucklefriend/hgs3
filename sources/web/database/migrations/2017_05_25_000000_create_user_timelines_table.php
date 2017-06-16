@@ -17,11 +17,11 @@ class CreateUserTimelinesTable extends Migration
     public function up()
     {
         Schema::create('user_timelines', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedBigInteger('sort')->index();
-            $table->dateTime('action_date')->index();
-            $table->unsignedInteger('user_id')->index();
-            $table->text('text');
+            $table->increments('id')->comment('タイムラインテーブル');
+            $table->unsignedBigInteger('sort')->index()->comment('ソート順');
+            $table->dateTime('action_date')->index()->comment('日時');
+            $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
+            $table->text('text')->comment('表示テキスト');
             $table->timestamps();
         });
     }

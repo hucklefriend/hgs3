@@ -17,12 +17,13 @@ class CreateUserOwnGamesTable extends Migration
     public function up()
     {
         Schema::create('user_own_games', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('package_id')->index();
-            $table->string('buy_date', 100);
-            $table->string('clear_date', 100);
-            $table->primary(['user_id', 'package_id']);
+            $table->unsignedInteger('user_id')->comment('ユーザーID');
+            $table->unsignedInteger('package_id')->index()->comment('パッケージID');
+            $table->string('buy_date', 100)->comment('買った日');
+            $table->string('clear_date', 100)->comment('クリアした日');
+            $table->text('comment')->comment('コメント');
             $table->timestamps();
+            $table->primary(['user_id', 'package_id']);
         });
     }
 

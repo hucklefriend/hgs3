@@ -17,12 +17,11 @@ class CreateUserFollowsTable extends Migration
     public function up()
     {
         Schema::create('user_follows', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('follow_user_id');
-            $table->unsignedTinyInteger('notice')->default(1);
-            $table->unsignedTinyInteger('open_flag')->default(1);
-            $table->primary(['user_id', 'follow_user_id']);
+            $table->unsignedInteger('user_id')->comment('ユーザーID');
+            $table->unsignedSmallInteger('category')->default(0)->comment('フォローカテゴリ');
+            $table->unsignedInteger('follow_user_id')->comment('フォロー対象ユーザーID');
             $table->timestamps();
+            $table->primary(['user_id', 'category', 'follow_user_id']);
         });
     }
 

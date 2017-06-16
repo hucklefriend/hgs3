@@ -16,7 +16,7 @@ class CreateReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('game_reviews', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('game_id')->index();
@@ -47,6 +47,6 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('game_reviews');
+        Schema::dropIfExists('reviews');
     }
 }

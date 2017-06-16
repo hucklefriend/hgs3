@@ -18,14 +18,15 @@ class CreateUsersTable2 extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 200)->index();
-            $table->unsignedSmallInteger('role')->default(1);
-            $table->unsignedTinyInteger('adult')->default(0);
-            $table->unsignedInteger('point')->default(0);
-            $table->dateTime('last_login_date')->nullable();
-            $table->dateTime('sign_up_date')->nullable();
-            $table->tinyInteger('hgs12_user')->default(0);
+            $table->increments('id')->comment('ユーザーID');
+            $table->string('name', 200)->index()->comment('ユーザー名');
+            $table->unsignedSmallInteger('role')->default(1)->comment('ロール');
+            $table->unsignedTinyInteger('adult')->default(0)->comment('18歳以上');
+            $table->unsignedInteger('point')->default(0)->comment('ポイント');
+            $table->dateTime('last_login_date')->nullable()->comment('最終ログイン日時');
+            $table->dateTime('sign_up_date')->nullable()->comment('登録日時');
+            $table->tinyInteger('hgs12_user')->default(0)->comment('旧HGSユーザーフラグ');
+            $table->string('remember_token', 200)->nullable()->comment('再アクセストークン');
             $table->timestamps();
         });
     }
