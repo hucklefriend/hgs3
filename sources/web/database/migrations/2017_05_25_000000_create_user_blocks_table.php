@@ -17,8 +17,8 @@ class CreateUserBlocksTable extends Migration
     public function up()
     {
         Schema::create('user_blocks', function (Blueprint $table) {
-            $table->integer('user_id')->comment('');
-            $table->integer('block_user_id')->comment('');
+            $table->integer('user_id')->comment('ユーザーID');
+            $table->integer('block_user_id')->comment('ブロック対象ユーザーID');
             $table->timestamps();
         });
     }

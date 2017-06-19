@@ -17,12 +17,12 @@ class CreateSiteDailyAccessesTable extends Migration
     public function up()
     {
         Schema::create('site_daily_accesses', function (Blueprint $table) {
-            $table->integer('site_id')->comment('');
-            $table->integer('user_id')->comment('');
-            $table->integer('date')->comment('');
-            $table->integer('in_count')->comment('');
-            $table->integer('out_count')->comment('');
+            $table->integer('site_id')->comment('サイトID');
+            $table->integer('date')->comment('アクセス日');
+            $table->integer('in_count')->comment('INカウント');
+            $table->integer('out_count')->comment('OUTカウント');
             $table->timestamps();
+            $table->primary('site_id');
         });
     }
 

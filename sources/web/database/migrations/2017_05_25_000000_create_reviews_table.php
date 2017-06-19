@@ -17,25 +17,25 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->increments('id')->comment('');
-            $table->unsignedInteger('user_id')->index()->comment('');
-            $table->unsignedInteger('game_id')->index()->comment('');
-            $table->unsignedInteger('package_id')->index()->comment('');
-            $table->unsignedSmallInteger('play_time')->comment('');
-            $table->unsignedTinyInteger('fear')->comment('');
-            $table->unsignedTinyInteger('story')->comment('');
-            $table->unsignedTinyInteger('volume')->comment('');
-            $table->unsignedTinyInteger('difficulty')->comment('');
-            $table->unsignedTinyInteger('sound')->comment('');
+            $table->increments('id')->comment('レビューID');
+            $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
+            $table->unsignedInteger('game_id')->index()->comment('ゲームソフトID');
+            $table->unsignedInteger('package_id')->index()->comment('パッケージID');
+            $table->unsignedSmallInteger('play_time')->comment('プレイ時間');
+            $table->unsignedTinyInteger('fear')->comment('怖さ');
+            $table->unsignedTinyInteger('story')->comment('シナリオ');
+            $table->unsignedTinyInteger('volume')->comment('ボリューム');
+            $table->unsignedTinyInteger('difficulty')->comment('難易度');
+            $table->unsignedTinyInteger('sound')->comment('サウンド');
             $table->unsignedTinyInteger('crowded')->comment('');
-            $table->unsignedTinyInteger('controllability')->comment('');
-            $table->unsignedTinyInteger('recommend')->comment('');
-            $table->text('thoughts')->comment('');
-            $table->text('recommendatory')->comment('');
-            $table->integer('sort_order')->comment('');
-            $table->unsignedInteger('like_num')->comment('');
-            $table->dateTime('post_date')->comment('');
-            $table->unsignedInteger('update_num')->comment('');
+            $table->unsignedTinyInteger('controllability')->comment('操作性');
+            $table->unsignedTinyInteger('recommend')->comment('オススメ度');
+            $table->text('thoughts')->comment('感想');
+            $table->text('recommendatory')->comment('オススメ');
+            $table->integer('sort_order')->comment('ソート順');
+            $table->unsignedInteger('good_num')->comment('いいね数');
+            $table->dateTime('post_date')->comment('投稿日時');
+            $table->unsignedInteger('update_num')->comment('更新回数');
             $table->timestamps();
         });
     }

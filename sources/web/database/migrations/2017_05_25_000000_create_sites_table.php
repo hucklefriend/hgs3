@@ -17,19 +17,20 @@ class CreateSitesTable extends Migration
     public function up()
     {
         Schema::create('sites', function (Blueprint $table) {
-            $table->increments('id')->comment('');
-            $table->unsignedInteger('user_id')->index()->comment('');
-            $table->string('name', 100)->comment('');
-            $table->string('url', 200)->comment('');
-            $table->string('banner_url', 200)->comment('');
-            $table->text('presentation')->comment('');
-            $table->unsignedTinyInteger('rate')->comment('');
-            $table->unsignedTinyInteger('gender')->comment('');
-            $table->unsignedSmallInteger('main_contents_id')->comment('');
-            $table->unsignedTinyInteger('open_type')->comment('');
-            $table->unsignedInteger('in_count')->comment('');
-            $table->unsignedInteger('out_count')->comment('');
-            $table->unsignedInteger('bad_count')->comment('');
+            $table->increments('id')->comment('サイトID');
+            $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
+            $table->string('name', 100)->comment('サイト名');
+            $table->string('url', 200)->comment('URL');
+            $table->string('banner_url', 200)->comment('バナーURL');
+            $table->text('presentation')->comment('紹介文');
+            $table->unsignedTinyInteger('rate')->comment('対象年齢');
+            $table->unsignedTinyInteger('gender')->comment('対象性別');
+            $table->unsignedSmallInteger('main_contents_id')->comment('メインコンテンツ');
+            $table->unsignedTinyInteger('open_type')->comment('公開範囲');
+            $table->unsignedInteger('in_count')->comment('INカウント');
+            $table->unsignedInteger('out_count')->comment('OUTカウント');
+            $table->unsignedInteger('good_count')->comment('いいね数');
+            $table->unsignedInteger('bad_count')->comment('BAD数');
             $table->timestamps();
         });
     }
