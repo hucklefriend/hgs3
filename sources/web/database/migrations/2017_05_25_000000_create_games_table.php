@@ -17,11 +17,11 @@ class CreateGamesTable extends Migration
     public function up()
     {
         Schema::create('games', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 200);
-            $table->integer('company_id');
-            $table->integer('series_id')->nullable()->index();
-            $table->integer('order_in_series')->index();
+            $table->increments('id')->comment('');
+            $table->string('name', 200)->comment('');
+            $table->integer('company_id')->comment('');
+            $table->integer('series_id')->nullable()->index()->comment('');
+            $table->integer('order_in_series')->index()->comment('');
             $table->timestamps();
         });
     }

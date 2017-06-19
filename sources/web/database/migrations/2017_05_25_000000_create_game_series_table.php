@@ -17,8 +17,8 @@ class CreateGameSeriesTable extends Migration
     public function up()
     {
         Schema::create('game_series', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 200);
+            $table->increments('id')->comment('シリーズID');
+            $table->string('name', 200)->comment('シリーズ名称');
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ class CreateSiteHandleGamesTable extends Migration
     public function up()
     {
         Schema::create('site_handle_games', function (Blueprint $table) {
-            $table->integer('site_id');
-            $table->integer('game_id');
+            $table->integer('site_id')->comment('');
+            $table->integer('game_id')->comment('');
             $table->timestamps();
         });
     }
