@@ -8,24 +8,18 @@ use App\Http\Controllers\Controller;
 
 class GamePlatformsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $platforms = GamePlatform::All();
+
+        return view('master.game_platform.list')->with([
+            "list"   => $platforms
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('master.game_platform.create');
     }
 
     /**
@@ -36,7 +30,14 @@ class GamePlatformsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $gamePlatform = new GamePlatform;
+        $gamePlatform->name = $request->input('name');
+        $gamePlatform->acronym = $request->input('acronym');
+        $gamePlatform->sort_order = $request->input('sort_order');
+
+        $gamePlatform->save();
+
+        return $this->index();
     }
 
     /**
@@ -47,7 +48,9 @@ class GamePlatformsController extends Controller
      */
     public function show(GamePlatform $gamePlatform)
     {
-        //
+        return view('master.game_platform.detail')->with([
+            'gamePlatform' => $gamePlatform
+        ]);
     }
 
     /**
@@ -58,7 +61,9 @@ class GamePlatformsController extends Controller
      */
     public function edit(GamePlatform $gamePlatform)
     {
-        //
+        return view('master.game_platform.edit')->with([
+            'gamePlatform' => $gamePlatform
+        ]);
     }
 
     /**
@@ -70,7 +75,13 @@ class GamePlatformsController extends Controller
      */
     public function update(Request $request, GamePlatform $gamePlatform)
     {
-        //
+        $gamePlatform->name = $request->input('name');
+        $gamePlatform->acronym = $request->input('acronym');
+        $gamePlatform->sort_order = $request->input('sort_order');
+
+        $gamePlatform->save();
+
+        return $this->edit($gamePlatform);
     }
 
     /**
@@ -81,6 +92,8 @@ class GamePlatformsController extends Controller
      */
     public function destroy(GamePlatform $gamePlatform)
     {
+        $gamePlatform->delete();
+
         return $this->index();
     }
 }

@@ -13,8 +13,7 @@ class GameCompanyController extends Controller
         $companies = GameCompany::All();
 
         return view('master.game_company.list')->with([
-            "list"   => $companies,
-            "test_2" => "テスト2",
+            "list"   => $companies
         ]);
     }
 
