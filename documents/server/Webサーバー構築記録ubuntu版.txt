@@ -1,0 +1,76 @@
+# sudo apt-get install openssh-server
+
+
+○以下、VMware環境のみ
+
+$ sudo apt-get install git
+$ cd /usr/local/src
+$ git clone https://github.com/rasa/vmware-tools-patches.git
+$ cd vmware-tools-patches
+$ sudo ./patched-open-vm-tools.sh
+
+VM wareのフォルダ共有設定をする
+
+$ sudo ln -s /mnt/hgfs/hgs3 /var/hgs3
+
+
+○ Apache
+
+$ sudo apt-get install apache2
+
+
+○ MariaDB
+
+sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository 'deb [arch=amd64,i386] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.2/ubuntu zesty main'
+sudo apt update
+sudo apt install mariadb-server
+
+# mysql -u root
+
+
+アプリ用ユーザー追加
+CREATE USER 'mysql'@'localhost' IDENTIFIED BY '';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON `hgs3`.* TO 'hgs'@'localhost';
+
+
+○ PHP
+sudo apt-get install php libapache2-mod-php php-mysql php-curl php-xml php-zip php-gd php-mbstring  php-bcmath
+
+
+○ Memcached
+sudo apt-get install php-memcached
+
+
+
+
+
+○ Apacheコンフィグ
+
+# vi /etc/apache2/sites-available/hgn.conf
+alias /hgn /var/hgs3/web/public
+<Directory /var/hgs3/web/public>
+    Options FollowSymLinks Indexes
+    AllowOverride All
+    Require all granted
+</Directory>
+
+# sudo a2ensite hgn.conf
+# sudo a2enmod rewrite
+
+
+
+○ Laravel設定
+
+cd (laravel設置パス)
+chmod 777 -R storage
+chmod 777 -R bootstrap/cache
+
+
+php artisan key:generate
+php artisan config:clear
+
+
+
+

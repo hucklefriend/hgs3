@@ -27,8 +27,14 @@ class CreateGamePackagesTable extends Migration
             $table->unsignedInteger('release_int')->comment('発売日（ソート用の数値）');
             $table->string('asin', 200)->nullable()->comment('ASIN');
             $table->text('small_image_url')->nullable()->comment('amazonの小画像URL');
+            $table->unsignedInteger('small_image_width')->nullable()->comment('小画像の幅');
+            $table->unsignedInteger('small_image_height')->nullable()->comment('小画像の高さ');
             $table->text('medium_image_url')->nullable()->comment('amazonの中画像URL');
+            $table->unsignedInteger('medium_image_width')->nullable()->comment('中画像の幅');
+            $table->unsignedInteger('medium_image_height')->nullable()->comment('中画像の高さ');
             $table->text('large_image_url')->nullable()->comment('amazonの大画像URL');
+            $table->unsignedInteger('large_image_width')->nullable()->comment('大画像の幅');
+            $table->unsignedInteger('large_image_height')->nullable()->comment('大画像の高さ');
             $table->timestamps();
             $table->index(['game_id', 'release_int']);
         });

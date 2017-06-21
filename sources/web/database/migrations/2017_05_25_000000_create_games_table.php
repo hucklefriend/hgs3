@@ -20,9 +20,11 @@ class CreateGamesTable extends Migration
             $table->increments('id')->comment('ゲームソフトID');
             $table->string('name', 200)->comment('名称');
             $table->string('phonetic', 200)->comment('名称のよみがな');
-            $table->unsignedInteger('company_id')->comment('ゲーム会社ID');
+            $table->string('genre', 200)->comment('ジャンル');
+            $table->unsignedInteger('company_id')->nullable()->index()->comment('ゲーム会社ID');
             $table->unsignedInteger('series_id')->nullable()->index()->comment('シリーズID');
             $table->unsignedInteger('order_in_series')->nullable()->comment('シリーズ内での表示順');
+            $table->unsignedInteger('sort_order')->index()->comment('一覧で表示した時の表示順');
             $table->timestamps();
         });
     }

@@ -18,8 +18,8 @@ class CreateGameCompaniesTable extends Migration
     {
         Schema::create('game_companies', function (Blueprint $table) {
             $table->increments('id')->comment('ゲーム会社ID');
-            $table->string('name', 200)->index()->comment('ゲーム会社名');
-            $table->string('phonetic', 200)->index()->comment('ゲーム会社名のよみがな');
+            $table->string('name', 200)->comment('ゲーム会社名');
+            $table->string('phonetic', 200)->comment('ゲーム会社名のよみがな');
             $table->text('url')->nullable()->comment('サイトのURL');
             $table->timestamps();
         });
