@@ -18,9 +18,10 @@ class CreateGamePlatformsTable extends Migration
     {
         Schema::create('game_platforms', function (Blueprint $table) {
             $table->increments('id')->comment('プラットフォームID');
+            $table->unsignedInteger('company_id')->comment('ゲーム会社ID');
             $table->string('name', 200)->comment('プラットフォーム名');
             $table->string('acronym', 30)->comment('略称');
-            $table->integer('sort_order')->index()->comment('表示順');
+            $table->unsignedInteger('sort_order')->index()->comment('表示順');
             $table->timestamps();
         });
     }

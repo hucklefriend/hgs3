@@ -19,9 +19,10 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id')->comment('ゲームソフトID');
             $table->string('name', 200)->comment('名称');
-            $table->integer('company_id')->comment('ゲーム会社ID');
-            $table->integer('series_id')->nullable()->index()->comment('シリーズID');
-            $table->integer('order_in_series')->nullable()->comment('シリーズ内での表示順');
+            $table->string('phonetic', 200)->comment('名称のよみがな');
+            $table->unsignedInteger('company_id')->comment('ゲーム会社ID');
+            $table->unsignedInteger('series_id')->nullable()->index()->comment('シリーズID');
+            $table->unsignedInteger('order_in_series')->nullable()->comment('シリーズ内での表示順');
             $table->timestamps();
         });
     }

@@ -18,13 +18,13 @@ class CreateGamePackagesTable extends Migration
     {
         Schema::create('game_packages', function (Blueprint $table) {
             $table->increments('id')->comment('ゲームパッケージID');
-            $table->integer('game_id')->comment('ゲームソフトID');
-            $table->integer('platform_id')->index()->comment('プラットフォームID');
-            $table->integer('company_id')->comment('ゲーム会社ID');
+            $table->unsignedInteger('game_id')->comment('ゲームソフトID');
+            $table->unsignedInteger('platform_id')->index()->comment('プラットフォームID');
+            $table->unsignedInteger('company_id')->comment('ゲーム会社ID');
             $table->string('name', 200)->comment('パッケージ名称');
             $table->text('url')->comment('公式サイトURL');
             $table->string('release_date', 100)->comment('発売日');
-            $table->integer('release_int')->comment('発売日（ソート用の数値）');
+            $table->unsignedInteger('release_int')->comment('発売日（ソート用の数値）');
             $table->string('asin', 200)->nullable()->comment('ASIN');
             $table->text('small_image_url')->nullable()->comment('amazonの小画像URL');
             $table->text('medium_image_url')->nullable()->comment('amazonの中画像URL');

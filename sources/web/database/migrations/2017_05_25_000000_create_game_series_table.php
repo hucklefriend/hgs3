@@ -19,6 +19,7 @@ class CreateGameSeriesTable extends Migration
         Schema::create('game_series', function (Blueprint $table) {
             $table->increments('id')->comment('シリーズID');
             $table->string('name', 200)->comment('シリーズ名称');
+            $table->string('phonetic', 200)->comment('シリーズ名称のよみがな');
             $table->timestamps();
         });
     }
