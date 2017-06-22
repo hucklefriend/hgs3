@@ -11,6 +11,7 @@ class Database
         $this->copy_platform();
         $this->copy_series();
         $this->copy_soft();
+        $this->copy_package();
     }
 
     /**
@@ -95,6 +96,49 @@ ON DUPLICATE KEY UPDATE
   , `series_id` = VALUES(`series_id`)
   , `order_in_series` = VALUES(`order_in_series`)
   , `sort_order` = VALUES(`sort_order`)
+  , `created_at` = VALUES(`created_at`)
+  , `updated_at` = VALUES(`updated_at`)
+SQL;
+
+        DB::insert($sql);
+    }
+
+    private function copy_package()
+    {
+        $sql =<<< SQL
+INSERT INTO game_packages
+SELECT
+	s.id, s.soft_id, s.hard_id, IF(s.company_id <= 0, null, s.company_id),
+	IF (other_name = '', ss.name, other_name), s.url,
+	s.release_date, s.release_int, s.game_type_id, a.asin, a.item_url,
+	a.small_image_url, a.small_image_width, a.small_image_height,
+	a.medium_image_url, a.medium_image_width, a.medium_image_height,
+	a.large_image_url, a.large_image_width, a.large_image_height,
+	FROM_UNIXTIME(s.registered_date), FROM_UNIXTIME(s.updated_date)
+FROM
+	hgs2.hgs_g_soft_detail s
+	LEFT OUTER JOIN hgs2.hgs_g_soft ss ON s.soft_id = ss.id
+	LEFT OUTER JOIN hgs2.hgs_g_amazon a ON s.asin = a.asin
+ON DUPLICATE KEY UPDATE
+  `name` = VALUES(`name`)
+  , `game_id` = VALUES(`game_id`)
+  , `platform_id` = VALUES(`platform_id`)
+  , `company_id` = VALUES(`company_id`)
+  , `url` = VALUES(`url`)
+  , `release_date` = VALUES(`release_date`)
+  , `release_int` = VALUES(`release_int`)
+  , `game_type_id` = VALUES(`game_type_id`)
+  , `asin` = VALUES(`asin`)
+  , `item_url` = VALUES(`item_url`)
+  , `small_image_url` = VALUES(`small_image_url`)
+  , `small_image_width` = VALUES(`small_image_width`)
+  , `small_image_height` = VALUES(`small_image_height`)
+  , `medium_image_url` = VALUES(`medium_image_url`)
+  , `medium_image_width` = VALUES(`medium_image_width`)
+  , `medium_image_height` = VALUES(`medium_image_height`)
+  , `large_image_url` = VALUES(`large_image_url`)
+  , `large_image_width` = VALUES(`large_image_width`)
+  , `large_image_height` = VALUES(`large_image_height`)
   , `created_at` = VALUES(`created_at`)
   , `updated_at` = VALUES(`updated_at`)
 SQL;
