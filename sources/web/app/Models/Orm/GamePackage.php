@@ -3,7 +3,7 @@
 namespace App\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 
-class GameSeries extends Model
+class GamePackage extends Model
 {
     //
 }

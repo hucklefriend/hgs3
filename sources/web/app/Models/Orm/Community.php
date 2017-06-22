@@ -3,7 +3,7 @@
 namespace App\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Community extends Model
 {
     //
 }

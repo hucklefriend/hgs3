@@ -36,7 +36,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORA
 
 
 ○ PHP
-sudo apt-get install php libapache2-mod-php php-mysql php-curl php-xml php-zip php-gd php-mbstring  php-bcmath
+sudo apt-get install php php-cli php-common libapache2-mod-php php-mysql php-curl php-xml php-zip php-gd php-mbstring  php-bcmath php-mcrypt php-json
 
 
 ○ Memcached

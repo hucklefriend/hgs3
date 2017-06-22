@@ -14,7 +14,8 @@
 Route::get('/', 'TopController@index');
 Route::get('/auth/login', 'AuthController@login');
 
-Route::get('test', function (){ return 'aaa'; });
+Route::get('/game/soft', 'Game\SoftController@index');
+Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
 Route::get('/master', 'Master\TopController@index')->name('master');
 Route::resource('master/game_company', 'Master\GameCompanyController');

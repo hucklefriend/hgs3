@@ -3,7 +3,7 @@
 namespace App\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 
-class CommunityUser extends Model
+class CommunityWalkthroughThread extends Model
 {
     //
 }
