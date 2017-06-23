@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
+        'model' => Hgs3\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

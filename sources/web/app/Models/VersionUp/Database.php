@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\VersionUp;
+namespace Hgs3\Models\VersionUp;
 use Illuminate\Support\Facades\DB;
 
 class Database

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Hgs3\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Hgs3\Http\Controllers\Controller;
 
 class VersionUpController extends Controller
 {

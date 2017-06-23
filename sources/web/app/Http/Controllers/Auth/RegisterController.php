@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Hgs3\Http\Controllers\Auth;
 
-use App\User;
-use App\Http\Controllers\Controller;
+use Hgs3\User;
+use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Models\Orm;
-use Illuminate\Database\Eloquent\Model;
+namespace Hgs3\Models\Orm;
 
-class UserFollow extends Model
+class UserFollow extends \Eloquent
 {
     //
 }

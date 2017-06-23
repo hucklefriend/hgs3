@@ -1,14 +1,19 @@
 <?php
-namespace App\Http\Controllers\User;
+namespace Hgs3\Http\Controllers\User;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Hgs3\Http\Controllers\Controller;
 
 class FollowController extends Controller
 {
     public function index()
     {
         return view('alpha/top');
+    }
+
+    public function follower()
+    {
+        \Auth::
     }
 
     public function add()

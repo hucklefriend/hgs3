@@ -1,7 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace Hgs3\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Hgs3\Http\Controllers\Controller;
 
 class TopController extends Controller
 {

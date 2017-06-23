@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Hgs3\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\VersionUp\Database;
+use Hgs3\Models\VersionUp\Database;
 
 class VersionUpDatabase extends Command
 {

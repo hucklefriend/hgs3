@@ -1,8 +1,8 @@
 <?php
-namespace App\Http\Controllers\Master;
+namespace Hgs3\Http\Controllers\Master;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Hgs3\Http\Controllers\Controller;
 
 class TopController extends Controller
 {

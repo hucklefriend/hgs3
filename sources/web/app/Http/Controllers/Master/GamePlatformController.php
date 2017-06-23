@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Master;
+namespace Hgs3\Http\Controllers\Master;
 
-use App\Models\Orm\GamePlatform;
+use Hgs3\Models\Orm\GamePlatform;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Hgs3\Http\Controllers\Controller;
 
 class GamePlatformController extends Controller
 {
@@ -87,7 +87,7 @@ class GamePlatformController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Orm\GamePlatform  $gamePlatform
+     * @param  \Hgs3\Models\Orm\GamePlatform  $gamePlatform
      * @return \Illuminate\Http\Response
      */
     public function destroy(GamePlatform $gamePlatform)

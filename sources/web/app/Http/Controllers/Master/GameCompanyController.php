@@ -1,10 +1,10 @@
 <?php
-namespace App\Http\Controllers\Master;
+namespace Hgs3\Http\Controllers\Master;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests;
-use App\Models\Orm\GameCompany;
+use Hgs3\Http\Controllers\Controller;
+use Hgs3\Http\Requests;
+use Hgs3\Models\Orm\GameCompany;
 
 class GameCompanyController extends Controller
 {

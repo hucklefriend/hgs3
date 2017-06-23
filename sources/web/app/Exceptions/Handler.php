@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace Hgs3\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
