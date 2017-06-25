@@ -5,9 +5,9 @@
 
 $ sudo apt-get install git
 $ cd /usr/local/src
-$ git clone https://github.com/rasa/vmware-tools-patches.git
+$ sudo git clone https://github.com/rasa/vmware-tools-patches.git
 $ cd vmware-tools-patches
-$ sudo ./patched-open-vm-tools.sh
+$ sudo ./patched-open-vm-tools.sh -d
 
 VM wareのフォルダ共有設定をする
 
@@ -31,15 +31,20 @@ sudo apt install mariadb-server
 
 
 アプリ用ユーザー追加
-CREATE USER 'mysql'@'localhost' IDENTIFIED BY '';
+CREATE USER 'hgs'@'localhost' IDENTIFIED BY '';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON `hgs3`.* TO 'hgs'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON `hgs2`.* TO 'hgs'@'localhost';
 
+
+CREATE DATABASE mysql_test CHARACTER SET utf8mb4;
+exit;
 
 ○ PHP
 sudo apt-get install php php-cli php-common libapache2-mod-php php-mysql php-curl php-xml php-zip php-gd php-mbstring  php-bcmath php-mcrypt php-json
 
 
 ○ Memcached
+sudo apt-get install memcached
 sudo apt-get install php-memcached
 
 
@@ -48,7 +53,7 @@ sudo apt-get install php-memcached
 
 ○ Apacheコンフィグ
 
-# vi /etc/apache2/sites-available/hgn.conf
+# sudo vi /etc/apache2/sites-available/hgn.conf
 alias /hgn /var/hgs3/web/public
 <Directory /var/hgs3/web/public>
     Options FollowSymLinks Indexes
