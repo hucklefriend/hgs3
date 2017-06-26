@@ -29,7 +29,6 @@ ON DUPLICATE KEY UPDATE
   `name` = VALUES(`name`)
   , `phonetic` = VALUES(`phonetic`)
   , `url` = VALUES(`url`)
-  , `created_at` = VALUES(`created_at`)
   , `updated_at` = VALUES(`updated_at`)
 SQL;
 
@@ -52,7 +51,6 @@ ON DUPLICATE KEY UPDATE
   , `name` = VALUES(`name`)
   , `acronym` = VALUES(`acronym`)
   , `sort_order` = VALUES(`sort_order`)
-  , `created_at` = VALUES(`created_at`)
   , `updated_at` = VALUES(`updated_at`)
 SQL;
 
@@ -73,7 +71,6 @@ FROM
 ON DUPLICATE KEY UPDATE
   `name` = VALUES(`name`)
   , `phonetic` = VALUES(`phonetic`)
-  , `created_at` = VALUES(`created_at`)
   , `updated_at` = VALUES(`updated_at`)
 SQL;
 
@@ -85,18 +82,20 @@ SQL;
         $sql =<<< SQL
 INSERT INTO games
 SELECT
-  sf.id, sf.name, sf.hiragana, sf.genre_name, IF (sf.company_id <= 0, NULL, sf.company_id), sl.series_id, sl.order, sf.hiragana_type, NOW(), NOW()
+  sf.id, sf.name, sf.hiragana, sf.hiragana_type, sf.hiragana_order, sf.genre_name, 
+  IF (sf.company_id <= 0, NULL, sf.company_id), sl.series_id, sl.order, sf.game_type_id, NOW(), NOW()
 FROM
   hgs2.hgs_g_soft sf LEFT OUTER JOIN hgs2.hgs_g_series_list sl ON sf.id = sl.soft_id
 ON DUPLICATE KEY UPDATE
   `name` = VALUES(`name`)
   , `phonetic` = VALUES(`phonetic`)
+  , `phonetic_type` = VALUES(`phonetic_type`)
+  , `phonetic_order` = VALUES(`phonetic_order`)
   , `genre` = VALUES(`genre`)
   , `company_id` = VALUES(`company_id`)
   , `series_id` = VALUES(`series_id`)
   , `order_in_series` = VALUES(`order_in_series`)
-  , `sort_order` = VALUES(`sort_order`)
-  , `created_at` = VALUES(`created_at`)
+  , `game_type` = VALUES(`game_type`)
   , `updated_at` = VALUES(`updated_at`)
 SQL;
 
@@ -139,7 +138,6 @@ ON DUPLICATE KEY UPDATE
   , `large_image_url` = VALUES(`large_image_url`)
   , `large_image_width` = VALUES(`large_image_width`)
   , `large_image_height` = VALUES(`large_image_height`)
-  , `created_at` = VALUES(`created_at`)
   , `updated_at` = VALUES(`updated_at`)
 SQL;
 

@@ -31,12 +31,18 @@ sudo apt install mariadb-server
 
 
 アプリ用ユーザー追加
+-- 開発用
 CREATE USER 'hgs'@'localhost' IDENTIFIED BY '';
+CREATE DATABASE hgs3 CHARACTER SET utf8mb4;
+CREATE DATABASE hgs2;
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON `hgs3`.* TO 'hgs'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON `hgs2`.* TO 'hgs'@'localhost';
 
+-- 本番用
+CREATE USER 'hgs'@'localhost' IDENTIFIED BY 'パスワード';
+CREATE DATABASE hgs3 CHARACTER SET utf8mb4;
+GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON `hgs3`.* TO 'hgs'@'localhost';
 
-CREATE DATABASE mysql_test CHARACTER SET utf8mb4;
 exit;
 
 ○ PHP
@@ -76,6 +82,21 @@ chmod 777 -R bootstrap/cache
 php artisan key:generate
 php artisan config:clear
 
+
+○ phpMyAdmin(開発環境のみ)
+
+# sudo apt install phpmyadmin
+# sudo vi /etc/phpmyadmin/config.inc.php
+
+$cfg['Servers'][$i]['AllowNoPassword'] = true;
+
+
+○ アプリ設置
+cd アプリのパス
+# rm composer.lock
+# php composer.phar install
+# php artisan migrate
+# php artisan versionup:database
 
 
 

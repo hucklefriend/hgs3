@@ -1,6 +1,7 @@
 <?php
 namespace Hgs3\Http\Controllers\Game;
 
+use Hgs3\Constants\PhoneticType;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
@@ -13,14 +14,17 @@ class SoftController extends Controller
         $soft = new Soft;
 
         return view('game.soft.list')->with([
-            "list"   => $soft->get_list()
+            'phoneticList' => PhoneticType::getId2CharData(),
+            'list'         => $soft->getList(),
         ]);
     }
 
     public function show(Game $game)
     {
+        $soft = new Soft;
+
         return view('game.soft.detail')->with([
-            'soft' => $game
+            'soft' => $soft->getDetail($game)
         ]);
     }
 
