@@ -20,6 +20,11 @@ Route::get('/game/soft/{game}', 'Game\SoftController@show');
 Route::get('/master', 'Master\TopController@index')->name('master');
 Route::resource('master/game_company', 'Master\GameCompanyController');
 
+
+
+
+Route::post('/auth/logout', 'AuthController@logout');
+
 /*Route::get('/master/game_company', 'Master\GameCompanyController@list')->name('master_game_company_list');
 Route::get('/master/game_company/add', 'Master\GameCompanyController@add')->name('master_add_game_company');
 Route::post('/master/game_company/add', 'Master\GameCompanyController@postAdd')->name('master_post_add_game_company');

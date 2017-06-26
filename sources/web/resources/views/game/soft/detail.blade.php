@@ -4,11 +4,9 @@
     <div class="container">
         <h4>{{ $soft['name'] }}</h4>
 
-
         <nav>
             データ編集 |
         </nav>
-
 
         <div class="row">
             <div class="col-3">メーカー</div>

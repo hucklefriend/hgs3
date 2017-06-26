@@ -16,14 +16,13 @@
     <div class="panel panel-info">
         <div class="panel-heading">メールアドレスでログイン</div>
         <div class="panel-body">
-            <form class="form-horizontal" method="GET" action="{{ route('mypage') }}}">
+            <form class="form-horizontal" method="POST">
                 {{ csrf_field() }}
 
                 <label for="email" class="col-md-4 control-label">メールアドレス</label>
                 <div class="form-group">
                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
                 </div>
-
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     <label for="password" class="col-md-4 control-label">パスワード</label>
