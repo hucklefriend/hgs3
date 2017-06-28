@@ -12,7 +12,9 @@
 */
 
 Route::get('/', 'TopController@index');
-Route::get('/auth/login', 'AuthController@login');
+Route::get('/auth/login', 'Auth\LoginController@login');
+Route::post('/auth/login', 'Auth\LoginController@authenticate');
+Route::get('/auth/logout', 'Auth\LoginController@logout');
 
 Route::get('/game/soft', 'Game\SoftController@index');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
@@ -20,10 +22,15 @@ Route::get('/game/soft/{game}', 'Game\SoftController@show');
 Route::get('/master', 'Master\TopController@index')->name('master');
 Route::resource('master/game_company', 'Master\GameCompanyController');
 
-
-
-
 Route::post('/auth/logout', 'AuthController@logout');
+
+
+
+
+Route::group(['middleware' => ['auth', 'can:admin']], function () {
+    Route::get('/ban_user', 'BanController@user');
+});
+
 
 /*Route::get('/master/game_company', 'Master\GameCompanyController@list')->name('master_game_company_list');
 Route::get('/master/game_company/add', 'Master\GameCompanyController@add')->name('master_add_game_company');

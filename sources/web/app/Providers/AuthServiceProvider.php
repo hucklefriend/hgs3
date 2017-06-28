@@ -25,6 +25,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // 'admin'ゲートを定義
+        Gate::define('admin', function ($user) {
+            return ($user->role == \Hgs3\Constants\UserRole::ADMIN);
+        });
     }
 }
