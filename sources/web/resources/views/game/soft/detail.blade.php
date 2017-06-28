@@ -12,7 +12,7 @@
             <div class="col-3">メーカー</div>
             <div class="col-8">
                 @if($soft['company'] != null)
-                    <a href="">{{ $soft['company']->name }}</a>
+                    <a href="{{ url('game/company') }}/{{ $soft['company']->id }}">{{ $soft['company']->name }}</a>
                 @endif
             </div>
         </div>

@@ -1,43 +1,70 @@
 <?php
 namespace Hgs3\Http\Controllers\Game;
 
-use Hgs3\Constants\PhoneticType;
+use Hgs3\Constants\UserRole;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Company;
+use Hgs3\Models\Orm\GameCompany;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
     public function index()
     {
-        $soft = new Soft;
+        $company = new Company;
 
-        return view('game.soft.list')->with([
-            'phoneticList' => PhoneticType::getId2CharData(),
-            'list'         => $soft->getList(),
+        return view('game.company.list')->with([
+            'companies' => $company->getList()
         ]);
     }
 
-    public function show(Company $company)
+    public function show(GameCompany $gameCompany)
     {
-        return view('game.soft.detail')->with([
-            'soft' => $soft->getDetail($game)
+        $company = new Company;
+
+        return view('game.company.detail')->with([
+            'company' => $gameCompany,
+            'detail'  => $company->getDetail($gameCompany),
+            'isAdmin' => UserRole::isAdmin()
         ]);
     }
 
 
-    public function edit(Game $game)
+    public function create()
     {
-        // TODO: 管理権限のある人のみ
+        return view('game.company.create');
     }
 
-    public function update(Game $game)
+    public function store(Request $request)
     {
-        // TODO: 管理権限のある人のみ
+        $gameCompany = new GameCompany;
+        $gameCompany->name = $request->input('name');
+        $gameCompany->phonetic = $request->input('phonetic');
+        $gameCompany->url = $request->input('url');
+        $gameCompany->wikipedia = $request->input('wikipedia');
+
+        $gameCompany->save();
+
+        return $this->index();
     }
 
-    public function remove(Game $game)
+    public function edit(GameCompany $gameCompany)
     {
-        // TODO: 管理権限のある人のみ
+        return view('game.company.edit')->with([
+            'gameCompany' => $gameCompany
+        ]);
+    }
+
+    public function update(Request $request, GameCompany $gameCompany)
+    {
+        $gameCompany->name = $request->input('name');
+        $gameCompany->phonetic = $request->input('phonetic');
+        $gameCompany->url = $request->input('url');
+        $gameCompany->wikipedia = $request->input('wikipedia');
+
+        $gameCompany->save();
+
+        return $this->edit($gameCompany);
     }
 }

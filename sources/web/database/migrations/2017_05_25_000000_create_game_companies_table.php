@@ -21,6 +21,7 @@ class CreateGameCompaniesTable extends Migration
             $table->string('name', 200)->comment('ゲーム会社名');
             $table->string('phonetic', 200)->comment('ゲーム会社名のよみがな');
             $table->text('url')->nullable()->comment('サイトのURL');
+            $table->text('wikipedia')->nullable()->comment('WikipediaのURL');
             $table->timestamps();
         });
     }
