@@ -17,13 +17,8 @@ Route::post('/auth/login', 'Auth\LoginController@authenticate');
 Route::get('/auth/logout', 'Auth\LoginController@logout');
 
 Route::get('/game/soft', 'Game\SoftController@index');
+Route::get('/game/soft/request', 'Game\SoftController@request')->middleware('auth');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
-
-Route::get('/game/company', 'Game\CompanyController@index');
-Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
-
-Route::get('/master', 'Master\TopController@index')->name('master');
-Route::resource('master/game_company', 'Master\GameCompanyController');
 
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/game/company/create', 'Game\CompanyController@create');
@@ -31,5 +26,8 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
     Route::put('/game/company/{gameCompany}', 'Game\CompanyController@update');
 });
+
+Route::get('/game/company', 'Game\CompanyController@index');
+Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
 
 //Auth::routes();

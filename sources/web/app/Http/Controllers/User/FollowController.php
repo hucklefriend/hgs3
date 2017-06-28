@@ -13,7 +13,7 @@ class FollowController extends Controller
 
     public function follower()
     {
-        \Auth::
+
     }
 
     public function add()

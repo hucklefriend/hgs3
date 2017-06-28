@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <div>
+        <a href="{{ url('game/soft/request') }}">追加リクエスト</a>
+    </div>
+
     <div>
         @foreach ($phoneticList as $phoneticId => $phoneticChar)
             <h4>{{ $phoneticChar }}</h4>

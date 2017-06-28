@@ -4,7 +4,7 @@ namespace Hgs3\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddGameCompanyRequest extends FormRequest
+class UpdateGameCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,7 @@ class AddGameCompanyRequest extends FormRequest
     public function rules()
     {
         return [
+            'id'        => 'required',
             'name'      => 'required|max:100',
             'phonetic'  => 'required|max:100',
             'url'       => 'max:256',

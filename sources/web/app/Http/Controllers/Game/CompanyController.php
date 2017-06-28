@@ -2,6 +2,8 @@
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\UserRole;
+use Hgs3\Http\Requests\AddGameCompanyRequest;
+use Hgs3\Http\Requests\UpdateGameCompanyRequest;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Company;
@@ -36,7 +38,7 @@ class CompanyController extends Controller
         return view('game.company.create');
     }
 
-    public function store(Request $request)
+    public function store(AddGameCompanyRequest $request)
     {
         $gameCompany = new GameCompany;
         $gameCompany->name = $request->input('name');
@@ -56,7 +58,7 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function update(Request $request, GameCompany $gameCompany)
+    public function update(UpdateGameCompanyRequest $request, GameCompany $gameCompany)
     {
         $gameCompany->name = $request->input('name');
         $gameCompany->phonetic = $request->input('phonetic');
