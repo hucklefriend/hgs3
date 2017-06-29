@@ -22,12 +22,14 @@ Route::get('/game/soft/{game}', 'Game\SoftController@show');
 Route::get('/game/request', 'Game\RequestController@index')->middleware('auth');
 Route::get('/game/request/input', 'Game\RequestController@input');
 Route::post('/game/request', 'Game\RequestController@store')->middleware('auth');
+Route::get('/game/request/{gar}', 'Game\RequestController@show');
 
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/game/company/create', 'Game\CompanyController@create');
     Route::post('/game/company', 'Game\CompanyController@store');
     Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
     Route::put('/game/company/{gameCompany}', 'Game\CompanyController@update');
+    Route::get('/game/request/admin/add/{gar}', 'Game\RequestController@adminAdd');
 });
 
 Route::get('/game/company', 'Game\CompanyController@index');

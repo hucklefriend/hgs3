@@ -49,4 +49,13 @@ class RequestController extends Controller
 
         return view('game.request.complete');
     }
+
+    public function show(GameAddRequest $gar)
+    {
+        return view('game.request.detail', [
+            'gar'  => $gar,
+            'user' => User::find($gar->user_id),
+            'isAdmin' => UserRole::isAdmin()
+        ]);
+    }
 }

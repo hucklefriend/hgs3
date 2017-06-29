@@ -12,7 +12,7 @@
             <tr>
                 <td>{{ $r->name }}</td>
                 <td>@if(isset($userHash[$r->user_id])){{ $userHash[$r->user_id] }}@else{{ '匿名' }}@endif</td>
-                <td></td>
+                <td><a href="{{ url('game/request') }}/{{ $r->id }}">詳細</a></td>
             </tr>
         @endforeach
     </table>
