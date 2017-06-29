@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/barryvdh/laravel-ide-helper" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/barryvdh/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/ccampbell/chromephp" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/dnoegel/php-xdg-base-dir" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/doctrine/inflector" />
@@ -85,6 +86,7 @@
         <CLASSES>
           <root url="file://$MODULE_DIR$/sources/web/vendor/barryvdh/laravel-ide-helper" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/barryvdh/reflection-docblock" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/ccampbell/chromephp" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/composer" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/dnoegel/php-xdg-base-dir" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/inflector" />
@@ -150,6 +152,7 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/sources/web/vendor/barryvdh/laravel-ide-helper" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/barryvdh/reflection-docblock" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/ccampbell/chromephp" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/composer" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/dnoegel/php-xdg-base-dir" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/inflector" />

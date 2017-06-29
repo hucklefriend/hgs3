@@ -22,7 +22,7 @@ class Database
         $sql =<<< SQL
 INSERT INTO game_companies
 SELECT
-  id, `name`, '', url, FROM_UNIXTIME(registered_date), FROM_UNIXTIME(updated_date)
+  id, `name`, '', url, '', FROM_UNIXTIME(registered_date), FROM_UNIXTIME(updated_date)
 FROM
   hgs2.hgs_g_company
 ON DUPLICATE KEY UPDATE

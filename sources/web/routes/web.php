@@ -17,8 +17,11 @@ Route::post('/auth/login', 'Auth\LoginController@authenticate');
 Route::get('/auth/logout', 'Auth\LoginController@logout');
 
 Route::get('/game/soft', 'Game\SoftController@index');
-Route::get('/game/soft/request', 'Game\SoftController@request')->middleware('auth');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
+
+Route::get('/game/request', 'Game\RequestController@index')->middleware('auth');
+Route::get('/game/request/input', 'Game\RequestController@input');
+Route::post('/game/request', 'Game\RequestController@store')->middleware('auth');
 
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/game/company/create', 'Game\CompanyController@create');

@@ -32,23 +32,6 @@ class SoftController extends Controller
         ]);
     }
 
-    public function request()
-    {
-        return view('game.soft.request', [
-            'platforms' => GamePlatform::all()
-        ]);
-    }
-
-    public function registerRequest()
-    {
-
-
-
-        return view('game.soft.request39');
-    }
-
-
-
     public function edit(Game $game)
     {
     }

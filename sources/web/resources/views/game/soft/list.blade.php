@@ -3,7 +3,8 @@
 @section('content')
 
     <div>
-        <a href="{{ url('game/soft/request') }}">追加リクエスト</a>
+        <a href="{{ url('game/request/') }}">追加リクエスト</a> |
+        <a href="{{ url('game/request') }}">追加リクエスト一覧</a>
     </div>
 
     <div>

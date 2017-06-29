@@ -4,6 +4,7 @@ namespace Hgs3;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * ユーザー名ハッシュを取得
+     *
+     * @param array $ids
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getNameHash(array $ids = array())
+    {
+        $tbl = DB::table('users');
+
+        if (!empty($ids)) {
+            $tbl->whereIn('id', $ids);
+        }
+
+        return $tbl->get()->pluck('name', 'id')->toArray();
+    }
 }
