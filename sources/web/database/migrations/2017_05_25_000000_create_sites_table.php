@@ -31,6 +31,8 @@ class CreateSitesTable extends Migration
             $table->unsignedInteger('out_count')->comment('OUTカウント');
             $table->unsignedInteger('good_count')->comment('いいね数');
             $table->unsignedInteger('bad_count')->comment('BAD数');
+            $table->unsignedBigInteger('registered_timestamp')->comment('登録日時タイムスタンプ');
+            $table->unsignedBigInteger('updated_timestamp')->comment('最終更新タイムスタンプ');
             $table->timestamps();
         });
     }

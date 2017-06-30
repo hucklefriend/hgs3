@@ -2,7 +2,7 @@
 
 namespace Hgs3\Constants;
 
-class SoftRequestStatus
+class GameRequestStatus
 {
     const NOT_DOING_ANYTHING = 0;   // 何もしていない
     const LOOKED = 1;               // 見ただけ
@@ -23,5 +23,10 @@ class SoftRequestStatus
     public static function getText($id)
     {
         return self::$text[$id];
+    }
+
+    public static function getSelectOptions()
+    {
+        return self::$text;
     }
 }

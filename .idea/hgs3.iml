@@ -16,6 +16,7 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-highlighter" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/laravel/framework" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/laravel/tinker" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/laravelcollective/html" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/monolog/monolog" />
@@ -98,6 +99,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-highlighter" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/framework" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/tinker" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/laravelcollective/html" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/league/flysystem" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/mockery/mockery" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/monolog/monolog" />
@@ -164,6 +166,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-highlighter" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/framework" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/tinker" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/laravelcollective/html" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/league/flysystem" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/mockery/mockery" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/monolog/monolog" />

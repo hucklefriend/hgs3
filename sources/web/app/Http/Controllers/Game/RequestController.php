@@ -5,11 +5,10 @@ use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
 use Hgs3\Models\Orm\GameAddRequest;
 use Hgs3\Models\Orm\GamePlatform;
+use Hgs3\Models\Orm\GameUpdateRequest;
 use Hgs3\User;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Game\Soft;
-use Hgs3\Models\Orm\Game;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,8 +18,6 @@ class RequestController extends Controller
     {
         $req = GameAddRequest::orderBy('id', 'desc')->paginate(30);
         $userHash = User::getNameHash(Arr::pluck($req, 'user_id'));
-
-        \ChromePhp::log($userHash);
 
         return view('game.request.list')->with([
             'list' => $req,

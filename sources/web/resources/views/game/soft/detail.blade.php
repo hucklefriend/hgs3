@@ -5,7 +5,10 @@
         <h4>{{ $soft['name'] }}</h4>
 
         <nav>
-            データ編集 |
+            <a href="{{ url('game/request/input/edit') }}/{{ $soft['id'] }}">データ編集リクエスト</a> |
+            <a href="{{ url('game/soft/edit') }}">データ編集リクエスト一覧</a> |
+            <a href="{{ url('game/soft/edit') }}/{{ $soft['id'] }}">データ編集</a> |
+            <a href="{{ url('game/soft') }}">一覧へ</a>
         </nav>
 
         <div class="row">
