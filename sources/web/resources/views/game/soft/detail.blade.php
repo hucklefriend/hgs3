@@ -20,6 +20,22 @@
             </div>
         </div>
 
+
+        <h5>コメント</h5>
+        <div>
+            @foreach ($soft['comments'] as $comment)
+                <div>
+                    <p>{{ $comment->user_name }} says 「{{ $comment->comment }}」</p>
+                </div>
+            @endforeach
+        </div>
+
+        <form method="POST" action="{{ url('game/soft/comment') }}/{{ $soft['id'] }}">
+            {{ csrf_field() }}
+            <textarea class="form-control" name="comment"></textarea>
+            <button class="btn btn-default" type="submit">投稿</button>
+        </form>
+
         <h5>パッケージ</h5>
         @foreach ($soft['packages'] as $pkg)
         <div class="row">

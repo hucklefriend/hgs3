@@ -18,7 +18,7 @@ class CreateGameAddRequestsTable extends Migration
     {
         Schema::create('game_add_requests', function (Blueprint $table) {
             $table->increments('id')->comment('仮登録ID');
-            $table->increments('parent_id')->nullable()->index()->comment('親の仮登録ID');
+            $table->unsignedInteger('parent_id')->nullable()->index()->comment('親の仮登録ID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->string('name', 200)->nullable()->comment('名称');
             $table->string('url', 200)->nullable()->comment('公式サイトURL');

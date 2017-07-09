@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSiteHandleGamesTable extends Migration
+class CreateSiteSearchIndicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateSiteHandleGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('site_handle_games', function (Blueprint $table) {
+        Schema::create('site_search_indices', function (Blueprint $table) {
             $table->unsignedInteger('site_id')->comment('サイトID');
             $table->unsignedInteger('game_id')->comment('ゲームソフトID');
             $table->unsignedTinyInteger('main_contents')->comment('メインコンテンツ');
@@ -34,6 +34,6 @@ class CreateSiteHandleGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('site_handle_games');
+        Schema::dropIfExists('site_search_indices');
     }
 }

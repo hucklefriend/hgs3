@@ -3,6 +3,7 @@ namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
+use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GameAddRequest;
 use Hgs3\Models\Orm\GamePlatform;
 use Hgs3\Models\Orm\GameUpdateRequest;

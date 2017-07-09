@@ -47,7 +47,28 @@ class Soft
         // パッケージ情報
         $data['packages'] = $this->getDetailPackages($game->id);
 
+        // コメント
+        $data['comments'] = $this->getComment($game->id);
+
         return $data;
+    }
+
+    private function getComment($gameId)
+    {
+        $sql =<<< SQL
+SELECT
+  com.*
+  , users.name AS user_name
+FROM (
+    SELECT id, user_id, type, comment, created_at
+    FROM game_comments
+    WHERE game_id = ?
+    ORDER BY id DESC
+    LIMIT 5
+  ) com LEFT OUTER JOIN users ON com.user_id = users.id
+SQL;
+
+        return DB::select($sql, [$gameId]);
     }
 
     private function getDetailSeries($gameId, $seriesId)

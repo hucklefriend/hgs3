@@ -17,6 +17,7 @@ Route::post('/auth/login', 'Auth\LoginController@authenticate');
 Route::get('/auth/logout', 'Auth\LoginController@logout');
 
 Route::get('/game/soft', 'Game\SoftController@index');
+Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
 Route::get('/game/request', 'Game\RequestController@index')->middleware('auth');

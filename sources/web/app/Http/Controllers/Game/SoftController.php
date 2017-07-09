@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm\Game;
+use Illuminate\Support\Facades\Auth;
 
 class SoftController extends Controller
 {
@@ -25,17 +26,29 @@ class SoftController extends Controller
     public function show(Game $game)
     {
         $soft = new Soft;
-        $comments = GameComment::where('game_id')
-            ->orderBy('id', 'DESC')
-            ->take(10)
-            ->get();
 
         return view('game.soft.detail')->with([
             'soft' => $soft->getDetail($game),
-            'comments' => $comments,
             'isUser' => UserRole::isUser(),
             'isAdmin' => UserRole::isAdmin(),
         ]);
+    }
+
+    public function comment(Game $game)
+    {
+
+    }
+
+    public function writeComment(Request $req, Game $game)
+    {
+        $comment = new GameComment;
+        $comment->game_id = $game->id;
+        $comment->user_id = Auth::id();
+        $comment->type = intval($req->input('type', 0));
+        $comment->comment = $req->input('comment', '');
+
+        $comment->save();
+        return redirect()->back();
     }
 
     public function edit(Game $game)
