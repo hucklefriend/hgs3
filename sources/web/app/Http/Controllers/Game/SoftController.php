@@ -51,6 +51,11 @@ class SoftController extends Controller
         return redirect()->back();
     }
 
+    public function showAddForm()
+    {
+        return view('game.soft.add');
+    }
+
     public function edit(Game $game)
     {
     }
