@@ -36,6 +36,7 @@ Route::get('/site/show/{site}', 'Site\SearchController@show');
 
 
 Route::get('/site/manage', 'Site\ManageController@index')->middleware('auth');
+Route::get('/site/manage/add', 'Site\ManageController@add')->middleware('auth');
 Route::get('/site/manage/edit/{site}', 'Site\ManageController@edit')->middleware('auth');
 
 Route::group(['middleware' => ['auth', 'can:admin']], function () {

@@ -4,6 +4,7 @@ namespace Hgs3\Http\Controllers\Site;
 
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm\Site;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,11 @@ class ManageController extends Controller
 
     public function add()
     {
+        $soft = new Soft;
 
+        return view('site.manage.add', [
+            'games' => $soft->getList()
+        ]);
     }
 
     public function store()
