@@ -21,9 +21,12 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
 
     Route::get('/game/soft/edit/{game}', 'Game\SoftController@edit');
     Route::patch('/game/soft/edit/{game}', 'Game\SoftController@update');
-    Route::post('/game/soft/package/{game}', 'Game\SoftController@show');
-    Route::patch('/game/soft/package/{game}', 'Game\SoftController@show');
-    Route::delete('/game/soft/package/{game}/{package}', 'Game\SoftController@show');
+
+    Route::get('/game/package/add/{game}', 'Game\PackageController@add');
+    Route::post('/game/package/add/{game}', 'Game\PackageController@store');
+    Route::get('/game/package/edit/{game}/{pkg}', 'Game\PackageController@edit');
+    Route::patch('/game/package/edit/{game}/{pkg}', 'Game\PackageController@update');
+    Route::delete('/game/package/{game}/{pkg}', 'Game\SoftController@remove');
 });
 
 Route::get('/', 'TopController@index');

@@ -58,3 +58,16 @@ function game_type_select($gameType, $params = [])
         ]
     );
 }
+
+function platform_select($platformId, $params = [])
+{
+    return Form::select(
+        $params['name'] ?? 'platform_id',
+        array_pluck(\Hgs3\Models\Orm\GamePlatform::all(['id', 'name']), 'name', 'id'),
+        $platformId,
+        [
+            'class' => 'form-control',
+            'id'    => $params['id'] ?? 'platform_id'
+        ]
+    );
+}
