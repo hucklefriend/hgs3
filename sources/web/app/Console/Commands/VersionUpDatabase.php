@@ -39,6 +39,6 @@ class VersionUpDatabase extends Command
     public function handle()
     {
         $db = new Database;
-        $db->version_up();
+        $db->versionUp();
     }
 }

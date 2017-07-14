@@ -26,4 +26,9 @@ class Company
 
         return $data;
     }
+
+    public static function getSelectItems($withEmpty)
+    {
+
+    }
 }

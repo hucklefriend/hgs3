@@ -11,6 +11,21 @@
 |
 */
 
+// 管理者のみ
+Route::group(['middleware' => ['auth', 'can:admin']], function () {
+    Route::get('/game/company/create', 'Game\CompanyController@create');
+    Route::post('/game/company', 'Game\CompanyController@store');
+    Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
+    Route::put('/game/company/{gameCompany}', 'Game\CompanyController@update');
+    Route::get('/game/request/admin/add/{gar}', 'Game\RequestController@adminAdd');
+
+    Route::get('/game/soft/edit/{game}', 'Game\SoftController@edit');
+    Route::patch('/game/soft/edit/{game}', 'Game\SoftController@update');
+    Route::post('/game/soft/package/{game}', 'Game\SoftController@show');
+    Route::patch('/game/soft/package/{game}', 'Game\SoftController@show');
+    Route::delete('/game/soft/package/{game}/{package}', 'Game\SoftController@show');
+});
+
 Route::get('/', 'TopController@index');
 Route::get('/auth/login', 'Auth\LoginController@login')->name('login');
 Route::post('/auth/login', 'Auth\LoginController@authenticate');
@@ -39,13 +54,6 @@ Route::get('/site/manage', 'Site\ManageController@index')->middleware('auth');
 Route::get('/site/manage/add', 'Site\ManageController@add')->middleware('auth');
 Route::get('/site/manage/edit/{site}', 'Site\ManageController@edit')->middleware('auth');
 
-Route::group(['middleware' => ['auth', 'can:admin']], function () {
-    Route::get('/game/company/create', 'Game\CompanyController@create');
-    Route::post('/game/company', 'Game\CompanyController@store');
-    Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
-    Route::put('/game/company/{gameCompany}', 'Game\CompanyController@update');
-    Route::get('/game/request/admin/add/{gar}', 'Game\RequestController@adminAdd');
-});
 
 Route::get('/game/company', 'Game\CompanyController@index');
 Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');

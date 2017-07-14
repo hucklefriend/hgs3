@@ -24,7 +24,10 @@
         "psr-4": {
             "Hgs3\\": "app/",
             "Collective\\Html\\": "src/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

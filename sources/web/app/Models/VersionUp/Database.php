@@ -5,19 +5,21 @@ use Illuminate\Support\Facades\DB;
 
 class Database
 {
-    public function version_up()
+    public function versionUp()
     {
-        $this->copy_company();
-        $this->copy_platform();
-        $this->copy_series();
-        $this->copy_soft();
-        $this->copy_package();
+        $this->copyCompany();
+        $this->copyPlatform();
+        $this->copySeries();
+        $this->copySoft();
+        $this->copyPackage();
+
+        $this->changeGameType();
     }
 
     /**
      * 会社マスターをコピー
      */
-    private function copy_company()
+    private function copyCompany()
     {
         $sql =<<< SQL
 INSERT INTO game_companies
@@ -38,7 +40,7 @@ SQL;
     /**
      * プラットフォームをコピー
      */
-    private function copy_platform()
+    private function copyPlatform()
     {
         $sql =<<< SQL
 INSERT INTO game_platforms
@@ -60,7 +62,7 @@ SQL;
     /**
      * シリーズをコピー
      */
-    private function copy_series()
+    private function copySeries()
     {
         $sql =<<< SQL
 INSERT INTO game_series
@@ -77,7 +79,7 @@ SQL;
         DB::insert($sql);
     }
 
-    private function copy_soft()
+    private function copySoft()
     {
         $sql =<<< SQL
 INSERT INTO games
@@ -102,7 +104,7 @@ SQL;
         DB::insert($sql);
     }
 
-    private function copy_package()
+    private function copyPackage()
     {
         $sql =<<< SQL
 INSERT INTO game_packages
@@ -142,5 +144,11 @@ ON DUPLICATE KEY UPDATE
 SQL;
 
         DB::insert($sql);
+    }
+
+    public function changeGameType()
+    {
+        // game_typeの2と5を統合する
+        DB::update('UPDATE games SET game_type = 2 WHERE game_type = 5');
     }
 }
