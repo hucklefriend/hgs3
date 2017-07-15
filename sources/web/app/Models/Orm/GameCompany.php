@@ -5,5 +5,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class GameCompany extends Model
 {
-    //
+
 }

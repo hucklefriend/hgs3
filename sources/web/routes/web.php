@@ -11,6 +11,24 @@
 |
 */
 
+// 管理者のみ
+Route::group(['middleware' => ['auth', 'can:admin']], function () {
+    Route::get('/game/company/create', 'Game\CompanyController@create');
+    Route::post('/game/company', 'Game\CompanyController@store');
+    Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
+    Route::put('/game/company/{gameCompany}', 'Game\CompanyController@update');
+    Route::get('/game/request/admin/add/{gar}', 'Game\RequestController@adminAdd');
+
+    Route::get('/game/soft/edit/{game}', 'Game\SoftController@edit');
+    Route::patch('/game/soft/edit/{game}', 'Game\SoftController@update');
+
+    Route::get('/game/package/add/{game}', 'Game\PackageController@add');
+    Route::post('/game/package/add/{game}', 'Game\PackageController@store');
+    Route::get('/game/package/edit/{game}/{pkg}', 'Game\PackageController@edit');
+    Route::patch('/game/package/edit/{game}/{pkg}', 'Game\PackageController@update');
+    Route::delete('/game/package/{game}/{pkg}', 'Game\SoftController@remove');
+});
+
 Route::get('/', 'TopController@index');
 Route::get('/auth/login', 'Auth\LoginController@login')->name('login');
 Route::post('/auth/login', 'Auth\LoginController@authenticate');
@@ -18,6 +36,7 @@ Route::get('/auth/logout', 'Auth\LoginController@logout');
 
 Route::get('/game/soft', 'Game\SoftController@index');
 Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');
+Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
 Route::get('/game/request', 'Game\RequestController@index')->middleware('auth');
 Route::get('/game/request/input', 'Game\RequestController@input');
@@ -35,22 +54,11 @@ Route::get('/site/show/{site}', 'Site\SearchController@show');
 
 
 Route::get('/site/manage', 'Site\ManageController@index')->middleware('auth');
+Route::get('/site/manage/add', 'Site\ManageController@add')->middleware('auth');
 Route::get('/site/manage/edit/{site}', 'Site\ManageController@edit')->middleware('auth');
 
-Route::group(['middleware' => ['auth', 'can:admin']], function () {
-    Route::get('/game/company/create', 'Game\CompanyController@create');
-    Route::post('/game/company', 'Game\CompanyController@store');
-    Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
-    Route::put('/game/company/{gameCompany}', 'Game\CompanyController@update');
-    Route::get('/game/request/admin/add/{gar}', 'Game\RequestController@adminAdd');
-    Route::get('/game/soft/add', 'Game\SoftController@showAddForm');
-    Route::post('/game/soft/add', 'Game\SoftController@add');
-});
 
 Route::get('/game/company', 'Game\CompanyController@index');
 Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
-
-
-Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
 //Auth::routes();

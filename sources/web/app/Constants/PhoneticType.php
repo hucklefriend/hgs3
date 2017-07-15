@@ -49,4 +49,30 @@ class PhoneticType
     {
         return self::$id2Char[$type];
     }
+
+    public static function getTypeByPhonetic($phonetic)
+    {
+        $txt = [
+            1  => '[あ-お]',
+            2  => '[か-こが-ご]',
+            3  => '[さ-そざ-ぞ]',
+            4  => '[た-とだ-ど]',
+            5  => '[な-の]',
+            6  => '[は-ほば-ぼぱ-ぽ]',
+            7  => '[ま-も]',
+            8  => '[や-よ]',
+            9  => '[ら-ろ]',
+            10 => '[わ-ん]'
+        ];
+
+        $result = array();
+
+        foreach ($txt as $phoneticType => $pattern) {
+            if (preg_match('/^' . $pattern . '/u', $phonetic)) {
+                return $phoneticType;
+            }
+        }
+
+        return 0;
+    }
 }

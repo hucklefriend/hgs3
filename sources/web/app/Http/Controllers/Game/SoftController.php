@@ -3,6 +3,8 @@ namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
+use Hgs3\Http\Requests\Game\Soft\AddPackageRequest;
+use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
 use Hgs3\Models\Orm\GamePlatform;
 use Illuminate\Http\Request;
@@ -58,10 +60,41 @@ class SoftController extends Controller
 
     public function edit(Game $game)
     {
+        return view('game.soft.edit')->with([
+            'game' => $game
+        ]);
     }
 
-    public function update(Game $game)
+    public function update(UpdateRequest $request, Game $game)
     {
+        $game->name = $request->get('name');
+        $game->phonetic = $request->get('phonetic', '');
+        $game->phonetic_type = PhoneticType::getTypeByPhonetic($game->phonetic);
+        $game->phonetic_order = $request->get('phonetic_order');
+        $game->genre = $request->get('genre') ?? '';
+        $game->company_id = $request->get('company_id');
+        $game->series_id = $request->get('series_id');
+        $game->order_in_series = $request->get('order_in_series');
+        $game->game_type = $request->get('game_type');
+
+        $game->save();
+
+        return redirect('game/soft/' . $game->id);
+    }
+
+    public function addPackage(Game $game)
+    {
+
+    }
+
+    public function storePackage(AddPackageRequest $request, Game $game)
+    {
+
+    }
+
+    public function editPackage()
+    {
+
     }
 
     public function remove(Game $game)

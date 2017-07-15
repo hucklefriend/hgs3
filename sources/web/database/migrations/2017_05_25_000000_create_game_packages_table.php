@@ -22,10 +22,10 @@ class CreateGamePackagesTable extends Migration
             $table->unsignedInteger('platform_id')->index()->comment('プラットフォームID');
             $table->unsignedInteger('company_id')->nullable()->index()->comment('ゲーム会社ID');
             $table->string('name', 200)->comment('パッケージ名称');
-            $table->text('url')->comment('公式サイトURL');
-            $table->string('release_date', 100)->comment('発売日');
+            $table->text('url')->nullable()->comment('公式サイトURL');
+            $table->string('release_date', 100)->nullable()->comment('発売日');
             $table->unsignedInteger('release_int')->comment('発売日（ソート用の数値）');
-            $table->unsignedTinyInteger('game_type_id')->comment('発売日（ソート用の数値）');
+            $table->unsignedTinyInteger('game_type_id')->comment('ゲーム区分');
             $table->string('asin', 200)->nullable()->comment('ASIN');
             $table->text('item_url')->nullable()->comment('amazonのURL');
             $table->text('small_image_url')->nullable()->comment('amazonの小画像URL');
