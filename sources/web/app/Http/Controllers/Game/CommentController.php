@@ -27,6 +27,11 @@ class CommentController extends Controller
         ]);
     }
 
+    public function add()
+    {
+
+    }
+
     public function edit(Game $game)
     {
     }

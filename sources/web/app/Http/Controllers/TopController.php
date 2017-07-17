@@ -8,13 +8,6 @@ class TopController extends Controller
 {
     public function index()
     {
-/*
-        \Hgs3\User::create([
-            'name'     => 'huckle',
-            'email'    => 'yuuki@horrorgame.net',
-            'password' => bcrypt('huckle'),
-        ]);
-*/
         return view('top', [
             'isLogin' => Auth::check()
         ]);

@@ -14,6 +14,14 @@ class Database
         $this->copyPackage();
 
         $this->changeGameType();
+
+        // TODO: パスワードを変更する
+        \Hgs3\User::create([
+            'name'     => 'huckle',
+            'email'    => 'yuuki@horrorgame.net',
+            'password' => bcrypt('huckle'),
+            'role'     => 100
+        ]);
     }
 
     /**
