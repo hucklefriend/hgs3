@@ -1,4 +1,7 @@
 <?php
+/**
+ * ORM: game_series
+ */
 
 namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;

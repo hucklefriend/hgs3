@@ -22,12 +22,15 @@ class CreateReviewsTable extends Migration
             $table->unsignedInteger('game_id')->index()->comment('ゲームソフトID');
             $table->unsignedInteger('package_id')->index()->comment('パッケージID');
             $table->unsignedSmallInteger('play_time')->comment('プレイ時間');
+            $table->string('title', 200)->comment('一言');
+            $table->unsignedTinyInteger('point')->comment('ポイント');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
             $table->unsignedTinyInteger('story')->comment('シナリオ');
             $table->unsignedTinyInteger('volume')->comment('ボリューム');
             $table->unsignedTinyInteger('difficulty')->comment('難易度');
+            $table->unsignedTinyInteger('graphic')->comment('グラフィック');
             $table->unsignedTinyInteger('sound')->comment('サウンド');
-            $table->unsignedTinyInteger('crowded')->comment('');
+            $table->unsignedTinyInteger('crowded')->comment('やりこみ');
             $table->unsignedTinyInteger('controllability')->comment('操作性');
             $table->unsignedTinyInteger('recommend')->comment('オススメ度');
             $table->text('thoughts')->comment('感想');

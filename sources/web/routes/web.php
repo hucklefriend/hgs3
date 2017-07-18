@@ -48,6 +48,16 @@ Route::get('/game/request/input/edit/{game}', 'Game\RequestController@inputEdit'
 Route::post('/game/request/input/edit/{game}', 'Game\RequestController@storeUpdate');
 Route::get('/game/request/{gar}', 'Game\RequestController@show');
 
+// レビュー
+Route::get('/game/review/all', 'Game\ReviewController@index');
+Route::post('/game/review/input', 'Game\ReviewController@postInput');
+Route::get('/game/review/input/{game}', 'Game\ReviewController@input');
+Route::get('/game/review/all', 'Game\ReviewController@index');
+Route::get('/game/review/soft/{game}', 'Game\ReviewController@soft');
+Route::get('/game/review/good/{review}', 'Game\ReviewController@good');
+Route::get('/game/review/bad/{review}', 'Game\ReviewController@bad');
+Route::get('/game/review/detail/{review}', 'Game\ReviewController@bad');
+
 
 Route::get('/site', 'Site\SearchController@index');
 Route::get('/site/show/{site}', 'Site\SearchController@show');

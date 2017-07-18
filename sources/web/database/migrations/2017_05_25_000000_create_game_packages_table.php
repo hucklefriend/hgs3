@@ -22,6 +22,7 @@ class CreateGamePackagesTable extends Migration
             $table->unsignedInteger('platform_id')->index()->comment('プラットフォームID');
             $table->unsignedInteger('company_id')->nullable()->index()->comment('ゲーム会社ID');
             $table->string('name', 200)->comment('パッケージ名称');
+            $table->string('acronym', 100)->comment('略称');
             $table->text('url')->nullable()->comment('公式サイトURL');
             $table->string('release_date', 100)->nullable()->comment('発売日');
             $table->unsignedInteger('release_int')->comment('発売日（ソート用の数値）');

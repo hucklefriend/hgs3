@@ -1,15 +1,24 @@
 <?php
+/**
+ * ゲームソフトモデル
+ */
 
 namespace Hgs3\Models\Game;
 
 use Hgs3\Models\Orm\GameCompany;
 use Hgs3\Models\Orm\GamePackage;
+use Hgs3\Models\Orm\ReviewTotal;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GameSeries;
 
 class Soft
 {
+    /**
+     * 一覧用データ取得
+     *
+     * @return array
+     */
     public function getList()
     {
         $tmp = DB::table('games')
@@ -26,9 +35,16 @@ class Soft
         return $result;
     }
 
+    /**
+     * 詳細データ取得
+     *
+     * @param Game $game
+     * @return array
+     */
     public function getDetail(Game $game)
     {
-        $data = $game->toArray();
+        $data = [];
+        $data['game'] = $game;
 
         // シリーズ
         if ($game->series_id != null) {
@@ -50,9 +66,18 @@ class Soft
         // コメント
         $data['comments'] = $this->getComment($game->id);
 
+        // レビュー
+        $data['review'] = ReviewTotal::find($game->id);
+
         return $data;
     }
 
+    /**
+     * コメント取得
+     *
+     * @param $gameId
+     * @return array
+     */
     private function getComment($gameId)
     {
         $sql =<<< SQL
@@ -71,6 +96,13 @@ SQL;
         return DB::select($sql, [$gameId]);
     }
 
+    /**
+     * 同一シリーズのソフトを取得
+     *
+     * @param $gameId
+     * @param $seriesId
+     * @return array
+     */
     private function getDetailSeries($gameId, $seriesId)
     {
         $series = GameSeries::find($seriesId);
@@ -87,6 +119,12 @@ SQL;
         return $data;
     }
 
+    /**
+     * パッケージの一覧を取得
+     *
+     * @param $gameId
+     * @return array
+     */
     private function getDetailPackages($gameId)
     {
         $sql =<<< SQL
@@ -100,6 +138,12 @@ SQL;
         return DB::select($sql, [$gameId]);
     }
 
+    /**
+     * ソフト名のハッシュを取得
+     *
+     * @param array $ids
+     * @return array
+     */
     public static function getNameHash(array $ids = array())
     {
         $tbl = DB::table('games');

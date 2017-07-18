@@ -1,12 +1,14 @@
 <?php
+/**
+ * ゲームソフトコントローラー
+ */
+
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
-use Hgs3\Http\Requests\Game\Soft\AddPackageRequest;
 use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
-use Hgs3\Models\Orm\GamePlatform;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
@@ -15,6 +17,9 @@ use Illuminate\Support\Facades\Auth;
 
 class SoftController extends Controller
 {
+    /**
+     * 一覧ページ
+     */
     public function index()
     {
         $soft = new Soft;
@@ -25,15 +30,20 @@ class SoftController extends Controller
         ]);
     }
 
+    /**
+     * 詳細ページ
+     *
+     * @param Game $game
+     */
     public function show(Game $game)
     {
         $soft = new Soft;
+        $data = $soft->getDetail($game);
 
-        return view('game.soft.detail')->with([
-            'soft' => $soft->getDetail($game),
-            'isUser' => UserRole::isUser(),
-            'isAdmin' => UserRole::isAdmin(),
-        ]);
+        $data['isUser'] = UserRole::isUser();
+        $data['isAdmin'] = UserRole::isAdmin();
+
+        return view('game.soft.detail')->with($data);
     }
 
     public function comment(Game $game)
@@ -80,24 +90,5 @@ class SoftController extends Controller
         $game->save();
 
         return redirect('game/soft/' . $game->id);
-    }
-
-    public function addPackage(Game $game)
-    {
-
-    }
-
-    public function storePackage(AddPackageRequest $request, Game $game)
-    {
-
-    }
-
-    public function editPackage()
-    {
-
-    }
-
-    public function remove(Game $game)
-    {
     }
 }
