@@ -151,4 +151,12 @@ class ReviewController extends Controller
     {
 
     }
+
+    public function show(Game $game, \Hgs3\Models\Orm\Review $review)
+    {
+        return view('game.review.detail')->with([
+            'game'   => $game,
+            'review' => $review
+        ]);
+    }
 }

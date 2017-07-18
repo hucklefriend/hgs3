@@ -25,9 +25,9 @@ class Review
         $sql =<<< SQL
 SELECT
   reviews.*
-  , users.name
+  , users.name AS user_name
 FROM (
-    SELECT id, point, user_id
+    SELECT id, point, user_id, post_date, title
     FROM reviews
     WHERE game_id = ?
     ORDER BY id DESC
@@ -86,6 +86,7 @@ SQL;
             // 統計
             ReviewTotal::calculate($orm->game_id);
 
+            // 下書き削除
             DB::table('review_drafts')
                 ->where('user_id', $orm->user_id)
                 ->where('game_id', $orm->game_id)

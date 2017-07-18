@@ -48,13 +48,22 @@
                 レビューは投稿されていません
             @endif
         </div>
-        <div>
-            <a href="{{ url('game/review/soft') }}/{{ $game->id }}">レビュー一覧へ</a>
-        </div>
     </section>
 
-    <section>
-
+    <section style="margin-top: 30px;">
+        @foreach ($reviews as $r)
+            <div class="row">
+                <div class="col-1 text-center" style="font-size: 30px;">{{ $r->point }}</div>
+                <div class="col-11">
+                    <h5><a href="{{ url('game/review/detail') }}/{{ $game->id }}/{{ $r->id }}">{{ $r->title }}</a></h5>
+                    <div>{{ $r->user_name }} {{ $r->post_date }}</div>
+                </div>
+            </div>
+            <hr>
+        @endforeach
     </section>
 
+    <div>
+        <a href="{{ url('game/review/soft') }}/{{ $game->id }}">レビュー一覧へ</a>
+    </div>
 @endsection
