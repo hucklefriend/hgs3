@@ -20,7 +20,7 @@ class CreateReviewsTable extends Migration
             $table->increments('id')->comment('レビューID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->unsignedInteger('game_id')->index()->comment('ゲームソフトID');
-            $table->unsignedInteger('package_id')->index()->comment('パッケージID');
+            $table->text('package_id')->comment('パッケージID');
             $table->unsignedSmallInteger('play_time')->comment('プレイ時間');
             $table->string('title', 200)->comment('一言');
             $table->unsignedTinyInteger('point')->comment('ポイント');
@@ -35,10 +35,10 @@ class CreateReviewsTable extends Migration
             $table->unsignedTinyInteger('recommend')->comment('オススメ度');
             $table->text('thoughts')->comment('感想');
             $table->text('recommendatory')->comment('オススメ');
-            $table->integer('sort_order')->comment('ソート順');
-            $table->unsignedInteger('good_num')->comment('いいね数');
+            $table->integer('sort_order')->default(0)->comment('ソート順');
+            $table->unsignedInteger('good_num')->default(0)->comment('いいね数');
             $table->dateTime('post_date')->comment('投稿日時');
-            $table->unsignedInteger('update_num')->comment('更新回数');
+            $table->unsignedInteger('update_num')->default(0)->comment('更新回数');
             $table->timestamps();
         });
     }

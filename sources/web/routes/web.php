@@ -50,13 +50,14 @@ Route::get('/game/request/{gar}', 'Game\RequestController@show');
 
 // レビュー
 Route::get('/game/review/all', 'Game\ReviewController@index');
-Route::post('/game/review/input', 'Game\ReviewController@postInput');
-Route::get('/game/review/input/{game}', 'Game\ReviewController@input');
-Route::get('/game/review/all', 'Game\ReviewController@index');
+Route::post('/game/review/input', 'Game\ReviewController@postInput')->middleware('auth');
+Route::get('/game/review/input/{game}', 'Game\ReviewController@input')->middleware('auth');
+Route::get('/game/review/confirm/{game}', 'Game\ReviewController@confirm')->middleware('auth');
+Route::post('/game/review/save/{game}', 'Game\ReviewController@save')->middleware('auth');
 Route::get('/game/review/soft/{game}', 'Game\ReviewController@soft');
-Route::get('/game/review/good/{review}', 'Game\ReviewController@good');
-Route::get('/game/review/bad/{review}', 'Game\ReviewController@bad');
-Route::get('/game/review/detail/{review}', 'Game\ReviewController@bad');
+Route::get('/game/review/good/{review}', 'Game\ReviewController@good')->middleware('auth');
+Route::get('/game/review/bad/{review}', 'Game\ReviewController@bad')->middleware('auth');
+Route::get('/game/review/detail/{review}', 'Game\ReviewController@show');
 
 
 Route::get('/site', 'Site\SearchController@index');

@@ -277,27 +277,27 @@
             <div class="col-10">
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend1" value="1" @if ($review->crowded == 1) checked @endif> 1
+                        <input class="form-check-input" type="radio" name="recommend" id="recommend1" value="1" @if ($review->recommend == 1) checked @endif> 1
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend2" value="2" @if ($review->crowded == 2) checked @endif> 2
+                        <input class="form-check-input" type="radio" name="recommend" id="recommend2" value="2" @if ($review->recommend == 2) checked @endif> 2
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend3" value="3" @if ($review->crowded == 3) checked @endif> 3
+                        <input class="form-check-input" type="radio" name="recommend" id="recommend3" value="3" @if ($review->recommend == 3) checked @endif> 3
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend4" value="4" @if ($review->crowded == 4) checked @endif> 4
+                        <input class="form-check-input" type="radio" name="recommend" id="recommend4" value="4" @if ($review->recommend == 4) checked @endif> 4
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend5" value="5" @if ($review->crowded == 5) checked @endif> 5
+                        <input class="form-check-input" type="radio" name="recommend" id="recommend5" value="5" @if ($review->recommend == 5) checked @endif> 5
                     </label>
                 </div>
             </div>

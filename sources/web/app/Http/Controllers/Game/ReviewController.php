@@ -62,55 +62,47 @@ class ReviewController extends Controller
         if ($request->get('draft') == 1) {
             return $this->saveDraft($request);
         } else {
-            return redirect('game/review/comfirm')->withInput();
+            return redirect('game/review/confirm/' . $request->get('game_id', 0))->withInput();
         }
     }
 
     /**
-     * 保存
+     * 確認
      *
      * @param Game $game
      */
-    public function confirm(InputRequest $request)
+    public function confirm(Game $game)
     {
-        
-        return view('game.review.complete')->with([
+        return view('game.review.confirm')->with([
+            'game' => $game,
         ]);
     }
 
     /**
      * 保存
      *
+     * @param InputRequest $request
      * @param Game $game
      */
-    public function save(InputRequest $request)
+    public function save(InputRequest $request, Game $game)
     {
-        $review = new \Hgs3\Models\Orm\Review;
-        
-        $review->user_id = \Auth::id();
-        $review->game_id = $request->get('game_id');
-        $review->package_id = '';
-        $review->play_time = $request->get('play_time') ?? 0;
-        $review->title = $request->get('title') ?? '';
-        $review->fear = $request->get('fear') ?? 0;
-        $review->story = $request->get('story') ?? 0;
-        $review->volume = $request->get('volume') ?? 0;
-        $review->difficulty = $request->get('difficulty') ?? 0;
-        $review->graphic = $request->get('graphic') ?? 0;
-        $review->sound = $request->get('sound') ?? 0;
-        $review->crowded = $request->get('crowded') ?? 0;
-        $review->controllability = $request->get('controllability') ?? 0;
-        $review->recommend = $request->get('recommend') ?? 0;
-        $review->thoughts = $request->get('thoughts') ?? '';
-        $review->recommendatory = $request->get('recommendatory') ?? '';
-        $review->save();
+        if ($request->get('draft') == 1) {
+            return $this->saveDraft($request);
+        } else {
+            $review = new Review();
+            $result = $review->save($request);
 
-        return view('game.review.complete')->with([
-        ]);
+            return view('game.review.complete')->with([
+                'reviewId' => $result,
+                'game'     => $game
+            ]);
+        }
     }
 
     /**
      * 下書き保存
+     *
+     * @param InputRequest $request
      */
     public function saveDraft(InputRequest $request)
     {
@@ -130,7 +122,7 @@ class ReviewController extends Controller
         $draft->game_id = $request->get('game_id');
         $draft->package_id = '';
         $draft->play_time = $request->get('play_time') ?? 0;
-        $draft->title = $request->get('play_time') ?? '';
+        $draft->title = $request->get('title') ?? '';
         $draft->point = 0;
         $draft->fear = $request->get('fear') ?? 0;
         $draft->story = $request->get('story') ?? 0;
@@ -156,11 +148,6 @@ class ReviewController extends Controller
     }
 
     public function good(\Hgs3\Models\Orm\Review $review)
-    {
-
-    }
-
-    public function bad(\Hgs3\Models\Orm\Review $review)
     {
 
     }
