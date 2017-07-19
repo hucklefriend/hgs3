@@ -6,6 +6,7 @@
 
 namespace Hgs3\Models\Game;
 
+use Faker\Provider\DateTime;
 use Hgs3\Http\Requests\Game\Review\InputRequest;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
@@ -58,13 +59,19 @@ SQL;
         return $draft ?? ReviewDraft::getDefault($userId, $gameId);
     }
 
+    /**
+     * 保存
+     *
+     * @param InputRequest $request
+     * @return bool|mixed
+     */
     public function save(InputRequest $request)
     {
         $orm = new \Hgs3\Models\Orm\Review;
 
         $orm->user_id = \Auth::id();
         $orm->game_id = $request->get('game_id');
-        $orm->package_id = '';
+        $orm->package_id = $request->get('package_id');
         $orm->play_time = $request->get('play_time') ?? 0;
         $orm->title = $request->get('title') ?? '';
         $orm->fear = $request->get('fear') ?? 0;
@@ -106,36 +113,6 @@ SQL;
         return $orm->id;
     }
 
-    public function getIndexData($num)
-    {
-        $newArrival = $this->getNewArrivalsAll($num);
-        $highScore = $this->getHighScore($num);
-        $manyGood = $this->getManyGood($num);
-
-        $users = array_merge(array_pluck($newArrival, 'user_id'),
-            array_pluck($manyGood, 'user_id'));
-        if (!empty($users)) {
-            $users = User::getNameHash($users);
-        }
-
-        $games = array_merge(
-            array_pluck($newArrival, 'game_id'),
-            array_pluck($highScore, 'game_id'),
-            array_pluck($manyGood, 'game_id')
-        );
-        if (!empty($games)) {
-            $games = $this->getGameInfo($games);
-        }
-
-        return [
-            'newArrival' => $newArrival,
-            'highScore'  => $highScore,
-            'manyGood'   => $manyGood,
-            'users'      => $users,
-            'games'      => $games
-        ];
-    }
-
     /**
      * 新着順レビューを取得(全ゲーム)
      *
@@ -148,12 +125,17 @@ SQL;
 SELECT
   reviews.*
   , users.name AS user_name
+  , games.name AS game_name
+  , game_packages.iteam_url
+  , game_packages.small_image_url
 FROM (
     SELECT id, point, user_id, post_date, title
     FROM reviews
     ORDER BY id DESC
     LIMIT {$num}
   ) reviews LEFT OUTER JOIN users ON reviews.user_id = users.id
+  LEFT OUTER JOIN games ON games.id = review_totals.game_id
+  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
 SQL;
 
         return DB::select($sql);
@@ -169,13 +151,17 @@ SQL;
     {
         $sql =<<< SQL
 SELECT
-  *
+  review.*
+  , games.name AS game_name
+  , game_packages.iteam_url
+  , game_packages.small_image_url
 FROM (
   SELECT point, game_id
   FROM review_totals
   ORDER BY point DESC
   LIMIT {$num}
-) review LEFT OUTER JOIN games ON games.id = 
+) review LEFT OUTER JOIN games ON games.id = review_totals.game_id
+  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
 SQL;
 
         return DB::select($sql);
@@ -189,16 +175,134 @@ SQL;
      */
     public function getManyGood($num)
     {
-        return DB::table('reviews')
-            ->select(['id', 'point', 'game_id', 'title', 'user_id', 'good_num'])
-            ->orderBy('good_num', 'DESC')
-            ->take($num)
-            ->get()
-            ->toArray();
+        $sql =<<< SQL
+SELECT
+  reviews.*
+  , users.name AS user_name
+  , games.name AS game_name
+  , game_packages.iteam_url
+  , game_packages.small_image_url
+FROM (
+    SELECT id, point, user_id, post_date, title
+    FROM reviews
+    ORDER BY latest_good_num DESC
+    LIMIT {$num}
+  ) reviews LEFT OUTER JOIN users ON reviews.user_id = users.id
+  LEFT OUTER JOIN games ON games.id = review_totals.game_id
+  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
+SQL;
+
+        return DB::select($sql);
     }
 
-    private function getGameInfo(array $games)
+    /**
+     * いいね済か
+     *
+     * @param $reviewId
+     * @param $userId
+     */
+    public function hasGood($reviewId, $userId)
     {
+        return DB::table('review_good_histories')
+            ->where('review_id', $reviewId)
+            ->where('user_id', $userId)
+            ->count() == 1;
+    }
+
+    /**
+     * いいね
+     *
+     * @param \Hgs3\Models\Orm\Review $orm
+     * @param $userId
+     * @return bool
+     */
+    public function good(\Hgs3\Models\Orm\Review $orm, $userId)
+    {
+        DB::beginTransaction();
+        try {
+            $sql =<<< SQL
+INSERT IGNORE INTO review_good_histories (review_id, user_id, good_date, created_at, updated_at)
+VALUES (?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+SQL;
+            $insNum = DB::insert($sql, [$orm->id, $userId]);
+            if ($insNum == 1) {
+                $updateGoodNum =<<< SQL
+UPDATE reviews
+SET good_num = good_num + 1
+    , latest_good_num = latest_good_num + 1
+WHERE id = ?
+SQL;
+                DB::update($updateGoodNum, [$orm->id]);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * いいね取り消し
+     *
+     * @param \Hgs3\Models\Orm\Review $orm
+     * @param $userId
+     * @return bool
+     */
+    public function cancelGood(\Hgs3\Models\Orm\Review $orm, $userId)
+    {
+        DB::beginTransaction();
+        try {
+            // 履歴を消す
+            $sql =<<< SQL
+DELETE FROM review_good_histories
+WHERE review_id = ? AND user_id = ?
+SQL;
+            $delNum = DB::delete($sql, [$orm->id, $userId]);
+
+            // 1件消されていたら数の再計算
+            if ($delNum == 1) {
+                $this->calculateGoodNum($orm->id);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * いいね数を履歴から再計算
+     *
+     * @param $reviewId
+     */
+    private function calculateGoodNum($reviewId)
+    {
+        $totalGoodNum = Db::table('review_good_histories')
+            ->where('review_id', $reviewId)
+            ->count();
+
+        $now = new \DateTime();
+        $now->sub(new \DateInterval('P30D'));
+
+        $latestGoodNum = Db::table('review_good_histories')
+            ->where('review_id', $reviewId)
+            ->where('good_date', '<', $now->format('Y-m-d 00:00:00'))
+            ->count();
+
+        DB::table('reviews')
+            ->where('id', $reviewId)
+            ->update([
+                'good_num'        => $totalGoodNum,
+                'latest_good_num' => $latestGoodNum
+            ]);
 
     }
 }

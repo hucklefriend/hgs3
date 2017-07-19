@@ -17,9 +17,9 @@ class CreateReviewDraftsTable extends Migration
     public function up()
     {
         Schema::create('review_drafts', function (Blueprint $table) {
-            $table->unsignedInteger('user_id')->comment('ユーザーID');
+            $table->unsignedInteger('user_id')->primary()->comment('ユーザーID');
             $table->unsignedInteger('game_id')->comment('ゲームソフトID');
-            $table->unsignedInteger('package_id')->nullable()->comment('パッケージID');
+            $table->unsignedInteger('package_id')->comment('パッケージID');
             $table->unsignedSmallInteger('play_time')->comment('プレイ時間');
             $table->string('title', 50)->comment('一言');
             $table->unsignedTinyInteger('point')->comment('ポイント');
@@ -35,7 +35,6 @@ class CreateReviewDraftsTable extends Migration
             $table->text('thoughts')->comment('感想');
             $table->text('recommendatory')->comment('オススメ');
             $table->timestamps();
-            $table->primary(['user_id', 'game_id']);
         });
     }
 

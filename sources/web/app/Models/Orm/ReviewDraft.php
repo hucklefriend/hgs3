@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewDraft extends Model
 {
-    protected $primaryKey = ['user_id', 'game_id'];
+    protected $primaryKey = 'user_id';
     public $incrementing = false;
-    protected $guarded = ['user_id', 'game_id'];
+    protected $guarded = ['user_id'];
 
     /**
      * デフォルト値が設定されているインスタンスを取得
@@ -41,7 +41,7 @@ class ReviewDraft extends Model
             'recommendatory'  => '',
         ]);
     }
-
+/*
     public function insert()
     {
         return DB::table($this->getTable())
@@ -87,4 +87,5 @@ class ReviewDraft extends Model
                 'recommendatory'  => $this->recommendatory,
             ]);
     }
+*/
 }

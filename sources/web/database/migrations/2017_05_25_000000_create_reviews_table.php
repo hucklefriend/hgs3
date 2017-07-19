@@ -37,6 +37,7 @@ class CreateReviewsTable extends Migration
             $table->text('recommendatory')->comment('オススメ');
             $table->integer('sort_order')->default(0)->comment('ソート順');
             $table->unsignedInteger('good_num')->default(0)->comment('いいね数');
+            $table->unsignedInteger('latest_good_num')->default(0)->comment('直近のいいね数');
             $table->dateTime('post_date')->comment('投稿日時');
             $table->unsignedInteger('update_num')->default(0)->comment('更新回数');
             $table->timestamps();

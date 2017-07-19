@@ -9,9 +9,11 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Game\Review\InputRequest;
 use Hgs3\Models\Game\Review;
 use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class ReviewController extends Controller
 {
@@ -21,9 +23,10 @@ class ReviewController extends Controller
     public function index()
     {
         $review = new Review();
-
         return view('game.review.index')->with([
-            'highScore'
+            'newArrival' => $review->getNewArrivalsAll(5),
+            'highScore'  => $review->getHighScore(5),
+            'manyGood'   => $review->getManyGood(5)
         ]);
     }
 
@@ -50,22 +53,29 @@ class ReviewController extends Controller
      */
     public function input(Game $game)
     {
-        // 下書きがあるかチェック
-        $review = new Review;
+        // TODO 下書きがあるかチェック
+        // TODO 同一ソフトのパッケージがあればその旨出力
+        // TODO 同一ソフトの他パッケージの内容コピー
+
+        $pkg = GamePackage::where('game_id', $game->id)
+            ->orderBy('release_int')
+            ->get();
+
+        if (Input::get('back', 0) == 1 && !empty(old())) {
+            $draft = new ReviewDraft(old());
+        } else {
+            $review = new Review;
+            $draft = $review->getDraft(Auth::id(), $game->id);
+            if (!empty($pkg)) {
+                $draft->package_id = $pkg[0]->id;
+            }
+        }
 
         return view('game.review.input')->with([
-            'game'   => $game,
-            'review' => $review->getDraft(Auth::id(), $game->id)
+            'game'     => $game,
+            'packages' => $pkg,
+            'draft'    => $draft
         ]);
-    }
-
-    public function postInput(InputRequest $request)
-    {
-        if ($request->get('draft') == 1) {
-            return $this->saveDraft($request);
-        } else {
-            return redirect('game/review/confirm/' . $request->get('game_id', 0))->withInput();
-        }
     }
 
     /**
@@ -73,10 +83,14 @@ class ReviewController extends Controller
      *
      * @param Game $game
      */
-    public function confirm(Game $game)
+    public function confirm(InputRequest $request, Game $game)
     {
+        $draft = new ReviewDraft;
+        $this->setDraftData($request, $draft);
+
         return view('game.review.confirm')->with([
-            'game' => $game,
+            'game'  => $game,
+            'draft' => $draft
         ]);
     }
 
@@ -88,9 +102,26 @@ class ReviewController extends Controller
      */
     public function save(InputRequest $request, Game $game)
     {
-        if ($request->get('draft') == 1) {
-            return $this->saveDraft($request);
+        $draftType = $request->get('draft');
+
+        if ($draftType == -1) {
+            // 入力画面に戻る
+            return redirect('game/review/input/' . $game->id . '?back=1')->withInput();
+        } if ($draftType == 1) {
+            // 下書き保存
+            $draft = ReviewDraft::find(Auth::id());
+            if ($draft === null) {
+                $draft = new ReviewDraft;
+            }
+
+            $this->setDraftData($request, $draft);
+            $draft->save();
+
+            return view('game.review.saveDraft')->with([
+                'gameId' => $draft->game_id
+            ]);
         } else {
+            // レビュー投稿
             $review = new Review();
             $result = $review->save($request);
 
@@ -102,63 +133,67 @@ class ReviewController extends Controller
     }
 
     /**
-     * 下書き保存
+     * 下書きモデルに値をセット
      *
      * @param InputRequest $request
+     * @param ReviewDraft $draft
      */
-    public function saveDraft(InputRequest $request)
+    private function setDraftData(InputRequest $request, ReviewDraft $draft)
     {
-        // firstOrNewを使うとsaveで「Illegal offset type in isset or empty」と言われるので使わない
-        // 複合キーのせいだと思われる
-        $draft = ReviewDraft::where('user_id', \Auth::id())
-            ->where('game_id', $request->get('game_id'))
-            ->first();
-
-        $isNew = false;
-        if ($draft === null) {
-            $isNew = true;
-            $draft = new ReviewDraft;
-        }
-
         $draft->user_id = \Auth::id();
         $draft->game_id = $request->get('game_id');
-        $draft->package_id = '';
+        $draft->package_id = $request->get('package_id');
         $draft->play_time = $request->get('play_time') ?? 0;
         $draft->title = $request->get('title') ?? '';
         $draft->point = 0;
-        $draft->fear = $request->get('fear') ?? 0;
-        $draft->story = $request->get('story') ?? 0;
-        $draft->volume = $request->get('volume') ?? 0;
-        $draft->difficulty = $request->get('difficulty') ?? 0;
-        $draft->graphic = $request->get('graphic') ?? 0;
-        $draft->sound = $request->get('sound') ?? 0;
-        $draft->crowded = $request->get('crowded') ?? 0;
-        $draft->controllability = $request->get('controllability') ?? 0;
-        $draft->recommend = $request->get('recommend') ?? 0;
+        $draft->fear = $request->get('fear') ?? 3;
+        $draft->story = $request->get('story') ?? 3;
+        $draft->volume = $request->get('volume') ?? 3;
+        $draft->difficulty = $request->get('difficulty') ?? 3;
+        $draft->graphic = $request->get('graphic') ?? 3;
+        $draft->sound = $request->get('sound') ?? 3;
+        $draft->crowded = $request->get('crowded') ?? 3;
+        $draft->controllability = $request->get('controllability') ?? 3;
+        $draft->recommend = $request->get('recommend') ?? 3;
         $draft->thoughts = $request->get('thoughts') ?? '';
         $draft->recommendatory = $request->get('recommendatory') ?? '';
-
-        if ($isNew) {
-            $draft->insert();
-        } else {
-            $draft->update();
-        }
-
-        return view('game.review.saveDraft')->with([
-            'gameId' => $draft->game_id
-        ]);
     }
 
+    /**
+     * いいね
+     *
+     * @param \Hgs3\Models\Orm\Review $review
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function good(\Hgs3\Models\Orm\Review $review)
     {
+        $r = new Review();
+        $r->good($review, Auth::id());
 
+        return redirect()->back();
     }
 
+    /**
+     * 詳細
+     *
+     * @param Game $game
+     * @param \Hgs3\Models\Orm\Review $review
+     */
     public function show(Game $game, \Hgs3\Models\Orm\Review $review)
     {
         return view('game.review.detail')->with([
             'game'   => $game,
             'review' => $review
         ]);
+    }
+
+    /**
+     * いいね履歴
+     *
+     * @param \Hgs3\Models\Orm\Review $review
+     */
+    public function goodHistory(\Hgs3\Models\Orm\Review $review)
+    {
+
     }
 }
