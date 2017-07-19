@@ -49,6 +49,18 @@
             <h5>おすすめ</h5>
             <pre>{{ $review->recommendatory }}</pre>
         </div>
+        <div>
+            @if ($hasGood)
+                <form action="{{ url('game/review/cancel_good') }}/{{ $review->id }}">
+
+                    <button>いいね取り消し</button>
+                </form>
+            @else
+                <form action="{{ url('game/review/good') }}/{{ $review->id }}">
+                    <button>いいね</button>
+                </form>
+            @endif
+        </div>
         <div class="row">
             <div class="col-2">いいね数</div>
             <div class="col-2">{{ $review->good_num }}</div>

@@ -303,6 +303,12 @@ SQL;
             ]);
     }
 
+    /**
+     * いいね履歴を取得する
+     *
+     * @param $reviewId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getGoodHistory($reviewId)
     {
         return DB::table('review_good_histories')
