@@ -12,6 +12,7 @@ use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
+use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
@@ -181,8 +182,11 @@ class ReviewController extends Controller
      */
     public function show(Game $game, \Hgs3\Models\Orm\Review $review)
     {
+        // TODO 投稿者本人かどうかで表示項目変わる
+
         return view('game.review.detail')->with([
             'game'   => $game,
+            'pkg'    => GamePackage::find($review->package_id),
             'review' => $review
         ]);
     }
@@ -194,6 +198,19 @@ class ReviewController extends Controller
      */
     public function goodHistory(\Hgs3\Models\Orm\Review $review)
     {
+        // TODO 投稿者本人しか見られない
 
+        $r = new Review;
+        $his = $r->getGoodHistory($review->id);
+        $users = [];
+        if (!empty($his)) {
+            $users = User::getNameHash(array_pluck($his, 'user_id'));
+        }
+
+        return view('game.review.good_history')->with([
+            'review'    => $review,
+            'histories' => $his,
+            'users'     => $users
+        ]);
     }
 }

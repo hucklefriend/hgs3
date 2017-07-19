@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}</h4>
 
     <nav style="margin-top: 10px; margin-bottom: 10px;">
         <a href="{{ url('game/soft') }}/{{ $game->id }}">詳細へ</a> |
@@ -11,8 +10,12 @@
 
     <section>
         <div class="row">
+            <div class="col-1 text-center">
+                <img src="{{ $pkg->small_image_url }}" class="thumbnail"><br>
+                {{ $pkg->name }}
+            </div>
             <div class="col-1">{{ $review->point }}</div>
-            <div class="col-11"><h5>{{ $review->title }}</h5></div>
+            <div class="col-10"><h5>{{ $review->title }}</h5></div>
         </div>
         <div>
             <div class="row">
@@ -39,6 +42,21 @@
                 <div class="col-2">オススメ</div>
                 <div class="col-2">{{ $review->recommend }}</div>
             </div>
+        </div>
+        <div>
+            <h5>感想</h5>
+            <pre>{{ $review->thoughts }}</pre>
+            <h5>おすすめ</h5>
+            <pre>{{ $review->recommendatory }}</pre>
+        </div>
+        <div class="row">
+            <div class="col-2">いいね数</div>
+            <div class="col-2">{{ $review->good_num }}</div>
+            <div class="col-8"><a href="{{ url('game/review/good_history') }}/{{ $review->id }}">いいねした人たち</a></div>
+        </div>
+        <div class="row">
+            <div class="col-2">直近30日のいいね数</div>
+            <div class="col-2">{{ $review->latest_good_num }}</div>
         </div>
     </section>
 @endsection

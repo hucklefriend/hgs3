@@ -57,7 +57,7 @@ Route::get('/game/review/soft/{game}', 'Game\ReviewController@soft');
 Route::get('/game/review/good/{review}', 'Game\ReviewController@good')->middleware('auth');
 Route::get('/game/review/bad/{review}', 'Game\ReviewController@bad')->middleware('auth');
 Route::get('/game/review/detail/{game}/{review}', 'Game\ReviewController@show');
-
+Route::get('/game/review/good_history/{review}', 'Game\ReviewController@goodHistory');
 
 Route::get('/site', 'Site\SearchController@index');
 Route::get('/site/show/{site}', 'Site\SearchController@show');

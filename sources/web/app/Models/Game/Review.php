@@ -6,11 +6,9 @@
 
 namespace Hgs3\Models\Game;
 
-use Faker\Provider\DateTime;
 use Hgs3\Http\Requests\Game\Review\InputRequest;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
-use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -283,7 +281,7 @@ SQL;
      *
      * @param $reviewId
      */
-    private function calculateGoodNum($reviewId)
+    public function calculateGoodNum($reviewId)
     {
         $totalGoodNum = Db::table('review_good_histories')
             ->where('review_id', $reviewId)
@@ -294,7 +292,7 @@ SQL;
 
         $latestGoodNum = Db::table('review_good_histories')
             ->where('review_id', $reviewId)
-            ->where('good_date', '<', $now->format('Y-m-d 00:00:00'))
+            ->where('good_date', '>=', $now->format('Y-m-d 00:00:00'))
             ->count();
 
         DB::table('reviews')
@@ -303,6 +301,13 @@ SQL;
                 'good_num'        => $totalGoodNum,
                 'latest_good_num' => $latestGoodNum
             ]);
+    }
 
+    public function getGoodHistory($reviewId)
+    {
+        return DB::table('review_good_histories')
+            ->where('review_id', $reviewId)
+            ->orderBy('good_date', 'DESC')
+            ->paginate(20);
     }
 }
