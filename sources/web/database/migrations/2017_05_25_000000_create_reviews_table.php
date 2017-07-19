@@ -20,7 +20,7 @@ class CreateReviewsTable extends Migration
             $table->increments('id')->comment('レビューID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->unsignedInteger('game_id')->index()->comment('ゲームソフトID');
-            $table->text('package_id')->comment('パッケージID');
+            $table->unsignedInteger('package_id')->comment('パッケージID');
             $table->unsignedSmallInteger('play_time')->comment('プレイ時間');
             $table->string('title', 200)->comment('一言');
             $table->unsignedTinyInteger('point')->comment('ポイント');

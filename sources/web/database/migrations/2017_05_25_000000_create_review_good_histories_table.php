@@ -20,7 +20,6 @@ class CreateReviewGoodHistoriesTable extends Migration
             $table->unsignedInteger('review_id')->comment('レビューID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->dateTime('good_date')->comment('いいねした日時');
-            $table->unsignedTinyInteger('anonymous')->default(0)->comment('匿名フラグ');
             $table->timestamps();
             $table->primary(['review_id', 'user_id']);
         });

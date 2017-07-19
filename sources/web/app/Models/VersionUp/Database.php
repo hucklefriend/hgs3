@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\DB;
 
 class Database
 {
+    /**
+     * バージョンアップ実行
+     */
     public function versionUp()
     {
         $this->copyCompany();
@@ -14,6 +17,8 @@ class Database
         $this->copyPackage();
 
         $this->changeGameType();
+        $this->setOriginalPackageId();
+
 
         // TODO: パスワードを変更する
         \Hgs3\User::create([
@@ -87,13 +92,16 @@ SQL;
         DB::insert($sql);
     }
 
+    /**
+     * ゲームソフトデータをコピー
+     */
     private function copySoft()
     {
         $sql =<<< SQL
 INSERT INTO games
 SELECT
   sf.id, sf.name, sf.hiragana, sf.hiragana_type, sf.hiragana_order, sf.genre_name, 
-  IF (sf.company_id <= 0, NULL, sf.company_id), sl.series_id, sl.order, sf.game_type_id, NOW(), NOW()
+  IF (sf.company_id <= 0, NULL, sf.company_id), sl.series_id, sl.order, sf.game_type_id, NULL, NOW(), NOW()
 FROM
   hgs2.hgs_g_soft sf LEFT OUTER JOIN hgs2.hgs_g_series_list sl ON sf.id = sl.soft_id
 ON DUPLICATE KEY UPDATE
@@ -112,13 +120,16 @@ SQL;
         DB::insert($sql);
     }
 
+    /**
+     * パッケージをコピー
+     */
     private function copyPackage()
     {
         $sql =<<< SQL
 INSERT INTO game_packages
 SELECT
 	s.id, s.soft_id, s.hard_id, IF(s.company_id <= 0, null, s.company_id),
-	IF (other_name = '', ss.name, other_name), s.url,
+	IF (other_name = '', ss.name, other_name), '', s.url,
 	s.release_date, s.release_int, s.game_type_id, a.asin, a.item_url,
 	a.small_image_url, a.small_image_width, a.small_image_height,
 	a.medium_image_url, a.medium_image_width, a.medium_image_height,
@@ -154,9 +165,34 @@ SQL;
         DB::insert($sql);
     }
 
+    /**
+     * game_typeの更新
+     */
     public function changeGameType()
     {
         // game_typeの2と5を統合する
         DB::update('UPDATE games SET game_type = 2 WHERE game_type = 5');
+    }
+
+    /**
+     * ベースとなるパッケージIDをgamesに登録
+     */
+    private function setOriginalPackageId()
+    {
+        $games = DB::select('SELECT id FROM games');
+
+        foreach ($games as $game) {
+            $package = DB::select('SELECT id FROM game_packages WHERE game_id = ? ORDER BY release_int, id', [$game->id]);
+
+            if (!empty($package)) {
+                DB::table('games')
+                    ->where('id', $game->id)
+                    ->update([
+                        'original_package_id' => $package[0]->id
+                    ]);
+            }
+
+            unset($package);
+        }
     }
 }

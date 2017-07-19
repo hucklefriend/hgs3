@@ -27,6 +27,7 @@ class CreateGamesTable extends Migration
             $table->unsignedInteger('series_id')->nullable()->index()->comment('シリーズID');
             $table->unsignedInteger('order_in_series')->nullable()->comment('シリーズ内での表示順');
             $table->unsignedTinyInteger('game_type')->index()->comment('ゲーム区分');
+            $table->unsignedInteger('original_package_id')->nullable()->comment('原点のパッケージID');
             $table->timestamps();
         });
     }

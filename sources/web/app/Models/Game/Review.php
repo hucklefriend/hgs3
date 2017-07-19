@@ -9,6 +9,7 @@ namespace Hgs3\Models\Game;
 use Hgs3\Http\Requests\Game\Review\InputRequest;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
+use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -103,5 +104,101 @@ SQL;
         }
 
         return $orm->id;
+    }
+
+    public function getIndexData($num)
+    {
+        $newArrival = $this->getNewArrivalsAll($num);
+        $highScore = $this->getHighScore($num);
+        $manyGood = $this->getManyGood($num);
+
+        $users = array_merge(array_pluck($newArrival, 'user_id'),
+            array_pluck($manyGood, 'user_id'));
+        if (!empty($users)) {
+            $users = User::getNameHash($users);
+        }
+
+        $games = array_merge(
+            array_pluck($newArrival, 'game_id'),
+            array_pluck($highScore, 'game_id'),
+            array_pluck($manyGood, 'game_id')
+        );
+        if (!empty($games)) {
+            $games = $this->getGameInfo($games);
+        }
+
+        return [
+            'newArrival' => $newArrival,
+            'highScore'  => $highScore,
+            'manyGood'   => $manyGood,
+            'users'      => $users,
+            'games'      => $games
+        ];
+    }
+
+    /**
+     * 新着順レビューを取得(全ゲーム)
+     *
+     * @param $num
+     * @return array
+     */
+    public function getNewArrivalsAll($num)
+    {
+        $sql =<<< SQL
+SELECT
+  reviews.*
+  , users.name AS user_name
+FROM (
+    SELECT id, point, user_id, post_date, title
+    FROM reviews
+    ORDER BY id DESC
+    LIMIT {$num}
+  ) reviews LEFT OUTER JOIN users ON reviews.user_id = users.id
+SQL;
+
+        return DB::select($sql);
+    }
+
+    /**
+     * ポイントの高いゲームを取得
+     *
+     * @param $num
+     * @return array
+     */
+    public function getHighScore($num)
+    {
+        $sql =<<< SQL
+SELECT
+  *
+FROM (
+  SELECT point, game_id
+  FROM review_totals
+  ORDER BY point DESC
+  LIMIT {$num}
+) review LEFT OUTER JOIN games ON games.id = 
+SQL;
+
+        return DB::select($sql);
+    }
+
+    /**
+     * いいねのレビューを取得
+     *
+     * @param $num
+     * @return array
+     */
+    public function getManyGood($num)
+    {
+        return DB::table('reviews')
+            ->select(['id', 'point', 'game_id', 'title', 'user_id', 'good_num'])
+            ->orderBy('good_num', 'DESC')
+            ->take($num)
+            ->get()
+            ->toArray();
+    }
+
+    private function getGameInfo(array $games)
+    {
+
     }
 }

@@ -17,12 +17,14 @@ class ReviewController extends Controller
 {
     /**
      * レビュートップページ
-     *
-     * @return $this
      */
     public function index()
     {
+        $review = new Review();
 
+        return view('game.review.index')->with([
+            'highScore'
+        ]);
     }
 
     /**

@@ -19,7 +19,7 @@ class CreateReviewDraftsTable extends Migration
         Schema::create('review_drafts', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->comment('ユーザーID');
             $table->unsignedInteger('game_id')->comment('ゲームソフトID');
-            $table->text('package_id')->nullable()->comment('パッケージID');
+            $table->unsignedInteger('package_id')->nullable()->comment('パッケージID');
             $table->unsignedSmallInteger('play_time')->comment('プレイ時間');
             $table->string('title', 50)->comment('一言');
             $table->unsignedTinyInteger('point')->comment('ポイント');
