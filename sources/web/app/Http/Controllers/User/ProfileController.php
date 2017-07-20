@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\UpdateRequest;
+use Hgs3\Models\User\Profile;
 use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,14 +20,12 @@ class ProfileController extends Controller
      */
     public function index(User $user)
     {
-        if ($user === null) {
-            $user = Auth::user();
-        }
+        $profile = new Profile();
+        $data = $profile->get($user->id);
+        $data['user'] = $user;
+        $data['isMyself'] = Auth::id() == $user->id;
 
-        return view('user.profile.index')->with([
-            'user'     => $user,
-            'isMyself' => Auth::id() == $user->id
-        ]);
+        return view('user.profile.index')->with($data);
     }
 
     /**
