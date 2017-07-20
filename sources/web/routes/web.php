@@ -66,4 +66,10 @@ Route::get('/site/manage/edit/{site}', 'Site\ManageController@edit')->middleware
 Route::get('/game/company', 'Game\CompanyController@index');
 Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
 
-//Auth::routes();
+
+// マイページ
+Route::get('/mypage', 'User\MyPageController@index')->middleware('auth');
+Route::get('/user/profile/edit', 'User\ProfileController@edit')->middleware('auth');
+Route::post('/user/profile/edit', 'User\ProfileController@update')->middleware('auth');
+Route::get('/user/profile/{user}', 'User\ProfileController@index')->middleware('auth');
+Route::get('/user/profile', 'User\ProfileController@myself')->middleware('auth');

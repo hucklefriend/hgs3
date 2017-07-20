@@ -15,6 +15,7 @@
 <div class="container">
     <header class="text-right">
         <a href="{{ url('') }}">トップ</a>
+@if (Auth::check())        | <a href="{{ url('mypage') }}">マイページ</a> @endif
     </header>
     @yield('content')
 </div>
