@@ -169,7 +169,25 @@ class ReviewController extends Controller
     public function good(\Hgs3\Models\Orm\Review $review)
     {
         $r = new Review();
-        $r->good($review, Auth::id());
+        if (!$r->hasGood($review->id, Auth::id())) {
+            $r->good($review, Auth::id());
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * いいね取り消し
+     *
+     * @param \Hgs3\Models\Orm\Review $review
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function cancelGood(\Hgs3\Models\Orm\Review $review)
+    {
+        $r = new Review();
+        if ($r->hasGood($review->id, Auth::id())) {
+            $r->cancelGood($review, Auth::id());
+        }
 
         return redirect()->back();
     }
@@ -182,12 +200,24 @@ class ReviewController extends Controller
      */
     public function show(Game $game, \Hgs3\Models\Orm\Review $review)
     {
-        // TODO 投稿者本人かどうかで表示項目変わる
+        $r = new Review();
+
+        // 投稿者本人か
+        $isWriter = $review->user_id == Auth::id();
+
+        // いいね済みか
+        $hasGood = false;
+        if (!$isWriter) {
+            $hasGood = $r->hasGood($review->id, Auth::id());
+        }
 
         return view('game.review.detail')->with([
-            'game'   => $game,
-            'pkg'    => GamePackage::find($review->package_id),
-            'review' => $review
+            'game'      => $game,
+            'pkg'       => GamePackage::find($review->package_id),
+            'review'    => $review,
+            'isWriter'  => $isWriter,
+            'hasGood'   => $hasGood,
+            'csrfToken' => csrf_token()
         ]);
     }
 

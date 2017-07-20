@@ -54,8 +54,8 @@ Route::get('/game/review/input/{game}', 'Game\ReviewController@input')->middlewa
 Route::post('/game/review/confirm/{game}', 'Game\ReviewController@confirm')->middleware('auth');
 Route::post('/game/review/save/{game}', 'Game\ReviewController@save')->middleware('auth');
 Route::get('/game/review/soft/{game}', 'Game\ReviewController@soft');
-Route::get('/game/review/good/{review}', 'Game\ReviewController@good')->middleware('auth');
-Route::get('/game/review/bad/{review}', 'Game\ReviewController@bad')->middleware('auth');
+Route::post('/game/review/good/{review}', 'Game\ReviewController@good')->middleware('auth');
+Route::delete('/game/review/good/{review}', 'Game\ReviewController@cancelGood')->middleware('auth');
 Route::get('/game/review/detail/{game}/{review}', 'Game\ReviewController@show');
 Route::get('/game/review/good_history/{review}', 'Game\ReviewController@goodHistory');
 

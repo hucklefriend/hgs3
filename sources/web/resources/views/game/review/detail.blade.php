@@ -49,18 +49,23 @@
             <h5>おすすめ</h5>
             <pre>{{ $review->recommendatory }}</pre>
         </div>
+        <hr>
+        @if (!$isWriter && Auth::check())
         <div>
             @if ($hasGood)
-                <form action="{{ url('game/review/cancel_good') }}/{{ $review->id }}">
-
+                <form action="{{ url('game/review/good') }}/{{ $review->id }}" method="POST">
+                    {{ method_field('DELETE') }}
+                    <input type="hidden" name="_token" value="{{ $csrfToken }}">
                     <button>いいね取り消し</button>
                 </form>
             @else
-                <form action="{{ url('game/review/good') }}/{{ $review->id }}">
+                <form action="{{ url('game/review/good') }}/{{ $review->id }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ $csrfToken }}">
                     <button>いいね</button>
                 </form>
             @endif
         </div>
+        @endif
         <div class="row">
             <div class="col-2">いいね数</div>
             <div class="col-2">{{ $review->good_num }}</div>
