@@ -11,6 +11,11 @@ class UserRole
     const USER = 10;
     const ADMIN = 100;
 
+    /**
+     * ログインユーザーかどうか
+     *
+     * @return bool
+     */
     public static function isUser()
     {
         $user = Auth::user();
@@ -21,6 +26,11 @@ class UserRole
         return false;
     }
 
+    /**
+     * 管理権限を持っているかどうか
+     *
+     * @return bool
+     */
     public static function isAdmin()
     {
         $user = Auth::user();

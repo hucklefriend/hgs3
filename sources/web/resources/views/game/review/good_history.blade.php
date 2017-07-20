@@ -3,7 +3,7 @@
 @section('content')
 
     <nav>
-        <a href="{{ url('game/review/detail') }}/{{ $review->game_id }}/{{ $review->id }}">レビュー詳細に戻る</a>
+        <a href="{{ url('game/review/detail') }}/{{ $review->id }}">レビュー詳細に戻る</a>
     </nav>
 
     <h4>{{ $review->title }}にいいねした人たち</h4>

@@ -3,9 +3,9 @@
 @section('content')
 
     <nav style="margin-top: 10px; margin-bottom: 10px;">
-        <a href="{{ url('game/soft') }}/{{ $game->id }}">詳細へ</a> |
+        <a href="{{ url('game/soft') }}/{{ $game->id }}">ゲームソフト詳細へ</a> |
         <a href="{{ url('game/review/soft') }}/{{ $game->id }}">他のレビュー</a> |
-        <a href="{{ url('game/review') }}"></a>
+        <a href="{{ url('game/review') }}">レビュートップ</a>
     </nav>
 
     <section>
@@ -75,5 +75,10 @@
             <div class="col-2">直近30日のいいね数</div>
             <div class="col-2">{{ $review->latest_good_num }}</div>
         </div>
+    </section>
+
+    <section>
+        <a href="{{ url('game/injustice_review/input') }}/{{ $review->id }}">このレビューを不正報告</a> |
+        <a href="{{ url('game/injustice_review/') }}/{{ $review->id }}">このレビューへの不正報告一覧</a>
     </section>
 @endsection

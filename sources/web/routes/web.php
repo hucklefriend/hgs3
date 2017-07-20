@@ -13,20 +13,8 @@
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
-    Route::get('/game/company/create', 'Game\CompanyController@create');
-    Route::post('/game/company', 'Game\CompanyController@store');
-    Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
-    Route::put('/game/company/{gameCompany}', 'Game\CompanyController@update');
-    Route::get('/game/request/admin/add/{gar}', 'Game\RequestController@adminAdd');
-
-    Route::get('/game/soft/edit/{game}', 'Game\SoftController@edit');
-    Route::patch('/game/soft/edit/{game}', 'Game\SoftController@update');
-
-    Route::get('/game/package/add/{game}', 'Game\PackageController@add');
-    Route::post('/game/package/add/{game}', 'Game\PackageController@store');
-    Route::get('/game/package/edit/{game}/{pkg}', 'Game\PackageController@edit');
-    Route::patch('/game/package/edit/{game}/{pkg}', 'Game\PackageController@update');
-    Route::delete('/game/package/{game}/{pkg}', 'Game\SoftController@remove');
+    // 不正レビュー
+    Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
 });
 
 Route::get('/', 'TopController@index');
@@ -49,15 +37,22 @@ Route::post('/game/request/input/edit/{game}', 'Game\RequestController@storeUpda
 Route::get('/game/request/{gar}', 'Game\RequestController@show');
 
 // レビュー
-Route::get('/game/review/all', 'Game\ReviewController@index');
+Route::get('/game/review', 'Game\ReviewController@index');
 Route::get('/game/review/input/{game}', 'Game\ReviewController@input')->middleware('auth');
 Route::post('/game/review/confirm/{game}', 'Game\ReviewController@confirm')->middleware('auth');
 Route::post('/game/review/save/{game}', 'Game\ReviewController@save')->middleware('auth');
 Route::get('/game/review/soft/{game}', 'Game\ReviewController@soft');
 Route::post('/game/review/good/{review}', 'Game\ReviewController@good')->middleware('auth');
 Route::delete('/game/review/good/{review}', 'Game\ReviewController@cancelGood')->middleware('auth');
-Route::get('/game/review/detail/{game}/{review}', 'Game\ReviewController@show');
+Route::get('/game/review/detail/{review}', 'Game\ReviewController@show');
 Route::get('/game/review/good_history/{review}', 'Game\ReviewController@goodHistory');
+
+// 不正レビュー
+Route::get('/game/injustice_review/input/{review}', 'Game\InjusticeReviewController@input');
+Route::post('/game/injustice_review/input/{review}', 'Game\InjusticeReviewController@report');
+Route::get('/game/injustice_review/detail/{ir}', 'Game\InjusticeReviewController@detail');
+Route::post('/game/injustice_review/comment/{ir}', 'Game\InjusticeReviewController@comment');
+Route::get('/game/injustice_review/{review}', 'Game\InjusticeReviewController@list');
 
 Route::get('/site', 'Site\SearchController@index');
 Route::get('/site/show/{site}', 'Site\SearchController@show');

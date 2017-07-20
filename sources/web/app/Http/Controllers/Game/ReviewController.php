@@ -5,16 +5,19 @@
 
 namespace Hgs3\Http\Controllers\Game;
 
+use Hgs3\Constants\InjusticeStatus;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Game\Review\InputRequest;
 use Hgs3\Models\Game\Review;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GamePackage;
+use Hgs3\Models\Orm\InjusticeReview;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 class ReviewController extends Controller
 {
@@ -195,11 +198,14 @@ class ReviewController extends Controller
     /**
      * 詳細
      *
-     * @param Game $game
      * @param \Hgs3\Models\Orm\Review $review
      */
-    public function show(Game $game, \Hgs3\Models\Orm\Review $review)
+    public function show(\Hgs3\Models\Orm\Review $review)
     {
+        // TODO レビュー存在しない
+
+        $game = Game::find($review->game_id);
+
         $r = new Review();
 
         // 投稿者本人か

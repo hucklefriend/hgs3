@@ -121,18 +121,18 @@ SQL;
     {
         $sql =<<< SQL
 SELECT
-  reviews.*
+  review.*
   , users.name AS user_name
   , games.name AS game_name
-  , game_packages.iteam_url
+  , game_packages.item_url
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title
+    SELECT id, point, user_id, post_date, title, game_id
     FROM reviews
     ORDER BY id DESC
     LIMIT {$num}
-  ) reviews LEFT OUTER JOIN users ON reviews.user_id = users.id
-  LEFT OUTER JOIN games ON games.id = review_totals.game_id
+  ) review LEFT OUTER JOIN users ON review.user_id = users.id
+  LEFT OUTER JOIN games ON games.id = review.game_id
   LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
 SQL;
 
@@ -151,14 +151,14 @@ SQL;
 SELECT
   review.*
   , games.name AS game_name
-  , game_packages.iteam_url
+  , game_packages.item_url
   , game_packages.small_image_url
 FROM (
   SELECT point, game_id
   FROM review_totals
   ORDER BY point DESC
   LIMIT {$num}
-) review LEFT OUTER JOIN games ON games.id = review_totals.game_id
+) review LEFT OUTER JOIN games ON games.id = review.game_id
   LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
 SQL;
 
@@ -175,18 +175,18 @@ SQL;
     {
         $sql =<<< SQL
 SELECT
-  reviews.*
+  review.*
   , users.name AS user_name
-  , games.name AS game_name
-  , game_packages.iteam_url
+  , game_packages.name AS game_name
+  , game_packages.item_url
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title
+    SELECT id, point, user_id, post_date, title, game_id
     FROM reviews
     ORDER BY latest_good_num DESC
     LIMIT {$num}
-  ) reviews LEFT OUTER JOIN users ON reviews.user_id = users.id
-  LEFT OUTER JOIN games ON games.id = review_totals.game_id
+  ) review LEFT OUTER JOIN users ON review.user_id = users.id
+  LEFT OUTER JOIN games ON games.id = review.game_id
   LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
 SQL;
 

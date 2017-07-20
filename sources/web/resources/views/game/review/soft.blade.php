@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-1 text-center" style="font-size: 30px;">{{ $r->point }}</div>
                 <div class="col-11">
-                    <h5><a href="{{ url('game/review/detail') }}/{{ $game->id }}/{{ $r->id }}">{{ $r->title }}</a></h5>
+                    <h5><a href="{{ url('game/review/detail') }}/{{ $r->id }}">{{ $r->title }}</a></h5>
                     <div>{{ $r->user_name }} {{ $r->post_date }}</div>
                 </div>
             </div>
