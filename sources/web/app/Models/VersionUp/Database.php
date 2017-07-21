@@ -19,14 +19,16 @@ class Database
         $this->changeGameType();
         $this->setOriginalPackageId();
 
-
-        // TODO: パスワードを変更する
         \Hgs3\User::create([
             'name'     => 'huckle',
             'email'    => 'yuuki@horrorgame.net',
             'password' => bcrypt('huckle'),
             'role'     => 100
         ]);
+
+        $user = \Hgs3\User::find(1);
+        $user->role = 100;
+        $user->save();
     }
 
     /**

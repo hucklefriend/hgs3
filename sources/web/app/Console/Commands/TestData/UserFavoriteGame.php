@@ -3,23 +3,22 @@
 namespace Hgs3\Console\Commands\TestData;
 
 use Illuminate\Console\Command;
-use Hgs3\Models\Test;
 
-class All extends Command
+class UserFavoriteGame extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'testdata:all';
+    protected $signature = 'testdata:userfavoritegame';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'create test data';
+    protected $description = 'create test user favorite game data';
 
     /**
      * Create a new command instance.
@@ -33,13 +32,9 @@ class All extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
-        Test\User::create(100);
-        Test\Review::create(1000);
-        Test\ReviewGoodHistory::create(10);
+        \Hgs3\Models\Test\UserFavoriteGame::create();
     }
 }

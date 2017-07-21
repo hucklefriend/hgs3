@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\VersionUpDatabase::class,
         Commands\TestData\All::class,
         Commands\TestData\User::class,
+        Commands\TestData\UserFavoriteGame::class,
         Commands\TestData\ReviewGoodHistory::class,
         Commands\TestData\Review::class
     ];

@@ -34,6 +34,7 @@ class UserRole
     public static function isAdmin()
     {
         $user = Auth::user();
+        \ChromePhp::info($user);
         if ($user != null) {
             return $user->role >= self::ADMIN;
         }

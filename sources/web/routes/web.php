@@ -57,11 +57,9 @@ Route::get('/game/injustice_review/{review}', 'Game\InjusticeReviewController@li
 Route::get('/site', 'Site\SearchController@index');
 Route::get('/site/show/{site}', 'Site\SearchController@show');
 
-
 Route::get('/site/manage', 'Site\ManageController@index')->middleware('auth');
 Route::get('/site/manage/add', 'Site\ManageController@add')->middleware('auth');
 Route::get('/site/manage/edit/{site}', 'Site\ManageController@edit')->middleware('auth');
-
 
 Route::get('/game/company', 'Game\CompanyController@index');
 Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
@@ -73,3 +71,10 @@ Route::get('/user/profile/edit', 'User\ProfileController@edit')->middleware('aut
 Route::post('/user/profile/edit', 'User\ProfileController@update')->middleware('auth');
 Route::get('/user/profile/{user}', 'User\ProfileController@index')->middleware('auth');
 Route::get('/user/profile', 'User\ProfileController@myself')->middleware('auth');
+
+// お気に入りゲーム
+Route::get('/game/favorite/{game}', 'Game\FavoriteGameController@index');
+Route::get('/mypage/favorite_game', 'User\FavoriteGameController@myself')->middleware('auth');
+Route::post('/user/favorite_game', 'User\FavoriteGameController@add')->middleware('auth');
+Route::delete('/user/favorite_game', 'User\FavoriteGameController@remove')->middleware('auth');
+Route::get('/user/favorite_game/{user}', 'User\FavoriteGameController@index');

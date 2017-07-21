@@ -9,6 +9,7 @@ use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
+use Hgs3\Models\User\FavoriteGame;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
@@ -43,24 +44,14 @@ class SoftController extends Controller
         $data['isUser'] = UserRole::isUser();
         $data['isAdmin'] = UserRole::isAdmin();
 
+        if ($data['isUser']) {
+            $fav = new FavoriteGame();
+            $data['isFavorite'] = $fav->isFavorite(Auth::id(), $game->id);
+        }
+
+        $data['csrfToken'] = csrf_token();
+
         return view('game.soft.detail')->with($data);
-    }
-
-    public function comment(Game $game)
-    {
-
-    }
-
-    public function writeComment(Request $req, Game $game)
-    {
-        $comment = new GameComment;
-        $comment->game_id = $game->id;
-        $comment->user_id = Auth::id();
-        $comment->type = intval($req->input('type', 0));
-        $comment->comment = $req->input('comment', '');
-
-        $comment->save();
-        return redirect()->back();
     }
 
     public function showAddForm()

@@ -17,12 +17,14 @@ class CreateUserFavoriteGamesTable extends Migration
     public function up()
     {
         Schema::create('user_favorite_games', function (Blueprint $table) {
+            $table->increments('id')->comment('お気に入りゲームID');
             $table->unsignedInteger('user_id')->comment('ユーザーID');
             $table->unsignedInteger('game_id')->index()->comment('ゲームID');
             $table->unsignedInteger('rank')->nullable()->comment('順位');
             $table->timestamps();
-            $table->primary(['user_id', 'game_id']);
+            $table->unique(['user_id', 'game_id']);
             $table->index(['user_id', 'rank']);
+            $table->index(['game_id', 'id']);
         });
     }
 

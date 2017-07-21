@@ -8,6 +8,8 @@ namespace Hgs3\Models\Game;
 use Hgs3\Models\Orm\GameCompany;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewTotal;
+use Hgs3\Models\Orm\SiteHandleGame;
+use Hgs3\Models\Orm\UserFavoriteGame;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GameSeries;
@@ -63,37 +65,16 @@ class Soft
         // パッケージ情報
         $data['packages'] = $this->getDetailPackages($game->id);
 
-        // コメント
-        $data['comments'] = $this->getComment($game->id);
-
         // レビュー
         $data['review'] = ReviewTotal::find($game->id);
 
+        // ベースデータ
+        $data['base'] = $this->getBaseData($game);
+
+        // お気に入り登録ユーザー
+        $data['favorite'] = $this->getFavoriteUser($game);
+
         return $data;
-    }
-
-    /**
-     * コメント取得
-     *
-     * @param $gameId
-     * @return array
-     */
-    private function getComment($gameId)
-    {
-        $sql =<<< SQL
-SELECT
-  com.*
-  , users.name AS user_name
-FROM (
-    SELECT id, user_id, type, comment, created_at
-    FROM game_comments
-    WHERE game_id = ?
-    ORDER BY id DESC
-    LIMIT 5
-  ) com LEFT OUTER JOIN users ON com.user_id = users.id
-SQL;
-
-        return DB::select($sql, [$gameId]);
     }
 
     /**
@@ -136,6 +117,46 @@ FROM (
 SQL;
 
         return DB::select($sql, [$gameId]);
+    }
+
+    /**
+     * ベースデータを取得
+     *
+     * @param Game $game
+     * @return array
+     */
+    private function getBaseData(Game $game)
+    {
+        $baseData = [];
+
+        // お気に入り数
+        $baseData['favorite_num'] = UserFavoriteGame::where('game_id', $game->id)->count('user_id');
+
+        // レビュー数
+        $baseData['review_num'] = \Hgs3\Models\Orm\Review::where('game_id', $game->id)->count('id');
+
+        // サイト数
+        $baseData['site_num'] = SiteHandleGame::where('game_id', $game->id)->count('site_id');
+
+        return $baseData;
+    }
+
+    /**
+     * お気に入りゲーム登録ユーザーを取得
+     *
+     * @param Game $game
+     * @return array
+     */
+    private function getFavoriteUser(Game $game)
+    {
+        $sql =<<< SQL
+SELECT users.id, users.name
+FROM (
+  SELECT user_id FROM user_favorite_games WHERE game_id = ? ORDER BY id LIMIT 10
+) fav LEFT OUTER JOIN users ON fav.user_id = users.id
+SQL;
+
+        return DB::select($sql, [$game->id]);
     }
 
     /**
