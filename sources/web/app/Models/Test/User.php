@@ -1,4 +1,7 @@
 <?php
+/**
+ * ユーザーのテストデータ生成
+ */
 
 namespace Hgs3\Models\Test;
 use Illuminate\Support\Facades\DB;
@@ -6,6 +9,11 @@ use Hgs3\Models\Orm\UserFollow;
 
 class User
 {
+    /**
+     * テストデータ生成
+     *
+     * @param $num
+     */
     public static function create($num)
     {
         for ($i = 0; $i < $num; $i++) {
@@ -17,5 +25,18 @@ class User
             $user->save();
             unset($user);
         }
+    }
+
+    /**
+     * ユーザーIDの配列を取得
+     *
+     * @return array
+     */
+    public static function getIds()
+    {
+        return DB::table('users')
+            ->select('id')
+            ->get()
+            ->pluck('id');
     }
 }

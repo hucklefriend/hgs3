@@ -14,8 +14,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\VersionUpDatabase::class,
+        Commands\TestData\All::class,
         Commands\TestData\User::class,
-        Commands\TestData\ReviewGoodHistory::class
+        Commands\TestData\ReviewGoodHistory::class,
+        Commands\TestData\Review::class
     ];
 
     /**

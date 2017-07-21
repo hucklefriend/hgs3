@@ -4,21 +4,21 @@ namespace Hgs3\Console\Commands\TestData;
 
 use Illuminate\Console\Command;
 
-class User extends Command
+class Review extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'testdata:user';
+    protected $signature = 'testdata:review';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'create test user data';
+    protected $description = 'create test review data';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,6 @@ class User extends Command
      */
     public function handle()
     {
-        \Hgs3\Models\User::create(100);
+        \Hgs3\Models\Test\Review::create(100);
     }
 }

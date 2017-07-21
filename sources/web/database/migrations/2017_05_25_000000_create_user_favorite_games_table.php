@@ -18,11 +18,11 @@ class CreateUserFavoriteGamesTable extends Migration
     {
         Schema::create('user_favorite_games', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->comment('ユーザーID');
-            $table->unsignedInteger('package_id')->comment('パッケージID');
-            $table->unsignedTinyInteger('open_type')->default(0)->comment('公開範囲');
+            $table->unsignedInteger('game_id')->index()->comment('ゲームID');
+            $table->unsignedInteger('rank')->nullable()->comment('順位');
             $table->timestamps();
-            $table->primary(['user_id', 'package_id']);
-            $table->index(['package_id', 'created_at']);
+            $table->primary(['user_id', 'game_id']);
+            $table->index(['user_id', 'rank']);
         });
     }
 

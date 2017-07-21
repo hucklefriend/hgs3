@@ -13,6 +13,11 @@ class ReviewTotal extends Model
     public $incrementing = false;
     protected $guarded = ['game_id'];
 
+    /**
+     * 集計
+     *
+     * @param $gameId
+     */
     public static function calculate($gameId)
     {
         $sql =<<< SQL
@@ -21,17 +26,17 @@ INSERT INTO review_totals
 SELECT
   {$gameId}
   , COUNT(id)
-  , AVG(play_time)
-  , AVG(point)
-  , AVG(fear)
-  , AVG(story)
-  , AVG(volume)
-  , AVG(difficulty)
-  , AVG(graphic)
-  , AVG(sound)
-  , AVG(crowded)
-  , AVG(controllability)
-  , AVG(recommend)
+  , IFNULL(AVG(play_time), 0)
+  , IFNULL(AVG(point), 0)
+  , IFNULL(AVG(fear), 0)
+  , IFNULL(AVG(story), 0)
+  , IFNULL(AVG(volume), 0)
+  , IFNULL(AVG(difficulty), 0)
+  , IFNULL(AVG(graphic), 0)
+  , IFNULL(AVG(sound), 0)
+  , IFNULL(AVG(crowded), 0)
+  , IFNULL(AVG(controllability), 0)
+  , IFNULL(AVG(recommend), 0)
 FROM
   reviews
 WHERE

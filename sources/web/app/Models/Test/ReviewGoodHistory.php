@@ -17,10 +17,7 @@ class ReviewGoodHistory
      */
     public static function create($num)
     {
-        $users = DB::table('users')
-            ->select('id')
-            ->get()
-            ->pluck('id');
+        $users = User::getIds();
         $userNum = count($users);
 
         $reviews = DB::table('reviews')
