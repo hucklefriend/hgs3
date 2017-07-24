@@ -22,7 +22,7 @@
                     <a class="nav-link" href="#">レビュー</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">サイト</a>
+                    <a class="nav-link" href="{{ url('user/site/myself') }}">サイト</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">お気に入り</a>

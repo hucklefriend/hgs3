@@ -21,7 +21,7 @@ class CreateSitesTable extends Migration
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->string('name', 100)->comment('サイト名');
             $table->string('url', 200)->comment('URL');
-            $table->string('banner_url', 200)->comment('バナーURL');
+            $table->string('banner_url', 200)->nullable()->comment('バナーURL');
             $table->text('presentation')->comment('紹介文');
             $table->unsignedTinyInteger('rate')->comment('対象年齢');
             $table->unsignedTinyInteger('gender')->comment('対象性別');

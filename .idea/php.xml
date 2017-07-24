@@ -69,7 +69,7 @@
       <path value="$PROJECT_DIR$/sources/web/vendor/laravelcollective/html" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7" />
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="C:/Users/xeen/hgs/hgs3/sources/web/vendor/autoload.php" />
