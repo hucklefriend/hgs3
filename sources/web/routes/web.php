@@ -57,7 +57,7 @@ Route::get('/game/injustice_review/{review}', 'Game\InjusticeReviewController@li
 // サイト
 Route::get('/site', 'Site\SearchController@index');
 Route::get('/site/search', 'Site\SearchController@search');
-Route::get('/site/show/{site}', 'Site\SearchController@show');
+Route::get('/site/detail/{site}', 'Site\SearchController@show');
 
 
 

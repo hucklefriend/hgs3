@@ -13,6 +13,11 @@ use Illuminate\Support\Arr;
 
 class SearchController extends Controller
 {
+    /**
+     * トップ
+     *
+     * @return $this
+     */
     public function index()
     {
         $gameId = intval(Input::get('gid', 0));
@@ -60,7 +65,7 @@ class SearchController extends Controller
 
         return view('site.search.detail')->with([
             'site' => $site,
-            'handleGames' => $handleGames
+            'handleGames' => implode('、', $handleGames)
         ]);
     }
 

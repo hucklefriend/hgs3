@@ -54,7 +54,7 @@ class SiteController extends Controller
     public function detail(Site $site)
     {
         return view('site.detail')->with([
-            'site' => $site
+            'site' => $site,
         ]);
     }
 
@@ -94,7 +94,7 @@ class SiteController extends Controller
         $site->good_count = 0;
         $site->bad_count = 0;
         $site->registered_timestamp = time();
-        $site->updated_timestamp = time();
+        $site->updated_timestamp = 0;
 
         $siteId = $site->saveWithHandleGame($request->get('handle_game') ?? '');
         if ($siteId === false) {
@@ -106,6 +106,12 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * 編集画面
+     *
+     * @param Site $site
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(Site $site)
     {
         if ($site->user_id != Auth::id()) {
@@ -119,16 +125,43 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * 編集
+     *
+     * @param UpdateRequest $request
+     * @param Site $site
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function update(UpdateRequest $request, Site $site)
     {
         if ($site->user_id != Auth::id()) {
             // 他人のサイトを編集しようとした
             return view('user.site.edit_error');
         } else {
-            $soft = new Soft;
-            return view('user.site.edit')->with([
-                'soft' => $soft->getList()
-            ]);
+            $site->user_id = Auth::id();
+            $site->name = $request->get('name') ?? '';
+            $site->url = $request->get('url') ?? '';
+            $site->banner_url = $request->get('banner_url') ?? '';
+            $site->presentation = $request->get('presentation') ?? '';
+            $site->main_contents_id = intval($request->get('main_contents') ?? 0);
+            $site->rate = intval($request->get('rate') ?? 1);
+            $site->gender = intval($request->get('gender') ?? 1);
+            $site->updated_timestamp = time();
+
+            return redirect('/site/detail/' . $site->id);
         }
+    }
+
+    /**
+     * サイト遷移
+     *
+     * @param Site $site
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function go(Site $site)
+    {
+        // TODO アクセスログに保存
+
+        return redirect($site->url);
     }
 }
