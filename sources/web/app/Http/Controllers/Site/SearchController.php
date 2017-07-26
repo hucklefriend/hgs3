@@ -7,7 +7,9 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Searcher;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Site;
+use Hgs3\User;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Arr;
 
@@ -54,7 +56,7 @@ class SearchController extends Controller
         ]);
     }
 
-    public function show(Site $site)
+    public function show(Site $site)//
     {
         $handleGames = [];
 
@@ -63,9 +65,17 @@ class SearchController extends Controller
             $handleGames = Game::getNameHash($gameIds);
         }
 
+        $isLogin = Auth::check();
+        $isFavorite = false;
+        if ($isLogin) {
+            User
+        }
+
         return view('site.search.detail')->with([
-            'site' => $site,
-            'handleGames' => implode('、', $handleGames)
+            'site'        => $site,
+            'handleGames' => implode('、', $handleGames),
+            'admin'       => User::find($site->user_id),
+            'isLogin'     => $isLogin
         ]);
     }
 
@@ -77,5 +87,18 @@ class SearchController extends Controller
     public function injustice()
     {
 
+    }
+
+    /**
+     * サイト遷移
+     *
+     * @param Site $site
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function go(Site $site)
+    {
+        // TODO アクセスログに保存
+
+        return redirect($site->url);
     }
 }

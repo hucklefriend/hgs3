@@ -17,12 +17,10 @@ class CreateUserFavoriteSitesTable extends Migration
     public function up()
     {
         Schema::create('user_favorite_sites', function (Blueprint $table) {
-            $table->unsignedInteger('user_id')->comment('');
-            $table->unsignedInteger('package_id')->comment('');
-            $table->unsignedTinyInteger('open_type')->default(0)->comment('');
+            $table->increments('id')->comment('お気に入りサイトID');
+            $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
+            $table->unsignedInteger('site_id')->index()->comment('サイトID');
             $table->timestamps();
-            $table->primary(['user_id', 'package_id']);
-            $table->index(['package_id', 'created_at']);
         });
     }
 

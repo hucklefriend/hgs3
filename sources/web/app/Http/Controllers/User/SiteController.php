@@ -151,17 +151,4 @@ class SiteController extends Controller
             return redirect('/site/detail/' . $site->id);
         }
     }
-
-    /**
-     * サイト遷移
-     *
-     * @param Site $site
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function go(Site $site)
-    {
-        // TODO アクセスログに保存
-
-        return redirect($site->url);
-    }
 }
