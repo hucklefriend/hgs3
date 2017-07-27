@@ -56,7 +56,7 @@ class SearchController extends Controller
         ]);
     }
 
-    public function show(Site $site)//
+    public function show(Site $site)
     {
         $handleGames = [];
 
@@ -68,7 +68,7 @@ class SearchController extends Controller
         $isLogin = Auth::check();
         $isFavorite = false;
         if ($isLogin) {
-            User
+            //User
         }
 
         return view('site.search.detail')->with([

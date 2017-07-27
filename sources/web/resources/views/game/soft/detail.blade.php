@@ -185,7 +185,17 @@
                     サイト
                 </div>
                 <div class="card-block">
-                    <div class="card-text">工事中</div>
+                    <div class="card-text">
+                        @foreach ($site as $s)
+                            <div>
+                                <h5>{{ $s->name }}</h5>
+                                <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
+                                <div>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</div>
+                                <div>→ <a href="{{ url('site/detail') }}/{{ $s->id }}">サイトの詳細情報</a></div>
+                            </div>
+                            <hr>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

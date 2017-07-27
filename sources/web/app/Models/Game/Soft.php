@@ -74,6 +74,9 @@ class Soft
         // お気に入り登録ユーザー
         $data['favorite'] = $this->getFavoriteUser($game);
 
+        // サイト
+        $data['site'] = $this->getSite($game);
+
         return $data;
     }
 
@@ -154,6 +157,37 @@ SELECT users.id, users.name
 FROM (
   SELECT user_id FROM user_favorite_games WHERE game_id = ? ORDER BY id LIMIT 10
 ) fav LEFT OUTER JOIN users ON fav.user_id = users.id
+SQL;
+
+        return DB::select($sql, [$game->id]);
+    }
+
+    /**
+     * サイト情報を取得
+     *
+     * @param Game $game
+     * @return array
+     */
+    private function getSite(Game $game)
+    {
+        $siteIds = DB::table('site_handle_games')
+            ->where('game_id', $game->id)
+            ->orderBy('updated_at')
+            ->take(5)
+            ->get()->pluck('site_id');
+
+        if (empty($siteIds)) {
+            return [];
+        }
+
+        $siteIdComma = implode(',', $siteIds->toArray());
+
+        $sql =<<< SQL
+SELECT users.id, users.name, s.id, s.name, s.url, s.presentation, s.rate,
+  s.gender, s.main_contents_id, s.out_count, s.in_count, s.good_count
+FROM (
+  SELECT * FROM sites WHERE id IN ({$siteIdComma}) ORDER BY updated_timestamp
+) s LEFT OUTER JOIN users ON s.user_id = users.id
 SQL;
 
         return DB::select($sql, [$game->id]);
