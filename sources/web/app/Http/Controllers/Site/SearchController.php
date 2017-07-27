@@ -56,6 +56,12 @@ class SearchController extends Controller
         ]);
     }
 
+    /**
+     * 詳細表示
+     *
+     * @param Site $site
+     * @return $this
+     */
     public function show(Site $site)
     {
         $handleGames = [];
@@ -71,11 +77,15 @@ class SearchController extends Controller
             //User
         }
 
+        $footprint = [];
+
         return view('site.search.detail')->with([
             'site'        => $site,
             'handleGames' => implode('、', $handleGames),
             'admin'       => User::find($site->user_id),
-            'isLogin'     => $isLogin
+            'isLogin'     => $isLogin,
+            'isFavorite'  => $isFavorite,
+            'footprint'   => $footprint
         ]);
     }
 

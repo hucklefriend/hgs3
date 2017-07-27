@@ -6,7 +6,6 @@
         <a href="{{ url('site/search') }}">サイト一覧</a>
     </nav>
 
-
     <hr>
 
     <div class="card">
@@ -68,7 +67,7 @@
                     <h5>足跡</h5>
                     @foreach ($footprint as $fp)
                         <div class="row">
-                            <div class="col-4">{{ $fp-> }}</div>
+                            <div class="col-4">{{ $fp->user_id }}</div>
                             <div class="col-8"></div>
                         </div>
                     @endforeach

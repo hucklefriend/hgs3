@@ -79,4 +79,9 @@ SQL;
 
         return $this->id;
     }
+
+    public function getNearlyFootprint()
+    {
+
+    }
 }
