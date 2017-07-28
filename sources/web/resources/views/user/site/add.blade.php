@@ -32,37 +32,37 @@
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents1" value="2">
+                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents2" value="2">
                     イラスト/漫画
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents1" value="2">
+                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents3" value="3">
                     小説/テキスト
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents1" value="2">
+                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents4" value="4">
                     その他創作
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents1" value="2">
+                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents5" value="5">
                     SNS/同盟/検索エンジン/ウェブ・リング
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents1" value="2">
+                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents6" value="6">
                     ニュース/情報
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents1" value="2">
+                    <input type="radio" class="form-check-input" name="main_contents" id="main_contents7" value="7">
                     その他
                 </label>
             </div>

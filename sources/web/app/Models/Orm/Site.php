@@ -38,48 +38,6 @@ class Site extends Model
         }
     }
 
-    /**
-     * 取扱いゲームと共に保存
-     *
-     * @param $handleGamesComma
-     */
-    public function saveWithHandleGame($handleGamesComma)
-    {
-        DB::beginTransaction();
-        try {
-            $this->save();
-
-            $sql =<<< SQL
-DELETE FROM site_handle_games WHERE site_id = ?
-SQL;
-            DB::delete($sql, [$this->id]);
-
-            $handleGameIds = explode(',', $handleGamesComma);
-            if (!empty($handleGameIds)) {
-                foreach ($handleGameIds as $gameId) {
-                    if (!empty($gameId)) {
-                        DB::table('site_handle_games')
-                            ->insert([
-                                'site_id' => $this->id,
-                                'game_id' => $gameId
-                            ]);
-                    }
-                }
-            }
-
-            DB::commit();
-        } catch(\Exception $e) {
-            DB::rollBack();
-
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
-        }
-
-        return $this->id;
-    }
-
     public function getNearlyFootprint()
     {
 

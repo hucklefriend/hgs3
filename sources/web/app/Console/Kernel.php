@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         Commands\TestData\User::class,
         Commands\TestData\UserFavoriteGame::class,
         Commands\TestData\ReviewGoodHistory::class,
-        Commands\TestData\Review::class
+        Commands\TestData\Review::class,
+        Commands\TestData\Site::class
     ];
 
     /**

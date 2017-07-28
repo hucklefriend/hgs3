@@ -174,13 +174,13 @@ SQL;
             ->where('game_id', $game->id)
             ->orderBy('updated_at')
             ->take(5)
-            ->get()->pluck('site_id');
+            ->get()->pluck('site_id')->toArray();
 
         if (empty($siteIds)) {
             return [];
         }
 
-        $siteIdComma = implode(',', $siteIds->toArray());
+        $siteIdComma = implode(',', $siteIds);
 
         $sql =<<< SQL
 SELECT users.id, users.name, s.id, s.name, s.url, s.presentation, s.rate,

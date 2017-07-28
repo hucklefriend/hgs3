@@ -186,15 +186,20 @@
                 </div>
                 <div class="card-block">
                     <div class="card-text">
-                        @foreach ($site as $s)
-                            <div>
-                                <h5>{{ $s->name }}</h5>
-                                <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
-                                <div>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</div>
-                                <div>→ <a href="{{ url('site/detail') }}/{{ $s->id }}">サイトの詳細情報</a></div>
-                            </div>
-                            <hr>
-                        @endforeach
+                        @if (empty($site))
+                            <p>このゲームを扱っているサイトは登録されていません。</p>
+                        @else
+                            @foreach ($site as $s)
+                                <div>
+                                    <h5>{{ $s->name }}</h5>
+                                    <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
+                                    <div>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</div>
+                                    <div>→ <a href="{{ url('site/detail') }}/{{ $s->id }}">サイトの詳細情報</a></div>
+                                </div>
+                                <hr>
+                            @endforeach
+                            ⇒ <a href="{{ url('site/game/') }}/{{ $game->id }}">もっと見る</a>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ namespace Hgs3\Http\Controllers\Site;
 
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Game\Searcher;
+use Hgs3\Models\Site\Searcher;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Site;
 use Hgs3\User;
@@ -22,10 +22,10 @@ class SearchController extends Controller
      */
     public function index()
     {
-        $gameId = intval(Input::get('gid', 0));
-        $mainContents = intval(Input::get('mc', 0));
-        $targetGender = intval(Input::get('tg', 0));
-        $rate = intval(Input::get('r', 0));
+        $gameId = intval(Input::get('gid', null));
+        $mainContents = intval(Input::get('mc', null));
+        $targetGender = intval(Input::get('tg', null));
+        $rate = intval(Input::get('r', null));
 
         $searcher = new Searcher();
         $data = $searcher->search($gameId, $mainContents, $targetGender, $rate, 20);
@@ -33,7 +33,13 @@ class SearchController extends Controller
         return view('site.search.list')->with($data);
     }
 
-    public function byGame(Game $game)
+    /**
+     * 指定ゲームで検索
+     *
+     * @param Game $game
+     * @return $this
+     */
+    public function game(Game $game)
     {
         $mainContents = intval(Input::get('mc', 0));
         $targetGender = intval(Input::get('tg', 0));
@@ -42,10 +48,10 @@ class SearchController extends Controller
         $data = $searcher->search($game->id, $mainContents, $targetGender, $rate, 20);
         $data['game'] = $game;
 
-        return view('site.search.gameList')->with($data);
+        return view('site.search.game')->with($data);
     }
 
-    public function byUser($userId)
+    public function user($userId)
     {
         $sites = Site::where('user_id', $userId)
             ->orderBy('updated_timestamp', 'DESC')
