@@ -41,5 +41,7 @@ class All extends Command
         Test\User::create(100);
         Test\Review::create(1000);
         Test\ReviewGoodHistory::create(10);
+        Test\UserFavoriteGame::create();
+        Test\Site::create();
     }
 }

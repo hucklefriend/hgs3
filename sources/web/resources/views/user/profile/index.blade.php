@@ -25,7 +25,10 @@
                     お気に入りゲーム
                 </div>
                 <div class="card-block">
-                    <p class="card-text">工事中</p>
+                    @foreach ($favoriteGames as $fg)
+                        <div><a href="{{ url('game/soft') }}/{{ $fg->game_id }}">{{ $games[$fg->game_id] }}</a></div>
+                    @endforeach
+                    → <a href="{{ url('/user/favorite_game') }}/{{ $user->id }}">もっと見る</a>
                 </div>
             </div>
         </div>
@@ -48,7 +51,11 @@
                     サイト
                 </div>
                 <div class="card-block">
-                    <p class="card-text">工事中</p>
+                    @foreach ($sites as $site)
+                        <div>{{ $site->name }}</div>
+                        <div><a href="{{ $site->url }}">{{ $site->url }}</a></div>
+                        <hr>
+                    @endforeach
                 </div>
             </div>
         </div>

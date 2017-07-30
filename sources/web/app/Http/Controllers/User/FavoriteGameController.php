@@ -5,6 +5,8 @@
 
 namespace Hgs3\Http\Controllers\User;
 
+use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\UserFavoriteGame;
 use Hgs3\Models\User\FavoriteGame;
 use Hgs3\User;
 use Illuminate\Http\Request;
@@ -20,8 +22,15 @@ class FavoriteGameController extends Controller
      */
     public function index(User $user)
     {
+        $isMyself = $user->id == Auth::id();
+        $fav = UserFavoriteGame::where('user_id', $user->id)->get();
 
-        return view('user.game.favorite');
+        return view('user.game.favorite')->with([
+            'user'     => $user,
+            'isMyself' => $isMyself,
+            'favGames' => $fav,
+            'games'    => Game::getNameHash(array_pluck($fav->toArray(), 'game_id'))
+        ]);
     }
 
     /**
