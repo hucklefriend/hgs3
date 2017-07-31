@@ -80,22 +80,28 @@ class SearchController extends Controller
             $handleGames = Game::getNameHash($gameIds);
         }
 
+        $fs = new FavoriteSite;
+
         $isLogin = Auth::check();
         $isFavorite = false;
         if ($isLogin) {
-            $fs = new FavoriteSite;
+
             $isFavorite = $fs->isFavorite(Auth::id(), $site->id);
         }
+
+        $favoriteUsers = $fs->getOldUsers($site->id);
 
         $footprint = [];
 
         return view('site.search.detail')->with([
-            'site'        => $site,
-            'handleGames' => implode('、', $handleGames),
-            'admin'       => User::find($site->user_id),
-            'isLogin'     => $isLogin,
-            'isFavorite'  => $isFavorite,
-            'footprint'   => $footprint
+            'site'          => $site,
+            'handleGames'   => implode('、', $handleGames),
+            'admin'         => User::find($site->user_id),
+            'isLogin'       => $isLogin,
+            'isFavorite'    => $isFavorite,
+            'footprint'     => $footprint,
+            'favoriteUsers' => $favoriteUsers,
+            'users'         => User::getNameHash(array_pluck($favoriteUsers->toArray(), 'user_id'))
         ]);
     }
 

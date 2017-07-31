@@ -53,4 +53,19 @@ SQL;
             ->where('site_id', $siteId)
             ->count('user_id') > 0;
     }
+
+    /**
+     * ユーザーを取得
+     *
+     * @param $siteId
+     * @return \Illuminate\Support\Collection
+     */
+    public function getOldUsers($siteId)
+    {
+        return DB::table('user_favorite_sites')
+            ->where('site_id', $siteId)
+            ->orderBy('id')
+            ->take(5)
+            ->get();
+    }
 }

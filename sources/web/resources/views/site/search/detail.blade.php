@@ -74,6 +74,10 @@
             <div class="card">
                 <div class="card-block">
                     <h5>お気に入り登録者</h5>
+                    @foreach ($favoriteUsers as $fu)
+                    {{ $users[$fu->user_id] }}
+                    <hr>
+                    @endforeach
                 </div>
             </div>
         </div>
