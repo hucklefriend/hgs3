@@ -170,9 +170,9 @@ SQL;
      */
     private function getSite(Game $game)
     {
-        $siteIds = DB::table('site_handle_games')
+        $siteIds = DB::table('site_search_indices')
             ->where('game_id', $game->id)
-            ->orderBy('updated_at')
+            ->orderBy('updated_timestamp', 'DESC')
             ->take(5)
             ->get()->pluck('site_id')->toArray();
 
@@ -186,7 +186,7 @@ SQL;
 SELECT users.id, users.name, s.id, s.name, s.url, s.presentation, s.rate,
   s.gender, s.main_contents_id, s.out_count, s.in_count, s.good_count
 FROM (
-  SELECT * FROM sites WHERE id IN ({$siteIdComma}) ORDER BY updated_timestamp
+  SELECT * FROM sites WHERE id IN ({$siteIdComma})
 ) s LEFT OUTER JOIN users ON s.user_id = users.id
 SQL;
 
