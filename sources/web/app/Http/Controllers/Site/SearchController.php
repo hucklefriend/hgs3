@@ -4,9 +4,12 @@ namespace Hgs3\Http\Controllers\Site;
 
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Models\Orm\UserFavoriteGame;
+use Hgs3\Models\Orm\UserFavoriteSite;
 use Hgs3\Models\Site\Searcher;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Site;
+use Hgs3\Models\User\FavoriteSite;
 use Hgs3\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -80,7 +83,8 @@ class SearchController extends Controller
         $isLogin = Auth::check();
         $isFavorite = false;
         if ($isLogin) {
-            //User
+            $fs = new FavoriteSite;
+            $isFavorite = $fs->isFavorite(Auth::id(), $site->id);
         }
 
         $footprint = [];

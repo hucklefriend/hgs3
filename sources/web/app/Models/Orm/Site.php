@@ -42,4 +42,30 @@ class Site extends Model
     {
 
     }
+
+    /**
+     * ハッシュでデータを取得
+     *
+     * @param array $siteIds
+     * @return array
+     */
+    public static function getHash(array $siteIds)
+    {
+        if (empty($siteIds)) {
+            return [];
+        }
+
+        $data = DB::table('user_favorite_sites')
+            ->whereIn('site_id', $siteIds)
+            ->get();
+
+        $hash = [];
+        foreach ($data as $site) {
+            $hash[$site->id] = $site;
+        }
+
+        unset($data);
+
+        return $hash;
+    }
 }

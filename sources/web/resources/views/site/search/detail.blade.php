@@ -49,7 +49,23 @@
             </div>
             <div class="row">
                 <div class="col-2">お気に入り</div>
-                <div class="col-10">{{ $site->in_count }}</div>
+                <div class="col-10">
+                    @if ($isFavorite)
+                        登録済み
+                        <form method="POST" action="{{ url('user/favorite_site') }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <input type="hidden" name="site_id" value="{{ $site->id }}">
+                            <button class="btn btn-primary">解除する</button>
+                        </form>
+                    @else
+                        <form method="POST" action="{{ url('user/favorite_site') }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="site_id" value="{{ $site->id }}">
+                            <button class="btn btn-primary">登録する</button>
+                        </form>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
