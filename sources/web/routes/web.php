@@ -95,3 +95,7 @@ Route::post('/user/site/add', 'User\SiteController@store')->middleware('auth');
 Route::get('/user/site/edit/{site}', 'User\SiteController@edit')->middleware('auth');
 Route::get('/user/site/edit/{site}', 'User\SiteController@edit')->middleware('auth');
 Route::get('/user/site/{site}', 'User\SiteController@detail')->middleware('auth');
+
+
+// コミュニティ
+Route::get('/community', 'CommunityController@index');
