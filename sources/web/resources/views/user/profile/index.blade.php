@@ -14,9 +14,8 @@
     </section>
 
     @if ($isMyself)
-    <p><a href="{{ url('user/profile/edit') }}">プロフィール編集</a></p>
+    <p><a href="{{ url2('user/profile/edit') }}">プロフィール編集</a></p>
     @endif
-
 
     <div class="row">
         <div class="col-sm-6">
@@ -26,9 +25,9 @@
                 </div>
                 <div class="card-block">
                     @foreach ($favoriteGames as $fg)
-                        <div><a href="{{ url('game/soft') }}/{{ $fg->game_id }}">{{ $games[$fg->game_id] }}</a></div>
+                        <div><a href="{{ url2('game/soft') }}/{{ $fg->game_id }}">{{ $games[$fg->game_id] }}</a></div>
                     @endforeach
-                    → <a href="{{ url('/user/favorite_game') }}/{{ $user->id }}">もっと見る</a>
+                    → <a href="{{ url2('/user/favorite_game') }}/{{ $user->id }}">もっと見る</a>
                 </div>
             </div>
         </div>
@@ -65,7 +64,11 @@
                     お気に入りサイト
                 </div>
                 <div class="card-block">
-                    <p class="card-text">工事中</p>
+                    @foreach ($favoriteSites['order'] as $siteId)
+                        <div><a href="{{ url2('site/detail') }}/{{ $siteId }}">{{ $favoriteSites['sites'][$siteId]->name }}</a></div>
+                        <div><a href="{{ $favoriteSites['sites'][$siteId]->url }}">{{ $favoriteSites['sites'][$siteId]->url }}</a></div>
+                        <hr>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -78,7 +81,10 @@
                     レビュー
                 </div>
                 <div class="card-block">
-                    <p class="card-text">工事中</p>
+                    @foreach ($reviews as $r)
+                        <p style="word-wrap: break-word;"><a href="{{ url2('/game/review/detail') }}/{{ $r->id }}">{{ $r->title }}</a></p>
+                        <hr>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -88,7 +94,12 @@
                     いいねしたレビュー
                 </div>
                 <div class="card-block">
-                    <p class="card-text">工事中</p>
+                    @foreach ($goodReviews['order'] as $gr)
+                        <p style="word-wrap: break-word;">
+                            <a href="{{ url2('/game/review/detail') }}/{{ $gr->review_id }}">{{ $goodReviews['reviews'][$gr->review_id]->title }}</a>
+                        </p>
+                        <hr>
+                    @endforeach
                 </div>
             </div>
         </div>

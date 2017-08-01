@@ -69,14 +69,15 @@
             </div>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-6">
             <div class="card">
                 <div class="card-block">
                     <h5>お気に入り登録者</h5>
                     @foreach ($favoriteUsers as $fu)
-                    {{ $users[$fu->user_id] }}
-                    <hr>
+                        <hr>
+                        <a href="{{ url('user/profile') }}/{{ $fu->user_id }}">{{ $users[$fu->user_id] }}</a>
                     @endforeach
                 </div>
             </div>

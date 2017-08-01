@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * 会社選択SELECTを生成
+ *
+ * @param $companyId
+ * @param $withEmpty
+ * @param array $params
+ * @return \Illuminate\Support\HtmlString
+ */
 function company_select($companyId, $withEmpty, $params = [])
 {
     $companies = \Hgs3\Models\Orm\GameCompany::all(['id', 'name']);
@@ -23,6 +31,14 @@ function company_select($companyId, $withEmpty, $params = [])
     );
 }
 
+/**
+ * シリーズ選択SELECTを生成
+ *
+ * @param $seriesId
+ * @param $withEmpty
+ * @param array $params
+ * @return \Illuminate\Support\HtmlString
+ */
 function series_select($seriesId, $withEmpty, $params = [])
 {
     $series = \Hgs3\Models\Orm\GameSeries::all(['id', 'name']);
@@ -46,6 +62,13 @@ function series_select($seriesId, $withEmpty, $params = [])
     );
 }
 
+/**
+ * ゲーム種別選択SELECTを生成
+ *
+ * @param $gameType
+ * @param array $params
+ * @return \Illuminate\Support\HtmlString
+ */
 function game_type_select($gameType, $params = [])
 {
     return Form::select(
@@ -59,6 +82,13 @@ function game_type_select($gameType, $params = [])
     );
 }
 
+/**
+ * プラットフォーム選択SELECTを生成
+ *
+ * @param $platformId
+ * @param array $params
+ * @return \Illuminate\Support\HtmlString
+ */
 function platform_select($platformId, $params = [])
 {
     return Form::select(
@@ -71,3 +101,19 @@ function platform_select($platformId, $params = [])
         ]
     );
 }
+
+/**
+ * HGS3用url
+ *
+ * @param $path
+ * @param array $parameters
+ * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+ */
+function url2($path, $parameters = [])
+{
+    // 準備できたら全部secureにしたいけど、
+    // まだできるかわからないのでラッパーで対応
+
+    return url($path, $parameters, false);
+}
+
