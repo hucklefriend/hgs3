@@ -16,7 +16,7 @@ class CreateGameCommunitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sites', function (Blueprint $table) {
+        Schema::create('game_communities', function (Blueprint $table) {
             $table->increments('id')->comment('サイトID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->string('name', 100)->comment('サイト名');
@@ -44,6 +44,6 @@ class CreateGameCommunitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sites');
+        Schema::dropIfExists('game_communities');
     }
 }
