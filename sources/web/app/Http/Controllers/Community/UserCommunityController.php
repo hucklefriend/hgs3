@@ -1,6 +1,6 @@
 <?php
 /**
- * コミュニティコントローラー
+ * ユーザーコミュニティコントローラー
  */
 
 namespace Hgs3\Http\Controllers\Community;
@@ -18,18 +18,21 @@ use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm\Game;
 use Illuminate\Support\Facades\Auth;
 
-class CommunityController extends Controller
+class UserCommunityController extends Controller
 {
     /**
-     * 一覧ページ
+     * ユーザーコミュニティトップページ
+     *
+     * @param UserCommunity $uc
+     * @return $this
      */
-    public function index()
+    public function detail(UserCommunity $uc)
     {
-        $uc = UserCommunity::orderBy('id')->get();
+        $model = new \Hgs3\Models\Community\UserCommunity();
 
-        return view('community.index')->with([
-            'isAdmin'         => UserRole::isAdmin(),
-            'userCommunities' => $uc
+        return view('community.user.detail')->with([
+            'uc'      => $uc,
+            'members' => $model->getOlderMembers($uc->id)
         ]);
     }
 }

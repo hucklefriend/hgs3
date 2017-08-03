@@ -98,4 +98,5 @@ Route::get('/user/site/{site}', 'User\SiteController@detail')->middleware('auth'
 
 
 // コミュニティ
-Route::get('/community', 'CommunityController@index');
+Route::get('/community', 'Community\CommunityController@index');
+Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail');

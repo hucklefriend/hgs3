@@ -17,7 +17,7 @@ class CreateUserCommunitiesTable extends Migration
     public function up()
     {
         Schema::create('user_communities', function (Blueprint $table) {
-            $table->increments('id')->comment('運営コミュニティID');
+            $table->increments('id')->comment('ユーザーコミュニティID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID(作成者)');
             $table->string('name', 100)->comment('コミュニティ名');
             $table->unsignedInteger('user_num')->comment('ユーザー数');
