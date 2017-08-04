@@ -3,6 +3,8 @@
 namespace Hgs3\Models\Community;
 
 use Hgs3\Models\Orm\UserCommunityMember;
+use Hgs3\Models\Orm\UserCommunityTopic;
+use Hgs3\Models\Orm\UserCommunityTopicResponse;
 use Illuminate\Support\Facades\DB;
 
 class UserCommunity
@@ -144,5 +146,65 @@ SQL;
             ->where('user_community_id', $userCommunityId)
             ->where('user_id', $userId)
             ->count() > 0;
+    }
+
+    /**
+     * トピックを投稿
+     *
+     * @param $userCommunityId
+     * @param $userId
+     * @param $title
+     * @param $comment
+     */
+    public function writeTopic($userCommunityId, $userId, $title, $comment)
+    {
+        $now = new \DateTime();
+
+        UserCommunityTopic::insert([
+            'user_community_id' => $userCommunityId,
+            'user_id'           => $userId,
+            'title'             => $title,
+            'comment'           => $comment,
+            'wrote_date'        => $now,
+            'response_date'     => $now
+        ]);
+    }
+
+    /**
+     * レスを投稿
+     *
+     * @param $topicId
+     * @param $userId
+     * @param $comment
+     */
+    public function writeResponse($topicId, $userId, $comment)
+    {
+        $now = new \DateTime();
+
+        DB::beginTransaction();
+
+        try {
+            UserCommunityTopicResponse::insert([
+                'user_community_topic_id' => $topicId,
+                'user_id'                 => $userId,
+                'comment'                 => $comment,
+                'wrote_date'              => $now
+            ]);
+
+            $updSql =<<< SQL
+UPDATE user_community_topics
+SET response_num = response_num + 1
+  , response_date = NOW()
+WHERE id = ?
+SQL;
+            DB::update($updSql, [$topicId]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
+
+        return true;
     }
 }
