@@ -77,6 +77,9 @@ class Soft
         // サイト
         $data['site'] = $this->getSite($game);
 
+        // コミュニティ
+
+
         return $data;
     }
 

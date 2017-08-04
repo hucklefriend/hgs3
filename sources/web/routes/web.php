@@ -96,7 +96,9 @@ Route::get('/user/site/edit/{site}', 'User\SiteController@edit')->middleware('au
 Route::get('/user/site/edit/{site}', 'User\SiteController@edit')->middleware('auth');
 Route::get('/user/site/{site}', 'User\SiteController@detail')->middleware('auth');
 
-
 // コミュニティ
 Route::get('/community', 'Community\CommunityController@index');
-Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail');
+Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join')->middleware('auth');
+Route::post('/community/u/{uc}/secession', 'Community\UserCommunityController@secession')->middleware('auth');
+Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members')->middleware('auth');
+Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->middleware('auth');

@@ -21,6 +21,8 @@ class Kernel extends ConsoleKernel
         Commands\TestData\Review::class,
         Commands\TestData\Site::class,
         Commands\TestData\UserFavoriteSite::class,
+        Commands\TestData\UserCommunity::class,
+        Commands\TestData\UserCommunityMember::class,
         Commands\Init::class,
     ];
 

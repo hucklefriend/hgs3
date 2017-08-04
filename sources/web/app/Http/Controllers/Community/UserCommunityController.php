@@ -30,9 +30,59 @@ class UserCommunityController extends Controller
     {
         $model = new \Hgs3\Models\Community\UserCommunity();
 
+        $members = $model->getOlderMembers($uc->id);
+        $users = User::getNameHash(array_pluck($members->toArray(), 'user_id'));
+
         return view('community.user.detail')->with([
+            'uc'       => $uc,
+            'members'  => $members,
+            'users'    => $users,
+            'isMember' => $model->isMember($uc->id, Auth::id())
+        ]);
+    }
+
+    /**
+     * 参加
+     *
+     * @param UserCommunity $uc
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function join(UserCommunity $uc)
+    {
+        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model->join($uc->id, Auth::id());
+
+        return redirect()->back();
+    }
+
+    /**
+     * 脱退
+     *
+     * @param UserCommunity $uc
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function secession(UserCommunity $uc)
+    {
+        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model->secession($uc->id, Auth::id());
+
+        return redirect()->back();
+    }
+
+    /**
+     * メンバー一覧
+     *
+     * @param UserCommunity $uc
+     * @return $this
+     */
+    public function members(UserCommunity $uc)
+    {
+        $members = $uc->getMembers();
+
+        return view('community.user.member')->with([
             'uc'      => $uc,
-            'members' => $model->getOlderMembers($uc->id)
+            'members' => $members,
+            'users'   => User::getNameHash(array_pluck($members->toArray(), 'user_id'))
         ]);
     }
 }
