@@ -44,5 +44,10 @@ class All extends Command
         Test\UserFavoriteGame::create();
         Test\Site::create();
         Test\UserFavoriteSite::create();
+
+        Test\UserCommunity::create();
+        Test\UserCommunityMember::create();
+        Test\UserCommunityTopic::create();
+        Test\UserCommunityTopicResponse::create();
     }
 }

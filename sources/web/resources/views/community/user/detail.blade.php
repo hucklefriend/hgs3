@@ -45,6 +45,17 @@
                     直近の書き込み
                 </div>
                 <div class="card-block">
+                    <table class="table table-responsive">
+                        <tbody>
+                            @foreach ($topics as $t)
+                            <tr>
+                                <td><a href="{{ url('community/u') }}/{{ $t->id }}/topics">{{ $t->title }}</a></td>
+                                <td>{{ $t->wrote_date }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    ⇒ <a href="{{ url('community/u') }}/{{ $uc->id }}/topics">もっと見る</a>
                 </div>
             </div>
         </div>

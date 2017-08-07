@@ -31,13 +31,19 @@ class UserCommunityController extends Controller
         $model = new \Hgs3\Models\Community\UserCommunity();
 
         $members = $model->getOlderMembers($uc->id);
-        $users = User::getNameHash(array_pluck($members->toArray(), 'user_id'));
+        $topics = $model->getLatestTopics($uc->id);
+
+        $users = User::getNameHash(array_merge(
+            array_pluck($members->toArray(), 'user_id'),
+            array_pluck($topics->toArray(), 'user_id')
+        ));
 
         return view('community.user.detail')->with([
             'uc'       => $uc,
             'members'  => $members,
             'users'    => $users,
-            'isMember' => $model->isMember($uc->id, Auth::id())
+            'isMember' => $model->isMember($uc->id, Auth::id()),
+            'topics'   => $topics
         ]);
     }
 
@@ -84,5 +90,30 @@ class UserCommunityController extends Controller
             'members' => $members,
             'users'   => User::getNameHash(array_pluck($members->toArray(), 'user_id'))
         ]);
+    }
+
+    /**
+     * 掲示板
+     *
+     * @param UserCommunity $uc
+     */
+    public function bbs(UserCommunity $uc)
+    {
+        $model = new \Hgs3\Models\Community\UserCommunity();
+
+        $data = $model->getTopics($uc);
+        $data['uc'] = $uc;
+
+        return view('community.user.bbs')->with($data);
+    }
+
+    public function write(UserCommunity $uc)
+    {
+        
+    }
+
+    public function remove(UserCommunity $uc)
+    {
+
     }
 }

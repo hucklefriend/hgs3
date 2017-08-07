@@ -5,6 +5,7 @@ namespace Hgs3\Models\Community;
 use Hgs3\Models\Orm\UserCommunityMember;
 use Hgs3\Models\Orm\UserCommunityTopic;
 use Hgs3\Models\Orm\UserCommunityTopicResponse;
+use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 
 class UserCommunity
@@ -149,6 +150,40 @@ SQL;
     }
 
     /**
+     * トピックを取得
+     *
+     * @param $userCommunityId
+     * @return array
+     */
+    public function getTopics($userCommunityId)
+    {
+        $pager = DB::table('user_community_topics')
+            ->where('user_community_id', $userCommunityId)
+            ->orderBy('id', 'DESC')
+            ->paginate(30);
+
+        return [
+            'pager' => $pager,
+            'users' => User::getNameHash(array_pluck($pager->items(), 'user_id'))
+        ];
+    }
+
+    /**
+     * 直近のトピックを取得
+     *
+     * @param $userCommunityId
+     * @return \Illuminate\Support\Collection
+     */
+    public function getLatestTopics($userCommunityId)
+    {
+        return DB::table('user_community_topics')
+            ->where('user_community_id', $userCommunityId)
+            ->orderBy('id', 'DESC')
+            ->take(5)
+            ->get();
+    }
+
+    /**
      * トピックを投稿
      *
      * @param $userCommunityId
@@ -166,7 +201,8 @@ SQL;
             'title'             => $title,
             'comment'           => $comment,
             'wrote_date'        => $now,
-            'response_date'     => $now
+            'response_date'     => $now,
+            'response_num'      => 0
         ]);
     }
 
