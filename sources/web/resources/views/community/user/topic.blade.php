@@ -26,8 +26,6 @@
             <div>writer: <a href="{{ url2('user/profile') }}/{{ $r->user_id }}">{{ $users[$r->user_id] }}</a></div>
             <pre>{{ $r->comment }}</pre>
         </div>
-
-
     @endforeach
 
     {{ $pager->links() }}
