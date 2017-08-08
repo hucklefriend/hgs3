@@ -36,8 +36,6 @@ class User extends Authenticatable
      */
     public static function getNameHash(array $ids = array())
     {
-
-
         $tbl = DB::table('users');
 
         if (!empty($ids)) {

@@ -18,7 +18,7 @@
         <tbody>
             @foreach ($pager->items() as $t)
                 <tr>
-                    <td><a href="{{ url('community/u') }}/{{ $t->id }}/topic/{{ $t->id }}">{{ $t->title }}</a></td>
+                    <td><a href="{{ url('community/u') }}/{{ $uc->id }}/topic/{{ $t->id }}">{{ $t->title }}</a></td>
                     <td>{{ $users[$t->user_id] }}</td>
                     <td>{{ $t->wrote_date }}</td>
                     <td>{{ $t->response_num }}</td>

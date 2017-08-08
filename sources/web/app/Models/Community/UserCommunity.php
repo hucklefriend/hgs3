@@ -184,6 +184,25 @@ SQL;
     }
 
     /**
+     * トピックの詳細を取得
+     *
+     * @param UserCommunityTopic $uct
+     * @return array
+     */
+    public function getTopicDetail(UserCommunityTopic $uct)
+    {
+        $pager = DB::table('user_community_topic_responses')
+            ->where('user_community_topic_id', $uct->id)
+            ->orderBy('id', 'DESC')
+            ->paginate(30);
+
+        return [
+            'pager' => $pager,
+            'users' => User::getNameHash(array_pluck($pager->items(), 'user_id'))
+        ];
+    }
+
+    /**
      * トピックを投稿
      *
      * @param $userCommunityId

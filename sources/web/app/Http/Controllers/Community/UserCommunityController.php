@@ -10,6 +10,7 @@ use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
 use Hgs3\Models\Orm\UserCommunity;
+use Hgs3\Models\Orm\UserCommunityTopic;
 use Hgs3\Models\User\FavoriteGame;
 use Hgs3\User;
 use Illuminate\Http\Request;
@@ -93,18 +94,38 @@ class UserCommunityController extends Controller
     }
 
     /**
-     * 掲示板
+     * トピックス
      *
      * @param UserCommunity $uc
+     * @return $this
      */
-    public function bbs(UserCommunity $uc)
+    public function topics(UserCommunity $uc)
     {
         $model = new \Hgs3\Models\Community\UserCommunity();
 
-        $data = $model->getTopics($uc);
+        $data = $model->getTopics($uc->id);
         $data['uc'] = $uc;
 
-        return view('community.user.bbs')->with($data);
+        return view('community.user.topics')->with($data);
+    }
+
+    /**
+     * トピックの詳細
+     *
+     * @param UserCommunity $uc
+     * @param UserCommunityTopic $uct
+     * @return $this
+     */
+    public function topicDetail(UserCommunity $uc, UserCommunityTopic $uct)
+    {
+        $model = new \Hgs3\Models\Community\UserCommunity();
+
+        $data = $model->getTopicDetail($uct);
+        $data['uc'] = $uc;
+        $data['uct'] = $uct;
+        $data['writer'] = User::find($uct->user_id);
+
+        return view('community.user.topic')->with($data);
     }
 
     public function write(UserCommunity $uc)

@@ -101,4 +101,6 @@ Route::get('/community', 'Community\CommunityController@index');
 Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join')->middleware('auth');
 Route::post('/community/u/{uc}/secession', 'Community\UserCommunityController@secession')->middleware('auth');
 Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members')->middleware('auth');
+Route::get('/community/u/{uc}/topics', 'Community\UserCommunityController@topics')->middleware('auth');
+Route::get('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@topicDetail')->middleware('auth');
 Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->middleware('auth');
