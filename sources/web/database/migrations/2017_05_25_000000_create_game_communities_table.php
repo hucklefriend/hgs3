@@ -17,22 +17,8 @@ class CreateGameCommunitiesTable extends Migration
     public function up()
     {
         Schema::create('game_communities', function (Blueprint $table) {
-            $table->increments('id')->comment('サイトID');
-            $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
-            $table->string('name', 100)->comment('サイト名');
-            $table->string('url', 200)->comment('URL');
-            $table->string('banner_url', 200)->nullable()->comment('バナーURL');
-            $table->text('presentation')->comment('紹介文');
-            $table->unsignedTinyInteger('rate')->comment('対象年齢');
-            $table->unsignedTinyInteger('gender')->comment('対象性別');
-            $table->unsignedSmallInteger('main_contents_id')->comment('メインコンテンツ');
-            $table->unsignedTinyInteger('open_type')->comment('公開範囲');
-            $table->unsignedInteger('in_count')->comment('INカウント');
-            $table->unsignedInteger('out_count')->comment('OUTカウント');
-            $table->unsignedInteger('good_count')->comment('いいね数');
-            $table->unsignedInteger('bad_count')->comment('BAD数');
-            $table->unsignedBigInteger('registered_timestamp')->comment('登録日時タイムスタンプ');
-            $table->unsignedBigInteger('updated_timestamp')->comment('最終更新タイムスタンプ');
+            $table->unsignedInteger('id')->primary()->comment('ゲームコミュニティID(=ゲームソフトID)');
+            $table->unsignedInteger('user_num')->comment('ユーザー数');
             $table->timestamps();
         });
     }

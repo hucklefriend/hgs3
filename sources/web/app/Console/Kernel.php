@@ -25,6 +25,9 @@ class Kernel extends ConsoleKernel
         Commands\TestData\UserCommunityMember::class,
         Commands\TestData\UserCommunityTopic::class,
         Commands\TestData\UserCommunityTopicResponse::class,
+        Commands\TestData\GameCommunityMember::class,
+        Commands\TestData\GameCommunityTopic::class,
+        Commands\TestData\gameCommunityTopicResponse::class,
         Commands\Init::class,
     ];
 

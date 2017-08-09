@@ -98,6 +98,7 @@ Route::get('/user/site/{site}', 'User\SiteController@detail')->middleware('auth'
 
 // コミュニティ
 Route::get('/community', 'Community\CommunityController@index');
+
 Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join')->middleware('auth');
 Route::post('/community/u/{uc}/secession', 'Community\UserCommunityController@secession')->middleware('auth');
 Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members')->middleware('auth');
@@ -108,3 +109,14 @@ Route::post('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@
 Route::delete('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@erase')->middleware('auth');
 Route::delete('/community/u/{uc}/topic_response/{uctr}', 'Community\UserCommunityController@eraseResponse')->middleware('auth');
 Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->middleware('auth');
+
+Route::post('/community/g/{gc}/join', 'Community\GameCommunityController@join')->middleware('auth');
+Route::post('/community/g/{gc}/secession', 'Community\GameCommunityController@secession')->middleware('auth');
+Route::get('/community/g/{gc}/member', 'Community\GameCommunityController@members')->middleware('auth');
+Route::get('/community/g/{gc}/topics', 'Community\GameCommunityController@topics')->middleware('auth');
+Route::post('/community/g/{gc}/topics', 'Community\GameCommunityController@write')->middleware('auth');
+Route::get('/community/g/{gc}/topic/{gct}', 'Community\GameCommunityController@topicDetail')->middleware('auth');
+Route::post('/community/g/{gc}/topic/{gct}', 'Community\GameCommunityController@writeResponse')->middleware('auth');
+Route::delete('/community/g/{gc}/topic/{gct}', 'Community\GameCommunityController@erase')->middleware('auth');
+Route::delete('/community/g/{gc}/topic_response/{gctr}', 'Community\GameCommunityController@eraseResponse')->middleware('auth');
+Route::get('/community/g/{gc}', 'Community\GameCommunityController@detail')->middleware('auth');
