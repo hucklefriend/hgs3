@@ -7,6 +7,8 @@ namespace Hgs3\Http\Controllers\Community;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
+use Hgs3\Http\Requests\Community\User\Topic;
+use Hgs3\Http\Requests\Community\User\TopicResponse;
 use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
 use Hgs3\Models\Orm\UserCommunity;
@@ -128,9 +130,34 @@ class UserCommunityController extends Controller
         return view('community.user.topic')->with($data);
     }
 
-    public function write(UserCommunity $uc)
+    /**
+     * 投稿
+     *
+     * @param Topic $request
+     * @param UserCommunity $uc
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function write(Topic $request, UserCommunity $uc)
     {
-        
+        $title = $request->get('title');
+        $comment = $request->get('comment');
+
+        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model->writeTopic($uc->id, Auth::id(), $title, $comment);
+
+        return redirect()->back();
+    }
+
+    /**
+     * レスの投稿
+     *
+     * @param TopicResponse $response
+     * @param UserCommunityTopic $uct
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function writeResponse(TopicResponse $response, UserCommunityTopic $uct)
+    {
+        return redirect()->back();
     }
 
     public function remove(UserCommunity $uc)
