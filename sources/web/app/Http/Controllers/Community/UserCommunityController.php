@@ -13,6 +13,7 @@ use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
 use Hgs3\Models\Orm\UserCommunity;
 use Hgs3\Models\Orm\UserCommunityTopic;
+use Hgs3\Models\Orm\UserCommunityTopicResponse;
 use Hgs3\Models\User\FavoriteGame;
 use Hgs3\User;
 use Illuminate\Http\Request;
@@ -126,6 +127,8 @@ class UserCommunityController extends Controller
         $data['uc'] = $uc;
         $data['uct'] = $uct;
         $data['writer'] = User::find($uct->user_id);
+        $data['csrfToken'] = csrf_token();
+        $data['userId'] = Auth::id();
 
         return view('community.user.topic')->with($data);
     }
@@ -171,8 +174,39 @@ class UserCommunityController extends Controller
         return redirect()->back();
     }
 
-    public function remove(UserCommunity $uc)
+    /**
+     * 投稿の削除
+     *
+     * @param UserCommunity $uc
+     * @param UserCommunityTopic $uct
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function erase(UserCommunity $uc, UserCommunityTopic $uct)
     {
+        // TODO: 投稿者かどうかチェック
 
+        $userCommunityId = $uct->user_community_id;
+
+        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model->eraseTopic($uct->id);
+
+        return redirect('community/u/' . $userCommunityId . '/topics');
+    }
+
+    /**
+     * レスの削除
+     *
+     * @param UserCommunity $uc
+     * @param UserCommunityTopicResponse $uctr
+     * @return mixed
+     */
+    public function eraseResponse(UserCommunity $uc, UserCommunityTopicResponse $uctr)
+    {
+        // TODO: 投稿者かどうかチェック
+
+        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model->eraseTopicResponse($uctr);
+
+        return redirect()->back();
     }
 }

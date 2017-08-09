@@ -105,4 +105,6 @@ Route::get('/community/u/{uc}/topics', 'Community\UserCommunityController@topics
 Route::post('/community/u/{uc}/topics', 'Community\UserCommunityController@write')->middleware('auth');
 Route::get('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@topicDetail')->middleware('auth');
 Route::post('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@writeResponse')->middleware('auth');
+Route::delete('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@erase')->middleware('auth');
+Route::delete('/community/u/{uc}/topic_response/{uctr}', 'Community\UserCommunityController@eraseResponse')->middleware('auth');
 Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->middleware('auth');

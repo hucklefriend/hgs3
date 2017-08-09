@@ -16,6 +16,14 @@
         <div>{{ $uct->wrote_date }}</div>
         <div>writer: <a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a></div>
         <pre>{{ $uct->comment }}</pre>
+
+        @if ($uct->user_id == $userId)
+            <form method="POST" action="{{ url('community/u') }}/{{ $uc->id }}/topic/{{ $uct->id }}">
+                <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                {{ method_field('DELETE') }}
+                <button class="btn btn-danger btn-sm">削除</button>
+            </form>
+        @endif
     </div>
 
     {{ $pager->links() }}
@@ -25,6 +33,14 @@
             <div>{{ $r->wrote_date }}</div>
             <div>writer: <a href="{{ url2('user/profile') }}/{{ $r->user_id }}">{{ $users[$r->user_id] }}</a></div>
             <pre>{{ $r->comment }}</pre>
+
+            @if ($r->user_id == $userId)
+                <form method="POST" action="{{ url2('community/u') }}/{{ $uc->id }}/topic_response/{{ $r->id }}">
+                    <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                    {{ method_field('DELETE') }}
+                    <button class="btn btn-danger btn-sm">削除</button>
+                </form>
+            @endif
         </div>
     @endforeach
 
@@ -33,7 +49,7 @@
     <hr>
 
     <form method="POST" action="{{ url('community/u') }}/{{ $uc->id }}/topic/{{ $uct->id }}">
-        {{ csrf_field() }}
+        <input type="hidden" name="_token" value="{{ $csrfToken }}">
         <div class="form-group row">
             <label for="comment" class="col-3 col-form-label">内容</label>
             <div class="col-9">
@@ -46,6 +62,8 @@
             </div>
         </div>
     </form>
+
+
 
 
 @endsection

@@ -262,4 +262,61 @@ SQL;
 
         return true;
     }
+
+    /**
+     * トピックの消去
+     *
+     * @param $topicId
+     * @return bool
+     */
+    public function eraseTopic($topicId)
+    {
+        DB::beginTransaction();
+
+        try {
+            DB::table('user_community_topics')
+                ->where('id', $topicId)
+                ->delete();
+
+            DB::table('user_community_topic_responses')
+                ->where('user_community_topic_id', $topicId)
+                ->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * レスの消去
+     *
+     * @param UserCommunityTopicResponse $uctr
+     * @return bool
+     */
+    public function eraseTopicResponse(UserCommunityTopicResponse $uctr)
+    {
+        DB::beginTransaction();
+
+        try {
+            $updSql =<<< SQL
+UPDATE user_community_topics
+SET response_num = response_num - 1
+WHERE id = ?
+SQL;
+            DB::update($updSql, [$uctr->topic_id]);
+
+            $uctr->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
+
+        return true;
+    }
 }
