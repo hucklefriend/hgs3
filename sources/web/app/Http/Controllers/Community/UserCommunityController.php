@@ -139,6 +139,9 @@ class UserCommunityController extends Controller
      */
     public function write(Topic $request, UserCommunity $uc)
     {
+        // TODO: メンバーかどうか
+
+
         $title = $request->get('title');
         $comment = $request->get('comment');
 
@@ -151,12 +154,20 @@ class UserCommunityController extends Controller
     /**
      * レスの投稿
      *
-     * @param TopicResponse $response
+     * @param TopicResponse $request
+     * @param UserCommunity $uc
      * @param UserCommunityTopic $uct
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function writeResponse(TopicResponse $response, UserCommunityTopic $uct)
+    public function writeResponse(TopicResponse $request, UserCommunity $uc, UserCommunityTopic $uct)
     {
+        // TODO: メンバーかどうか
+
+        $comment = $request->get('comment');
+
+        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model->writeResponse($uct->id, Auth::id(), $comment);
+
         return redirect()->back();
     }
 

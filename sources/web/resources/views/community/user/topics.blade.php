@@ -29,6 +29,8 @@
 
     {{ $pager->links() }}
 
+    <hr>
+
     <form method="POST" action="{{ url('community/u') }}/{{ $uc->id }}/topics">
         {{ csrf_field() }}
         <div class="form-group row">
