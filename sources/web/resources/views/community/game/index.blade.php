@@ -8,7 +8,7 @@
             <ul class="">
                 @if (isset($list[$phoneticId]))
                 @foreach ($list[$phoneticId] as $soft)
-                    <li><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
+                    <li><a href="{{ url('community/g') }}/{{ $soft->id }}">{{ $soft->name }} ({{ $memberNum[$soft->id] ?? 0 }}人)</a></li>
                 @endforeach
                 @endif
             </ul>

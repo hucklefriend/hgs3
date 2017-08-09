@@ -21,6 +21,9 @@
         <div class="col-6">
             <h5>ゲームコミュニティ</h5>
             <p>特定のゲームソフトが集まるコミュニティです。</p>
+
+
+            <div>⇒ <a href="{{ url2('community/g/') }}">全部見る</a></div>
         </div>
     </div>
 

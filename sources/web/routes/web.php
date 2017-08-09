@@ -120,3 +120,4 @@ Route::post('/community/g/{gc}/topic/{gct}', 'Community\GameCommunityController@
 Route::delete('/community/g/{gc}/topic/{gct}', 'Community\GameCommunityController@erase')->middleware('auth');
 Route::delete('/community/g/{gc}/topic_response/{gctr}', 'Community\GameCommunityController@eraseResponse')->middleware('auth');
 Route::get('/community/g/{gc}', 'Community\GameCommunityController@detail')->middleware('auth');
+Route::get('/community/g', 'Community\GameCommunityController@index');
