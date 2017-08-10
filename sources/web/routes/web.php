@@ -110,14 +110,14 @@ Route::delete('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityControlle
 Route::delete('/community/u/{uc}/topic_response/{uctr}', 'Community\UserCommunityController@eraseResponse')->middleware('auth');
 Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->middleware('auth');
 
-Route::post('/community/g/{gc}/join', 'Community\GameCommunityController@join')->middleware('auth');
-Route::post('/community/g/{gc}/secession', 'Community\GameCommunityController@secession')->middleware('auth');
-Route::get('/community/g/{gc}/member', 'Community\GameCommunityController@members')->middleware('auth');
-Route::get('/community/g/{gc}/topics', 'Community\GameCommunityController@topics')->middleware('auth');
-Route::post('/community/g/{gc}/topics', 'Community\GameCommunityController@write')->middleware('auth');
-Route::get('/community/g/{gc}/topic/{gct}', 'Community\GameCommunityController@topicDetail')->middleware('auth');
-Route::post('/community/g/{gc}/topic/{gct}', 'Community\GameCommunityController@writeResponse')->middleware('auth');
-Route::delete('/community/g/{gc}/topic/{gct}', 'Community\GameCommunityController@erase')->middleware('auth');
-Route::delete('/community/g/{gc}/topic_response/{gctr}', 'Community\GameCommunityController@eraseResponse')->middleware('auth');
-Route::get('/community/g/{gc}', 'Community\GameCommunityController@detail')->middleware('auth');
+Route::post('/community/g/{game}/join', 'Community\GameCommunityController@join')->middleware('auth');
+Route::post('/community/g/{game}/secession', 'Community\GameCommunityController@secession')->middleware('auth');
+Route::get('/community/g/{game}/member', 'Community\GameCommunityController@members')->middleware('auth');
+Route::get('/community/g/{game}/topics', 'Community\GameCommunityController@topics')->middleware('auth');
+Route::post('/community/g/{game}/topics', 'Community\GameCommunityController@write')->middleware('auth');
+Route::get('/community/g/{game}/topic/{gct}', 'Community\GameCommunityController@topicDetail')->middleware('auth');
+Route::post('/community/g/{game}/topic/{gct}', 'Community\GameCommunityController@writeResponse')->middleware('auth');
+Route::delete('/community/g/{game}/topic/{gct}', 'Community\GameCommunityController@erase')->middleware('auth');
+Route::delete('/community/g/{game}/topic_response/{gctr}', 'Community\GameCommunityController@eraseResponse')->middleware('auth');
+Route::get('/community/g/{game}', 'Community\GameCommunityController@detail')->middleware('auth');
 Route::get('/community/g', 'Community\GameCommunityController@index');

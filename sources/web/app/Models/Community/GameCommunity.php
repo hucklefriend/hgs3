@@ -1,10 +1,14 @@
 <?php
+/**
+ * ゲームコミュニティモデル
+ */
 
 namespace Hgs3\Models\Community;
 
-use Hgs3\Models\Orm\UserCommunityMember;
-use Hgs3\Models\Orm\UserCommunityTopic;
-use Hgs3\Models\Orm\UserCommunityTopicResponse;
+use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameCommunityMember;
+use Hgs3\Models\Orm\GameCommunityTopic;
+use Hgs3\Models\Orm\GameCommunityTopicResponse;
 use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +37,7 @@ class GameCommunity
      */
     public function getOlderMembers($gameId)
     {
-        return UserCommunityMember::where('game_community_id', $userCommunityId)
+        return GameCommunityMember::where('game_id', $gameId)
             ->orderBy('join_date')
             ->take(5)
             ->get();
@@ -41,8 +45,6 @@ class GameCommunity
 
     /**
      * ユーザー数を更新
-     *
-     * @param $userCommunityId
      */
     public static function updateUserNum()
     {
@@ -136,14 +138,14 @@ SQL;
     /**
      * 参加しているか？
      *
-     * @param $userCommunityId
-     * @param $userId
+     * @param int $gameId
+     * @param int $userId
      * @return bool
      */
-    public function isMember($userCommunityId, $userId)
+    public function isMember($gameId, $userId)
     {
-        return DB::table('user_community_members')
-            ->where('user_community_id', $userCommunityId)
+        return DB::table('game_community_members')
+            ->where('game_id', $gameId)
             ->where('user_id', $userId)
             ->count() > 0;
     }
@@ -151,13 +153,13 @@ SQL;
     /**
      * トピックを取得
      *
-     * @param $userCommunityId
+     * @param int $gameId
      * @return array
      */
-    public function getTopics($userCommunityId)
+    public function getTopics($gameId)
     {
-        $pager = DB::table('user_community_topics')
-            ->where('user_community_id', $userCommunityId)
+        $pager = DB::table('game_community_topics')
+            ->where('game_id', $gameId)
             ->orderBy('id', 'DESC')
             ->paginate(30);
 
@@ -170,13 +172,13 @@ SQL;
     /**
      * 直近のトピックを取得
      *
-     * @param $userCommunityId
+     * @param int $gameId
      * @return \Illuminate\Support\Collection
      */
-    public function getLatestTopics($userCommunityId)
+    public function getLatestTopics($gameId)
     {
-        return DB::table('user_community_topics')
-            ->where('user_community_id', $userCommunityId)
+        return DB::table('game_community_topics')
+            ->where('game_id', $gameId)
             ->orderBy('id', 'DESC')
             ->take(5)
             ->get();
@@ -185,13 +187,13 @@ SQL;
     /**
      * トピックの詳細を取得
      *
-     * @param UserCommunityTopic $uct
+     * @param GameCommunityTopic $gct
      * @return array
      */
-    public function getTopicDetail(UserCommunityTopic $uct)
+    public function getTopicDetail(GameCommunityTopic $gct)
     {
-        $pager = DB::table('user_community_topic_responses')
-            ->where('user_community_topic_id', $uct->id)
+        $pager = DB::table('game_community_topic_responses')
+            ->where('game_community_topic_id', $uct->id)
             ->orderBy('id', 'DESC')
             ->paginate(30);
 
@@ -204,23 +206,23 @@ SQL;
     /**
      * トピックを投稿
      *
-     * @param $userCommunityId
-     * @param $userId
-     * @param $title
-     * @param $comment
+     * @param int $gameId
+     * @param int $userId
+     * @param int $title
+     * @param string $comment
      */
-    public function writeTopic($userCommunityId, $userId, $title, $comment)
+    public function writeTopic($gameId, $userId, $title, $comment)
     {
         $now = new \DateTime();
 
-        UserCommunityTopic::insert([
-            'user_community_id' => $userCommunityId,
-            'user_id'           => $userId,
-            'title'             => $title,
-            'comment'           => $comment,
-            'wrote_date'        => $now,
-            'response_date'     => $now,
-            'response_num'      => 0
+        GameCommunityTopic::insert([
+            'game_id'       => $gameId,
+            'user_id'       => $userId,
+            'title'         => $title,
+            'comment'       => $comment,
+            'wrote_date'    => $now,
+            'response_date' => $now,
+            'response_num'  => 0
         ]);
     }
 
@@ -238,15 +240,15 @@ SQL;
         DB::beginTransaction();
 
         try {
-            UserCommunityTopicResponse::insert([
-                'user_community_topic_id' => $topicId,
+            GameCommunityTopicResponse::insert([
+                'game_community_topic_id' => $topicId,
                 'user_id'                 => $userId,
                 'comment'                 => $comment,
                 'wrote_date'              => $now
             ]);
 
             $updSql =<<< SQL
-UPDATE user_community_topics
+UPDATE game_community_topics
 SET response_num = response_num + 1
   , response_date = NOW()
 WHERE id = ?
@@ -273,12 +275,12 @@ SQL;
         DB::beginTransaction();
 
         try {
-            DB::table('user_community_topics')
+            DB::table('game_community_topics')
                 ->where('id', $topicId)
                 ->delete();
 
-            DB::table('user_community_topic_responses')
-                ->where('user_community_topic_id', $topicId)
+            DB::table('game_community_topic_responses')
+                ->where('game_community_topic_id', $topicId)
                 ->delete();
 
             DB::commit();
@@ -293,22 +295,22 @@ SQL;
     /**
      * レスの消去
      *
-     * @param UserCommunityTopicResponse $uctr
+     * @param GameCommunityTopicResponse $gctr
      * @return bool
      */
-    public function eraseTopicResponse(UserCommunityTopicResponse $uctr)
+    public function eraseTopicResponse(GameCommunityTopicResponse $gctr)
     {
         DB::beginTransaction();
 
         try {
             $updSql =<<< SQL
-UPDATE user_community_topics
+UPDATE game_community_topics
 SET response_num = response_num - 1
 WHERE id = ?
 SQL;
-            DB::update($updSql, [$uctr->topic_id]);
+            DB::update($updSql, [$gctr->topic_id]);
 
-            $uctr->delete();
+            $gctr->delete();
 
             DB::commit();
         } catch (\Exception $e) {
@@ -317,5 +319,21 @@ SQL;
         }
 
         return true;
+    }
+
+    /**
+     * メンバー一覧を取得
+     *
+     * @param Game $game
+     * @return \Illuminate\Support\Collection
+     */
+    public function getMembers(Game $game)
+    {
+        return DB::table('game_community_members')
+            ->where('game_id', $game->id)
+            ->orderBy('join_date')
+            ->get()
+            ->pluck('user_id')
+            ->toArray();
     }
 }

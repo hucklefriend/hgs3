@@ -45,35 +45,38 @@ class GameCommunityController extends Controller
      */
     public function detail(Game $game)
     {
-        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model = new \Hgs3\Models\Community\GameCommunity();
 
-        $members = $model->getOlderMembers($uc->id);
-        $topics = $model->getLatestTopics($uc->id);
+        $members = $model->getOlderMembers($game->id);
+        $topics = $model->getLatestTopics($game->id);
 
         $users = User::getNameHash(array_merge(
             array_pluck($members->toArray(), 'user_id'),
             array_pluck($topics->toArray(), 'user_id')
         ));
 
-        return view('community.user.detail')->with([
-            'uc'       => $uc,
-            'members'  => $members,
-            'users'    => $users,
-            'isMember' => $model->isMember($uc->id, Auth::id()),
-            'topics'   => $topics
+        $gc = GameCommunity::find($game->id);
+
+        return view('community.game.detail')->with([
+            'game'       => $game,
+            'memberNum'  => $gc ? $gc->user_num : 0,
+            'members'    => $members,
+            'users'      => $users,
+            'isMember'   => $model->isMember($game->id, Auth::id()),
+            'topics'     => $topics
         ]);
     }
 
     /**
      * 参加
      *
-     * @param UserCommunity $uc
+     * @param Game $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function join(UserCommunity $uc)
+    public function join(Game $game)
     {
-        $model = new \Hgs3\Models\Community\UserCommunity();
-        $model->join($uc->id, Auth::id());
+        $model = new \Hgs3\Models\Community\GameCommunity();
+        $model->join($game->id, Auth::id());
 
         return redirect()->back();
     }
@@ -81,13 +84,13 @@ class GameCommunityController extends Controller
     /**
      * 脱退
      *
-     * @param UserCommunity $uc
+     * @param Game $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function secession(UserCommunity $uc)
+    public function secession(Game $game)
     {
-        $model = new \Hgs3\Models\Community\UserCommunity();
-        $model->secession($uc->id, Auth::id());
+        $model = new \Hgs3\Models\Community\GameCommunity();
+        $model->secession($game->id, Auth::id());
 
         return redirect()->back();
     }
@@ -95,17 +98,19 @@ class GameCommunityController extends Controller
     /**
      * メンバー一覧
      *
-     * @param UserCommunity $uc
+     * @param Game $game
      * @return $this
      */
-    public function members(UserCommunity $uc)
+    public function members(Game $game)
     {
-        $members = $uc->getMembers();
+        $gc = new \Hgs3\Models\Community\GameCommunity;
 
-        return view('community.user.member')->with([
-            'uc'      => $uc,
+        $members = $gc->getMembers($game);
+
+        return view('community.game.member')->with([
+            'game'    => $game,
             'members' => $members,
-            'users'   => User::getNameHash(array_pluck($members->toArray(), 'user_id'))
+            'users'   => User::getNameHash($members)
         ]);
     }
 
