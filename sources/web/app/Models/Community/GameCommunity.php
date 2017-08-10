@@ -193,7 +193,7 @@ SQL;
     public function getTopicDetail(GameCommunityTopic $gct)
     {
         $pager = DB::table('game_community_topic_responses')
-            ->where('game_community_topic_id', $uct->id)
+            ->where('game_community_topic_id', $gct->id)
             ->orderBy('id', 'DESC')
             ->paginate(30);
 

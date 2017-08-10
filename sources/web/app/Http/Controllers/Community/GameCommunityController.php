@@ -117,48 +117,48 @@ class GameCommunityController extends Controller
     /**
      * トピックス
      *
-     * @param UserCommunity $uc
+     * @param Game $game
      * @return $this
      */
-    public function topics(UserCommunity $uc)
+    public function topics(Game $game)
     {
-        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model = new \Hgs3\Models\Community\GameCommunity();
 
-        $data = $model->getTopics($uc->id);
-        $data['uc'] = $uc;
+        $data = $model->getTopics($game->id);
+        $data['game'] = $game;
 
-        return view('community.user.topics')->with($data);
+        return view('community.game.topics')->with($data);
     }
 
     /**
      * トピックの詳細
      *
-     * @param UserCommunity $uc
-     * @param UserCommunityTopic $uct
+     * @param Game $game
+     * @param GameCommunityTopic $gct
      * @return $this
      */
-    public function topicDetail(UserCommunity $uc, UserCommunityTopic $uct)
+    public function topicDetail(Game $game, GameCommunityTopic $gct)
     {
-        $model = new \Hgs3\Models\Community\UserCommunity();
+        $model = new \Hgs3\Models\Community\GameCommunity();
 
-        $data = $model->getTopicDetail($uct);
-        $data['uc'] = $uc;
-        $data['uct'] = $uct;
-        $data['writer'] = User::find($uct->user_id);
+        $data = $model->getTopicDetail($gct);
+        $data['game'] = $game;
+        $data['gct'] = $gct;
+        $data['writer'] = User::find($gct->user_id);
         $data['csrfToken'] = csrf_token();
         $data['userId'] = Auth::id();
 
-        return view('community.user.topic')->with($data);
+        return view('community.game.topic')->with($data);
     }
 
     /**
      * 投稿
      *
      * @param Topic $request
-     * @param UserCommunity $uc
+     * @param Game $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function write(Topic $request, UserCommunity $uc)
+    public function write(Topic $request, Game $game)
     {
         // TODO: メンバーかどうか
 
@@ -166,8 +166,8 @@ class GameCommunityController extends Controller
         $title = $request->get('title');
         $comment = $request->get('comment');
 
-        $model = new \Hgs3\Models\Community\UserCommunity();
-        $model->writeTopic($uc->id, Auth::id(), $title, $comment);
+        $model = new \Hgs3\Models\Community\GameCommunity();
+        $model->writeTopic($game->id, Auth::id(), $title, $comment);
 
         return redirect()->back();
     }
@@ -176,18 +176,18 @@ class GameCommunityController extends Controller
      * レスの投稿
      *
      * @param TopicResponse $request
-     * @param UserCommunity $uc
-     * @param UserCommunityTopic $uct
+     * @param Game $game
+     * @param GameCommunityTopic $gct
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function writeResponse(TopicResponse $request, UserCommunity $uc, UserCommunityTopic $uct)
+    public function writeResponse(TopicResponse $request, Game $game, GameCommunityTopic $gct)
     {
         // TODO: メンバーかどうか
 
         $comment = $request->get('comment');
 
-        $model = new \Hgs3\Models\Community\UserCommunity();
-        $model->writeResponse($uct->id, Auth::id(), $comment);
+        $model = new \Hgs3\Models\Community\GameCommunity();
+        $model->writeResponse($gct->id, Auth::id(), $comment);
 
         return redirect()->back();
     }
@@ -195,35 +195,35 @@ class GameCommunityController extends Controller
     /**
      * 投稿の削除
      *
-     * @param UserCommunity $uc
-     * @param UserCommunityTopic $uct
+     * @param Game $game
+     * @param GameCommunityTopic $gct
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function erase(UserCommunity $uc, UserCommunityTopic $uct)
+    public function erase(Game $game, GameCommunityTopic $gct)
     {
         // TODO: 投稿者かどうかチェック
 
-        $userCommunityId = $uct->user_community_id;
+        $gameId = $gct->game_id;
 
-        $model = new \Hgs3\Models\Community\UserCommunity();
-        $model->eraseTopic($uct->id);
+        $model = new \Hgs3\Models\Community\GameCommunity();
+        $model->eraseTopic($gct->id);
 
-        return redirect('community/u/' . $userCommunityId . '/topics');
+        return redirect('community/g/' . $gameId . '/topics');
     }
 
     /**
      * レスの削除
      *
-     * @param UserCommunity $uc
-     * @param UserCommunityTopicResponse $uctr
+     * @param Game $game
+     * @param GameCommunityTopicResponse $gctr
      * @return mixed
      */
-    public function eraseResponse(UserCommunity $uc, UserCommunityTopicResponse $uctr)
+    public function eraseResponse(Game $game, GameCommunityTopicResponse $gctr)
     {
         // TODO: 投稿者かどうかチェック
 
-        $model = new \Hgs3\Models\Community\UserCommunity();
-        $model->eraseTopicResponse($uctr);
+        $model = new \Hgs3\Models\Community\GameCommunity();
+        $model->eraseTopicResponse($gctr);
 
         return redirect()->back();
     }
