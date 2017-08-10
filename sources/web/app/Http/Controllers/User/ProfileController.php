@@ -25,6 +25,15 @@ class ProfileController extends Controller
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
 
+        if (!$data['isMyself']) {
+            // フォロー関連
+
+
+
+        }
+
+
+
         return view('user.profile.index')->with($data);
     }
 

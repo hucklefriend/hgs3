@@ -1,4 +1,8 @@
 <?php
+/**
+ * フォローモデル
+ */
+
 
 namespace Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -6,6 +10,34 @@ use Hgs3\Models\Orm\UserFollow;
 
 class Follow
 {
+    /**
+     * $userIdが$followUserIdをフォローしているか
+     *
+     * @param int $userId
+     * @param int $followUserId
+     */
+    public function isFollow($userId, $followUserId)
+    {
+        return DB::table('user_follows')
+            ->where('user_id', $userId)
+            ->where('follow_user_id', $followUserId)
+            ->count() == 1;
+    }
+
+    /**
+     * $followerUserIdが$userIdをフォローしているか（$userIdのフォロワーか)
+     *
+     * @param int $userId
+     * @param int $followerUserId
+     */
+    public function isFollower($userId, $followerUserId)
+    {
+        return $this->isFollow($followerUserId, $userId);
+    }
+
+
+
+
     public function get_list($userId, $category)
     {
         return UserFollow::where('user_id', $userId)
