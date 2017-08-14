@@ -15,6 +15,24 @@
 
     @if ($isMyself)
     <p><a href="{{ url2('user/profile/edit') }}">プロフィール編集</a></p>
+    @else
+    <div>
+        @if ($isFollow)
+            フォロー中
+            <form action="{{ url2('user/follow') }}" method="POST">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
+                <button class="btn btn-danger">解除</button>
+            </form>
+        @else
+            <form action="{{ url2('user/follow') }}" method="POST">
+                {{ csrf_field() }}
+                <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
+                <button class="btn btn-danger">フォローする</button>
+            </form>
+        @endif
+    </div>
     @endif
 
     <div class="row">

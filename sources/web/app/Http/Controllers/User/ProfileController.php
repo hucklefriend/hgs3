@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\UpdateRequest;
+use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
 use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +28,9 @@ class ProfileController extends Controller
 
         if (!$data['isMyself']) {
             // フォロー関連
+            $follow = new Follow;
 
-
+            $data['isFollow'] = $follow->isFollow(Auth::id(), $user->id);
 
         }
 
@@ -80,6 +82,35 @@ class ProfileController extends Controller
         return view('user.profile.edit')->with([
             'isUpdated' => true,
             'user'      => $user
+        ]);
+    }
+
+    /**
+     * フォロー一覧
+     */
+    public function follow(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+
+        return view('user.profile.follow')->with([
+            'user'     => $user,
+            'isMyself' => $isMyself
+        ]);
+    }
+
+    /**
+     * フォロワー一覧
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function follower(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+
+        return view('user.profile.follow')->with([
+            'user'     => $user,
+            'isMyself' => $isMyself
         ]);
     }
 }

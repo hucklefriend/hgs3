@@ -35,10 +35,14 @@ class Follow
         return $this->isFollow($followerUserId, $userId);
     }
 
-
-
-
-    public function get_list($userId, $category)
+    /**
+     * フォローしているユーザーの一覧を取得
+     *
+     * @param $userId
+     * @param int $category
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getFollow($userId, $category = 0)
     {
         return UserFollow::where('user_id', $userId)
             ->where()
@@ -46,8 +50,19 @@ class Follow
             ->get();
     }
 
-    public function add($userId, $followUserId, $followCategory)
+    /**
+     * 追加
+     *
+     * @param $userId
+     * @param $followUserId
+     * @param $followCategory
+     */
+    public function add($userId, $followUserId, $followCategory = 0)
     {
+        if ($userId == $followUserId) {
+            return 0;
+        }
+
         $sql =<<< SQL
 INSERT IGNORE INTO user_follows
 (user_id, category, follow_user_id, created_at, updated_at)
@@ -56,8 +71,18 @@ SQL;
         DB::insert($sql, [$userId, $followCategory, $followUserId]);
     }
 
+    /**
+     * 削除
+     *
+     * @param $userId
+     * @param $followUserId
+     * @return int
+     */
     public function remove($userId, $followUserId)
     {
-        UserFollow::destroy([$userId, $followUserId]);
+        return DB::table('user_follows')
+            ->where('user_id', $userId)
+            ->where('follow_user_id', $followUserId)
+            ->delete();
     }
 }
