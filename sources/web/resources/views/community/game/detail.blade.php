@@ -32,7 +32,7 @@
                 <div class="card-block">
                     <ul class="list-group">
                         @foreach ($members as $u)
-                            <li class="list-group-item">{{ $users[$u->user_id] }}</li>
+                            <li class="list-group-item">{{ un($users, $u->user_id) }}</li>
                         @endforeach
                     </ul>
                     ⇒ <a href="{{ url('community/g') }}/{{ $game->id }}/member">もっと見る</a>

@@ -7,6 +7,8 @@ namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\UpdateRequest;
+use Hgs3\Models\Community\GameCommunity;
+use Hgs3\Models\Orm\Game;
 use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
 use Hgs3\User;
@@ -120,6 +122,27 @@ class ProfileController extends Controller
             'isMyself'   => $isMyself,
             'followers'  => $follows,
             'users'      => User::getNameHash(array_pluck($follows->items(), 'user_id'))
+        ]);
+    }
+
+    /**
+     * コミュニティ
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function community(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+
+        $gc = new GameCommunity();
+        $communities = $gc->getJoinCommunity($user->id);
+
+        return view('user.profile.community')->with([
+            'user'        => $user,
+            'isMyself'    => $isMyself,
+            'communities' => $communities,
+            'games'       => Game::getNameHash(array_pluck($communities->items(), 'game_id'))
         ]);
     }
 }

@@ -5,6 +5,7 @@
 
 
 namespace Hgs3\Models\User;
+use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Review;
 use Hgs3\Models\Orm\ReviewGoodHistory;
@@ -44,6 +45,10 @@ class Profile
 
         // いいねしたレビュー
         $data['goodReviews'] = $this->getGoodReviews($userId);
+
+        // コミュニティ
+        $gc = new GameCommunity();
+        $data['communities'] = $gc->getNewerJoinCommunity($userId);
 
         // ゲームマスター
         $data['games'] = $this->getGameMaster($data);
@@ -157,6 +162,13 @@ class Profile
         return $result;
     }
 
+    private function getCommunities($userId)
+    {
+        // ゲームコミュニティのみ取得
+
+
+    }
+
     /**
      * 必要なゲームマスターを取得
      *
@@ -168,7 +180,8 @@ class Profile
         $gameIds = array_merge(
             array_pluck($data['favoriteGames']->toArray(), 'game_id'),
             array_pluck($data['reviews']->toArray(), 'game_id'),
-            array_pluck(array_pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'game_id')
+            array_pluck(array_pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'game_id'),
+            $data['communities']
         );
 
         return Game::getNameHash($gameIds);

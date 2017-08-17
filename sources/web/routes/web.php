@@ -73,6 +73,7 @@ Route::get('/user/profile/edit', 'User\ProfileController@edit')->middleware('aut
 Route::post('/user/profile/edit', 'User\ProfileController@update')->middleware('auth');
 Route::get('/user/profile/{user}', 'User\ProfileController@index')->middleware('auth');
 Route::get('/user/profile', 'User\ProfileController@myself')->middleware('auth');
+Route::get('/user/communities/{user}', 'User\ProfileController@community')->middleware('auth');
 
 // お気に入りゲーム
 Route::get('/game/favorite/{game}', 'Game\FavoriteGameController@index');

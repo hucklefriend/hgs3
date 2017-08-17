@@ -336,4 +336,35 @@ SQL;
             ->pluck('user_id')
             ->toArray();
     }
+
+    /**
+     * 直近に参加したコミュニティを取得
+     *
+     * @param $userId
+     * @return array
+     */
+    public function getNewerJoinCommunity($userId)
+    {
+        return DB::table('game_community_members')
+            ->where('user_id', $userId)
+            ->orderBy('join_date', 'DESC')
+            ->take(5)
+            ->get()
+            ->pluck('game_id')
+            ->toArray();
+    }
+
+    /**
+     * 一覧用データを取得
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getJoinCommunity($userId)
+    {
+        return DB::table('game_community_members')
+            ->where('user_id', $userId)
+            ->orderBy('join_date', 'DESC')
+            ->paginate(30);
+    }
 }

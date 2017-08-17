@@ -148,7 +148,11 @@
                     参加コミュニティ
                 </div>
                 <div class="card-block">
-                    <p class="card-text">工事中</p>
+                    @foreach ($communities as $c)
+                        <div><a href="{{ url2('community/g') }}/{{ $c }}">{{ $games[$c] ?? '---' }}</a></div>
+                    @endforeach
+
+                    <div><a href="{{ url2('user/communities') }}/{{ $user->id }}">⇒もっと見る</a></div>
                 </div>
             </div>
         </div>
