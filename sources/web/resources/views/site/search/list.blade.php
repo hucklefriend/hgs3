@@ -2,13 +2,14 @@
 
 @section('content')
 
-    <form>
-        <div>
+    <div class="card">
+        <div class="card-header"></div>
+        <div class="card-block">
+            @foreach ($newcomer as $site)
 
-
-
+            @endforeach
         </div>
-    </form>
+    </div>
 
     @foreach ($pager as $p)
         <?php $s = $sites[$p->site_id]; ?>

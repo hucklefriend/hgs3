@@ -25,15 +25,30 @@ class SearchController extends Controller
      */
     public function index()
     {
-        $gameId = intval(Input::get('gid', null));
-        $mainContents = intval(Input::get('mc', null));
-        $targetGender = intval(Input::get('tg', null));
-        $rate = intval(Input::get('r', null));
+        $site = new \Hgs3\Models\Site();
 
-        $searcher = new Searcher();
-        $data = $searcher->search($gameId, $mainContents, $targetGender, $rate, 20);
+        // 新着サイト
+        $data['newcomer'] = $site->getNewcomer();
 
-        return view('site.search.list')->with($data);
+        // 更新サイト
+        $data['updated'] = $site->getLatestUpdate();
+
+        // 人気サイト
+        $data['good'] = $site->getGoodRanking();
+
+        // アクセス数
+        $data['access'] = $site->getAccessRanking();
+
+        $userIds = array_merge(
+            $data['newcomer']->pluck('user_id')->toArray(),
+            $data['updated']->pluck('user_id')->toArray(),
+            $data['newcomer']->pluck('user_id')->toArray(),
+            $data['access']->pluck('user_id')->toArray()
+        );
+
+        $data['users'] = User::getNameHash($userIds);
+
+        return view('site.search.index', $data);
     }
 
     /**

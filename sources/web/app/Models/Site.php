@@ -98,4 +98,37 @@ SQL;
             DB::insert($sql, [$orm->id, $gameId, $orm->main_contents_id, $orm->gender, $orm->rate]);
         }
     }
+
+
+    public function getNewcomer()
+    {
+        return DB::table('sites')
+            ->orderBy('registered_timestamp', 'DESC')
+            ->take(5)
+            ->get();
+    }
+
+    public function getLatestUpdate()
+    {
+        return DB::table('sites')
+            ->orderBy('updated_timestamp', 'DESC')
+            ->take(5)
+            ->get();
+    }
+
+    public function getAccessRanking()
+    {
+        return DB::table('sites')
+            ->orderBy('out_count', 'DESC')
+            ->take(5)
+            ->get();
+    }
+
+    public function getGoodRanking()
+    {
+        return DB::table('sites')
+            ->orderBy('good_count', 'DESC')
+            ->take(5)
+            ->get();
+    }
 }
