@@ -17,6 +17,14 @@
     <p><a href="{{ url2('user/profile/edit') }}">プロフィール編集</a></p>
     @else
     <div>
+        <div>
+            <a href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー数: {{ $followNum }}</a>
+        </div>
+        <div>
+            <a href="{{ url2('user/follower') }}/{{ $user->id }}">フォロワー数: {{ $followerNum }}</a>
+        </div>
+
+
         @if ($isFollow)
             フォロー中
             <form action="{{ url2('user/follow') }}" method="POST">
@@ -138,30 +146,6 @@
             <div class="card">
                 <div class="card-header">
                     参加コミュニティ
-                </div>
-                <div class="card-block">
-                    <p class="card-text">工事中</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    フォロー
-                </div>
-                <div class="card-block">
-                    <p class="card-text">工事中</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    フォロワー
                 </div>
                 <div class="card-block">
                     <p class="card-text">工事中</p>

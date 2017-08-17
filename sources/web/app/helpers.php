@@ -117,3 +117,7 @@ function url2($path, $parameters = [])
     return url($path, $parameters, false);
 }
 
+function un(array $hash, $userId)
+{
+    return $hash[$userId] ?? '---';
+}

@@ -97,8 +97,8 @@ Route::get('/user/site/edit/{site}', 'User\SiteController@edit')->middleware('au
 Route::get('/user/site/{site}', 'User\SiteController@detail')->middleware('auth');
 
 // フォロー
-Route::get('/user/follow/{user}')->middleware('auth');
-Route::get('/user/follower/{user}')->middleware('auth');
+Route::get('/user/follow/{user}', 'User\ProfileController@follow')->middleware('auth');
+Route::get('/user/follower/{user}', 'User\ProfileController@follower')->middleware('auth');
 Route::post('/user/follow', 'User\FollowController@add')->middleware('auth');
 Route::delete('/user/follow', 'User\FollowController@remove')->middleware('auth');
 

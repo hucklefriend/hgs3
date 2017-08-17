@@ -26,15 +26,14 @@ class ProfileController extends Controller
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
 
+        // フォロー関連
+        $follow = new Follow;
+        $data['followNum'] = $follow->getFollowNum($user->id);
+        $data['followerNum'] = $follow->getFollowerNum($user->id);
+
         if (!$data['isMyself']) {
-            // フォロー関連
-            $follow = new Follow;
-
             $data['isFollow'] = $follow->isFollow(Auth::id(), $user->id);
-
         }
-
-
 
         return view('user.profile.index')->with($data);
     }
@@ -92,9 +91,14 @@ class ProfileController extends Controller
     {
         $isMyself = $user->id == Auth::id();
 
+        $follow = new Follow;
+        $follows = $follow->getFollow($user->id);
+
         return view('user.profile.follow')->with([
             'user'     => $user,
-            'isMyself' => $isMyself
+            'isMyself' => $isMyself,
+            'follows'  => $follows,
+            'users'    => User::getNameHash(array_pluck($follows->items(), 'follow_user_id'))
         ]);
     }
 
@@ -108,9 +112,14 @@ class ProfileController extends Controller
     {
         $isMyself = $user->id == Auth::id();
 
-        return view('user.profile.follow')->with([
-            'user'     => $user,
-            'isMyself' => $isMyself
+        $follow = new Follow;
+        $follows = $follow->getFollower($user->id);
+
+        return view('user.profile.follower')->with([
+            'user'       => $user,
+            'isMyself'   => $isMyself,
+            'followers'  => $follows,
+            'users'      => User::getNameHash(array_pluck($follows->items(), 'user_id'))
         ]);
     }
 }

@@ -40,14 +40,27 @@ class Follow
      *
      * @param $userId
      * @param int $category
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getFollow($userId, $category = 0)
     {
-        return UserFollow::where('user_id', $userId)
-            ->where()
-            ->orderBy('follow_date', 'desc')
-            ->get();
+        return DB::table('user_follows')
+            ->where('user_id', $userId)
+            ->paginate(30);
+    }
+
+    /**
+     * フォローされているユーザーの一覧を取得
+     *
+     * @param $userId
+     * @param int $category
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getFollower($userId, $category = 0)
+    {
+        return DB::table('user_follows')
+            ->where('follow_user_id', $userId)
+            ->paginate(30);
     }
 
     /**
@@ -84,5 +97,31 @@ SQL;
             ->where('user_id', $userId)
             ->where('follow_user_id', $followUserId)
             ->delete();
+    }
+
+    /**
+     * フォロー数を取得
+     *
+     * @param $userId
+     * @return int
+     */
+    public function getFollowNum($userId)
+    {
+        return DB::table('user_follows')
+            ->where('user_id', $userId)
+            ->count();
+    }
+
+    /**
+     * フォロワー数を取得
+     *
+     * @param $userId
+     * @return int
+     */
+    public function getFollowerNum($userId)
+    {
+        return DB::table('user_follows')
+            ->where('follow_user_id', $userId)
+            ->count();
     }
 }
