@@ -9,7 +9,9 @@ use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
+use Hgs3\Models\Orm\UserPlayedGame;
 use Hgs3\Models\User\FavoriteGame;
+use Hgs3\Models\User\PlayedGame;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
@@ -47,6 +49,7 @@ class SoftController extends Controller
         if ($data['isUser']) {
             $fav = new FavoriteGame();
             $data['isFavorite'] = $fav->isFavorite(Auth::id(), $game->id);
+            $data['playedGame'] = UserPlayedGame::findByUserAndGame(Auth::id(), $game->id);
         }
 
         $data['csrfToken'] = csrf_token();

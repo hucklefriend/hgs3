@@ -264,6 +264,46 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    遊んだゲーム
+                </div>
+                <div class="card-block">
+                    @if ($isUser)
+                        @if ($playedGame == null)
+                            <form method="POST" action="{{ url2('user/played_game') }}/{{ $game->id }}">
+                                <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                                <textarea name="comment" class="form-control"></textarea>
+                                <button class="btn btn-default">登録</button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ url2('user/played_game') }}/{{ $playedGame->id }}">
+                                <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                                {{ method_field('PUT') }}
+                                <textarea name="comment" class="form-control">{{ $playedGame->comment }}</textarea>
+                                <button class="btn btn-default">編集</button>
+                            </form>
+                            <hr>
+                            <form method="POST" action="{{ url2('user/played_game') }}/{{ $playedGame->id }}">
+                                <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                                {{ method_field('DELETE') }}
+                                <button class="btn btn-danger">削除</button>
+                            </form>
+                        @endif
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header"></div>
+                <div class="card-block"></div>
+            </div>
+        </div>
+    </div>
+
 <style>
     section {
         margin-top: 30px;
