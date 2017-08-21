@@ -5,7 +5,13 @@
         {{ csrf_field() }}
         <div class="form-group">
             <label for="name">名称</label>
-            <input type="text" class="form-control" id="name" name="name">
+            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+
+            @if ($errors->has('name'))
+                @foreach ($errors->get('name') as $message)
+                <div class="alert alert-danger" role="alert">{{ $message }}</div>
+                @endforeach
+            @endif
         </div>
         <div class="form-group">
             <label for="url">公式サイトURL</label>

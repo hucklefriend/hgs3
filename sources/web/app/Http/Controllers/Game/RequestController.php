@@ -1,8 +1,13 @@
 <?php
+/**
+ * ゲーム追加リクエスト
+ */
+
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
+use Hgs3\Http\Requests\Game\Request\AddRequest;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GameAddRequest;
 use Hgs3\Models\Orm\GamePlatform;
@@ -15,12 +20,17 @@ use Illuminate\Support\Facades\Auth;
 
 class RequestController extends Controller
 {
+    /**
+     *
+     *
+     * @return $this
+     */
     public function index()
     {
         $req = GameAddRequest::orderBy('id', 'desc')->paginate(30);
         $userHash = User::getNameHash(Arr::pluck($req, 'user_id'));
 
-        return view('game.request.list')->with([
+        return view('game.request.list', [
             'list' => $req,
             'userHash' => $userHash
         ]);
@@ -33,7 +43,7 @@ class RequestController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(AddRequest $request)
     {
         $gar = new GameAddRequest;
         $gar->user_id = Auth::id();

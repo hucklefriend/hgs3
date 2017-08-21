@@ -26,8 +26,8 @@ Route::get('/game/soft', 'Game\SoftController@index');
 Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
-Route::get('/game/request', 'Game\RequestController@index')->middleware('auth');
-Route::get('/game/request/input', 'Game\RequestController@input');
+Route::get('/game/request', 'Game\RequestController@index')->middleware(['auth', 'web']);
+Route::get('/game/request/input', 'Game\RequestController@input')->middleware(['auth', 'web']);
 Route::post('/game/request', 'Game\RequestController@store')->middleware('auth');
 Route::get('/game/request/edit/all', 'Game\RequestController@editListAll');
 Route::get('/game/request/edit/{game}', 'Game\RequestController@editList');
