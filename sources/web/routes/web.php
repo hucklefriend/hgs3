@@ -26,15 +26,13 @@ Route::get('/game/soft', 'Game\SoftController@index');
 Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
+// ゲーム追加リクエスト
 Route::get('/game/request', 'Game\RequestController@index')->middleware(['auth', 'web']);
 Route::get('/game/request/input', 'Game\RequestController@input')->middleware(['auth', 'web']);
 Route::post('/game/request', 'Game\RequestController@store')->middleware('auth');
-Route::get('/game/request/edit/all', 'Game\RequestController@editListAll');
-Route::get('/game/request/edit/{game}', 'Game\RequestController@editList');
-Route::get('/game/request/show/edit/{gur}', 'Game\RequestController@showEdit');
-Route::get('/game/request/input/edit/{game}', 'Game\RequestController@inputEdit');
-Route::post('/game/request/input/edit/{game}', 'Game\RequestController@storeUpdate');
-Route::get('/game/request/{gar}', 'Game\RequestController@show');
+Route::post('/game/request/{gar}/comment', 'Game\RequestController@addComment')->middleware(['auth']);
+Route::post('/game/request/{gar}/change_status', 'Game\RequestController@changeStatus')->middleware(['auth']);
+Route::get('/game/request/{gar}', 'Game\RequestController@show')->middleware(['web']);
 
 // レビュー
 Route::get('/game/review', 'Game\ReviewController@index');

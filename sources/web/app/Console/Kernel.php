@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         Commands\TestData\GameCommunityMember::class,
         Commands\TestData\GameCommunityTopic::class,
         Commands\TestData\GameCommunityTopicResponse::class,
+        Commands\TestData\GameAddRequest::class,
         Commands\Init::class,
     ];
 
