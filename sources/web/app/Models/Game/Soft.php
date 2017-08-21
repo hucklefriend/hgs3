@@ -80,6 +80,10 @@ class Soft
         // コミュニティ
 
 
+        // 遊んだゲーム
+        $data['playedUsers'] = $this->getPlayedUsers($game);
+
+
         return $data;
     }
 
@@ -158,7 +162,7 @@ SQL;
         $sql =<<< SQL
 SELECT users.id, users.name
 FROM (
-  SELECT user_id FROM user_favorite_games WHERE game_id = ? ORDER BY id LIMIT 10
+  SELECT user_id FROM user_favorite_games WHERE game_id = ? ORDER BY id LIMIT 5
 ) fav LEFT OUTER JOIN users ON fav.user_id = users.id
 SQL;
 
@@ -191,6 +195,24 @@ SELECT users.id, users.name, s.id, s.name, s.url, s.presentation, s.rate,
 FROM (
   SELECT * FROM sites WHERE id IN ({$siteIdComma})
 ) s LEFT OUTER JOIN users ON s.user_id = users.id
+SQL;
+
+        return DB::select($sql, [$game->id]);
+    }
+
+    /**
+     * 遊んだプレーヤーを取得
+     *
+     * @param Game $game
+     * @return \Illuminate\Support\Collection
+     */
+    private function getPlayedUsers(Game $game)
+    {
+        $sql =<<< SQL
+SELECT users.id, users.name
+FROM (
+  SELECT user_id FROM user_played_games WHERE game_id = ? ORDER BY id LIMIT 5
+) fav LEFT OUTER JOIN users ON fav.user_id = users.id
 SQL;
 
         return DB::select($sql, [$game->id]);

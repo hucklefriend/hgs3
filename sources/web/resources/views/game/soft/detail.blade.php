@@ -293,6 +293,19 @@
                             </form>
                         @endif
                     @endif
+                    <hr>
+                    @foreach ($playedUsers as $pu)
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <a href="{{ url('user/profile') }}/{{ $pu->id }}">{{ $pu->name }}</a>
+                            </div>
+                        </div>
+                        <hr>
+                    @endforeach
+                    <p>
+                        ⇒ <a href="{{ url('game/played_user/') }}/{{ $game->id }}">全ての登録者を見る</a>
+                    </p>
                 </div>
             </div>
         </div>
