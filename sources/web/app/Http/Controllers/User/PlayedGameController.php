@@ -13,9 +13,30 @@ use Hgs3\User;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PlayedGameController extends Controller
 {
+    /**
+     * 遊んだゲームリスト
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+        $played = DB::table('user_played_games')
+            ->where('user_id', $user->id)
+            ->paginate(20);
+
+        return view('user.game.played')->with([
+            'user'        => $user,
+            'isMyself'    => $isMyself,
+            'playedGames' => $played,
+            'games'       => Game::getNameHash(array_pluck($played->items(), 'game_id'))
+        ]);
+    }
+
     /**
      * 追加
      *

@@ -50,6 +50,10 @@ class Profile
         $gc = new GameCommunity();
         $data['communities'] = $gc->getNewerJoinCommunity($userId);
 
+        // 遊んだゲーム
+        $data['playedGames'] = $this->getPlayedGames($userId);
+
+
         // ゲームマスター
         $data['games'] = $this->getGameMaster($data);
         // ユーザーマスター
@@ -170,6 +174,22 @@ class Profile
     }
 
     /**
+     * 遊んだゲーム
+     *
+     * @param $userId
+     * @return \Illuminate\Support\Collection
+     */
+    private function getPlayedGames($userId)
+    {
+        return DB::table('user_played_games')
+            ->select(['game_id', 'comment'])
+            ->where('user_id', $userId)
+            ->orderBy('id', 'DESC')
+            ->take(5)
+            ->get();
+    }
+
+    /**
      * 必要なゲームマスターを取得
      *
      * @param array $data
@@ -181,7 +201,8 @@ class Profile
             array_pluck($data['favoriteGames']->toArray(), 'game_id'),
             array_pluck($data['reviews']->toArray(), 'game_id'),
             array_pluck(array_pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'game_id'),
-            $data['communities']
+            $data['communities'],
+            array_pluck($data['playedGames']->toArray(), 'game_id')
         );
 
         return Game::getNameHash($gameIds);

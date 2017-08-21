@@ -63,7 +63,10 @@
                     遊んだゲーム
                 </div>
                 <div class="card-block">
-                    <p class="card-text">工事中</p>
+                    @foreach ($playedGames as $pg)
+                        <div><a href="{{ url2('game/soft') }}/{{ $pg->game_id }}">{{ $games[$pg->game_id] }}</a></div>
+                    @endforeach
+                    → <a href="{{ url2('/user/played_game') }}/{{ $user->id }}">もっと見る</a>
                 </div>
             </div>
         </div>

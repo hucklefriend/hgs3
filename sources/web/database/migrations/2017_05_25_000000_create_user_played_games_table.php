@@ -21,6 +21,7 @@ class CreateUserPlayedGamesTable extends Migration
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->unsignedInteger('game_id')->index()->comment('ゲームID');
             $table->text('comment')->nullable()->comment('コメント');
+            $table->unique(['user_id', 'game_id']);
             $table->timestamps();
         });
     }

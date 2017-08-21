@@ -83,7 +83,8 @@ Route::delete('/user/favorite_game', 'User\FavoriteGameController@remove')->midd
 Route::get('/user/favorite_game/{user}', 'User\FavoriteGameController@index');
 
 // 遊んだゲーム
-Route::get('game/played/{game}', 'Game\PlayedGameController@index');
+Route::get('game/played_game/{game}', 'Game\PlayedGameController@index');
+Route::get('user/played_game/{user}', 'User\PlayedGameController@index');
 Route::post('user/played_game/{game}', 'User\PlayedGameController@add')->middleware('auth');
 Route::put('user/played_game/{upg}', 'User\PlayedGameController@edit')->middleware('auth');
 Route::delete('user/played_game/{upg}', 'User\PlayedGameController@remove')->middleware('auth');
