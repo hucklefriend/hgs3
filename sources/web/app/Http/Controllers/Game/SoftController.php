@@ -27,7 +27,7 @@ class SoftController extends Controller
     {
         $soft = new Soft;
 
-        return view('game.soft.list')->with([
+        return view('game.soft.index')->with([
             'phoneticList' => PhoneticType::getId2CharData(),
             'list'         => $soft->getList(),
         ]);
