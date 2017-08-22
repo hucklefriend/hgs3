@@ -11,8 +11,8 @@ use Hgs3\Http\Requests\Game\Request\AddRequest;
 use Hgs3\Http\Requests\Game\Request\ChangeStatusRequest;
 use Hgs3\Http\Requests\Game\Request\CommentRequest;
 use Hgs3\Models\Orm\Game;
-use Hgs3\Models\Orm\GameAddRequest;
-use Hgs3\Models\Orm\GameAddRequestComment;
+use Hgs3\Models\Orm\GameRequest;
+use Hgs3\Models\Orm\GameRequestComment;
 use Hgs3\Models\Orm\GamePlatform;
 use Hgs3\Models\Orm\GameUpdateRequest;
 use Hgs3\User;
@@ -30,7 +30,7 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $req = GameAddRequest::orderBy('id', 'desc')->paginate(30);
+        $req = GameRequest::orderBy('id', 'desc')->paginate(30);
         $userHash = User::getNameHash(Arr::pluck($req, 'user_id'));
 
         return view('game.request.index', [
@@ -48,47 +48,86 @@ class RequestController extends Controller
 
     public function store(AddRequest $request)
     {
-        $gar = new GameAddRequest;
-        $gar->user_id = Auth::id();
-        $gar->name = $request->input('name');
-        $gar->url = $request->input('url');
-        $gar->platforms = json_encode($request->input('platform', array()));
-        $gar->other = $request->input('other');
-        $gar->status = 0;
+        $gr = new GameRequest;
+        $gr->user_id = Auth::id();
+        $gr->name = $request->input('name');
+        $gr->url = $request->input('url');
+        $gr->platforms = json_encode($request->input('platform', array()));
+        $gr->other = $request->input('other');
+        $gr->status = 0;
 
-        $gar->save();
+        $gr->save();
 
         return view('game.request.complete');
     }
 
-    public function show(GameAddRequest $gar)
+    /**
+     * 詳細表示
+     *
+     * @param GameRequest $gr
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(GameRequest $gr)
     {
+        $req = new \Hgs3\Models\Game\GameRequest();
+
+        $comments = $req->getComment($gr->id);
+
         return view('game.request.detail', [
-            'gar'     => $gar,
-            'user'    => User::find($gar->user_id),
-            'isAdmin' => UserRole::isAdmin()
+            'gr'        => $gr,
+            'user'      => User::find($gr->user_id),
+            'isAdmin'   => UserRole::isAdmin(),
+            'comments'  => $comments,
+            'users'     => User::getNameHashByPager($comments),
+            'csrfToken' => csrf_token()
         ]);
     }
 
-    public function addComment(CommentRequest $request, GameAddRequest $gar)
+    /**
+     * コメント書き込み
+     *
+     * @param CommentRequest $request
+     * @param GameRequest $gr
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function writeComment(CommentRequest $request, GameRequest $gr)
     {
-        $comment = new GameAddRequestComment;
-
-        // TODO: ここparent_idじゃなくて、game_add_request_idにする
-        $comment->parent_id = $gar->id;
-        $comment->user_id = Auth::id();
-        $comment->comment = $request->get('comment', '');
-        $comment->save();
+        $model = new \Hgs3\Models\Game\GameRequest();
+        $model->writeComment($gr, Auth::id(), $request->get('comment'));
 
         return redirect()->back();
     }
 
-    public function changeStatus(ChangeStatusRequest $request, GameAddRequest $gar)
+    /**
+     * コメントの削除
+     *
+     * @param GameRequest $gr
+     * @param GameRequestComment $grc
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteComment(GameRequest $gr, GameRequestComment $grc)
+    {
+        if ($grc->user_id == Auth::id()) {
+            $model = new \Hgs3\Models\Game\GameRequest();
+            $model->deleteComment($gr, $grc);
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * ステータスの更新
+     *
+     * @param ChangeStatusRequest $request
+     * @param GameRequest $gr
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeStatus(ChangeStatusRequest $request, GameRequest $gr)
     {
         $status = $request->get('status');
 
-        $gar->satatus = $status;
-        $gar->save();
+        $gr->status = $status;
+        $gr->save();
 
         return redirect()->back();
     }

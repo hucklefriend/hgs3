@@ -32,10 +32,14 @@ class User extends Authenticatable
      * ユーザー名ハッシュを取得
      *
      * @param array $ids
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
-    public static function getNameHash(array $ids = array())
+    public static function getNameHash(array $ids)
     {
+        if (empty($ids)) {
+            return [];
+        }
+
         $tbl = DB::table('users');
 
         if (!empty($ids)) {
@@ -43,5 +47,16 @@ class User extends Authenticatable
         }
 
         return $tbl->get()->pluck('name', 'id')->toArray();
+    }
+
+    /**
+     * ページャーからユーザー名ハッシュを取得
+     *
+     * @param \Illuminate\Contracts\Pagination\LengthAwarePaginator $pager
+     * @param string $key
+     */
+    public static function getNameHashByPager(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager, $key = 'user_id')
+    {
+        return self::getNameHash(array_pluck($pager->items(), $key));
     }
 }

@@ -7,21 +7,21 @@ namespace Hgs3\Console\Commands\TestData;
 
 use Illuminate\Console\Command;
 
-class GameAddRequest extends Command
+class GameRequest extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'testdata:gameaddrequest';
+    protected $signature = 'testdata:gamerequest';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'create test game add request';
+    protected $description = 'create test game request';
 
     /**
      * Create a new command instance.
@@ -38,6 +38,6 @@ class GameAddRequest extends Command
      */
     public function handle()
     {
-        \Hgs3\Models\Test\GameAddRequest::create();
+        \Hgs3\Models\Test\GameRequest::create();
     }
 }

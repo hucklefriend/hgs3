@@ -117,7 +117,25 @@ function url2($path, $parameters = [])
     return url($path, $parameters, false);
 }
 
+/**
+ * ユーザー名を表示
+ *
+ * @param array $hash
+ * @param $userId
+ * @return mixed|string
+ */
 function un(array $hash, $userId)
 {
     return $hash[$userId] ?? '---';
+}
+
+/**
+ * CSRF用のタグを生成
+ *
+ * @param $token
+ * @return string
+ */
+function csrf_tag($token)
+{
+    return new \Illuminate\Support\HtmlString('<input type="hidden" name="_token" value="'.$token.'">');
 }
