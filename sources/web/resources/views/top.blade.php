@@ -6,8 +6,8 @@
         <li class="list-group-item"><a href="{{ url('auth/logout') }}">ログアウト</a></li>
 @else
         <li class="list-group-item"><a href="{{ url('auth/login') }}">ログイン</a></li>
+        <li class="list-group-item"><a href="{{ url('account/signup') }}">新規登録</a></li>
 @endif
-        <li class="list-group-item"><a href="{{ url('account/create') }}">新規登録</a></li>
         <li class="list-group-item"><a href="{{ url('game/soft') }}">ゲームデータベース</a></li>
         <li class="list-group-item"><a href="{{ url('site') }}">サイト</a></li>
         <li class="list-group-item"><a href="{{ url('game/review') }}">レビュー</a></li>

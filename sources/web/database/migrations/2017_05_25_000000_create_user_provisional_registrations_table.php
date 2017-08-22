@@ -20,7 +20,7 @@ class CreateUserProvisionalRegistrationsTable extends Migration
         Schema::create('user_provisional_registrations', function (Blueprint $table) {
             $table->string('email', 200)->comment('メールアドレス');
             $table->string('token', 50)->comment('トークン');
-            $table->dateTime('limit_date')->comment('有効期限');
+            $table->dateTime('limit_date')->index()->comment('有効期限');
             $table->timestamps();
             $table->primary('email');
         });

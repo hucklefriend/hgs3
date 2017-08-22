@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgs3\Http\Controllers\Auth;
+namespace Hgs3\Http\Controllers\Account;
 
 use Hgs3\User;
 use Hgs3\Http\Controllers\Controller;

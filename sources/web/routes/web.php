@@ -22,6 +22,10 @@ Route::get('/auth/login', 'Auth\LoginController@login')->name('login');
 Route::post('/auth/login', 'Auth\LoginController@authenticate');
 Route::get('/auth/logout', 'Auth\LoginController@logout');
 
+// アカウント作成
+Route::get('/account/signup', 'Account\SignUpController@index');
+Route::post('/account/sendmail', 'Account\SignUpController@sendmail');
+
 Route::get('/game/soft', 'Game\SoftController@index');
 Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
