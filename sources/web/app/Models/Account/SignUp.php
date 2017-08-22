@@ -44,11 +44,12 @@ SQL;
 
             return false;
         }
-
+/*
         \Mail::to($email)
             ->send(new ProvisionalRegistration($email, $token));
-
-        return true;
+*/
+        return $token;
+        // return true;
     }
 
     /**

@@ -29,9 +29,19 @@ class SignUpController extends Controller
      */
     public function sendPRMail(SendPRMailRequestRequest $request)
     {
-        $signUp = new SignUp();
-        $signUp->sendProvisionalRegistrationMail($request->get('email'));
+        $email = $request->get('email');
 
-        return view('account.sendPRMail');
+        $signUp = new SignUp();
+        $token = $signUp->sendProvisionalRegistrationMail($email);
+
+        return view('account.sendPRMail', [
+            'token' => $token,
+            'email' => $email
+        ]);
+    }
+
+    public function register($email, $token)
+    {
+
     }
 }
