@@ -79,19 +79,7 @@ class SignUpController extends Controller
             $signUp->deleteToken($token);
             return view('account.tokenError');
         } else {
-            $orm = UserProvisionalRegistration::where('token', $token)
-                ->first();
-
-            $data = [
-                'name'     => $request->get('name'),
-                'email'    => $orm->email,
-                'password' => bcrypt($request->get('password')),
-                'role'     => 1
-            ];
-
-            \Hgs3\User::create($data);
-
-            $signUp->deleteToken($token);
+            $signUp->register($token, $request->get('name'), $request->get('password'));
 
             return view('account.complete');
         }

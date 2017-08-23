@@ -6,6 +6,7 @@
 namespace Hgs3\Models\Account;
 
 use Hgs3\Mail\ProvisionalRegistration;
+use Hgs3\Models\Orm\UserProvisionalRegistration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -98,13 +99,59 @@ SQL;
      * @param string $password
      * @return bool
      */
-    public function register($token, $name, $email, $password)
+    public function register($token, $name, $password)
     {
+        $orm = UserProvisionalRegistration::where('token', $token)
+            ->first();
+
         DB::beginTransaction();
         try {
             \Hgs3\User::create([
                 'name'     => $name,
-                'email'    => $email,
+                'email'    => $orm->email,
+                'password' => bcrypt($password),
+                'role'     => 1
+            ]);
+
+            $this->deleteToken($token);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function registerBySocialite(\Laravel\Socialite\One\User $user)
+    {
+        $account = SocialAccount::firstOrCreate([
+            'provider_user_id' => $providerUser->getId(),
+            'provider'         => $provider,
+        ]);
+
+        if (empty($account->user))
+        {
+            $user = User::create([
+                'name'   => $providerUser->getName(),
+            ]);
+            $account->user()->associate($user);
+        }
+
+        $account->provider_access_token = $providerUser->token;
+        $account->save();
+
+
+        DB::beginTransaction();
+        try {
+            \Hgs3\User::create([
+                'name'     => $name,
+                'email'    => $orm->email,
                 'password' => bcrypt($password),
                 'role'     => 1
             ]);

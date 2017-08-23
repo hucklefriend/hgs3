@@ -141,3 +141,10 @@ Route::delete('/community/g/{game}/topic/{gct}', 'Community\GameCommunityControl
 Route::delete('/community/g/{game}/topic_response/{gctr}', 'Community\GameCommunityController@eraseResponse')->middleware('auth');
 Route::get('/community/g/{game}', 'Community\GameCommunityController@detail')->middleware('auth');
 Route::get('/community/g', 'Community\GameCommunityController@index');
+
+
+// SNS
+Route::get('/social/twitter/mode', 'Social\TwitterController@redirect');
+Route::get('/social/twitter/callback', 'Social\TwitterController@callback');
+
+
