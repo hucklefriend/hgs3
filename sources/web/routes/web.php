@@ -18,15 +18,15 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
 });
 
 Route::get('/', 'TopController@index');
-Route::get('/auth/login', 'Auth\LoginController@login')->name('login');
-Route::post('/auth/login', 'Auth\LoginController@authenticate');
-Route::get('/auth/logout', 'Auth\LoginController@logout');
+Route::get('/auth/login', 'Account\LoginController@login')->name('login');
+Route::post('/auth/login', 'Account\LoginController@authenticate');
+Route::get('/auth/logout', 'Account\LoginController@logout');
 
 // アカウント作成
+Route::post('/account/signup/pr', 'Account\SignUpController@sendPRMail');
+Route::get('/account/register/{token}', 'Account\SignUpController@register');
+Route::post('/account/register', 'Account\SignUpController@registration');
 Route::get('/account/signup', 'Account\SignUpController@index');
-Route::post('/account/sendmail', 'Account\SignUpController@sendmail');
-Route::get('/account/register/{$token}', 'Account\SignUpController@index');
-
 
 Route::get('/game/soft', 'Game\SoftController@index');
 Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');

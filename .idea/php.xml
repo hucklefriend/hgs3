@@ -67,6 +67,12 @@
       <path value="$PROJECT_DIR$/sources/web/vendor/composer" />
       <path value="$PROJECT_DIR$/sources/web/vendor/ccampbell/chromephp" />
       <path value="$PROJECT_DIR$/sources/web/vendor/laravelcollective/html" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/laravel/socialite" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/league/oauth1-client" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

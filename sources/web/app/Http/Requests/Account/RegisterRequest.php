@@ -1,13 +1,13 @@
 <?php
 /**
- * 仮登録メール送信リクエスト
+ * 本登録リクエスト
  */
 
 namespace Hgs3\Http\Requests\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SendPRMailRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,6 @@ class SendPRMailRequest extends FormRequest
     public function rules()
     {
         return [
-
         ];
     }
 }

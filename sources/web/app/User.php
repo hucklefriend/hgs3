@@ -2,9 +2,11 @@
 
 namespace Hgs3;
 
+use Hgs3\Models\Account\SignUp;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {

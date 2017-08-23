@@ -26,7 +26,7 @@ class SignUp
         try {
             $sql =<<< SQL
 INSERT IGNORE INTO
-user_provisional_registrations (email, token, limit_date, create_at, updated_at)
+user_provisional_registrations (email, token, limit_date, created_at, updated_at)
 VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
 
@@ -59,10 +59,9 @@ SQL;
      * @param $token
      * @return bool
      */
-    public function validateToken($email, $token)
+    public function validateToken($token)
     {
         return DB::table('user_provisional_registrations')
-            ->where('email', $email)
             ->where('token', $token)
             ->whereRaw('limit_date >= NOW()')
             ->count() == 1;
@@ -71,12 +70,12 @@ SQL;
     /**
      * 削除
      *
-     * @param $email
+     * @param string $token
      */
-    public function deleteToken($email)
+    public function deleteToken($token)
     {
         DB::table('user_provisional_registrations')
-                ->where('email', $email)
+                ->where('token', $token)
                 ->delete();
     }
 
@@ -90,8 +89,38 @@ SQL;
             ->delete();
     }
 
-    public function register($name, $email)
+    /**
+     * 本登録
+     *
+     * @param string $token
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @return bool
+     */
+    public function register($token, $name, $email, $password)
     {
-        // 本登録
+        DB::beginTransaction();
+        try {
+            \Hgs3\User::create([
+                'name'     => $name,
+                'email'    => $email,
+                'password' => bcrypt($password),
+                'role'     => 1
+            ]);
+
+            $this->deleteToken($token);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return false;
+        }
+
+        return true;
     }
 }

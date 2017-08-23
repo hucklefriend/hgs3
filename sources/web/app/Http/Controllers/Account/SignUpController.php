@@ -6,8 +6,10 @@
 namespace Hgs3\Http\Controllers\Account;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\SendPRMailRequestRequest;
+use Hgs3\Http\Requests\Account\RegisterRequest;
+use Hgs3\Http\Requests\Account\SendPRMailRequest;
 use Hgs3\Models\Account\SignUp;
+use Hgs3\Models\Orm\UserProvisionalRegistration;
 
 class SignUpController extends Controller
 {
@@ -24,10 +26,10 @@ class SignUpController extends Controller
     /**
      * メール送信
      *
-     * @param SendPRMailRequestRequest $request
+     * @param SendPRMailRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function sendPRMail(SendPRMailRequestRequest $request)
+    public function sendPRMail(SendPRMailRequest $request)
     {
         $email = $request->get('email');
 
@@ -35,13 +37,63 @@ class SignUpController extends Controller
         $token = $signUp->sendProvisionalRegistrationMail($email);
 
         return view('account.sendPRMail', [
-            'token' => $token,
-            'email' => $email
+            'token' => $token
         ]);
     }
 
-    public function register($email, $token)
+    /**
+     * 登録画面
+     *
+     * @param string $token
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function register($token)
     {
+        $signUp = new SignUp();
 
+        if (!$signUp->validateToken($token)) {
+            $signUp->deleteToken($token);
+            return view('account.tokenError');
+        } else {
+            $orm = UserProvisionalRegistration::where('token', $token)
+                ->first();
+
+            return view('account.register', [
+                'pr' => $orm
+            ]);
+        }
+    }
+
+    /**
+     * 本登録
+     *
+     * @param RegisterRequest $request
+     */
+    public function registration(RegisterRequest $request)
+    {
+        $signUp = new SignUp();
+
+        $token = $request->get('token');
+
+        if (!$signUp->validateToken($token)) {
+            $signUp->deleteToken($token);
+            return view('account.tokenError');
+        } else {
+            $orm = UserProvisionalRegistration::where('token', $token)
+                ->first();
+
+            $data = [
+                'name'     => $request->get('name'),
+                'email'    => $orm->email,
+                'password' => bcrypt($request->get('password')),
+                'role'     => 1
+            ];
+
+            \Hgs3\User::create($data);
+
+            $signUp->deleteToken($token);
+
+            return view('account.complete');
+        }
     }
 }
