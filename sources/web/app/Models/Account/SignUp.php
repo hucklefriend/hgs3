@@ -6,7 +6,9 @@
 namespace Hgs3\Models\Account;
 
 use Hgs3\Mail\ProvisionalRegistration;
+use Hgs3\Models\Orm\SocialAccount;
 use Hgs3\Models\Orm\UserProvisionalRegistration;
+use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -128,8 +130,39 @@ SQL;
         return true;
     }
 
-    public function registerBySocialite(\Laravel\Socialite\One\User $user)
+    public function registerBySocialite(\Laravel\Socialite\One\User $socialUser, $socialSiteId)
     {
+
+        DB::beginTransaction();
+
+        try {
+            $user = User::create([
+                'name'   => $socialUser->getName(),
+            ]);
+
+            $sa = new SocialAccount;
+
+            $sa->user_id = $user->id;
+            $sa->social_site_id = $socialSiteId;
+
+
+
+            $sa->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return false;
+        }
+
+
+        return true;
+
         $account = SocialAccount::firstOrCreate([
             'provider_user_id' => $providerUser->getId(),
             'provider'         => $provider,

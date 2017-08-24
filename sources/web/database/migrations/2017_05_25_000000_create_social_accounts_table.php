@@ -1,4 +1,8 @@
 <?php
+/**
+ * ソーシャルアカウントテーブルの作成
+ */
+
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,13 +18,14 @@ class CreateSocialAccountsTable extends Migration
     public function up()
     {
         Schema::create('social_accounts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->string('provider_user_id');
-            $table->mediumText('provider_access_token')->nullable();
-            $table->string('provider');
+            $table->increments('id')->comment('ソーシャルアカウントID');
+            $table->unsignedInteger('user_id')->comment('ユーザーID');
+            $table->string('social_user_id', 256)->index()->comment('ソーシャルサイト側のユーザーID');
+            $table->string('token', 256)->nullable()->comment('アクセストークン');
+            $table->string('token_secret', 256)->nullable()->comment('シークレットアクセストークン');
+            $table->unsignedSmallInteger('social_site_id')->comment('ソーシャルサイトの種別');
             $table->timestamps();
-            $table->softDeletes();
+            $table->unique(['user_id', 'social_site_id']);
         });
     }
 

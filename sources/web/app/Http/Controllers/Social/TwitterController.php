@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers\Social;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Models\Orm\SocialAccount;
 use Laravel\Socialite\Facades\Socialite;
 use Hgs3\Constants\Social\Twitter\Mode;
 
@@ -53,8 +54,14 @@ class TwitterController extends Controller
 
     private function createAccount(\Laravel\Socialite\One\User $user)
     {
+        // 登録済みアカウントかチェック
 
 
+        // データ登録
+        $account = SocialAccount::firstOrCreate([
+            'provider_user_id' => $providerUser->getId(),
+            'provider'         => $provider,
+        ]);
 
 
         return redirect('mypage');
