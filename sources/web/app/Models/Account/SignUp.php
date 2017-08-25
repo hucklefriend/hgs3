@@ -130,9 +130,15 @@ SQL;
         return true;
     }
 
+    /**
+     * Socialiteでのユーザー登録
+     *
+     * @param \Laravel\Socialite\One\User $socialUser
+     * @param $socialSiteId
+     * @return bool
+     */
     public function registerBySocialite(\Laravel\Socialite\One\User $socialUser, $socialSiteId)
     {
-
         DB::beginTransaction();
 
         try {
@@ -144,52 +150,10 @@ SQL;
 
             $sa->user_id = $user->id;
             $sa->social_site_id = $socialSiteId;
-
-
-
+            $sa->social_user_id = $socialUser->id;
+            $sa->token = $socialUser->token;
+            $sa->token_secret = $socialUser->tokenSecret;
             $sa->save();
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
-        }
-
-
-        return true;
-
-        $account = SocialAccount::firstOrCreate([
-            'provider_user_id' => $providerUser->getId(),
-            'provider'         => $provider,
-        ]);
-
-        if (empty($account->user))
-        {
-            $user = User::create([
-                'name'   => $providerUser->getName(),
-            ]);
-            $account->user()->associate($user);
-        }
-
-        $account->provider_access_token = $providerUser->token;
-        $account->save();
-
-
-        DB::beginTransaction();
-        try {
-            \Hgs3\User::create([
-                'name'     => $name,
-                'email'    => $orm->email,
-                'password' => bcrypt($password),
-                'role'     => 1
-            ]);
-
-            $this->deleteToken($token);
 
             DB::commit();
         } catch (\Exception $e) {

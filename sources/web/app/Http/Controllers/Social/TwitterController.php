@@ -6,9 +6,13 @@
 namespace Hgs3\Http\Controllers\Social;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm\SocialAccount;
+use Hgs3\User;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Hgs3\Constants\Social\Twitter\Mode;
+use Hgs3\Constants\SocialSite;
 
 class TwitterController extends Controller
 {
@@ -21,7 +25,7 @@ class TwitterController extends Controller
     public function redirect($mode)
     {
         $mode = intval($mode);
-        session('twitter', $mode);
+        session(['twitter' => $mode]);
 
         return Socialite::driver('twitter')->redirect();
     }
@@ -49,49 +53,47 @@ class TwitterController extends Controller
                 break;
         }
 
-        return view('social.twitter', ['user' => $user]);
+        return view('social.twitter', ['user' => $user, 'mode' => $mode]);
     }
 
+    /**
+     * Twitterでアカウント作成
+     *
+     * @param \Laravel\Socialite\One\User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     private function createAccount(\Laravel\Socialite\One\User $user)
     {
-        // 登録済みアカウントかチェック
+        $signUp = new SignUp();
 
-
-        // データ登録
-        $account = SocialAccount::firstOrCreate([
-            'provider_user_id' => $providerUser->getId(),
-            'provider'         => $provider,
-        ]);
-
-
-        return redirect('mypage');
+        $sa = new SocialAccount;
+        if ($sa->isRegistered(SocialSite::TWITTER, $user->id)) {
+            return view('social.twitter.alreadyRegistered');
+        } else {
+            $signUp->registerBySocialite($user, SocialSite::TWITTER);
+            return view('social.twitter.createAccount');
+        }
     }
 
-    private function login(\Laravel\Socialite\One\User $user)
+    /**
+     * ログイン
+     *
+     * @param \Laravel\Socialite\One\User $socialUser
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
+    private function login(\Laravel\Socialite\One\User $socialUser)
     {
-        return redirect('mypage');
-    }
+        $sa = new SocialAccount;
+        $userId = $sa->getUserId(SocialSite::TWITTER, $socialUser->id);
 
-    public function createOrGetUser($providerUser, $provider)
-    {
-
-
-        $account = SocialAccount::firstOrCreate([
-            'provider_user_id' => $providerUser->getId(),
-            'provider'         => $provider,
-        ]);
-
-        if (empty($account->user))
-        {
-            $user = User::create([
-                'name'   => $providerUser->getName(),
-            ]);
-            $account->user()->associate($user);
+        if ($userId != null) {
+            $user = User::find($userId);
+            if ($user != null) {
+                Auth::login($user, true);
+                return redirect('mypage');
+            }
         }
 
-        $account->provider_access_token = $providerUser->token;
-        $account->save();
-
-        return $account->user;
+        return view('social.twitter.notRegistered');
     }
 }

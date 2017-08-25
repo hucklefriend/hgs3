@@ -2,13 +2,10 @@
 
 @section('content')
 
-
     <h3>ユーザー登録</h3>
 
-
-
     <div class="row">
-        <div class="col-md-4"><a href="{{ url2('social/twitter') }}">Twitter</a></div>
+        <div class="col-md-4"><a href="{{ url2('social/twitter') }}/{{ \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT }}">Twitter</a></div>
         <div class="col-md-4"><a href="{{ url2('social/facebook') }}">facebook</a></div>
         <div class="col-md-4"><a href="{{ url2('social/github') }}">GitHub</a></div>
     </div>
@@ -17,8 +14,6 @@
         <div class="col-md-4">Yahoo!</div>
         <div class="col-md-4">mixi</div>
     </div>
-
-
 
     <p>
         仮登録メール送信

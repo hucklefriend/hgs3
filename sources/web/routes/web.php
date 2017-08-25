@@ -144,7 +144,7 @@ Route::get('/community/g', 'Community\GameCommunityController@index');
 
 
 // SNS
-Route::get('/social/twitter/mode', 'Social\TwitterController@redirect');
 Route::get('/social/twitter/callback', 'Social\TwitterController@callback');
+Route::get('/social/twitter/{mode}', 'Social\TwitterController@redirect');
 
 
