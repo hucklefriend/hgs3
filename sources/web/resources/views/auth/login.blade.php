@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-4">Twitter</div>
+        <div class="col-md-4"><a href="{{ url2('social/twitter') }}/{{ \Hgs3\Constants\Social\Twitter\Mode::LOGIN }}">Twitter</a></div>
         <div class="col-md-4">facebook</div>
         <div class="col-md-4">GitHub</div>
     </div>
