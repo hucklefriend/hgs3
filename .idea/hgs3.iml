@@ -20,6 +20,7 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/hamcrest/hamcrest-php" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-color" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-highlighter" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/jenssegers/mongodb" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/laravel/framework" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/laravel/socialite" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/laravel/tinker" />
@@ -97,6 +98,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/hamcrest/hamcrest-php" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-color" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-highlighter" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/jenssegers/mongodb" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/framework" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/socialite" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/tinker" />
@@ -170,6 +172,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/hamcrest/hamcrest-php" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-color" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/jakub-onderka/php-console-highlighter" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/jenssegers/mongodb" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/framework" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/socialite" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/laravel/tinker" />
@@ -226,6 +229,18 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/tijsverkoyen/css-to-inline-styles" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/webmozart/assert" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="PHARS">
+        <CLASSES>
+          <root url="phar://$MODULE_DIR$/sources/web/composer.phar/" />
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
+        </CLASSES>
+        <SOURCES>
+          <root url="phar://$MODULE_DIR$/sources/web/composer.phar/" />
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
         </SOURCES>
       </library>
     </orderEntry>

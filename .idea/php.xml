@@ -73,6 +73,7 @@
       <path value="$PROJECT_DIR$/sources/web/vendor/laravel/socialite" />
       <path value="$PROJECT_DIR$/sources/web/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/sources/web/vendor/league/oauth1-client" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/jenssegers/mongodb" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
