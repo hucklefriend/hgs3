@@ -1,6 +1,6 @@
 <?php
 /**
- * Twitterコントローラー
+ * Google+コントローラー
  */
 
 namespace Hgs3\Http\Controllers\Social;
@@ -14,10 +14,10 @@ use Laravel\Socialite\Facades\Socialite;
 use Hgs3\Constants\Social\Mode;
 use Hgs3\Constants\SocialSite;
 
-class TwitterController extends Controller
+class GoogleController extends Controller
 {
     /**
-     * Twitter認証画面へ遷移
+     * Google+認証画面へ遷移
      *
      * @param $mode
      * @return mixed
@@ -25,9 +25,9 @@ class TwitterController extends Controller
     public function redirect($mode)
     {
         $mode = intval($mode);
-        session(['twitter' => $mode]);
+        session(['github' => $mode]);
 
-        return Socialite::driver('twitter')->redirect();
+        return Socialite::driver('github')->redirect();
     }
 
     /**
@@ -37,9 +37,9 @@ class TwitterController extends Controller
      */
     public function callback()
     {
-        $user = Socialite::driver('twitter')->user();
+        $user = Socialite::driver('github')->user();
 
-        $mode = session('twitter');
+        $mode = session('github');
         switch ($mode) {
             case Mode::CREATE_ACCOUNT:
                 return $this->createAccount($user);
@@ -53,7 +53,7 @@ class TwitterController extends Controller
                 break;
         }
 
-        return view('social.twitter', ['user' => $user, 'mode' => $mode]);
+        return view('social.github', ['user' => $user, 'mode' => $mode]);
     }
 
     /**
@@ -67,11 +67,11 @@ class TwitterController extends Controller
         $signUp = new SignUp();
 
         $sa = new SocialAccount;
-        if ($sa->isRegistered(SocialSite::TWITTER, $user->id)) {
-            return view('social.twitter.alreadyRegistered');
+        if ($sa->isRegistered(SocialSite::GITHUB, $user->id)) {
+            return view('social.github.alreadyRegistered');
         } else {
-            $signUp->registerBySocialite($user, SocialSite::TWITTER);
-            return view('social.twitter.createAccount');
+            $signUp->registerBySocialite($user, SocialSite::GITHUB);
+            return view('social.github.createAccount');
         }
     }
 
@@ -84,7 +84,7 @@ class TwitterController extends Controller
     private function login(\Laravel\Socialite\One\User $socialUser)
     {
         $sa = new SocialAccount;
-        $userId = $sa->getUserId(SocialSite::TWITTER, $socialUser->id);
+        $userId = $sa->getUserId(SocialSite::GITHUB, $socialUser->id);
 
         if ($userId != null) {
             $user = User::find($userId);
@@ -94,6 +94,6 @@ class TwitterController extends Controller
             }
         }
 
-        return view('social.twitter.notRegistered');
+        return view('social.github.notRegistered');
     }
 }

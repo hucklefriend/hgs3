@@ -148,4 +148,7 @@ Route::get('/social/twitter/callback', 'Social\TwitterController@callback');
 Route::get('/social/twitter/{mode}', 'Social\TwitterController@redirect');
 Route::get('/social/facebook/callback', 'Social\FacebookController@callback');
 Route::get('/social/facebook/{mode}', 'Social\FacebookController@redirect');
-
+Route::get('/social/github/callback', 'Social\GitHubController@callback');
+Route::get('/social/github/{mode}', 'Social\GitHubController@redirect');
+Route::get('/social/google/callback', 'Social\GoogleController@callback');
+Route::get('/social/google/{mode}', 'Social\GoogleController@redirect');

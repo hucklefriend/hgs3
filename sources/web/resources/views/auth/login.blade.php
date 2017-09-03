@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-4"><a href="{{ url2('social/twitter') }}/{{ \Hgs3\Constants\Social\Mode::LOGIN }}">Twitter</a></div>
         <div class="col-md-4"><a href="{{ url2('social/facebook') }}/{{ \Hgs3\Constants\Social\Mode::LOGIN }}">facebook</a></div>
-        <div class="col-md-4">GitHub</div>
+        <div class="col-md-4"><a href="{{ url2('social/github') }}/{{ \Hgs3\Constants\Social\Mode::LOGIN }}">GitHub</a></div>
     </div>
     <div class="row">
         <div class="col-md-4">Google+</div>

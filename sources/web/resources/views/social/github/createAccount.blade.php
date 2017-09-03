@@ -5,6 +5,6 @@
 
     <pre>{{ print_r($user) }}</pre>
 
-    <p><a href="{{ url2('social/facebook') }}/{{ \Hgs3\Constants\Social\Mode::LOGIN }}">ログイン</a></p>
+    <p><a href="{{ url2('social/github') }}/{{ \Hgs3\Constants\Social\Mode::LOGIN }}">ログイン</a></p>
 
 @endsection
