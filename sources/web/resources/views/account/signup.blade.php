@@ -6,7 +6,7 @@
 
     <div class="row">
         <div class="col-md-4"><a href="{{ url2('social/twitter') }}/{{ \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT }}">Twitter</a></div>
-        <div class="col-md-4"><a href="{{ url2('social/facebook') }}">facebook</a></div>
+        <div class="col-md-4"><a href="{{ url2('social/facebook') }}/{{ \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT }}">facebook</a></div>
         <div class="col-md-4"><a href="{{ url2('social/github') }}">GitHub</a></div>
     </div>
     <div class="row">

@@ -167,4 +167,42 @@ SQL;
 
         return true;
     }
+
+    /**
+     * Socialiteでのユーザー登録
+     *
+     * @param \Laravel\Socialite\Two\User $socialUser
+     * @param $socialSiteId
+     * @return bool
+     */
+    public function registerBySocialite2(\Laravel\Socialite\Two\User $socialUser, $socialSiteId)
+    {
+        DB::beginTransaction();
+
+        try {
+            $user = User::create([
+                'name'   => $socialUser->getName(),
+            ]);
+
+            $sa = new SocialAccount;
+
+            $sa->user_id = $user->id;
+            $sa->social_site_id = $socialSiteId;
+            $sa->social_user_id = $socialUser->id;
+            $sa->token = $socialUser->token;
+            $sa->token_secret = '';
+            $sa->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return false;
+        }
+
+        return true;
+    }
 }

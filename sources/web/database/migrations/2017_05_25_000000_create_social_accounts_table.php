@@ -20,12 +20,12 @@ class CreateSocialAccountsTable extends Migration
         Schema::create('social_accounts', function (Blueprint $table) {
             $table->increments('id')->comment('ソーシャルアカウントID');
             $table->unsignedInteger('user_id')->comment('ユーザーID');
-            $table->string('social_user_id', 256)->index()->comment('ソーシャルサイト側のユーザーID');
+            $table->string('social_user_id', 100)->index()->comment('ソーシャルサイト側のユーザーID');
             $table->string('token', 256)->nullable()->comment('アクセストークン');
             $table->string('token_secret', 256)->nullable()->comment('シークレットアクセストークン');
             $table->unsignedSmallInteger('social_site_id')->comment('ソーシャルサイトの種別');
             $table->timestamps();
-            $table->unique(['user_id', 'social_site_id']);
+            $table->index(['user_id', 'social_site_id']);
         });
     }
 

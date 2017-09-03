@@ -23,6 +23,8 @@ class CreateUserEmailsTable extends Migration
             $table->dateTime('limit_date')->nullable()->comment('パスワード再発行時の有効期限');
             $table->string('password', 100)->comment('パスワード');
             $table->timestamps();
+
+
         });
     }
 

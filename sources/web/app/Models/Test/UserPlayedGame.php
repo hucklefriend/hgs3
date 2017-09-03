@@ -5,6 +5,8 @@
 
 namespace Hgs3\Models\Test;
 
+use Illuminate\Support\Facades\DB;
+
 class UserPlayedGame
 {
     /**
@@ -17,16 +19,22 @@ class UserPlayedGame
 
         $games = Game::getIds();
 
+        $sql =<<< SQL
+INSERT IGNORE INTO user_played_games
+(user_id, game_id, comment, created_at, updated_at)
+VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+SQL;
+
+
         foreach ($games as $gameId) {
             $num = rand(0, $userMax);
 
             for ($i = 0; $i < $num; $i++) {
-                $orm = new \Hgs3\Models\Orm\UserPlayedGame;
-
-                $orm->user_id = $users[rand(0, $userMax)];
-                $orm->game_id = $gameId;
-                $orm->comment = str_random(rand(3, 30));
-                $orm->save();
+                DB::insert($sql, [
+                    $users[rand(0, $userMax)],
+                    $gameId,
+                    str_random(rand(3, 30))
+                ]);
             }
         }
     }

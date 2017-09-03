@@ -5,13 +5,13 @@
 
 namespace Hgs3\Http\Controllers\Social;
 
+use Hgs3\Constants\Social\Mode;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm\SocialAccount;
 use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use Hgs3\Constants\Social\Twitter\Mode;
 use Hgs3\Constants\SocialSite;
 
 class FacebookController extends Controller
@@ -27,11 +27,13 @@ class FacebookController extends Controller
         $mode = intval($mode);
         session(['facebook' => $mode]);
 
-        return Socialite::driver('facebook')->redirect();
+        $facebook = Socialite::driver('facebook');
+
+        return $facebook->redirect();
     }
 
     /**
-     * Twitterからのコールバック
+     * Facebook
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -57,34 +59,34 @@ class FacebookController extends Controller
     }
 
     /**
-     * Twitterでアカウント作成
+     * Facebook
      *
-     * @param \Laravel\Socialite\One\User $user
+     * @param \Laravel\Socialite\Two\User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function createAccount(\Laravel\Socialite\One\User $user)
+    private function createAccount(\Laravel\Socialite\Two\User $user)
     {
         $signUp = new SignUp();
 
         $sa = new SocialAccount;
-        if ($sa->isRegistered(SocialSite::TWITTER, $user->id)) {
+        if ($sa->isRegistered(SocialSite::FACEBOOK, $user->id)) {
             return view('social.facebook.alreadyRegistered');
         } else {
-            $signUp->registerBySocialite($user, SocialSite::TWITTER);
-            return view('social.facebook.createAccount');
+            $signUp->registerBySocialite2($user, SocialSite::FACEBOOK);
+            return view('social.facebook.createAccount', ['user' => $user]);
         }
     }
 
     /**
      * ログイン
      *
-     * @param \Laravel\Socialite\One\User $socialUser
+     * @param \Laravel\Socialite\Two\User $socialUser
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    private function login(\Laravel\Socialite\One\User $socialUser)
+    private function login(\Laravel\Socialite\Two\User $socialUser)
     {
         $sa = new SocialAccount;
-        $userId = $sa->getUserId(SocialSite::TWITTER, $socialUser->id);
+        $userId = $sa->getUserId(SocialSite::FACEBOOK, $socialUser->id);
 
         if ($userId != null) {
             $user = User::find($userId);
