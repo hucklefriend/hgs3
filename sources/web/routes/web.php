@@ -11,10 +11,17 @@
 |
 */
 
+
+
+Route::get('/timeline', 'TimelineController@index');
+Route::get('/timeline/add', 'TimelineController@input');
+Route::post('/timeline/add', 'TimelineController@add');
+
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
+
 });
 
 Route::get('/', 'TopController@index');

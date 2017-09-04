@@ -5,13 +5,15 @@
 
 namespace Hgs3\Models;
 
-use Hgs3\Models\Orm\SiteSearchIndex;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Jenssegers\Mongodb\Model as Eloquent;
 
-class Timeline
+class Timeline extends Eloquent
 {
-    public function add()
+    protected $connection = 'mongodb';
+
+
+    public function add($tltId, $param = [])
     {
+
     }
 }

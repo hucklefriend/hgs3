@@ -78,6 +78,17 @@ return [
             'prefix' => '',
         ],
 
+        'mongodb' => [
+            'driver'   => 'mongodb',
+            'host'     => 'localhost',
+            'port'     => 27017,
+            // 'username' => 'username',
+            // 'password' => 'password',
+            'database' => 'test',
+            'options' => [
+                // 'db' => 'admin' // sets the authentication database required by mongo 3
+            ],
+        ],
     ],
 
     /*
