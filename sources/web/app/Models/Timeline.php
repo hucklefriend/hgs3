@@ -5,13 +5,8 @@
 
 namespace Hgs3\Models;
 
-use Jenssegers\Mongodb\Model as Eloquent;
-
-class Timeline extends Eloquent
+class Timeline
 {
-    protected $connection = 'mongodb';
-
-
     public function add($tltId, $param = [])
     {
 

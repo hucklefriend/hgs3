@@ -19,14 +19,7 @@ class TimelineController extends Controller
      */
     public function index()
     {
-        //
-        //
-        //$timeline = Timeline::all();
-
         $client = new \MongoDB\Client("mongodb://localhost:27017");
-        //$manager = new \MongoDB\Driver\Manager("mongodb://localhost:27017");
-        //$query = new \MongoDB\Driver\Query([], []);
-        //$cursor = $manager->executeQuery('test.users', $query);
         $collection = $client->test->users;
 
         return view('timeline.index', [
