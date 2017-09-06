@@ -53,6 +53,16 @@ class TimelineText
         return self::$instance;
     }
 
+    public function getNewGameSoftText($gameId, $gameName)
+    {
+        return sprintf($this->text[self::TLT_NEW_GAME_SOFT], url2('game/soft').'/'.$gameId, $gameName);
+    }
+
+    public function getUpdateGameSoftText($gameId, $gameName)
+    {
+        return sprintf($this->text[self::TLT_UPDATE_GAME_SOFT], url2('game/soft').'/'.$gameId, $gameName);
+    }
+
     /**
      * テキストを取得
      *
