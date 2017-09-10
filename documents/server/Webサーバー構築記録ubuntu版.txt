@@ -115,3 +115,8 @@ sudo phpenmod mongodb
 sudo service mongod start
 sudo service apache2 restart
 
+sudo service mongod enable
+
+mongo hgs3
+use hgs3
+db.createCollection('timeline');

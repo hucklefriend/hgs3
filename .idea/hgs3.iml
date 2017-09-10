@@ -118,6 +118,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/league/flysystem" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/league/oauth1-client" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/mockery/mockery" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/mongodb/mongodb" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/monolog/monolog" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/mtdowling/cron-expression" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/myclabs/deep-copy" />
@@ -191,6 +192,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/league/flysystem" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/league/oauth1-client" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/mockery/mockery" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/mongodb/mongodb" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/monolog/monolog" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/mtdowling/cron-expression" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/myclabs/deep-copy" />
