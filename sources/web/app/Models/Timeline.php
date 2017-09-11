@@ -26,17 +26,28 @@ class Timeline
             $gameName
         );
 
-
-
-        $this->insert()
-    }
-
-    public function getUpdateGameSoftText($gameId, $gameName)
-    {
-        return sprintf($this->text[self::TLT_UPDATE_GAME_SOFT], url2('game/soft').'/'.$gameId, $gameName);
+        $this->insert($text, ['game_id' => $gameId]);
     }
 
     /**
+     * ゲームソフト更新
+     *
+     * @param $gameId
+     * @param $gameName
+     */
+    public function getUpdateGameSoftText($gameId, $gameName)
+    {
+        $text = sprintf('「<a href="%s">%s</a>」の情報が更新されました。',
+            url2('game/soft').'/'.$gameId,
+            $gameName
+        );
+
+        $this->insert($text, ['game_id' => $gameId]);
+    }
+
+    /**
+     * MongoDBのコレクションを取得
+     *
      * @return mixed
      */
     private function getMongoCollection()
@@ -52,12 +63,11 @@ class Timeline
      * @param $category
      * @param $text
      */
-    private function insert($category, $text, $option = [])
+    private function insert( $text, $option = [])
     {
         $data = [
-            'category' => $category,
-            'text'     => $text,
-            'time'     => time()
+            'text' => $text,
+            'time' => time()
         ];
 
         $collection = $this->getMongoCollection();

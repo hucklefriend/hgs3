@@ -22,8 +22,15 @@ class TimelineController extends Controller
         $client = new \MongoDB\Client("mongodb://localhost:27017");
         $collection = $client->test->users;
 
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => 30,
+            'skip'  => 0
+        ];
+
+
         return view('timeline.index', [
-            'timelines' => $collection->find(),
+            'timelines' => $collection->find([], $options),
         ]);
     }
 
@@ -31,5 +38,4 @@ class TimelineController extends Controller
     {
 
     }
-
 }
