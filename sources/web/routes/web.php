@@ -11,11 +11,10 @@
 |
 */
 
-
-
 Route::get('/timeline', 'TimelineController@index');
 Route::get('/timeline/add', 'TimelineController@input');
 Route::post('/timeline/add', 'TimelineController@add');
+Route::delete('/timeline/', 'TimelineController@remove');
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {

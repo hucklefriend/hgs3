@@ -6,6 +6,8 @@
 namespace Hgs3\Models;
 
 use Hgs3\Constants\TimelineText;
+use Hgs3\Constants\TimelineType;
+use Hgs3\Models\Orm\Game;
 
 class Timeline
 {
@@ -21,28 +23,42 @@ class Timeline
      */
     public function addNewGameSoftText($gameId, $gameName)
     {
+        if ($gameName === null) {
+            $gameName = $this->getGameName($gameId);
+            if ($gameName === false) {
+                return;
+            }
+        }
+
         $text = sprintf('「<a href="%s">%s</a>」が追加されました。',
             url2('game/soft').'/'.$gameId,
             $gameName
         );
 
-        $this->insert($text, ['game_id' => $gameId]);
+        $this->insert(TimelineType::NEW_GAME_SOFT, $text, ['game_id' => $gameId]);
     }
 
     /**
      * ゲームソフト更新
      *
-     * @param $gameId
-     * @param $gameName
+     * @param int $gameId
+     * @param string $gameName
      */
-    public function getUpdateGameSoftText($gameId, $gameName)
+    public function addUpdateGameSoftText($gameId, $gameName)
     {
+        if ($gameName === null) {
+            $gameName = $this->getGameName($gameId);
+            if ($gameName === false) {
+                return;
+            }
+        }
+
         $text = sprintf('「<a href="%s">%s</a>」の情報が更新されました。',
             url2('game/soft').'/'.$gameId,
             $gameName
         );
 
-        $this->insert($text, ['game_id' => $gameId]);
+        $this->insert(TimelineType::UPDATE_GAME_SOFT, $text, ['game_id' => $gameId]);
     }
 
     /**
@@ -50,7 +66,7 @@ class Timeline
      *
      * @return mixed
      */
-    private function getMongoCollection()
+    public function getMongoCollection()
     {
         $client = new \MongoDB\Client("mongodb://localhost:27017");
         return $client->hgs3->timeline;
@@ -60,17 +76,35 @@ class Timeline
     /**
      * データ登録
      *
-     * @param $category
-     * @param $text
+     * @param int $type
+     * @param string $text
+     * @param array $option
      */
-    private function insert( $text, $option = [])
+    private function insert($type, $text, $option = [])
     {
         $data = [
+            'type' => $type,
             'text' => $text,
             'time' => time()
         ];
 
         $collection = $this->getMongoCollection();
         $collection->insertOne($data + $option);
+    }
+
+    /**
+     * ゲーム名を取得
+     *
+     * @param $gameId
+     * @return bool|mixed
+     */
+    private function getGameName($gameId)
+    {
+        $game = Game::find($gameId);
+        if ($game !== null) {
+            return $game->name;
+        }
+
+        return false;
     }
 }

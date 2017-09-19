@@ -115,7 +115,10 @@ sudo phpenmod mongodb
 sudo service mongod start
 sudo service apache2 restart
 
-sudo service mongod enable
+
+sudo systemctl enable mongod.service
+
+
 
 mongo hgs3
 use hgs3
