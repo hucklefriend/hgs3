@@ -7,7 +7,7 @@ namespace Hgs3\Models\Orm;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GameCommunityTopicResponse extends Model
+class GameCommunityTopicResponse extends \Eloquent
 {
 
 }

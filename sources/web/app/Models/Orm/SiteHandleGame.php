@@ -6,7 +6,7 @@
 namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 
-class SiteHandleGame extends Model
+class SiteHandleGame extends \Eloquent
 {
     public function getHandleGames()
     {

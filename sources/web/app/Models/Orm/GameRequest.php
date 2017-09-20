@@ -4,7 +4,7 @@ namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class GameRequest extends Model
+class GameRequest extends \Eloquent
 {
     /**
      * コメント数を更新

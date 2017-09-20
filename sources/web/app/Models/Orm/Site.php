@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class Site extends Model
+class Site extends \Eloquent
 {
     /**
      * 取扱いゲームのIDを取得

@@ -7,7 +7,7 @@ namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class ReviewTotal extends Model
+class ReviewTotal extends \Eloquent
 {
     protected $primaryKey = 'game_id';
     public $incrementing = false;

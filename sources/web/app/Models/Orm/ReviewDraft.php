@@ -7,7 +7,7 @@ namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class ReviewDraft extends Model
+class ReviewDraft extends \Eloquent
 {
     protected $primaryKey = 'user_id';
     public $incrementing = false;

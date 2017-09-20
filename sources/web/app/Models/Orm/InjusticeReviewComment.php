@@ -6,6 +6,6 @@
 namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 
-class InjusticeReviewComment extends Model
+class InjusticeReviewComment extends \Eloquent
 {
 }

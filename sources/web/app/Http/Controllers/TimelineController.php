@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TimelineController extends Controller
 {
-    const PER_PAGE = 3;
+    const PER_PAGE = 30;
 
     /**
      * タイムライン
@@ -24,8 +24,7 @@ class TimelineController extends Controller
      */
     public function index()
     {
-        $tl = new Timeline();
-        $collection = $tl->getMongoCollection();
+        $collection = Timeline::getMongoCollection();
 
         $num = $collection->count();
 
@@ -63,14 +62,28 @@ class TimelineController extends Controller
     public function add(Request $request)
     {
         $timelineType = $request->get('type');
-        $tl = new Timeline();
 
         switch($timelineType) {
             case TimelineType::NEW_GAME_SOFT:
-                $tl->addNewGameSoftText($request->get('game_id'), null);
+                Timeline::addNewGameSoftText($request->get('game_id'), null);
                 break;
             case TimelineType::UPDATE_GAME_SOFT:
-                $tl->addUpdateGameSoftText($request->get('game_id'), null);
+                Timeline::addUpdateGameSoftText($request->get('game_id'), null);
+                break;
+            case TimelineType::FAVORITE_GAME:
+                Timeline::addFavoriteGameText($request->get('game_id'), null, $request->get('user_id'), null);
+                break;
+            case TimelineType::NEW_REVIEW:
+                Timeline::addNewReviewText($request->get('review_id'), $request->get('user_id'), null, $request->get('game_id'), null);
+                break;
+            case TimelineType::REVIEW_GOOD:
+                Timeline::addReviewGoodText($request->get('review_id'), $request->get('user_id'), null, $request->get('reviewer_id'));
+                break;
+            case TimelineType::NEW_USER_COMMUNITY_MEMBER:
+                Timeline::addNewUserCommunityMemberText($request->get('community_id'), null, $request->get('user_id'), null);
+                break;
+            case TimelineType::NEW_GAME_COMMUNITY_MEMBER:
+                Timeline::addNewUserCommunityMemberText($request->get('community_id'), null, $request->get('user_id'), null);
                 break;
         }
 
@@ -87,8 +100,7 @@ class TimelineController extends Controller
     {
         $id = $request->get('id');
 
-        $tl = new Timeline();
-        $collection = $tl->getMongoCollection();
+        $collection = Timeline::getMongoCollection();
         $collection->deleteOne(['_id' => new \MongoDB\BSON\ObjectID($id)]);
 
         return redirect()->back();
