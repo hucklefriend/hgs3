@@ -65,7 +65,7 @@ class Timeline
     }
 
     /**
-     * お気に入り
+     * お気に入りゲーム登録
      *
      * @param $gameId
      * @param $gameName
@@ -243,6 +243,68 @@ class Timeline
     }
 
     /**
+     * フォローされた
+     *
+     * @param $followerId
+     * @param $followerName
+     * @param $userId
+     */
+    public static function addNewFollower($followerId, $followerName, $userId)
+    {
+        if ($followerName === null) {
+            $followerName = self::getUserName($followerId);
+            if ($followerName === false) {
+                return;
+            }
+        }
+
+        $text = sprintf('<a href="%s">%sさん</a>にフォローされました',
+            url2('user/profile') . '/' . $followerId,
+            $followerName
+        );
+
+        self::insert(TimelineType::NEW_USER_COMMUNITY_MEMBER, $text, [
+            'target_user_id' => $userId
+        ]);
+    }
+
+    /**
+     * 新規サイトを登録
+     *
+     * @param int $userId
+     * @param string $userName
+     * @param int $siteId
+     * @param string $siteName
+     */
+    public static function addNewSite($userId, $userName, $siteId, $siteName)
+    {
+        if ($userName === null) {
+            $userName = self::getUserName($userId);
+            if ($userName === false) {
+                return;
+            }
+        }
+
+        if ($siteName === null) {
+            $siteName = self::getSiteName($siteId);
+            if ($siteName === false) {
+                return;
+            }
+        }
+
+        $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」を登録しました',
+            url2('user/profile') . '/' . $userId,
+            $userName,
+            url2('site/detail') . '/' . $siteId,
+            $siteName
+        );
+
+        self::insert(TimelineType::NEW_SITE, $text, [
+            'user_id' => $userId
+        ]);
+    }
+
+    /**
      * MongoDBのコレクションを取得
      *
      * @return mixed
@@ -252,7 +314,6 @@ class Timeline
         $client = new \MongoDB\Client("mongodb://localhost:27017");
         return $client->hgs3->timeline;
     }
-
 
     /**
      * データ登録

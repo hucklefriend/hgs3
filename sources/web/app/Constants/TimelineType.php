@@ -20,4 +20,6 @@ class TimelineType
 
     const NEW_USER_COMMUNITY_MEMBER = 301;
     const NEW_GAME_COMMUNITY_MEMBER = 302;
+
+    const NEW_FOLLOWER = 401;
 }

@@ -9,6 +9,7 @@ namespace Hgs3\Models\Game;
 use Hgs3\Http\Requests\Game\Review\InputRequest;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
+use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -97,6 +98,9 @@ SQL;
                 ->where('user_id', $orm->user_id)
                 ->where('game_id', $orm->game_id)
                 ->delete();
+
+            // タイムライン登録
+            Timeline::addNewReviewText($orm->id, $orm->user_id, null, $orm->game_id, null);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -231,11 +235,17 @@ SET good_num = good_num + 1
 WHERE id = ?
 SQL;
                 DB::update($updateGoodNum, [$orm->id]);
+
+                // タイムライン
+                Timeline::addReviewGoodText($orm->id, $userId, null, $orm->user_id);
             }
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
 
             return false;
         }

@@ -4,15 +4,18 @@
  */
 
 namespace Hgs3\Models\User;
+use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class FavoriteGame
 {
     /**
      * 登録
      *
-     * @param $userId
-     * @param $gameId
+     * @param int $userId
+     * @param int $gameId
+     * @return bool
      */
     public function add($userId, $gameId)
     {
@@ -22,7 +25,23 @@ INSERT IGNORE INTO user_favorite_games
 VALUES (?, ?, null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
 
-        DB::insert($sql, [$userId, $gameId]);
+        DB::beginTransaction();
+        try {
+            DB::insert($sql, [$userId, $gameId]);
+
+            Timeline::addFavoriteGameText($gameId, null, $userId, null);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
