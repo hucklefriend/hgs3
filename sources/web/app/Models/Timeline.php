@@ -16,6 +16,10 @@ class Timeline
     // https://docs.mongodb.com/php-library/master/
     // http://qiita.com/_takwat/items/1d1463d22a1316a2efbe
 
+    public function get()
+    {
+
+    }
 
 
     /**
