@@ -55,5 +55,6 @@ class All extends Command
         Test\GameCommunityTopicResponse::create();
         Test\GameRequest::create();
         Test\GameRequestComment::create();
+        Test\Timeline::create(10000);
     }
 }

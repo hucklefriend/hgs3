@@ -8,6 +8,7 @@ namespace Hgs3\Models;
 use Hgs3\Constants\TimelineText;
 use Hgs3\Constants\TimelineType;
 use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\Review;
 use Hgs3\Models\Orm\UserCommunity;
 use Hgs3\User;
 
@@ -148,9 +149,9 @@ class Timeline
      * @param $reviewId
      * @param $userId
      * @param $userName
-     * @param $reviewer_id
+     * @param $reviewerId
      */
-    public static function addReviewGoodText($reviewId, $userId, $userName, $reviewer_id)
+    public static function addReviewGoodText($reviewId, $userId, $userName, $reviewerId)
     {
         if ($userName === null) {
             $userName = self::getUserName($userId);
@@ -159,14 +160,20 @@ class Timeline
             }
         }
 
-        $text = sprintf('<a href="%s">投稿したレビュー</a>に<a href="%s>%sさん</a>がイイネしました！"',
-            url2('review') . '/' . $reviewId.
+        if ($reviewerId === null) {
+            $r = Review::find($reviewId);
+            $reviewId = $r->user_id;
+        }
+
+
+        $text = sprintf('<a href="%s">投稿したレビュー</a>に<a href="%s">%sさん</a>がイイネしました！',
+            url2('review') . '/' . $reviewId,
             url2('user/profile') . '/' . $userId,
-            userName
+            $userName
         );
 
-        self::insert(TimelineType::NEW_REVIEW, $text, [
-            'target_user_id' => $reviewer_id,
+        self::insert(TimelineType::REVIEW_GOOD, $text, [
+            'target_user_id' => $reviewerId,
             'review_id'      => $reviewId
         ]);
     }
@@ -297,6 +304,42 @@ class Timeline
         }
 
         $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」を登録しました',
+            url2('user/profile') . '/' . $userId,
+            $userName,
+            url2('site/detail') . '/' . $siteId,
+            $siteName
+        );
+
+        self::insert(TimelineType::NEW_SITE, $text, [
+            'user_id' => $userId
+        ]);
+    }
+
+    /**
+     * 更新サイトを登録
+     *
+     * @param int $userId
+     * @param string $userName
+     * @param int $siteId
+     * @param string $siteName
+     */
+    public static function addUpdateSite($userId, $userName, $siteId, $siteName)
+    {
+        if ($userName === null) {
+            $userName = self::getUserName($userId);
+            if ($userName === false) {
+                return;
+            }
+        }
+
+        if ($siteName === null) {
+            $siteName = self::getSiteName($siteId);
+            if ($siteName === false) {
+                return;
+            }
+        }
+
+        $text = sprintf('<a href="%s">%sさん</a>のサイト「<a href="%s">%s</a>」の情報が更新されました',
             url2('user/profile') . '/' . $userId,
             $userName,
             url2('site/detail') . '/' . $siteId,
