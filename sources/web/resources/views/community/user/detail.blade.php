@@ -49,7 +49,7 @@
                         <tbody>
                             @foreach ($topics as $t)
                             <tr>
-                                <td><a href="{{ url('community/u') }}/{{ $t->id }}/topics">{{ $t->title }}</a></td>
+                                <td><a href="{{ url('community/u') }}/{{ $uc->id }}/topic/{{ $t->id }}">{{ $t->title }}</a></td>
                                 <td>{{ $t->wrote_date }}</td>
                             </tr>
                             @endforeach
