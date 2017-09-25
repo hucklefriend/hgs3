@@ -5,21 +5,47 @@
 
 namespace Hgs3\Models;
 
-use Hgs3\Constants\TimelineText;
 use Hgs3\Constants\TimelineType;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Review;
 use Hgs3\Models\Orm\UserCommunity;
 use Hgs3\User;
+use Hgs3\Models\User\Mongo;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Timeline
 {
     // https://docs.mongodb.com/php-library/master/
     // http://qiita.com/_takwat/items/1d1463d22a1316a2efbe
 
-    public function get()
-    {
 
+
+    public function get($userId, $perPage)
+    {
+        $collection = self::getMongoCollection();
+
+        $user = new Mongo($userId);
+
+        $filter = [
+            '$or' => [
+                ['target_user_id' => 1],
+                ['game_id' => ['$in' => $user->getFavoriteGame()]],
+                ['user_id' => ['$in' =>$user->getFollow()]],
+                ['site_id' => ['$in' =>$user->getFavoriteSite()]]
+            ],
+            'user_id' => ['$ne' => 1]
+        ];
+
+        $num = $collection->count($filter);
+
+        $pager = new LengthAwarePaginator([], $num, $perPage);
+        $pager->setPath('timeline');
+
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $perPage,
+            'skip'  => ($pager->currentPage() - 1) * $perPage
+        ];
     }
 
 
@@ -164,7 +190,6 @@ class Timeline
             $r = Review::find($reviewId);
             $reviewId = $r->user_id;
         }
-
 
         $text = sprintf('<a href="%s">投稿したレビュー</a>に<a href="%s">%sさん</a>がイイネしました！',
             url2('review') . '/' . $reviewId,
@@ -354,7 +379,7 @@ class Timeline
     /**
      * MongoDBのコレクションを取得
      *
-     * @return mixed
+     * @return \MongoDB\Collection
      */
     public static function getMongoCollection()
     {

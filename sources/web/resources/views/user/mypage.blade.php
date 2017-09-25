@@ -41,6 +41,15 @@
 
     <section>
         <h5>タイムライン</h5>
+        {{ $pager->render() }}
+
+        @foreach ($timelines as $tl)
+
+            <div>{{ date('Y-m-d H:i:s', $tl['time']) }} type: {{ $tl['type'] }}</div>
+            <p>{!!  $tl['text'] !!}</p>
+            <hr>
+
+        @endforeach
     </section>
 
 @endsection

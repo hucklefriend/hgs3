@@ -35,6 +35,6 @@ class Timeline extends Command
      */
     public function handle()
     {
-        \Hgs3\Models\Test\Timeline::create(10000);
+        \Hgs3\Models\Test\Timeline::create(190000);
     }
 }

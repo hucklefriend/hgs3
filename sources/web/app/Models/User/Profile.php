@@ -222,7 +222,6 @@ class Profile
             array_pluck($data['goodReviews']['reviews'], 'user_id')
         );
 
-
         return User::getNameHash($userIds);
     }
 }

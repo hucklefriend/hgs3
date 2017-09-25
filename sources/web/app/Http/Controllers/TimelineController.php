@@ -9,6 +9,7 @@ use Hgs3\Constants\TimelineType;
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Timeline;
+use Hgs3\Models\User\Mongo;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,19 @@ class TimelineController extends Controller
     {
         $collection = Timeline::getMongoCollection();
 
-        $num = $collection->count();
+        $user = new Mongo(1);
+
+        $filter = [
+            '$or' => [
+                ['target_user_id' => 1],
+                ['game_id' => ['$in' => $user->getFavoriteGame()]],
+                ['user_id' => ['$in' =>$user->getFollow()]],
+                ['site_id' => ['$in' =>$user->getFavoriteSite()]]
+            ],
+            'user_id' => ['$ne' => 1]
+        ];
+
+        $num = $collection->count($filter);
 
         $pager = new LengthAwarePaginator([], $num, self::PER_PAGE);
         $pager->setPath('timeline');
@@ -38,7 +51,7 @@ class TimelineController extends Controller
         ];
 
         return view('timeline.index', [
-            'timelines' => $collection->find([], $options),
+            'timelines' => $collection->find($filter, $options),
             'pager'     => $pager
         ]);
     }
