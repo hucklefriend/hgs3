@@ -6,6 +6,11 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Models\Game\Review;
+use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GamePackage;
+use Hgs3\Models\User\Follow;
+use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
 use Hgs3\Models\User\Mongo;
 use Illuminate\Http\Request;
@@ -55,6 +60,59 @@ class MyPageController extends Controller
             'user'      => Auth::user(),
             'timelines' => $collection->find($filter, $options),
             'pager'     => $pager
+        ]);
+    }
+
+    /**
+     * @return $this
+     */
+    public function follow()
+    {
+        $isMyself = true;
+
+        $follow = new Follow;
+        $follows = $follow->getFollow(Auth::id());
+
+        return view('user.profile.follow')->with([
+            'user'     => Auth::user(),
+            'isMyself' => $isMyself,
+            'follows'  => $follows,
+            'users'    => User::getNameHash(array_pluck($follows->items(), 'follow_user_id'))
+        ]);
+    }
+
+    /**
+     * フォロワー一覧
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function follower(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+
+        $follow = new Follow;
+        $follows = $follow->getFollower($user->id);
+
+        return view('user.profile.follower')->with([
+            'user'       => $user,
+            'isMyself'   => $isMyself,
+            'followers'  => $follows,
+            'users'      => User::getNameHash(array_pluck($follows->items(), 'user_id'))
+        ]);
+    }
+
+    public function review()
+    {
+        $review = new Review();
+
+        $reviews = $review->getUser(Auth::id());
+
+        $packages = GamePackage::getHash(array_pluck($reviews->items(), 'package_id'));
+
+        return view('user.game.review', [
+            'reviews'  => $reviews,
+            'packages' => $packages
         ]);
     }
 }

@@ -85,10 +85,14 @@ Route::post('/user/profile/edit', 'User\ProfileController@update')->middleware('
 Route::get('/user/profile/{user}', 'User\ProfileController@index')->middleware('auth');
 Route::get('/user/profile', 'User\ProfileController@myself')->middleware('auth');
 Route::get('/user/communities/{user}', 'User\ProfileController@community')->middleware('auth');
+Route::get('/mypage/favorite_game', 'User\FavoriteGameController@myself')->middleware('auth');
+Route::get('/mypage/favorite_site', 'User\FavoriteSiteController@myself')->middleware('auth');
+Route::get('/mypage/follow', 'User\MyPageController@follow')->middleware('auth');
+Route::get('/mypage/follower', 'User\MyPageController@follower')->middleware('auth');
+Route::get('/mypage/review', 'User\MyPageController@review')->middleware('auth');
 
 // お気に入りゲーム
 Route::get('/game/favorite/{game}', 'Game\FavoriteGameController@index');
-Route::get('/mypage/favorite_game', 'User\FavoriteGameController@myself')->middleware('auth');
 Route::post('/user/favorite_game', 'User\FavoriteGameController@add')->middleware('auth');
 Route::delete('/user/favorite_game', 'User\FavoriteGameController@remove')->middleware('auth');
 Route::get('/user/favorite_game/{user}', 'User\FavoriteGameController@index');
@@ -103,7 +107,6 @@ Route::delete('user/played_game/{upg}', 'User\PlayedGameController@remove')->mid
 
 // お気に入りサイト
 Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@index');
-Route::get('/mypage/favorite_site', 'User\FavoriteSiteController@myself')->middleware('auth');
 Route::post('/user/favorite_site', 'User\FavoriteSiteController@add')->middleware('auth');
 Route::delete('/user/favorite_site', 'User\FavoriteSiteController@remove')->middleware('auth');
 Route::get('/user/favorite_site/{user}', 'User\FavoriteSiteController@index');

@@ -10,28 +10,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('user/profile') }}">プロフィール確認</a>
+                    <a class="nav-link" href="{{ url2('user/profile') }}">プロフィール確認</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('mypage/follow') }}">フォロー</a>
+                    <a class="nav-link" href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('mypage/follower') }}">フォロワー</a>
+                    <a class="nav-link" href="{{ url2('mypage/follower') }}">フォロワー</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">レビュー</a>
+                    <a class="nav-link" href="{{ url2('mypage/review') }}">レビュー</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('user/site/myself') }}">サイト</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">お気に入り</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">遊んだゲーム</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">遊んだゲーム</a>
                 </li>
             </ul>
         </div>

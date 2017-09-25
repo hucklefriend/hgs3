@@ -326,4 +326,18 @@ SQL;
             ->orderBy('good_date', 'DESC')
             ->paginate(20);
     }
+
+    /**
+     * ユーザー別データ取得
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getUser($userId)
+    {
+        return DB::table('reviews')
+            ->where('user_id', $userId)
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
+    }
 }
