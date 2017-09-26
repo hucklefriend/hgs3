@@ -37,6 +37,6 @@ class NewInformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('new_information');
     }
 }
