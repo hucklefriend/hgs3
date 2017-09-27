@@ -129,21 +129,30 @@ db.createCollection('timeline');
 
 ○ LaravelのBoostrap4対応
 
+※以下はエラーが出て対応できず
+
+
 https://laracasts.com/discuss/channels/tips/tip-using-bootstrap-4-alpha-6-with-laravel-54
 
 sudo apt install npm
 sudo npm -g install n
 sudo n latest
 sudo npm update -g npm
-sudo npm -g install express
-sudo npm -g install connect
 
+sudo apt install libpng-dev
 
 cd (アプリパス)
+
+sudo npm config set user 0
+sudo npm config set unsafe-perm true
 
 # linux環境(Win上の仮想は×)
 sudo npm install
 
 # WinまたはWin仮想上のlinux環境
 npm install --no-bin-links
+
+
+
+
 sudo npm run dev

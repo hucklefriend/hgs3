@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <perl5 />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/sources/web/src" isTestSource="false" packagePrefix="Collective\Html\" />
       <sourceFolder url="file://$MODULE_DIR$/sources/web/app" isTestSource="false" packagePrefix="Hgs3\" />
@@ -13,7 +12,10 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/dnoegel/php-xdg-base-dir" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/doctrine/inflector" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/erusev/parsedown" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/filp/whoops" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/fzaninotto/faker" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/promises" />
@@ -35,6 +37,8 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/nesbot/carbon" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/phar-io/manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/phar-io/version" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/type-resolver" />
@@ -46,8 +50,10 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/phpunit/php-token-stream" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit-mock-objects" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/psy/psysh" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/ramsey/uuid" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/code-unit-reverse-lookup" />
@@ -57,6 +63,7 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/exporter" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/global-state" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/object-reflector" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/recursion-context" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/resource-operations" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/version" />
@@ -74,7 +81,7 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/var-dumper" />
-      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/tijsverkoyen/css-to-inline-styles" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/webmozart/assert" />
@@ -84,12 +91,14 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phar-io/manifest/tests/_fixture/test.phar/" />
           <root url="phar://$MODULE_DIR$/sources/web/composer.phar/" />
-          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.1.phar/" />
         </CLASSES>
         <SOURCES>
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phar-io/manifest/tests/_fixture/test.phar/" />
           <root url="phar://$MODULE_DIR$/sources/web/composer.phar/" />
-          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.1.phar/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -103,7 +112,10 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/dnoegel/php-xdg-base-dir" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/inflector" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/instantiator" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/lexer" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/egulias/email-validator" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/erusev/parsedown" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/filp/whoops" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/fzaninotto/faker" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/guzzle" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/promises" />
@@ -125,6 +137,8 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/nesbot/carbon" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/nikic/php-parser" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/paragonie/random_compat" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/phar-io/manifest" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/phar-io/version" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/reflection-common" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/reflection-docblock" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/type-resolver" />
@@ -136,8 +150,10 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpunit/php-token-stream" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit-mock-objects" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/psr/container" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/psr/http-message" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/psr/log" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/psr/simple-cache" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/psy/psysh" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/ramsey/uuid" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/code-unit-reverse-lookup" />
@@ -147,6 +163,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/exporter" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/global-state" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/object-enumerator" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/object-reflector" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/recursion-context" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/resource-operations" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/version" />
@@ -164,7 +181,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/routing" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/translation" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/var-dumper" />
-          <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/yaml" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/theseer/tokenizer" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/tijsverkoyen/css-to-inline-styles" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/webmozart/assert" />
@@ -177,7 +194,10 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/dnoegel/php-xdg-base-dir" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/inflector" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/instantiator" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/lexer" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/egulias/email-validator" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/erusev/parsedown" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/filp/whoops" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/fzaninotto/faker" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/guzzle" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/promises" />
@@ -199,6 +219,8 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/nesbot/carbon" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/nikic/php-parser" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/paragonie/random_compat" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/phar-io/manifest" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/phar-io/version" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/reflection-common" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/reflection-docblock" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpdocumentor/type-resolver" />
@@ -210,8 +232,10 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpunit/php-token-stream" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit-mock-objects" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/psr/container" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/psr/http-message" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/psr/log" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/psr/simple-cache" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/psy/psysh" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/ramsey/uuid" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/code-unit-reverse-lookup" />
@@ -221,6 +245,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/exporter" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/global-state" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/object-enumerator" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/object-reflector" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/recursion-context" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/resource-operations" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/version" />
@@ -238,7 +263,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/routing" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/translation" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/var-dumper" />
-          <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/yaml" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/theseer/tokenizer" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/tijsverkoyen/css-to-inline-styles" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/webmozart/assert" />

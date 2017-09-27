@@ -56,7 +56,6 @@
       <path value="$PROJECT_DIR$/sources/web/vendor/phpdocumentor/reflection-common" />
       <path value="$PROJECT_DIR$/sources/web/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/sources/web/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/sources/web/vendor/symfony/yaml" />
       <path value="$PROJECT_DIR$/sources/web/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/sources/web/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/sources/web/vendor/symfony/translation" />
@@ -74,6 +73,15 @@
       <path value="$PROJECT_DIR$/sources/web/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/sources/web/vendor/league/oauth1-client" />
       <path value="$PROJECT_DIR$/sources/web/vendor/mongodb/mongodb" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/filp/whoops" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/sebastian/object-reflector" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
