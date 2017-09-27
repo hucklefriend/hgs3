@@ -48,6 +48,8 @@
         <div class="card-block">
             <p class="card-text">
 
+
+                {{ $newInfo->render() }}
             </p>
         </div>
     </div>
