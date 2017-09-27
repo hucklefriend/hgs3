@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class NewInformationTable extends Migration
+class CreateNewInformationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,14 +17,13 @@ class NewInformationTable extends Migration
      */
     public function up()
     {
-        Schema::create('new_information', function (Blueprint $table) {
+        Schema::create('new_informations', function (Blueprint $table) {
             $table->increments('id')->comment('新着情報ID');
             $table->unsignedInteger('text_type')->comment('テキスト種類');
-            $table->unsignedInteger('param1')->default(0)->comment('パラメーター1');
-            $table->unsignedInteger('param2')->default(0)->comment('パラメーター2');
-            $table->unsignedInteger('param3')->default(0)->comment('パラメーター3');
-            $table->unsignedInteger('param4')->default(0)->comment('パラメーター4');
-            $table->unsignedInteger('param5')->default(0)->comment('パラメーター5');
+            $table->unsignedInteger('user_id')->default(0)->comment('ユーザーID');
+            $table->unsignedInteger('game_id')->default(0)->comment('ゲームID');
+            $table->unsignedInteger('site_id')->default(0)->comment('サイトID');
+            $table->unsignedInteger('review_id')->default(0)->comment('レビューID');
             $table->dateTime('date_time')->comment('日時');
             $table->timestamps();
         });
@@ -37,6 +36,6 @@ class NewInformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('new_information');
+        Schema::dropIfExists('new_informations');
     }
 }

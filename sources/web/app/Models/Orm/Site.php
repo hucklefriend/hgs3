@@ -68,4 +68,30 @@ class Site extends \Eloquent
 
         return $hash;
     }
+
+    /**
+     * ハッシュでデータを取得
+     *
+     * @param array $siteIds
+     * @return array
+     */
+    public static function getNameHash(array $siteIds)
+    {
+        if (empty($siteIds)) {
+            return [];
+        }
+
+        $data = DB::table('sites')
+            ->whereIn('id', $siteIds)
+            ->get();
+
+        $hash = [];
+        foreach ($data as $site) {
+            $hash[$site->id] = $site->name;
+        }
+
+        unset($data);
+
+        return $hash;
+    }
 }

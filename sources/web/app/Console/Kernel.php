@@ -33,6 +33,7 @@ class Kernel extends ConsoleKernel
         Commands\TestData\GameRequest::class,
         Commands\TestData\GameRequestComment::class,
         Commands\TestData\Timeline::class,
+        Commands\TestData\NewInformation::class,
         Commands\Init::class,
     ];
 

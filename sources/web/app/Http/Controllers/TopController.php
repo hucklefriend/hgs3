@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers;
 
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Models\Orm\NewInformation;
 use Illuminate\Support\Facades\Auth;
 
 class TopController extends Controller
@@ -23,9 +24,14 @@ class TopController extends Controller
             return redirect('mypage');
         }
 
+        $newInfo = NewInformation::getPager();
+        $newInfoData = NewInformation::getPagerData($newInfo);
+
         return view('top', [
-            'isLogin' => Auth::check(),
-            'isAdmin' => UserRole::isAdmin()
+            'isLogin'     => Auth::check(),
+            'isAdmin'     => UserRole::isAdmin(),
+            'newInfo'     => $newInfo,
+            'newInfoData' => $newInfoData,
         ]);
     }
 }

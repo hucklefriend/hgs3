@@ -47,11 +47,8 @@
         <div class="card-header">新着情報</div>
         <div class="card-block">
             <p class="card-text">
-                人というものは、はじめから悪の道を知っているわけではない。何かの拍子で、小さな悪事を起こしてしまい、それを世間の目にふれさせぬため、また、つぎの悪事をする。そして、これを隠そうとして、さらに大きな悪の道へ踏み込んで行くものなのだ
+
             </p>
-            <div class="text-center" style="font-size: 150%;">
-                <a href="{{ url2('') }}">新規登録</a>
-            </div>
         </div>
     </div>
 @endsection
