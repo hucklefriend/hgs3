@@ -33,7 +33,7 @@ class NewInformation extends \Eloquent
     {
         $data = [];
 
-        $data['game_hash'] = User::getNameHash(array_pluck($pager->items(), 'game_id'));
+        $data['game_hash'] = Game::getNameHash(array_pluck($pager->items(), 'game_id'));
         $data['site_hash'] = Site::getNameHash(array_pluck($pager->items(), 'site_id'));
 
         return $data;

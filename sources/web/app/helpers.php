@@ -130,6 +130,18 @@ function un(array $hash, $userId)
 }
 
 /**
+ * ユーザー名を表示
+ *
+ * @param array $hash
+ * @param $userId
+ * @return mixed|string
+ */
+function get_hash(array $hash, $id, $default = '---')
+{
+    return $hash[$id] ?? $default;
+}
+
+/**
  * CSRF用のタグを生成
  *
  * @param $token
