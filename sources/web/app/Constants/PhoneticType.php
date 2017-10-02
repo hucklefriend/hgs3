@@ -1,10 +1,18 @@
 <?php
+/**
+ * よみがなの種別
+ */
 
 namespace Hgs3\Constants;
 
 
 class PhoneticType
 {
+    /**
+     * ID => char
+     *
+     * @var array
+     */
     private static $id2Char = array(
         1  => 'あ',
         2  => 'か',
@@ -17,6 +25,12 @@ class PhoneticType
         9  => 'ら',
         10 => 'わ',
     );
+
+    /**
+     * char => ID
+     *
+     * @var array
+     */
     private static $char2Id = [
         'あ' => 1,
         'か' => 2,
@@ -30,26 +44,54 @@ class PhoneticType
         'わ' => 10,
     ];
 
+    /**
+     * ID => charの配列を取得
+     *
+     * @return array
+     */
     public static function getId2CharData()
     {
         return self::$id2Char;
     }
 
+    /**
+     * char => IDの配列を取得
+     *
+     * @return array
+     */
     public static function getChar2IdData()
     {
         return self::$char2Id;
     }
 
+    /**
+     * タイプを取得
+     *
+     * @param $char
+     * @return mixed
+     */
     public static function getType($char)
     {
         return self::$char2Id[$char];
     }
 
+    /**
+     * タイプを取得
+     *
+     * @param $type
+     * @return mixed
+     */
     public static function getChar($type)
     {
         return self::$id2Char[$type];
     }
 
+    /**
+     * よみがなからタイプを取得
+     *
+     * @param $phonetic
+     * @return int|string
+     */
     public static function getTypeByPhonetic($phonetic)
     {
         $txt = [
@@ -64,8 +106,6 @@ class PhoneticType
             9  => '[ら-ろ]',
             10 => '[わ-ん]'
         ];
-
-        $result = array();
 
         foreach ($txt as $phoneticType => $pattern) {
             if (preg_match('/^' . $pattern . '/u', $phonetic)) {

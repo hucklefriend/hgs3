@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Auth;
 class PlayedUserController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'game');
+    }
+
+    /**
      * 遊んだゲームに登録しているユーザー
      *
      * @param Game $game

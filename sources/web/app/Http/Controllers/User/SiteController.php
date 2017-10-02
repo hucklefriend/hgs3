@@ -18,6 +18,14 @@ use Illuminate\Support\Facades\Auth;
 class SiteController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'site');
+    }
+
+    /**
      * サイトページ
      *
      * @param User $user

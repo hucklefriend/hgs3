@@ -5,14 +5,18 @@
 
 namespace Hgs3\Models\Game;
 
+use Hgs3\Constants\PhoneticType;
+use Hgs3\Http\Requests\Game\Soft\AddRequest;
 use Hgs3\Models\Orm\GameCompany;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\Models\Orm\SiteHandleGame;
 use Hgs3\Models\Orm\UserFavoriteGame;
+use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GameSeries;
+use Illuminate\Support\Facades\Log;
 
 class Soft
 {
@@ -233,5 +237,45 @@ SQL;
         }
 
         return $tbl->get()->pluck('name', 'id')->toArray();
+    }
+
+    /**
+     * 新規登録
+     *
+     * @param AddRequest $request
+     * @return bool
+     */
+    public function add(AddRequest $request)
+    {
+        $game = new Game();
+
+        $game->name = $request->get('name');
+        $game->phonetic = $request->get('phonetic');
+        $game->phonetic_type = PhoneticType::getTypeByPhonetic($game->phonetic);
+        $game->phonetic_order = $request->get('phonetic_order');
+        $game->genre = $request->get('genre');
+        $game->company_id = $request->get('company_id');
+        $game->series_id = $request->get('series_id');
+        $game->order_in_series = $request->get('order_in_series');
+        $game->game_type = $request->get('game_type');
+        $game->original_package_id = null;
+
+        DB::beginTransaction();
+        try {
+            // 保存
+            $game->save();
+
+            // タイムラインに登録
+            Timeline::addNewGameSoftText($game->id, $game->name);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            throw $e;
+        }
     }
 }

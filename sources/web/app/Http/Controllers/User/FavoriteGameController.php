@@ -16,6 +16,14 @@ use Illuminate\Support\Facades\Auth;
 class FavoriteGameController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'game');
+    }
+
+    /**
      * お気に入りゲームリスト
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

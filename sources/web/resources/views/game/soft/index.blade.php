@@ -97,11 +97,6 @@
         @endif
     </ul>
 
-
-    <div>
-        <a href="{{ url('game/request') }}">追加リクエスト一覧</a>
-    </div>
-
     <script>
         $(function (){
             $('.game_tab').click(function (){

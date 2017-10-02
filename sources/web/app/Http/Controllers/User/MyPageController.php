@@ -23,6 +23,16 @@ class MyPageController extends Controller
     const PER_PAGE = 20;
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'home');
+    }
+
+    /**
      * マイページ
      *
      * @return $this

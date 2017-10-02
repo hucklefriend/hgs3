@@ -16,6 +16,14 @@ use Illuminate\Http\Request;
 class InjusticeReviewController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'game');
+    }
+
+    /**
      * 不正報告リスト
      *
      * @param \Hgs3\Models\Orm\Review $review

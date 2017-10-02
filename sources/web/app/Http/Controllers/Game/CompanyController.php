@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'game');
+    }
+
     public function index()
     {
         $company = new Company;

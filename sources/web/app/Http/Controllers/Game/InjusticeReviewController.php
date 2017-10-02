@@ -20,6 +20,14 @@ use Illuminate\Support\Facades\DB;
 class InjusticeReviewController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'review');
+    }
+
+    /**
      * 不正報告入力画面
      *
      * @param \Hgs3\Models\Orm\Review $review

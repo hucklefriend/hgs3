@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'home');
+    }
+
+    /**
      * プロフィール
      *
      * @return $this

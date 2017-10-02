@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'game');
+    }
+
     public function add(Game $game)
     {
         return view('game.package.add')->with([

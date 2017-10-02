@@ -11,16 +11,24 @@
 |
 */
 
-Route::get('/timeline', 'TimelineController@index');
-Route::get('/timeline/add', 'TimelineController@input');
-Route::post('/timeline/add', 'TimelineController@add');
-Route::delete('/timeline/', 'TimelineController@remove');
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
+
+    Route::get('/game/soft/add', 'Game\SoftController@showAddForm');
+    Route::post('/game/soft/add', 'Game\SoftController@add');
+
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
 
+
+
+    Route::get('/timeline', 'TimelineController@index');
+    Route::get('/timeline/add', 'TimelineController@input');
+    Route::post('/timeline/add', 'TimelineController@add');
+    Route::delete('/timeline/', 'TimelineController@remove');
+
+    Route::get('/admin', 'TopController@admin');
 });
 
 Route::get('/', 'TopController@index');

@@ -9,9 +9,20 @@ use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Orm\NewInformation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class TopController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        View::share('navActive', 'home');
+    }
+
     /**
      * トップページ
      *
@@ -33,5 +44,15 @@ class TopController extends Controller
             'newInfo'     => $newInfo,
             'newInfoData' => $newInfoData,
         ]);
+    }
+
+    /**
+     * 管理トップ
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function admin()
+    {
+        return view('admin.top');
     }
 }

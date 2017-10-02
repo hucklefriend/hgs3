@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
+use Hgs3\Http\Requests\Game\Soft\AddRequest;
 use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
 use Hgs3\Models\Orm\UserPlayedGame;
@@ -17,9 +18,18 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm\Game;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class SoftController extends Controller
 {
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'game');
+    }
+
     /**
      * 一覧ページ
      */
@@ -57,8 +67,26 @@ class SoftController extends Controller
         return view('game.soft.detail')->with($data);
     }
 
+    /**
+     * 追加フォーム
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showAddForm()
     {
+        return view('game.soft.add');
+    }
+
+    /**
+     * 追加
+     *
+     * @param AddRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function add(AddRequest $request)
+    {
+        $soft = new Soft();
+        $soft->add($request);
         return view('game.soft.add');
     }
 

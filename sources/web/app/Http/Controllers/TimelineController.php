@@ -19,6 +19,16 @@ class TimelineController extends Controller
     const PER_PAGE = 30;
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        View::share('navActive', 'home');
+    }
+
+    /**
      * タイムライン
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

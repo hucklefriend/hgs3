@@ -22,6 +22,16 @@ use Illuminate\Support\Facades\Request;
 class ReviewController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'review');
+    }
+
+    /**
      * レビュートップページ
      */
     public function index()

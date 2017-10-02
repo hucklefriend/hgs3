@@ -8,15 +8,9 @@
         <a href="{{ url('game/soft/edit') }}/{{ $game->id }}">データ編集</a>
     </nav>
 
-    <style>
-        .card {
-            margin-bottom: 30px;
-        }
-    </style>
-
     <div class="row">
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card card-hgn">
                 <div class="card-header">
                     ベースデータ
                 </div>
@@ -63,7 +57,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card card-hgn">
                 <div class="card-header">
                     パッケージ情報
                 </div>
@@ -111,7 +105,7 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card card-hgn">
                 <div class="card-header">
                     <a name="review">レビュー</a>
                 </div>
@@ -180,7 +174,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card card-hgn">
                 <div class="card-header">
                     サイト
                 </div>
@@ -208,7 +202,7 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card card-hgn">
                 <div class="card-header">
                     お気に入り登録者
                 </div>
@@ -243,7 +237,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card card-hgn">
                 <div class="card-header">
                     同一シリーズの別タイトル
                 </div>
@@ -266,7 +260,7 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card card-hgn">
                 <div class="card-header">
                     遊んだゲーム
                 </div>
@@ -310,7 +304,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card card-hgn">
                 <div class="card-header"></div>
                 <div class="card-block"></div>
             </div>

@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Auth;
 class FollowController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'game');
+    }
+
+    /**
      * フォローする
      *
      * @return \Illuminate\Http\RedirectResponse

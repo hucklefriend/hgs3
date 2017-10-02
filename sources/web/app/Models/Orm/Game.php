@@ -25,4 +25,6 @@ class Game extends \Eloquent
 
         return $tbl->get()->pluck('name', 'id')->toArray();
     }
+
+
 }

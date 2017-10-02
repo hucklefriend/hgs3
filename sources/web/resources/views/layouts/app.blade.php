@@ -64,28 +64,33 @@
 
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-                <li class="nav-item active">
+                <li class="nav-item @if ($navActive == 'home') active @endif">
                     @if (Auth::check())
                         <a class="nav-link" href="{{ url2('mypage') }}">マイページ</a>
                     @else
                         <a class="nav-link" href="{{ url2('') }}">トップページ</a>
                     @endif
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @if ($navActive == 'game') active @endif">
                     <a class="nav-link" href="{{ url2('game/soft') }}">ゲーム一覧</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @if ($navActive == 'review') active @endif">
                     <a class="nav-link" href="{{ url2('game/review') }}">レビュー</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @if ($navActive == 'site') active @endif">
                     <a class="nav-link" href="{{ url2('site') }}">サイト</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @if ($navActive == 'diary') active @endif">
                     <a class="nav-link" href="{{ url2('diary') }}">攻略日記</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @if ($navActive == 'community') active @endif">
                     <a class="nav-link" href="{{ url2('community') }}">コミュニティ</a>
                 </li>
+@if (\Hgs3\Constants\UserRole::isAdmin())
+                <li class="nav-item @if ($navActive == 'admin') active @endif">
+                    <a class="nav-link" href="{{ url2('admin') }}">管理用</a>
+                </li>
+@endif
             </ul>
             <ul class="navbar-nav my-2 my-lg-0">
                 @if (Auth::check())

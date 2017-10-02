@@ -19,6 +19,14 @@ use Illuminate\Support\Arr;
 class SearchController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'site');
+    }
+
+    /**
      * トップ
      *
      * @return $this

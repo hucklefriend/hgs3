@@ -18,6 +18,14 @@ use Illuminate\Support\Facades\DB;
 class PlayedGameController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'home');
+    }
+
+    /**
      * 遊んだゲームリスト
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

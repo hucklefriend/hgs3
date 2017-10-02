@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Auth;
 class FavoriteSiteController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'game');
+    }
+
+    /**
      * お気に入りサイトリスト
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
