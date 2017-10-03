@@ -15,6 +15,7 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/erusev/parsedown" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/exeu/apai-io" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/filp/whoops" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/fzaninotto/faker" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/guzzle" />
@@ -56,6 +57,7 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/psy/psysh" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/ramsey/uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/revolution/laravel-amazon-product-api" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/code-unit-reverse-lookup" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/comparator" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/sebastian/diff" />
@@ -115,6 +117,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/lexer" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/egulias/email-validator" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/erusev/parsedown" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/exeu/apai-io" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/filp/whoops" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/fzaninotto/faker" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/guzzle" />
@@ -156,6 +159,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/psr/simple-cache" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/psy/psysh" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/ramsey/uuid" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/revolution/laravel-amazon-product-api" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/code-unit-reverse-lookup" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/comparator" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/diff" />
@@ -197,6 +201,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/doctrine/lexer" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/egulias/email-validator" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/erusev/parsedown" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/exeu/apai-io" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/filp/whoops" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/fzaninotto/faker" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/guzzlehttp/guzzle" />
@@ -238,6 +243,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/psr/simple-cache" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/psy/psysh" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/ramsey/uuid" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/revolution/laravel-amazon-product-api" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/code-unit-reverse-lookup" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/comparator" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/sebastian/diff" />

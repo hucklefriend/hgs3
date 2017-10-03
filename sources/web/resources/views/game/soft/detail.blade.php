@@ -1,11 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url('game/soft') }}">ゲーム一覧</a></li>
-        <li class="breadcrumb-item active">{{ $game->name }}</li>
-    </ol>
-
     <div class="text-center">
         <h1>{{ $game->name }}</h1>
     </div>
@@ -19,7 +14,7 @@
                         </div>
                         <div class="col-2 text-right">
                             @if ($isEditor)
-                            <a href="{{ url('game/package/add') }}/{{ $game->id }}">追加</a>
+                            <a href="{{ url('game/soft/package/add') }}/{{ $game->id }}">追加</a>
                             @endif
                         </div>
                     </div>

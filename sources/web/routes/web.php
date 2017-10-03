@@ -14,14 +14,8 @@
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
-
-    Route::get('/game/soft/add', 'Game\SoftController@showAddForm');
-    Route::post('/game/soft/add', 'Game\SoftController@add');
-
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
-
-
 
     Route::get('/timeline', 'TimelineController@index');
     Route::get('/timeline/add', 'TimelineController@input');
@@ -29,6 +23,17 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::delete('/timeline/', 'TimelineController@remove');
 
     Route::get('/admin', 'TopController@admin');
+});
+
+// エディターのみ
+Route::group(['middleware' => ['auth', 'can:editor']], function () {
+    // ゲーム追加
+    Route::get('/game/soft/add', 'Game\SoftController@showAddForm');
+    Route::post('/game/soft/add', 'Game\SoftController@add');
+
+    // パッケージ登録
+    Route::get('/game/soft/package/add/{game}', 'Game\PackageController@add');
+    Route::post('/game/soft/package/add/{game}', 'Game\PackageController@store');
 });
 
 Route::get('/', 'TopController@index');
@@ -45,15 +50,6 @@ Route::get('/account/signup', 'Account\SignUpController@index');
 Route::get('/game/soft', 'Game\SoftController@index');
 Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
-
-// ゲーム追加リクエスト
-Route::get('/game/request', 'Game\RequestController@index')->middleware(['auth', 'web']);
-Route::get('/game/request/input', 'Game\RequestController@input')->middleware(['auth', 'web']);
-Route::post('/game/request', 'Game\RequestController@store')->middleware('auth');
-Route::post('/game/request/{gr}/comment', 'Game\RequestController@writeComment')->middleware(['auth']);
-Route::delete('/game/request/{gr}/comment/{grc}', 'Game\RequestController@deleteComment')->middleware(['auth']);
-Route::post('/game/request/{gr}/change_status', 'Game\RequestController@changeStatus')->middleware(['auth']);
-Route::get('/game/request/{gr}', 'Game\RequestController@show')->middleware(['web']);
 
 // レビュー
 Route::get('/game/review', 'Game\ReviewController@index');

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.13 on 2017-09-27 16:48:47.
+ * Generated for Laravel 5.5.13 on 2017-10-03 17:12:18.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -13257,6 +13257,89 @@ namespace Laravel\Socialite\Facades {
  
 }
 
+namespace Revolution\Amazon\ProductAdvertising\Facades { 
+
+    class AmazonProduct {
+        
+        /**
+         * 
+         *
+         * @param \Revolution\Amazon\ProductAdvertising\ApaiIO $api
+         * @return void 
+         * @static 
+         */ 
+        public static function config($api)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::config($api);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Revolution\Amazon\ProductAdvertising\OperationInterface $operation
+         * @return array 
+         * @static 
+         */ 
+        public static function run($operation)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::run($operation);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $category
+         * @param string $keyword
+         * @param int $page
+         * @return array 
+         * @static 
+         */ 
+        public static function search($category, $keyword = null, $page = 1)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::search($category, $keyword, $page);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $node
+         * @param string $response
+         * @return array 
+         * @static 
+         */ 
+        public static function browse($node, $response = 'TopSellers')
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::browse($node, $response);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $asin
+         * @return array 
+         * @static 
+         */ 
+        public static function item($asin)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::item($asin);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $asin
+         * @return array 
+         * @static 
+         */ 
+        public static function items($asin)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::items($asin);
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -15375,6 +15458,8 @@ namespace  {
     class Html extends \Collective\Html\HtmlFacade {}
 
     class Socialite extends \Laravel\Socialite\Facades\Socialite {}
+
+    class AmazonProduct extends \Revolution\Amazon\ProductAdvertising\Facades\AmazonProduct {}
  
 }
 

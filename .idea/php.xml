@@ -82,6 +82,8 @@
       <path value="$PROJECT_DIR$/sources/web/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/sources/web/vendor/doctrine/lexer" />
       <path value="$PROJECT_DIR$/sources/web/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/revolution/laravel-amazon-product-api" />
+      <path value="$PROJECT_DIR$/sources/web/vendor/exeu/apai-io" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

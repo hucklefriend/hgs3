@@ -10,7 +10,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "*",
         "laravel/socialite" : "*",
-        "mongodb/mongodb" : "*"
+        "mongodb/mongodb" : "*",
+        "revolution/laravel-amazon-product-api" : "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "@dev",

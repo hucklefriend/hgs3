@@ -1,4 +1,8 @@
 <?php
+/**
+ * パッケージコントローラー
+ */
+
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Http\Controllers\Controller;
@@ -18,6 +22,12 @@ class PackageController extends Controller
         \Illuminate\Support\Facades\View::share('navActive', 'game');
     }
 
+    /**
+     * 追加画面
+     *
+     * @param Game $game
+     * @return $this
+     */
     public function add(Game $game)
     {
         return view('game.package.add')->with([
@@ -25,6 +35,13 @@ class PackageController extends Controller
         ]);
     }
 
+    /**
+     * 登録
+     *
+     * @param StoreRequest $request
+     * @param Game $game
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store(StoreRequest $request, Game $game)
     {
         $pkg = new GamePackage;
