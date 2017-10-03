@@ -55,6 +55,7 @@ class SoftController extends Controller
 
         $data['isUser'] = UserRole::isUser();
         $data['isAdmin'] = UserRole::isAdmin();
+        $data['isEditor'] = UserRole::isDataEditor();
 
         if ($data['isUser']) {
             $fav = new FavoriteGame();

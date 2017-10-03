@@ -6,8 +6,9 @@
         <li class="breadcrumb-item active">{{ $game->name }}</li>
     </ol>
 
-    <h4>{{ $game->name }}</h4>
-
+    <div class="text-center">
+        <h1>{{ $game->name }}</h1>
+    </div>
     <div class="row">
         <div class="col-lg-6">
             <div class="card card-hgn">
@@ -16,12 +17,16 @@
                         <div class="col-10">
                             パッケージ情報
                         </div>
-                        <div class="col-2">
+                        <div class="col-2 text-right">
+                            @if ($isEditor)
                             <a href="{{ url('game/package/add') }}/{{ $game->id }}">追加</a>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="card-block">
+                    @if ($package_num > 2)
+
                     <script type="text/javascript" src="{{ url2('js/slick.min.js') }}"></script>
                     <link rel="stylesheet" type="text/css" href="{{ url2('css/slick.css') }}">
                     <link rel="stylesheet" type="text/css" href="{{ url2('css/slick-theme.css') }}">
@@ -31,15 +36,27 @@
                             width: auto !important;
                             position: inherit !important;
                         }
+
+                        .package_slide {
+                            visibility: hidden;
+                        }
+
+                        .package_slide div {
+                            outline: none;
+                        }
+
                     </style>
                     <script>
                         $(function (){
                             let slick = $('.package_slide');
                             slick.slick({
+                                arrows: false,
                                 dots: true,
                                 appendDots: $('#package_pager'),
                                 prevArrow: $('.slick-prev')
                             });
+
+                            $('.package_slide').css('visibility', 'visible');
                             $('#package_slider_prev').click(function () {
                                 slick.slick('slickPrev');
                             });
@@ -48,6 +65,8 @@
                             });
                         });
                     </script>
+
+                    @endif
                     <div class="package_slide">
 
                     @for ($i = 0; $i < $package_num; $i += 2)
@@ -65,7 +84,7 @@
                                     <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
                                 </div>
 
-                                @if ($isAdmin)
+                                @if ($isEditor)
                                 <hr>
                                 <div class="row" style="margin-bottom: 20px;">
                                     <div class="col-6">
@@ -95,7 +114,7 @@
                                     <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
                                 </div>
 
-                                @if ($isAdmin)
+                                @if ($isEditor)
                                     <hr>
                                     <div class="row" style="margin-bottom: 20px;">
                                         <div class="col-6">
@@ -115,16 +134,18 @@
                         </div>
                     @endfor
                     </div>
+                        @if ($package_num > 2)
                     <div class="row">
                         <div class="col-2">
-                            <button class="btn btn-default" id="package_slider_prev">&lt;</button>
+                            <button class="btn btn-warning btn-default" id="package_slider_prev">&lt;</button>
                         </div>
                         <div class="col-8 text-center" id="package_pager">
                         </div>
-                        <div class="col-2">
-                            <button class="btn btn-default" id="package_slider_next">&gt;</button>
+                        <div class="col-2 text-right">
+                            <button class="btn btn-warning btn-default" id="package_slider_next">&gt;</button>
                         </div>
                     </div>
+                        @endif
                 </div>
             </div>
         </div>
@@ -198,76 +219,31 @@
                                 });
                             });
                         </script>
-
-                    <div>
-                        平均プレイ時間 {{ $review->play_time }}時間
-                    </div>
-                    <div>
-                        レビュー数 &nbsp;⇒<a href="{{ url('game/review/soft') }}/{{ $game->id }}">みんなのレビューを見る</a>
-                    </div>
                     @else
                         <p>レビューは投稿されていません。<br>
                             最初のレビューを投稿してみませんか？</p>
                     @endif
-                    <div style="margin-top: 25px;font-size: 150%;" class="text-center">
-                        <a href="{{ url('game/review/input') }}/{{ $game->id }}">レビューを書く</a>
-                    </div>
+                    <hr>
+                        @if ($isUser)
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-center">
+                                        <a href="{{ url('game/review/soft') }}/{{ $game->id }}">レビューを見る</a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-center">
+                                        <a href="{{ url('game/review/input') }}/{{ $game->id }}">レビューを書く</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="text-center">
+                                <a href="{{ url('game/review/soft') }}/{{ $game->id }}">レビューを見る</a>
+                            </div>
+                        @endif
                 </div>
             </div>
-        </div>
-    </div>
-
-
-
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card card-hgn">
-                <div class="card-header">
-                    ベースデータ
-                </div>
-                <div class="card-block">
-                    <div class="row">
-                        <div class="col-5">メーカー</div>
-                        <div class="col-7"><a href="{{ url('game/company') }}/{{ $company->id }}">{{ $company->name }}</a></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-5">レビュー数</div>
-                        <div class="col-7">{{ $base['review_num'] }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-5">お気に入り登録者数</div>
-                        <div class="col-7">{{ $base['favorite_num'] }}</div>
-                    </div>
-                    @if ($isUser)
-                    <div class="row">
-                        <div class="col-5">お気に入り</div>
-                        <div class="col-7">
-                            @if ($isFavorite)
-                                <form action="{{ url('user/favorite_game') }}" method="POST" class="form-inline">
-                                    <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                                    <input type="hidden" value="{{ $game->id }}" name="game_id">
-                                    {{ method_field('DELETE') }}
-                                    <span style="padding-right: 20px;">登録済み</span>
-                                    <button class="btn btn-sm btn-warning">取り消す</button>
-                                </form>
-                            @else
-                                <form action="{{ url('user/favorite_game') }}" method="POST" class="form-inline">
-                                    <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                                    <input type="hidden" value="{{ $game->id }}" name="game_id">
-                                    <button class="btn btn-sm btn-info">登録する</button>
-                                </form>
-                            @endif
-                        </div>
-                    </div>
-                    @endif
-                    <div class="row">
-                        <div class="col-5">サイト数</div>
-                        <div class="col-7">{{ $base['site_num'] }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
         </div>
     </div>
 
@@ -275,35 +251,31 @@
         <div class="col-lg-6">
             <div class="card card-hgn">
                 <div class="card-header">
-                    サイト
+                    サイト <small>{{ $base['site_num'] }}件</small>
                 </div>
                 <div class="card-block">
                     <div class="card-text">
                         @if (empty($site))
-                            <p>このゲームを扱っているサイトは登録されていません。</p>
+                            <p>{{ $game->name }}を扱っているサイトは登録されていません。</p>
                         @else
                             @foreach ($site as $s)
-                                <div>
-                                    <h5>{{ $s->name }}</h5>
-                                    <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
-                                    <div>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</div>
-                                    <div>→ <a href="{{ url('site/detail') }}/{{ $s->id }}">サイトの詳細情報</a></div>
-                                </div>
+                                @include('site.common.minimal', ['s' => $s])
                                 <hr>
                             @endforeach
-                            ⇒ <a href="{{ url('site/game/') }}/{{ $game->id }}">もっと見る</a>
+                            <div class="text-center">
+                                <a href="{{ url('site/game/') }}/{{ $game->id }}">
+                                    サイトを全て見る
+                                </a>
+                            </div>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-lg-6">
             <div class="card card-hgn">
                 <div class="card-header">
-                    お気に入り登録者
+                    お気に入り登録ユーザー <small>{{ $base['favorite_num'] }}人</small>
                 </div>
                 <div class="card-block">
                     @if (!empty($favorite))
@@ -316,43 +288,38 @@
                             </div>
                             <hr>
                         @endforeach
-                            <p>
-                                ⇒ <a href="{{ url('game/favorite/') }}/{{ $game->id }}">全ての登録者を見る</a>
-                            </p>
+                        <div class="text-center">
+                            <a href="{{ url('game/favorite/') }}/{{ $game->id }}">
+                                お気に入り登録ユーザーを全て見る
+                            </a>
+                        </div>
                     @else
-                        <p>
-                            お気に入りに登録しているユーザーはいません。
-                            @if ($isUser)
-                            <br>お気に入りに登録しませんか？
-                            <form action="{{ url('user/favorite_game') }}" method="POST">
-                                <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                                <input type="hidden" value="{{ $game->id }}" name="game_id">
-                                <button class="btn btn-sm btn-info">登録する</button>
-                            </form>
-                            @endif
-                        </p>
+                        <p>お気に入りに登録しているユーザーはいません。</p>
                     @endif
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card card-hgn">
-                <div class="card-header">
-                    同一シリーズの別タイトル
-                </div>
-                <div class="card-block">
-                    @if($series != null)
-                        <ul class="list-group">
-                            @foreach ($series['list'] as $sl)
-                                <li class="list-group-item">
-                                    <a href="{{ url('game/soft') }}/{{ $sl->id }}">{{ $sl->name }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
+                @if ($isUser)
+                <div class="card-footer">
+                    @if ($isFavorite)
+                        <form action="{{ url('user/favorite_game') }}" method="POST">
+                            <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                            <input type="hidden" value="{{ $game->id }}" name="game_id">
+                            {{ method_field('DELETE') }}
+                            <div class="text-center">
+                                <span style="padding-right: 10px;">登録済み</span>
+                                <button class="btn btn-sm btn-warning">取り消す</button>
+                            </div>
+                        </form>
                     @else
-                        <p>シリーズの別タイトルはありません。</p>
+                        <form action="{{ url('user/favorite_game') }}" method="POST">
+                            <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                            <input type="hidden" value="{{ $game->id }}" name="game_id">
+                            <div class="text-center">
+                                <button class="btn btn-info">お気に入りに登録する</button>
+                            </div>
+                        </form>
                     @endif
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -361,51 +328,23 @@
         <div class="col-lg-6">
             <div class="card card-hgn">
                 <div class="card-header">
-                    遊んだゲーム
+                    同一シリーズの別タイトル
                 </div>
-                <div class="card-block">
-                    @if ($isUser)
-                        @if ($playedGame == null)
-                            <form method="POST" action="{{ url2('user/played_game') }}/{{ $game->id }}">
-                                <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                                <textarea name="comment" class="form-control"></textarea>
-                                <button class="btn btn-default">登録</button>
-                            </form>
-                        @else
-                            <form method="POST" action="{{ url2('user/played_game') }}/{{ $playedGame->id }}">
-                                <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                                {{ method_field('PUT') }}
-                                <textarea name="comment" class="form-control">{{ $playedGame->comment }}</textarea>
-                                <button class="btn btn-default">編集</button>
-                            </form>
-                            <hr>
-                            <form method="POST" action="{{ url2('user/played_game') }}/{{ $playedGame->id }}">
-                                <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                                {{ method_field('DELETE') }}
-                                <button class="btn btn-danger">削除</button>
-                            </form>
-                        @endif
-                    @endif
-                    <hr>
-                    @foreach ($playedUsers as $pu)
-                        <div class="row">
-                            <div class="col-1"></div>
-                            <div class="col-10">
-                                <a href="{{ url('user/profile') }}/{{ $pu->id }}">{{ $pu->name }}</a>
-                            </div>
+                @if($series != null)
+                    <ul class="list-group list-group-flush">
+                        @foreach ($series['list'] as $sl)
+                            <li class="list-group-item">
+                                <a href="{{ url('game/soft') }}/{{ $sl->id }}">{{ $sl->name }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="card-block">
+                        <div class="card-text">
+                            <p>シリーズの別タイトルはありません。</p>
                         </div>
-                        <hr>
-                    @endforeach
-                    <p>
-                        ⇒ <a href="{{ url('game/played_user/') }}/{{ $game->id }}">全ての登録者を見る</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card card-hgn">
-                <div class="card-header"></div>
-                <div class="card-block"></div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
