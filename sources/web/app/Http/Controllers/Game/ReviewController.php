@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Request;
 class ReviewController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * コンストラクタ
      *
      * @return void
      */

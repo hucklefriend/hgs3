@@ -45,3 +45,11 @@ code {
 .site_presentation {
     word-wrap: break-word;
 }
+
+.review_title {
+    word-wrap: break-word;
+}
+
+.review_point {
+    font-size: 200%;
+}

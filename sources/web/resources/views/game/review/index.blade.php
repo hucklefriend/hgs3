@@ -2,27 +2,32 @@
 
 @section('content')
 
-    <section>
-        <h4>新着</h4>
-        @if (empty($newArrival))
-            <p>新着レビューはありません。</p>
-        @else
-            <div>
-                @foreach ($newArrival as $r)
-                    <div class="row">
-                        <div class="col-1">
-                            <img src="{{ $r->small_image_url }}" class="thumbnail"><br>
-                            {{ $r->game_name }}
-                        </div>
-                        <div class="col-1">{{ $r->point }}</div>
-                        <div class="col-10">
-                            <p><a href="{{ url('game/review/detail/') }}/{{ $r->id }}">{{ $r->title }}</a></p>
-                            <p>{{ $r->user_name }} {{ $r->post_date }}</p>
-                        </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card card-hgn">
+                <div class="card-header">
+                    新着(5件)
+                </div>
+                <div class="card-block">
+                @if (empty($newArrival))
+                    <div class="card-text">
+                        <p>新着レビューはありません。</p>
                     </div>
-                @endforeach
+                @else
+                    @foreach ($newArrival as $r)
+                        @include('game.review.common.normal', ['r' => $r])
+                        @if (!$loop->last)
+                        <hr>
+                        @endif
+                    @endforeach
+                @endif
+                </div>
             </div>
-        @endif
+        </div>
+    </div>
+
+    <section>
+
     </section>
 
     <hr>

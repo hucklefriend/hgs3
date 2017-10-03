@@ -9,10 +9,10 @@
             <div class="card card-hgn">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-10">
+                        <div class="col-8">
                             パッケージ情報
                         </div>
-                        <div class="col-2 text-right">
+                        <div class="col-4 text-right">
                             @if ($isEditor)
                             <a href="{{ url('game/soft/package/add') }}/{{ $game->id }}">追加</a>
                             @endif
