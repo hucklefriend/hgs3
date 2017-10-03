@@ -1,12 +1,223 @@
 @extends('layouts.app')
 
 @section('content')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url('game/soft') }}">ゲーム一覧</a></li>
+        <li class="breadcrumb-item active">{{ $game->name }}</li>
+    </ol>
+
     <h4>{{ $game->name }}</h4>
 
-    <nav>
-        <a href="{{ url('game/soft') }}">一覧へ</a> |
-        <a href="{{ url('game/soft/edit') }}/{{ $game->id }}">データ編集</a>
-    </nav>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card card-hgn">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-10">
+                            パッケージ情報
+                        </div>
+                        <div class="col-2">
+                            <a href="{{ url('game/package/add') }}/{{ $game->id }}">追加</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <script type="text/javascript" src="{{ url2('js/slick.min.js') }}"></script>
+                    <link rel="stylesheet" type="text/css" href="{{ url2('css/slick.css') }}">
+                    <link rel="stylesheet" type="text/css" href="{{ url2('css/slick-theme.css') }}">
+                    <style>
+                        .slick-dots {
+                            bottom: 0 !important;
+                            width: auto !important;
+                            position: inherit !important;
+                        }
+                    </style>
+                    <script>
+                        $(function (){
+                            let slick = $('.package_slide');
+                            slick.slick({
+                                dots: true,
+                                appendDots: $('#package_pager'),
+                                prevArrow: $('.slick-prev')
+                            });
+                            $('#package_slider_prev').click(function () {
+                                slick.slick('slickPrev');
+                            });
+                            $('#package_slider_next').click(function () {
+                                slick.slick('slickNext');
+                            });
+                        });
+                    </script>
+                    <div class="package_slide">
+
+                    @for ($i = 0; $i < $package_num; $i += 2)
+                        <div>
+                        @php $pkg = $packages[$i]; @endphp
+                        <div class="row">
+                            <div class="col-4">
+                                <img src="{{ $pkg->medium_image_url }}" class="img-responsive" style="max-width: 100%;">
+                            </div>
+                            <div class="col-8">
+                                <div><h4>{{ $pkg->name }}</h4></div>
+                                <div>{{ $pkg->platform_name }}</div>
+                                <div>{{ $pkg->release_date }}</div>
+                                <div>
+                                    <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
+                                </div>
+
+                                @if ($isAdmin)
+                                <hr>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="col-6">
+                                        <a href="{{ url('game/package/edit') }}/{{ $game->id }}/{{ $pkg->id }}">編集</a><br>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <form method="POST" action="{{ url('game/package/delete') }}/{{ $pkg->id }}" onsubmit="return confirm('削除します');">
+                                            {{ method_field('DELETE') }}
+                                            <button type="submit" class="btn btn-danger btn-sm">削除</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        @if (isset($packages[$i + 1]))
+                        @php $pkg = $packages[$i + 1]; @endphp
+                        <div class="row">
+                            <div class="col-4">
+                                <img src="{{ $pkg->medium_image_url }}" class="img-responsive" style="max-width: 100%;">
+                            </div>
+                            <div class="col-8">
+                                <div><h4>{{ $pkg->name }}</h4></div>
+                                <div>{{ $pkg->platform_name }}</div>
+                                <div>{{ $pkg->release_date }}</div>
+                                <div>
+                                    <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
+                                </div>
+
+                                @if ($isAdmin)
+                                    <hr>
+                                    <div class="row" style="margin-bottom: 20px;">
+                                        <div class="col-6">
+                                            <a href="{{ url('game/package/edit') }}/{{ $game->id }}/{{ $pkg->id }}">編集</a><br>
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            <form method="POST" action="{{ url('game/package/delete') }}/{{ $pkg->id }}" onsubmit="return confirm('削除します');">
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" class="btn btn-danger btn-sm">削除</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
+                        </div>
+                    @endfor
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <button class="btn btn-default" id="package_slider_prev">&lt;</button>
+                        </div>
+                        <div class="col-8 text-center" id="package_pager">
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-default" id="package_slider_next">&gt;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card card-hgn">
+                <div class="card-header">
+                    <a name="review">レビュー</a>
+                    {{ $review->review_num }}件
+                </div>
+                <div class="card-block">
+                    @if ($review != null)
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="col-3 text-center">
+                                <small class="text-muted">ポイント</small>
+                                <p style="font-size: 250%;">{{ $review->point }}</p>
+                            </div>
+                            <div class="col-9">
+                                <canvas id="review_chart"></canvas>
+                            </div>
+                        </div>
+
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+                        <script>
+                            $(function (){
+                                let ctx = $("#review_chart");
+
+                                let data = {
+                                    labels: ["怖さ", "シナリオ", "ボリューム", "グラフィック", "サウンド", "操作性", "難易度", "やりこみ", "オススメ"],
+                                    datasets: [{
+                                        fill: false,
+                                        label: "",
+                                        backgroundColor: "white",
+                                        borderColor: "red",
+                                        pointBackgroundColor: "red",
+                                        data: [
+                                            {{ $review->fear }},
+                                            {{ $review->story }},
+                                            {{ $review->volume }},
+                                            {{ $review->graphic }},
+                                            {{ $review->sound }},
+                                            {{ $review->controllability }},
+                                            {{ $review->difficulty }},
+                                            {{ $review->crowded }},
+                                            {{ $review->recommend }}
+                                        ]
+                                    }]
+                                };
+
+                                let chart = new Chart(ctx, {
+                                    type: 'radar',
+                                    data: data,
+                                    options: {
+                                        legend: {
+                                            display: false,
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: false,
+                                            text: 'Chart.js Radar Chart'
+                                        },
+                                        scale: {
+                                            ticks: {
+                                                beginAtZero: true,
+                                                stepSize: 1
+                                            }
+                                        },
+                                        responsive: true
+                                    }
+                                });
+                            });
+                        </script>
+
+                    <div>
+                        平均プレイ時間 {{ $review->play_time }}時間
+                    </div>
+                    <div>
+                        レビュー数 &nbsp;⇒<a href="{{ url('game/review/soft') }}/{{ $game->id }}">みんなのレビューを見る</a>
+                    </div>
+                    @else
+                        <p>レビューは投稿されていません。<br>
+                            最初のレビューを投稿してみませんか？</p>
+                    @endif
+                    <div style="margin-top: 25px;font-size: 150%;" class="text-center">
+                        <a href="{{ url('game/review/input') }}/{{ $game->id }}">レビューを書く</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <div class="row">
         <div class="col-lg-6">
@@ -57,122 +268,10 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card card-hgn">
-                <div class="card-header">
-                    パッケージ情報
-                </div>
-                <div class="card-block">
-                @foreach ($packages as $pkg)
-                    <div class="row">
-                        <div class="col-4">
-                            <img src="{{ $pkg->medium_image_url }}" class="img-responsive" style="max-width: 100%;">
-                        </div>
-                        <div class="col-8">
-                            <div><h4>{{ $pkg->name }}</h4></div>
-                            <div>{{ $pkg->platform_name }}</div>
-                            <div>{{ $pkg->release_date }}</div>
-                            <div>
-                                <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    @if ($isAdmin)
-                    <div class="row">
-                        <div class="col-1">
-                            <a href="{{ url('game/package/edit') }}/{{ $game->id }}/{{ $pkg->id }}"><button type="button" class="btn btn-info btn-sm">編集</button></a>
-                        </div>
-                        <div class="col-1">
-                            <form method="POST" action="{{ url('game/package/delete') }}/{{ $pkg->id }}" onsubmit="return confirm('削除します');">
-                                {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-danger btn-sm">削除</button>
-                            </form>
-                        </div>
-                        <div class="col-8">
-
-                        </div>
-                    </div>
-                    @endif
-                    <hr>
-                @endforeach
-                    @if ($isAdmin)
-                    <p><a href="{{ url('game/package/add') }}/{{ $game->id }}">パッケージを追加</a></p>
-                    @endif
-                </div>
-            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
-            <div class="card card-hgn">
-                <div class="card-header">
-                    <a name="review">レビュー</a>
-                </div>
-                <div class="card-block">
-                    @if ($review != null)
-                        <div class="row">
-                            <div class="col-5">平均ポイント</div>
-                            <div class="col-7">{{ $review->point }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">平均プレイ時間</div>
-                            <div class="col-7">{{ $review->play_time }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">レビュー数</div>
-                            <div class="col-7">{{ $review->review_num }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">怖さ</div>
-                            <div class="col-7">{{ $review->fear }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">シナリオ</div>
-                            <div class="col-7">{{ $review->story }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">ボリューム</div>
-                            <div class="col-7">{{ $review->volume }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">グラフィック</div>
-                            <div class="col-7">{{ $review->graphic }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">サウンド</div>
-                            <div class="col-7">{{ $review->sound }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">操作性</div>
-                            <div class="col-7">{{ $review->controllability }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">難易度</div>
-                            <div class="col-7">{{ $review->difficulty }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">やりこみ</div>
-                            <div class="col-7">{{ $review->crowded }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5">オススメ</div>
-                            <div class="col-7">{{ $review->recommend }}</div>
-                        </div>
-
-                        <div style="margin-top: 15px;margin-bottom: 15px;">
-                            <a href="{{ url('game/review/soft') }}/{{ $game->id }}">レビュー一覧へ</a>
-                        </div>
-                    @else
-                        <p>レビューは投稿されていません。<br>
-                            最初のレビューを投稿してみませんか？</p>
-                    @endif
-                    <div>
-                        <a href="{{ url('game/review/input') }}/{{ $game->id }}">レビューの投稿</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="col-lg-6">
             <div class="card card-hgn">
                 <div class="card-header">
@@ -316,5 +415,8 @@
         margin-top: 30px;
     }
 </style>
+
+
+
 
 @endsection

@@ -40,11 +40,11 @@
         -------------------------------------------------- */
         /* Not required for template or sticky footer method. */
 
-        body > .container {
+        body > .container, body > .container-fluid {
             padding: 80px 15px 0;
         }
 
-        .footer > .container {
+        .footer > .container, body > .container-fluid {
             padding-right: 15px;
             padding-left: 15px;
         }
@@ -81,16 +81,11 @@
                     <a class="nav-link" href="{{ url2('site') }}">サイト</a>
                 </li>
                 <li class="nav-item @if ($navActive == 'diary') active @endif">
-                    <a class="nav-link" href="{{ url2('diary') }}">攻略日記</a>
+                    <a class="nav-link" href="{{ url2('diary') }}">日記</a>
                 </li>
                 <li class="nav-item @if ($navActive == 'community') active @endif">
                     <a class="nav-link" href="{{ url2('community') }}">コミュニティ</a>
                 </li>
-@if (\Hgs3\Constants\UserRole::isAdmin())
-                <li class="nav-item @if ($navActive == 'admin') active @endif">
-                    <a class="nav-link" href="{{ url2('admin') }}">管理用</a>
-                </li>
-@endif
             </ul>
             <ul class="navbar-nav my-2 my-lg-0">
                 @if (Auth::check())
@@ -107,7 +102,7 @@
     </nav>
 
 </div>
-<div class="container">
+<div class="container-fluid">
     @yield('content')
 </div>
 
@@ -122,5 +117,6 @@
         </a>
     </div>
 </footer>
+
 </body>
 </html>

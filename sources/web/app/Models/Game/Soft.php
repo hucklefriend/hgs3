@@ -68,6 +68,7 @@ class Soft
 
         // パッケージ情報
         $data['packages'] = $this->getDetailPackages($game->id);
+        $data['package_num'] = count($data['packages']);
 
         // レビュー
         $data['review'] = ReviewTotal::find($game->id);

@@ -9,6 +9,7 @@ class UserRole
 {
     const GUEST = 1;
     const USER = 10;
+    const EDITOR = 50;
     const ADMIN = 100;
 
     /**
@@ -21,6 +22,21 @@ class UserRole
         $user = Auth::user();
         if ($user != null) {
             return $user->role >= self::USER;
+        }
+
+        return false;
+    }
+
+    /**
+     * データ編集権限があるか
+     *
+     * @return bool
+     */
+    public static function isDataEditor()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->role >= self::EDITOR;
         }
 
         return false;
