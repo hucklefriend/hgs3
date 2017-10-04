@@ -32,7 +32,7 @@
                     @else
                         <div>
                             @foreach ($highScore as $r)
-                                @include('game.review.common.no_user', ['r' => $r])
+                                @include('game.review.common.game.php', ['r' => $r])
                                 @if (!$loop->last)
                                     <hr>
                                 @endif

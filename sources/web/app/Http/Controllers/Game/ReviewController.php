@@ -52,6 +52,8 @@ class ReviewController extends Controller
      */
     public function soft(Game $game)
     {
+        // TODO 発売日が過ぎていないと投稿するリンクは出さない
+
         $data = [
             'game'  => $game,
             'total' => null
@@ -85,6 +87,7 @@ class ReviewController extends Controller
         // TODO 下書きがあるかチェック
         // TODO 同一ソフトのパッケージがあればその旨出力
         // TODO 同一ソフトの他パッケージの内容コピー
+        // TODO 発売日が過ぎているか
 
         $pkg = GamePackage::where('game_id', $game->id)
             ->orderBy('release_int')
@@ -131,6 +134,9 @@ class ReviewController extends Controller
      */
     public function save(InputRequest $request, Game $game)
     {
+        // TODO: 発売日が過ぎているか
+
+
         $draftType = $request->get('draft');
 
         if ($draftType == -1) {
@@ -242,7 +248,7 @@ class ReviewController extends Controller
             $hasGood = $r->hasGood($review->id, Auth::id());
         }
 
-        return view('game.review.detail')->with([
+        return view('game.review.detail', [
             'game'      => $game,
             'pkg'       => GamePackage::find($review->package_id),
             'review'    => $review,
@@ -261,6 +267,8 @@ class ReviewController extends Controller
     public function goodHistory(\Hgs3\Models\Orm\Review $review)
     {
         // TODO 投稿者本人しか見られない
+
+
 
         $r = new Review;
         $his = $r->getGoodHistory($review->id);

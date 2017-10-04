@@ -50,6 +50,8 @@ class SoftController extends Controller
      */
     public function show(Game $game)
     {
+        // TODO 発売日が過ぎていないとレビューを投稿するリンクは出さない
+
         $soft = new Soft;
         $data = $soft->getDetail($game);
 

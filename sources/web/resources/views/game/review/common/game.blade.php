@@ -14,15 +14,9 @@
                 </div>
             </div>
             <div class="col-10">
-                <div class="review_title">
-                    <a href="{{ url('game/review/detail/') }}/{{ $r->id }}">{{ $r->title }}</a>
-                </div>
+                {{ $r->review_num }}件のレビュー<br>
+                <a href="{{ url2('/game/review/soft') }}/{{ $r->game_id }}">このゲームのレビューを見る</a>
             </div>
-        </div>
-
-        <div>
-            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $r->good_num }}&nbsp;
-            {{ $r->post_date }}
         </div>
     </div>
 </div>

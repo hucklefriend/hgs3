@@ -35,6 +35,7 @@
                 @endif
             @else
                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $review->good_num }}
+                <a href="{{ url2('game/review/good_history') }}/{{ $review->id }}">いいねしてくれたユーザー一覧</a>
             @endif
         </div>
 
@@ -107,8 +108,6 @@
             <h4>{{ $review->title }}</h4>
         </div>
 
-
-
         <div style="margin-top: 10px;">
             <h5>感想</h5>
             <p class="break_word">{{ $review->thoughts }}</p>
@@ -121,10 +120,10 @@
         </div>
     </section>
 
-
-
     <section>
+        @if (!$isWriter)
         <a href="{{ url('game/injustice_review/input') }}/{{ $review->id }}">このレビューを不正報告</a> |
+        @endif
         <a href="{{ url('game/injustice_review/') }}/{{ $review->id }}">このレビューへの不正報告一覧</a>
     </section>
 @endsection

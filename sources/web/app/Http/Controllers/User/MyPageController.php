@@ -64,8 +64,6 @@ class MyPageController extends Controller
             'skip'  => ($pager->currentPage() - 1) * self::PER_PAGE
         ];
 
-
-
         return view('user.mypage')->with([
             'user'      => Auth::user(),
             'timelines' => $collection->find($filter, $options),
@@ -112,17 +110,20 @@ class MyPageController extends Controller
         ]);
     }
 
+    /**
+     * 自分が投稿したレビュー
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function review()
     {
         $review = new Review();
 
         $reviews = $review->getUser(Auth::id());
 
-        $packages = GamePackage::getHash(array_pluck($reviews->items(), 'package_id'));
-
         return view('user.game.review', [
             'reviews'  => $reviews,
-            'packages' => $packages
+            'user'     => Auth::user()
         ]);
     }
 }

@@ -2,20 +2,16 @@
 
 @section('content')
 
-    <section>
-        @foreach ($reviews as $r)
-            <div class="row">
-                <div class="col-1">
-                    <img src="{{ $packages[$r->package_id]->small_image_url }}" class="thumbnail"><br>
-                    {{ $packages[$r->package_id]->name }}
-                </div>
-                <div class="col-1">{{ $r->point }}</div>
-                <div class="col-10">
-                    <p><a href="{{ url('game/review/detail/') }}/{{ $r->id }}">{{ $r->title }}</a></p>
-                    <p>{{ $r->post_date }}</p>
-                </div>
-            </div>
-        @endforeach
-    </section>
+    <h2>{{ $user->name }}さんが投稿したレビュー</h2>
 
+    {{ $reviews }}
+
+    @foreach ($reviews as $r)
+        @include('game.review.common.no_user', ['r' => $r])
+        @if (!$loop->last)
+            <hr>
+        @endif
+    @endforeach
+
+    {{ $reviews }}
 @endsection

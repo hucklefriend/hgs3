@@ -7,6 +7,7 @@
 namespace Hgs3\Models\Game;
 
 use Hgs3\Http\Requests\Game\Review\InputRequest;
+use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\Models\Timeline;
@@ -341,9 +342,22 @@ SQL;
      */
     public function getUser($userId)
     {
-        return DB::table('reviews')
+        $data = DB::table('reviews')
             ->where('user_id', $userId)
             ->orderBy('id', 'DESC')
             ->paginate(20);
+
+        $packages = GamePackage::getHash(array_pluck($data->items(), 'package_id'));
+        foreach ($data as &$row) {
+            if (isset($packages[$row->package_id])) {
+                $row->game_name = $packages[$row->package_id]->name;
+                $row->small_image_url = $packages[$row->package_id]->small_image_url;
+            } else {
+                $row->game_name = '';
+                $row->small_image_url = null;
+            }
+        }
+
+        return $data;
     }
 }
