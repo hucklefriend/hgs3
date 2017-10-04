@@ -168,7 +168,7 @@ SQL;
     private function getFavoriteUser(Game $game)
     {
         $sql =<<< SQL
-SELECT users.id, users.name
+SELECT users.id, users.name, users.icon_upload_flag
 FROM (
   SELECT user_id FROM user_favorite_games WHERE game_id = ? ORDER BY id LIMIT 5
 ) fav LEFT OUTER JOIN users ON fav.user_id = users.id
