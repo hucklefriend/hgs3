@@ -1,9 +1,9 @@
 <div class="row" style="margin-bottom: 15px;">
-    <div class="col-2">
+    <div class="col-2 text-center">
         <img src="{{ $r->small_image_url }}" class="thumbnail">
     </div>
     <div class="col-10">
-        <div class="text-center">
+        <div>
             <strong>{{ $r->game_name }}</strong>
         </div>
 
@@ -20,7 +20,14 @@
             </div>
         </div>
 
-        <div>投稿者：<a href="{{ url2('user/profile') }}/{{ $r->user_id }}">{{ $r->user_name }}</a></div>
-        <div>投稿日時：{{ $r->post_date }}</div>
+        <div>
+            @if ($showLastMonthGood)
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $r->latest_good_num }}({{ $r->good_num }})&nbsp;
+            @else
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $r->good_num }}&nbsp;
+            @endif
+            <i class="fa fa-user" aria-hidden="true"></i><a href="{{ url2('user/profile') }}/{{ $r->user_id }}">{{ $r->user_name }}</a><br>
+            {{ $r->post_date }}
+        </div>
     </div>
 </div>

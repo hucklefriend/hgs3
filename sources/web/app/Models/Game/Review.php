@@ -131,7 +131,7 @@ SELECT
   , game_packages.item_url
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, game_id
+    SELECT id, point, user_id, post_date, title, game_id, good_num
     FROM reviews
     ORDER BY id DESC
     LIMIT {$num}
@@ -158,7 +158,7 @@ SELECT
   , game_packages.item_url
   , game_packages.small_image_url
 FROM (
-  SELECT point, game_id
+  SELECT *
   FROM review_totals
   ORDER BY point DESC
   LIMIT {$num}
@@ -185,7 +185,7 @@ SELECT
   , game_packages.item_url
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, game_id
+    SELECT id, point, user_id, post_date, title, game_id, latest_good_num, good_num
     FROM reviews
     ORDER BY latest_good_num DESC
     LIMIT {$num}

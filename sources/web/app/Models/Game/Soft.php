@@ -60,12 +60,14 @@ class Soft
         }
 
         // メーカー
+        // パッケージのメーカーを使うので不要
+/*
         if ($game->company_id != null) {
             $data['company'] = GameCompany::find($game->company_id);
         } else {
             $data['company'] = null;
         }
-
+*/
         // パッケージ情報
         $data['packages'] = $this->getDetailPackages($game->id);
         $data['package_num'] = count($data['packages']);
@@ -124,11 +126,12 @@ class Soft
     private function getDetailPackages($gameId)
     {
         $sql =<<< SQL
-SELECT pkg.*, plt.id plt_id, plt.name AS platform_name
+SELECT pkg.*, plt.id plt_id, plt.name AS platform_name, com.name AS company_name
 FROM (
   SELECT * FROM game_packages WHERE game_id = ?
 ) pkg
   LEFT OUTER JOIN game_platforms plt ON pkg.platform_id = plt.id
+  LEFT OUTER JOIN game_companies com ON pkg.company_id = com.id
 SQL;
 
         return DB::select($sql, [$gameId]);

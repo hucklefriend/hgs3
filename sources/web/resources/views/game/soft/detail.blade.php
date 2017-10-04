@@ -63,7 +63,6 @@
 
                     @endif
                     <div class="package_slide">
-
                     @for ($i = 0; $i < $package_num; $i += 2)
                         <div>
                         @php $pkg = $packages[$i]; @endphp
@@ -73,6 +72,7 @@
                             </div>
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
+                                <div><a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a></div>
                                 <div>{{ $pkg->platform_name }}</div>
                                 <div>{{ $pkg->release_date }}</div>
                                 <div>
@@ -103,6 +103,7 @@
                             </div>
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
+                                <div><a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a></div>
                                 <div>{{ $pkg->platform_name }}</div>
                                 <div>{{ $pkg->release_date }}</div>
                                 <div>
