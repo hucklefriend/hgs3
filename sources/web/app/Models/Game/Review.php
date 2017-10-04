@@ -20,20 +20,26 @@ class Review
      *
      * @param $gameId
      * @param $num
+     * @param $offset
      */
-    public function getNewArrivals($gameId, $num)
+    public function getNewArrivals($gameId, $num, $offset = 0)
     {
         $sql =<<< SQL
 SELECT
   reviews.*
   , users.name AS user_name
+  , pkg.name game_name
+  , pkg.game_type_id
+  , pkg.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title
+    SELECT id, point, user_id, post_date, title, good_num, package_id
     FROM reviews
     WHERE game_id = ?
     ORDER BY id DESC
     LIMIT {$num}
+    OFFSET {$offset}
   ) reviews LEFT OUTER JOIN users ON reviews.user_id = users.id
+  LEFT OUTER JOIN game_packages pkg ON pkg.id = reviews.package_id
 SQL;
 
         return DB::select($sql, [$gameId]);

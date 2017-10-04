@@ -15,6 +15,7 @@ use Hgs3\Models\Orm\InjusticeReview;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
@@ -51,13 +52,27 @@ class ReviewController extends Controller
      */
     public function soft(Game $game)
     {
+        $data = [
+            'game'  => $game,
+            'total' => null
+        ];
+
         $review = new Review();
 
-        return view('game.review.soft')->with([
-            'game'    => $game,
-            'total'   => ReviewTotal::find($game->id),
-            'reviews' => $review->getNewArrivals($game->id, 10)
-        ]);
+        $total = ReviewTotal::find($game->id);
+        if ($total !== null) {
+            $data['total'] = $total;
+
+            $data['reviews'] = $review->getNewArrivals($game->id, 10);
+
+            $pager = new LengthAwarePaginator([], $total->review_num, 10);
+            //$pager->setPath('game/review/soft/' . $game->id);
+            $pager->setPath('');
+
+            $data['pager'] = $pager;
+        }
+
+        return view('game.review.soft', $data);
     }
 
     /**

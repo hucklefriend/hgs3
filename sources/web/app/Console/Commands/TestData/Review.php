@@ -37,6 +37,6 @@ class Review extends Command
      */
     public function handle()
     {
-        \Hgs3\Models\Test\Review::create(100);
+        \Hgs3\Models\Test\Review::create(1000);
     }
 }

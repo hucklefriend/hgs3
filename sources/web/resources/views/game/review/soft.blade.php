@@ -1,69 +1,104 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}</h4>
+    <h4></h4>
 
     <nav style="margin-top: 10px; margin-bottom: 10px;">
         <a href="{{ url('game/soft') }}/{{ $game->id }}">詳細へ</a>|
         <a href="{{ url('game/review/input') }}/{{ $game->id }}">投稿する</a>
     </nav>
 
-    <section>
-        <h5>累計</h5>
-        <div>
-            @if ($total != null)
-                <div class="row">
-                    <div class="col-2">平均ポイント</div>
-                    <div class="col-2">{{ $total->point }}</div>
-                    <div class="col-2">平均プレイ時間</div>
-                    <div class="col-2">{{ $total->play_time }}</div>
-                    <div class="col-2">レビュー数</div>
-                    <div class="col-2">{{ $total->review_num }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-2">怖さ</div>
-                    <div class="col-2">{{ $total->fear }}</div>
-                    <div class="col-2">シナリオ</div>
-                    <div class="col-2">{{ $total->story }}</div>
-                    <div class="col-2">ボリューム</div>
-                    <div class="col-2">{{ $total->volume }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-2">グラフィック</div>
-                    <div class="col-2">{{ $total->graphic }}</div>
-                    <div class="col-2">サウンド</div>
-                    <div class="col-2">{{ $total->sound }}</div>
-                    <div class="col-2">操作性</div>
-                    <div class="col-2">{{ $total->controllability }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-2">難易度</div>
-                    <div class="col-2">{{ $total->difficulty }}</div>
-                    <div class="col-2">やりこみ</div>
-                    <div class="col-2">{{ $total->crowded }}</div>
-                    <div class="col-2">オススメ</div>
-                    <div class="col-2">{{ $total->recommend }}</div>
-                </div>
-            @else
-                レビューは投稿されていません
-            @endif
-        </div>
-    </section>
+    <div>
 
-    <section style="margin-top: 30px;">
-        @foreach ($reviews as $r)
-            <div class="row">
-                <div class="col-1 text-center" style="font-size: 30px;">{{ $r->point }}</div>
-                <div class="col-11">
-                    <h5><a href="{{ url('game/review/detail') }}/{{ $r->id }}">{{ $r->title }}</a></h5>
-                    <div>{{ $r->user_name }} {{ $r->post_date }}</div>
-                </div>
-            </div>
-            <hr>
-        @endforeach
-    </section>
+    </div>
+
+
+
+    @if ($total !== null)
+    <div style="display:table-row">
+        <div style="display:table-cell">
+            <span style="font-size: 250%">{{ $total->point }}</span>
+        </div>
+
+        <div style="display:table-cell">
+            <span style="font-size: 200%">{{ $game->name }}</span>
+        </div>
+    </div>
+
+    <div style="width: 320px;">
+        <canvas id="review_chart"></canvas>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+        <script>
+            $(function (){
+                let ctx = $("#review_chart");
+
+                let data = {
+                    labels: ["怖さ", "シナリオ", "ボリューム", "グラフィック", "サウンド", "操作性", "難易度", "やりこみ", "オススメ"],
+                    datasets: [{
+                        fill: false,
+                        label: "",
+                        backgroundColor: "white",
+                        borderColor: "red",
+                        pointBackgroundColor: "red",
+                        data: [
+                            {{ $total->fear }},
+                            {{ $total->story }},
+                            {{ $total->volume }},
+                            {{ $total->graphic }},
+                            {{ $total->sound }},
+                            {{ $total->controllability }},
+                            {{ $total->difficulty }},
+                            {{ $total->crowded }},
+                            {{ $total->recommend }}
+                        ]
+                    }]
+                };
+
+                let chart = new Chart(ctx, {
+                    type: 'radar',
+                    data: data,
+                    options: {
+                        legend: {
+                            display: false,
+                            position: 'top',
+                        },
+                        title: {
+                            display: false
+                        },
+                        scale: {
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    responsive: true
+                });
+            });
+        </script>
+    </div>
 
     <div>
-        <a href="{{ url('game/review/soft') }}/{{ $game->id }}">レビュー一覧へ</a>
+        レビュー数 {{ $total->review_num }}
     </div>
+
+    {{ $pager }}
+
+        @foreach ($reviews as $r)
+            @include('game.review.common.normal', ['r' => $r, 'showLastMonthGood' => false])
+            @if (!$loop->last)
+                <hr>
+            @endif
+        @endforeach
+
+    {{ $pager }}
+    @else
+
+        <p>レビューが投稿されていません。</p>
+
+
+
+    @endif
+
 @endsection
