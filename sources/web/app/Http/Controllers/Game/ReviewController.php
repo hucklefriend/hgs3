@@ -248,6 +248,7 @@ class ReviewController extends Controller
             'review'    => $review,
             'isWriter'  => $isWriter,
             'hasGood'   => $hasGood,
+            'user'      => User::find($review->user_id),
             'csrfToken' => csrf_token()
         ]);
     }

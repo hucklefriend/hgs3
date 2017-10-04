@@ -50,6 +50,10 @@ code {
     word-wrap: break-word;
 }
 
+.break_word {
+    word-wrap: break-word;
+}
+
 .review_point {
     font-size: 200%;
 }
