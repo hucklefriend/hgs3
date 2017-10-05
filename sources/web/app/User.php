@@ -51,6 +51,34 @@ class User extends Authenticatable
         return $tbl->get()->pluck('name', 'id')->toArray();
     }
 
+
+    /**
+     * ハッシュでデータを取得
+     *
+     * @param array $userIds
+     * @return array
+     */
+    public static function getHash(array $userIds)
+    {
+        if (empty($userIds)) {
+            return [];
+        }
+
+        $data = DB::table('users')
+            ->select(['id', 'name', 'icon_upload_flag'])
+            ->whereIn('id', $userIds)
+            ->get();
+
+        $hash = [];
+        foreach ($data as $user) {
+            $hash[$user->id] = $user;
+        }
+
+        unset($data);
+
+        return $hash;
+    }
+
     /**
      * ページャーからユーザー名ハッシュを取得
      *

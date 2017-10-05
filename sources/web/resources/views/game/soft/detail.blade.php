@@ -283,13 +283,10 @@
                         @foreach ($favorite as $fu)
                             <div class="row">
                                 <div class="col-1">
-                                    @if ($fu->icon_upload_flag == 1)
-                                    @else
-                                        <i class="fa fa-user-circle user_icon" aria-hidden="true"></i>
-                                    @endif
+                                    @include('user.common.icon', ['u' => $fu])
                                 </div>
                                 <div class="col-10">
-                                    <a href="{{ url('user/profile') }}/{{ $fu->id }}">{{ $fu->name }}</a>
+                                    @include('user.common.user_name', ['id' => $fu->id, 'name' => $fu->name])
                                 </div>
                             </div>
                             <hr>
@@ -354,14 +351,4 @@
             </div>
         </div>
     </div>
-
-<style>
-    section {
-        margin-top: 30px;
-    }
-</style>
-
-
-
-
 @endsection

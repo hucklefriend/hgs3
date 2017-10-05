@@ -2,21 +2,19 @@
 
 @section('content')
 
-    <div>
-        <a href="{{ url('game/soft/detail') }}/{{ $game->id }}">詳細に戻る</a>
-    </div>
+    <h4><a href="{{ url('game/soft/detail') }}/{{ $game->id }}">{{ $game->name }}</a>をお気に入りに登録しているユーザー</h4>
 
-    <div>
-        @foreach ($pager as $item)
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-10">
-                    <a href="{{ url('user/profile') }}/{{ $item->user_id }}">{{ $users[$item->user_id] }}</a>
-                </div>
+    @foreach ($pager as $item)
+        <div class="row">
+            <div class="col-1">
+                @include('user.common.icon', ['u' => $item])
             </div>
-            <hr>
-        @endforeach
-    </div>
+            <div class="col-10">
+                @include('user.common.user_name', ['id' => $item->id, 'name' => get_hash(, $item->name)])
+            </div>
+        </div>
+        <hr>
+    @endforeach
 
     {{ $pager->links() }}
 

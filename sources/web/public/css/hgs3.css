@@ -127,3 +127,7 @@ code {
 .sns_link_github {
     background-color: #4183c4;
 }
+
+.no_border td {
+    border:none;
+}
