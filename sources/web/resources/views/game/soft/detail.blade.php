@@ -68,12 +68,14 @@
                         @php $pkg = $packages[$i]; @endphp
                         <div class="row">
                             <div class="col-4">
-                                <img src="{{ $pkg->medium_image_url }}" class="img-responsive" style="max-width: 100%;">
+                                @include('game.common.package_image', ['imageUrl' => $pkg->medium_image_url])
                             </div>
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
-                                <div><a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a></div>
-                                <div>{{ $pkg->platform_name }}</div>
+                                <div>
+                                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
+                                    <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
+                                </div>
                                 <div>{{ $pkg->release_date }}</div>
                                 <div>
                                     <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
@@ -97,14 +99,17 @@
                         </div>
                         @if (isset($packages[$i + 1]))
                         @php $pkg = $packages[$i + 1]; @endphp
+                        <br>
                         <div class="row">
                             <div class="col-4">
-                                <img src="{{ $pkg->medium_image_url }}" class="img-responsive" style="max-width: 100%;">
+                                @include('game.common.package_image', ['imageUrl' => $pkg->medium_image_url])
                             </div>
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
-                                <div><a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a></div>
-                                <div>{{ $pkg->platform_name }}</div>
+                                <div>
+                                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
+                                    <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
+                                </div>
                                 <div>{{ $pkg->release_date }}</div>
                                 <div>
                                     <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
@@ -133,12 +138,12 @@
                         @if ($package_num > 2)
                     <div class="row">
                         <div class="col-2">
-                            <button class="btn btn-warning btn-default" id="package_slider_prev">&lt;</button>
+                            <button class="btn btn-warning btn-sm" id="package_slider_prev">&lt;</button>
                         </div>
                         <div class="col-8 text-center" id="package_pager">
                         </div>
                         <div class="col-2 text-right">
-                            <button class="btn btn-warning btn-default" id="package_slider_next">&gt;</button>
+                            <button class="btn btn-warning btn-sm" id="package_slider_next">&gt;</button>
                         </div>
                     </div>
                         @endif
