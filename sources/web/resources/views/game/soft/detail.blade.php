@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @if ($package_num > 2)
 
                     <script type="text/javascript" src="{{ url2('js/slick.min.js') }}"></script>
@@ -157,7 +157,7 @@
                     <a name="review">レビュー</a>
                     {{ $review->review_num }}件
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @if ($review != null)
                         <div class="row" style="margin-bottom: 20px;">
                             <div class="col-3 text-center">
@@ -254,7 +254,7 @@
                 <div class="card-header">
                     サイト <small>{{ $base['site_num'] }}件</small>
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <div class="card-text">
                         @if (empty($site))
                             <p>{{ $game->name }}を扱っているサイトは登録されていません。</p>
@@ -278,7 +278,7 @@
                 <div class="card-header">
                     お気に入り登録ユーザー <small>{{ $base['favorite_num'] }}人</small>
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @if (!empty($favorite))
                         @foreach ($favorite as $fu)
                             <div class="row">
@@ -345,7 +345,7 @@
                         @endforeach
                     </ul>
                 @else
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="card-text">
                             <p>シリーズの別タイトルはありません。</p>
                         </div>

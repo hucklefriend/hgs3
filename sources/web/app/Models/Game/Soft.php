@@ -126,7 +126,7 @@ class Soft
     private function getDetailPackages($gameId)
     {
         $sql =<<< SQL
-SELECT pkg.*, plt.id plt_id, plt.name AS platform_name, com.name AS company_name
+SELECT pkg.*, plt.id plt_id, plt.acronym AS platform_name, com.name AS company_name
 FROM (
   SELECT * FROM game_packages WHERE game_id = ?
 ) pkg

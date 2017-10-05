@@ -1,102 +1,84 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs  text-center" id="game_tab">
+                <li class="nav-item">
+                    <a class="nav-link active game_tab" href="#" data-target="agyo">あ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="kagyo">か</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="sagyo">さ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="tagyo">た</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="nagyo">な</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="hagyo">は</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="magyo">ま</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="yagyo">や</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="ragyo">ら</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link game_tab" href="#" data-target="wagyo">わ</a>
+                </li>
+            </ul>
 
-    <nav class="nav nav-pills flex-column flex-sm-row" id="game_tab">
-        <a class="flex-sm-fill text-sm-center nav-link active game_tab" href="#" data-target="agyo">あ行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="kagyo">か行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="sagyo">さ行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="tagyo">た行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="nagyo">な行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="hagyo">は行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="magyo">ま行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="yagyo">や行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="ragyo">ら行</a>
-        <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="wagyo">わ行</a>
-    </nav>
+            <nav class="nav nav-pills flex-column flex-sm-row" id="game_tab_a" style="display:none">
+                <a class="flex-sm-fill text-sm-center nav-link active game_tab" href="#" data-target="agyo">あ</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="kagyo">か</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="sagyo">さ</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="tagyo">た</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="nagyo">な</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="hagyo">は</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="magyo">ま</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="yagyo">や</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="ragyo">ら</a>
+                <a class="flex-sm-fill text-sm-center nav-link game_tab" href="#" data-target="wagyo">わ</a>
+            </nav>
+        </div>
+        <div class="card-body">
+            @php
+            $phonetics = [
+                ['a', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ')],
+                ['ka', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('か')],
+                ['sa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('さ')],
+                ['ta', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('た')],
+                ['na', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('な')],
+                ['ha', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('は')],
+                ['ma', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ま')],
+                ['ya', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('や')],
+                ['ra', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ら')],
+                ['wa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('わ')],
+            ];
+            @endphp
 
-    <ul class="list-group" id="agyo">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
+            @foreach ($phonetics as $p)
+                <section id="{{ $p[0] }}gyo">
+                    @if (isset($list[$p[1]]))
+                        @foreach ($list[$p[1]] as $soft)
+                            <a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a>
+                            @if (!$loop->last)
+                                <hr>
+                            @endif
+                        @endforeach
+                    @endif
+                </section>
             @endforeach
-        @endif
-    </ul>
-
-    <ul class="list-group" id="kagyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('か'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-    <ul class="list-group" id="sagyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('さ'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-    <ul class="list-group" id="tagyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('た'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-    <ul class="list-group" id="nagyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('な'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-    <ul class="list-group" id="hagyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('は'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-    <ul class="list-group" id="magyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ま'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-    <ul class="list-group" id="yagyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('や'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-    <ul class="list-group" id="ragyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ら'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-    <ul class="list-group" id="wagyo" style="display:none;">
-        @php $phoneticId = \Hgs3\Constants\PhoneticType::getTypeByPhonetic('わ'); @endphp
-        @if (isset($list[$phoneticId]))
-            @foreach ($list[$phoneticId] as $soft)
-                <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a></li>
-            @endforeach
-        @endif
-    </ul>
-
+        </div>
+    </div>
     <script>
         $(function (){
             $('.game_tab').click(function (){
@@ -108,6 +90,4 @@
             });
         });
     </script>
-
-
 @endsection

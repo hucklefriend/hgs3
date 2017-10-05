@@ -49,7 +49,7 @@
                 <div class="card-header">
                     お気に入りゲーム
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @foreach ($favoriteGames as $fg)
                         <div><a href="{{ url2('game/soft') }}/{{ $fg->game_id }}">{{ $games[$fg->game_id] }}</a></div>
                     @endforeach
@@ -62,7 +62,7 @@
                 <div class="card-header">
                     遊んだゲーム
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @foreach ($playedGames as $pg)
                         <div><a href="{{ url2('game/soft') }}/{{ $pg->game_id }}">{{ $games[$pg->game_id] }}</a></div>
                     @endforeach
@@ -78,7 +78,7 @@
                 <div class="card-header">
                     サイト
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @foreach ($sites as $site)
                         <div>{{ $site->name }}</div>
                         <div><a href="{{ $site->url }}">{{ $site->url }}</a></div>
@@ -92,7 +92,7 @@
                 <div class="card-header">
                     お気に入りサイト
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @foreach ($favoriteSites['order'] as $siteId)
                         <div><a href="{{ url2('site/detail') }}/{{ $siteId }}">{{ $favoriteSites['sites'][$siteId]->name }}</a></div>
                         <div><a href="{{ $favoriteSites['sites'][$siteId]->url }}">{{ $favoriteSites['sites'][$siteId]->url }}</a></div>
@@ -109,7 +109,7 @@
                 <div class="card-header">
                     レビュー
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @foreach ($reviews as $r)
                         <p style="word-wrap: break-word;"><a href="{{ url2('/game/review/detail') }}/{{ $r->id }}">{{ $r->title }}</a></p>
                         <hr>
@@ -122,7 +122,7 @@
                 <div class="card-header">
                     いいねしたレビュー
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @foreach ($goodReviews['order'] as $gr)
                         <p style="word-wrap: break-word;">
                             <a href="{{ url2('/game/review/detail') }}/{{ $gr->review_id }}">{{ $goodReviews['reviews'][$gr->review_id]->title }}</a>
@@ -140,7 +140,7 @@
                 <div class="card-header">
                     攻略日記
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <p class="card-text">工事中</p>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                 <div class="card-header">
                     参加コミュニティ
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @foreach ($communities as $c)
                         <div><a href="{{ url2('community/g') }}/{{ $c }}">{{ $games[$c] ?? '---' }}</a></div>
                     @endforeach

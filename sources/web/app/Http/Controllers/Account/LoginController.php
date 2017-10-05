@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'home');
+    }
+
     public function login()
     {
         return view('auth.login');

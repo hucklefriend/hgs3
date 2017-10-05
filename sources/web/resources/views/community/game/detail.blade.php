@@ -29,7 +29,7 @@
                 <div class="card-header">
                     参加メンバー({{ $memberNum }}人)
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <ul class="list-group">
                         @foreach ($members as $u)
                             <li class="list-group-item">{{ un($users, $u->user_id) }}</li>
@@ -44,7 +44,7 @@
                 <div class="card-header">
                     直近の書き込み
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <table class="table table-responsive">
                         <tbody>
                             @foreach ($topics as $t)

@@ -3,24 +3,24 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="card card-hgn">
                 <div class="card-header">ようこそ</div>
-                <div class="card-block">
+                <div class="card-body">
                     <p class="card-text">
                         人というものは、はじめから悪の道を知っているわけではない。何かの拍子で、小さな悪事を起こしてしまい、それを世間の目にふれさせぬため、また、つぎの悪事をする。そして、これを隠そうとして、さらに大きな悪の道へ踏み込んで行くものなのだ
                     </p>
                     <div class="text-center" style="font-size: 150%;">
-                        <a href="{{ url2('') }}">新規登録</a>
+                        <a href="{{ url2('account/signup') }}">新規登録</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="card card-hgn">
                 <div class="card-header">ログイン</div>
-                <div class="card-block">
+                <div class="card-body">
                     <a href="{{ url2('social/twitter') }}/{{ \Hgs3\Constants\Social\Mode::LOGIN }}" style="color: #55acee;margin-right: 5px;text-decoration: none;">
                         <i class="fa fa-twitter" aria-hidden="true" style="font-size: 150%;"></i>
                     </a>
@@ -46,7 +46,7 @@
 
     <div class="card card-hgn">
         <div class="card-header">新着情報</div>
-        <div class="card-block">
+        <div class="card-body">
             <p class="card-text">
                 {{ $newInfo->render() }}
 

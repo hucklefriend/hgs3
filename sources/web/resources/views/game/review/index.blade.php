@@ -7,7 +7,7 @@
                 <div class="card-header">
                     新着(5件)
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                 @if (empty($newArrival))
                     <div class="card-text">
                         <p>新着レビューはありません。</p>
@@ -26,13 +26,13 @@
         <div class="col-lg-6">
             <div class="card card-hgn">
                 <div class="card-header">評価の高いゲーム</div>
-                <div class="card-block">
+                <div class="card-body">
                     @if (empty($highScore))
                         <p>評価の高いゲーム。</p>
                     @else
                         <div>
                             @foreach ($highScore as $r)
-                                @include('game.review.common.game.php', ['r' => $r])
+                                @include('game.review.common.game', ['r' => $r])
                                 @if (!$loop->last)
                                     <hr>
                                 @endif
@@ -49,7 +49,7 @@
                 <div class="card-header">
                     直近1ヶ月のいいねの多いレビュー
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     @if (empty($manyGood))
                         <div class="card-text">
                             <p>直近1ヶ月のいいねの多いレビューはありません。</p>

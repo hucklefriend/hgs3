@@ -55,4 +55,14 @@ class TopController extends Controller
     {
         return view('admin.top');
     }
+
+    /**
+     * サイトマップ
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function sitemap()
+    {
+        return view('sitemap');
+    }
 }

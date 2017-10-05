@@ -27,6 +27,7 @@ body {
 
 body > .container, body > .container-fluid {
     padding: 80px 15px 0;
+    min-width: 320px;
 }
 
 .footer > .container, body > .container-fluid {
@@ -65,22 +66,64 @@ code {
 
 .no_image_text_outer {
     width: 100%;
-    height: 100%;
-    min-width: 100px;
+    height: 80%;
+    min-width: 70px;
+    max-width: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .no_image_text_inner {
-
-    width: 100px;
+    width: 100%;
     height: 100%;
-    min-width: 100px;
-    font-size: 150%;
+    font-size: 120%;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10%;
     border: solid 1px #636b6f;
+}
+
+.block_link {
+    display:block;
+    width: 100%;
+    height: 100%;
+}
+
+.sns_link_outline {
+    padding: 5px 10px;
+}
+
+.sns_link {
+    /*border: 2px solid black;*/
+    border-radius: 5px;
+    padding: 10px 5px;
+    color: white;
+}
+
+.sns_link:hover, .sns_link:active, .sns_link:focus {
+    color: white;
+}
+
+.sns_link_twitter {
+    background-color: #00aced;
+}
+.sns_link_facebook {
+    background-color: #305097;
+}
+.sns_link_google {
+    background-color: #db4a39;
+}
+.sns_link_instagram {
+    background-color: #3f729b;
+}
+.sns_link_mixi {
+    background-color: #d1ad59;
+}
+.sns_link_line {
+    background-color: #00c300;
+}
+.sns_link_github {
+    background-color: #4183c4;
 }

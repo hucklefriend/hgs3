@@ -1,6 +1,6 @@
 <div class="row" style="margin-bottom: 15px;">
-    <div class="col-2 text-center">
-        <img src="{{ $r->small_image_url }}" class="thumbnail">
+    <div class="col-2">
+        @include ('game.common.package_image', ['imageUrl' => $r->small_image_url])
     </div>
     <div class="col-10">
         <div>

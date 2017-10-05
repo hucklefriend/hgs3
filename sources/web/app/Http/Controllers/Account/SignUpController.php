@@ -14,6 +14,14 @@ use Hgs3\Models\Orm\UserProvisionalRegistration;
 class SignUpController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'home');
+    }
+
+    /**
      * サインアップ
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

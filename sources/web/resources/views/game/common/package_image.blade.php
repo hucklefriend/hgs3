@@ -4,6 +4,6 @@
     </div>
 @else
     <div class="text-center">
-        <img src="{{ $pkg->medium_image_url }}" class="img-responsive" style="max-width: 100%;">
+        <img src="{{ $imageUrl }}" class="img-responsive" style="max-width: 100%;">
     </div>
 @endif

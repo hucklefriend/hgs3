@@ -34,6 +34,9 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     // パッケージ登録
     Route::get('/game/soft/package/add/{game}', 'Game\PackageController@add');
     Route::post('/game/soft/package/add/{game}', 'Game\PackageController@store');
+
+
+    Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
 });
 
 Route::get('/', 'TopController@index');
@@ -165,3 +168,6 @@ Route::get('/social/github/callback', 'Social\GitHubController@callback');
 Route::get('/social/github/{mode}', 'Social\GitHubController@redirect');
 Route::get('/social/google/callback', 'Social\GoogleController@callback');
 Route::get('/social/google/{mode}', 'Social\GoogleController@redirect');
+
+// サイトマップ
+Route::get('/sitemap', 'TopController@sitemap');

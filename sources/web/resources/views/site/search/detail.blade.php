@@ -9,7 +9,7 @@
     <hr>
 
     <div class="card">
-        <div class="card-block">
+        <div class="card-body">
             <h4>{{ $site->name }}</h4>
             <div class="row">
                 <div class="col-2">URL</div>
@@ -73,7 +73,7 @@
     <div class="row">
         <div class="col-6">
             <div class="card">
-                <div class="card-block">
+                <div class="card-body">
                     <h5>お気に入り登録者</h5>
                     @foreach ($favoriteUsers as $fu)
                         <hr>
@@ -84,7 +84,7 @@
         </div>
         <div class="col-6">
             <div class="card">
-                <div class="card-block">
+                <div class="card-body">
                     <h5>足跡</h5>
                     @foreach ($footprint as $fp)
                         <div class="row">

@@ -20,15 +20,26 @@ class CompanyController extends Controller
         \Illuminate\Support\Facades\View::share('navActive', 'game');
     }
 
+    /**
+     * 会社一覧
+     *
+     * @return $this
+     */
     public function index()
     {
         $company = new Company;
 
-        return view('game.company.list')->with([
+        return view('game.company.list', [
             'companies' => $company->getList()
         ]);
     }
 
+    /**
+     * 会社詳細
+     *
+     * @param GameCompany $gameCompany
+     * @return $this
+     */
     public function show(GameCompany $gameCompany)
     {
         $company = new Company;
