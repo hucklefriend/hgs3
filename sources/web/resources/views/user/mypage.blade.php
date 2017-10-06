@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mypage_menu" aria-controls="mypage_menu" aria-expanded="false" aria-label="">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">マイページメニュー</a>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="mypage_menu">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url2('user/profile') }}">プロフィール確認</a>
+                    <a class="nav-link" href="{{ url2('user/profile') }}">プロフィール</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー</a>
@@ -32,15 +32,13 @@
 
     <section>
         <h5>タイムライン</h5>
-        {{ $pager->render() }}
 
         @foreach ($timelines as $tl)
-
-            <div>{{ date('Y-m-d H:i:s', $tl['time']) }} type: {{ $tl['type'] }}</div>
+            <div>{{ date('Y-m-d H:i:s', $tl['time']) }}</div>
             <p>{!!  $tl['text'] !!}</p>
             <hr>
-
         @endforeach
+        {{ $pager->render() }}
     </section>
 
 @endsection

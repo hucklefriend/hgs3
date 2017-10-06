@@ -27,25 +27,49 @@ class ProfileController extends Controller
     /**
      * プロフィール
      *
+     * @param User $user
+     * @param int $show
      * @return $this
      */
-    public function index(User $user)
+    public function index(User $user, $show = 'timeline')
     {
         $profile = new Profile();
-        $data = $profile->get($user->id);
+
+        // データ数を取得
+        $data = $profile->getDataNum($user->id);
+
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
 
-        // フォロー関連
-        $follow = new Follow;
-        $data['followNum'] = $follow->getFollowNum($user->id);
-        $data['followerNum'] = $follow->getFollowerNum($user->id);
+        switch ($show) {
+            case 'follow':
+                break;
+            case 'follower':
+                break;
+            case 'favorite_game':
+                break;
+            case 'site':
+                break;
+            case 'favorite_site':
+                break;
+            case 'diary':
+                break;
+            case 'community':
+                break;
+            case 'timeline':
+            default:
+                $show = 'timeline';
+                break;
+        }
+
+        $data['show'] = $show;
 
         if (!$data['isMyself']) {
+            $follow = new Follow();
             $data['isFollow'] = $follow->isFollow(Auth::id(), $user->id);
         }
 
-        return view('user.profile.index')->with($data);
+        return view('user.profile.index', $data);
     }
 
     /**

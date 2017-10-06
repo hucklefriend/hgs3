@@ -1,164 +1,74 @@
 @extends('layouts.app')
 
 @section('content')
+    <h4>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのプロフィール</h4>
 
-    <style>
-        .card {
-            margin-bottom: 10px;
-        }
-    </style>
-
-
-    <section>
-        <h5>{{ $user->name }}さんのプロフィール</h5>
-    </section>
-
-    @if ($isMyself)
-    <p><a href="{{ url2('user/profile/edit') }}">プロフィール編集</a></p>
-    @else
     <div>
-        <div>
-            <a href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー数: {{ $followNum }}</a>
-        </div>
-        <div>
-            <a href="{{ url2('user/follower') }}/{{ $user->id }}">フォロワー数: {{ $followerNum }}</a>
-        </div>
-
-
-        @if ($isFollow)
-            フォロー中
-            <form action="{{ url2('user/follow') }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-                <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
-                <button class="btn btn-danger">解除</button>
-            </form>
-        @else
-            <form action="{{ url2('user/follow') }}" method="POST">
-                {{ csrf_field() }}
-                <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
-                <button class="btn btn-danger">フォローする</button>
-            </form>
+        @if (!$isMyself)
+            @if ($isFollow)
+                <form action="{{ url2('user/follow') }}" method="POST">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
+                    <span class="badge badge-success">フォロー中</span>
+                    <button class="btn btn-danger btn-sm">解除</button>
+                </form>
+            @else
+                <form action="{{ url2('user/follow') }}" method="POST">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
+                    <button class="btn btn-primary btn-sm">フォローする</button>
+                </form>
+            @endif
         @endif
     </div>
-    @endif
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    お気に入りゲーム
+    <div>
+        <p>金と申すものは、おもしろいものよ。つぎからつぎへ、さまざまな人びとの手にわたりながら、善悪二様のはたらきをする</p>
+
+        @if ($isMyself)
+            <a href="{{ url2('user/profile/edit') }}">プロフィール編集</a>
+        @endif
+    </div>
+
+    <hr>
+
+    <div class="d-none d-sm-block">
+        <div class="d-flex flex-row">
+            <div class="p-2">
+                <div class="nav flex-column nav-pills">
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/timeline" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/follow" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/follower" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/favorite_game" class="nav-link @if($show == 'favorite_game') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteGameNum }}個</a>
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/site" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/favorite_site" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/diary" class="nav-link @if($show == 'diary') active @endif" aria-expanded="true">日記 {{ $diaryNum }}件</a>
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/community" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
                 </div>
-                <div class="card-body">
-                    @foreach ($favoriteGames as $fg)
-                        <div><a href="{{ url2('game/soft') }}/{{ $fg->game_id }}">{{ $games[$fg->game_id] }}</a></div>
-                    @endforeach
-                    → <a href="{{ url2('/user/favorite_game') }}/{{ $user->id }}">もっと見る</a>
-                </div>
+
+
+                <ul class="nav flex-column">
+                </ul>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    遊んだゲーム
-                </div>
-                <div class="card-body">
-                    @foreach ($playedGames as $pg)
-                        <div><a href="{{ url2('game/soft') }}/{{ $pg->game_id }}">{{ $games[$pg->game_id] }}</a></div>
-                    @endforeach
-                    → <a href="{{ url2('/user/played_game') }}/{{ $user->id }}">もっと見る</a>
-                </div>
+            <div class="p-2">
+                {{ $show }}
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    サイト
-                </div>
-                <div class="card-body">
-                    @foreach ($sites as $site)
-                        <div>{{ $site->name }}</div>
-                        <div><a href="{{ $site->url }}">{{ $site->url }}</a></div>
-                        <hr>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    お気に入りサイト
-                </div>
-                <div class="card-body">
-                    @foreach ($favoriteSites['order'] as $siteId)
-                        <div><a href="{{ url2('site/detail') }}/{{ $siteId }}">{{ $favoriteSites['sites'][$siteId]->name }}</a></div>
-                        <div><a href="{{ $favoriteSites['sites'][$siteId]->url }}">{{ $favoriteSites['sites'][$siteId]->url }}</a></div>
-                        <hr>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+    <div class="d-sm-none">
+        <ul class="list-group">
+            @if ($isMyself)
+                <li class="list-group-item"><a href="{{ url2('user/profile') }}/{{ $user->id }}/edit" class="nav-link active">プロフィール編集</a></li>
+            @endif
+            <li class="list-group-item"><a href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー {{ $followNum }}人</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/follower') }}/{{ $user->id }}">フォロワー {{ $followerNum }}人</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/favorite_game') }}/{{ $user->id }}">お気に入りゲーム {{ $favoriteGameNum }}個</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/site') }}/{{ $user->id }}">サイト {{ $siteNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/follower') }}/{{ $user->id }}">お気に入りサイト {{ $favoriteSiteNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/follower') }}/{{ $user->id }}">日記 {{ $diaryNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/communities') }}/{{ $user->id }}">コミュニティ {{ $communityNum }}個</a></li>
+        </ul>
     </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    レビュー
-                </div>
-                <div class="card-body">
-                    @foreach ($reviews as $r)
-                        <p style="word-wrap: break-word;"><a href="{{ url2('/game/review/detail') }}/{{ $r->id }}">{{ $r->title }}</a></p>
-                        <hr>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    いいねしたレビュー
-                </div>
-                <div class="card-body">
-                    @foreach ($goodReviews['order'] as $gr)
-                        <p style="word-wrap: break-word;">
-                            <a href="{{ url2('/game/review/detail') }}/{{ $gr->review_id }}">{{ $goodReviews['reviews'][$gr->review_id]->title }}</a>
-                        </p>
-                        <hr>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    攻略日記
-                </div>
-                <div class="card-body">
-                    <p class="card-text">工事中</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    参加コミュニティ
-                </div>
-                <div class="card-body">
-                    @foreach ($communities as $c)
-                        <div><a href="{{ url2('community/g') }}/{{ $c }}">{{ $games[$c] ?? '---' }}</a></div>
-                    @endforeach
-
-                    <div><a href="{{ url2('user/communities') }}/{{ $user->id }}">⇒もっと見る</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @endsection

@@ -7,15 +7,41 @@
 namespace Hgs3\Models\User;
 use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameCommunityMember;
 use Hgs3\Models\Orm\Review;
 use Hgs3\Models\Orm\ReviewGoodHistory;
 use Hgs3\Models\Orm\Site;
+use Hgs3\Models\Orm\UserCommunityMember;
 use Hgs3\Models\Orm\UserFavoriteGame;
+use Hgs3\Models\Orm\UserFavoriteSite;
 use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 
 class Profile
 {
+    /**
+     * プロフィールトップで表示する各データ数を取得
+     *
+     * @param $userId
+     * @return array
+     */
+    public function getDataNum($userId)
+    {
+        $follow = new Follow();
+
+        return [
+            'followNum'       => $follow->getFollowNum($userId),
+            'followerNum'     => $follow->getFollowerNum($userId),
+            'siteNum'         => Site::getNumByUser($userId),
+            'favoriteGameNum' => UserFavoriteGame::getNumByUser($userId),
+            'favoriteSiteNum' => UserFavoriteSite::getNumByUser($userId),
+            'diaryNum'        => 0,     // TODO 日記実装時に実装
+            'communityNum'    => UserCommunityMember::getNumByUser($userId) + GameCommunityMember::getNumByUser($userId)
+        ];
+    }
+
+
+
     /**
      * データ取得
      *

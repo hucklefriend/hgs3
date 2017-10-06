@@ -89,7 +89,7 @@ Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
 Route::get('/mypage', 'User\MyPageController@index')->middleware('auth');
 Route::get('/user/profile/edit', 'User\ProfileController@edit')->middleware('auth');
 Route::post('/user/profile/edit', 'User\ProfileController@update')->middleware('auth');
-Route::get('/user/profile/{user}', 'User\ProfileController@index')->middleware('auth');
+Route::get('/user/profile/{user}/{type}', 'User\ProfileController@index')->middleware('auth');
 Route::get('/user/profile', 'User\ProfileController@myself')->middleware('auth');
 Route::get('/user/communities/{user}', 'User\ProfileController@community')->middleware('auth');
 Route::get('/mypage/favorite_game', 'User\FavoriteGameController@myself')->middleware('auth');
