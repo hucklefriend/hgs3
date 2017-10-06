@@ -28,7 +28,7 @@
                         <i class="fa fa-facebook-official" aria-hidden="true" style="font-size: 150%;"></i>
                     </a>
                     <hr>
-                    <form method="POST">
+                    <form method="POST" action="{{ url2('auth/login') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group form-group-sm">

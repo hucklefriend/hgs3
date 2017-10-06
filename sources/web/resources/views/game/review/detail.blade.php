@@ -164,7 +164,7 @@
             @endif
         </div>
     </section>
-
+    @auth
     <hr>
 
     <section>
@@ -173,4 +173,5 @@
         @endif
         <a href="{{ url('game/injustice_review/') }}/{{ $review->id }}">このレビューへの不正報告一覧</a>
     </section>
+    @endauth
 @endsection

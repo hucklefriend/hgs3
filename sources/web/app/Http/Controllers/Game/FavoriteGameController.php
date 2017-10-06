@@ -30,12 +30,12 @@ class FavoriteGameController extends Controller
     public function index(Game $game)
     {
         $pager = UserFavoriteGame::where('game_id', $game->id)
-            ->paginate(30);
+            ->paginate(20);
 
         return view('game.favorite.index')->with([
             'game'  => $game,
             'pager' => $pager,
-            'users' => User::getNameHash(array_pluck($pager->items(), 'user_id'))
+            'users' => User::getHash(array_pluck($pager->items(), 'user_id'))
         ]);
     }
 }

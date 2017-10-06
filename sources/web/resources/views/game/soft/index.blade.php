@@ -66,7 +66,7 @@
             @endphp
 
             @foreach ($phonetics as $p)
-                <section id="{{ $p[0] }}gyo">
+                <section id="{{ $p[0] }}gyo"@if (!$loop->first) style="display:none;"@endif>
                     @if (isset($list[$p[1]]))
                         @foreach ($list[$p[1]] as $soft)
                             <a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a>

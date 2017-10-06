@@ -7,10 +7,10 @@
     @foreach ($pager as $item)
         <div class="row">
             <div class="col-1">
-                @include('user.common.icon', ['u' => $item])
+                @include('user.common.icon', ['u' => $users[$item->user_id]])
             </div>
             <div class="col-10">
-                @include('user.common.user_name', ['id' => $item->id, 'name' => get_hash(, $item->name)])
+                @include('user.common.user_name', ['id' => $item->id, 'name' => $users[$item->user_id]->name])
             </div>
         </div>
         <hr>
