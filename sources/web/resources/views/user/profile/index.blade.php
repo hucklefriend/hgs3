@@ -46,12 +46,8 @@
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/diary" class="nav-link @if($show == 'diary') active @endif" aria-expanded="true">日記 {{ $diaryNum }}件</a>
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/community" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
                 </div>
-
-
-                <ul class="nav flex-column">
-                </ul>
             </div>
-            <div class="p-2">
+            <div class="p-10">
                 {{ $show }}
             </div>
         </div>
@@ -59,9 +55,6 @@
 
     <div class="d-sm-none">
         <ul class="list-group">
-            @if ($isMyself)
-                <li class="list-group-item"><a href="{{ url2('user/profile') }}/{{ $user->id }}/edit" class="nav-link active">プロフィール編集</a></li>
-            @endif
             <li class="list-group-item"><a href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー {{ $followNum }}人</a></li>
             <li class="list-group-item"><a href="{{ url2('user/follower') }}/{{ $user->id }}">フォロワー {{ $followerNum }}人</a></li>
             <li class="list-group-item"><a href="{{ url2('user/favorite_game') }}/{{ $user->id }}">お気に入りゲーム {{ $favoriteGameNum }}個</a></li>
