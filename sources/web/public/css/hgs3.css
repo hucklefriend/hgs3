@@ -79,8 +79,9 @@ code {
 .no_image_text_outer {
     width: 100%;
     height: 80%;
-    min-width: 70px;
+    min-width: 50px;
     max-width: 120px;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,12 +90,14 @@ code {
 .no_image_text_inner {
     width: 100%;
     height: 100%;
-    font-size: 120%;
+    font-size: 3vw;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10%;
     border: solid 1px #636b6f;
+    min-height: 50px;
+    max-height: 100px;
 }
 
 .block_link {

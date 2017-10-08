@@ -18,7 +18,9 @@
 
         <div class="d-flex align-items-stretch">
             <div class="p-2 align-self-center">
-                <span style="font-size: 300%;">{{ $review->point }}</span>
+                <div class="review_point_outline">
+                    <p class="review_point">{{ $review->point }}</p>
+                </div>
             </div>
             <div class="p-12 align-self-center">
                 <div class="break_word" style="width: 100%;"><h5>{{ $review->title }}</h5></div>

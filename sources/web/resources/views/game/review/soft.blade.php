@@ -1,29 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4></h4>
-
-    <nav style="margin-top: 10px; margin-bottom: 10px;">
-        <a href="{{ url('game/soft') }}/{{ $game->id }}">詳細へ</a>|
-        <a href="{{ url('game/review/input') }}/{{ $game->id }}">投稿する</a>
-    </nav>
-
-    <div>
-
-    </div>
-
-
-
     @if ($total !== null)
-    <div style="display:table-row">
-        <div style="display:table-cell">
-            <span style="font-size: 250%">{{ $total->point }}</span>
-        </div>
 
-        <div style="display:table-cell">
-            <span style="font-size: 200%">{{ $game->name }}</span>
+        <div class="d-flex align-items-stretch">
+            <div class="p-2 align-self-center" style="min-width: 3em;">
+                <div class="review_point_outline">
+                    <p class="review_point">{{ $total->point }}</p>
+                </div>
+            </div>
+            <div class="p-10 align-self-center">
+                <div class="break_word" style="width: 100%;"><h5>{{ $game->name }}</h5></div>
+                <a href="{{ url('game/soft') }}/{{ $game->id }}">ゲームの詳細</a> |
+                <a href="{{ url('game/review/input') }}/{{ $game->id }}">レビューを投稿する</a>
+            </div>
         </div>
-    </div>
 
     <div style="width: 320px;">
         <canvas id="review_chart"></canvas>
