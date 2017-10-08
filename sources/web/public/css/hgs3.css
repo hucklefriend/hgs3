@@ -57,7 +57,19 @@ code {
 }
 
 .review_point {
-    font-size: 200%;
+    font-size: 7vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 !important;
+}
+.review_point_outline {
+    width: 100%;
+    border: 1px solid #00aced;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .user_icon {

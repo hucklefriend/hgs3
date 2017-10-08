@@ -161,8 +161,9 @@
                     @if ($review != null)
                         <div class="row" style="margin-bottom: 20px;">
                             <div class="col-3 text-center">
-                                <small class="text-muted">ポイント</small>
-                                <p style="font-size: 250%;">{{ $review->point }}</p>
+                                <div class="review_point_outline">
+                                    <p class="review_point">{{ $review->point }}</p>
+                                </div>
                             </div>
                             <div class="col-9">
                                 <canvas id="review_chart"></canvas>
