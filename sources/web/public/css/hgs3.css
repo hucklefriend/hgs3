@@ -27,7 +27,7 @@ body {
 
 body > .container, body > .container-fluid {
     padding: 80px 15px 0;
-    min-width: 320px;
+    min-width: 300px;
 }
 
 .footer > .container, body > .container-fluid {
@@ -41,7 +41,7 @@ code {
 
 .card-hgn {
     margin-bottom: 30px;
-    min-width: 320px;
+    min-width: 280px;
 }
 
 .site_presentation {
