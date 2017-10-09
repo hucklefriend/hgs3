@@ -42,23 +42,38 @@ class ProfileController extends Controller
         $data['isMyself'] = Auth::id() == $user->id;
 
         switch ($show) {
-            case 'follow':
+            case 'follow':{
+
+                $follow = new Follow;
+                $follows = $follow->getFollow($user->id);
+                $data['parts'] = [
+                    'follows'   => $follows,
+                    'users'     => User::getHash(array_pluck($follows->items(), 'user_id')),
+                ];
+            }
                 break;
             case 'follower':
+                $data['parts'] = [];
                 break;
             case 'favorite_game':
+                $data['parts'] = [];
                 break;
             case 'site':
+                $data['parts'] = [];
                 break;
             case 'favorite_site':
+                $data['parts'] = [];
                 break;
             case 'diary':
+                $data['parts'] = [];
                 break;
             case 'community':
+                $data['parts'] = [];
                 break;
             case 'timeline':
             default:
                 $show = 'timeline';
+                $data['parts'] = [];
                 break;
         }
 

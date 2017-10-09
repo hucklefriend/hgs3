@@ -1,19 +1,14 @@
-@extends('layouts.app')
+@foreach ($follows as $f)
+    @isset($users[$f->follow_user_id])
+        @php $u = $users[$f->follow_user_id]; @endphp
+        <div>
+            @include('user.common.icon', ['u' => $u])
+            <a href="{{ url2('user/profile') }}/{{ $f->follow_user_id }}">@include('user.common.user_name', ['id' => $u->id, 'name' => $u->name])</a>
+        </div>
+        @if (!$loop->last) <hr> @endif
+    @endisset
 
-@section('content')
 
-    <div>
-        <a href="{{ url2('user/profile') }}/{{ $user->id }}">プロフィールに戻る</a>
-    </div>
+@endforeach
 
-    {{ $follows->links() }}
-
-    <ul class="list-group">
-        @foreach ($follows as $f)
-            <li class="list-group-item"><a href="{{ url2('user/profile') }}/{{ $f->follow_user_id }}">{{ un($users, $f->follow_user_id) }}</a></li>
-        @endforeach
-    </ul>
-
-    {{ $follows->links() }}
-
-@endsection
+{{ $follows->links('vendor.pagination.simple-bootstrap-4') }}

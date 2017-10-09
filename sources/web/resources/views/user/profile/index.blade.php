@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="p-10">
-                {{ $show }}
+                @include('user.profile.parts.'.$show, $parts)
             </div>
         </div>
     </div>

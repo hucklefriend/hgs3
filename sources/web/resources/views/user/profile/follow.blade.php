@@ -28,7 +28,6 @@
 
 
         @endforeach
-    </ul>
 
     {{ $follows->links() }}
 
