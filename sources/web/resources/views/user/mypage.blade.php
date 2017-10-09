@@ -2,31 +2,18 @@
 
 @section('content')
 
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mypage_menu" aria-controls="mypage_menu" aria-expanded="false" aria-label="">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="mypage_menu">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url2('user/profile') }}">プロフィール</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url2('mypage/follower') }}">フォロワー</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url2('mypage/review') }}">レビュー</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('user/site/myself') }}">サイト</a>
-                </li>
-            </ul>
+    <div class="d-flex align-items-stretch">
+        <div class="p-2 align-self-center" style="min-width: 3em;">
+            @include('user.common.icon', ['u' => $user])
         </div>
-    </nav>
+        <div class="p-10 align-self-center">
+            <h5>@include('user.common.user_name', ['id' => $user->id, 'name' => $user->name])さんのマイページ</h5>
+            <div>
+                <a href="{{ url2('user/profile') }}">プロフィール確認</a>
+            </div>
+        </div>
+    </div>
 
     <hr>
 
@@ -38,7 +25,7 @@
             <p>{!!  $tl['text'] !!}</p>
             <hr>
         @endforeach
-        {{ $pager->render() }}
+        {{ $pager->links('vendor.pagination.simple-bootstrap-4') }}
     </section>
 
 @endsection

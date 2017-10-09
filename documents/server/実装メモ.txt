@@ -1,0 +1,12 @@
+
+
+○ページャービューの生成
+php artisan vendor:publish --tag=laravel-pagination
+→resources/views/vendorにページャーのbladeができるのでいじる
+
+デフォルトをdefaultではなく、bootstrap-4にしている
+bootstrap/app.php
+Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4");
+Illuminate\Pagination\AbstractPaginator::defaultSimpleView("pagination::simple-bootstrap-4");
+
+$pager->links('vendor.pagination.simple-bootstrap-4')
