@@ -2,15 +2,31 @@
 
 @section('content')
 
-    <div>
-        <a href="{{ url2('user/profile') }}/{{ $user->id }}">プロフィールに戻る</a>
+    <div class="d-flex align-items-stretch">
+        <div class="p-2 align-self-center" style="min-width: 3em;">
+            @include('user.common.icon', ['u' => $user])
+        </div>
+        <div class="p-10 align-self-center">
+            <h5>@include('user.common.user_name', ['id' => $user->id, 'name' => $user->name])さんがフォローしているユーザー</h5>
+            <div>
+                <a href="{{ url2('user/profile') }}">プロフィール</a>
+            </div>
+        </div>
     </div>
 
-    {{ $follows->links() }}
+    <hr>
 
-    <ul class="list-group">
         @foreach ($follows as $f)
-            <li class="list-group-item"><a href="{{ url2('user/profile') }}/{{ $f->follow_user_id }}">{{ un($users, $f->follow_user_id) }}</a></li>
+            @isset($users[$f->follow_user_id])
+                @php $u = $users[$f->follow_user_id]; @endphp
+            <div>
+                @include('user.common.icon', ['u' => $u])
+                <a href="{{ url2('user/profile') }}/{{ $f->follow_user_id }}">@include('user.common.user_name', ['id' => $u->id, 'name' => $u->name])</a>
+            </div>
+                @if (!$loop->last) <hr> @endif
+            @endisset
+
+
         @endforeach
     </ul>
 

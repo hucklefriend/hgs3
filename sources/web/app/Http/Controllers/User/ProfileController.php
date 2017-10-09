@@ -132,7 +132,7 @@ class ProfileController extends Controller
             'user'     => $user,
             'isMyself' => $isMyself,
             'follows'  => $follows,
-            'users'    => User::getNameHash(array_pluck($follows->items(), 'follow_user_id'))
+            'users'    => User::getHash(array_pluck($follows->items(), 'follow_user_id'))
         ]);
     }
 

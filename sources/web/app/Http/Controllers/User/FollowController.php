@@ -18,7 +18,7 @@ class FollowController extends Controller
      */
     public function __construct()
     {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
+        \Illuminate\Support\Facades\View::share('navActive', 'home');
     }
 
     /**
