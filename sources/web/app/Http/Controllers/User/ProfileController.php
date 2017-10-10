@@ -9,6 +9,7 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\UpdateRequest;
 use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\Site;
 use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
 use Hgs3\User;
@@ -204,7 +205,28 @@ class ProfileController extends Controller
             'user'     => $user,
             'isMyself' => $isMyself,
             'favGames' => $favGames,
-            'games'    => Game::getNameHash()
+            'games'    => Game::getNameHash(array_pluck($favGames->items(), 'game_id'))
+        ]);
+    }
+
+    /**
+     * お気に入りサイト一覧
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function favoriteSite(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+
+        $fs = new \Hgs3\Models\User\FavoriteSite();
+        $favSites = $fs->get($user->id);
+
+        return view('user.profile.favorite_site')->with([
+            'user'     => $user,
+            'isMyself' => $isMyself,
+            'favSites' => $favSites,
+            'sites'    => Site::getNameHash(array_pluck($favSites->items(), 'site_id'))
         ]);
     }
 

@@ -68,4 +68,18 @@ SQL;
             ->take(5)
             ->get();
     }
+
+    /**
+     * 一覧を取得
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function get($userId)
+    {
+        return DB::table('user_favorite_sites')
+            ->where('user_id', $userId)
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
+    }
 }
