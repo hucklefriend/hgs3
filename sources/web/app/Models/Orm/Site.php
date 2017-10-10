@@ -55,8 +55,8 @@ class Site extends \Eloquent
             return [];
         }
 
-        $data = DB::table('user_favorite_sites')
-            ->whereIn('site_id', $siteIds)
+        $data = DB::table('sites')
+            ->whereIn('id', $siteIds)
             ->get();
 
         $hash = [];
@@ -82,6 +82,7 @@ class Site extends \Eloquent
         }
 
         $data = DB::table('sites')
+            ->select(['id', 'name'])
             ->whereIn('id', $siteIds)
             ->get();
 

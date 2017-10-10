@@ -132,18 +132,19 @@
     @if ($isAdmin)
     <p class="text-muted">※これより下はサイト登録をしたユーザー本人のみ確認できます。</p>
     <div class="row">
-        <div class="col-6">
+        <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
                     <h5>お気に入り登録者</h5>
                     @foreach ($favoriteUsers as $fu)
+                        @include('user.common.icon', ['u' => $fu])
+                        @include('user.common.user_name', ['id' => $fu->id, 'name' => $fu->name])
                         <hr>
-                        <a href="{{ url('user/profile') }}/{{ $fu->user_id }}">{{ $users[$fu->user_id] }}</a>
                     @endforeach
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
                     <h5>足跡</h5>

@@ -7,9 +7,11 @@
         <img src="{{ url2('img/banner/test/300x100.png') }}" style="width: 100%;max-width:300px;">
     </div>
     <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
-    <div><small>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</small></div>
+    <div class="site_presentation"><small>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</small></div>
+    @if (!$noUser)
     <div>
         <i class="fa fa-user-o" aria-hidden="true"></i>
         <a href="{{ url('user/profile') }}/{{ $s->user_id }}">{{ un($users, $s->user_id) }}</a>
     </div>
+    @endif
 </div>

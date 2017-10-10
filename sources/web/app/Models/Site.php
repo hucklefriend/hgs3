@@ -131,4 +131,17 @@ SQL;
             ->take(5)
             ->get();
     }
+
+    /**
+     * ユーザーのサイトを取得
+     *
+     * @param $userId
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function get($userId)
+    {
+        return \Hgs3\Models\Orm\Site::where('user_id', $userId)
+            ->orderBy( 'id')
+            ->get();
+    }
 }

@@ -70,11 +70,22 @@ class ProfileController extends Controller
             }
                 break;
             case 'site': {
-                $data['parts'] = [];
+                $site = new \Hgs3\Models\Site();
+                $data['parts'] = [
+                    'sites' => $site->get($user->id)
+                ];
             }
                 break;
             case 'favorite_site': {
-                $data['parts'] = [];
+                $fs = new \Hgs3\Models\User\FavoriteSite();
+                $favSites = $fs->get($user->id);
+                $sites = Site::getHash(array_pluck($favSites->items(), 'site_id'));
+
+                $data['parts'] = [
+                    'favSites' => $favSites,
+                    'sites'    => $sites,
+                    'users'    => User::getNameHash(array_pluck($sites, 'user_id'))
+                ];
             }
                 break;
             case 'diary': {
@@ -210,6 +221,25 @@ class ProfileController extends Controller
     }
 
     /**
+     * サイト一覧
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function site(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+
+        $site = new \Hgs3\Models\Site();
+
+        return view('user.profile.site')->with([
+            'user'     => $user,
+            'isMyself' => $isMyself,
+            'sites'    => $site->get($user->id)
+        ]);
+    }
+
+    /**
      * お気に入りサイト一覧
      *
      * @param User $user
@@ -221,12 +251,14 @@ class ProfileController extends Controller
 
         $fs = new \Hgs3\Models\User\FavoriteSite();
         $favSites = $fs->get($user->id);
+        $sites = Site::getHash(array_pluck($favSites->items(), 'site_id'));
 
         return view('user.profile.favorite_site')->with([
             'user'     => $user,
             'isMyself' => $isMyself,
             'favSites' => $favSites,
-            'sites'    => Site::getNameHash(array_pluck($favSites->items(), 'site_id'))
+            'sites'    => $sites,
+            'users'    => User::getNameHash(array_pluck($sites, 'user_id'))
         ]);
     }
 
