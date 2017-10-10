@@ -103,7 +103,7 @@ Route::get('/mypage/review', 'User\MyPageController@review')->middleware('auth')
 Route::get('/game/favorite/{game}', 'Game\FavoriteGameController@index');
 Route::post('/user/favorite_game', 'User\FavoriteGameController@add')->middleware('auth');
 Route::delete('/user/favorite_game', 'User\FavoriteGameController@remove')->middleware('auth');
-Route::get('/user/favorite_game/{user}', 'User\FavoriteGameController@index');
+Route::get('/user/favorite_game/{user}', 'User\ProfileController@favoriteGame');
 
 // 遊んだゲーム
 Route::get('game/played_user/{game}', 'Game\PlayedUserController@index');

@@ -46,33 +46,49 @@ class ProfileController extends Controller
                 $follow = new Follow;
                 $follows = $follow->getFollow($user->id);
                 $data['parts'] = [
-                    'follows'   => $follows,
-                    'users'     => User::getHash(array_pluck($follows->items(), 'follow_user_id')),
+                    'follows' => $follows,
+                    'users'   => User::getHash(array_pluck($follows->items(), 'follow_user_id')),
                 ];
             }
                 break;
-            case 'follower':
-                $data['parts'] = [];
+            case 'follower':{
+                $follow = new Follow;
+                $follows = $follow->getFollower($user->id);
+                $data['parts'] = [
+                    'followers' => $follows,
+                    'users'     => User::getHash(array_pluck($follows->items(), 'user_id')),
+                ];
+            }
                 break;
-            case 'favorite_game':
-                $data['parts'] = [];
+            case 'favorite_game':{
+                $fg = new \Hgs3\Models\User\FavoriteGame();
+                $data['parts'] = [
+                    'favGames' => $fg->get($user->id),
+                    'games'    => Game::getNameHash()
+                ];
+            }
                 break;
-            case 'site':
+            case 'site': {
                 $data['parts'] = [];
+            }
                 break;
-            case 'favorite_site':
+            case 'favorite_site': {
                 $data['parts'] = [];
+            }
                 break;
-            case 'diary':
+            case 'diary': {
                 $data['parts'] = [];
+            }
                 break;
-            case 'community':
+            case 'community': {
                 $data['parts'] = [];
+            }
                 break;
             case 'timeline':
-            default:
+            default: {
                 $show = 'timeline';
                 $data['parts'] = [];
+        }
                 break;
         }
 
@@ -168,6 +184,27 @@ class ProfileController extends Controller
             'isMyself'   => $isMyself,
             'followers'  => $follows,
             'users'      => User::getNameHash(array_pluck($follows->items(), 'user_id'))
+        ]);
+    }
+
+    /**
+     * お気に入りゲーム一覧
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function favoriteGame(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+
+        $fg = new \Hgs3\Models\User\FavoriteGame();
+        $favGames = $fg->get($user->id);
+
+        return view('user.profile.favorite_game')->with([
+            'user'     => $user,
+            'isMyself' => $isMyself,
+            'favGames' => $favGames,
+            'games'    => Game::getNameHash()
         ]);
     }
 

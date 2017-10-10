@@ -72,4 +72,18 @@ SQL;
             ->where('game_id', $gameId)
             ->count('user_id') > 0;
     }
+
+    /**
+     * 取得
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function get($userId)
+    {
+        return DB::table('user_favorite_games')
+            ->where('user_id', $userId)
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
+    }
 }
