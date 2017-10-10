@@ -43,12 +43,11 @@ class ProfileController extends Controller
 
         switch ($show) {
             case 'follow':{
-
                 $follow = new Follow;
                 $follows = $follow->getFollow($user->id);
                 $data['parts'] = [
                     'follows'   => $follows,
-                    'users'     => User::getHash(array_pluck($follows->items(), 'user_id')),
+                    'users'     => User::getHash(array_pluck($follows->items(), 'follow_user_id')),
                 ];
             }
                 break;

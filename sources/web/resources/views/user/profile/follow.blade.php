@@ -16,19 +16,18 @@
 
     <hr>
 
-        @foreach ($follows as $f)
-            @isset($users[$f->follow_user_id])
-                @php $u = $users[$f->follow_user_id]; @endphp
+    @foreach ($follows as $f)
+        @isset($users[$f->follow_user_id])
+            @php $u = $users[$f->follow_user_id]; @endphp
             <div>
                 @include('user.common.icon', ['u' => $u])
                 <a href="{{ url2('user/profile') }}/{{ $f->follow_user_id }}">@include('user.common.user_name', ['id' => $u->id, 'name' => $u->name])</a>
+                <button class="btn btn-danger btn-sm">フォロー解除</button>
             </div>
-                @if (!$loop->last) <hr> @endif
-            @endisset
-
-
-        @endforeach
-
-    {{ $follows->links() }}
+            @if (!$loop->last) <hr> @endif
+        @endisset
+    @endforeach
+    <br>
+    {{ $follows->links('vendor.pagination.simple-bootstrap-4') }}
 
 @endsection

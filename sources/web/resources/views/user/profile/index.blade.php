@@ -33,6 +33,7 @@
 
     <hr>
 
+    <!-- 最小表示以外はメニューと内容を表示 -->
     <div class="d-none d-sm-block">
         <div class="d-flex flex-row">
             <div class="p-2">
@@ -47,12 +48,13 @@
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/community" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
                 </div>
             </div>
-            <div class="p-10">
+            <div class="p-10" style="width: 100%;max-width:420px;">
                 @include('user.profile.parts.'.$show, $parts)
             </div>
         </div>
     </div>
 
+    <!-- 最小表示時はメニューのみ -->
     <div class="d-sm-none">
         <ul class="list-group">
             <li class="list-group-item"><a href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー {{ $followNum }}人</a></li>
