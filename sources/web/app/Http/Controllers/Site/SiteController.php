@@ -1,22 +1,21 @@
 <?php
+/**
+ * サイトコントローラー
+ */
+
 
 namespace Hgs3\Http\Controllers\Site;
 
-use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Orm\UserFavoriteGame;
-use Hgs3\Models\Orm\UserFavoriteSite;
 use Hgs3\Models\Site\Searcher;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Site;
 use Hgs3\Models\User\FavoriteSite;
 use Hgs3\User;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Arr;
 
-class SearchController extends Controller
+class SiteController extends Controller
 {
     /**
      * コンストラクタ
@@ -56,7 +55,7 @@ class SearchController extends Controller
 
         $data['users'] = User::getNameHash($userIds);
 
-        return view('site.search.index', $data);
+        return view('site.index', $data);
     }
 
     /**
@@ -77,24 +76,13 @@ class SearchController extends Controller
         return view('site.search.game')->with($data);
     }
 
-    public function user($userId)
-    {
-        $sites = Site::where('user_id', $userId)
-            ->orderBy('updated_timestamp', 'DESC')
-            ->get();
-
-        return view('site.search.userList')->with([
-            'sites' => $sites
-        ]);
-    }
-
     /**
      * 詳細表示
      *
      * @param Site $site
      * @return $this
      */
-    public function show(Site $site)
+    public function detail(Site $site)
     {
         $handleGames = [];
 
@@ -108,7 +96,6 @@ class SearchController extends Controller
         $isLogin = Auth::check();
         $isFavorite = false;
         if ($isLogin) {
-
             $isFavorite = $fs->isFavorite(Auth::id(), $site->id);
         }
 
@@ -116,10 +103,13 @@ class SearchController extends Controller
 
         $footprint = [];
 
-        return view('site.search.detail')->with([
+        $admin = User::find($site->user_id);
+
+        return view('site.detail')->with([
             'site'          => $site,
             'handleGames'   => implode('、', $handleGames),
             'admin'         => User::find($site->user_id),
+            'isAdmin'       => $admin->id == Auth::id(),
             'isLogin'       => $isLogin,
             'isFavorite'    => $isFavorite,
             'footprint'     => $footprint,

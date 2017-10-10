@@ -73,11 +73,11 @@ Route::post('/game/injustice_review/comment/{ir}', 'Game\InjusticeReviewControll
 Route::get('/game/injustice_review/{review}', 'Game\InjusticeReviewController@list');
 
 // サイト
-Route::get('/site', 'Site\SearchController@index');
-Route::get('/site/search', 'Site\SearchController@search');
-Route::get('/site/game/{game}', 'Site\SearchController@game');
-Route::get('/site/user/{user}', 'Site\SearchController@user');
-Route::get('/site/detail/{site}', 'Site\SearchController@show');
+Route::get('/site', 'Site\SiteController@index');
+Route::get('/site/search', 'Site\SiteController@search');
+Route::get('/site/game/{game}', 'Site\SiteController@game');
+Route::get('/site/user/{user}', 'Site\SiteController@user');
+Route::get('/site/detail/{site}', 'Site\SiteController@detail');
 
 
 

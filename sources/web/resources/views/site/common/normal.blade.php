@@ -1,7 +1,15 @@
-    <div>
-        <h5>{{ $s->name }}</h5>
-        <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
-        <div><pre>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</pre></div>
-        <div>→ <a href="{{ url('site/detail') }}/{{ $s->id }}">サイトの詳細情報</a></div>
-        <div>管理人：<a href="{{ url('user/profile') }}/{{ $s->user_id }}">{{ un($users, $s->user_id) }}</a></div>
+<div>
+    <h5><a href="{{ url('site/detail') }}/{{ $s->id }}">{{ $s->name }}</a></h5>
+    <div class="d-sm-none">
+        <img src="{{ url2('img/banner/test/200x40.gif') }}">
     </div>
+    <div class="d-none d-sm-block">
+        <img src="{{ url2('img/banner/test/300x100.png') }}" style="width: 100%;max-width:300px;">
+    </div>
+    <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
+    <div><small>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</small></div>
+    <div>
+        <i class="fa fa-user-o" aria-hidden="true"></i>
+        <a href="{{ url('user/profile') }}/{{ $s->user_id }}">{{ un($users, $s->user_id) }}</a>
+    </div>
+</div>
