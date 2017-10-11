@@ -32,7 +32,7 @@ class Timeline
         }
 
         $text = sprintf('「<a href="%s">%s</a>」が追加されました。',
-            url2('game/soft').'/'.$gameId,
+            "url2('game/soft')".'/'.$gameId,
             $gameName
         );
 
@@ -55,7 +55,7 @@ class Timeline
         }
 
         $text = sprintf('「<a href="%s">%s</a>」の情報が更新されました。',
-            url2('game/soft').'/'.$gameId,
+            "url2('game/soft')".'/'.$gameId,
             $gameName
         );
 
@@ -87,9 +87,9 @@ class Timeline
         }
 
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%s</a>をお気に入りゲームに登録しました。',
-            url2('user/profile') . '/' . $userId,
+            "url2('user/profile')" . '/' . $userId,
             $userName,
-            url2('game/soft').'/'.$gameId,
+            "url2('game/soft')".'/'.$gameId,
             $gameName
         );
 
@@ -122,11 +122,11 @@ class Timeline
         }
 
         $text = sprintf('<a href="%s">%s</a>さんが<a href="%s">%s</a>の<a href="%s">レビュー</a>を投稿しました。',
-            url2('user/profile') . '/' . $userId,
+            "url2('user/profile')" . '/' . $userId,
             $userName,
-            url2('game/soft') . '/' . $gameId,
+            "url2('game/soft')" . '/' . $gameId,
             $gameName,
-            url2('game/review') . '/' . $reviewId
+            "url2('game/review')" . '/' . $reviewId
         );
 
         self::insert(TimelineType::NEW_REVIEW, $text, [
@@ -159,8 +159,8 @@ class Timeline
         }
 
         $text = sprintf('<a href="%s">投稿したレビュー</a>に<a href="%s">%sさん</a>がイイネしました！',
-            url2('game/review') . '/' . $reviewId,
-            url2('user/profile') . '/' . $userId,
+            "url2('game/review')" . '/' . $reviewId,
+            "url2('user/profile')" . '/' . $userId,
             $userName
         );
 
@@ -195,9 +195,9 @@ class Timeline
         }
 
         $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">%sさん</a>が参加しました',
-            url2('community/u') . '/' . $communityId,
+            "url2('community/u')" . '/' . $communityId,
             $communityName,
-            url2('user/profile') . '/' . $userId,
+            "url2('user/profile')" . '/' . $userId,
             $userName
         );
 
@@ -232,9 +232,9 @@ class Timeline
         }
 
         $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">%sさん</a>が参加しました',
-            url2('community/g') . '/' . $communityId,
+            "url2('community/g')" . '/' . $communityId,
             $communityName,
-            url2('user/profile') . '/' . $userId,
+            "url2('user/profile')" . '/' . $userId,
             $userName
         );
 
@@ -261,7 +261,7 @@ class Timeline
         }
 
         $text = sprintf('<a href="%s">%sさん</a>にフォローされました',
-            url2('user/profile') . '/' . $followerId,
+            "url2('user/profile')" . '/' . $followerId,
             $followerName
         );
 
@@ -295,9 +295,9 @@ class Timeline
         }
 
         $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」を登録しました',
-            url2('user/profile') . '/' . $userId,
+            "url2('user/profile')" . '/' . $userId,
             $userName,
-            url2('site/detail') . '/' . $siteId,
+            "url2('site/detail')" . '/' . $siteId,
             $siteName
         );
 
@@ -331,9 +331,9 @@ class Timeline
         }
 
         $text = sprintf('<a href="%s">%sさん</a>のサイト「<a href="%s">%s</a>」の情報が更新されました',
-            url2('user/profile') . '/' . $userId,
+            "url2('user/profile')" . '/' . $userId,
             $userName,
-            url2('site/detail') . '/' . $siteId,
+            "url2('site/detail')" . '/' . $siteId,
             $siteName
         );
 

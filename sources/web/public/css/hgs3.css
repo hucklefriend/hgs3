@@ -45,15 +45,15 @@ code {
 }
 
 .site_presentation {
-    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .review_title {
-    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .break_word {
-    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .review_point {
@@ -145,4 +145,8 @@ code {
 
 .no_border td {
     border:none;
+}
+
+.community_topic_comment {
+    word-break: break-all;
 }

@@ -2,27 +2,33 @@
 
 @section('content')
     <div>
-        <h5>{{ $gct->title }}</h5>
-        <div>{{ $gct->wrote_date }}</div>
-        <div><i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a></div>
-        <p style="word-break: break-all;">{{ $gct->comment }}</p>
+        <small><a href="{{ url2('community/g') }}/{{ $game->id }}/topics">トピック一覧へ</a></small>
+        <h4>{{ $gct->title }}</h4>
+        <div>
+            <i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a>
+            {{ $gct->wrote_date }}
+            @if ($gct->user_id == $userId)
+                <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/topic/{{ $gct->id }}" class="d-inline">
+                    <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                    {{ method_field('DELETE') }}
+                    <button class="btn btn-danger btn-sm">削除</button>
+                </form>
+            @endif
+        </div>
+        <div>
 
-        @if ($gct->user_id == $userId)
-            <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/topic/{{ $gct->id }}">
-                <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                {{ method_field('DELETE') }}
-                <button class="btn btn-danger btn-sm">削除</button>
-            </form>
-        @endif
+        </div>
+
+        <p class="community_topic_comment">{{ $gct->comment }}</p>
     </div>
-
-    {{ $pager->links() }}
 
     @foreach ($pager->items() as $r)
         <div>
-            <div>{{ $r->wrote_date }}</div>
-            <div>writer: <a href="{{ url2('user/profile') }}/{{ $r->user_id }}">{{ $users[$r->user_id] }}</a></div>
-            <pre>{{ $r->comment }}</pre>
+            <div>
+                <i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile') }}/{{ $r->user_id }}">{{ $users[$r->user_id] }}</a>
+                {{ $r->wrote_date }}
+            </div>
+            <p class="community_topic_comment">{{ $r->comment }}</p>
 
             @if ($r->user_id == $userId)
                 <form method="POST" action="{{ url2('community/g') }}/{{ $game->id }}/topic_response/{{ $r->id }}">
