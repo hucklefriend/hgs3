@@ -5,6 +5,7 @@
 
 namespace Hgs3\Http\Controllers\Community;
 
+use Composer\Package\Package;
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Community\User\Topic;
@@ -14,6 +15,7 @@ use Hgs3\Models\Orm\GameComment;
 use Hgs3\Models\Orm\GameCommunity;
 use Hgs3\Models\Orm\GameCommunityTopic;
 use Hgs3\Models\Orm\GameCommunityTopicResponse;
+use Hgs3\Models\Orm\GamePackage;
 use Hgs3\User;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
@@ -21,6 +23,14 @@ use Illuminate\Support\Facades\Auth;
 
 class GameCommunityController extends Controller
 {
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'community');
+    }
+
     /**
      * 一覧ページ
      */
@@ -47,6 +57,8 @@ class GameCommunityController extends Controller
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
 
+        $pkg = GamePackage::find($game->original_package_id);
+
         $members = $model->getOlderMembers($game->id);
         $topics = $model->getLatestTopics($game->id);
 
@@ -59,6 +71,7 @@ class GameCommunityController extends Controller
 
         return view('community.game.detail')->with([
             'game'       => $game,
+            'pkg'        => $pkg,
             'memberNum'  => $gc ? $gc->user_num : 0,
             'members'    => $members,
             'users'      => $users,
@@ -107,10 +120,14 @@ class GameCommunityController extends Controller
 
         $members = $gc->getMembers($game);
 
+        $pkg = GamePackage::find($game->original_package_id);
+
         return view('community.game.member')->with([
-            'game'    => $game,
-            'members' => $members,
-            'users'   => User::getNameHash($members)
+            'game'     => $game,
+            'members'  => $members,
+            'users'    => User::getNameHash($members),
+            'pkg'      => $pkg,
+            'isMember' => $gc->isMember($game->id, Auth::id())
         ]);
     }
 
@@ -124,10 +141,14 @@ class GameCommunityController extends Controller
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
 
+        $pkg = GamePackage::find($game->original_package_id);
+
         $data = $model->getTopics($game->id);
         $data['game'] = $game;
+        $data['pkg'] = $pkg;
+        $data['isMember'] = $model->isMember($game->id, Auth::id());
 
-        return view('community.game.topics')->with($data);
+        return view('community.game.topics', $data);
     }
 
     /**
@@ -147,8 +168,10 @@ class GameCommunityController extends Controller
         $data['writer'] = User::find($gct->user_id);
         $data['csrfToken'] = csrf_token();
         $data['userId'] = Auth::id();
+        $data['pkg'] = GamePackage::find($game->original_package_id);
+        $data['isMember'] = $model->isMember($game->id, Auth::id());
 
-        return view('community.game.topic')->with($data);
+        return view('community.game.topic', $data);
     }
 
     /**

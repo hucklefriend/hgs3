@@ -161,7 +161,7 @@ SQL;
         $pager = DB::table('game_community_topics')
             ->where('game_id', $gameId)
             ->orderBy('id', 'DESC')
-            ->paginate(30);
+            ->paginate(20);
 
         return [
             'pager' => $pager,

@@ -1,21 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <h5>{{ $game->name }}掲示板</h5>
-
-    <div>
-        <a href="{{ url2('community/g') }}/{{ $game->id }}/topics">トピック一覧</a> |
-        <a href="{{ url2('community/g') }}/{{ $game->id }}">コミュニティトップ</a>
-    </div>
-
-    <hr>
-
     <div>
         <h5>{{ $gct->title }}</h5>
         <div>{{ $gct->wrote_date }}</div>
-        <div>writer: <a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a></div>
-        <pre>{{ $gct->comment }}</pre>
+        <div><i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a></div>
+        <p style="word-break: break-all;">{{ $gct->comment }}</p>
 
         @if ($gct->user_id == $userId)
             <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/topic/{{ $gct->id }}">

@@ -2,7 +2,31 @@
 
 @section('content')
 
-    <h5>{{ $game->name }}掲示板</h5>
+    <div class="d-flex align-items-stretch">
+        <div class="p-2 align-self-center" style="min-width: 3em;">
+            @include('game.common.package_image', ['imageUrl' => $pkg->medium_image_url])
+        </div>
+        <div class="p-10 align-self-top">
+            <div class="break_word" style="width: 100%;"><h5>{{ $game->name }}<small>のトピックス</small></h5></div>
+            <div>
+                <a href="{{ url('community/g') }}/{{ $game->id }}">コミュニティトップ</a>　
+                <a href="{{ url('game/soft') }}/{{ $game->id }}">ゲームの詳細</a>
+            </div>
+            <br>
+            @if ($isMember)
+                <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/secession">
+                    {{ csrf_field() }}
+                    <button class="btn btn-sm btn-warning">脱退する</button>
+                </form>
+            @else
+                <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/join">
+                    {{ csrf_field() }}
+                    <button class="btn btn-sm btn-primary">参加する</button>
+                </form>
+            @endif
+        </div>
+    </div>
+    <hr>
 
     {{ $pager->links() }}
 

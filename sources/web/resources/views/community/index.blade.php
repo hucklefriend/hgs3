@@ -14,14 +14,13 @@
             @endif
 
             @foreach ($userCommunities as $uc)
-                <div><a href="{{ 'community/u' }}/{{ $uc->id }}">{{ $uc->name }}</a></div>
+                <div><a href="{{ url2('community/u') }}/{{ $uc->id }}">{{ $uc->name }}</a></div>
             @endforeach
         </div>
 
         <div class="col-6">
             <h5>ゲームコミュニティ</h5>
-            <p>特定のゲームソフトが集まるコミュニティです。</p>
-
+            <p>特定のゲームを好きなメンバーが集まるコミュニティです。</p>
 
             <div>⇒ <a href="{{ url2('community/g/') }}">全部見る</a></div>
         </div>

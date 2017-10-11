@@ -25,6 +25,14 @@ use Illuminate\Support\Facades\Auth;
 class UserCommunityController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'community');
+    }
+
+    /**
      * ユーザーコミュニティトップページ
      *
      * @param UserCommunity $uc

@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\Auth;
 class CommunityController extends Controller
 {
     /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'community');
+    }
+
+    /**
      * 一覧ページ
      */
     public function index()
