@@ -80,6 +80,6 @@ SQL;
         return DB::table('user_favorite_sites')
             ->where('user_id', $userId)
             ->orderBy('id', 'DESC')
-            ->paginate(20);
+            ->paginate(10);
     }
 }

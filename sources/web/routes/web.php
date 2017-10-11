@@ -117,7 +117,7 @@ Route::delete('user/played_game/{upg}', 'User\PlayedGameController@remove')->mid
 Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@index');
 Route::post('/user/favorite_site', 'User\FavoriteSiteController@add')->middleware('auth');
 Route::delete('/user/favorite_site', 'User\FavoriteSiteController@remove')->middleware('auth');
-Route::get('/user/favorite_site/{user}', 'User\FavoriteSiteController@index');
+Route::get('/user/favorite_site/{user}', 'User\ProfileController@favoriteSite')->middleware('auth');
 
 // 自分のサイト
 Route::get('/user/site/myself', 'User\SiteController@myself')->middleware('auth');

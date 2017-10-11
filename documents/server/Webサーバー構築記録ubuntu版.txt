@@ -123,3 +123,5 @@ sudo systemctl enable mongod.service
 mongo hgs3
 use hgs3
 db.createCollection('timeline');
+db.createCollection('personal_timeline');
+db.createCollection('site_footprint');

@@ -61,8 +61,8 @@
             <li class="list-group-item"><a href="{{ url2('user/follower') }}/{{ $user->id }}">フォロワー {{ $followerNum }}人</a></li>
             <li class="list-group-item"><a href="{{ url2('user/favorite_game') }}/{{ $user->id }}">お気に入りゲーム {{ $favoriteGameNum }}個</a></li>
             <li class="list-group-item"><a href="{{ url2('user/site') }}/{{ $user->id }}">サイト {{ $siteNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/follower') }}/{{ $user->id }}">お気に入りサイト {{ $favoriteSiteNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/follower') }}/{{ $user->id }}">日記 {{ $diaryNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/favorite_site') }}/{{ $user->id }}">お気に入りサイト {{ $favoriteSiteNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/diary') }}/{{ $user->id }}">日記 {{ $diaryNum }}件</a></li>
             <li class="list-group-item"><a href="{{ url2('user/communities') }}/{{ $user->id }}">コミュニティ {{ $communityNum }}個</a></li>
         </ul>
     </div>
