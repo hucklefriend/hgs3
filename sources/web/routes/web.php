@@ -159,6 +159,8 @@ Route::delete('/community/g/{game}/topic_response/{gctr}', 'Community\GameCommun
 Route::get('/community/g/{game}', 'Community\GameCommunityController@detail')->middleware('auth');
 Route::get('/community/g', 'Community\GameCommunityController@index');
 
+// 日記
+Route::get('/diary', 'Diary\DiaryController@index');
 
 // SNS
 Route::get('/social/twitter/callback', 'Social\TwitterController@callback');

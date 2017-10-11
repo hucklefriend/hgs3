@@ -5,7 +5,7 @@
         <h1>{{ $game->name }}</h1>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
                     <div class="row">
@@ -151,7 +151,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
                     <a name="review">レビュー</a>
@@ -250,7 +250,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
                     サイト <small>{{ $base['site_num'] }}件</small>
@@ -261,7 +261,7 @@
                             <p>{{ $game->name }}を扱っているサイトは登録されていません。</p>
                         @else
                             @foreach ($site as $s)
-                                @include('site.common.minimal', ['s' => $s])
+                                @include('site.common.minimal', ['s' => $s, 'noUser' => true])
                                 <hr>
                             @endforeach
                             <div class="text-center">
@@ -274,7 +274,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
                     お気に入り登録ユーザー <small>{{ $base['favorite_num'] }}人</small>
@@ -329,7 +329,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
                     同一シリーズの別タイトル

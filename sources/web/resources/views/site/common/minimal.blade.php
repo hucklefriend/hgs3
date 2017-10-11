@@ -1,3 +1,7 @@
+@php
+    if (!isset($noUser))
+        $noUser = false;
+@endphp
 <div>
     <h5><a href="{{ url('site/detail') }}/{{ $s->id }}">{{ $s->name }}</a></h5>
     <div class="d-sm-none">

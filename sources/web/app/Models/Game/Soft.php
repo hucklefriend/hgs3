@@ -13,6 +13,7 @@ use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\Models\Orm\SiteHandleGame;
 use Hgs3\Models\Orm\UserFavoriteGame;
 use Hgs3\Models\Timeline;
+use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GameSeries;
@@ -89,7 +90,6 @@ class Soft
 
         // 遊んだゲーム
         $data['playedUsers'] = $this->getPlayedUsers($game);
-
 
         return $data;
     }
