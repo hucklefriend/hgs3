@@ -14,6 +14,8 @@ class UserFollow
      */
     public static function create()
     {
+        echo 'create user follow test data.'.PHP_EOL;
+
         $users = User::getIds();
         $userMax = count($users) - 1;
 

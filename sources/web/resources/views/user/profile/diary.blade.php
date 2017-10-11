@@ -7,7 +7,7 @@
             @include('user.common.icon', ['u' => $user])
         </div>
         <div class="p-10 align-self-center">
-            <h5>@include('user.common.user_name', ['id' => $user->id, 'name' => $user->name])さんが参加しているコミュニティ</h5>
+            <h5>@include('user.common.user_name', ['id' => $user->id, 'name' => $user->name])さんの日記</h5>
             <div>
                 <a href="{{ url2('user/profile') }}">プロフィール</a>
             </div>
@@ -16,6 +16,5 @@
 
     <hr>
 
-    @include('user.profile.parts.community')
-
+    @include('user.profile.parts.diary', ['users' => $users, 'follows' => $follows])
 @endsection

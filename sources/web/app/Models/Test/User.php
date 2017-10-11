@@ -16,6 +16,8 @@ class User
      */
     public static function create($num)
     {
+        echo 'create user test data.'.PHP_EOL;
+
         for ($i = 0; $i < $num; $i++) {
             $user = new \Hgs3\User([
                 'name' => str_random(rand(3, 7)),

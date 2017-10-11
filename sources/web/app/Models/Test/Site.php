@@ -14,6 +14,8 @@ class Site
      */
     public static function create()
     {
+        echo 'create site test data.'.PHP_EOL;
+
         $site = new \Hgs3\Models\Site();
 
         $userIds = User::getIds();
@@ -61,7 +63,7 @@ class Site
      */
     public static function getIds()
     {
-        return DB::table('games')
+        return DB::table('sites')
             ->select('id')
             ->get()
             ->pluck('id');

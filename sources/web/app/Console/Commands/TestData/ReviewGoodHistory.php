@@ -13,14 +13,14 @@ class ReviewGoodHistory extends Command
      *
      * @var string
      */
-    protected $signature = 'testdata:rgh';
+    protected $signature = 'testdata:reviewgoodhistory';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'create test user data';
+    protected $description = 'create test review good history data';
 
     /**
      * Create a new command instance.
@@ -39,6 +39,6 @@ class ReviewGoodHistory extends Command
      */
     public function handle()
     {
-        \Hgs3\Models\Test\ReviewGoodHistory::create(10);
+        \Hgs3\Models\Test\ReviewGoodHistory::create(30);
     }
 }

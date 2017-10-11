@@ -13,6 +13,8 @@ class GameCommunityMember
      */
     public static function create()
     {
+        echo 'create game community member test data.'.PHP_EOL;
+
         $userIds = User::getIds();
         $userMax = count($userIds) - 1;
         $gameIds = Game::getIds();

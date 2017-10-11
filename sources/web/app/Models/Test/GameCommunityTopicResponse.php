@@ -13,6 +13,8 @@ class GameCommunityTopicResponse
      */
     public static function create()
     {
+        echo 'create game community topic response test data.'.PHP_EOL;
+
         $gc = new \Hgs3\Models\Community\GameCommunity();
         $userIds = User::getIds();
         $userMax = count($userIds) - 1;

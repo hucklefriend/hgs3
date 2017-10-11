@@ -13,6 +13,8 @@ class UserFavoriteGame
      */
     public static function create()
     {
+        echo 'create user favorite game test data.'.PHP_EOL;
+
         $users = User::getIds();
         $userMax = count($users) - 1;
 

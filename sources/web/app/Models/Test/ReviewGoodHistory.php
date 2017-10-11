@@ -17,6 +17,8 @@ class ReviewGoodHistory
      */
     public static function create($num)
     {
+        echo 'create review good history test data.'.PHP_EOL;
+
         $users = User::getIds();
         $userNum = count($users);
 

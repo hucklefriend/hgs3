@@ -13,6 +13,8 @@ class UserCommunityTopic
      */
     public static function create()
     {
+        echo 'create user community topic test data.'.PHP_EOL;
+
         $uc = new \Hgs3\Models\Community\UserCommunity();
 
         $ucIds = UserCommunity::getIds();

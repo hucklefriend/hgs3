@@ -13,6 +13,8 @@ class GameCommunityTopic
      */
     public static function create()
     {
+        echo 'create game community topic test data.'.PHP_EOL;
+
         $gc = new \Hgs3\Models\Community\GameCommunity();
 
         $gcIds = Game::getIds();

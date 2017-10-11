@@ -13,6 +13,8 @@ class UserCommunityMember
      */
     public static function create()
     {
+        echo 'create user community member test data.'.PHP_EOL;
+
         $userIds = User::getIds();
         $userMax = count($userIds) - 1;
         $ucIds = UserCommunity::getIds();

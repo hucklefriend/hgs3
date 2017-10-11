@@ -14,6 +14,8 @@ class UserPlayedGame
      */
     public static function create()
     {
+        echo 'create user played game test data.'.PHP_EOL;
+
         $users = User::getIds();
         $userMax = count($users) - 1;
 

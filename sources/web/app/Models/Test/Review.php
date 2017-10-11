@@ -16,6 +16,8 @@ class Review
      */
     public static function create($num)
     {
+        echo 'create review test data.'.PHP_EOL;
+
         $users = User::getIds();
         $pkgs = Package::get();
 

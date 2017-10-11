@@ -13,6 +13,8 @@ class UserFavoriteSite
      */
     public static function create()
     {
+        echo 'create user favorite site test data.'.PHP_EOL;
+
         $users = User::getIds();
         $userMax = count($users) - 1;
 

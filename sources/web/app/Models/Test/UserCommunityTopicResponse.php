@@ -13,6 +13,8 @@ class UserCommunityTopicResponse
      */
     public static function create()
     {
+        echo 'create user community topic response test data.'.PHP_EOL;
+
         $uc = new \Hgs3\Models\Community\UserCommunity();
         $userIds = User::getIds();
         $userMax = count($userIds) - 1;

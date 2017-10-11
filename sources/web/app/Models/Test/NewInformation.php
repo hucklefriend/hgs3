@@ -17,6 +17,8 @@ class NewInformation
      */
     public static function create($num)
     {
+        echo 'create new information test data.'.PHP_EOL;
+
         $types = [
             NewInformationText::NEW_GAME,
             NewInformationText::NEW_SITE,

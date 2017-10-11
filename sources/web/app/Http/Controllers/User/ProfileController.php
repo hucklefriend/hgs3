@@ -79,6 +79,7 @@ class ProfileController extends Controller
             case 'favorite_site': {
                 $fs = new \Hgs3\Models\User\FavoriteSite();
                 $favSites = $fs->get($user->id);
+
                 $sites = Site::getHash(array_pluck($favSites->items(), 'site_id'));
 
                 $data['parts'] = [
@@ -93,7 +94,12 @@ class ProfileController extends Controller
             }
                 break;
             case 'community': {
-                $data['parts'] = [];
+                $gc = new GameCommunity();
+                $communities = $gc->getJoinCommunity($user->id);
+                $data['parts'] = [
+                    'communities' => $communities,
+                    'games'       => Game::getNameHash(array_pluck($communities->items(), 'game_id'))
+                ];
             }
                 break;
             case 'timeline':
@@ -259,6 +265,23 @@ class ProfileController extends Controller
             'favSites' => $favSites,
             'sites'    => $sites,
             'users'    => User::getNameHash(array_pluck($sites, 'user_id'))
+        ]);
+    }
+
+    /**
+     * 日記
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function diary(User $user)
+    {
+        $isMyself = $user->id == Auth::id();
+
+        return view('user.profile.diary')->with([
+            'user'     => $user,
+            'isMyself' => $isMyself,
+            'diaries'  => []
         ]);
     }
 

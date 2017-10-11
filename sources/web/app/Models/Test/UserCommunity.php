@@ -13,6 +13,8 @@ class UserCommunity
      */
     public static function create()
     {
+        echo 'create user community test data.'.PHP_EOL;
+
         // とりあえずのところ、管理者しか作れないので数個
         $now = new \DateTime();
 

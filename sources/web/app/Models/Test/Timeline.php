@@ -17,6 +17,8 @@ class Timeline
      */
     public static function create($num)
     {
+        echo 'create timeline test data.'.PHP_EOL;
+
         $tl_types = [
             TimelineType::NEW_GAME_SOFT,
             TimelineType::UPDATE_GAME_SOFT,
