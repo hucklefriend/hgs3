@@ -1,6 +1,6 @@
 <div class="row" style="margin-bottom: 15px;">
-    <div class="col-2">
-        @include ('game.common.package_image', ['imageUrl' => $r->small_image_url])
+    <div class="col-2 text-center">
+        <img src="{{ $r->small_image_url }}" class="thumbnail">
     </div>
     <div class="col-10">
         <div>
@@ -14,9 +14,15 @@
                 </div>
             </div>
             <div class="col-10">
-                {{ $r->review_num }}件のレビュー<br>
-                <a href="{{ url2('/game/review/soft') }}/{{ $r->game_id }}">このゲームのレビューを見る</a>
+                <div class="review_title">
+                    <a href="{{ url('review/detail/') }}/{{ $r->id }}">{{ $r->title }}</a>
+                </div>
             </div>
+        </div>
+
+        <div>
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $r->good_num }}&nbsp;
+            {{ $r->post_date }}
         </div>
     </div>
 </div>

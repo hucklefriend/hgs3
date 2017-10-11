@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
                     新着(5件)
@@ -14,7 +14,7 @@
                     </div>
                 @else
                     @foreach ($newArrival as $r)
-                        @include('game.review.common.normal', ['r' => $r, 'showLastMonthGood' => false])
+                        @include('review.common.normal', ['r' => $r, 'showLastMonthGood' => false])
                         @if (!$loop->last)
                         <hr>
                         @endif
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">評価の高いゲーム</div>
                 <div class="card-body">
@@ -32,7 +32,7 @@
                     @else
                         <div>
                             @foreach ($highScore as $r)
-                                @include('game.review.common.game', ['r' => $r])
+                                @include('review.common.game', ['r' => $r])
                                 @if (!$loop->last)
                                     <hr>
                                 @endif
@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
                     直近1ヶ月のいいねの多いレビュー
@@ -56,7 +56,7 @@
                         </div>
                     @else
                         @foreach ($manyGood as $r)
-                            @include('game.review.common.normal', ['r' => $r, 'showLastMonthGood' => true])
+                            @include('review.common.normal', ['r' => $r, 'showLastMonthGood' => true])
                             @if (!$loop->last)
                                 <hr>
                             @endif

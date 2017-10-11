@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Request::path() }}
+
     <ul class="list-group">
         <li class="list-group-item"><a href="{{ url2('') }}">トップページ</a></li>
         <li class="list-group-item"><a href="{{ url2('game/soft') }}">ゲーム一覧</a></li>
@@ -10,7 +12,7 @@
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
-        <li class="list-group-item"><a href="{{ url2('game/review') }}">レビュー</a></li>
+        <li class="list-group-item"><a href="{{ url2('review') }}">レビュー</a></li>
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>

@@ -103,18 +103,17 @@ function platform_select($platformId, $params = [])
 }
 
 /**
- * HGS3用url
+ * HGS3用URL生成
  *
  * @param $path
  * @param array $parameters
  * @return \Illuminate\Contracts\Routing\UrlGenerator|string
  */
-function url2($path, $parameters = [])
+function url2($path)
 {
-    // 準備できたら全部secureにしたいけど、
-    // まだできるかわからないのでラッパーで対応
-
-    return url($path, $parameters, false);
+    // urlと違って相対パスを生成する
+    return env('URL_BASE', '/') . ltrim($path, '/');
+    //return url($path, $parameters, false);
 }
 
 /**

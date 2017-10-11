@@ -6,7 +6,7 @@
     </div>
     <div class="col-10">
         <div class="review_title">
-            <a href="{{ url('game/review/detail/') }}/{{ $r->id }}">{{ $r->title }}</a>
+            <a href="{{ url('review/detail/') }}/{{ $r->id }}">{{ $r->title }}</a>
         </div>
     </div>
 </div>

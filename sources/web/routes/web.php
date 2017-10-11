@@ -55,15 +55,15 @@ Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
 // レビュー
-Route::get('/game/review', 'Game\ReviewController@index');
-Route::get('/game/review/input/{game}', 'Game\ReviewController@input')->middleware('auth');
-Route::post('/game/review/confirm/{game}', 'Game\ReviewController@confirm')->middleware('auth');
-Route::post('/game/review/save/{game}', 'Game\ReviewController@save')->middleware('auth');
-Route::get('/game/review/soft/{game}', 'Game\ReviewController@soft');
-Route::post('/game/review/good/{review}', 'Game\ReviewController@good')->middleware('auth');
-Route::delete('/game/review/good/{review}', 'Game\ReviewController@cancelGood')->middleware('auth');
-Route::get('/game/review/detail/{review}', 'Game\ReviewController@show');
-Route::get('/game/review/good_history/{review}', 'Game\ReviewController@goodHistory');
+Route::get('/review', 'Review\ReviewController@index')->name('review');
+Route::get('/review/input/{game}', 'Review\ReviewController@input')->middleware('auth');
+Route::post('/review/confirm/{game}', 'Review\ReviewController@confirm')->middleware('auth');
+Route::post('/review/save/{game}', 'Review\ReviewController@save')->middleware('auth');
+Route::get('/review/soft/{game}', 'Review\ReviewController@soft');
+Route::post('/review/good/{review}', 'Review\ReviewController@good')->middleware('auth');
+Route::delete('/review/good/{review}', 'Review\ReviewController@cancelGood')->middleware('auth');
+Route::get('/review/detail/{review}', 'Review\ReviewController@show');
+Route::get('/review/good_history/{review}', 'Review\ReviewController@goodHistory');
 
 // 不正レビュー
 Route::get('/game/injustice_review/input/{review}', 'Game\InjusticeReviewController@input');
