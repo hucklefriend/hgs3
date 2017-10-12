@@ -46,7 +46,7 @@ class Review extends \Eloquent
      * @param $gameId
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getSameGamePackageId($userId, $gameId)
+    public static function getHashByGame($userId, $gameId)
     {
         $data = self::where('user_id', $userId)
             ->select(['id', 'package_id'])

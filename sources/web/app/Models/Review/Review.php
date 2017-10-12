@@ -4,7 +4,7 @@
  */
 
 
-namespace Hgs3\Models\Game;
+namespace Hgs3\Models\Review;
 
 use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Orm\GamePackage;
@@ -359,5 +359,30 @@ SQL;
         }
 
         return $data;
+    }
+
+    /**
+     * パッケージのリストを取得
+     *
+     * @param $gameId
+     * @return array
+     */
+    public function getPackageList($gameId)
+    {
+        $sql =<<< SQL
+SELECT
+  pkg.*
+  , p.name platform_name
+  , c.name company_name
+FROM  (
+  SELECT id, platform_id, name, small_image_url, item_url, company_id
+  FROM game_packages
+  WHERE game_id = ?
+  ORDER BY release_int
+) pkg INNER JOIN game_platforms p ON pkg.platform_id = p.id
+  LEFT OUTER JOIN game_companies c ON c.id = pkg.company_id
+SQL;
+
+        return DB::select($sql, [$gameId]);
     }
 }

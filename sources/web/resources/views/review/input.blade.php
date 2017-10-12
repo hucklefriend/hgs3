@@ -1,55 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}のレビューを書く</h4>
-    <div>
-        <a href="{{ url2('game/soft') }}/{{ $game->id }}">ゲームの詳細</a> |
-        <a href="{{ url2('review/soft') }}/{{ $game->id }}">レビュー一覧</a>
+    <div class="d-flex align-items-stretch">
+        <div class="align-self-top p-2">
+            @include ('game.common.package_image', ['imageUrl' => $package->small_image_url])
+        </div>
+        <div class="align-self-top">
+            <div>
+                <h4>{{ $package->name }}のレビューを書く</h4>
+            </div>
+            <div>
+                <a href="{{ url2('review/package_select') }}/{{ $package->game_id }}">パッケージを選び直す</a>
+            </div>
+        </div>
     </div>
 
     <hr>
 
-    <form method="POST" action="{{ url2('review/confirm') }}/{{ $game->id }}">
+    <form method="POST" action="{{ url2('review/confirm') }}/{{ $package->id }}">
         {{ csrf_field() }}
-        <input type="hidden" name="game_id" value="{{ $game->id }}">
-
-        @if (count($packages) > 1)
-        <div>
-            <p class="help-block">
-                レビューを書くパッケージを選択してください。
-            </p>
-
-            <div class="form-group">
-                <div class="d-flex flex-nowrap">
-                    @foreach ($packages as $pkg)
-                        <div class="package_select_item text-center @if ($pkg->id == $draft->package_id) selected @endif">
-                            <label>
-                                <input type="radio" class="package_check" value="{{ $pkg->id }}" name="package_id" @if ($pkg->id == $draft->package_id) checked @endif>
-                                <img src="{{ $pkg->small_image_url }}" class="thumbnail"><br>
-                                <small>{{ $pkg->name }}</small>
-                            </label>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-{{--
-            <div class="form-group">
-                @foreach ($packages as $pkg)
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" value="{{ $pkg->id }}" name="package_id" @if ($pkg->id == $draft->package_id) checked @endif>
-                        <img src="{{ $pkg->small_image_url }}" class="thumbnail"><br>
-                        <small>{{ $pkg->name }}</small>
-                    </label>
-                </div>
-                @endforeach
-            </div>
- --}}
-        </div>
-        @elseif (!empty($packages))
-            <input type="hidden" name="package_id" value="{{ $packages[0]->id }}">
-        @endif
 
         <div class="form-group">
             <label for="title">一言(タイトル)</label>

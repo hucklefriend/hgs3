@@ -235,7 +235,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('review/write') }}/{{ $game->id }}">レビューを書く</a>
+                                        <a href="{{ url('review/package_select') }}/{{ $game->id }}">レビューを書く</a>
                                     </div>
                                 </div>
                             </div>

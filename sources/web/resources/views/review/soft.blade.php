@@ -12,7 +12,7 @@
             <div class="p-10 align-self-center">
                 <div class="break_word" style="width: 100%;"><h5>{{ $game->name }}</h5></div>
                 <a href="{{ url('game/soft') }}/{{ $game->id }}">ゲームの詳細</a> |
-                <a href="{{ url('review/write') }}/{{ $game->id }}">レビューを投稿する</a>
+                <a href="{{ url('review/package_select') }}/{{ $game->id }}">レビューを投稿する</a>
             </div>
         </div>
 

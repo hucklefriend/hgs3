@@ -50,13 +50,13 @@ Route::get('/account/register/{token}', 'Account\SignUpController@register');
 Route::post('/account/register', 'Account\SignUpController@registration');
 Route::get('/account/signup', 'Account\SignUpController@index');
 
-Route::get('/game/soft', 'Game\SoftController@index');
-Route::post('/game/soft/comment/{game}', 'Game\SoftController@writeComment');
+Route::get('/game', 'Game\SoftController@index');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
 // レビュー
 Route::get('/review', 'Review\ReviewController@index')->name('review');
-Route::get('/review/write/{game}', 'Review\ReviewController@input')->middleware('auth');
+Route::get('/review/package_select/{game}', 'Review\ReviewController@packageSelect')->middleware('auth');
+Route::get('/review/write/{pkg}', 'Review\ReviewController@input')->middleware('auth');
 Route::post('/review/confirm/{game}', 'Review\ReviewController@confirm')->middleware('auth');
 Route::post('/review/save/{game}', 'Review\ReviewController@save')->middleware('auth');
 Route::get('/review/soft/{game}', 'Review\ReviewController@soft');

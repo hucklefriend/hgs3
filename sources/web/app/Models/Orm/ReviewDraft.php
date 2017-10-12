@@ -53,25 +53,17 @@ class ReviewDraft extends \Eloquent
     }
 
     /**
-     * 同じゲームの下書きを取得
+     * 同じゲームで下書きがあるパッケージIDのハッシュを取得
      *
      * @param $userId
      * @param $gameId
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getSameGame($userId, $gameId)
+    public static function getHashByGame($userId, $gameId)
     {
-        $data = self::where('user_id', $userId)
+        return self::where('user_id', $userId)
             ->where('game_id', $gameId)
-            ->get();
-
-        $result = [];
-        foreach ($data as $row) {
-            $result[$row->package_id] = $row->toArray();
-        }
-
-        unset($data);
-
-        return $result;
+            ->get()
+            ->pluck('package_id', 'package_id');
     }
 }

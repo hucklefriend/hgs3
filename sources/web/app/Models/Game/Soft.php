@@ -7,13 +7,10 @@ namespace Hgs3\Models\Game;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Http\Requests\Game\Soft\AddRequest;
-use Hgs3\Models\Orm\GameCompany;
-use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\Models\Orm\SiteHandleGame;
 use Hgs3\Models\Orm\UserFavoriteGame;
 use Hgs3\Models\Timeline;
-use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GameSeries;

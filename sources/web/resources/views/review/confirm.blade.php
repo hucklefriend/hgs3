@@ -1,7 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}のレビュー投稿 確認</h4>
+    <div class="d-flex align-items-stretch">
+        <div class="align-self-top p-2">
+            @include ('game.common.package_image', ['imageUrl' => $gamePackage->small_image_url])
+        </div>
+        <div class="align-self-top">
+            <div>
+                <h4>{{ $gamePackage->name }}のレビュー入力内容確認</h4>
+            </div>
+        </div>
+    </div>
 
     <section>
         <div class="d-flex align-items-stretch">
@@ -30,7 +39,7 @@
         </div>
     </section>
 
-    <form method="POST" action="{{ url('review/save') }}/{{ $game->id }}">
+    <form method="POST" action="{{ url('review/save') }}/{{ $gamePackage->id }}">
         {{ csrf_field() }}
 
         <input type="hidden" name="game_id" value="{{ $draft->game_id }}">

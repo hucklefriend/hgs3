@@ -6,9 +6,8 @@
 namespace Hgs3\Http\Controllers\Review;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Game\Request\ChangeStatusRequest;
 use Hgs3\Http\Requests\Review\WriteRequest;
-use Hgs3\Models\Game\Review;
+use Hgs3\Models\Review\Review;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
@@ -16,7 +15,6 @@ use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 
 class ReviewController extends Controller
 {
@@ -75,43 +73,51 @@ class ReviewController extends Controller
     }
 
     /**
-     * 入力画面
+     * パッケージ選択
      *
      * @param Game $game
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function input(Game $game)
+    public function packageSelect(Game $game)
+    {
+        $review = new \Hgs3\Models\Review\Review();
+
+        return view('review.packageSelect', [
+            'game'     => $game,
+            'packages' => $review->getPackageList($game->id),
+            'drafts'   => ReviewDraft::getHashByGame(Auth::id(), $game->id),
+            'written'  => \Hgs3\Models\Orm\Review::getHashByGame(Auth::id(), $game->id)
+        ]);
+
+    }
+
+    /**
+     * 入力画面
+     *
+     * @param GamePackage $pkg
+     * @return $this
+     */
+    public function input(GamePackage $pkg)
     {
         // TODO 下書きがあるかチェック
         // TODO 同一ソフトのパッケージがあればその旨出力
         // TODO 同一ソフトの他パッケージの内容コピー
         // TODO 発売日が過ぎているか
 
-        $pkg = GamePackage::where('game_id', $game->id)
-            ->orderBy('release_int')
-            ->get();
-
-        //\ChromePhp::info($pkg->toArray());
-        $review = new Review;
-
         if (!empty(old())) {
             $draft = new ReviewDraft(old());
         } else {
-            $draft = $review->getDraft(Auth::id(), $game->id);
+            $draft = ReviewDraft::where('user_id', Auth::id())
+                ->where('package_id', $pkg->id)
+                ->first();
             if ($draft == null) {
-                $draft = ReviewDraft::getDefault(Auth::id(), $game->id);
-            }
-
-            if ($pkg->isNotEmpty()) {
-                $draft->package_id = $pkg[0]->id;
+                $draft = ReviewDraft::getDefault(Auth::id(), $pkg->game_id);
             }
         }
 
         return view('review.input')->with([
-            'game'     => $game,
-            'packages' => $pkg,
-            'draft'    => $draft,
-            'drafts'   => ReviewDraft::getSameGame(Auth::id(), $game->id),
-            'written'  => \Hgs3\Models\Orm\Review::getSameGamePackageId(Auth::id(), $game->id)
+            'package' => $pkg,
+            'draft'   => $draft
         ]);
     }
 
@@ -119,17 +125,18 @@ class ReviewController extends Controller
      * 確認
      *
      * @param WriteRequest $request
-     * @param Game $game
+     * @param GamePackage $gamePackage
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function confirm(WriteRequest $request, Game $game)
+    public function confirm(WriteRequest $request, GamePackage $gamePackage)
     {
         $draft = new ReviewDraft;
         $this->setDraftData($request, $draft);
 
-        return view('review.confirm')->with([
-            'game'  => $game,
-            'user'  => Auth::user(),
-            'draft' => $draft
+        return view('review.confirm', [
+            'gamePackage' => $gamePackage,
+            'user'        => Auth::user(),
+            'draft'       => $draft
         ]);
     }
 
@@ -137,9 +144,10 @@ class ReviewController extends Controller
      * 保存
      *
      * @param WriteRequest $request
-     * @param Game $game
+     * @param GamePackage $gamePackage
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function save(WriteRequest $request, Game $game)
+    public function save(WriteRequest $request, GamePackage $gamePackage)
     {
         // TODO: 発売日が過ぎているか
 
@@ -167,7 +175,7 @@ class ReviewController extends Controller
             $review = new Review();
             $result = $review->save($request);
 
-            return view('review.complete')->with([
+            return view('review.complete', [
                 'reviewId' => $result,
                 'game'     => $game
             ]);
