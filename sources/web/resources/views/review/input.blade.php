@@ -25,10 +25,16 @@
             <input type="text" name="title" id="title" class="form-control{{ invalid($errors, 'title') }}" value="{{ $draft->title }}" maxlength="100" required>
             @include('common.error', ['formName' => 'title'])
         </div>
-
         <div class="form-group row">
-            <label class="col-2 col-form-label">怖さ</label>
-            <div class="col-10">
+            <label for="fear" class="col-sm-2 col-form-label">怖さ</label>
+            <div class="col-sm-10 mx-auto">
+                <input type="range" name="fear" id="fear" value="{{ $draft->fear }}" min="0" max="5">
+                <span style="vertical-align: middle;">{{ $draft->fear }}</span>
+            </div>
+        </div>
+
+
+{{--
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
                         <input class="form-check-input" type="radio" name="fear" id="fear1" value="1" @if ($draft->fear == 1) checked @endif> 1
@@ -54,8 +60,7 @@
                         <input class="form-check-input" type="radio" name="fear" id="fear5" value="5" @if ($draft->fear == 5) checked @endif> 5
                     </label>
                 </div>
-            </div>
-        </div>
+--}}
 
         <div class="form-group row">
             <label class="col-2 col-form-label">シナリオ</label>
