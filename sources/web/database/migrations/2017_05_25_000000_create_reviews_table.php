@@ -41,6 +41,7 @@ class CreateReviewsTable extends Migration
             $table->dateTime('post_date')->comment('投稿日時');
             $table->unsignedInteger('update_num')->default(0)->comment('更新回数');
             $table->timestamps();
+            $table->primary(['user_id', 'package_id']);
         });
     }
 

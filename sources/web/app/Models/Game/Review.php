@@ -62,7 +62,7 @@ SQL;
             ->where('game_id', $gameId)
             ->first();
 
-        return $draft ?? ReviewDraft::getDefault($userId, $gameId);
+        return $draft;
     }
 
     /**

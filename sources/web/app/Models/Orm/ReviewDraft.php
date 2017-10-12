@@ -26,7 +26,6 @@ class ReviewDraft extends \Eloquent
             'user_id'         => $userId,
             'game_id'         => $gameId,
             'package_id'      => '',
-            'play_time'       => 0,
             'title'           => '',
             'fear'            => 3,
             'story'           => 3,
@@ -37,8 +36,9 @@ class ReviewDraft extends \Eloquent
             'crowded'         => 3,
             'controllability' => 3,
             'recommend'       => 3,
-            'thoughts'        => '',
-            'recommendatory'  => '',
+            'progress'        => '',
+            'text'            => '',
+            'is_spoiler'      => 0
         ]);
     }
 
@@ -50,5 +50,28 @@ class ReviewDraft extends \Eloquent
         $this->point =
             $this->fear * 4 + ($this->story + $this->volume + $this->difficulty +
                 $this->graphic + $this->sound + $this->crowded + $this->controllability + $this->recommend) * 2;
+    }
+
+    /**
+     * 同じゲームの下書きを取得
+     *
+     * @param $userId
+     * @param $gameId
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public static function getSameGame($userId, $gameId)
+    {
+        $data = self::where('user_id', $userId)
+            ->where('game_id', $gameId)
+            ->get();
+
+        $result = [];
+        foreach ($data as $row) {
+            $result[$row->package_id] = $row->toArray();
+        }
+
+        unset($data);
+
+        return $result;
     }
 }

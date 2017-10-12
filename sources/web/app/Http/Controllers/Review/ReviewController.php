@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers\Review;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Http\Requests\Game\Request\ChangeStatusRequest;
 use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Game\Review;
 use Hgs3\Models\Orm\Game;
@@ -89,12 +90,18 @@ class ReviewController extends Controller
             ->orderBy('release_int')
             ->get();
 
+        //\ChromePhp::info($pkg->toArray());
+        $review = new Review;
+
         if (!empty(old())) {
             $draft = new ReviewDraft(old());
         } else {
-            $review = new Review;
             $draft = $review->getDraft(Auth::id(), $game->id);
-            if (!empty($pkg)) {
+            if ($draft == null) {
+                $draft = ReviewDraft::getDefault(Auth::id(), $game->id);
+            }
+
+            if ($pkg->isNotEmpty()) {
                 $draft->package_id = $pkg[0]->id;
             }
         }
@@ -102,7 +109,9 @@ class ReviewController extends Controller
         return view('review.input')->with([
             'game'     => $game,
             'packages' => $pkg,
-            'draft'    => $draft
+            'draft'    => $draft,
+            'drafts'   => ReviewDraft::getSameGame(Auth::id(), $game->id),
+            'written'  => \Hgs3\Models\Orm\Review::getSameGamePackageId(Auth::id(), $game->id)
         ]);
     }
 

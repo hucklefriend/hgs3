@@ -20,7 +20,6 @@ class CreateReviewDraftsTable extends Migration
             $table->unsignedInteger('user_id')->primary()->comment('ユーザーID');
             $table->unsignedInteger('game_id')->comment('ゲームソフトID');
             $table->unsignedInteger('package_id')->comment('パッケージID');
-            $table->unsignedSmallInteger('play_time')->comment('プレイ時間');
             $table->string('title', 0)->comment('一言');
             $table->unsignedTinyInteger('point')->comment('ポイント');
             $table->unsignedTinyInteger('fear')->comment('怖さ');

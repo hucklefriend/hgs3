@@ -165,7 +165,28 @@ code {
 }
 
 .package_image {
-    min-width: 50px;
+    min-width: 70px;
     max-width: 100%;
 }
 
+.package_select_item {
+    width: 100px;
+    margin-right: 5px;
+    padding: 5px 3px;
+}
+
+.package_select_item input[type=radio] {
+    display: none;
+}
+
+.package_select_item label {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.package_select_item.selected {
+    border: solid 1px blue;
+    border-radius: 5px;
+    padding: 4px 3px;
+}

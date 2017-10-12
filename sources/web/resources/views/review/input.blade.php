@@ -20,6 +20,21 @@
             </p>
 
             <div class="form-group">
+                <div class="d-flex flex-nowrap">
+                    @foreach ($packages as $pkg)
+                        <div class="package_select_item text-center @if ($pkg->id == $draft->package_id) selected @endif">
+                            <label>
+                                <input type="radio" class="package_check" value="{{ $pkg->id }}" name="package_id" @if ($pkg->id == $draft->package_id) checked @endif>
+                                <img src="{{ $pkg->small_image_url }}" class="thumbnail"><br>
+                                <small>{{ $pkg->name }}</small>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+{{--
+            <div class="form-group">
                 @foreach ($packages as $pkg)
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
@@ -30,6 +45,7 @@
                 </div>
                 @endforeach
             </div>
+ --}}
         </div>
         @elseif (!empty($packages))
             <input type="hidden" name="package_id" value="{{ $packages[0]->id }}">
@@ -352,4 +368,17 @@
             <button class="btn btn-primary btn-block">確認</button>
         </div>
     </form>
+
+    <script>
+        $(function (){
+            $('.package_check').on('click', function(){
+                $('.package_select_item.selected').removeClass('selected');
+
+
+                $(this).parents('.package_select_item').addClass('selected');
+            });
+        });
+    </script>
+
+
 @endsection
