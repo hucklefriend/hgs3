@@ -6,11 +6,26 @@
         <div>
             <strong>{{ $r->game_name }}</strong>
         </div>
+        <div class="d-flex align-items-stretch">
+            <div>
+                <div class="review_point_outline">
+                    <div class="review_point text-center">
+                        {{ $r->point }}
+                    </div>
+                </div>
+            </div>
+            <div style="margin-left: 5px;">
+                {{ $r->review_num }}件のレビュー<br>
+                <a href="{{ url2('/review/soft') }}/{{ $r->game_id }}">このゲームのレビューを見る</a>
+            </div>
+        </div>
 
-        <div class="row">
+        <div class="row" style="display:none">
             <div class="col-2">
-                <div class="review_point text-center">
-                    {{ $r->point }}
+                <div class="review_point_outline">
+                    <div class="review_point text-center">
+                        {{ $r->point }}
+                    </div>
                 </div>
             </div>
             <div class="col-10">

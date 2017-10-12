@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}のレビュー投稿</h4>
+    <h4>{{ $game->name }}のレビューを書く</h4>
+    <div>
+        <a href="{{ url2('game/soft') }}/{{ $game->id }}">ゲームの詳細</a> |
+        <a href="{{ url2('review/soft') }}/{{ $game->id }}">レビュー一覧</a>
+    </div>
 
-    <nav style="margin-bottom: 20px;">
-        <a href="{{ url('game/review/soft') }}/{{ $game->id }}">戻る</a>
-    </nav>
+    <hr>
 
-    <form method="POST" action="{{ url('game/review/confirm') }}/{{ $game->id }}">
+    <form method="POST" action="{{ url2('review/confirm') }}/{{ $game->id }}">
         {{ csrf_field() }}
         <input type="hidden" name="game_id" value="{{ $game->id }}">
 
@@ -23,7 +25,7 @@
                     <label class="form-check-label">
                         <input class="form-check-input" type="radio" value="{{ $pkg->id }}" name="package_id" @if ($pkg->id == $draft->package_id) checked @endif>
                         <img src="{{ $pkg->small_image_url }}" class="thumbnail"><br>
-                        {{ $pkg->acronym }}
+                        <small>{{ $pkg->name }}</small>
                     </label>
                 </div>
                 @endforeach
@@ -34,16 +36,9 @@
         @endif
 
         <div class="form-group">
-            <label for="title">一言</label>
-            <input type="text" name="title" id="title" class="form-control" value="{{ $draft->title }}">
-        </div>
-
-        <div class="form-group">
-
-            <label for="play_time">プレイ時間</label>
-            <div class="form-inline">
-                <input type="number" min="0" max="255" id="play_time" name="play_time" class="form-control" value="{{ $draft->play_time }}">&nbsp;時間
-            </div>
+            <label for="title">一言(タイトル)</label>
+            <input type="text" name="title" id="title" class="form-control{{ invalid($errors, 'title') }}" value="{{ $draft->title }}" maxlength="100" required>
+            @include('common.error', ['formName' => 'title'])
         </div>
 
         <div class="form-group row">
@@ -326,19 +321,35 @@
         </div>
 
         <div class="form-group">
-            <label for="thoughts">感想</label>
-            <textarea name="thoughts" id="thoughts" class="form-control">{{ $draft->thoughts }}</textarea>
-            <p class="help-block">プレイした感想、どこが良かったか、どこが悪かった、あのシーンがすごく良い、もっとこうしてくれたらなど、ネタバレもありで自由に記入ください</p>
+            <label for="progress">ゲームのプレイ状況</label>
+            <textarea name="progress" id="progress" class="form-control{{ invalid($errors, 'progress') }}" maxlength="300" required>{{ $draft->progress }}</textarea>
+            @include('common.error', ['formName' => 'progress'])
+            <small class="form-text text-muted">
+                「5周クリア」「XXルートだけクリア」など、どの程度遊んだ上でレビューを書くのか記載してください。
+            </small>
         </div>
 
         <div class="form-group">
-            <label for="recommendatory">オススメ</label>
-            <textarea name="recommendatory" id="recommendatory" class="form-control">{{ $draft->recommendatory }}</textarea>
-            <p class="help-block">未プレイユーザーへネタバレ無しでオススメ文を記入ください。</p>
+            <label for="text">レビュー</label>
+            <textarea name="text" id="text" class="form-control{{ invalid($errors, 'text') }}" maxlength="10000" required>{{ $draft->text }}</textarea>
+            @include('common.error', ['formName' => 'text'])
+            <small class="form-text text-muted">
+                書き方は自由です！<br>
+                良かった点や悪かった点など、思う所を書いていってください。<br>
+                <strong><span class="text-danger">ネタバレがある場合は、必ず↓にチェックを入れてください。</span></strong>
+            </small>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="is_spoiler"{{ checked(1, $draft->is_spoiler) }} value="1">
+                ネタバレあり
+            </label>
         </div>
 
+        <br>
+
         <div class="form-group">
-            <button class="btn btn-primary">確認</button>
+            <button class="btn btn-primary btn-block">確認</button>
         </div>
     </form>
 @endsection

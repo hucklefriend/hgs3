@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.14 on 2017-10-10 11:22:13.
+ * Generated for Laravel 5.5.14 on 2017-10-12 15:55:13.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -13277,7 +13277,7 @@ namespace Revolution\Amazon\ProductAdvertising\Facades {
          * 
          *
          * @param \Revolution\Amazon\ProductAdvertising\OperationInterface $operation
-         * @return array 
+         * @return mixed 
          * @static 
          */ 
         public static function run($operation)
@@ -13291,7 +13291,7 @@ namespace Revolution\Amazon\ProductAdvertising\Facades {
          * @param string $category
          * @param string $keyword
          * @param int $page
-         * @return array 
+         * @return mixed 
          * @static 
          */ 
         public static function search($category, $keyword = null, $page = 1)
@@ -13304,7 +13304,7 @@ namespace Revolution\Amazon\ProductAdvertising\Facades {
          *
          * @param string $node
          * @param string $response
-         * @return array 
+         * @return mixed 
          * @static 
          */ 
         public static function browse($node, $response = 'TopSellers')
@@ -13316,7 +13316,7 @@ namespace Revolution\Amazon\ProductAdvertising\Facades {
          * 
          *
          * @param string $asin
-         * @return array 
+         * @return mixed 
          * @static 
          */ 
         public static function item($asin)
@@ -13328,12 +13328,34 @@ namespace Revolution\Amazon\ProductAdvertising\Facades {
          * 
          *
          * @param array $asin
-         * @return array 
+         * @return mixed 
          * @static 
          */ 
         public static function items($asin)
         {
             return \Revolution\Amazon\ProductAdvertising\AmazonClient::items($asin);
+        }
+        
+        /**
+         * 
+         *
+         * @inheritDoc 
+         * @static 
+         */ 
+        public static function setIdType($idType)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::setIdType($idType);
+        }
+        
+        /**
+         * 
+         *
+         * @inheritDoc 
+         * @static 
+         */ 
+        public static function getIdType()
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::getIdType();
         }
          
     }

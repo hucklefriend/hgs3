@@ -22,11 +22,10 @@ class ReviewTotal extends \Eloquent
     {
         $sql =<<< SQL
 INSERT INTO review_totals
-(game_id, review_num, play_time, point, fear, story, volume, difficulty, graphic, sound, crowded, controllability, recommend)
+(game_id, review_num, point, fear, story, volume, difficulty, graphic, sound, crowded, controllability, recommend)
 SELECT
   {$gameId}
   , COUNT(id)
-  , IFNULL(AVG(play_time), 0)
   , IFNULL(AVG(point), 0)
   , IFNULL(AVG(fear), 0)
   , IFNULL(AVG(story), 0)
@@ -43,7 +42,6 @@ WHERE
   game_id = ?
 ON DUPLICATE KEY UPDATE
   review_num = VALUES(review_num)
-  , play_time = VALUES(play_time)
   , point = VALUES(point)
   , fear = VALUES(fear)
   , story = VALUES(story)

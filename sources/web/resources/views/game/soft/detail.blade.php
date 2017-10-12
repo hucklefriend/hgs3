@@ -230,18 +230,18 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('game/review/soft') }}/{{ $game->id }}">レビューを見る</a>
+                                        <a href="{{ url('review/soft') }}/{{ $game->id }}">レビューを見る</a>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('game/review/input') }}/{{ $game->id }}">レビューを書く</a>
+                                        <a href="{{ url('review/write') }}/{{ $game->id }}">レビューを書く</a>
                                     </div>
                                 </div>
                             </div>
                         @else
                             <div class="text-center">
-                                <a href="{{ url('game/review/soft') }}/{{ $game->id }}">レビューを見る</a>
+                                <a href="{{ url('review/soft') }}/{{ $game->id }}">レビューを見る</a>
                             </div>
                         @endif
                 </div>

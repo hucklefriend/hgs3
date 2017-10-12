@@ -6,7 +6,7 @@
 
 namespace Hgs3\Models\Game;
 
-use Hgs3\Http\Requests\Game\Review\InputRequest;
+use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
@@ -33,7 +33,7 @@ SELECT
   , pkg.game_type_id
   , pkg.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, good_num, package_id
+    SELECT id, point, user_id, post_date, title, good_num, package_id, is_spoiler
     FROM reviews
     WHERE game_id = ?
     ORDER BY id DESC
@@ -68,10 +68,10 @@ SQL;
     /**
      * 保存
      *
-     * @param InputRequest $request
+     * @param WriteRequest $request
      * @return bool|mixed
      */
-    public function save(InputRequest $request)
+    public function save(WriteRequest $request)
     {
         $orm = new \Hgs3\Models\Orm\Review;
 
@@ -138,7 +138,7 @@ SELECT
   , game_packages.item_url
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, game_id, good_num
+    SELECT id, point, user_id, post_date, title, game_id, good_num, is_spoiler
     FROM reviews
     ORDER BY id DESC
     LIMIT {$num}
@@ -192,7 +192,7 @@ SELECT
   , game_packages.item_url
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, game_id, latest_good_num, good_num
+    SELECT id, point, user_id, post_date, title, game_id, latest_good_num, good_num, is_spoiler
     FROM reviews
     ORDER BY latest_good_num DESC
     LIMIT {$num}

@@ -150,3 +150,28 @@ function csrf_tag($token)
 {
     return new \Illuminate\Support\HtmlString('<input type="hidden" name="_token" value="'.$token.'">');
 }
+
+/**
+ * checkboxとradioボタンのchecked判定
+ *
+ * @param $val1
+ * @param $val2
+ * @return string
+ */
+function checked($val1, $val2)
+{
+    if ($val1 == $val2) {
+        return ' checked';
+    }
+
+    return '';
+}
+
+function invalid($errors, $formName)
+{
+    if ($errors->has($formName)) {
+        return ' is-invalid';
+    }
+
+    return '';
+}

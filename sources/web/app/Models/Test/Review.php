@@ -31,7 +31,6 @@ class Review
                 'user_id'         => $users[rand(0, $userMax)],
                 'game_id'         => $pkg->game_id,
                 'package_id'      => $pkg->id,
-                'play_time'       => rand(2, 99),
                 'fear'            => rand(0, 5),
                 'story'           => rand(0, 5),
                 'volume'          => rand(0, 5),
@@ -41,9 +40,10 @@ class Review
                 'crowded'         => rand(0, 5),
                 'controllability' => rand(0, 5),
                 'recommend'       => rand(0, 5),
-                'thoughts'        => str_random(100),
-                'recommendatory'  => str_random(100),
-                'title'           => str_random(100),
+                'is_spoiler'      => rand(0, 1),
+                'progress'        => str_random(rand(50, 300)),
+                'text'            => str_random(rand(50, 3000)),
+                'title'           => str_random(rand(5, 100)),
                 'post_date'       => new \DateTime()
             ]);
             $orm->save();

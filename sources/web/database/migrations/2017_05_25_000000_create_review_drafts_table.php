@@ -21,7 +21,7 @@ class CreateReviewDraftsTable extends Migration
             $table->unsignedInteger('game_id')->comment('ゲームソフトID');
             $table->unsignedInteger('package_id')->comment('パッケージID');
             $table->unsignedSmallInteger('play_time')->comment('プレイ時間');
-            $table->string('title', 50)->comment('一言');
+            $table->string('title', 0)->comment('一言');
             $table->unsignedTinyInteger('point')->comment('ポイント');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
             $table->unsignedTinyInteger('story')->comment('シナリオ');
@@ -32,9 +32,11 @@ class CreateReviewDraftsTable extends Migration
             $table->unsignedTinyInteger('crowded')->comment('やりこみ');
             $table->unsignedTinyInteger('controllability')->comment('操作性');
             $table->unsignedTinyInteger('recommend')->comment('オススメ度');
-            $table->text('thoughts')->comment('感想');
-            $table->text('recommendatory')->comment('オススメ');
+            $table->text('progress')->comment('ゲームの進行状態');
+            $table->text('text')->comment('レビュー本文');
+            $table->unsignedTinyInteger('is_spoiler')->default(0)->comment('ネタバレ有無');
             $table->timestamps();
+            $table->primary(['user_id', 'package_id']);
         });
     }
 

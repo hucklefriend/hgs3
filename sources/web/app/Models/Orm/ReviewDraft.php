@@ -41,51 +41,14 @@ class ReviewDraft extends \Eloquent
             'recommendatory'  => '',
         ]);
     }
-/*
-    public function insert()
-    {
-        return DB::table($this->getTable())
-            ->insert([
-                'user_id'         => $this->user_id,
-                'game_id'         => $this->game_id,
-                'package_id'      => $this->package_id,
-                'play_time'       => $this->play_time,
-                'title'           => $this->title,
-                'fear'            => $this->fear,
-                'story'           => $this->story,
-                'volume'          => $this->volume,
-                'difficulty'      => $this->difficulty,
-                'graphic'         => $this->graphic,
-                'sound'           => $this->sound,
-                'crowded'         => $this->crowded,
-                'controllability' => $this->controllability,
-                'recommend'       => $this->recommend,
-                'thoughts'        => $this->thoughts,
-                'recommendatory'  => $this->recommendatory,
-            ]);
-    }
 
-    public function update(array $attributes = [], array $options = [])
+    /**
+     * ポイントの計算
+     */
+    public function calcPoint()
     {
-        return DB::table($this->getTable())
-            ->where('user_id', $this->user_id)
-            ->where('game_id', $this->game_id)
-            ->update([
-                'package_id'      => $this->package_id,
-                'play_time'       => $this->play_time,
-                'title'           => $this->title,
-                'fear'            => $this->fear,
-                'story'           => $this->story,
-                'volume'          => $this->volume,
-                'difficulty'      => $this->difficulty,
-                'graphic'         => $this->graphic,
-                'sound'           => $this->sound,
-                'crowded'         => $this->crowded,
-                'controllability' => $this->controllability,
-                'recommend'       => $this->recommend,
-                'thoughts'        => $this->thoughts,
-                'recommendatory'  => $this->recommendatory,
-            ]);
+        $this->point =
+            $this->fear * 4 + ($this->story + $this->volume + $this->difficulty +
+                $this->graphic + $this->sound + $this->crowded + $this->controllability + $this->recommend) * 2;
     }
-*/
 }

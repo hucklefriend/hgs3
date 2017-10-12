@@ -5,20 +5,17 @@
 
 namespace Hgs3\Http\Controllers\Review;
 
-use Hgs3\Constants\InjusticeStatus;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Game\Review\InputRequest;
+use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Game\Review;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GamePackage;
-use Hgs3\Models\Orm\InjusticeReview;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Request;
 
 class ReviewController extends Controller
 {
@@ -68,7 +65,6 @@ class ReviewController extends Controller
             $data['reviews'] = $review->getNewArrivals($game->id, 10);
 
             $pager = new LengthAwarePaginator([], $total->review_num, 10);
-            //$pager->setPath('game/review/soft/' . $game->id);
             $pager->setPath('');
 
             $data['pager'] = $pager;
@@ -93,7 +89,7 @@ class ReviewController extends Controller
             ->orderBy('release_int')
             ->get();
 
-        if (Input::get('back', 0) == 1 && !empty(old())) {
+        if (!empty(old())) {
             $draft = new ReviewDraft(old());
         } else {
             $review = new Review;
@@ -113,15 +109,17 @@ class ReviewController extends Controller
     /**
      * 確認
      *
+     * @param WriteRequest $request
      * @param Game $game
      */
-    public function confirm(InputRequest $request, Game $game)
+    public function confirm(WriteRequest $request, Game $game)
     {
         $draft = new ReviewDraft;
         $this->setDraftData($request, $draft);
 
         return view('review.confirm')->with([
             'game'  => $game,
+            'user'  => Auth::user(),
             'draft' => $draft
         ]);
     }
@@ -129,10 +127,10 @@ class ReviewController extends Controller
     /**
      * 保存
      *
-     * @param InputRequest $request
+     * @param WriteRequest $request
      * @param Game $game
      */
-    public function save(InputRequest $request, Game $game)
+    public function save(WriteRequest $request, Game $game)
     {
         // TODO: 発売日が過ぎているか
 
@@ -141,7 +139,7 @@ class ReviewController extends Controller
 
         if ($draftType == -1) {
             // 入力画面に戻る
-            return redirect('game/review/input/' . $game->id . '?back=1')->withInput();
+            return redirect('review/write/' . $game->id . '?back=1')->withInput();
         } if ($draftType == 1) {
             // 下書き保存
             $draft = ReviewDraft::find(Auth::id());
@@ -152,7 +150,7 @@ class ReviewController extends Controller
             $this->setDraftData($request, $draft);
             $draft->save();
 
-            return view('game.review.saveDraft')->with([
+            return view('review.saveDraft')->with([
                 'gameId' => $draft->game_id
             ]);
         } else {
@@ -170,17 +168,15 @@ class ReviewController extends Controller
     /**
      * 下書きモデルに値をセット
      *
-     * @param InputRequest $request
+     * @param WriteRequest $request
      * @param ReviewDraft $draft
      */
-    private function setDraftData(InputRequest $request, ReviewDraft $draft)
+    private function setDraftData(WriteRequest $request, ReviewDraft $draft)
     {
         $draft->user_id = \Auth::id();
         $draft->game_id = $request->get('game_id');
         $draft->package_id = $request->get('package_id');
-        $draft->play_time = $request->get('play_time') ?? 0;
         $draft->title = $request->get('title') ?? '';
-        $draft->point = 0;
         $draft->fear = $request->get('fear') ?? 3;
         $draft->story = $request->get('story') ?? 3;
         $draft->volume = $request->get('volume') ?? 3;
@@ -190,8 +186,10 @@ class ReviewController extends Controller
         $draft->crowded = $request->get('crowded') ?? 3;
         $draft->controllability = $request->get('controllability') ?? 3;
         $draft->recommend = $request->get('recommend') ?? 3;
-        $draft->thoughts = $request->get('thoughts') ?? '';
-        $draft->recommendatory = $request->get('recommendatory') ?? '';
+        $draft->progress = $request->get('progress') ?? '';
+        $draft->text = $request->get('text') ?? '';
+        $draft->is_spoiler = $request->get('is_spoiler') ?? 0;
+        $draft->calcPoint();
     }
 
     /**
@@ -267,8 +265,6 @@ class ReviewController extends Controller
     public function goodHistory(\Hgs3\Models\Orm\Review $review)
     {
         // TODO 投稿者本人しか見られない
-
-
 
         $r = new Review;
         $his = $r->getGoodHistory($review->id);

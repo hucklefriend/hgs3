@@ -34,7 +34,7 @@
                         <div class="form-group form-group-sm">
                             <input id="email" type="email" class="form-control form-control-sm" name="email" value="{{ old('email') }}" required placeholder="メールアドレス">
                         </div>
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                             <input id="password" type="password" class="form-control form-control-sm" name="password" required placeholder="パスワード">
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">ログイン</button>

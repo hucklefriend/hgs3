@@ -56,7 +56,7 @@ Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
 // レビュー
 Route::get('/review', 'Review\ReviewController@index')->name('review');
-Route::get('/review/input/{game}', 'Review\ReviewController@input')->middleware('auth');
+Route::get('/review/write/{game}', 'Review\ReviewController@input')->middleware('auth');
 Route::post('/review/confirm/{game}', 'Review\ReviewController@confirm')->middleware('auth');
 Route::post('/review/save/{game}', 'Review\ReviewController@save')->middleware('auth');
 Route::get('/review/soft/{game}', 'Review\ReviewController@soft');

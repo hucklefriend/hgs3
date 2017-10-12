@@ -1732,16 +1732,16 @@
         },
         {
             "name": "revolution/laravel-amazon-product-api",
-            "version": "0.2.3",
+            "version": "0.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kawax/laravel-amazon-product-api.git",
-                "reference": "d013fe850dbb1b885685ee198c3872a2a4c86fbe"
+                "reference": "764c8ba2f8a17bbe22001e10b9176085c99988cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kawax/laravel-amazon-product-api/zipball/d013fe850dbb1b885685ee198c3872a2a4c86fbe",
-                "reference": "d013fe850dbb1b885685ee198c3872a2a4c86fbe",
+                "url": "https://api.github.com/repos/kawax/laravel-amazon-product-api/zipball/764c8ba2f8a17bbe22001e10b9176085c99988cb",
+                "reference": "764c8ba2f8a17bbe22001e10b9176085c99988cb",
                 "shasum": ""
             },
             "require": {
@@ -1785,7 +1785,7 @@
                 "amazon",
                 "laravel"
             ],
-            "time": "2017-09-25T14:14:51+00:00"
+            "time": "2017-10-12T01:03:03+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
