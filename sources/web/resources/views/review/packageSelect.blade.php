@@ -9,12 +9,9 @@
 
     <hr>
 
-
-    <div class="alert alert-info" role="alert">
-        レビューを書くパッケージを選んでください。<br>
-        パッケージ毎にレビューを投稿できます。
+    <div class="alert alert-secondary" role="alert">
+        レビューを書くパッケージを選んでください。
     </div>
-
 
     @foreach ($packages as $pkg)
         <div class="d-flex align-items-stretch">
@@ -27,7 +24,8 @@
                 </div>
                 <div>
                     <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
-                    <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
+                    <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}<br>
+                    <i class="fa fa-calendar" aria-hidden="true"></i> {{ $pkg->release_date }}
                 </div>
                 <div>
                     <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url2('img/assocbutt_or_detail._V371070159_.png') }}"></a>
@@ -35,17 +33,20 @@
             </div>
         </div>
         <div style="margin: 10px 8px;" class="d-flex">
+            @if ($pkg->release_int > $dateInt)
+                <div class="alert alert-dark" role="alert">発売後に投稿できます。</div>
+            @else
             <div style="padding: 5px 0;">
-        @if (isset($written[$pkg->id]))
-            <p>このパッケージのレビューは投稿済みです。</p>
-            <a href="{{ url2('review/detail') }}/{{ $written[$pkg->id] }}">このパッケージのレビューを確認</a>
-        @else
-            @if (isset($drafts[$pkg->id]))
+                    @if (isset($written[$pkg->id]))
+                <p>このパッケージのレビューは投稿済みです。</p>
+                <a href="{{ url2('review/detail') }}/{{ $written[$pkg->id] }}">このパッケージのレビューを確認</a>
+                    @else
+                        @if (isset($drafts[$pkg->id]))
                 <span class="badge badge-info">下書き保存中</span><br>
-            @endif
-            <i class="fa fa-pencil" aria-hidden="true"></i>
-            <a href="{{ url2('review/write') }}/{{ $pkg->id }}">このパッケージのレビューを書く</a>
-        @endif
+                        @endif
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                <a href="{{ url2('review/write') }}/{{ $pkg->id }}">このパッケージのレビューを書く</a>
+                    @endif
             </div>
 
             @if (isset($drafts[$pkg->id]))
@@ -56,6 +57,7 @@
                         <button class="btn btn-warning btn-sm">下書きを削除</button>
                     </form>
                 </div>
+            @endif
             @endif
         </div>
 

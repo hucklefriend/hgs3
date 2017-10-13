@@ -357,10 +357,10 @@ SQL;
         $sql =<<< SQL
 SELECT
   pkg.*
-  , p.name platform_name
+  , p.acronym platform_name
   , c.name company_name
 FROM  (
-  SELECT id, platform_id, name, small_image_url, item_url, company_id
+  SELECT id, platform_id, name, small_image_url, item_url, company_id, release_date, release_int
   FROM game_packages
   WHERE game_id = ?
   ORDER BY release_int

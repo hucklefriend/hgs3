@@ -14,6 +14,7 @@ use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
 use Hgs3\User;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
@@ -87,8 +88,21 @@ class ReviewController extends Controller
             'packages'  => $review->getPackageList($game->id),
             'drafts'    => ReviewDraft::getHashByGame(Auth::id(), $game->id),
             'written'   => \Hgs3\Models\Orm\Review::getHashByGame(Auth::id(), $game->id),
-            'csrfToken' => csrf_token()
+            'csrfToken' => csrf_token(),
+            'dateInt'   => $this->getDateInt()
         ]);
+    }
+
+    /**
+     * 今日の日付のintを取得(yyyymmdd)
+     *
+     * @return int
+     */
+    private function getDateInt()
+    {
+        return 19971212;
+        $dt = new \DateTime();
+        return intval($dt->format('Ymd'));
     }
 
     /**
@@ -99,7 +113,10 @@ class ReviewController extends Controller
      */
     public function input(GamePackage $gamePackage)
     {
-        // TODO 発売日が過ぎているか
+        // 発売日が過ぎていないパッケージ
+        if ($gamePackage->release_int < $this->getDateInt()) {
+            App::abort(404);
+        }
 
         $isDraft = false;
         if (!empty(old())) {
@@ -228,6 +245,40 @@ class ReviewController extends Controller
         $draft = ReviewDraft::getData(Auth::id(), $packageId);
         if ($draft) {
             $draft->delete();
+        }
+
+        return redirect()->back();
+    }
+
+    public function edit(\Hgs3\Models\Orm\Review $review)
+    {
+        if ($review->user_id != Auth::id()) {
+            // 他のユーザーのデータを編集しようとしている
+            App::abort(403);
+        }
+    }
+
+    public function update(WriteRequest $request, \Hgs3\Models\Orm\Review $review)
+    {
+        if ($review->user_id != Auth::id()) {
+            // 他のユーザーのデータを編集しようとしている
+            App::abort(403);
+        }
+
+        return redirect('review/detail/' . $review->id);
+    }
+
+    /**
+     * データ削除
+     *
+     * @param \Hgs3\Models\Orm\Review $review
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(\Hgs3\Models\Orm\Review $review)
+    {
+        if ($review->user_id != Auth::id()) {
+            // 他のユーザーのデータを削除しようとしている
+            App::abort(403);
         }
 
         return redirect()->back();
