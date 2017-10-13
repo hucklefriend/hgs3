@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        .review_value_text {
+            margin-left: 10px;
+        }
+
+        .value_label {
+            width: 120px;
+        }
+    </style>
+
     <div class="d-flex align-items-stretch">
         <div class="align-self-top p-2">
             @include ('game.common.package_image', ['imageUrl' => $package->small_image_url])
@@ -25,291 +35,185 @@
             <input type="text" name="title" id="title" class="form-control{{ invalid($errors, 'title') }}" value="{{ $draft->title }}" maxlength="100" required>
             @include('common.error', ['formName' => 'title'])
         </div>
-        <div class="form-group row">
-            <label for="fear" class="col-sm-2 col-form-label">怖さ</label>
-            <div class="col-sm-10 mx-auto">
-                <input type="range" name="fear" id="fear" value="{{ $draft->fear }}" min="0" max="5">
-                <span style="vertical-align: middle;">{{ $draft->fear }}</span>
-            </div>
-        </div>
+        <div class="d-flex">
+            <div class="d-none d-sm-block">
+                <div class="align-self-center">
+                    <div style="min-width: 320px;max-width: 500px;width: 100%;">
+                        <canvas id="review_chart"></canvas>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+                        <script>
+                            $(function (){
+                                let ctx = $("#review_chart");
 
+                                let data = {
+                                    labels: ["怖さ", "シナリオ", "ボリューム", "グラフィック", "サウンド", "操作性", "難易度", "やりこみ", "オススメ"],
+                                    datasets: [{
+                                        fill: false,
+                                        label: "",
+                                        backgroundColor: "white",
+                                        borderColor: "red",
+                                        pointBackgroundColor: "red",
+                                        data: [
+                                            {{ $draft->fear }},
+                                            {{ $draft->story }},
+                                            {{ $draft->volume }},
+                                            {{ $draft->graphic }},
+                                            {{ $draft->sound }},
+                                            {{ $draft->controllability }},
+                                            {{ $draft->difficulty }},
+                                            {{ $draft->crowded }},
+                                            {{ $draft->recommend }}
+                                        ]
+                                    }]
+                                };
 
-{{--
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="fear" id="fear1" value="1" @if ($draft->fear == 1) checked @endif> 1
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="fear" id="fear2" value="2" @if ($draft->fear == 2) checked @endif> 2
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="fear" id="fear3" value="3" @if ($draft->fear == 3) checked @endif> 3
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="fear" id="fear4" value="4" @if ($draft->fear == 4) checked @endif> 4
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="fear" id="fear5" value="5" @if ($draft->fear == 5) checked @endif> 5
-                    </label>
-                </div>
---}}
+                                let chart = new Chart(ctx, {
+                                    type: 'radar',
+                                    data: data,
+                                    options: {
+                                        legend: {
+                                            display: false,
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: false
+                                        },
+                                        scale: {
+                                            ticks: {
+                                                beginAtZero: true,
+                                                stepSize: 1,
+                                                min: 0,
+                                                max: 5
+                                            }
+                                        }
+                                    },
+                                    responsive: true
+                                });
 
-        <div class="form-group row">
-            <label class="col-2 col-form-label">シナリオ</label>
-            <div class="col-10">
-                <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="story" id="story1" value="1" @if ($draft->story == 1) checked @endif> 1
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="story" id="story2" value="2" @if ($draft->story == 2) checked @endif> 2
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="story" id="story3" value="3" @if ($draft->story == 3) checked @endif> 3
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="story" id="story4" value="4" @if ($draft->story == 4) checked @endif> 4
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="story" id="story5" value="5" @if ($draft->story == 5) checked @endif> 5
-                </label>
-            </div>
-            </div>
-        </div>
+                                $('.value_range').on('input', function (){
+                                    let range = $(this);
+                                    let idx = parseInt(range.data('index'));
+                                    let val = parseInt(range.val());
 
-        <div class="form-group row">
-            <label class="col-2 col-form-label">ボリューム</label>
-            <div class="col-10">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="volume" id="volume1" value="1" @if ($draft->volume == 1) checked @endif> 1
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="volume" id="volume2" value="2" @if ($draft->volume == 2) checked @endif> 2
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="volume" id="volume3" value="3" @if ($draft->volume == 3) checked @endif> 3
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="volume" id="volume4" value="4" @if ($draft->volume == 4) checked @endif> 4
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="volume" id="volume5" value="5" @if ($draft->volume == 5) checked @endif> 5
-                    </label>
+                                    console.debug(range.data('index') + ':' + val);
+
+                                    chart.data.datasets[0].data[idx] = val;
+                                    chart.update({
+                                        duration: 800,
+                                        easing: 'easeOutBounce'
+                                    });
+
+                                    $('#' + range.attr('id') + '_value').text(val);
+
+                                });
+                            });
+                        </script>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-2 col-form-label">グラフィック</label>
-            <div class="col-10">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="graphic" id="graphic1" value="1" @if ($draft->graphic == 1) checked @endif> 1
-                    </label>
+            <div>
+                <div class="form-group d-flex">
+                <label for="fear" class="col-form-label value_label">怖さ</label>
+                <div class="d-flex align-items-stretch">
+                    <div class="d-flex justify-content-center">
+                        <input type="range"  data-index="0" class="form-control value_range" name="fear" id="fear" value="{{ $draft->fear }}" min="0" max="5">
+                    </div>
+                    <div class="d-flex justify-content-center review_value_text">
+                        <span id="fear_value">{{ $draft->fear }}</span>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="graphic" id="graphic2" value="2" @if ($draft->graphic == 2) checked @endif> 2
-                    </label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="graphic" id="graphic3" value="3" @if ($draft->graphic == 3) checked @endif> 3
-                    </label>
+                <div class="form-group d-flex">
+                    <label for="story" class="value_label col-form-label">シナリオ</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range" data-index="1" class="form-control value_range" name="story" id="story" value="{{ $draft->story }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="story_value">{{ $draft->story }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="graphic" id="graphic4" value="4" @if ($draft->graphic == 4) checked @endif> 4
-                    </label>
+                <div class="form-group d-flex">
+                    <label for="volume" class="value_label col-form-label">ボリューム</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range" data-index="2" class="form-control value_range" name="volume" id="volume" value="{{ $draft->volume }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="volume_value">{{ $draft->volume }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="graphic" id="graphic5" value="5" @if ($draft->graphic == 5) checked @endif> 5
-                    </label>
+                <div class="form-group d-flex">
+                    <label for="graphic" class="value_label col-form-label">グラフィック</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range" data-index="3" class="form-control value_range" name="graphic" id="graphic" value="{{ $draft->graphic }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="graphic_value">{{ $draft->graphic }}</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-2 col-form-label">サウンド</label>
-            <div class="col-10">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="sound" id="sound1" value="1" @if ($draft->sound == 1) checked @endif> 1
-                    </label>
+                <div class="form-group d-flex">
+                    <label for="sound" class="value_label col-form-label">サウンド</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range" data-index="4" class="form-control value_range" name="sound" id="sound" value="{{ $draft->sound }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="sound_value">{{ $draft->sound }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="sound" id="sound2" value="2" @if ($draft->sound == 2) checked @endif> 2
-                    </label>
+                <div class="form-group d-flex">
+                    <label for="controllability" class="value_label col-form-label">操作性</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range" data-index="5" class="form-control value_range" name="sound" id="sound" value="{{ $draft->controllability }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="controllability_value">{{ $draft->controllability }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="sound" id="sound3" value="3" @if ($draft->sound == 3) checked @endif> 3
-                    </label>
+                <div class="form-group d-flex">
+                    <label for="difficulty" class="value_label col-form-label">難易度</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range" data-index="6" class="form-control value_range" name="difficulty" id="difficulty" value="{{ $draft->difficulty }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="difficulty_value">{{ $draft->difficulty }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="sound" id="sound4" value="4" @if ($draft->sound == 4) checked @endif> 4
-                    </label>
+                <div class="form-group d-flex">
+                    <label for="crowded" class="value_label col-form-label">やりこみ</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range" data-index="7" class="form-control value_range" name="crowded" id="crowded" value="{{ $draft->crowded }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="crowded_value">{{ $draft->crowded }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="sound" id="sound5" value="5" @if ($draft->sound == 5) checked @endif> 5
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-2 col-form-label">操作性</label>
-            <div class="col-10">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="controllability" id="controllability1" value="1" @if ($draft->controllability == 1) checked @endif> 1
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="controllability" id="controllability2" value="2" @if ($draft->controllability == 2) checked @endif> 2
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="controllability" id="controllability3" value="3" @if ($draft->controllability == 3) checked @endif> 3
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="controllability" id="controllability4" value="4" @if ($draft->controllability == 4) checked @endif> 4
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="controllability" id="controllability5" value="5" @if ($draft->controllability == 5) checked @endif> 5
-                    </label>
+                <div class="form-group d-flex">
+                    <label for="recommend" class="value_label col-form-label">オススメ</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range" data-index="8" class="form-control value_range" name="recommend" id="recommend" value="{{ $draft->recommend }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="recommend_value">{{ $draft->recommend }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="form-group row">
-            <label class="col-2 col-form-label">難易度</label>
-            <div class="col-10">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="difficulty" id="difficulty1" value="1" @if ($draft->difficulty == 1) checked @endif> 1
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="difficulty" id="difficulty2" value="2" @if ($draft->difficulty == 2) checked @endif> 2
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="difficulty" id="difficulty3" value="3" @if ($draft->difficulty == 3) checked @endif> 3
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="difficulty" id="difficulty4" value="4" @if ($draft->difficulty == 4) checked @endif> 4
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="difficulty" id="difficulty5" value="5" @if ($draft->difficulty == 5) checked @endif> 5
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-2 col-form-label">やりこみ</label>
-            <div class="col-10">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="crowded" id="crowded1" value="1" @if ($draft->crowded == 1) checked @endif> 1
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="crowded" id="crowded2" value="2" @if ($draft->crowded == 2) checked @endif> 2
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="crowded" id="crowded3" value="3" @if ($draft->crowded == 3) checked @endif> 3
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="crowded" id="crowded4" value="4" @if ($draft->crowded == 4) checked @endif> 4
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="crowded" id="crowded5" value="5" @if ($draft->crowded == 5) checked @endif> 5
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-2 col-form-label">オススメ</label>
-            <div class="col-10">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend1" value="1" @if ($draft->recommend == 1) checked @endif> 1
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend2" value="2" @if ($draft->recommend == 2) checked @endif> 2
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend3" value="3" @if ($draft->recommend == 3) checked @endif> 3
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend4" value="4" @if ($draft->recommend == 4) checked @endif> 4
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="recommend" id="recommend5" value="5" @if ($draft->recommend == 5) checked @endif> 5
-                    </label>
-                </div>
-            </div>
-        </div>
-
         <div class="form-group">
             <label for="progress">ゲームのプレイ状況</label>
             <textarea name="progress" id="progress" class="form-control{{ invalid($errors, 'progress') }}" maxlength="300" required>{{ $draft->progress }}</textarea>
@@ -347,7 +251,6 @@
         $(function (){
             $('.package_check').on('click', function(){
                 $('.package_select_item.selected').removeClass('selected');
-
 
                 $(this).parents('.package_select_item').addClass('selected');
             });
