@@ -200,7 +200,8 @@ SQL;
         return DB::table('review_good_histories')
             ->where('review_id', $reviewId)
             ->where('user_id', $userId)
-            ->count() == 1;
+            ->get()
+            ->isNotEmpty();
     }
 
     /**

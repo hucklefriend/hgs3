@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Review extends \Eloquent
 {
@@ -61,5 +62,18 @@ class Review extends \Eloquent
         unset($data);
 
         return $result;
+    }
+
+    /**
+     * いいね履歴を取得する
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getGoodHistory()
+    {
+        return DB::table('review_good_histories')
+            ->where('review_id', $this->id)
+            ->orderBy('good_date', 'DESC')
+            ->paginate(20);
     }
 }

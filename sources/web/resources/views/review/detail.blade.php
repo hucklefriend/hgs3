@@ -59,7 +59,7 @@
                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $review->good_num }}
             @endif
             @if ($isWriter)
-                <a href="{{ url2('game/review/good_history') }}/{{ $review->id }}">いいねしてくれたユーザー一覧</a>
+                <a href="{{ url2('review/good_history') }}/{{ $review->id }}">いいねしてくれたユーザー一覧</a>
             @endif
         </div>
     </section>

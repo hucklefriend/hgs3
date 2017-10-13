@@ -284,46 +284,12 @@ class ReviewController extends Controller
     }
 
     /**
-     * いいね
-     *
-     * @param \Hgs3\Models\Orm\Review $review
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function good(\Hgs3\Models\Orm\Review $review)
-    {
-        $r = new Review();
-        if (!$r->hasGood($review->id, Auth::id())) {
-            $r->good($review, Auth::id());
-        }
-
-        return redirect()->back();
-    }
-
-    /**
-     * いいね取り消し
-     *
-     * @param \Hgs3\Models\Orm\Review $review
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function cancelGood(\Hgs3\Models\Orm\Review $review)
-    {
-        $r = new Review();
-        if ($r->hasGood($review->id, Auth::id())) {
-            $r->cancelGood($review, Auth::id());
-        }
-
-        return redirect()->back();
-    }
-
-    /**
      * 詳細
      *
      * @param \Hgs3\Models\Orm\Review $review
      */
     public function show(\Hgs3\Models\Orm\Review $review)
     {
-        // TODO レビュー存在しない
-
         $game = Game::find($review->game_id);
 
         $r = new Review();
@@ -345,29 +311,6 @@ class ReviewController extends Controller
             'hasGood'   => $hasGood,
             'user'      => User::find($review->user_id),
             'csrfToken' => csrf_token()
-        ]);
-    }
-
-    /**
-     * いいね履歴
-     *
-     * @param \Hgs3\Models\Orm\Review $review
-     */
-    public function goodHistory(\Hgs3\Models\Orm\Review $review)
-    {
-        // TODO 投稿者本人しか見られない
-
-        $r = new Review;
-        $his = $r->getGoodHistory($review->id);
-        $users = [];
-        if (!empty($his)) {
-            $users = User::getNameHash(array_pluck($his, 'user_id'));
-        }
-
-        return view('review.good_history')->with([
-            'review'    => $review,
-            'histories' => $his,
-            'users'     => $users
         ]);
     }
 }
