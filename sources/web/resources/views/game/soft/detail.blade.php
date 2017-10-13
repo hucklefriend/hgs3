@@ -230,7 +230,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('review/soft') }}/{{ $game->id }}">レビューを見る</a>
+                                        <a href="{{ url('review/game') }}/{{ $game->id }}">レビューを見る</a>
                                     </div>
                                 </div>
                                 <div class="col-6">

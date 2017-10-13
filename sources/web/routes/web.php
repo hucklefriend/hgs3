@@ -59,7 +59,8 @@ Route::get('/review/package_select/{game}', 'Review\ReviewController@packageSele
 Route::get('/review/write/{gamePackage}', 'Review\ReviewController@input')->middleware('auth');
 Route::post('/review/confirm/{gamePackage}', 'Review\ReviewController@confirm')->middleware('auth');
 Route::post('/review/save/{gamePackage}', 'Review\ReviewController@save')->middleware('auth');
-Route::get('/review/soft/{game}', 'Review\ReviewController@soft');
+Route::delete('/review/draft/{packageId}', 'Review\ReviewController@deleteDraft')->middleware('auth');
+Route::get('/review/game/{game}', 'Review\ReviewController@game');
 Route::post('/review/good/{review}', 'Review\ReviewController@good')->middleware('auth');
 Route::delete('/review/good/{review}', 'Review\ReviewController@cancelGood')->middleware('auth');
 Route::get('/review/detail/{review}', 'Review\ReviewController@show');

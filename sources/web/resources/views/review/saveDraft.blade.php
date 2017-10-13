@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div>下書きを保存しました。</div>
+    <h4>下書きを保存しました。</h4>
 
-    <nav style="margin-top: 10px; margin-bottom: 10px;">
-        <a href="{{ url('game/soft') }}/{{ $gameId }}">詳細へ</a> |
-        <a href="{{ url('review/input') }}/{{ $gameId }}">入力画面に戻る</a> |
-        <a href="{{ url('user/review') }}">自分のレビュー一覧</a>
-    </nav>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{{ url('game/soft') }}/{{ $game->id }}" class="block_link">{{ $game->name }}の詳細</a></li>
+        <li class="list-group-item"><a href="{{ url('review/game') }}/{{ $game->id }}" class="block_link">{{ $game->name }}のレビュー一覧</a></li>
+        <li class="list-group-item"><a href="{{ url('mypage/review') }}" class="block_link">自分のレビュー一覧</a></li>
+    </ul>
 
 @endsection

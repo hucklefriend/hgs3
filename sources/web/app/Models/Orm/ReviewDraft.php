@@ -66,4 +66,18 @@ class ReviewDraft extends \Eloquent
             ->get()
             ->pluck('package_id', 'package_id');
     }
+
+    /**
+     * データを取得
+     *
+     * @param int $userId
+     * @param int $packageId
+     * @return Model|null|static
+     */
+    public static function getData($userId, $packageId)
+    {
+        return ReviewDraft::where('user_id', $userId)
+            ->where('package_id', $packageId)
+            ->first();
+    }
 }

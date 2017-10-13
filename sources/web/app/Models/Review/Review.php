@@ -69,28 +69,13 @@ SQL;
      * 保存
      *
      * @param WriteRequest $request
+     * @param ReviewDraft $draft
      * @return bool|mixed
      */
-    public function save(WriteRequest $request)
+    public function save(WriteRequest $request, ReviewDraft $draft)
     {
-        $orm = new \Hgs3\Models\Orm\Review;
-
-        $orm->user_id = \Auth::id();
-        $orm->game_id = $request->get('game_id');
-        $orm->package_id = $request->get('package_id');
-        $orm->play_time = $request->get('play_time') ?? 0;
-        $orm->title = $request->get('title') ?? '';
-        $orm->fear = $request->get('fear') ?? 0;
-        $orm->story = $request->get('story') ?? 0;
-        $orm->volume = $request->get('volume') ?? 0;
-        $orm->difficulty = $request->get('difficulty') ?? 0;
-        $orm->graphic = $request->get('graphic') ?? 0;
-        $orm->sound = $request->get('sound') ?? 0;
-        $orm->crowded = $request->get('crowded') ?? 0;
-        $orm->controllability = $request->get('controllability') ?? 0;
-        $orm->recommend = $request->get('recommend') ?? 0;
-        $orm->thoughts = $request->get('thoughts') ?? '';
-        $orm->recommendatory = $request->get('recommendatory') ?? '';
+        $orm = new \Hgs3\Models\Orm\Review($draft->toArray());
+        $orm->post_date = new \DateTime();
 
         DB::beginTransaction();
         try {

@@ -60,7 +60,7 @@
         <div class="form-group">
             <button class="btn btn-link" name="draft" value="-1">入力画面に戻る</button>
             <button class="btn btn-warning" style="margin-left: 30px;" name="draft" value="1">下書き保存</button>
-            <button class="btn btn-primary" style="margin-left: 30px;" name="draft" value="0">保存</button>
+            <button class="btn btn-primary" style="margin-left: 30px;" name="draft" value="0">レビューを投稿</button>
         </div>
     </form>
 @endsection

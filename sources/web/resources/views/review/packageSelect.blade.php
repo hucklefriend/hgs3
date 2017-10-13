@@ -34,19 +34,29 @@
                 </div>
             </div>
         </div>
-        <div style="margin: 10px 8px;">
-            <span style="padding: 5px 0;">
+        <div style="margin: 10px 8px;" class="d-flex">
+            <div style="padding: 5px 0;">
         @if (isset($written[$pkg->id]))
             <p>このパッケージのレビューは投稿済みです。</p>
             <a href="{{ url2('review/detail') }}/{{ $written[$pkg->id] }}">このパッケージのレビューを確認</a>
         @else
             @if (isset($drafts[$pkg->id]))
-                <span class="badge badge-warning">下書き保存中</span><br>
+                <span class="badge badge-info">下書き保存中</span><br>
             @endif
             <i class="fa fa-pencil" aria-hidden="true"></i>
             <a href="{{ url2('review/write') }}/{{ $pkg->id }}">このパッケージのレビューを書く</a>
         @endif
-            </span>
+            </div>
+
+            @if (isset($drafts[$pkg->id]))
+                <div class="align-self-end" style="margin-left: 10px;">
+                    <form method="POST" action="{{ url2('review/draft') }}/{{ $pkg->id }}" onsubmit="return confirm('下書きを削除してよろしいですか？');">
+                        {{ csrf_tag($csrfToken) }}
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-warning btn-sm">下書きを削除</button>
+                    </form>
+                </div>
+            @endif
         </div>
 
         @if (!$loop->last) <hr> @endif

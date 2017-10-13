@@ -46,7 +46,7 @@ class ReviewController extends Controller
      *
      * @param Game $game
      */
-    public function soft(Game $game)
+    public function game(Game $game)
     {
         // TODO 発売日が過ぎていないと投稿するリンクは出さない
 
@@ -83,12 +83,12 @@ class ReviewController extends Controller
         $review = new \Hgs3\Models\Review\Review();
 
         return view('review.packageSelect', [
-            'game'     => $game,
-            'packages' => $review->getPackageList($game->id),
-            'drafts'   => ReviewDraft::getHashByGame(Auth::id(), $game->id),
-            'written'  => \Hgs3\Models\Orm\Review::getHashByGame(Auth::id(), $game->id)
+            'game'      => $game,
+            'packages'  => $review->getPackageList($game->id),
+            'drafts'    => ReviewDraft::getHashByGame(Auth::id(), $game->id),
+            'written'   => \Hgs3\Models\Orm\Review::getHashByGame(Auth::id(), $game->id),
+            'csrfToken' => csrf_token()
         ]);
-
     }
 
     /**
@@ -99,18 +99,13 @@ class ReviewController extends Controller
      */
     public function input(GamePackage $gamePackage)
     {
-        // TODO 下書きがあるかチェック
-        // TODO 同一ソフトのパッケージがあればその旨出力
-        // TODO 同一ソフトの他パッケージの内容コピー
         // TODO 発売日が過ぎているか
 
         $isDraft = false;
         if (!empty(old())) {
             $draft = new ReviewDraft(old());
         } else {
-            $draft = ReviewDraft::where('user_id', Auth::id())
-                ->where('package_id', $gamePackage->id)
-                ->first();
+            $draft = ReviewDraft::getData(Auth::id(), $gamePackage->id);
             if ($draft == null) {
                 $draft = ReviewDraft::getDefault(Auth::id(), $gamePackage->game_id);
             } else {
@@ -163,7 +158,7 @@ class ReviewController extends Controller
             return redirect('review/write/' . $gamePackage->id)->withInput();
         } if ($draftType == 1) {
             // 下書き保存
-            $draft = ReviewDraft::find(Auth::id());
+            $draft = ReviewDraft::getData(Auth::id(), $gamePackage->id);
             if ($draft === null) {
                 $draft = new ReviewDraft;
             }
@@ -173,17 +168,25 @@ class ReviewController extends Controller
             $draft->package_id = $gamePackage->id;
             $draft->save();
 
-            return view('review.saveDraft')->with([
-                'gameId' => $draft->game_id
+            return view('review.saveDraft', [
+                'gamePackage' => $gamePackage,
+                'game'        => Game::find($gamePackage->game_id)
             ]);
         } else {
+            // 下書きに保存
+            $draft = new ReviewDraft;
+            $this->setDraftData($request, $draft);
+            $draft->game_id = $gamePackage->game_id;
+            $draft->package_id = $gamePackage->id;
+
             // レビュー投稿
             $review = new Review();
-            $result = $review->save($request);
+            $result = $review->save($request, $draft);
 
             return view('review.complete', [
                 'reviewId'    => $result,
-                'gamePackage' => $gamePackage
+                'gamePackage' => $gamePackage,
+                'game'        => Game::find($gamePackage->game_id)
             ]);
         }
     }
@@ -200,19 +203,34 @@ class ReviewController extends Controller
         $draft->game_id = $request->get('game_id');
         $draft->package_id = $request->get('package_id');
         $draft->title = $request->get('title') ?? '';
-        $draft->fear = $request->get('fear') ?? 3;
-        $draft->story = $request->get('story') ?? 3;
-        $draft->volume = $request->get('volume') ?? 3;
-        $draft->difficulty = $request->get('difficulty') ?? 3;
-        $draft->graphic = $request->get('graphic') ?? 3;
-        $draft->sound = $request->get('sound') ?? 3;
-        $draft->crowded = $request->get('crowded') ?? 3;
-        $draft->controllability = $request->get('controllability') ?? 3;
-        $draft->recommend = $request->get('recommend') ?? 3;
+        $draft->fear = intval($request->get('fear') ?? 3);
+        $draft->story = intval($request->get('story') ?? 3);
+        $draft->volume = intval($request->get('volume') ?? 3);
+        $draft->difficulty = intval($request->get('difficulty') ?? 3);
+        $draft->graphic = intval($request->get('graphic') ?? 3);
+        $draft->sound = intval($request->get('sound') ?? 3);
+        $draft->crowded = intval($request->get('crowded') ?? 3);
+        $draft->controllability = intval($request->get('controllability') ?? 3);
+        $draft->recommend = intval($request->get('recommend') ?? 3);
         $draft->progress = $request->get('progress') ?? '';
         $draft->text = $request->get('text') ?? '';
         $draft->is_spoiler = $request->get('is_spoiler') ?? 0;
         $draft->calcPoint();
+    }
+
+    /**
+     * 下書き削除
+     *
+     * @param $packageId
+     */
+    public function deleteDraft($packageId)
+    {
+        $draft = ReviewDraft::getData(Auth::id(), $packageId);
+        if ($draft) {
+            $draft->delete();
+        }
+
+        return redirect()->back();
     }
 
     /**
