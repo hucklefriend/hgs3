@@ -3,10 +3,16 @@
 @section('content')
     <div>レビューを投稿しました。</div>
 
-    <nav style="margin-top: 10px; margin-bottom: 10px;">
-        <a href="{{ url('review/soft') }}/{{ $game->id }}">{{ $game->name }}のレビュー一覧</a>
-        <a href="{{ url('review/detail') }}/{{ $reviewId }}">レビューの詳細へ</a>
-        <a href="{{ url('user/review') }}">自分のレビュー一覧</a>
-    </nav>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ url2('review/soft') }}/{{ $game->id }}" class="block_link">{{ $game->name }}のレビュー一覧</a>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ url2('review/detail') }}/{{ $reviewId }}" class="block_link">{{ $game->name }}投稿したレビューの確認</a>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ url2('user/review') }}" class="block_link">自分のレビュー一覧</a>
+        </li>
+    </ul>
 
 @endsection

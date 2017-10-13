@@ -3,8 +3,8 @@
 @section('content')
     <h4>{{ $game->name }}のレビューを書く</h4>
     <div>
-        <a href="{{ url2('game/soft') }}/{{ $game->id }}">ゲームの詳細</a> |
-        <a href="{{ url2('review/soft') }}/{{ $game->id }}">同じゲームのレビュー一覧</a>
+        <a href="{{ url2('game/soft') }}/{{ $game->id }}">{{ $game->name }}の詳細</a> |
+        <a href="{{ url2('review/soft') }}/{{ $game->id }}">{{ $game->name }}のレビュー一覧</a>
     </div>
 
     <hr>

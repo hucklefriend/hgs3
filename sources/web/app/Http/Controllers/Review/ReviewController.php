@@ -100,7 +100,6 @@ class ReviewController extends Controller
      */
     private function getDateInt()
     {
-        return 19971212;
         $dt = new \DateTime();
         return intval($dt->format('Ymd'));
     }
@@ -114,7 +113,7 @@ class ReviewController extends Controller
     public function input(GamePackage $gamePackage)
     {
         // 発売日が過ぎていないパッケージ
-        if ($gamePackage->release_int < $this->getDateInt()) {
+        if ($gamePackage->release_int > $this->getDateInt()) {
             App::abort(404);
         }
 
