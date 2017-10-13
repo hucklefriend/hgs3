@@ -97,27 +97,31 @@ class ReviewController extends Controller
      * @param GamePackage $pkg
      * @return $this
      */
-    public function input(GamePackage $pkg)
+    public function input(GamePackage $gamePackage)
     {
         // TODO 下書きがあるかチェック
         // TODO 同一ソフトのパッケージがあればその旨出力
         // TODO 同一ソフトの他パッケージの内容コピー
         // TODO 発売日が過ぎているか
 
+        $isDraft = false;
         if (!empty(old())) {
             $draft = new ReviewDraft(old());
         } else {
             $draft = ReviewDraft::where('user_id', Auth::id())
-                ->where('package_id', $pkg->id)
+                ->where('package_id', $gamePackage->id)
                 ->first();
             if ($draft == null) {
-                $draft = ReviewDraft::getDefault(Auth::id(), $pkg->game_id);
+                $draft = ReviewDraft::getDefault(Auth::id(), $gamePackage->game_id);
+            } else {
+                $isDraft = true;
             }
         }
 
         return view('review.input')->with([
-            'package' => $pkg,
-            'draft'   => $draft
+            'gamePackage' => $gamePackage,
+            'draft'       => $draft,
+            'isDraft'     => $isDraft
         ]);
     }
 
@@ -156,7 +160,7 @@ class ReviewController extends Controller
 
         if ($draftType == -1) {
             // 入力画面に戻る
-            return redirect('review/write/' . $game->id . '?back=1')->withInput();
+            return redirect('review/write/' . $gamePackage->id)->withInput();
         } if ($draftType == 1) {
             // 下書き保存
             $draft = ReviewDraft::find(Auth::id());
@@ -165,6 +169,8 @@ class ReviewController extends Controller
             }
 
             $this->setDraftData($request, $draft);
+            $draft->game_id = $gamePackage->game_id;
+            $draft->package_id = $gamePackage->id;
             $draft->save();
 
             return view('review.saveDraft')->with([
@@ -176,8 +182,8 @@ class ReviewController extends Controller
             $result = $review->save($request);
 
             return view('review.complete', [
-                'reviewId' => $result,
-                'game'     => $game
+                'reviewId'    => $result,
+                'gamePackage' => $gamePackage
             ]);
         }
     }

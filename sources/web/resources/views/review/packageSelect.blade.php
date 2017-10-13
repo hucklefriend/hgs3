@@ -36,13 +36,13 @@
         </div>
         <div style="margin: 10px 8px;">
             <span style="padding: 5px 0;">
-        @if (isset($drafts[$pkg->id]))
-            <i class="fa fa-pencil" aria-hidden="true"></i>
-            <a href="{{ url2('review/write') }}/{{ $pkg->id }}">このパッケージのレビューを書く</a>
-        @elseif (isset($written[$pkg->id]))
+        @if (isset($written[$pkg->id]))
             <p>このパッケージのレビューは投稿済みです。</p>
             <a href="{{ url2('review/detail') }}/{{ $written[$pkg->id] }}">このパッケージのレビューを確認</a>
         @else
+            @if (isset($drafts[$pkg->id]))
+                <span class="badge badge-warning">下書き保存中</span><br>
+            @endif
             <i class="fa fa-pencil" aria-hidden="true"></i>
             <a href="{{ url2('review/write') }}/{{ $pkg->id }}">このパッケージのレビューを書く</a>
         @endif

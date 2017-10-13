@@ -13,21 +13,27 @@
 
     <div class="d-flex align-items-stretch">
         <div class="align-self-top p-2">
-            @include ('game.common.package_image', ['imageUrl' => $package->small_image_url])
+            @include ('game.common.package_image', ['imageUrl' => $gamePackage->small_image_url])
         </div>
         <div class="align-self-top">
             <div>
-                <h4>{{ $package->name }}のレビューを書く</h4>
+                <h4>{{ $gamePackage->name }}のレビューを書く</h4>
             </div>
             <div>
-                <a href="{{ url2('review/package_select') }}/{{ $package->game_id }}">パッケージを選び直す</a>
+                <a href="{{ url2('review/package_select') }}/{{ $gamePackage->game_id }}">パッケージを選び直す</a>
             </div>
         </div>
     </div>
 
     <hr>
 
-    <form method="POST" action="{{ url2('review/confirm') }}/{{ $package->id }}">
+    @if ($isDraft)
+    <div class="alert alert-warning" role="alert">
+        下書きを読み込みました。
+    </div>
+    @endif
+
+    <form method="POST" action="{{ url2('review/confirm') }}/{{ $gamePackage->id }}">
         {{ csrf_field() }}
 
         <div class="form-group">
@@ -95,8 +101,6 @@
                                     let range = $(this);
                                     let idx = parseInt(range.data('index'));
                                     let val = parseInt(range.val());
-
-                                    console.debug(range.data('index') + ':' + val);
 
                                     chart.data.datasets[0].data[idx] = val;
                                     chart.update({
