@@ -32,7 +32,7 @@
                     @if (Auth::check())
                         <a class="nav-link" href="{{ url2('mypage') }}">マイページ</a>
                     @else
-                        <a class="nav-link" href="{{ url2('') }}">トップページ</a>
+                        <a class="nav-link" href="{{ url2('/') }}">トップページ</a>
                     @endif
                 </li>
                 <li class="nav-item @if ($navActive == 'game') active @endif">

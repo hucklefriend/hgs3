@@ -61,10 +61,10 @@ Route::post('/review/confirm/{gamePackage}', 'Review\ReviewController@confirm')-
 Route::post('/review/save/{gamePackage}', 'Review\ReviewController@save')->middleware('auth');
 Route::delete('/review/draft/{packageId}', 'Review\ReviewController@deleteDraft')->middleware('auth');
 Route::get('/review/game/{game}', 'Review\ReviewController@game');
-Route::post('/review/good/{review}', 'Review\ReviewController@good')->middleware('auth');
-Route::delete('/review/good/{review}', 'Review\ReviewController@cancelGood')->middleware('auth');
+Route::post('/review/good/{review}', 'Review\GoodController@good')->middleware('auth');
+Route::delete('/review/good/{review}', 'Review\GoodController@cancelGood')->middleware('auth');
 Route::get('/review/detail/{review}', 'Review\ReviewController@show');
-Route::get('/review/good_history/{review}', 'Review\ReviewController@goodHistory');
+Route::get('/review/good_history/{review}', 'Review\GoodController@goodHistory');
 
 // 不正レビュー
 Route::get('/game/injustice_review/input/{review}', 'Game\InjusticeReviewController@input');

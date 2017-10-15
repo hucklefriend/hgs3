@@ -18,7 +18,7 @@
             <div>
                 <div class="review_title" style="margin-left: 10px;">
                     @if($r->is_spoiler == 1)
-                        <span class="badge badge-pill badge-danger">ネタバレあり！</span>
+                        <span class="badge badge-pill badge-danger">ネタバレあり！</span><br>
                     @endif
                     <a href="{{ url('review/detail/') }}/{{ $r->id }}" class="d-none d-sm-block">{{ $r->title }}</a>
                     <a href="{{ url('review/detail/') }}/{{ $r->id }}" class="d-sm-none">{{ str_limit($r->title, 30) }}</a>

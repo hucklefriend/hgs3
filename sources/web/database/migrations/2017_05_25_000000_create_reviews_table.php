@@ -40,8 +40,10 @@ class CreateReviewsTable extends Migration
             $table->unsignedInteger('latest_good_num')->default(0)->comment('直近のいいね数');
             $table->dateTime('post_date')->comment('投稿日時');
             $table->unsignedInteger('update_num')->default(0)->comment('更新回数');
+            $table->unsignedTinyInteger('status')->default(0)->comment('表示ステータス');
             $table->timestamps();
-            $table->primary(['user_id', 'package_id']);
+            $table->index(['game_id', 'status']);
+            $table->index(['user_id', 'status']);
         });
     }
 

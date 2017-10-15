@@ -17,7 +17,7 @@ class CreateReviewDraftsTable extends Migration
     public function up()
     {
         Schema::create('review_drafts', function (Blueprint $table) {
-            $table->unsignedInteger('user_id')->primary()->comment('ユーザーID');
+            $table->unsignedInteger('user_id')->comment('ユーザーID');
             $table->unsignedInteger('game_id')->comment('ゲームソフトID');
             $table->unsignedInteger('package_id')->comment('パッケージID');
             $table->string('title', 0)->comment('一言');
