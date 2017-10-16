@@ -33,11 +33,14 @@ class FraudReportController extends Controller
      */
     public function input(Review $review)
     {
+        return view('review.fraudReport.alpha');
 
+/*
         return view('review.fraudReport.report', [
             'review' => $review,
             'writer' => User::find($review->user_id)
         ]);
+*/
     }
 
     /**
@@ -49,6 +52,8 @@ class FraudReportController extends Controller
      */
     public function report(Request $request, Review $review)
     {
+        return view('review.fraudReport.alpha');
+/*
         $type = $request->post('type', []);
         $comment = $request->post('comment', '');
         $anonymous = $request->post('anonymous', 0);
@@ -84,6 +89,7 @@ class FraudReportController extends Controller
         $fraudReport->save();
 
         return view('review.fraudReport.reportComplete');
+*/
     }
 
     /**
@@ -94,6 +100,9 @@ class FraudReportController extends Controller
      */
     public function list(Review $review)
     {
+        return view('review.fraudReport.alpha');
+
+/*
         $list = ReviewFraudReport:://where('review_id', $review->id)
             orderBy('id', 'DESC')
             ->paginate(15);
@@ -103,5 +112,6 @@ class FraudReportController extends Controller
             'writer' => User::find($review->user_id),
             'list'   => $list
         ]);
+*/
     }
 }
