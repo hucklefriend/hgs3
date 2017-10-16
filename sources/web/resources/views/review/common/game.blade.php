@@ -17,7 +17,7 @@
             </div>
             <div style="margin-left: 5px;">
                 {{ $r->review_num }}件のレビュー<br>
-                <a href="{{ url2('/review/soft') }}/{{ $r->game_id }}">このゲームのレビューを見る</a>
+                <a href="{{ url2('/review/game') }}/{{ $r->game_id }}">このゲームのレビューを見る</a>
             </div>
         </div>
     </div>

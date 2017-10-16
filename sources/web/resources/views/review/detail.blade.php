@@ -9,7 +9,7 @@
             <div class="p-12">
                 <h4>{{ $pkg->name }}</h4>
                 <a href="{{ url2('game/soft') }}/{{ $game->id }}">ゲームの詳細</a> |
-                <a href="{{ url('review/soft') }}/{{ $game->id }}">レビュー一覧</a>
+                <a href="{{ url('review/game') }}/{{ $game->id }}">レビュー一覧</a>
             </div>
         </div>
     </section>
@@ -59,7 +59,7 @@
                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $review->good_num }}
             @endif
             @if ($isWriter)
-                <a href="{{ url2('review/good_history') }}/{{ $review->id }}">いいねしてくれたユーザー一覧</a>
+                <a href="{{ url2('review/good/history') }}/{{ $review->id }}">いいねしてくれたユーザー一覧</a>
             @endif
         </div>
     </section>
@@ -68,7 +68,7 @@
 
     <section>
         @if (!$isWriter)
-        <a href="{{ url('game/injustice_review/input') }}/{{ $review->id }}">このレビューを不正報告</a> |
+        <a href="{{ url('game/review/injustice/report') }}/{{ $review->id }}">このレビューを不正報告</a> |
         @endif
         <a href="{{ url('game/injustice_review/') }}/{{ $review->id }}">このレビューへの不正報告一覧</a>
     </section>

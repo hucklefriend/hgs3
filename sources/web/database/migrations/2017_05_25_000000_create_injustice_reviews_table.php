@@ -20,10 +20,12 @@ class CreateInjusticeReviewsTable extends Migration
             $table->increments('id')->comment('不正レビュー報告ID');
             $table->unsignedInteger('review_id')->index()->comment('レビューID');
             $table->unsignedInteger('user_id')->nullable()->index()->comment('ユーザーID');
+            $table->unsignedInteger('types')->default(0)->comment('種類');
             $table->text('comment')->comment('コメント');
             $table->unsignedTinyInteger('status')->index()->comment('対応状況');
             $table->unsignedTinyInteger('stop_comment')->comment('コメント停止フラグ');
             $table->timestamps();
+            $table->index(['status', 'created_at']);
         });
     }
 
