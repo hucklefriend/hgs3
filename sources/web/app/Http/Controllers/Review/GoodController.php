@@ -80,10 +80,11 @@ class GoodController extends Controller
         $his = $review->getGoodHistory();
         $users = [];
         if (!empty($his)) {
-            $users = User::getNameHash(array_pluck($his->items(), 'user_id'));
+            $users = User::getHash(array_pluck($his->items(), 'user_id'));
         }
 
-        return view('review.good_history')->with([
+        return view('review.goodHistory')->with([
+            'user'      => Auth::user(),
             'review'    => $review,
             'histories' => $his,
             'users'     => $users

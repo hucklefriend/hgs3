@@ -2,17 +2,24 @@
 
 @section('content')
 
-    <nav>
-        <a href="{{ url('game/review/detail') }}/{{ $review->id }}">レビュー詳細に戻る</a>
-    </nav>
+    @include ('review.common.head', ['writer' => $user])
 
-    <h4>{{ $review->title }}にいいねした人たち</h4>
+    <h4 style="margin-top: 20px;">いいねした人たち</h4>
 
-    <ul>
     @foreach ($histories as $history)
-        <li>{{ $users[$history->user_id] }} - {{ $history->good_date }}</li>
+        @php $u = $users[$history->user_id] @endphp
+        <div class="row">
+            <div class="col-1">
+                @include('user.common.icon', ['u' => $u])
+            </div>
+            <div class="col-10">
+                @include('user.common.user_name', ['id' => $u->id, 'name' => $u->name])
+                <br>
+                {{ $history->good_date }}
+            </div>
+        </div>
+        <hr>
     @endforeach
-    </ul>
 
     {{ $histories->links() }}
 @endsection

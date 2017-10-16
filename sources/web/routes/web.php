@@ -64,7 +64,7 @@ Route::get('/review/game/{game}', 'Review\ReviewController@game');
 Route::post('/review/good/{review}', 'Review\GoodController@good')->middleware('auth');
 Route::delete('/review/good/{review}', 'Review\GoodController@cancelGood')->middleware('auth');
 Route::get('/review/detail/{review}', 'Review\ReviewController@show');
-Route::get('/review/good_history/{review}', 'Review\GoodController@goodHistory');
+Route::get('/review/good/history/{review}', 'Review\GoodController@history');
 
 // 不正レビュー
 Route::get('/review/fraud_report/report/{review}', 'Review\FraudReportController@input');
