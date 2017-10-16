@@ -32,6 +32,7 @@ class Profile
         return [
             'followNum'       => $follow->getFollowNum($userId),
             'followerNum'     => $follow->getFollowerNum($userId),
+            'reviewNum'       => Review::getNumByUser($userId),
             'siteNum'         => Site::getNumByUser($userId),
             'favoriteGameNum' => UserFavoriteGame::getNumByUser($userId),
             'favoriteSiteNum' => UserFavoriteSite::getNumByUser($userId),

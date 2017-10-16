@@ -6,16 +6,10 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Game\Review;
-use Hgs3\Models\Orm\Game;
-use Hgs3\Models\Orm\GamePackage;
+use Hgs3\Models\Review\Review;
 use Hgs3\Models\User\Follow;
 use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
-use Hgs3\Models\User\Mongo;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Hgs3\Constants\TimelineType;
 use Hgs3\Models\Timeline;
 
 class MyPageController extends Controller
@@ -39,36 +33,7 @@ class MyPageController extends Controller
      */
     public function index()
     {
-        $collection = Timeline::getMongoCollection();
-
-        $user = new Mongo(Auth::id());
-
-        $filter = [
-            '$or' => [
-                ['target_user_id' => 1],
-                ['game_id' => ['$in' => $user->getFavoriteGame()]],
-                ['user_id' => ['$in' =>$user->getFollow()]],
-                ['site_id' => ['$in' =>$user->getFavoriteSite()]]
-            ],
-            'user_id' => ['$ne' => 1]
-        ];
-
-        $num = $collection->count($filter);
-
-        $pager = new LengthAwarePaginator([], $num, self::PER_PAGE);
-        $pager->setPath('mypage');
-
-        $options = [
-            'sort'  => ['time' => -1],
-            'limit' => self::PER_PAGE,
-            'skip'  => ($pager->currentPage() - 1) * self::PER_PAGE
-        ];
-
-        return view('user.mypage')->with([
-            'user'      => Auth::user(),
-            'timelines' => $collection->find($filter, $options),
-            'pager'     => $pager
-        ]);
+        return redirect('user/profile/'.Auth::id());
     }
 
     /**

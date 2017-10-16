@@ -9,12 +9,47 @@ use Hgs3\Constants\TimelineType;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Review;
 use Hgs3\Models\Orm\UserCommunity;
+use Hgs3\Models\User\Mongo;
 use Hgs3\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Timeline
 {
     // https://docs.mongodb.com/php-library/master/
     // http://qiita.com/_takwat/items/1d1463d22a1316a2efbe
+
+    public function getMyPage($userId, $num)
+    {
+        $user = new Mongo($userId);
+
+        $collection = self::getMongoCollection();
+
+        $filter = [
+            '$or' => [
+                ['target_user_id' => 1],
+                ['game_id' => ['$in' => $user->getFavoriteGame()]],
+                ['user_id' => ['$in' =>$user->getFollow()]],
+                ['site_id' => ['$in' =>$user->getFavoriteSite()]]
+            ],
+            'user_id' => ['$ne' => 1]
+        ];
+
+        $itemNum = $collection->count($filter);
+
+        $pager = new LengthAwarePaginator([], $itemNum, $num);
+        $pager->setPath('');
+
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $num,
+            'skip'  => ($pager->currentPage() - 1) * $num
+        ];
+
+        return [
+            'pager'     => $pager,
+            'timelines' => $collection->find($filter, $options)
+        ];
+    }
 
     /**
      * ゲームソフト追加

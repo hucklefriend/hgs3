@@ -36,19 +36,20 @@
     <!-- 最小表示以外はメニューと内容を表示 -->
     <div class="d-none d-sm-block">
         <div class="d-flex flex-row">
-            <div class="p-2">
+            <div class="p-2" style="width: 270px;">
                 <div class="nav flex-column nav-pills">
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/timeline" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/follow" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/follower" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/favorite_game" class="nav-link @if($show == 'favorite_game') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteGameNum }}個</a>
+                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/review" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/site" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/favorite_site" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/diary" class="nav-link @if($show == 'diary') active @endif" aria-expanded="true">日記 {{ $diaryNum }}件</a>
                     <a href="{{ url2('user/profile') }}/{{ $user->id }}/community" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
                 </div>
             </div>
-            <div class="p-10" style="width: 100%;max-width:420px;">
+            <div class="p-10" style="width: 100%;">
                 @include('user.profile.parts.'.$show, $parts)
             </div>
         </div>

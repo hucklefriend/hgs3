@@ -190,6 +190,19 @@ SQL;
     }
 
     /**
+     * マイページ用のデータ取得
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getMyPage($userId)
+    {
+        return \Hgs3\Models\Orm\Review::where('user_id', $userId)
+            ->orderBy('id')
+            ->paginate(15);
+    }
+
+    /**
      * いいね済か
      *
      * @param $reviewId

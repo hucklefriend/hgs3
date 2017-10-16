@@ -9,7 +9,10 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\UpdateRequest;
 use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\Site;
+use Hgs3\Models\Review\Review;
+use Hgs3\Models\Timeline;
 use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
 use Hgs3\User;
@@ -69,6 +72,16 @@ class ProfileController extends Controller
                 ];
             }
                 break;
+            case 'review': {
+                $r = new Review();
+                $reviews = $r->getMypage($user->id);
+                $data['parts'] = [
+                    'reviews'      => $reviews,
+                    'gamePackages' => GamePackage::getHash(array_pluck($reviews->items(), 'package_id')),
+
+                ];
+            }
+                break;
             case 'site': {
                 $site = new \Hgs3\Models\Site();
                 $data['parts'] = [
@@ -105,8 +118,11 @@ class ProfileController extends Controller
             case 'timeline':
             default: {
                 $show = 'timeline';
-                $data['parts'] = [];
-        }
+
+                $timeline = new Timeline();
+
+                $data['parts'] = $timeline->getMyPage($user->id, 15);
+            }
                 break;
         }
 
