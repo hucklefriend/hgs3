@@ -6,6 +6,7 @@
 namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Review extends \Eloquent
 {
@@ -75,5 +76,29 @@ class Review extends \Eloquent
             ->where('review_id', $this->id)
             ->orderBy('good_date', 'DESC')
             ->paginate(20);
+    }
+
+    /**
+     * 削除
+     */
+    public function delete()
+    {
+        DB::beginTransaction();
+        try {
+            // 履歴を削除
+            ReviewGoodHistory::where('review_id')
+                ->delete();
+
+            // TODO 不正報告を削除
+
+            parent::delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+        }
     }
 }

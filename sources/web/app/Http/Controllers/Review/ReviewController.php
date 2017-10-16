@@ -249,20 +249,56 @@ class ReviewController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * レビューを編集
+     *
+     * @param \Hgs3\Models\Orm\Review $review
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(\Hgs3\Models\Orm\Review $review)
     {
         if ($review->user_id != Auth::id()) {
             // 他のユーザーのデータを編集しようとしている
             App::abort(403);
         }
+
+        return view('review.edit', [
+            'review'      => $review,
+            'gamePackage' => GamePackage::find($review->package_id),
+            'csrfToken'   => csrf_token()
+        ]);
     }
 
+    /**
+     * データの修正
+     *
+     * @param WriteRequest $request
+     * @param \Hgs3\Models\Orm\Review $review
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function update(WriteRequest $request, \Hgs3\Models\Orm\Review $review)
     {
         if ($review->user_id != Auth::id()) {
             // 他のユーザーのデータを編集しようとしている
             App::abort(403);
         }
+
+        $review->title = $request->get('title') ?? '';
+        $review->fear = intval($request->get('fear') ?? 3);
+        $review->story = intval($request->get('story') ?? 3);
+        $review->volume = intval($request->get('volume') ?? 3);
+        $review->difficulty = intval($request->get('difficulty') ?? 3);
+        $review->graphic = intval($request->get('graphic') ?? 3);
+        $review->sound = intval($request->get('sound') ?? 3);
+        $review->crowded = intval($request->get('crowded') ?? 3);
+        $review->controllability = intval($request->get('controllability') ?? 3);
+        $review->recommend = intval($request->get('recommend') ?? 3);
+        $review->progress = $request->get('progress') ?? '';
+        $review->text = $request->get('text') ?? '';
+        $review->is_spoiler = $request->get('is_spoiler') ?? 0;
+        $review->calcPoint();
+
+        $review->save();
 
         return redirect('review/detail/' . $review->id);
     }
@@ -280,7 +316,11 @@ class ReviewController extends Controller
             App::abort(403);
         }
 
-        return redirect()->back();
+        // TODO とりあえず削除
+        // β版では論理削除とデータのクリアにして、ID自体は残すようにする
+        $review->delete();
+
+        return redirect('review/game/' . $review->game_id);
     }
 
     /**

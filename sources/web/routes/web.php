@@ -65,6 +65,9 @@ Route::post('/review/good/{review}', 'Review\GoodController@good')->middleware('
 Route::delete('/review/good/{review}', 'Review\GoodController@cancelGood')->middleware('auth');
 Route::get('/review/detail/{review}', 'Review\ReviewController@show');
 Route::get('/review/good/history/{review}', 'Review\GoodController@history');
+Route::get('/review/edit/{review}', 'Review\ReviewController@edit');
+Route::patch('/review/edit/{review}', 'Review\ReviewController@update');
+Route::delete('/review/edit/{review}', 'Review\ReviewController@delete');
 
 // 不正レビュー
 Route::get('/review/fraud_report/report/{review}', 'Review\FraudReportController@input');

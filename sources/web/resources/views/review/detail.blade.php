@@ -72,5 +72,11 @@
         @endif
         <a href="{{ url('review/fraud_report/list') }}/{{ $review->id }}">このレビューへの不正報告一覧</a>
     </section>
+
+        @if ($isWriter)
+            <section>
+                <a href="{{ url2('review/edit') }}/{{ $review->id }}">レビューを修正・削除</a>
+            </section>
+        @endif
     @endauth
 @endsection

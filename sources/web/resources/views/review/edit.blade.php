@@ -17,19 +17,27 @@
         </div>
         <div class="align-self-top">
             <div>
-                <h4>{{ $gamePackage->name }}のレビュー編集</h4>
+                <h4>{{ $gamePackage->name }}のレビュー修正・削除</h4>
             </div>
+        </div>
+        <div class="align-self-top p-3">
+            <form method="POST" onsubmit="return confirm('このレビューを削除します。');">
+                {{ method_field('DELETE') }}
+                {{ csrf_tag($csrfToken) }}
+                <button class="btn btn-danger">削除</button>
+            </form>
         </div>
     </div>
 
     <hr>
 
-    <form method="POST" action="{{ url2('review/edit') }}/{{ $review->id }}">
-        {{ csrf_field() }}
+    <form method="POST">
+        {{ method_field('PATCH') }}
+        {{ csrf_tag($csrfToken) }}
 
         <div class="form-group">
             <label for="title">一言(タイトル)</label>
-            <input type="text" name="title" id="title" class="form-control{{ invalid($errors, 'title') }}" value="{{ $draft->title }}" maxlength="100" required>
+            <input type="text" name="title" id="title" class="form-control{{ invalid($errors, 'title') }}" value="{{ old('title', $review->title) }}" maxlength="100" required>
             @include('common.error', ['formName' => 'title'])
         </div>
         <div class="d-flex">
@@ -52,15 +60,15 @@
                                         borderColor: "red",
                                         pointBackgroundColor: "red",
                                         data: [
-                                            {{ $draft->fear }},
-                                            {{ $draft->story }},
-                                            {{ $draft->volume }},
-                                            {{ $draft->graphic }},
-                                            {{ $draft->sound }},
-                                            {{ $draft->controllability }},
-                                            {{ $draft->difficulty }},
-                                            {{ $draft->crowded }},
-                                            {{ $draft->recommend }}
+                                            {{ $review->fear }},
+                                            {{ $review->story }},
+                                            {{ $review->volume }},
+                                            {{ $review->graphic }},
+                                            {{ $review->sound }},
+                                            {{ $review->controllability }},
+                                            {{ $review->difficulty }},
+                                            {{ $review->crowded }},
+                                            {{ $review->recommend }}
                                         ]
                                     }]
                                 };
@@ -109,24 +117,24 @@
             </div>
             <div>
                 <div class="form-group d-flex">
-                <label for="fear" class="col-form-label value_label">怖さ</label>
-                <div class="d-flex align-items-stretch">
-                    <div class="d-flex justify-content-center">
-                        <input type="range"  data-index="0" class="form-control value_range" name="fear" id="fear" value="{{ $draft->fear }}" min="0" max="5">
+                    <label for="fear" class="col-form-label value_label">怖さ</label>
+                    <div class="d-flex align-items-stretch">
+                        <div class="d-flex justify-content-center">
+                            <input type="range"  data-index="0" class="form-control value_range" name="fear" id="fear" value="{{ old('fear', $review->fear) }}" min="0" max="5">
+                        </div>
+                        <div class="d-flex justify-content-center review_value_text">
+                            <span id="fear_value">{{ old('fear', $review->fear) }}</span>
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-center review_value_text">
-                        <span id="fear_value">{{ $draft->fear }}</span>
-                    </div>
-                </div>
                 </div>
                 <div class="form-group d-flex">
                     <label for="story" class="value_label col-form-label">シナリオ</label>
                     <div class="d-flex align-items-stretch">
                         <div class="d-flex justify-content-center">
-                            <input type="range" data-index="1" class="form-control value_range" name="story" id="story" value="{{ $draft->story }}" min="0" max="5">
+                            <input type="range" data-index="1" class="form-control value_range" name="story" id="story" value="{{ old('story', $review->story) }}" min="0" max="5">
                         </div>
                         <div class="d-flex justify-content-center review_value_text">
-                            <span id="story_value">{{ $draft->story }}</span>
+                            <span id="story_value">{{ old('story', $review->story) }}</span>
                         </div>
                     </div>
                 </div>
@@ -134,10 +142,10 @@
                     <label for="volume" class="value_label col-form-label">ボリューム</label>
                     <div class="d-flex align-items-stretch">
                         <div class="d-flex justify-content-center">
-                            <input type="range" data-index="2" class="form-control value_range" name="volume" id="volume" value="{{ $draft->volume }}" min="0" max="5">
+                            <input type="range" data-index="2" class="form-control value_range" name="volume" id="volume" value="{{ old('volume', $review->volume) }}" min="0" max="5">
                         </div>
                         <div class="d-flex justify-content-center review_value_text">
-                            <span id="volume_value">{{ $draft->volume }}</span>
+                            <span id="volume_value">{{ old('volume', $review->volume) }}</span>
                         </div>
                     </div>
                 </div>
@@ -145,10 +153,10 @@
                     <label for="graphic" class="value_label col-form-label">グラフィック</label>
                     <div class="d-flex align-items-stretch">
                         <div class="d-flex justify-content-center">
-                            <input type="range" data-index="3" class="form-control value_range" name="graphic" id="graphic" value="{{ $draft->graphic }}" min="0" max="5">
+                            <input type="range" data-index="3" class="form-control value_range" name="graphic" id="graphic" value="{{ old('graphic', $review->graphic) }}" min="0" max="5">
                         </div>
                         <div class="d-flex justify-content-center review_value_text">
-                            <span id="graphic_value">{{ $draft->graphic }}</span>
+                            <span id="graphic_value">{{ old('graphic', $review->graphic) }}</span>
                         </div>
                     </div>
                 </div>
@@ -156,10 +164,10 @@
                     <label for="sound" class="value_label col-form-label">サウンド</label>
                     <div class="d-flex align-items-stretch">
                         <div class="d-flex justify-content-center">
-                            <input type="range" data-index="4" class="form-control value_range" name="sound" id="sound" value="{{ $draft->sound }}" min="0" max="5">
+                            <input type="range" data-index="4" class="form-control value_range" name="sound" id="sound" value="{{ old('sound', $review->sound) }}" min="0" max="5">
                         </div>
                         <div class="d-flex justify-content-center review_value_text">
-                            <span id="sound_value">{{ $draft->sound }}</span>
+                            <span id="sound_value">{{ old('sound', $review->sound) }}</span>
                         </div>
                     </div>
                 </div>
@@ -167,10 +175,10 @@
                     <label for="controllability" class="value_label col-form-label">操作性</label>
                     <div class="d-flex align-items-stretch">
                         <div class="d-flex justify-content-center">
-                            <input type="range" data-index="5" class="form-control value_range" name="sound" id="sound" value="{{ $draft->controllability }}" min="0" max="5">
+                            <input type="range" data-index="5" class="form-control value_range" name="sound" id="sound" value="{{ old('controllability', $review->controllability) }}" min="0" max="5">
                         </div>
                         <div class="d-flex justify-content-center review_value_text">
-                            <span id="controllability_value">{{ $draft->controllability }}</span>
+                            <span id="controllability_value">{{ old('controllability', $review->controllability) }}</span>
                         </div>
                     </div>
                 </div>
@@ -178,10 +186,10 @@
                     <label for="difficulty" class="value_label col-form-label">難易度</label>
                     <div class="d-flex align-items-stretch">
                         <div class="d-flex justify-content-center">
-                            <input type="range" data-index="6" class="form-control value_range" name="difficulty" id="difficulty" value="{{ $draft->difficulty }}" min="0" max="5">
+                            <input type="range" data-index="6" class="form-control value_range" name="difficulty" id="difficulty" value="{{ old('difficulty', $review->difficulty) }}" min="0" max="5">
                         </div>
                         <div class="d-flex justify-content-center review_value_text">
-                            <span id="difficulty_value">{{ $draft->difficulty }}</span>
+                            <span id="difficulty_value">{{ old('difficulty', $review->difficulty) }}</span>
                         </div>
                     </div>
                 </div>
@@ -189,10 +197,10 @@
                     <label for="crowded" class="value_label col-form-label">やりこみ</label>
                     <div class="d-flex align-items-stretch">
                         <div class="d-flex justify-content-center">
-                            <input type="range" data-index="7" class="form-control value_range" name="crowded" id="crowded" value="{{ $draft->crowded }}" min="0" max="5">
+                            <input type="range" data-index="7" class="form-control value_range" name="crowded" id="crowded" value="{{ old('crowded', $review->crowded) }}" min="0" max="5">
                         </div>
                         <div class="d-flex justify-content-center review_value_text">
-                            <span id="crowded_value">{{ $draft->crowded }}</span>
+                            <span id="crowded_value">{{ old('crowded', $review->crowded) }}</span>
                         </div>
                     </div>
                 </div>
@@ -200,10 +208,10 @@
                     <label for="recommend" class="value_label col-form-label">オススメ</label>
                     <div class="d-flex align-items-stretch">
                         <div class="d-flex justify-content-center">
-                            <input type="range" data-index="8" class="form-control value_range" name="recommend" id="recommend" value="{{ $draft->recommend }}" min="0" max="5">
+                            <input type="range" data-index="8" class="form-control value_range" name="recommend" id="recommend" value="{{ old('recomment', $review->recommend) }}" min="0" max="5">
                         </div>
                         <div class="d-flex justify-content-center review_value_text">
-                            <span id="recommend_value">{{ $draft->recommend }}</span>
+                            <span id="recommend_value">{{ old('recommend', $review->recommend) }}</span>
                         </div>
                     </div>
                 </div>
@@ -211,7 +219,7 @@
         </div>
         <div class="form-group">
             <label for="progress">ゲームのプレイ状況</label>
-            <textarea name="progress" id="progress" class="form-control{{ invalid($errors, 'progress') }}" maxlength="300" required>{{ $draft->progress }}</textarea>
+            <textarea name="progress" id="progress" class="form-control{{ invalid($errors, 'progress') }}" maxlength="300" required>{{ old('progress', $review->progress) }}</textarea>
             @include('common.error', ['formName' => 'progress'])
             <small class="form-text text-muted">
                 「5周クリア」「XXルートだけクリア」など、どの程度遊んだ上でレビューを書くのか記載してください。
@@ -220,7 +228,7 @@
 
         <div class="form-group">
             <label for="text">レビュー</label>
-            <textarea name="text" id="text" class="form-control{{ invalid($errors, 'text') }}" maxlength="10000" required>{{ $draft->text }}</textarea>
+            <textarea name="text" id="text" class="form-control{{ invalid($errors, 'text') }}" maxlength="10000" required>{{ old('text', $review->text) }}</textarea>
             @include('common.error', ['formName' => 'text'])
             <small class="form-text text-muted">
                 書き方は自由です！<br>
@@ -230,7 +238,7 @@
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="is_spoiler"{{ checked(1, $draft->is_spoiler) }} value="1">
+                <input type="checkbox" class="form-check-input" name="is_spoiler"{{ checked(1, old('is_spoiler', $review->is_spoiler)) }} value="1">
                 ネタバレあり
             </label>
         </div>
@@ -238,19 +246,8 @@
         <br>
 
         <div class="form-group">
-            <button class="btn btn-primary btn-block">確認</button>
+            <button class="btn btn-primary btn-block">修正</button>
         </div>
     </form>
-
-    <script>
-        $(function (){
-            $('.package_check').on('click', function(){
-                $('.package_select_item.selected').removeClass('selected');
-
-                $(this).parents('.package_select_item').addClass('selected');
-            });
-        });
-    </script>
-
 
 @endsection

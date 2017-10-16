@@ -9,7 +9,7 @@
             @if($review->is_spoiler == 1) <span class="badge badge-pill badge-danger">ネタバレあり！</span> @endif
             <div class="break_word" style="width: 100%;">
                 <h5>
-                    <a href="{{ url2('review/detail') }}/{{ $review->id }}">{{ $review->title }}</a>
+                    <a href="{{ url2('eview/detail') }}/{{ $review->id }}">{{ $review->title }}</a>
                 </h5>
             </div>
             <div>
