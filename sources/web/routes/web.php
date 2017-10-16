@@ -67,9 +67,11 @@ Route::get('/review/detail/{review}', 'Review\ReviewController@show');
 Route::get('/review/good_history/{review}', 'Review\GoodController@goodHistory');
 
 // 不正レビュー
-Route::get('/game/review/injustice/report/{review}', 'Review\InjusticeReviewController@input');
-Route::post('/game/review/injustice/report/{review}', 'Review\InjusticeReviewController@report');
-/*Route::post('/game/injustice_review/input/{review}', 'Game\InjusticeReviewController@report');
+Route::get('/review/fraud_report/report/{review}', 'Review\FraudReportController@input');
+Route::post('/review/fraud_report/report/{review}', 'Review\FraudReportController@report');
+Route::get('/review/fraud_report/list/{review}', 'Review\FraudReportController@list');
+/*
+Route::post('/game/injustice_review/input/{review}', 'Game\InjusticeReviewController@report');
 Route::get('/game/injustice_review/detail/{ir}', 'Game\InjusticeReviewController@detail');
 Route::post('/game/injustice_review/comment/{ir}', 'Game\InjusticeReviewController@comment');
 Route::get('/game/injustice_review/{review}', 'Game\InjusticeReviewController@list');

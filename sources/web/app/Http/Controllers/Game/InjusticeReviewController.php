@@ -9,8 +9,8 @@ use Hgs3\Constants\InjusticeStatus;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GamePackage;
-use Hgs3\Models\Orm\InjusticeReview;
-use Hgs3\Models\Orm\InjusticeReviewComment;
+use Hgs3\Models\Orm\ReviewFraudReport;
+use Hgs3\Models\Orm\ReviewFraudReportComment;
 use Hgs3\Models\Orm\Review;
 use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +51,7 @@ class InjusticeReviewController extends Controller
      */
     public function report(Request $request, \Hgs3\Models\Orm\Review $review)
     {
-        $injustice = new InjusticeReview();
+        $injustice = new ReviewFraudReport();
         $injustice->review_id = $review->id;
 
         if ($request->get('anonymous') == 1) {
@@ -79,7 +79,7 @@ class InjusticeReviewController extends Controller
      */
     public function list(\Hgs3\Models\Orm\Review $review)
     {
-        $data = InjusticeReview::where('review_id', $review->id)
+        $data = ReviewFraudReport::where('review_id', $review->id)
             ->orderBy('id', 'DESC')
             ->paginate();
 
@@ -101,9 +101,9 @@ class InjusticeReviewController extends Controller
     /**
      * 詳細
      *
-     * @param \Hgs3\Models\Orm\InjusticeReview $ir
+     * @param \Hgs3\Models\Orm\ReviewFraudReport $ir
      */
-    public function detail(InjusticeReview $ir)
+    public function detail(ReviewFraudReport $ir)
     {
         $review = Review::find($ir->review_id);
 
@@ -120,9 +120,9 @@ class InjusticeReviewController extends Controller
      *
      * @param \Hgs3\Models\Orm\Review $review
      */
-    public function comment(InjusticeReview $ir)
+    public function comment(ReviewFraudReport $ir)
     {
-        $c = new InjusticeReviewComment;
+        $c = new ReviewFraudReportComment;
 
 
 

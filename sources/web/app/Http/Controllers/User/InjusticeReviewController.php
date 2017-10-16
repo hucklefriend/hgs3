@@ -8,7 +8,7 @@ namespace Hgs3\Http\Controllers\User;
 use Hgs3\Constants\InjusticeStatus;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Orm\GamePackage;
-use Hgs3\Models\Orm\InjusticeReview;
+use Hgs3\Models\Orm\ReviewFraudReport;
 use Hgs3\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;

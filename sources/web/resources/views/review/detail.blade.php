@@ -68,9 +68,9 @@
 
     <section>
         @if (!$isWriter)
-        <a href="{{ url('game/review/injustice/report') }}/{{ $review->id }}">このレビューを不正報告</a> |
+        <a href="{{ url('review/fraud_report/report') }}/{{ $review->id }}">このレビューを不正報告</a> |
         @endif
-        <a href="{{ url('game/injustice_review/') }}/{{ $review->id }}">このレビューへの不正報告一覧</a>
+        <a href="{{ url('review/fraud_report/list') }}/{{ $review->id }}">このレビューへの不正報告一覧</a>
     </section>
     @endauth
 @endsection

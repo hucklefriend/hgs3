@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInjusticeReviewsTable extends Migration
+class CreateReviewFraudReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateInjusticeReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('injustice_reviews', function (Blueprint $table) {
+        Schema::create('review_fraud_reports', function (Blueprint $table) {
             $table->increments('id')->comment('不正レビュー報告ID');
             $table->unsignedInteger('review_id')->index()->comment('レビューID');
             $table->unsignedInteger('user_id')->nullable()->index()->comment('ユーザーID');
@@ -24,8 +24,8 @@ class CreateInjusticeReviewsTable extends Migration
             $table->text('comment')->comment('コメント');
             $table->unsignedTinyInteger('status')->index()->comment('対応状況');
             $table->unsignedTinyInteger('stop_comment')->comment('コメント停止フラグ');
+            $table->string('ip_address', 64)->nullable()->comment('IPアドレス');
             $table->timestamps();
-            $table->index(['status', 'created_at']);
         });
     }
 
@@ -36,6 +36,6 @@ class CreateInjusticeReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('injustice_reviews');
+        Schema::dropIfExists('review_fraud_reports');
     }
 }

@@ -1,11 +1,11 @@
 <?php
 /**
- * ORM: injustice_review_comments
+ * ORM: injustice_reviews
  */
 
 namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 
-class InjusticeReviewComment extends \Eloquent
+class ReviewFraudReport extends \Eloquent
 {
 }

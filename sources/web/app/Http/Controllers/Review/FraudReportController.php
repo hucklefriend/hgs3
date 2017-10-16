@@ -1,20 +1,19 @@
 <?php
 /**
- * 不正レビューコントローラー
+ * レビューの不正報告コントローラー
  */
 
 namespace Hgs3\Http\Controllers\Review;
 
-use Hgs3\Constants\Review\Injustice\Status;
+use Hgs3\Constants\Review\FraudReport\Status;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Orm\InjusticeReview;
+use Hgs3\Models\Orm\ReviewFraudReport;
 use Hgs3\Models\Orm\Review;
 use Hgs3\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-class InjusticeReviewController extends Controller
+class FraudReportController extends Controller
 {
     /**
      * コンストラクタ
@@ -35,7 +34,7 @@ class InjusticeReviewController extends Controller
     public function input(Review $review)
     {
 
-        return view('review.injustice.report', [
+        return view('review.fraudReport.report', [
             'review' => $review,
             'writer' => User::find($review->user_id)
         ]);
@@ -59,30 +58,50 @@ class InjusticeReviewController extends Controller
             return redirect()->back();
         }
 
-        $injusticeReview = new InjusticeReview();
-        $injusticeReview->review_id = $review->id;
+        $fraudReport = new ReviewFraudReport();
+        $fraudReport->review_id = $review->id;
 
         if (Auth::check() && $anonymous == 0) {
-            $injusticeReview->user_id = Auth::id();
+            $fraudReport->user_id = Auth::id();
         }
 
         $types = 0;
         foreach ($type as $key => $value) {
             $key = intval($key);
 
-            if ($key > 0) {
-                $types += $key + 1;
+            if ($key == 0) {
+                $types += 1;
             } else {
-                $types += 10 ** $key + 1;
+                $types += (10 ** $key) + 1;
             }
         }
 
-        $injusticeReview->types = $types;
-        $injusticeReview->comment = $comment;
-        $injusticeReview->stop_comment = 0;
-        $injusticeReview->status = Status::REPORTED;
-        $injusticeReview->save();
+        $fraudReport->types = $types;
+        $fraudReport->comment = $comment ?? '';
+        $fraudReport->stop_comment = 0;
+        $fraudReport->status = Status::REPORTED;
+        $fraudReport->ip_address = $request->ip();
+        $fraudReport->save();
 
-        return view('review.injustice.reportComplete');
+        return view('review.fraudReport.reportComplete');
+    }
+
+    /**
+     * 不正報告一覧
+     *
+     * @param Review $review
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function list(Review $review)
+    {
+        $list = ReviewFraudReport:://where('review_id', $review->id)
+            orderBy('id', 'DESC')
+            ->paginate(15);
+
+        return view('review.fraudReport.list', [
+            'review' => $review,
+            'writer' => User::find($review->user_id),
+            'list'   => $list
+        ]);
     }
 }
