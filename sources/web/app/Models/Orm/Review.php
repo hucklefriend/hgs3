@@ -23,12 +23,23 @@ class Review extends \Eloquent
         // ポイントは怖さ値×4+それ以外の値の合算×2
         $this->calcPoint();
 
-        $this->sort_order = 0;
-        $this->good_num = 0;
-        $this->post_date = new \DateTime();
-        $this->update_num = 0;
+        if ($this->id === null) {
+            // 新規登録
+            $this->sort_order = 0;
+            $this->good_num = 0;
+            $this->post_date = new \DateTime();
+            $this->update_num = 0;
+        } else {
+            // データ修正
+            $this->update_num++;
+        }
 
-        return parent::save($options);
+        parent::save($options);
+
+        // 累計データ
+        ReviewTotal::calculate($this->game_id);
+
+        return true;
     }
 
     /**
@@ -91,7 +102,11 @@ class Review extends \Eloquent
 
             // TODO 不正報告を削除
 
+            $gameId = $this->gameId;
             parent::delete();
+
+            // 累計データの修正
+            ReviewTotal::calculate($gameId);
 
             DB::commit();
         } catch (\Exception $e) {

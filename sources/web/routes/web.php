@@ -68,6 +68,8 @@ Route::get('/review/good/history/{review}', 'Review\GoodController@history');
 Route::get('/review/edit/{review}', 'Review\ReviewController@edit');
 Route::patch('/review/edit/{review}', 'Review\ReviewController@update');
 Route::delete('/review/edit/{review}', 'Review\ReviewController@delete');
+Route::get('/review/new_arrivals', 'Review\ReviewController@newArrivals');
+
 
 // 不正レビュー
 Route::get('/review/fraud_report/report/{review}', 'Review\FraudReportController@input');

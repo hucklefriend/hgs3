@@ -6,6 +6,7 @@
 
 namespace Hgs3\Models\Review;
 
+use Hgs3\Constants\Review\Status;
 use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
@@ -16,6 +17,22 @@ use Illuminate\Support\Facades\Log;
 
 class Review
 {
+    /**
+     * データ数を取得
+     *
+     * @param $gameId
+     * @return int
+     */
+    public function getNumByGame($gameId)
+    {
+        return DB::table('reviews')
+            ->select(['id'])
+            ->where('game_id', $gameId)
+            ->where('status', Status::OPEN)
+            ->count(['id']);
+    }
+
+
     /**
      * 新着順レビューを取得
      *

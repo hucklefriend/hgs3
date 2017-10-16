@@ -353,4 +353,21 @@ class ReviewController extends Controller
             'csrfToken' => csrf_token()
         ]);
     }
+
+    /**
+     * 新着
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function newArrivals()
+    {
+        $reviews = \Hgs3\Models\Orm\Review::orderBy('id', 'desc')
+            ->paginate(20);
+
+        return view('review.newArrivals', [
+            'reviews'      => $reviews,
+            'writers'      => User::getHash(array_pluck($reviews->items(), 'user_id')),
+            'gamePackages' => GamePackage::getHash(array_pluck($reviews->items(), 'package_id'))
+        ]);
+    }
 }
