@@ -39,8 +39,6 @@ class TopController extends Controller
         $newInfoData = NewInformation::getPagerData($newInfo);
 
         return view('top', [
-            'isLogin'     => Auth::check(),
-            'isAdmin'     => UserRole::isAdmin(),
             'newInfo'     => $newInfo,
             'newInfoData' => $newInfoData,
         ]);

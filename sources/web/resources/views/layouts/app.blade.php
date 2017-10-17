@@ -36,7 +36,7 @@
                     @endif
                 </li>
                 <li class="nav-item @if ($navActive == 'game') active @endif">
-                    <a class="nav-link" href="{{ url2('game') }}">ゲーム一覧</a>
+                    <a class="nav-link" href="{{ url2('game') }}">ゲーム</a>
                 </li>
                 <li class="nav-item @if ($navActive == 'review') active @endif">
                     <a class="nav-link" href="{{ url2('review') }}">レビュー</a>

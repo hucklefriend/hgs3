@@ -80,7 +80,7 @@ class CompanyController extends Controller
 
         $gameCompany->save();
 
-        return $this->index();
+        return redirect('game/company');
     }
 
     /**
@@ -112,6 +112,6 @@ class CompanyController extends Controller
 
         $gameCompany->save();
 
-        return $this->index();
+        return redirect('game/company/detail/' . $gameCompany->id);
     }
 }

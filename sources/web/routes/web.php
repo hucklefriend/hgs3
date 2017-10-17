@@ -40,6 +40,12 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::post('/game/company/add', 'Game\CompanyController@insert');
     Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
     Route::patch('/game/company/edit/{gameCompany}', 'Game\CompanyController@update');
+
+    // プラットフォーム
+    Route::get('/game/platform/add', 'Game\PlatformController@add');
+    Route::post('/game/platform/add', 'Game\PlatformController@insert');
+    Route::get('/game/platform/edit/{gamePlatform}', 'Game\PlatformController@edit');
+    Route::patch('/game/platform/edit/{gamePlatform}', 'Game\PlatformController@update');
 });
 
 Route::get('/', 'TopController@index');
@@ -96,6 +102,10 @@ Route::get('/site/detail/{site}', 'Site\SiteController@detail');
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');
 Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
+
+// プラットフォーム
+Route::get('/game/platform', 'Game\PlatformController@index');
+Route::get('/game/platform/{gamePlatform}', 'Game\PlatformController@show');
 
 
 // マイページ
