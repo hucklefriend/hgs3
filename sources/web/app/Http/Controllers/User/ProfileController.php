@@ -78,7 +78,6 @@ class ProfileController extends Controller
                 $data['parts'] = [
                     'reviews'      => $reviews,
                     'gamePackages' => GamePackage::getHash(array_pluck($reviews->items(), 'package_id')),
-
                 ];
             }
                 break;

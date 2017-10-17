@@ -1,10 +1,10 @@
 <div class="d-flex align-items-stretch">
     <div class="align-self-top p-2">
-        @include ('game.common.package_image', ['imageUrl' => $r->small_image_url])
+        @include ('game.common.package_image', ['imageUrl' => $gamePackage->small_image_url])
     </div>
     <div class="align-self-top">
         <div>
-            <strong>{{ $r->game_name }}</strong>
+            <strong>{{ $gamePackage->name }}</strong>
         </div>
 
         <div class="d-flex align-items-stretch">
