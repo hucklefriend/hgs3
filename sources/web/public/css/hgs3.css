@@ -195,3 +195,12 @@ code {
     overflow-y: scroll;
     max-height: 7.5rem;
 }
+
+.user_icon_img {
+    max-width: 3rem;
+    max-height: 3rem;
+}
+.user_icon_img_large {
+    max-width: 5rem;
+    max-height: 5rem;
+}

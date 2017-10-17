@@ -1,6 +1,6 @@
 <?php
 /**
- * プロフィール変更リクエスト
+ * アイコン変更リクエスト
  */
 
 
@@ -8,7 +8,7 @@ namespace Hgs3\Http\Requests\User\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditRequest extends FormRequest
+class ChangeIconRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,7 @@ class EditRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'    => 'required|max:50',
-            'profile' => 'max:500',
+            'icon' => 'required|file|image',
         ];
     }
 }

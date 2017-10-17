@@ -92,4 +92,18 @@ class User extends Authenticatable
     {
         return self::getNameHash(array_pluck($pager->items(), $key));
     }
+
+    /**
+     * アイコンファイルを削除
+     */
+    public function deleteIconFile()
+    {
+        if (!empty($this->icon_file_name)) {
+            $path = base_path() . '/public/img/user_icon/' . $this->icon_file_name;
+
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
+    }
 }

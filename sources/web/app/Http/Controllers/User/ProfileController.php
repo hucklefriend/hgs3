@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Http\Requests\User\Profile\ChangeIconRequest;
 use Hgs3\Http\Requests\User\Profile\EditRequest;
 use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm\Game;
@@ -16,7 +17,9 @@ use Hgs3\Models\Timeline;
 use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
 use Hgs3\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -175,6 +178,61 @@ class ProfileController extends Controller
         }
 
         $user->save();
+
+        return redirect('mypage');
+    }
+
+    /**
+     * アイコン選択
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function selectIcon()
+    {
+        return view('user.profile.selectIcon', [
+            'user'      => Auth::user(),
+            'csrfToken' => csrf_token()
+        ]);
+    }
+
+    /**
+     * アイコン変更
+     *
+     * @param ChangeIconRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeIcon(ChangeIconRequest $request)
+    {
+        $fileName = Auth::id() . '.' . $request->file('icon')->getClientOriginalExtension();
+
+        $user = Auth::user();
+        $user->deleteIconFile();
+
+        $request->file('icon')->move(
+            base_path() . '/public/img/user_icon/', $fileName
+        );
+
+        $user->icon_upload_flag = 1;
+        $user->icon_file_name = $fileName;
+        $user->save();
+
+        return redirect('mypage');
+    }
+
+    /**
+     * アイコン削除
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function deleteIcon()
+    {
+        $user = Auth::user();
+
+        $user->icon_upload_flag = 0;
+        $user->icon_file_name = null;
+        $user->save();
+
+        $user->deleteIconFile();
 
         return redirect('mypage');
     }

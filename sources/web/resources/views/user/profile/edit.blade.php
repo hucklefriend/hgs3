@@ -6,6 +6,7 @@
 
     <form method="POST">
         {{ csrf_field() }}
+        {{ method_field('PATCH') }}
 
         <div class="form-group">
             <label for="name">名前</label>

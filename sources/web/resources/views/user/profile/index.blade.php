@@ -27,6 +27,7 @@
         <p class="profile_text">{!! nl2br(e($user->profile)) !!}</p>
 
         @if ($isMyself)
+            <a href="{{ url2('user/profile/change_icon') }}">アイコン変更</a> |
             <a href="{{ url2('user/profile/edit') }}">プロフィール編集</a>
         @endif
     </div>

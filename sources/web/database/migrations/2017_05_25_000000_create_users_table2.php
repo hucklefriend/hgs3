@@ -31,6 +31,7 @@ class CreateUsersTable2 extends Migration
             $table->string('password', 200)->nullable()->comment('パスワード');
             $table->string('remember_token', 200)->nullable()->comment('再アクセストークン');
             $table->unsignedTinyInteger('icon_upload_flag')->default(0)->comment('アイコンアップロード済みフラグ');
+            $table->string('icon_file_name', 30)->nullable()->comment('アイコンファイル名');
             $table->timestamps();
         });
     }

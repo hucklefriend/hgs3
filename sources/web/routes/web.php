@@ -35,7 +35,6 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::get('/game/soft/package/add/{game}', 'Game\PackageController@add');
     Route::post('/game/soft/package/add/{game}', 'Game\PackageController@store');
 
-
     Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
 });
 
@@ -98,7 +97,10 @@ Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
 // マイページ
 Route::get('/mypage', 'User\MyPageController@index')->middleware('auth');
 Route::get('/user/profile/edit', 'User\ProfileController@edit')->middleware('auth');
-Route::post('/user/profile/edit', 'User\ProfileController@update')->middleware('auth');
+Route::patch('/user/profile/edit', 'User\ProfileController@update')->middleware('auth');
+Route::get('/user/profile/change_icon', 'User\ProfileController@selectIcon')->middleware('auth');
+Route::patch('/user/profile/change_icon', 'User\ProfileController@changeIcon')->middleware('auth');
+Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon')->middleware('auth');
 Route::get('/user/profile/{user}', 'User\ProfileController@index')->middleware('auth');
 Route::get('/user/profile/{user}/{type}', 'User\ProfileController@index')->middleware('auth');
 Route::get('/user/profile', 'User\ProfileController@myself')->middleware('auth');
