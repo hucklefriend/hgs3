@@ -1,9 +1,12 @@
 <?php
+/**
+ * ゲーム会社コントローラー
+ */
+
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\UserRole;
-use Hgs3\Http\Requests\AddGameCompanyRequest;
-use Hgs3\Http\Requests\UpdateGameCompanyRequest;
+use Hgs3\Http\Requests\Game\GameCompanyRequest;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Company;
@@ -51,17 +54,27 @@ class CompanyController extends Controller
         ]);
     }
 
-
-    public function create()
+    /**
+     * ゲーム会社追加
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function add()
     {
-        return view('game.company.create');
+        return view('game.company.add');
     }
 
-    public function store(AddGameCompanyRequest $request)
+    /**
+     * ゲーム会社追加
+     *
+     * @param GameCompanyRequest $request
+     * @return CompanyController
+     */
+    public function insert(GameCompanyRequest $request)
     {
         $gameCompany = new GameCompany;
-        $gameCompany->name = $request->input('name');
-        $gameCompany->phonetic = $request->input('phonetic');
+        $gameCompany->name = $request->input('name', '');
+        $gameCompany->phonetic = $request->input('phonetic', '');
         $gameCompany->url = $request->input('url');
         $gameCompany->wikipedia = $request->input('wikipedia');
 
@@ -70,6 +83,12 @@ class CompanyController extends Controller
         return $this->index();
     }
 
+    /**
+     * データ編集
+     *
+     * @param GameCompany $gameCompany
+     * @return $this
+     */
     public function edit(GameCompany $gameCompany)
     {
         return view('game.company.edit')->with([
@@ -77,7 +96,14 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function update(UpdateGameCompanyRequest $request, GameCompany $gameCompany)
+    /**
+     * データ更新
+     *
+     * @param GameCompanyRequest $request
+     * @param GameCompany $gameCompany
+     * @return CompanyController
+     */
+    public function update(GameCompanyRequest $request, GameCompany $gameCompany)
     {
         $gameCompany->name = $request->input('name');
         $gameCompany->phonetic = $request->input('phonetic');
@@ -86,6 +112,6 @@ class CompanyController extends Controller
 
         $gameCompany->save();
 
-        return $this->edit($gameCompany);
+        return $this->index();
     }
 }

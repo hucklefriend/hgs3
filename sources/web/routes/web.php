@@ -35,7 +35,11 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::get('/game/soft/package/add/{game}', 'Game\PackageController@add');
     Route::post('/game/soft/package/add/{game}', 'Game\PackageController@store');
 
+    // ゲーム会社
+    Route::get('/game/company/add', 'Game\CompanyController@add');
+    Route::post('/game/company/add', 'Game\CompanyController@insert');
     Route::get('/game/company/edit/{gameCompany}', 'Game\CompanyController@edit');
+    Route::patch('/game/company/edit/{gameCompany}', 'Game\CompanyController@update');
 });
 
 Route::get('/', 'TopController@index');
@@ -89,7 +93,7 @@ Route::get('/site/user/{user}', 'Site\SiteController@user');
 Route::get('/site/detail/{site}', 'Site\SiteController@detail');
 
 
-
+// ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');
 Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
 

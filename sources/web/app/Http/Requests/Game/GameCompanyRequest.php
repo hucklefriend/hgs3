@@ -1,10 +1,13 @@
 <?php
+/**
+ * ゲーム会社追加リクエスト
+ */
 
-namespace Hgs3\Http\Requests\Game\Company;
+namespace Hgs3\Http\Requests\Game;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class GameCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +29,8 @@ class StoreRequest extends FormRequest
         return [
             'name'      => 'required|max:100',
             'phonetic'  => 'required|max:100',
-            'url'       => 'max:256',
-            'wikipedia' => 'max:256'
+            'url'       => 'max:512',
+            'wikipedia' => 'max:512'
         ];
     }
 }

@@ -3,15 +3,18 @@
 @section('content')
     <h4>{{ $company->name }}</h4>
 
-    @if ($company->url != null)
-        <div>公式サイト: <a href="{{ $company->url }}" target="_blank">{{ $company->url }}</a></div>
-    @endif
-    @if ($company->wikipedia != null)
-        <div>Wikipedia: <a href="{{ $company->wikipedia }}" target="_blank">{{ $company->wikipedia }}</a></div>
-    @endif
+    <div>
+        @if ($company->url != null)
+        <a href="{{ $company->url }}" target="_blank">公式サイト</a>
+        @endif
+        @if ($company->wikipedia != null)
+        <a href="{{ $company->wikipedia }}" target="_blank">Wikipedia</a>
+        @endif
+    </div>
+
 
     @if (\Hgs3\Constants\UserRole::isDataEditor())
-    <div>
+    <div class="text-right">
         <a href="{{ url('game/company/edit/') }}/{{ $company->id }}">データ編集</a>
     </div>
     @endif
