@@ -101,6 +101,7 @@ class SiteController extends Controller
 
         $favoriteUsers = $fs->getOldUsers($site->id);
 
+        // TODO 足跡
         $footprint = [];
 
         $admin = User::find($site->user_id);

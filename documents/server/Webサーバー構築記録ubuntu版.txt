@@ -121,12 +121,20 @@ sudo systemctl enable mongod.service
 
 
 mongo hgs3
-use hgs3
-db.createCollection('timeline');
-db.createCollection('personal_timeline');
+db.createCollection('game_timeline');
+db.createCollection('site_timeline');
+db.createCollection('follow_user_timeline');
+db.createCollection('game_community_timeline');
+db.createCollection('user_community_timeline');
+db.createCollection('myself_timeline');
+db.createCollection('user_action_timeline');
 db.createCollection('site_footprint');
+
+
+db.user_action_timeline.createIndex({user_id: 1, time: -1});
+
 
 ※データ削除
 db.timeline.remove({});
-db.personal_timeline.remove({});
+db.user_action_timeline.remove({});
 db.site_footprint.remove({});

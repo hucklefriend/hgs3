@@ -9,7 +9,7 @@ use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Game\GameCompanyRequest;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Game\Company;
+use Hgs3\Models\Game\Collection;
 use Hgs3\Models\Orm\GameCompany;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +30,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $company = new Company;
+        $company = new Collection;
 
         return view('game.company.list', [
             'companies' => $company->getList()
@@ -45,7 +45,7 @@ class CompanyController extends Controller
      */
     public function show(GameCompany $gameCompany)
     {
-        $company = new Company;
+        $company = new Collection;
 
         return view('game.company.detail')->with([
             'company' => $gameCompany,
