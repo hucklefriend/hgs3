@@ -1,6 +1,7 @@
 <?php
 
 namespace Hgs3\Models\VersionUp;
+use Hgs3\Models\Orm\UserCommunity;
 use Illuminate\Support\Facades\DB;
 
 class Database
@@ -19,16 +20,29 @@ class Database
         $this->changeGameType();
         $this->setOriginalPackageId();
 
+        if (env('') == 'local') {
+            $password = 'huckle';
+        } else {
+            $password = str_random(10);
+            // パスワードをファイル出力
+            $path = storage_path('app/admin_password.txt');
+            file_put_contents($path, $password);
+        }
+
+        // 管理人を作成
         \Hgs3\User::create([
             'name'     => 'huckle',
-            'email'    => 'yuuki@horrorgame.net',
-            'password' => bcrypt('huckle'),
+            'email'    => 'webmaster@horrorgame.net',
+            'password' => bcrypt($password),
             'role'     => 100
         ]);
 
         $user = \Hgs3\User::find(1);
         $user->role = 100;
         $user->save();
+
+        // 運営用ユーザーコミュニティを作成
+        //UserCommunity::createDefault();
     }
 
     /**
