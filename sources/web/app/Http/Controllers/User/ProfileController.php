@@ -6,7 +6,7 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\User\Profile\UpdateRequest;
+use Hgs3\Http\Requests\User\Profile\EditRequest;
 use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GamePackage;
@@ -161,24 +161,22 @@ class ProfileController extends Controller
     /**
      * プロフィール編集
      *
-     * @param UpdateRequest $request
+     * @param EditRequest $request
      * @return $this
      */
-    public function update(UpdateRequest $request)
+    public function update(EditRequest $request)
     {
         $user = Auth::user();
-        $user->name = $request->get('name') ?? '';
-        $user->adult = intval($request->get('adult') ?? 0);
+        $user->name = $request->get('name', '');
+        $user->profile = cut_new_line($request->get('profile', ''));
+        $user->adult = intval($request->get('adult', 0));
         if ($user->adult != 1) {
             $user->adult = 0;
         }
 
         $user->save();
 
-        return view('user.profile.edit')->with([
-            'isUpdated' => true,
-            'user'      => $user
-        ]);
+        return redirect('mypage');
     }
 
     /**

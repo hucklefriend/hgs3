@@ -24,7 +24,7 @@
     </div>
 
     <div>
-        <p>金と申すものは、おもしろいものよ。つぎからつぎへ、さまざまな人びとの手にわたりながら、善悪二様のはたらきをする</p>
+        <p class="profile_text">{!! nl2br(e($user->profile)) !!}</p>
 
         @if ($isMyself)
             <a href="{{ url2('user/profile/edit') }}">プロフィール編集</a>

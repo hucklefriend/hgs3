@@ -175,3 +175,14 @@ function invalid($errors, $formName)
 
     return '';
 }
+
+/**
+ * 必要以上に多い改行を取り除く
+ *
+ * @param $text
+ * @return string
+ */
+function cut_new_line($text)
+{
+    return trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $text));
+}

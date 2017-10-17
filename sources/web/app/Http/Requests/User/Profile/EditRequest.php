@@ -4,7 +4,7 @@ namespace Hgs3\Http\Requests\User\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class EditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-//            'id'        => 'required'
+            'name'    => 'required|max:50',
+            'profile' => 'max:500',
         ];
     }
 }

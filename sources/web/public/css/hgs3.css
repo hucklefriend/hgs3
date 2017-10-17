@@ -190,3 +190,8 @@ code {
     border-radius: 5px;
     padding: 4px 3px;
 }
+
+.profile_text {
+    overflow-y: scroll;
+    max-height: 7.5rem;
+}
