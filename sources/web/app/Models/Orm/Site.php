@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class Site extends \Eloquent
 {
+    protected $guarded = ['id'];
+
     /**
      * 取扱いゲームのIDを取得
      *

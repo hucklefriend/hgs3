@@ -6,7 +6,7 @@
 @if ($isMyself && count($sites) < 3)
     @if (count($sites) > 0) <hr> @endif
     <button class="btn btn-link btn-block">
-        <a href="{{ url2('user/site/add') }}">サイトを追加する</a>
+        <a href="{{ url2('site/add') }}">サイトを追加する</a>
     </button>
 @endif
 <br>

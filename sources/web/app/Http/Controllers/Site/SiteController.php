@@ -6,7 +6,11 @@
 
 namespace Hgs3\Http\Controllers\Site;
 
+use Hgs3\Constants\Site\Gender;
+use Hgs3\Constants\Site\MainContents;
+use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Http\Requests\Review\SiteRequest;
 use Hgs3\Models\Site\Searcher;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Site;
@@ -119,26 +123,59 @@ class SiteController extends Controller
         ]);
     }
 
-    public function good()
+    /**
+     * サイト追加画面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function add()
     {
+        // TODO サイト登録可能数チェック
 
-    }
 
-    public function injustice()
-    {
-
+        return view('site.add', [
+            'games' => Game::getPhoneticTypeHash(),
+            'site'  => new Site([
+                'main_contents' => MainContents::WALKTHROUGH,
+                'rate'          => Rate::ALL,
+                'gender'        => Gender::NONE
+            ])
+        ]);
     }
 
     /**
-     * サイト遷移
+     * サイト追加
      *
-     * @param Site $site
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param SiteRequest $request
+     * @return $this
      */
-    public function go(Site $site)
+    public function store(SiteRequest $request)
     {
-        // TODO アクセスログに保存
+        $site = new Site;
 
-        return redirect($site->url);
+        $site->user_id = Auth::id();
+        $site->name = $request->get('name') ?? '';
+        $site->url = $request->get('url') ?? '';
+        $site->banner_url = $request->get('banner_url') ?? '';
+        $site->presentation = $request->get('presentation') ?? '';
+        $site->main_contents_id = intval($request->get('main_contents') ?? 0);
+        $site->rate = intval($request->get('rate') ?? 1);
+        $site->gender = intval($request->get('gender') ?? 1);
+        $site->open_type = 0;
+        $site->in_count = 0;
+        $site->out_count = 0;
+        $site->good_count = 0;
+        $site->bad_count = 0;
+        $site->registered_timestamp = time();
+        $site->updated_timestamp = 0;
+
+        $siteId = $site->saveWithHandleGame($request->get('handle_game') ?? '');
+        if ($siteId === false) {
+            // TODO エラー
+        }
+
+        return view('user.site.add_complete')->with([
+            'site_id' => $siteId
+        ]);
     }
 }

@@ -29,6 +29,28 @@ class Game extends \Eloquent
     }
 
     /**
+     * よみがた単位でハッシュを取得
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public static function getPhoneticTypeHash()
+    {
+        $data = self::select(['id', 'name', 'phonetic_type'])
+            ->orderBy('phonetic_order')
+            ->get();
+
+        $result = [];
+
+        foreach ($data as $game) {
+            $result[intval($game->phonetic_type)][] = $game;
+        }
+        unset($data);
+
+        return $result;
+    }
+
+    /**
      * 保存
      *
      * @param array $options

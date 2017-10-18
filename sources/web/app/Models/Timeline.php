@@ -67,7 +67,7 @@ class Timeline
         }
 
         $text = sprintf('「<a href="%s">%s</a>」が追加されました。',
-            url2('game/soft') . '/' . $gameId,
+            url2('game/soft/' . $gameId),
             $gameName
         );
 

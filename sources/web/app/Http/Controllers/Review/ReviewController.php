@@ -194,11 +194,11 @@ class ReviewController extends Controller
             $draft->package_id = $gamePackage->id;
 
             // レビュー投稿
-            $review = new Review();
-            $result = $review->save($draft);
+            $review = new \Hgs3\Models\Orm\Review($draft->toArray());
+            $review->save();
 
             return view('review.complete', [
-                'reviewId'    => $result,
+                'reviewId'    => $review->id,
                 'gamePackage' => $gamePackage,
                 'game'        => Game::find($gamePackage->game_id)
             ]);

@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-header">
             <div class="d-none d-sm-block">
-                <ul class="nav nav-tabs card-header-tabs  text-center" id="game_tab">
+                <ul class="nav nav-tabs card-header-tabs text-center" id="game_tab">
                     <li class="nav-item">
                         <a class="nav-link active game_tab" href="#" data-target="agyo">あ</a>
                     </li>

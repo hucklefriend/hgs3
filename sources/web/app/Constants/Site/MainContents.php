@@ -35,4 +35,14 @@ class MainContents
     {
         return self::$text[$id];
     }
+
+    /**
+     * データを取得
+     *
+     * @return array
+     */
+    public static function getData()
+    {
+        return self::$text;
+    }
 }

@@ -29,8 +29,6 @@ SQL;
         try {
             DB::insert($sql, [$userId, $gameId]);
 
-            Timeline::addFavoriteGameText($gameId, null, $userId, null);
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -40,6 +38,9 @@ SQL;
 
             return false;
         }
+
+        // TODO 追加->取り消しの繰り返しをさせない
+        Timeline\Game::addFavoriteGameText($gameId, null, $userId, null);
 
         return true;
     }

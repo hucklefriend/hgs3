@@ -4,6 +4,7 @@
  */
 
 namespace Hgs3\Models\Orm;
+use Hgs3\Models\Timeline;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -20,10 +21,12 @@ class Review extends \Eloquent
      */
     public function save(array $options = [])
     {
+        $isNew = $this->id === null;
+
         // ポイントは怖さ値×4+それ以外の値の合算×2
         $this->calcPoint();
 
-        if ($this->id === null) {
+        if ($isNew) {
             // 新規登録
             $this->sort_order = 0;
             $this->good_num = 0;
@@ -34,10 +37,34 @@ class Review extends \Eloquent
             $this->update_num++;
         }
 
-        parent::save($options);
+        DB::beginTransaction();
+        try {
+            parent::save($options);
 
-        // 累計データ
-        ReviewTotal::calculate($this->game_id);
+            // 累計データ
+            ReviewTotal::calculate($this->game_id);
+
+            if ($isNew) {
+                // 下書き削除
+                DB::table('review_drafts')
+                    ->where('user_id', $this->user_id)
+                    ->where('game_id', $this->game_id)
+                    ->delete();
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return false;
+        }
+
+        if ($isNew) {
+            Timeline\Game::addNewReviewText($this->game_id, null, $this->id, $this->is_spoiler);
+        }
 
         return true;
     }

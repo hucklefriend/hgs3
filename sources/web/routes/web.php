@@ -106,7 +106,12 @@ Route::get('/site/search', 'Site\SiteController@search');
 Route::get('/site/game/{game}', 'Site\SiteController@game');
 Route::get('/site/user/{user}', 'Site\SiteController@user');
 Route::get('/site/detail/{site}', 'Site\SiteController@detail');
-
+Route::get('/site/add', 'Site\SiteController@add')->middleware('auth');
+Route::post('/site/add', 'Site\SiteController@store')->middleware('auth');
+Route::get('/site/edit/{site}', 'Site\SiteController@edit')->middleware('auth');
+Route::patch('/site/edit/{site}', 'Site\SiteController@edit')->middleware('auth');
+Route::delete('/site/{site}', 'Site\SiteController@delete')->middleware('auth');
+Route::get('/site/{site}', 'Site\SiteController@detail')->middleware('auth');
 
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');
@@ -160,11 +165,7 @@ Route::get('/user/favorite_site/{user}', 'User\ProfileController@favoriteSite')-
 
 // 自分のサイト
 Route::get('/user/site/myself', 'User\SiteController@myself')->middleware('auth');
-Route::get('/user/site/add', 'User\SiteController@add')->middleware('auth');
-Route::post('/user/site/add', 'User\SiteController@store')->middleware('auth');
-Route::get('/user/site/edit/{site}', 'User\SiteController@edit')->middleware('auth');
-Route::get('/user/site/edit/{site}', 'User\SiteController@edit')->middleware('auth');
-Route::get('/user/site/{site}', 'User\SiteController@detail')->middleware('auth');
+
 
 // フォロー
 Route::get('/user/follow/{user}', 'User\ProfileController@follow')->middleware('auth');
@@ -175,6 +176,7 @@ Route::delete('/user/follow', 'User\FollowController@remove')->middleware('auth'
 // コミュニティ
 Route::get('/community', 'Community\CommunityController@index');
 
+// ユーザーコミュニティ
 Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join')->middleware('auth');
 Route::post('/community/u/{uc}/secession', 'Community\UserCommunityController@secession')->middleware('auth');
 Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members')->middleware('auth');
@@ -186,6 +188,7 @@ Route::delete('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityControlle
 Route::delete('/community/u/{uc}/topic_response/{uctr}', 'Community\UserCommunityController@eraseResponse')->middleware('auth');
 Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->middleware('auth');
 
+// ゲームコミュニティ
 Route::post('/community/g/{game}/join', 'Community\GameCommunityController@join')->middleware('auth');
 Route::post('/community/g/{game}/secession', 'Community\GameCommunityController@secession')->middleware('auth');
 Route::get('/community/g/{game}/member', 'Community\GameCommunityController@members')->middleware('auth');

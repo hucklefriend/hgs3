@@ -1,13 +1,13 @@
 <?php
 /**
- * レビュー投稿リクエスト
+ * サイトリクエスト
  */
 
 namespace Hgs3\Http\Requests\Review;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WriteRequest extends FormRequest
+class SiteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -20,7 +20,7 @@ class Game extends TimelineAbstract
         self::setGameName($gameId, $gameName);
 
         $text = sprintf('「<a href="%s">%s</a>」が追加されました。',
-            url2('game/soft') . '/' . $gameId,
+            url2('game/soft/' . $gameId),
             $gameName
         );
 
@@ -47,7 +47,9 @@ class Game extends TimelineAbstract
         self::setSeriesName($seriesId, $seriesName);
 
         $text = sprintf('<a href="%s">%s</a>シリーズのゲーム「<a href="%s">%s</a>」が追加されました。',
-            url2('game/soft') . '/' . $gameId,
+            url2('game/series/' . $seriesId),
+            $seriesName,
+            url2('game/soft/' . $gameId),
             $gameName
         );
 
@@ -71,7 +73,7 @@ class Game extends TimelineAbstract
         self::setGameName($gameId, $gameName);
 
         $text = sprintf('「<a href="%s">%s</a>」の情報が更新されました。',
-            url2('game/soft') . '/'.$gameId,
+            url2('game/soft/' . $gameId),
             $gameName
         );
 

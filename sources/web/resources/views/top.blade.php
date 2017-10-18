@@ -53,11 +53,11 @@
                 @foreach ($newInfo as $nf)
 
                     @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
-                    <p><a href="{{ url2('game/soft') }}/{{ $nf->game_id }}">「{{ get_hash($newInfoData['game_hash'], $nf->game_id) }}」</a>が追加されました。</p>
+                    <p><a href="{{ url2('game/soft/' . $nf->game_id) }}">「{{ get_hash($newInfoData['game_hash'], $nf->game_id) }}」</a>が追加されました。</p>
                     @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
-                    <p>新着サイトです！<a href="{{ url2('site') }}/{{ $nf->site_id }}">「{{ get_hash($newInfoData['site_hash'], $nf->site_id) }}」</a></p>
+                    <p>新着サイトです！<a href="{{ url2('site/' . $nf->site_id) }}">「{{ get_hash($newInfoData['site_hash'], $nf->site_id) }}」</a></p>
                     @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
-                    <p><a href="{{ url2('game/soft') }}/{{ $nf->game_id }}">「{{ get_hash($newInfoData['game_hash'], $nf->game_id) }}」</a>の新しいレビューが投稿されました！</p>
+                    <p><a href="{{ url2('game/soft/' . $nf->game_id) }}">「{{ get_hash($newInfoData['game_hash'], $nf->game_id) }}」</a>の新しいレビューが投稿されました！</p>
                     @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_DIARY)
                     <p></p>
                     @endif

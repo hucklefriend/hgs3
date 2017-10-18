@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.14 on 2017-10-14 20:56:51.
+ * Generated for Laravel 5.5.17 on 2017-10-18 16:33:07.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -5225,7 +5225,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key
          * @param array $replace
          * @param string $locale
-         * @return string 
+         * @return string|array|null 
          * @static 
          */ 
         public static function getFromJson($key, $replace = array(), $locale = null)

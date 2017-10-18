@@ -7,9 +7,9 @@ namespace Hgs3\Constants\Site;
 
 class Rate
 {
-    const ALL = 1;
-    const R15 = 2;
-    const R18 = 3;
+    const ALL = 0;
+    const R15 = 15;
+    const R18 = 18;
 
     private static $text = [
         self::ALL => '全年齢',
