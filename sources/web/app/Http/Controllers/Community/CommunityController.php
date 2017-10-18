@@ -36,7 +36,6 @@ class CommunityController extends Controller
         $uc = UserCommunity::orderBy('id')->get();
 
         return view('community.index')->with([
-            'isAdmin'         => UserRole::isAdmin(),
             'userCommunities' => $uc
         ]);
     }

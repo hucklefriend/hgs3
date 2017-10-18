@@ -50,7 +50,6 @@ class CompanyController extends Controller
         return view('game.company.detail')->with([
             'company' => $gameCompany,
             'detail'  => $company->getDetail($gameCompany),
-            'isAdmin' => UserRole::isAdmin()
         ]);
     }
 

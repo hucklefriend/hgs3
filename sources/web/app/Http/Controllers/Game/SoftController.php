@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
+use Hgs3\Http\Requests\Game\GameSoftRequest;
 use Hgs3\Http\Requests\Game\Soft\AddRequest;
 use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
 use Hgs3\Models\Orm\GameComment;
@@ -55,11 +56,7 @@ class SoftController extends Controller
         $soft = new Soft;
         $data = $soft->getDetail($game);
 
-        $data['isUser'] = UserRole::isUser();
-        $data['isAdmin'] = UserRole::isAdmin();
-        $data['isEditor'] = UserRole::isDataEditor();
-
-        if ($data['isUser']) {
+        if (Auth::check()) {
             $fav = new FavoriteGame();
             $data['isFavorite'] = $fav->isFavorite(Auth::id(), $game->id);
             $data['playedGame'] = UserPlayedGame::findByUserAndGame(Auth::id(), $game->id);
@@ -75,7 +72,7 @@ class SoftController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showAddForm()
+    public function add()
     {
         return view('game.soft.add');
     }
@@ -83,16 +80,34 @@ class SoftController extends Controller
     /**
      * 追加
      *
-     * @param AddRequest $request
+     * @param GameSoftRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function add(AddRequest $request)
+    public function insert(GameSoftRequest $request)
     {
-        $soft = new Soft();
-        $soft->add($request);
-        return view('game.soft.add');
+        $game = new Game();
+
+        $game->name = $request->get('name');
+        $game->phonetic = $request->get('phonetic');
+        $game->phonetic_type = PhoneticType::getTypeByPhonetic($game->phonetic);
+        $game->phonetic_order = $request->get('phonetic');
+        $game->genre = $request->get('genre', '');
+        $game->company_id = $request->get('company_id', null);
+        $game->series_id = $request->get('series_id', null);
+        $game->order_in_series = $request->get('order_in_series', null);
+        $game->game_type = 0;
+
+        $game->save();
+
+        return redirect('game/soft/' . $game->id);
     }
 
+    /**
+     * 編集画面
+     *
+     * @param Game $game
+     * @return $this
+     */
     public function edit(Game $game)
     {
         return view('game.soft.edit')->with([

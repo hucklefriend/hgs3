@@ -49,8 +49,6 @@ class ReviewController extends Controller
      */
     public function game(Game $game)
     {
-        // TODO 発売日が過ぎていないと投稿するリンクは出さない
-
         $data = [
             'game'  => $game,
             'total' => null
@@ -197,7 +195,7 @@ class ReviewController extends Controller
 
             // レビュー投稿
             $review = new Review();
-            $result = $review->save($request, $draft);
+            $result = $review->save($draft);
 
             return view('review.complete', [
                 'reviewId'    => $result,

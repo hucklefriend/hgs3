@@ -4,6 +4,9 @@
     <div class="text-center">
         <h1>{{ $game->name }}</h1>
     </div>
+    <div class="text-right">
+        <a href="{{ url2('game/soft/edit/' . $game->id) }}">データ修正</a>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
@@ -13,7 +16,7 @@
                             パッケージ情報
                         </div>
                         <div class="col-4 text-right">
-                            @if ($isEditor)
+                            @if (is_data_editor())
                             <a href="{{ url('game/soft/package/add') }}/{{ $game->id }}">追加</a>
                             @endif
                         </div>
@@ -81,7 +84,7 @@
                                     <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
                                 </div>
 
-                                @if ($isEditor)
+                                @if (is_data_editor())
                                 <hr>
                                 <div class="row" style="margin-bottom: 20px;">
                                     <div class="col-6">
@@ -115,7 +118,7 @@
                                     <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
                                 </div>
 
-                                @if ($isEditor)
+                                @if (is_data_editor())
                                     <hr>
                                     <div class="row" style="margin-bottom: 20px;">
                                         <div class="col-6">
@@ -155,7 +158,7 @@
             <div class="card card-hgn">
                 <div class="card-header">
                     <a name="review">レビュー</a>
-                    {{ $review->review_num }}件
+                    {{ $review->review_num ?? 0 }}件
                 </div>
                 <div class="card-body">
                     @if ($review != null)
@@ -226,7 +229,7 @@
                             最初のレビューを投稿してみませんか？</p>
                     @endif
                     <hr>
-                        @if ($isUser)
+                        @if (\Illuminate\Support\Facades\Auth::check())
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-center">
@@ -301,7 +304,7 @@
                         <p>お気に入りに登録しているユーザーはいません。</p>
                     @endif
                 </div>
-                @if ($isUser)
+                @auth
                 <div class="card-footer">
                     @if ($isFavorite)
                         <form action="{{ url('user/favorite_game') }}" method="POST">
@@ -323,7 +326,7 @@
                         </form>
                     @endif
                 </div>
-                @endif
+                @endauth
             </div>
         </div>
     </div>

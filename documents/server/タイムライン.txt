@@ -1,9 +1,3 @@
-db.createCollection('timeline');
-db.createCollection('user_action_timeline');
-db.createCollection('follow_timeline');
-db.createCollection('community_timeline');
-db.createCollection('site_footprint');
-
 ○ゲームタイムライン db.hgs3.game_timeline
 お気に入りゲーム
 

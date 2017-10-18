@@ -7,25 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UserRole
 {
-    const GUEST = 1;
-    const USER = 10;
+    const USER = 0;
     const EDITOR = 50;
     const ADMIN = 100;
-
-    /**
-     * ログインユーザーかどうか
-     *
-     * @return bool
-     */
-    public static function isUser()
-    {
-        $user = Auth::user();
-        if ($user != null) {
-            return $user->role >= self::USER;
-        }
-
-        return false;
-    }
 
     /**
      * データ編集権限があるか

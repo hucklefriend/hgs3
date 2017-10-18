@@ -13,7 +13,7 @@
     </div>
 
 
-    @if (\Hgs3\Constants\UserRole::isDataEditor())
+    @if (is_data_editor())
     <div class="text-right">
         <a href="{{ url('game/company/edit/') }}/{{ $company->id }}">データ編集</a>
     </div>

@@ -7,7 +7,6 @@
 namespace Hgs3\Models\Review;
 
 use Hgs3\Constants\Review\Status;
-use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
@@ -85,11 +84,10 @@ SQL;
     /**
      * 保存
      *
-     * @param WriteRequest $request
      * @param ReviewDraft $draft
      * @return bool|mixed
      */
-    public function save(WriteRequest $request, ReviewDraft $draft)
+    public function save(ReviewDraft $draft)
     {
         $orm = new \Hgs3\Models\Orm\Review($draft->toArray());
         $orm->post_date = new \DateTime();
@@ -108,9 +106,6 @@ SQL;
                 ->where('game_id', $orm->game_id)
                 ->delete();
 
-            // タイムライン登録
-            Timeline::addNewReviewText($orm->id, $orm->user_id, null, $orm->game_id, null);
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -120,6 +115,9 @@ SQL;
 
             return false;
         }
+
+        // タイムライン登録
+        Timeline\Game::addNewReviewText($draft->game_id, null, $orm->id, $orm->is_spoiler);
 
         return $orm->id;
     }
@@ -258,9 +256,6 @@ SET good_num = good_num + 1
 WHERE id = ?
 SQL;
                 DB::update($updateGoodNum, [$orm->id]);
-
-                // タイムライン
-                Timeline::addReviewGoodText($orm->id, $userId, null, $orm->user_id);
             }
 
             DB::commit();
@@ -272,6 +267,8 @@ SQL;
 
             return false;
         }
+
+        // TODO タイムライン
 
         return true;
     }

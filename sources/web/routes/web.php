@@ -21,15 +21,17 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/timeline/add', 'TimelineController@input');
     Route::post('/timeline/add', 'TimelineController@add');
     Route::delete('/timeline/', 'TimelineController@remove');
-
-    Route::get('/admin', 'TopController@admin');
 });
 
 // エディターのみ
 Route::group(['middleware' => ['auth', 'can:editor']], function () {
     // ゲーム追加
-    Route::get('/game/soft/add', 'Game\SoftController@showAddForm');
-    Route::post('/game/soft/add', 'Game\SoftController@add');
+    Route::get('/game/soft/add', 'Game\SoftController@add');
+    Route::post('/game/soft/add', 'Game\SoftController@insert');
+
+    // ゲーム編集
+    Route::get('/game/soft/edit/{game}', 'Game\SoftController@edit');
+    Route::patch('/game/soft/edit/{game}', 'Game\SoftController@update');
 
     // パッケージ登録
     Route::get('/game/soft/package/add/{game}', 'Game\PackageController@add');
@@ -46,6 +48,12 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::post('/game/platform/add', 'Game\PlatformController@insert');
     Route::get('/game/platform/edit/{gamePlatform}', 'Game\PlatformController@edit');
     Route::patch('/game/platform/edit/{gamePlatform}', 'Game\PlatformController@update');
+
+    // シリーズ
+    Route::get('/game/series/add', 'Game\SeriesController@add');
+    Route::post('/game/series/add', 'Game\SeriesController@insert');
+    Route::get('/game/series/edit/{gameSeries}', 'Game\SeriesController@edit');
+    Route::patch('/game/series/edit/{gameSeries}', 'Game\SeriesController@update');
 });
 
 Route::get('/', 'TopController@index');
@@ -59,6 +67,7 @@ Route::get('/account/register/{token}', 'Account\SignUpController@register');
 Route::post('/account/register', 'Account\SignUpController@registration');
 Route::get('/account/signup', 'Account\SignUpController@index');
 
+// ゲーム
 Route::get('/game', 'Game\SoftController@index');
 Route::get('/game/soft/{game}', 'Game\SoftController@show');
 
@@ -106,6 +115,10 @@ Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
 // プラットフォーム
 Route::get('/game/platform', 'Game\PlatformController@index');
 Route::get('/game/platform/{gamePlatform}', 'Game\PlatformController@show');
+
+// シリーズ
+Route::get('/game/series', 'Game\SeriesController@index');
+Route::get('/game/series/{gameSeries}', 'Game\SeriesController@show');
 
 
 // マイページ

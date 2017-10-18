@@ -4,8 +4,10 @@
  */
 
 namespace Hgs3\Models\Orm;
+use Hgs3\Models\Timeline;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Game extends \Eloquent
 {
@@ -26,5 +28,39 @@ class Game extends \Eloquent
         return $tbl->get()->pluck('name', 'id')->toArray();
     }
 
+    /**
+     * 保存
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = [])
+    {
+        $isNew = $this->id === null;
 
+        DB::beginTransaction();
+        try {
+            parent::save($options);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return false;
+        }
+
+        if ($isNew) {
+            //Timeline\Game::addNewGameSoftText($this->id, $this->name);
+
+            // TODO 新着情報に登録
+
+            if ($this->series_id !== null) {
+                Timeline\Game::addSameSeriesGameText($this->id, $this->name, $this->series_id, null);
+            }
+        } else {
+            Timeline\Game::addUpdateGameSoftText($this->id, $this->name);
+        }
+        return true;
+    }
 }

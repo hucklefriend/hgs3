@@ -1,26 +1,30 @@
 <?php
+/**
+ *
+ */
 
-namespace Hgs3\Console\Commands;
+
+namespace Hgs3\Console\Commands\Mongo;
 
 use Hgs3\Models\MongoDB\Collection;
 use Illuminate\Console\Command;
 use Hgs3\Models\VersionUp\Database;
 
-class VersionUpDatabase extends Command
+class Reset extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'versionup:database';
+    protected $signature = 'mongo:reset';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'copy data hgs2 to hgs3';
+    protected $description = 'reset MongoDB';
 
     /**
      * Create a new command instance.
@@ -34,12 +38,9 @@ class VersionUpDatabase extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
-        $db = new Database;
-        $db->versionUp();
+        Collection::create();
     }
 }

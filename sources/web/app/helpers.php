@@ -41,19 +41,19 @@ function company_select($companyId, $withEmpty, $params = [])
  */
 function series_select($seriesId, $withEmpty, $params = [])
 {
-    $series = \Hgs3\Models\Orm\GameSeries::all(['id', 'name']);
+    $series = \Hgs3\Models\Orm\GameSeries::orderBy('phonetic')
+        ->select(['id', 'name'])
+        ->get()
+        ->pluck('name', 'id')
+        ->toArray();
 
-    $data = [];
     if ($withEmpty) {
-        $data[0] = '';
+        $series = [0 => ''] + $series;
     }
-
-    $data += array_pluck($series, 'name', 'id');
-    unset($series);
 
     return Form::select(
         $params['name'] ?? 'series_id',
-        $data,
+        $series,
         $seriesId,
         [
             'class' => 'form-control',
@@ -185,4 +185,15 @@ function invalid($errors, $formName)
 function cut_new_line($text)
 {
     return trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $text));
+}
+
+
+function is_data_editor()
+{
+    return \Hgs3\Constants\UserRole::isDataEditor();
+}
+
+function is_admin()
+{
+    return \Hgs3\Constants\UserRole::isAdmin();
 }

@@ -110,7 +110,7 @@ class SiteController extends Controller
             'site'          => $site,
             'handleGames'   => implode('、', $handleGames),
             'admin'         => User::find($site->user_id),
-            'isAdmin'       => $admin->id == Auth::id(),
+            'isWebMaster'   => $admin->id == Auth::id(),
             'isLogin'       => $isLogin,
             'isFavorite'    => $isFavorite,
             'footprint'     => $footprint,

@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @if (is_data_editor())
+    <div class="text-right">
+        <a href="{{ url2('game/soft/add') }}">ゲーム追加</a>
+    </div>
+    @endif
     <div class="card">
         <div class="card-header">
             <div class="d-none d-sm-block">

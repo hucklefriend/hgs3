@@ -104,7 +104,7 @@
                 </p>
             </div>
         </div>
-        @if (Auth::check() && !$isAdmin)
+        @if (Auth::check() && !$isWebMaster)
             <div class="card card_site">
                 <div class="card-body">
                     <h5 class="card-title">お気に入り</h5>
@@ -129,7 +129,7 @@
         @endif
     </div>
 
-    @if ($isAdmin)
+    @if ($isWebMaster)
     <p class="text-muted">※これより下はサイト登録をしたユーザー本人のみ確認できます。</p>
     <div class="row">
         <div class="col-sm-6">

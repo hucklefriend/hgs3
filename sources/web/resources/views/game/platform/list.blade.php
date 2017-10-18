@@ -3,7 +3,7 @@
 @section('content')
     <h4>プラットフォーム一覧</h4>
 
-    @if (\Hgs3\Constants\UserRole::isDataEditor())
+    @if (is_data_editor())
     <div class="text-right">
         <a href="{{ url2('game/platform/add') }}">プラットフォームを追加</a>
     </div>

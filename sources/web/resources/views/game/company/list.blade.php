@@ -3,7 +3,7 @@
 @section('content')
     <h4>ゲーム会社一覧</h4>
 
-    @if (\Hgs3\Constants\UserRole::isDataEditor())
+    @if (is_data_editor())
     <div class="text-right">
         <a href="{{ url2('game/company/add') }}">ゲーム会社を追加</a>
     </div>

@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
         Commands\TestData\GameCommunityTopicResponse::class,
         Commands\TestData\Timeline::class,
         Commands\TestData\NewInformation::class,
+        Commands\Mongo\Reset::class,
         Commands\Init::class,
     ];
 
