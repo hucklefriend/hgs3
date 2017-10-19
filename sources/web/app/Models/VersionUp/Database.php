@@ -120,6 +120,8 @@ SELECT
   IF (sf.company_id <= 0, NULL, sf.company_id), sl.series_id, sl.order, sf.game_type_id, NULL, NOW(), NOW()
 FROM
   hgs2.hgs_g_soft sf LEFT OUTER JOIN hgs2.hgs_g_series_list sl ON sf.id = sl.soft_id
+WHERE
+  sf.id NOT IN (91, 188)
 ON DUPLICATE KEY UPDATE
   `name` = VALUES(`name`)
   , `phonetic` = VALUES(`phonetic`)

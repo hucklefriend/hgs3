@@ -1,0 +1,50 @@
+{
+  "game_id": 11,
+  "packages":[
+    {
+      "platform": "PS3",
+      "company": "カプコン",
+      "name": "biohazard HD REMASTER",
+      "url": "http://www.capcom.co.jp/biohd/ja/",
+      "asin": "B00MGHDAGG",
+      "release_int": 20141127,
+      "release_date": "2014年11月27日"
+    },
+    {
+      "platform": "PS3",
+      "company": "カプコン",
+      "name": "biohazard HD REMASTER コレクターズ・パッケージ",
+      "url": "http://www.capcom.co.jp/biohd/ja/",
+      "asin": "B00MGHDAUC",
+      "release_int": 20141127,
+      "release_date": "2014年11月27日"
+    },
+    {
+      "platform": "PS3",
+      "company": "カプコン",
+      "name": "biohazard HD REMASTER PlayStation 3 the Best",
+      "url": "http://www.capcom.co.jp/biohd/ja/",
+      "asin": "B013JWYW4K",
+      "release_int": 20150917,
+      "release_date": "2015年9月17日"
+    },
+    {
+      "platform": "PS4",
+      "company": "カプコン",
+      "name": "biohazard ORIGINS COLLECTION",
+      "url": "http://www.capcom.co.jp/biohd/ja/",
+      "asin": "B014U9OQOW",
+      "release_int": 20160121,
+      "release_date": "2016年1月21日"
+    },
+    {
+      "platform": "PS4",
+      "company": "カプコン",
+      "name": "biohazard ORIGINS COLLECTION Best Price!",
+      "url": "http://www.capcom.co.jp/biohd/ja/",
+      "asin": "B01MYESO6C",
+      "release_int": 20170323,
+      "release_date": "2017年3月23日"
+    }
+  ]
+}

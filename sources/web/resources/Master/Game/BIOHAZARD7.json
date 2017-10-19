@@ -1,0 +1,20 @@
+{
+  "name": "BIOHAZARD7",
+  "phonetic": "ばいおはざーどせぶん",
+  "genre": "サバイバルホラー",
+  "company": "カプコン",
+  "series": "バイオハザード",
+  "packages":[
+    {
+      "platform": "PS4",
+      "company": "カプコン",
+      "name": "BIOHAZARD7",
+      "release_date": "2017年1月26日",
+      "release_int": 20170126,
+      "acronym": "PS4版",
+      "url":"http://www.capcom.co.jp/biohazard7/",
+      "game_type_id": 1,
+      "asin": "B01M133HE8"
+    }
+  ]
+}

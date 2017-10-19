@@ -196,7 +196,7 @@ SQL;
 
         $sql =<<< SQL
 SELECT users.id, users.name, s.id, s.name, s.url, s.presentation, s.rate,
-  s.gender, s.main_contents_id, s.out_count, s.in_count, s.good_count
+  s.gender, s.main_contents_id, s.out_count, s.in_count, s.good_num
 FROM (
   SELECT * FROM sites WHERE id IN ({$siteIdComma})
 ) s LEFT OUTER JOIN users ON s.user_id = users.id
