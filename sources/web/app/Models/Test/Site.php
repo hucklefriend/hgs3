@@ -16,10 +16,10 @@ class Site
     {
         echo 'create site test data.'.PHP_EOL;
 
-        $site = new \Hgs3\Models\Site();
+        $site = new \Hgs3\Models\Site\Site();
 
-        $userIds = User::getIds();
-        $maxUser = count($userIds) - 1;
+        $users = User::get();
+        $maxUser = $users->count() - 1;
 
         $gameIds = game::getIds();
         $maxGame = count($gameIds) - 1;
@@ -27,11 +27,12 @@ class Site
         $rates = [0, 15, 18];
 
         for ($i = 0; $i < $maxUser; $i++) {
+            $u = $users[$i];
             $n = rand(0, 3);
             for ($j = 0; $j < $n; $j++) {
                 $orm = new \Hgs3\Models\Orm\Site();
 
-                $orm->user_id = $userIds[$i];
+                $orm->user_id = $u->id;
                 $orm->name = str_random(rand(3, 30));
                 $orm->url = 'http://fake.' . str_random(rand(3, 10)) . '.com/';
                 $orm->banner_url = '';
@@ -53,7 +54,9 @@ class Site
                     $handleGame .= $gameIds[rand(0, $maxGame)] . ',';
                 }
 
-                $site->add($orm->user_id, $orm, $handleGame);
+                rtrim($handleGame, ',');
+
+                $site->insert($u, $orm, $handleGame);
             }
         }
     }

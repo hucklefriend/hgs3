@@ -41,4 +41,15 @@ class User
             ->get()
             ->pluck('id');
     }
+
+
+    /**
+     * データを取得
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public static function get()
+    {
+        return \Hgs3\User::all();
+    }
 }

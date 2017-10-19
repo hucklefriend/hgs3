@@ -3,29 +3,44 @@
  * サイトモデル
  */
 
-namespace Hgs3\Models;
+namespace Hgs3\Models\Site;
 
-use Hgs3\Models\Orm\SiteSearchIndex;
+use Hgs3\Models\Orm;
+use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Hgs3\Models\Timeline;
 
 class Site
 {
     /**
      * 登録
      *
-     * @param int $userId
+     * @param User $user
      * @param Orm\Site $orm
      * @param string $handleGamesComma
      */
-    public function add($userId, \Hgs3\Models\Orm\Site $orm, $handleGamesComma)
+    public function save(User $user, Orm\Site $orm, $handleGamesComma)
     {
+        $isAdd = $orm->id === null;
+
+        $handleGameIds = explode(',', $handleGamesComma);
+
+        if (!$isAdd) {
+            // タイムライン用に現在の取扱いゲームを取得
+            $prevHandleGameIds = DB::table('site_handle_games')
+                ->select(['game_id'])
+                ->where('site_id', $orm->id)
+                ->get()
+                ->pluck('game_id', 'game_id')
+                ->toArray();
+        }
+
         DB::beginTransaction();
         try {
             $orm->save();
 
-            $handleGameIds = explode(',', $handleGamesComma);
-            $this->saveHandleGame($userId, $handleGameIds);
+            $this->saveHandleGame($orm->user_id, $handleGameIds);
 
             $this->saveSearchIndex($orm, $handleGameIds);
 
@@ -36,42 +51,56 @@ class Site
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
 
-            echo $e->getMessage();
-
             return false;
+        }
+
+        // タイムライン
+        if ($isAdd) {
+            Timeline\User::addAddSiteText($user->id, $user->name, $orm->id, $orm->name);
+
+            // TODO ループを回さずに、配列を渡して内部で一括登録するようにしたい
+            foreach ($handleGameIds as $gameId) {
+                Timeline\Game::addNewSiteText($gameId, null, $orm->id, $orm->name);
+            }
+        } else {
+            Timeline\User::addUpdateSiteText($user->id, $user->name, $orm->id, $orm->name);
+
+            // 直前に取りつかってないゲームを追加
+            foreach ($handleGameIds as $gameId) {
+                if (!isset($prevHandleGameIds[$gameId])) {
+                    Timeline\Game::addNewSiteText($gameId, null, $orm->id, $orm->name);
+                }
+            }
         }
 
         return true;
     }
 
-    public function update()
-    {
-
-    }
-
     /**
-     * 取扱いゲームと共に保存
+     * 取扱いゲームを保存
      *
      * @param int $siteId
      * @param string $handleGameIds
      */
     private function saveHandleGame($siteId, array $handleGameIds)
     {
-        $sql =<<< SQL
-DELETE FROM site_handle_games WHERE site_id = ?
-SQL;
-        DB::delete($sql, [$siteId]);
+        DB::table('site_handle_games')
+            ->where('site_id', $siteId)
+            ->delete();
 
         if (!empty($handleGameIds)) {
+            $data = [];
             foreach ($handleGameIds as $gameId) {
                 if (!empty($gameId)) {
-                    DB::table('site_handle_games')
-                        ->insert([
+                    $data[] = [
                             'site_id' => $siteId,
                             'game_id' => $gameId
-                        ]);
+                        ];
                 }
             }
+
+            DB::table('site_handle_games')
+                ->insert($data);
         }
     }
 
@@ -81,7 +110,7 @@ SQL;
      * @param Orm\Site $orm
      * @param array $handleGames
      */
-    private function saveSearchIndex(\Hgs3\Models\Orm\Site $orm, array $handleGames)
+    private function saveSearchIndex(Orm\Site $orm, array $handleGames)
     {
         // 先に消す
         DB::table('site_search_indices')

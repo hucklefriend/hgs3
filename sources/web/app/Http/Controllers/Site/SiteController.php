@@ -17,8 +17,10 @@ use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Site;
 use Hgs3\Models\User\FavoriteSite;
 use Hgs3\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class SiteController extends Controller
 {
@@ -37,7 +39,7 @@ class SiteController extends Controller
      */
     public function index()
     {
-        $site = new \Hgs3\Models\Site();
+        $site = new \Hgs3\Models\Site\Site();
 
         // 新着サイト
         $data['newcomer'] = $site->getNewcomer();
@@ -87,7 +89,7 @@ class SiteController extends Controller
      * @param Site $site
      * @return $this
      */
-    public function detail(Site $site)
+    public function detail(Request $request, Site $site)
     {
         $data = ['site' => $site];
 
@@ -119,15 +121,24 @@ class SiteController extends Controller
         $data['users'] = User::getNameHash(array_pluck($data['favoriteUsers']->toArray(), 'user_id'));
         $data['csrfToken'] = csrf_token();
 
+        if ($request->session()->pull('a') != null) {
+            $data['defaultMessage'] = '';
+        }
+
+        if ($request->session()->pull('u') != null) {
+            $data['defaultMessage'] = '';
+        }
+
         return view('site.detail', $data);
     }
 
     /**
      * サイト追加画面
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function add()
+    public function add(Request $request)
     {
         // TODO サイト登録可能数チェック
 
@@ -148,18 +159,11 @@ class SiteController extends Controller
      * @param SiteRequest $request
      * @return $this
      */
-    public function store(SiteRequest $request)
+    public function insert(SiteRequest $request)
     {
         $site = new Site;
 
-        $site->user_id = Auth::id();
-        $site->name = $request->get('name') ?? '';
-        $site->url = $request->get('url') ?? '';
-        $site->banner_url = $request->get('banner_url') ?? '';
-        $site->presentation = $request->get('presentation') ?? '';
-        $site->main_contents_id = intval($request->get('main_contents') ?? 0);
-        $site->rate = intval($request->get('rate') ?? 1);
-        $site->gender = intval($request->get('gender') ?? 1);
+        $this->setRequestData($site, $request);
         $site->open_type = 0;
         $site->in_count = 0;
         $site->out_count = 0;
@@ -169,13 +173,70 @@ class SiteController extends Controller
         $site->registered_timestamp = time();
         $site->updated_timestamp = 0;
 
-        $siteId = $site->saveWithHandleGame($request->get('handle_game') ?? '');
-        if ($siteId === false) {
-            // TODO エラー
+        $s = new \Hgs3\Models\Site\Site();
+        if (!$s->save(Auth::user(), $site, $request->get('handle_game', ''))) {
+            session(['se' => 1]);
+            return redirect()->back()->withInput();
         }
 
-        return view('user.site.add_complete')->with([
-            'site_id' => $siteId
+        session(['a' => 1]);
+
+        return redirect('site/detail/' . $site->id);
+    }
+
+    /**
+     * 編集画面
+     *
+     * @param Request $request
+     * @param Site $site
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Request $request, Site $site)
+    {
+        return view('site.edit', [
+            'games' => Game::getPhoneticTypeHash(),
+            'site'  => $site
         ]);
+    }
+
+    /**
+     * データ更新
+     *
+     * @param SiteRequest $request
+     * @param Site $site
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(SiteRequest $request, Site $site)
+    {
+        $this->setRequestData($site, $request);
+        $site->updated_timestamp = time();
+
+        $s = new \Hgs3\Models\Site\Site();
+        if (!$s->save(Auth::user(), $site, $request->get('handle_game', ''))) {
+            session(['se' => 1]);
+            return redirect()->back()->withInput();
+        }
+
+        session(['u' => 1]);
+
+        return redirect('site/detail/' . $site->id);
+    }
+
+    /**
+     * リクエストの値をO/Rマッパーにセット
+     *
+     * @param Site $site
+     * @param SiteRequest $request
+     */
+    private function setRequestData(Site $site, SiteRequest $request)
+    {
+        $site->user_id = Auth::id();
+        $site->name = $request->get('name', '');
+        $site->url = $request->get('url', '');
+        $site->banner_url = $request->get('banner_url', '');
+        $site->presentation = $request->get('presentation', '');
+        $site->main_contents_id = intval($request->get('main_contents', MainContents::OTHER));
+        $site->rate = intval($request->get('rate',Rate::ALL));
+        $site->gender = intval($request->get('gender', Gender::NONE));
     }
 }
