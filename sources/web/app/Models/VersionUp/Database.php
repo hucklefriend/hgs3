@@ -73,6 +73,7 @@ SQL;
     {
         $sql =<<< SQL
 INSERT INTO game_platforms
+  (id, company_id, `name`, acronym, sort_order, created_at, updated_at)
 SELECT
   id, company_id, `name`, acronym, order_no, FROM_UNIXTIME(registered_date), FROM_UNIXTIME(updated_date)
 FROM

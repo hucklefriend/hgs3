@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.17 on 2017-10-18 16:33:07.
+ * Generated for Laravel 5.5.18 on 2017-10-19 22:52:13.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -6650,6 +6650,43 @@ namespace Illuminate\Support\Facades {
         public static function setSession($session)
         {
             \Illuminate\Routing\Redirector::setSession($session);
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Routing\Redirector::macro($name, $macro);
+        }
+        
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @return void 
+         * @static 
+         */ 
+        public static function mixin($mixin)
+        {
+            \Illuminate\Routing\Redirector::mixin($mixin);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Routing\Redirector::hasMacro($name);
         }
          
     }

@@ -19,7 +19,7 @@ class CreateUserCommunitiesTable extends Migration
         Schema::create('user_communities', function (Blueprint $table) {
             $table->increments('id')->comment('ユーザーコミュニティID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID(作成者)');
-            $table->unsignedTinyInteger('access')->default(\Hgs3\Constants\Access::OPEN)->comment('アクセス区分');
+            $table->unsignedTinyInteger('access')->default(\Hgs3\Constants\UserCommunity\Access::OPEN)->comment('アクセス区分');
             $table->string('name', 100)->comment('コミュニティ名');
             $table->text('profile')->comment('コミュニティ紹介文');
             $table->unsignedInteger('user_num')->comment('ユーザー数');
