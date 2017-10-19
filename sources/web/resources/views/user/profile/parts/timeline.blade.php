@@ -3,4 +3,7 @@
     <p>{!!  $tl['text'] !!}</p>
     <hr>
 @endforeach
+
+@if ($timelines)
 {{ $pager->links('vendor.pagination.simple-bootstrap-4') }}
+@endif

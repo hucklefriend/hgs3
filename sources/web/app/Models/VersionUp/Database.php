@@ -20,12 +20,13 @@ class Database
         $this->changeGameType();
         $this->setOriginalPackageId();
 
-        if (env('') == 'local') {
+        if (env('APP_ENV') == 'local') {
             $password = 'huckle';
         } else {
             $password = str_random(10);
             // パスワードをファイル出力
             $path = storage_path('app/admin_password.txt');
+            echo 'admin password is '.$password.PHP_EOL;
             file_put_contents($path, $password);
         }
 

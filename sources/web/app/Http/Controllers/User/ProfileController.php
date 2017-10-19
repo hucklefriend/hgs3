@@ -121,9 +121,9 @@ class ProfileController extends Controller
             default: {
                 $show = 'timeline';
 
-                $timeline = new Timeline();
-
-                $data['parts'] = $timeline->getMyPage($user->id, 15);
+                $data['parts'] = [
+                    'timelines' => []
+                ];
             }
                 break;
         }

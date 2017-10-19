@@ -4,9 +4,12 @@
     <div class="text-center">
         <h1>{{ $game->name }}</h1>
     </div>
+
+    @if (is_data_editor())
     <div class="text-right">
         <a href="{{ url2('game/soft/edit/' . $game->id) }}">データ修正</a>
     </div>
+    @endif
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
@@ -225,11 +228,16 @@
                             });
                         </script>
                     @else
-                        <p>レビューは投稿されていません。<br>
-                            最初のレビューを投稿してみませんか？</p>
+                        <p>
+                            レビューは投稿されていません。
+                            @auth
+                            <br>
+                            最初のレビューを投稿してみませんか？
+                            @endauth
+                        </p>
                     @endif
-                    <hr>
                         @if (\Illuminate\Support\Facades\Auth::check())
+                            <hr>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-center">
@@ -242,7 +250,8 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
+                        @elseif ($review !== null)
+                            <hr>
                             <div class="text-center">
                                 <a href="{{ url('review/soft') }}/{{ $game->id }}">レビューを見る</a>
                             </div>
