@@ -10,6 +10,7 @@ use Hgs3\Models\Orm\GameCommunityMember;
 use Hgs3\Models\Orm\GameCommunityTopic;
 use Hgs3\Models\Orm\GameCommunityTopicResponse;
 use Hgs3\User;
+use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
 
 class GameCommunity
@@ -61,11 +62,11 @@ SQL;
     /**
      * 参加
      *
-     * @param $gameId
-     * @param $userId
+     * @param Game $game
+     * @param User $user
      * @return bool
      */
-    public function join($gameId, $userId)
+    public function join(Game $game, User $user)
     {
         DB::beginTransaction();
 
@@ -77,14 +78,14 @@ INSERT IGNORE INTO game_community_members (
   ?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 )
 SQL;
-            DB::insert($sql, [$gameId, $userId]);
+            DB::insert($sql, [$game->id, $user->id]);
 
             $sql =<<< SQL
 UPDATE game_communities
 SET user_num = user_num + 1
 WHERE id = ?
 SQL;
-            if (DB::update($sql, [$gameId]) == 0) {
+            if (DB::update($sql, [$game->id]) == 0) {
                 DB::table('game_communities')
                     ->insert([
                         'id'       => $gameId,
@@ -98,17 +99,21 @@ SQL;
             return false;
         }
 
+        // タイムライン
+        Timeline\User::addJoinGameCommunityText($user->id, $user->name, $game->id, $game->name);
+
+
         return true;
     }
 
     /**
      * 脱退
      *
-     * @param $gameId
-     * @param $userId
+     * @param Game $game
+     * @param User $user
      * @return bool
      */
-    public function secession($gameId, $userId)
+    public function secession(Game $game, User $user)
     {
         DB::beginTransaction();
 
@@ -117,20 +122,23 @@ SQL;
 DELETE FROM game_community_members
 WHERE game_id = ? AND user_id = ?
 SQL;
-            DB::insert($sql, [$gameId, $userId]);
+            DB::insert($sql, [$game->id, $user->id]);
 
             $sql =<<< SQL
 UPDATE game_communities
 SET user_num = user_num - 1
 WHERE id = ?
 SQL;
-            DB::update($sql, [$gameId]);
+            DB::update($sql, [$game->id]);
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return false;
         }
+
+        // タイムライン
+        Timeline\User::addLeaveGameCommunityText($user->id, $user->name, $game->id, $game->name);
 
         return true;
     }

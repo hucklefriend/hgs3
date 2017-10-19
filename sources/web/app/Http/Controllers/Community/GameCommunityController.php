@@ -89,7 +89,7 @@ class GameCommunityController extends Controller
     public function join(Game $game)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->join($game->id, Auth::id());
+        $model->join($game, Auth::user());
 
         return redirect()->back();
     }
@@ -103,7 +103,7 @@ class GameCommunityController extends Controller
     public function secession(Game $game)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->secession($game->id, Auth::id());
+        $model->secession($game, Auth::user());
 
         return redirect()->back();
     }

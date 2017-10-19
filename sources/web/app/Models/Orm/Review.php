@@ -62,8 +62,10 @@ class Review extends \Eloquent
             return false;
         }
 
+        // タイムライン
         if ($isNew) {
             Timeline\Game::addNewReviewText($this->game_id, null, $this->id, $this->is_spoiler);
+            Timeline\User::addWriteReviewText($this->user_id, null, $this->id, $this->is_spoiler, $this->game_id, null);
         }
 
         return true;

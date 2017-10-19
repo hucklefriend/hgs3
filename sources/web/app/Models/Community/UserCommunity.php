@@ -2,10 +2,12 @@
 
 namespace Hgs3\Models\Community;
 
+use Hgs3\Models\Orm;
 use Hgs3\Models\Orm\UserCommunityMember;
 use Hgs3\Models\Orm\UserCommunityTopic;
 use Hgs3\Models\Orm\UserCommunityTopicResponse;
 use Hgs3\User;
+use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
 
 class UserCommunity
@@ -66,11 +68,11 @@ SQL;
     /**
      * 参加
      *
-     * @param $userCommunityId
-     * @param $userId
+     * @param Orm\UserCommunity $userCommunity
+     * @param User $user
      * @return bool
      */
-    public function join($userCommunityId, $userId)
+    public function join(Orm\UserCommunity $userCommunity, User $user)
     {
         DB::beginTransaction();
 
@@ -82,20 +84,23 @@ INSERT IGNORE INTO user_community_members (
   ?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 )
 SQL;
-            DB::insert($sql, [$userCommunityId, $userId]);
+            DB::insert($sql, [$userCommunity->id, $user->id]);
 
             $sql =<<< SQL
 UPDATE user_communities
 SET user_num = user_num + 1
 WHERE id = ?
 SQL;
-            DB::update($sql, [$userCommunityId]);
+            DB::update($sql, [$userCommunity->id]);
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return false;
         }
+
+        // タイムライン
+        Timeline\User::addJoinUserCommunityText($user->id, $user->name, $userCommunity->id, $userCommunity->name);
 
         return true;
     }
@@ -130,6 +135,8 @@ SQL;
             DB::rollBack();
             return false;
         }
+
+        Timeline\User::addLeaveUserCommunityText($user->id, $user->name, $userCommunity->id, $userCommunity->name);
 
         return true;
     }

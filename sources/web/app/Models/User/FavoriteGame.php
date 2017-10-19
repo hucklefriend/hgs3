@@ -41,6 +41,7 @@ SQL;
 
         // TODO 追加->取り消しの繰り返しをさせない
         Timeline\Game::addFavoriteGameText($gameId, null, $userId, null);
+        Timeline\User::addAddFavoriteGameText($userId, null, $gameId, null);
 
         return true;
     }

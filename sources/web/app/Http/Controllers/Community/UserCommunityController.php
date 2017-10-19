@@ -68,7 +68,7 @@ class UserCommunityController extends Controller
     public function join(UserCommunity $uc)
     {
         $model = new \Hgs3\Models\Community\UserCommunity();
-        $model->join($uc->id, Auth::id());
+        $model->join($uc, Auth::user());
 
         return redirect()->back();
     }
@@ -82,7 +82,7 @@ class UserCommunityController extends Controller
     public function secession(UserCommunity $uc)
     {
         $model = new \Hgs3\Models\Community\UserCommunity();
-        $model->secession($uc->id, Auth::id());
+        $model->secession($uc, Auth::user());
 
         return redirect()->back();
     }
