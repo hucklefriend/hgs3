@@ -27,6 +27,20 @@ abstract class TimelineAbstract
     }
 
     /**
+     * パッケージ名を取得
+     *
+     * @param int $packageId
+     * @param string $packageName
+     */
+    protected static function setPackageName($packageId, &$packageName)
+    {
+        if (empty($packageName)) {
+            $package = Orm\GamePackage::find($packageId);
+            $packageName = $package !== null ? $package->name : '';
+        }
+    }
+
+    /**
      * シリーズ名を取得
      *
      * @param int $seriesId
