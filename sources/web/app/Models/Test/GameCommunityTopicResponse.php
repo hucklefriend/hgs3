@@ -16,15 +16,22 @@ class GameCommunityTopicResponse
         echo 'create game community topic response test data.'.PHP_EOL;
 
         $gc = new \Hgs3\Models\Community\GameCommunity();
-        $userIds = User::getIds();
-        $userMax = count($userIds) - 1;
+        $users = User::get();
+        $userMax = $users->count() - 1;
 
-        $uctIds = GameCommunityTopic::getIds();
-        foreach ($uctIds as $topicId) {
-            $n = rand(0, 100);
+        $gcts = GameCommunityTopic::get();
+        foreach ($gcts as $gct) {
+            if (rand(0, 100) > 40) {
+                continue;
+            }
+
+            $n = rand(0, 15);
             for ($i = 0; $i < $n; $i++) {
-                $gc->writeResponse($topicId, $userIds[rand(0, $userMax)], str_random(500));
+                $gc->writeResponse($gct, $users[rand(0, $userMax)], str_random(500));
             }
         }
+
+        unset($users);
+        unset($gcts);
     }
 }

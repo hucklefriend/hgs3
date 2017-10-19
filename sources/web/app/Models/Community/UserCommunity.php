@@ -9,6 +9,7 @@ use Hgs3\Models\Orm\UserCommunityTopicResponse;
 use Hgs3\User;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UserCommunity
 {
@@ -212,17 +213,17 @@ SQL;
     /**
      * トピックを投稿
      *
-     * @param $userCommunityId
+     * @param Orm\UserCommunity $userCommunity
      * @param $userId
      * @param $title
      * @param $comment
      */
-    public function writeTopic($userCommunityId, $userId, $title, $comment)
+    public function writeTopic(Orm\UserCommunity $userCommunity, $userId, $title, $comment)
     {
         $now = new \DateTime();
 
-        UserCommunityTopic::insert([
-            'user_community_id' => $userCommunityId,
+        $topicId = UserCommunityTopic::insertGetId([
+            'user_community_id' => $userCommunity->id,
             'user_id'           => $userId,
             'title'             => $title,
             'comment'           => $comment,
@@ -230,16 +231,20 @@ SQL;
             'response_date'     => $now,
             'response_num'      => 0
         ]);
+
+        Timeline\UserCommunity::addNewTopicText($userCommunity->id, $userCommunity->name, $topicId);
     }
 
     /**
      * レスを投稿
      *
-     * @param $topicId
-     * @param $userId
-     * @param $comment
+     * @param Orm\UserCommunity $userCommunity
+     * @param Orm\UserCommunityTopic $userCommunityTopic
+     * @param User $user
+     * @param string $comment
+     * @return bool
      */
-    public function writeResponse($topicId, $userId, $comment)
+    public function writeResponse(Orm\UserCommunity $userCommunity, Orm\UserCommunityTopic $userCommunityTopic, User $user, $comment)
     {
         $now = new \DateTime();
 
@@ -247,8 +252,8 @@ SQL;
 
         try {
             UserCommunityTopicResponse::insert([
-                'user_community_topic_id' => $topicId,
-                'user_id'                 => $userId,
+                'user_community_topic_id' => $userCommunityTopic->id,
+                'user_id'                 => $user->id,
                 'comment'                 => $comment,
                 'wrote_date'              => $now
             ]);
@@ -259,13 +264,26 @@ SET response_num = response_num + 1
   , response_date = NOW()
 WHERE id = ?
 SQL;
-            DB::update($updSql, [$topicId]);
+            DB::update($updSql, [$userCommunityTopic->id]);
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
             return false;
         }
+
+        // タイムライン
+        Timeline\MySelf::addUserCommunityTopicResponseText(
+            $userCommunityTopic->user_id,
+            $userCommunity->id,
+            $userCommunity->name,
+            $userCommunityTopic->id
+        );
+
 
         return true;
     }
@@ -292,6 +310,10 @@ SQL;
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
             return false;
         }
 
@@ -301,10 +323,10 @@ SQL;
     /**
      * レスの消去
      *
-     * @param UserCommunityTopicResponse $uctr
+     * @param UserCommunityTopicResponse $userCommunityTopicResponse
      * @return bool
      */
-    public function eraseTopicResponse(UserCommunityTopicResponse $uctr)
+    public function eraseTopicResponse(UserCommunityTopicResponse $userCommunityTopicResponse)
     {
         DB::beginTransaction();
 
@@ -314,13 +336,17 @@ UPDATE user_community_topics
 SET response_num = response_num - 1
 WHERE id = ?
 SQL;
-            DB::update($updSql, [$uctr->topic_id]);
+            DB::update($updSql, [$userCommunityTopicResponse->topic_id]);
 
-            $uctr->delete();
+            $userCommunityTopicResponse->delete();
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
             return false;
         }
 

@@ -4,7 +4,7 @@
  */
 
 namespace Hgs3\Models\Test;
-use Hgs3\Models\Orm\ReviewTotal;
+use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
 
 class Review
@@ -26,8 +26,7 @@ class Review
 
         for ($i = 0; $i < $num; $i++) {
             $pkg = $pkgs[rand(0, $pkgMax)];
-
-            $orm = new \Hgs3\Models\Orm\Review([
+            $orm = new Orm\Review([
                 'user_id'         => $users[rand(0, $userMax)],
                 'game_id'         => $pkg->game_id,
                 'package_id'      => $pkg->id,
@@ -46,14 +45,20 @@ class Review
                 'title'           => str_random(rand(5, 100)),
                 'post_date'       => new \DateTime()
             ]);
+
             $orm->save();
             unset($orm);
         }
 
+        unset($users);
+        unset($pkgs);
+
         $games = Game::getIds();
         foreach ($games as $gameId) {
-            ReviewTotal::calculate($gameId);
+            Orm\ReviewTotal::calculate($gameId);
         }
+
+        unset($games);
     }
 
     /**

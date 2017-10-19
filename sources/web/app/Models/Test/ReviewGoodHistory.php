@@ -7,38 +7,25 @@
 namespace Hgs3\Models\Test;
 use Hgs3\Models\Review\Review;
 use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Orm;
 
 class ReviewGoodHistory
 {
     /**
      * テストデータ生成
-     *
-     * @param $num
      */
-    public static function create($num)
+    public static function create()
     {
         echo 'create review good history test data.'.PHP_EOL;
 
-        $users = User::getIds();
-        $userNum = count($users);
+        Orm\Review::chunk(100, function ($reviews) {
+            $users = User::get();
+            $userMax = $users->count() - 1;
+            $r = new Review;
 
-        $reviews = DB::table('reviews')
-            ->select('id')
-            ->get()
-            ->pluck('id');
-
-        $r = new Review;
-
-        foreach ($reviews as $reviewId) {
-            for ($i = 0; $i < $num; $i++) {
-                $sql =<<< SQL
-INSERT IGNORE INTO review_good_histories
-VALUES(?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-SQL;
-                DB::insert($sql, [$reviewId, $users[rand(0, $userNum - 1)]]);
+            foreach ($reviews as $review) {
+                $r->good($review, $users[rand(0, $userMax)]);
             }
-
-            $r->calculateGoodNum($reviewId);
-        }
+        });
     }
 }

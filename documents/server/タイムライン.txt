@@ -73,6 +73,8 @@
 　XXさんが新しいイラストを投稿しました
 
 
+
+
 ○コミュニティタイムライン db.hgs3.game_community_timeline, db.hgs3.user_community_timeline
 {
     community_id: コミュニティID,
@@ -125,6 +127,10 @@
 
 ・投稿したコミュニティのトピックにレスがついた
 　コミュニティ「」に投稿したトピック「」へ返信があります。
+
+
+・サイトに初めていいねされた
+　サイト「」が初めていいねされました！
 
 
 ○自分の行動タイムライン db.hgs3.user_action_timeline

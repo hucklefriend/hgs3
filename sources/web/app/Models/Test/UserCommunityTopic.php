@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Test;
 use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Orm;
 
 class UserCommunityTopic
 {
@@ -17,12 +18,16 @@ class UserCommunityTopic
 
         $uc = new \Hgs3\Models\Community\UserCommunity();
 
-        $ucIds = UserCommunity::getIds();
-        foreach ($ucIds as $ucId) {
-            for ($i = 0; $i < 100; $i++) {
-                $uc->writeTopic($ucId, 1, 'テスト' . $i, str_random(500));
+        $userCommunities = UserCommunity::get();
+
+
+        Orm\UserCommunity::chunk(100, function ($userCommunities){
+            foreach ($userCommunities as $userCommunity) {
+                for ($i = 0; $i < 100; $i++) {
+                    $uc->writeTopic($userCommunity, 1, 'テスト' . $i, str_random(500));
+                }
             }
-        }
+        });
     }
 
     /**

@@ -5,7 +5,7 @@
 
 namespace Hgs3\Models\Test;
 use Illuminate\Support\Facades\DB;
-use Hgs3\Models\Orm\UserFollow;
+use Hgs3\Models\Orm;
 
 class Site
 {
@@ -29,9 +29,10 @@ class Site
         for ($i = 0; $i < $maxUser; $i++) {
             $u = $users[$i];
             $n = rand(0, 3);
-            for ($j = 0; $j < $n; $j++) {
-                $orm = new \Hgs3\Models\Orm\Site();
 
+            $orm = new Orm\Site();
+            for ($j = 0; $j < $n; $j++) {
+                $orm->id = null;
                 $orm->user_id = $u->id;
                 $orm->name = str_random(rand(3, 30));
                 $orm->url = 'http://fake.' . str_random(rand(3, 10)) . '.com/';
@@ -56,7 +57,7 @@ class Site
 
                 rtrim($handleGame, ',');
 
-                $site->insert($u, $orm, $handleGame);
+                $site->save($u, $orm, $handleGame);
             }
         }
     }

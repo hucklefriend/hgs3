@@ -7,10 +7,9 @@
 namespace Hgs3\Models\Review;
 
 use Hgs3\Constants\Review\Status;
-use Hgs3\Models\Orm\GamePackage;
-use Hgs3\Models\Orm\ReviewDraft;
-use Hgs3\Models\Orm\ReviewTotal;
+use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
+use Hgs3\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -65,16 +64,16 @@ SQL;
     /**
      * 下書きを取得
      *
-     * @param $userId
-     * @param $gameId
+     * @param int $userId
+     * @param int $gameId
      */
     public function getDraft($userId, $gameId)
     {
         if ($userId == null) {
-            return ReviewDraft::getDefault($userId, $gameId);
+            return Orm\ReviewDraft::getDefault($userId, $gameId);
         }
 
-        $draft = ReviewDraft::where('user_id', $userId)
+        $draft = Orm\ReviewDraft::where('user_id', $userId)
             ->where('game_id', $gameId)
             ->first();
 
@@ -84,12 +83,12 @@ SQL;
     /**
      * 保存
      *
-     * @param ReviewDraft $draft
+     * @param Orm\ReviewDraft $draft
      * @return bool|mixed
      */
-    public function save(ReviewDraft $draft)
+    public function save(Orm\ReviewDraft $draft)
     {
-        $orm = new \Hgs3\Models\Orm\Review($draft->toArray());
+        $orm = new Orm\Review($draft->toArray());
         $orm->post_date = new \DateTime();
 
         DB::beginTransaction();
@@ -98,7 +97,7 @@ SQL;
             $orm->save();
 
             // 統計
-            ReviewTotal::calculate($orm->game_id);
+            Orm\ReviewTotal::calculate($orm->game_id);
 
             // 下書き削除
             DB::table('review_drafts')
@@ -212,7 +211,7 @@ SQL;
      */
     public function getMyPage($userId)
     {
-        return \Hgs3\Models\Orm\Review::where('user_id', $userId)
+        return Orm\Review::where('user_id', $userId)
             ->orderBy('id')
             ->paginate(15);
     }
@@ -235,11 +234,11 @@ SQL;
     /**
      * いいね
      *
-     * @param \Hgs3\Models\Orm\Review $orm
-     * @param $userId
+     * @param Orm\Review $orm
+     * @param User $user
      * @return bool
      */
-    public function good(\Hgs3\Models\Orm\Review $orm, $userId)
+    public function good(Orm\Review $orm, User $user)
     {
         DB::beginTransaction();
         try {
@@ -247,7 +246,7 @@ SQL;
 INSERT IGNORE INTO review_good_histories (review_id, user_id, good_date, created_at, updated_at)
 VALUES (?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
-            $insNum = DB::insert($sql, [$orm->id, $userId]);
+            $insNum = DB::insert($sql, [$orm->id, $user->id]);
             if ($insNum == 1) {
                 $updateGoodNum =<<< SQL
 UPDATE reviews
@@ -268,7 +267,8 @@ SQL;
             return false;
         }
 
-        // TODO タイムライン
+        // タイムライン
+        Timeline\MySelf::addReviewGoodText($orm->user_id, $orm->id, $orm->package_id, null, $user->id, $user->name);
 
         return true;
     }
@@ -360,7 +360,7 @@ SQL;
             ->orderBy('id', 'DESC')
             ->paginate(20);
 
-        $packages = GamePackage::getHash(array_pluck($data->items(), 'package_id'));
+        $packages = Orm\GamePackage::getHash(array_pluck($data->items(), 'package_id'));
         foreach ($data as &$row) {
             if (isset($packages[$row->package_id])) {
                 $row->game_name = $packages[$row->package_id]->name;

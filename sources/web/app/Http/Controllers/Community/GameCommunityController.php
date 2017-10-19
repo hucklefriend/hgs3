@@ -33,6 +33,8 @@ class GameCommunityController extends Controller
 
     /**
      * 一覧ページ
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -40,7 +42,7 @@ class GameCommunityController extends Controller
 
         $gc = new \Hgs3\Models\Community\GameCommunity;
 
-        return view('community.game.index')->with([
+        return view('community.game.index', [
             'phoneticList' => PhoneticType::getId2CharData(),
             'list'         => $soft->getList(),
             'memberNum'    => $gc->getMemberNum()
@@ -183,14 +185,13 @@ class GameCommunityController extends Controller
      */
     public function write(Topic $request, Game $game)
     {
-        // TODO: メンバーかどうか
-
+        // TODO メンバーかどうか
 
         $title = $request->get('title');
         $comment = $request->get('comment');
 
         $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->writeTopic($game->id, Auth::id(), $title, $comment);
+        $model->writeTopic($game, Auth::user(), $title, $comment);
 
         return redirect()->back();
     }

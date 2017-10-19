@@ -9,6 +9,7 @@ use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\GameCommunityMember;
 use Hgs3\Models\Orm\GameCommunityTopic;
 use Hgs3\Models\Orm\GameCommunityTopicResponse;
+use Hgs3\Models\Orm;
 use Hgs3\User;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
@@ -214,34 +215,37 @@ SQL;
     /**
      * トピックを投稿
      *
-     * @param int $gameId
-     * @param int $userId
+     * @param Orm\Game $game
+     * @param User $user
      * @param int $title
      * @param string $comment
      */
-    public function writeTopic($gameId, $userId, $title, $comment)
+    public function writeTopic(Orm\Game $game, User $user, $title, $comment)
     {
         $now = new \DateTime();
 
-        GameCommunityTopic::insert([
-            'game_id'       => $gameId,
-            'user_id'       => $userId,
+        $topicId = GameCommunityTopic::insertGetId([
+            'game_id'       => $game->id,
+            'user_id'       => $user->id,
             'title'         => $title,
             'comment'       => $comment,
             'wrote_date'    => $now,
             'response_date' => $now,
             'response_num'  => 0
         ]);
+
+        // タイムライン
+        Timeline\GameCommunity::addNewTopicText($game->id, $game->name, $topicId);
     }
 
     /**
      * レスを投稿
      *
-     * @param $topicId
-     * @param $userId
+     * @param Orm\GameCommunityTopic $gameCommunityTopic
+     * @param User $user
      * @param $comment
      */
-    public function writeResponse($topicId, $userId, $comment)
+    public function writeResponse(Orm\GameCommunityTopic $gameCommunityTopic, User $user, $comment)
     {
         $now = new \DateTime();
 
@@ -249,8 +253,8 @@ SQL;
 
         try {
             GameCommunityTopicResponse::insert([
-                'game_community_topic_id' => $topicId,
-                'user_id'                 => $userId,
+                'game_community_topic_id' => $gameCommunityTopic->id,
+                'user_id'                 => $user->id,
                 'comment'                 => $comment,
                 'wrote_date'              => $now
             ]);
@@ -261,13 +265,18 @@ SET response_num = response_num + 1
   , response_date = NOW()
 WHERE id = ?
 SQL;
-            DB::update($updSql, [$topicId]);
+            DB::update($updSql, [$gameCommunityTopic->id]);
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return false;
         }
+
+        // タイムライン
+        Timeline\MySelf::addGameCommunityTopicResponseText(
+            $gameCommunityTopic->user_id, $gameCommunityTopic->game_id, null, $gameCommunityTopic->id
+        );
 
         return true;
     }

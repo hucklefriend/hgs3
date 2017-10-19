@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Test;
 use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Orm;
 
 class UserCommunity
 {
@@ -18,8 +19,11 @@ class UserCommunity
         // とりあえずのところ、管理者しか作れないので数個
         $now = new \DateTime();
 
+        $uc = new \Hgs3\Models\Community\UserCommunity();
+
+
         for ($i = 2; $i < 7; $i++) {
-            $uc = new \Hgs3\Models\Orm\UserCommunity([
+            $uc = new Orm\UserCommunity([
                 'user_id'  => 1,
                 'name'     => 'テスト' . $i,
                 'user_num' => 1
@@ -47,5 +51,15 @@ class UserCommunity
             ->select('id')
             ->get()
             ->pluck('id');
+    }
+
+    /**
+     * Ormで取得
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public static function get()
+    {
+        return Orm\UserCommunity::all();
     }
 }

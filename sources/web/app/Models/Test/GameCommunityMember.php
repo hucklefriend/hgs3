@@ -13,21 +13,23 @@ class GameCommunityMember
      */
     public static function create()
     {
-        echo 'create game community member test data.'.PHP_EOL;
+        echo 'create game community member test data.' . PHP_EOL;
 
-        $userIds = User::getIds();
-        $userMax = count($userIds) - 1;
-        $gameIds = Game::getIds();
-        $gameMax = count($gameIds) - 1;
+        $users = User::get();
+        $games = Game::get();
+        $gameMax = $games->count() - 1;
 
         $gc = new \Hgs3\Models\Community\GameCommunity();
 
-        foreach ($userIds as $userId) {
-            $num = rand(1, 30);
+        foreach ($users as $user) {
+            $num = rand(0, 30);
 
             for ($i = 0; $i < $num; $i++) {
-                $gc->join($userId, $gameIds[rand(0, $gameMax)]);
+                $gc->join($user, $games[rand(0, $gameMax)]);
             }
         }
+
+        unset($users);
+        unset($games);
     }
 }

@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Test;
 use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Orm;
 
 class GameCommunityTopic
 {
@@ -17,12 +18,23 @@ class GameCommunityTopic
 
         $gc = new \Hgs3\Models\Community\GameCommunity();
 
-        $gcIds = Game::getIds();
-        foreach ($gcIds as $gcId) {
-            for ($i = 0; $i < 100; $i++) {
-                $gc->writeTopic($gcId, 1, 'テスト' . $i, str_random(500));
+        $users = User::get();
+        $userMax = $users->count() - 1;
+        $games = Game::get();
+
+        foreach ($games as $game) {
+            if (rand(0, 100) > 30) {
+                continue;
+            }
+
+            $n = rand(0, 10);
+            for ($i = 0; $i < $n; $i++) {
+                $gc->writeTopic($game, $users[rand(0, $userMax)], 'テスト' . $i, str_random(500));
             }
         }
+
+        unset($users);
+        unset($games);
     }
 
     /**
@@ -36,5 +48,15 @@ class GameCommunityTopic
             ->select('id')
             ->get()
             ->pluck('id');
+    }
+
+    /**
+     * ORMのコレクションを取得
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public static function get()
+    {
+        return Orm\GameCommunityTopic::all();
     }
 }
