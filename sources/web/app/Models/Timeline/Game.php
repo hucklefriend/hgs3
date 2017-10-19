@@ -24,13 +24,7 @@ class Game extends TimelineAbstract
             $gameName
         );
 
-        $document = [
-            'text'    => $text,
-            'game_id' => $gameId,
-            'time'    => microtime(true)
-        ];
-
-        self::insert($document);
+        self::insert($gameId, $text);
     }
 
     /**
@@ -53,13 +47,7 @@ class Game extends TimelineAbstract
             $gameName
         );
 
-        $document = [
-            'text'    => $text,
-            'game_id' => $gameId,
-            'time'    => microtime(true)
-        ];
-
-        self::insert($document);
+        self::insert($gameId, $text);
     }
 
     /**
@@ -77,13 +65,7 @@ class Game extends TimelineAbstract
             $gameName
         );
 
-        $document = [
-            'text'    => $text,
-            'game_id' => $gameId,
-            'time'    => microtime(true)
-        ];
-
-        self::insert($document);
+        self::insert($gameId, $text);
     }
 
     /**
@@ -106,13 +88,7 @@ class Game extends TimelineAbstract
             $gameName
         );
 
-        $document = [
-            'text'    => $text,
-            'game_id' => $gameId,
-            'time'    => microtime(true)
-        ];
-
-        self::insert($document);
+        self::insert($gameId, $text);
     }
 
     /**
@@ -134,13 +110,7 @@ class Game extends TimelineAbstract
             $isSpoiler ? '(ネタバレあり)' : ''
         );
 
-        $document = [
-            'text'    => $text,
-            'game_id' => $gameId,
-            'time'    => microtime(true)
-        ];
-
-        self::insert($document);
+        self::insert($gameId, $text);
     }
 
     /**
@@ -163,25 +133,24 @@ class Game extends TimelineAbstract
             $siteName
         );
 
-        $document = [
-            'text'    => $text,
-            'game_id' => $gameId,
-            'time'    => microtime(true)
-        ];
-
-        self::insert($document);
+        self::insert($gameId, $text);
     }
 
     /**
      * データ登録
      *
-     * @param $document
+     * @param int $gameId
+     * @param string $text
      * @return bool
      */
-    private static function insert($document)
+    private static function insert($gameId, $text)
     {
         try {
-            self::getDB()->game_timeline->insertOne($document);
+            self::getDB()->game_timeline->insertOne([
+                'site_id' => $gameId,
+                'text'    => $text,
+                'time'    => microtime(true)
+            ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());

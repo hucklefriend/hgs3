@@ -3,7 +3,7 @@
  * ユーザーコミュニティのアクセス権限
  */
 
-namespace Hgs3\Constants;
+namespace Hgs3\Constants\UserCommunity;
 
 class Access
 {

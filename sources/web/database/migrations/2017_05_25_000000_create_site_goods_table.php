@@ -1,13 +1,13 @@
 <?php
 /**
- * 新着サイトテーブルの作成
+ * サイトいいねログの作成
  */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSiteNewArrivalsTable extends Migration
+class CreateSiteGoodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +16,11 @@ class CreateSiteNewArrivalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('site_new_arrivals', function (Blueprint $table) {
+        Schema::create('site_goods', function (Blueprint $table) {
+            $table->unsignedInteger('user_id')->comment('ユーザーID');
             $table->unsignedInteger('site_id')->comment('サイトID');
-            $table->unsignedBigInteger('registered_timestamp')->comment('登録日時タイムスタンプ');
             $table->timestamps();
+            $table->primary(['user_id', 'site_id']);
         });
     }
 
@@ -30,6 +31,6 @@ class CreateSiteNewArrivalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sites');
+        Schema::dropIfExists('site_goods');
     }
 }

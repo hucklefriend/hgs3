@@ -1,13 +1,13 @@
 <?php
 /**
- * 新着サイトテーブルの作成
+ * サイトいいね履歴テーブルの作成
  */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSiteNewArrivalsTable extends Migration
+class CreateSiteGoodHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +16,12 @@ class CreateSiteNewArrivalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('site_new_arrivals', function (Blueprint $table) {
+        Schema::create('site_good_histories', function (Blueprint $table) {
             $table->unsignedInteger('site_id')->comment('サイトID');
-            $table->unsignedBigInteger('registered_timestamp')->comment('登録日時タイムスタンプ');
+            $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
+            $table->dateTime('good_date')->comment('いいねした日時');
             $table->timestamps();
+            $table->primary(['site_id', 'user_id']);
         });
     }
 

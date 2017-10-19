@@ -27,10 +27,11 @@ class CreateSitesTable extends Migration
             $table->unsignedTinyInteger('gender')->comment('対象性別');
             $table->unsignedSmallInteger('main_contents_id')->comment('メインコンテンツ');
             $table->unsignedTinyInteger('open_type')->comment('公開範囲');
-            $table->unsignedInteger('in_count')->comment('INカウント');
-            $table->unsignedInteger('out_count')->comment('OUTカウント');
-            $table->unsignedInteger('good_count')->comment('いいね数');
-            $table->unsignedInteger('bad_count')->comment('BAD数');
+            $table->unsignedInteger('in_count')->default(0)->comment('INカウント');
+            $table->unsignedInteger('out_count')->default(0)->comment('OUTカウント');
+            $table->unsignedInteger('good_num')->default(0)->comment('いいね数');
+            $table->unsignedInteger('max_good_num')->default(0)->comment('最高いいね数');
+            $table->unsignedInteger('bad_num')->default(0)->comment('BAD数');
             $table->unsignedBigInteger('registered_timestamp')->comment('登録日時タイムスタンプ');
             $table->unsignedBigInteger('updated_timestamp')->comment('最終更新タイムスタンプ');
             $table->timestamps();

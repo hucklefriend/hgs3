@@ -18,8 +18,9 @@ class CreateSiteHandleGamesTable extends Migration
     {
         Schema::create('site_handle_games', function (Blueprint $table) {
             $table->unsignedInteger('site_id')->comment('サイトID');
-            $table->unsignedInteger('game_id')->comment('ゲームソフトID');
+            $table->unsignedInteger('game_id')->index()->comment('ゲームソフトID');
             $table->timestamps();
+            $table->primary(['site_id', 'game_id']);
         });
     }
 

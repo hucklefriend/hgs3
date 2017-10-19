@@ -32,7 +32,6 @@
     <div>
         <h4>{{ $site->name }}</h4>
 
-
         <div class="d-sm-none">
             <img src="{{ url2('img/banner/test/200x40.gif') }}">
         </div>
@@ -47,9 +46,9 @@
     <div class="card-columns">
         <div class="card card_site">
             <div class="card-body">
-                <h6 class="card-title">管理人</h6>
+                <h6 class="card-title">ウェブ・マスター</h6>
                 <p class="card-text">
-                    {{ $admin->name }}さん
+                    <a href="{{ url2('user/profile/' . $webMaster->id) }}">{{ $webMaster->name }}さん</a>
                 </p>
             </div>
         </div>
@@ -65,7 +64,9 @@
             <div class="card-body">
                 <h5 class="card-title">取扱いゲーム</h5>
                 <p class="card-text">
-                    {{ $handleGames }}
+                    @foreach ($handleGameIds as $handleGameId)
+                        <a href="{{ url2('game/soft/' . $handleGameId) }}">{{ $handleGames[$handleGameId] }}</a>@if (!$loop->last)、@endif
+                    @endforeach
                 </p>
             </div>
         </div>
@@ -84,7 +85,7 @@
         <div class="card card_site">
             <div class="card-body">
                 <h5 class="card-title">性別傾向</h5>
-                <p class="card-text">{{ \Hgs3\Constants\Site\Gender::getText($site->rate) }}</p>
+                <p class="card-text">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</p>
             </div>
         </div>
         <div class="card card_site">
@@ -104,6 +105,32 @@
                 </p>
             </div>
         </div>
+        <div class="card card_site">
+            <div class="card-body">
+                <h5 class="card-title">いいね数</h5>
+                <p class="card-text">
+                    {{ number_format($site->good_num) }}
+                    @if (Auth::check() && !$isWebMaster)
+                        <div>
+                            @if ($isGood)
+                            <form method="POST" action="{{ url('site/good/' . $site->id) }}">
+                                {{ csrf_tag($csrfToken) }}
+                                {{ method_field('DELETE') }}
+                                <input type="hidden" name="site_id" value="{{ $site->id }}">
+                                <button class="btn btn-warning btn-sm">取り消し</button>
+                            </form>
+                            @else
+                            <form method="POST" action="{{ url('site/good/' . $site->id) }}">
+                                {{ csrf_tag($csrfToken) }}
+                                <input type="hidden" name="site_id" value="{{ $site->id }}">
+                                <button class="btn btn-info btn-sm">いいね</button>
+                            </form>
+                            @endif
+                        </div>
+                    @endif
+                </p>
+            </div>
+        </div>
         @if (Auth::check() && !$isWebMaster)
             <div class="card card_site">
                 <div class="card-body">
@@ -111,14 +138,14 @@
                     <p class="card-text">
                         @if ($isFavorite)
                         <form method="POST" action="{{ url('user/favorite_site') }}">
-                            {{ csrf_field() }}
+                            {{ csrf_tag($csrfToken) }}
                             {{ method_field('DELETE') }}
                             <input type="hidden" name="site_id" value="{{ $site->id }}">
                             <button class="btn btn-warning btn-sm">解除する</button>
                         </form>
                         @else
                         <form method="POST" action="{{ url('user/favorite_site') }}">
-                            {{ csrf_field() }}
+                            {{ csrf_tag($csrfToken) }}
                             <input type="hidden" name="site_id" value="{{ $site->id }}">
                             <button class="btn btn-info btn-sm">登録する</button>
                         </form>

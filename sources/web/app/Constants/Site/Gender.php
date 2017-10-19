@@ -25,6 +25,6 @@ class Gender
      */
     public static function getText($id)
     {
-        return self::$text[$id];
+        return self::$text[$id] ?? '';
     }
 }

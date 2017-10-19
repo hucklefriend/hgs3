@@ -11,6 +11,7 @@ use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Review\SiteRequest;
+use Hgs3\Models\Site\Good;
 use Hgs3\Models\Site\Searcher;
 use Hgs3\Models\Orm\Game;
 use Hgs3\Models\Orm\Site;
@@ -88,39 +89,37 @@ class SiteController extends Controller
      */
     public function detail(Site $site)
     {
-        $handleGames = [];
+        $data = ['site' => $site];
 
-        $gameIds = $site->getHandleGames();
-        if (!empty($gameIds)) {
-            $handleGames = Game::getNameHash($gameIds);
+        $data['handleGameIds'] = $site->getHandleGames();
+        if (!empty($data['handleGameIds'])) {
+            $data['handleGames'] = Game::getNameHash($data['handleGameIds']);
         }
 
         $fs = new FavoriteSite;
 
         $isLogin = Auth::check();
-        $isFavorite = false;
+        $data['isFavorite'] = false;
+        $data['isGood'] = false;
         if ($isLogin) {
-            $isFavorite = $fs->isFavorite(Auth::id(), $site->id);
+            $data['isFavorite'] = $fs->isFavorite(Auth::id(), $site->id);
+
+            $good = new Good();
+            $data['isGood'] = $good->isGood($site, Auth::user());
         }
 
-        $favoriteUsers = $fs->getOldUsers($site->id);
+        $data['favoriteUsers'] = $fs->getOldUsers($site->id);
+
+        $data['webMaster'] = User::find($site->user_id);
+        $data['isWebMaster'] = $data['webMaster']->id == Auth::id();
 
         // TODO 足跡
-        $footprint = [];
+        $data['footprint'] = [];
 
-        $admin = User::find($site->user_id);
+        $data['users'] = User::getNameHash(array_pluck($data['favoriteUsers']->toArray(), 'user_id'));
+        $data['csrfToken'] = csrf_token();
 
-        return view('site.detail')->with([
-            'site'          => $site,
-            'handleGames'   => implode('、', $handleGames),
-            'admin'         => User::find($site->user_id),
-            'isWebMaster'   => $admin->id == Auth::id(),
-            'isLogin'       => $isLogin,
-            'isFavorite'    => $isFavorite,
-            'footprint'     => $footprint,
-            'favoriteUsers' => $favoriteUsers,
-            'users'         => User::getNameHash(array_pluck($favoriteUsers->toArray(), 'user_id'))
-        ]);
+        return view('site.detail', $data);
     }
 
     /**
@@ -164,8 +163,9 @@ class SiteController extends Controller
         $site->open_type = 0;
         $site->in_count = 0;
         $site->out_count = 0;
-        $site->good_count = 0;
-        $site->bad_count = 0;
+        $site->good_num = 0;
+        $site->max_good_num = 0;
+        $site->bad_num = 0;
         $site->registered_timestamp = time();
         $site->updated_timestamp = 0;
 
