@@ -16,6 +16,12 @@ class Site
     {
         echo 'create site test data.'.PHP_EOL;
 
+        DB::table('sites')->truncate();
+        DB::table('site_new_arrivals')->truncate();
+        DB::table('site_search_indices')->truncate();
+        DB::table('site_handle_games')->truncate();
+
+
         $site = new \Hgs3\Models\Site\Site();
 
         $users = User::get();
@@ -49,7 +55,7 @@ class Site
                 $orm->registered_timestamp = time();
                 $orm->updated_timestamp = time();
 
-                $handleGameNum = rand(1, 10);
+                $handleGameNum = rand(5, 20);
                 $handleGame = '';
                 for ($k = 0; $k < $handleGameNum; $k++) {
                     $handleGame .= $gameIds[rand(0, $maxGame)] . ',';
@@ -63,7 +69,7 @@ class Site
     }
 
     /**
-     * ゲームIDの配列を取得
+     * サイトIDの配列を取得
      *
      * @return array
      */
@@ -73,5 +79,16 @@ class Site
             ->select('id')
             ->get()
             ->pluck('id');
+    }
+
+
+    /**
+     * サイトORMの配列を取得
+     *
+     * @return array
+     */
+    public static function get()
+    {
+        return Orm\Site::all();
     }
 }

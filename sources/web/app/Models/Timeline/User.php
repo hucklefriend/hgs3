@@ -206,7 +206,7 @@ class User extends TimelineAbstract
     private static function insert($userId, $text)
     {
         try {
-            self::getDB()->user_timeline->insertOne([
+            self::getDB()->follow_user_timeline->insertOne([
                 'user_id' => $userId,
                 'text'    => $text,
                 'time'    => microtime(true)

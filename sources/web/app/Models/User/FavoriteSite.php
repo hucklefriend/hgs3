@@ -4,6 +4,9 @@
  */
 
 namespace Hgs3\Models\User;
+use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
 
 class FavoriteSite
@@ -11,10 +14,10 @@ class FavoriteSite
     /**
      * 登録
      *
-     * @param $userId
-     * @param $siteId
+     * @param User $user
+     * @param Orm\site $site
      */
-    public function add($userId, $siteId)
+    public function add(User $user, Orm\Site $site)
     {
         $sql =<<< SQL
 INSERT IGNORE INTO user_favorite_sites
@@ -22,7 +25,9 @@ INSERT IGNORE INTO user_favorite_sites
 VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
 
-        DB::insert($sql, [$userId, $siteId]);
+        DB::insert($sql, [$user->id, $site->id]);
+
+        Timeline\ToMe::addSiteFavoriteText($site->user_id, $site->id, $site->name, $user->id, $user->name);
     }
 
     /**

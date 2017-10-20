@@ -15,17 +15,17 @@ class UserFavoriteSite
     {
         echo 'create user favorite site test data.'.PHP_EOL;
 
-        $users = User::getIds();
-        $userMax = count($users) - 1;
+        $users = User::get();
+        $userMax = $users->count() - 1;
 
-        $sites = Site::getIds();
+        $sites = Site::get();
         $fav = new FavoriteSite();
 
-        foreach ($sites as $siteId) {
+        foreach ($sites as $site) {
             $num = rand(0, $userMax);
 
             for ($i = 0; $i < $num; $i++) {
-                $fav->add($users[rand(0, $userMax)], $siteId);
+                $fav->add($users[rand(0, $userMax)], $site);
             }
         }
     }

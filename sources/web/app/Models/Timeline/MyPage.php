@@ -21,8 +21,11 @@ class MyPage extends TimelineAbstract
     {
         $favoriteGame = $this->getFavoriteGameTimeline($userId, $time, $num + 1);
         $toMe = $this->getToMeTimeline($userId, $time, $num + 1);
+        $followUser = $this->getFollowUserTimeline($userId, $time, $num + 1);
+        $gameCommunity = $this->getGameCommunityTimeline($userId, $time, $num + 1);
+        $userCommunity = $this->getUserCommunityTimeline($userId, $time, $num + 1);
 
-        $timeline = array_merge($favoriteGame, $toMe);
+        $timeline = array_merge($favoriteGame, $toMe, $followUser, $gameCommunity, $userCommunity);
 
         unset($favoriteGame);
         unset($toMe);
@@ -50,13 +53,41 @@ class MyPage extends TimelineAbstract
             ];
         } else {
             return [
-                'timelines' => $timeline,//array_slice($timeline, 0, $num),
+                'timelines' => array_slice($timeline, 0, $num),
                 'hasNext'   => true,
                 'moreTime'  => $timeline[$num - 1]['time']
             ];
         }
     }
 
+    /**
+     * フォローユーザータイムライン
+     *
+     * @param int $userId
+     * @param float $time
+     * @param int $num
+     * @return array
+     */
+    private function getFollowUserTimeline($userId, $time, $num)
+    {
+        $followUserIds = Orm\UserFollow::select(['follow_user_id'])
+            ->where('user_id', $userId)
+            ->get()
+            ->pluck('follow_user_id')
+            ->toArray();
+
+        $filter = [
+            'user_id' => ['$in' => $followUserIds],
+            'time' => ['$lt' => $time]
+        ];
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $num,
+        ];
+
+        $db = self::getDB();
+        return $db->follow_user_timeline->find($filter, $options)->toArray();
+    }
 
     /**
      * お気に入りゲームタイムライン
@@ -108,5 +139,63 @@ class MyPage extends TimelineAbstract
 
         $db = self::getDB();
         return $db->to_me_timeline->find($filter, $options)->toArray();
+    }
+
+    /**
+     * ユーザーコミュニティタイムライン
+     *
+     * @param int $userId
+     * @param float $time
+     * @param int $num
+     * @return array
+     */
+    private function getUserCommunityTimeline($userId, $time, $num)
+    {
+        $userCommunityIds = Orm\UserCommunityMember::select(['user_community_id'])
+            ->where('user_id', $userId)
+            ->get()
+            ->pluck('user_community_id')
+            ->toArray();
+
+        $filter = [
+            'user_community_id' => ['$in' => $userCommunityIds],
+            'time' => ['$lt' => $time]
+        ];
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $num,
+        ];
+
+        $db = self::getDB();
+        return $db->user_community_timeline->find($filter, $options)->toArray();
+    }
+
+    /**
+     * ゲームコミュニティタイムライン
+     *
+     * @param int $userId
+     * @param float $time
+     * @param int $num
+     * @return array
+     */
+    private function getGameCommunityTimeline($userId, $time, $num)
+    {
+        $gameIds = Orm\GameCommunityMember::select(['game_id'])
+            ->where('user_id', $userId)
+            ->get()
+            ->pluck('game_id')
+            ->toArray();
+
+        $filter = [
+            'game_id' => ['$in' => $gameIds],
+            'time' => ['$lt' => $time]
+        ];
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $num,
+        ];
+
+        $db = self::getDB();
+        return $db->game_community_timeline->find($filter, $options)->toArray();
     }
 }
