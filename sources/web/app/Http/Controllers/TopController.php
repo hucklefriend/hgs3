@@ -8,7 +8,12 @@ namespace Hgs3\Http\Controllers;
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Orm\NewInformation;
+use Hgs3\Models\VersionUp\MasterImport\Company;
+use Hgs3\Models\VersionUp\MasterImport\Platform;
+use Hgs3\Models\VersionUp\MasterImport\Series;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 
 class TopController extends Controller
@@ -62,5 +67,18 @@ class TopController extends Controller
     public function sitemap()
     {
         return view('sitemap');
+    }
+
+
+    public function test()
+    {
+        if (env('APP_ENV') != 'local') {
+            return abort(403);
+        }
+
+        $test = new Series();
+        $test->import();
+
+        return '';
     }
 }

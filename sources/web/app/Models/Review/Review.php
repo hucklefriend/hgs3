@@ -240,6 +240,8 @@ SQL;
      */
     public function good(Orm\Review $orm, User $user)
     {
+        $prevMaxGood = $orm->max_good_num;
+
         DB::beginTransaction();
         try {
             $sql =<<< SQL
@@ -248,13 +250,13 @@ VALUES (?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
             $insNum = DB::insert($sql, [$orm->id, $user->id]);
             if ($insNum == 1) {
-                $updateGoodNum =<<< SQL
-UPDATE reviews
-SET good_num = good_num + 1
-    , latest_good_num = latest_good_num + 1
-WHERE id = ?
-SQL;
-                DB::update($updateGoodNum, [$orm->id]);
+                $orm->good_num++;
+                $orm->latest_good_num++;
+                if ($prevMaxGood < $orm->god_num) {
+                    $orm->max_good_num = $orm->good_num;
+                }
+
+                $orm->save();
             }
 
             DB::commit();
@@ -269,6 +271,8 @@ SQL;
 
         // タイムライン
         Timeline\ToMe::addReviewGoodText($orm->user_id, $orm->id, $orm->package_id, null, $user->id, $user->name);
+        Timeline\ToMe::addReviewGoodNumText($orm->user_id, $orm->id, $orm->package_id, null, $prevMaxGood, $orm->max_good_num);
+
 
         return true;
     }

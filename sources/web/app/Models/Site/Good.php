@@ -82,6 +82,7 @@ SQL;
         }
 
         // タイムライン
+        Timeline\ToMe::addSiteFavoriteText($site->user_id, $site->id, $site->name, $user->id, $user->name);
         Timeline\FavoriteSite::addGoodNumText($site->id, $site->name, $site->good_num, $maxGoodNum);
 
         return true;

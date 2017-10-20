@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class GameCompany extends \Eloquent
 {
+    protected $guarded = ['id'];
+
     /**
      * id => nameのハッシュを取得
      *

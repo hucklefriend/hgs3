@@ -72,6 +72,12 @@ class Game extends \Eloquent
             return false;
         }
 
+        // タイムライン登録しない
+        if (isset($options['timeline']) && !$options['timeline']) {
+            return true;
+        }
+
+
         if ($isNew) {
             //Timeline\Game::addNewGameSoftText($this->id, $this->name);
 

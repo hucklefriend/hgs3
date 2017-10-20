@@ -19,6 +19,7 @@ class CreateGameCompaniesTable extends Migration
         Schema::create('game_companies', function (Blueprint $table) {
             $table->increments('id')->comment('ゲーム会社ID');
             $table->string('name', 200)->comment('ゲーム会社名');
+            $table->string('acronym', 30)->comment('略称');
             $table->string('phonetic', 200)->comment('ゲーム会社名のよみがな');
             $table->text('url')->nullable()->comment('サイトのURL');
             $table->text('wikipedia')->nullable()->comment('WikipediaのURL');

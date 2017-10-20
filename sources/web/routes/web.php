@@ -221,3 +221,6 @@ Route::get('/social/google/{mode}', 'Social\GoogleController@redirect');
 
 // サイトマップ
 Route::get('/sitemap', 'TopController@sitemap');
+
+// デバッグ用
+Route::get('/test', 'TopController@test');

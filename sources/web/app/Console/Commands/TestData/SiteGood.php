@@ -1,26 +1,27 @@
 <?php
+/**
+ * サイトいいね
+ */
 
 namespace Hgs3\Console\Commands\TestData;
 
-use Hgs3\Models\Test\User;
 use Illuminate\Console\Command;
-use Hgs3\Models\VersionUp\Database;
 
-class ReviewGoodHistory extends Command
+class SiteGood extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'testdata:reviewgoodhistory';
+    protected $signature = 'testdata:sitegood';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'create test review good history data';
+    protected $description = 'create test site good data';
 
     /**
      * Create a new command instance.
@@ -39,6 +40,6 @@ class ReviewGoodHistory extends Command
      */
     public function handle()
     {
-        \Hgs3\Models\Test\ReviewGoodHistory::create();
+        \Hgs3\Models\Test\SiteGood::create();
     }
 }

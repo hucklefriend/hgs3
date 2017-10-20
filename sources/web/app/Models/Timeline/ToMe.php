@@ -147,19 +147,22 @@ class ToMe extends TimelineAbstract
      * @param int $reviewId
      * @param int $packageId
      * @param string $packageName
-     * @param int $goodNum
+     * @param int $prevMaxGoodNum
+     * @param int $maxGoodNum
      */
-    public static function addReviewGoodNumText($userId, $reviewId, $packageId, $packageName, $goodNum)
+    public static function addReviewGoodNumText($userId, $reviewId, $packageId, $packageName, $prevMaxGoodNum, $maxGoodNum)
     {
-        self::setPackageName($packageId, $packageName);
+        if ($maxGoodNum > 1 && $prevMaxGoodNum < $maxGoodNum && $maxGoodNum % 100 == 0) {
+            self::setPackageName($packageId, $packageName);
 
-        $text = sprintf('<a href="%s">%sのレビュー</a>へのいいねが%d件に達しました。',
-            url2('review/detail/' . $reviewId),
-            $packageName,
-            $goodNum
-        );
+            $text = sprintf('<a href="%s">%sのレビュー</a>へのいいねが%d件に達しました。',
+                url2('review/detail/' . $reviewId),
+                $packageName,
+                $maxGoodNum
+            );
 
-        self::insert($userId, $text);
+            self::insert($userId, $text);
+        }
     }
 
     /**

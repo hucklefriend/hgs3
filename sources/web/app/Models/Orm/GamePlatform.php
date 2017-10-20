@@ -4,10 +4,11 @@
  */
 
 namespace Hgs3\Models\Orm;
-use Illuminate\Database\Eloquent\Model;
 
 class GamePlatform extends \Eloquent
 {
+    protected $guarded = ['id'];
+
     /**
      * パッケージを取得
      *

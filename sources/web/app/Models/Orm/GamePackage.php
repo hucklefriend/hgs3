@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GamePackage extends \Eloquent
 {
-    //
+    protected $guarded = ['id'];
 
     /**
      * データのハッシュを取得

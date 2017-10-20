@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class GameSeries extends \Eloquent
 {
-    //
+    protected $guarded = ['id'];
 }
