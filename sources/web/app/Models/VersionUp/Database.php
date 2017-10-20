@@ -17,7 +17,6 @@ class Database
         $this->copySoft();
         $this->copyPackage();
 
-        $this->changeGameType();
         $this->setOriginalPackageId();
 
         if (env('APP_ENV') == 'local') {
@@ -53,12 +52,14 @@ class Database
     {
         $sql =<<< SQL
 INSERT INTO game_companies
+  (id, `name`, acronym, phonetic, url, wikipedia, created_at, updated_at)
 SELECT
-  id, `name`, '', url, '', FROM_UNIXTIME(registered_date), FROM_UNIXTIME(updated_date)
+  id, `name`, `name`, '', url, '', FROM_UNIXTIME(registered_date), FROM_UNIXTIME(updated_date)
 FROM
   hgs2.hgs_g_company
 ON DUPLICATE KEY UPDATE
   `name` = VALUES(`name`)
+  , `acronym` = VALUES(`name`)
   , `phonetic` = VALUES(`phonetic`)
   , `url` = VALUES(`url`)
   , `updated_at` = VALUES(`updated_at`)
@@ -116,10 +117,11 @@ SQL;
     private function copySoft()
     {
         $sql =<<< SQL
-INSERT INTO games
+INSERT INTO game_softs
+  
 SELECT
-  sf.id, sf.name, sf.hiragana, sf.hiragana_type, sf.hiragana_order, sf.genre_name, 
-  IF (sf.company_id <= 0, NULL, sf.company_id), sl.series_id, sl.order, sf.game_type_id, NULL, NOW(), NOW()
+  sf.id, sf.name, sf.hiragana, sf.hiragana_type, 0, sf.genre_name, 
+  sl.series_id, sl.order, NULL, NOW(), NOW()
 FROM
   hgs2.hgs_g_soft sf LEFT OUTER JOIN hgs2.hgs_g_series_list sl ON sf.id = sl.soft_id
 WHERE
@@ -128,13 +130,10 @@ ON DUPLICATE KEY UPDATE
   `name` = VALUES(`name`)
   , `phonetic` = VALUES(`phonetic`)
   , `phonetic_type` = VALUES(`phonetic_type`)
-  , `phonetic_order` = VALUES(`phonetic_order`)
   , `genre` = VALUES(`genre`)
-  , `company_id` = VALUES(`company_id`)
   , `series_id` = VALUES(`series_id`)
   , `order_in_series` = VALUES(`order_in_series`)
-  , `game_type` = VALUES(`game_type`)
-  , `updated_at` = VALUES(`updated_at`)
+  , `updated_at` = NOW()
 SQL;
 
         DB::insert($sql);
@@ -148,9 +147,12 @@ SQL;
         $sql =<<< SQL
 INSERT INTO game_packages
 SELECT
-	s.id, s.soft_id, s.hard_id, IF(s.company_id <= 0, null, s.company_id),
+	s.id, s.hard_id, IF(s.company_id <= 0, null, s.company_id),
 	IF (other_name = '', ss.name, other_name), '', s.url,
-	s.release_date, s.release_int, s.game_type_id, a.asin, a.item_url,
+	s.release_date, s.release_int,
+	IF(s.game_type_id IN (1, 3), 0, 1),
+	IF(a.asin IS NULL, null, 1),
+	a.asin, a.item_url,
 	a.small_image_url, a.small_image_width, a.small_image_height,
 	a.medium_image_url, a.medium_image_width, a.medium_image_height,
 	a.large_image_url, a.large_image_width, a.large_image_height,
@@ -186,20 +188,11 @@ SQL;
     }
 
     /**
-     * game_typeの更新
-     */
-    public function changeGameType()
-    {
-        // game_typeの2と5を統合する
-        DB::update('UPDATE games SET game_type = 2 WHERE game_type = 5');
-    }
-
-    /**
      * ベースとなるパッケージIDをgamesに登録
      */
-    private function setOriginalPackageId()
+    public function setOriginalPackageId()
     {
-        $games = DB::select('SELECT id FROM games');
+        $games = DB::select('SELECT id FROM game_softs');
 
         foreach ($games as $game) {
             $package = DB::select('SELECT id FROM game_packages WHERE game_id = ? ORDER BY release_int, id', [$game->id]);

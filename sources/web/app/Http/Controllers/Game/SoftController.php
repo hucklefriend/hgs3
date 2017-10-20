@@ -17,7 +17,7 @@ use Hgs3\Models\User\PlayedGame;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
@@ -47,9 +47,9 @@ class SoftController extends Controller
     /**
      * 詳細ページ
      *
-     * @param Game $game
+     * @param GameSoft $game
      */
-    public function show(Game $game)
+    public function show(GameSoft $game)
     {
         // TODO 発売日が過ぎていないとレビューを投稿するリンクは出さない
 
@@ -85,7 +85,7 @@ class SoftController extends Controller
      */
     public function insert(GameSoftRequest $request)
     {
-        $game = new Game();
+        $game = new GameSoft();
 
         $game->name = $request->get('name');
         $game->phonetic = $request->get('phonetic');
@@ -105,17 +105,17 @@ class SoftController extends Controller
     /**
      * 編集画面
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return $this
      */
-    public function edit(Game $game)
+    public function edit(GameSoft $game)
     {
         return view('game.soft.edit')->with([
             'game' => $game
         ]);
     }
 
-    public function update(UpdateRequest $request, Game $game)
+    public function update(UpdateRequest $request, GameSoft $game)
     {
         $game->name = $request->get('name');
         $game->phonetic = $request->get('phonetic', '');

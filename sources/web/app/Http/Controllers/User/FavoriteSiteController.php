@@ -5,7 +5,7 @@
 
 namespace Hgs3\Http\Controllers\User;
 
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\UserFavoriteSite;
 use Hgs3\Models\Site;
 use Hgs3\Models\User\FavoriteSite;
@@ -40,7 +40,7 @@ class FavoriteSiteController extends Controller
             'user'     => $user,
             'isMyself' => $isMyself,
             'favSites' => $fav,
-            'sites'    => Game::getNameHash(array_pluck($fav->toArray(), 'site_id'))
+            'sites'    => GameSoft::getNameHash(array_pluck($fav->toArray(), 'site_id'))
         ]);
     }
 

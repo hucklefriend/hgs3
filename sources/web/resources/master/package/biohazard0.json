@@ -1,5 +1,5 @@
 {
-  "game_id": 12,
+  "soft_id": [12],
   "packages":[
     {
       "platform": "PS3",

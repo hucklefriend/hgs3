@@ -23,7 +23,7 @@ class Game extends MasterImportAbstract
         foreach ($files as $filePath) {
             $data = \GuzzleHttp\json_decode(File::get($filePath));
 
-            $game = new Orm\Game;
+            $game = new Orm\GameSoft;
             $game->name = $data->name;
             $game->phonetic = $data->phonetic;
             $game->phonetic_order = $data->phonetic;

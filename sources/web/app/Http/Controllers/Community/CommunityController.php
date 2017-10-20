@@ -15,7 +15,7 @@ use Hgs3\User;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Illuminate\Support\Facades\Auth;
 
 class CommunityController extends Controller

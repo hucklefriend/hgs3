@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class Game extends \Eloquent
+class GameSoft extends \Eloquent
 {
     /**
      * ゲームソフト名のハッシュを取得

@@ -7,7 +7,7 @@ namespace Hgs3\Models;
 
 use Hgs3\Constants\TimelineType;
 use Hgs3\Constants\UserActionTimelineType;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\Review;
 use Hgs3\Models\Orm\UserCommunity;
 use Hgs3\Models\User\Mongo;

@@ -10,7 +10,7 @@ use Hgs3\Constants\PhoneticType;
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Community\User\Topic;
 use Hgs3\Http\Requests\Community\User\TopicResponse;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GameComment;
 use Hgs3\Models\Orm\GameCommunity;
 use Hgs3\Models\Orm\GameCommunityTopic;
@@ -52,10 +52,10 @@ class GameCommunityController extends Controller
     /**
      * ゲームコミュニティトップページ
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return $this
      */
-    public function detail(Game $game)
+    public function detail(GameSoft $game)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
 
@@ -85,10 +85,10 @@ class GameCommunityController extends Controller
     /**
      * 参加
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function join(Game $game)
+    public function join(GameSoft $game)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
         $model->join($game, Auth::user());
@@ -99,10 +99,10 @@ class GameCommunityController extends Controller
     /**
      * 脱退
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function secession(Game $game)
+    public function secession(GameSoft $game)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
         $model->secession($game, Auth::user());
@@ -113,10 +113,10 @@ class GameCommunityController extends Controller
     /**
      * メンバー一覧
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return $this
      */
-    public function members(Game $game)
+    public function members(GameSoft $game)
     {
         $gc = new \Hgs3\Models\Community\GameCommunity;
 
@@ -136,10 +136,10 @@ class GameCommunityController extends Controller
     /**
      * トピックス
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return $this
      */
-    public function topics(Game $game)
+    public function topics(GameSoft $game)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
 
@@ -156,11 +156,11 @@ class GameCommunityController extends Controller
     /**
      * トピックの詳細
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @param GameCommunityTopic $gct
      * @return $this
      */
-    public function topicDetail(Game $game, GameCommunityTopic $gct)
+    public function topicDetail(GameSoft $game, GameCommunityTopic $gct)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
 
@@ -180,10 +180,10 @@ class GameCommunityController extends Controller
      * 投稿
      *
      * @param Topic $request
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function write(Topic $request, Game $game)
+    public function write(Topic $request, GameSoft $game)
     {
         // TODO メンバーかどうか
 
@@ -200,11 +200,11 @@ class GameCommunityController extends Controller
      * レスの投稿
      *
      * @param TopicResponse $request
-     * @param Game $game
+     * @param GameSoft $game
      * @param GameCommunityTopic $gct
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function writeResponse(TopicResponse $request, Game $game, GameCommunityTopic $gct)
+    public function writeResponse(TopicResponse $request, GameSoft $game, GameCommunityTopic $gct)
     {
         // TODO: メンバーかどうか
 
@@ -219,11 +219,11 @@ class GameCommunityController extends Controller
     /**
      * 投稿の削除
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @param GameCommunityTopic $gct
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function erase(Game $game, GameCommunityTopic $gct)
+    public function erase(GameSoft $game, GameCommunityTopic $gct)
     {
         // TODO: 投稿者かどうかチェック
 
@@ -238,11 +238,11 @@ class GameCommunityController extends Controller
     /**
      * レスの削除
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @param GameCommunityTopicResponse $gctr
      * @return mixed
      */
-    public function eraseResponse(Game $game, GameCommunityTopicResponse $gctr)
+    public function eraseResponse(GameSoft $game, GameCommunityTopicResponse $gctr)
     {
         // TODO: 投稿者かどうかチェック
 

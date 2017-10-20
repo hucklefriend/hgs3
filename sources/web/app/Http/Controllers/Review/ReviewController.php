@@ -8,7 +8,7 @@ namespace Hgs3\Http\Controllers\Review;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Review\Review;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;
@@ -45,9 +45,9 @@ class ReviewController extends Controller
     /**
      * 特定ゲームソフトのレビュー
      *
-     * @param Game $game
+     * @param GameSoft $game
      */
-    public function game(Game $game)
+    public function game(GameSoft $game)
     {
         $data = [
             'game'  => $game,
@@ -74,10 +74,10 @@ class ReviewController extends Controller
     /**
      * パッケージ選択
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function packageSelect(Game $game)
+    public function packageSelect(GameSoft $game)
     {
         $review = new \Hgs3\Models\Review\Review();
 
@@ -184,7 +184,7 @@ class ReviewController extends Controller
 
             return view('review.saveDraft', [
                 'gamePackage' => $gamePackage,
-                'game'        => Game::find($gamePackage->game_id)
+                'game'        => GameSoft::find($gamePackage->game_id)
             ]);
         } else {
             // 下書きに保存
@@ -200,7 +200,7 @@ class ReviewController extends Controller
             return view('review.complete', [
                 'reviewId'    => $review->id,
                 'gamePackage' => $gamePackage,
-                'game'        => Game::find($gamePackage->game_id)
+                'game'        => GameSoft::find($gamePackage->game_id)
             ]);
         }
     }
@@ -328,7 +328,7 @@ class ReviewController extends Controller
      */
     public function show(\Hgs3\Models\Orm\Review $review)
     {
-        $game = Game::find($review->game_id);
+        $game = GameSoft::find($review->game_id);
 
         $r = new Review();
 

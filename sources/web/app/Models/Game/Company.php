@@ -2,7 +2,7 @@
 
 namespace Hgs3\Models\Game;
 
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GameCompany;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +20,7 @@ class Company
     {
         $data = array();
 
-        $data['soft'] = Game::where('company_id', $gameCompany->id)
+        $data['soft'] = GameSoft::where('company_id', $gameCompany->id)
             ->orderBy('phonetic_order')
             ->get();
 

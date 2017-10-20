@@ -7,7 +7,7 @@ namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\InjusticeStatus;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewFraudReport;
 use Hgs3\Models\Orm\ReviewFraudReportComment;

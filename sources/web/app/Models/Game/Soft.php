@@ -12,7 +12,7 @@ use Hgs3\Models\Orm\SiteHandleGame;
 use Hgs3\Models\Orm\UserFavoriteGame;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GameSeries;
 use Illuminate\Support\Facades\Log;
 
@@ -42,10 +42,10 @@ class Soft
     /**
      * 詳細データ取得
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return array
      */
-    public function getDetail(Game $game)
+    public function getDetail(GameSoft $game)
     {
         $data = [];
         $data['game'] = $game;
@@ -137,10 +137,10 @@ SQL;
     /**
      * ベースデータを取得
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return array
      */
-    private function getBaseData(Game $game)
+    private function getBaseData(GameSoft $game)
     {
         $baseData = [];
 
@@ -159,10 +159,10 @@ SQL;
     /**
      * お気に入りゲーム登録ユーザーを取得
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return array
      */
-    private function getFavoriteUser(Game $game)
+    private function getFavoriteUser(GameSoft $game)
     {
         $sql =<<< SQL
 SELECT users.id, users.name, users.icon_upload_flag
@@ -177,10 +177,10 @@ SQL;
     /**
      * サイト情報を取得
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return array
      */
-    private function getSite(Game $game)
+    private function getSite(GameSoft $game)
     {
         $siteIds = DB::table('site_search_indices')
             ->where('game_id', $game->id)
@@ -208,10 +208,10 @@ SQL;
     /**
      * 遊んだプレーヤーを取得
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Support\Collection
      */
-    private function getPlayedUsers(Game $game)
+    private function getPlayedUsers(GameSoft $game)
     {
         $sql =<<< SQL
 SELECT users.id, users.name
@@ -248,7 +248,7 @@ SQL;
      */
     public function add(AddRequest $request)
     {
-        $game = new Game();
+        $game = new GameSoft();
 
         $game->name = $request->get('name');
         $game->phonetic = $request->get('phonetic');

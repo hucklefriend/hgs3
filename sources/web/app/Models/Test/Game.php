@@ -29,6 +29,6 @@ class Game
      */
     public static function get()
     {
-        return Orm\Game::all();
+        return Orm\GameSoft::all();
     }
 }

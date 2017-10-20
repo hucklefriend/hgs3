@@ -1,0 +1,28 @@
+{
+  "name": "脱出×和風ホラー：夢怨",
+  "phonetic": "むおん",
+  "genre": "",
+  "company": "ZZYZX",
+  "packages":[
+    {
+      "platform": "iOS",
+      "company": "ZZYZX",
+      "name": "脱出×和風ホラー：夢怨",
+      "release_date": "2017年3月6日",
+      "release_int": 20170306,
+      "url":"",
+      "shop": "App Store",
+      "shop_url": "https://itunes.apple.com/jp/app/tuo-chu-he-fenghora-meng-yuan/id1200760812"
+    },
+    {
+      "platform": "Android",
+      "company": "ZZYZX",
+      "name": "脱出×和風ホラー：夢怨",
+      "release_date": "2017年3月6日",
+      "release_int": 20170306,
+      "url":"",
+      "shop": "Google Play",
+      "shop_url": "https://play.google.com/store/apps/details?id=zzyzx.app.muon"
+    }
+  ]
+}

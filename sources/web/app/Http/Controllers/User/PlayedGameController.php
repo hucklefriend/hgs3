@@ -7,7 +7,7 @@ namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Requests\User\PlayedGame\AddRequest;
 use Hgs3\Http\Requests\User\PlayedGame\EditRequest;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\UserPlayedGame;
 use Hgs3\User;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class PlayedGameController extends Controller
             'user'        => $user,
             'isMyself'    => $isMyself,
             'playedGames' => $played,
-            'games'       => Game::getNameHash(array_pluck($played->items(), 'game_id'))
+            'games'       => GameSoft::getNameHash(array_pluck($played->items(), 'game_id'))
         ]);
     }
 
@@ -49,10 +49,10 @@ class PlayedGameController extends Controller
      * 追加
      *
      * @param AddRequest $request
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add(AddRequest $request, Game $game)
+    public function add(AddRequest $request, GameSoft $game)
     {
         $upg = new UserPlayedGame;
 

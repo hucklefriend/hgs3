@@ -8,7 +8,7 @@ namespace Hgs3\Http\Controllers\Game;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Game\Package\StoreRequest;
 use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GamePackage;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,10 +25,10 @@ class PackageController extends Controller
     /**
      * 追加画面
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return $this
      */
-    public function add(Game $game)
+    public function add(GameSoft $game)
     {
         return view('game.package.add')->with([
             'game' => $game
@@ -39,10 +39,10 @@ class PackageController extends Controller
      * 登録
      *
      * @param StoreRequest $request
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreRequest $request, Game $game)
+    public function store(StoreRequest $request, GameSoft $game)
     {
         $pkg = new GamePackage;
 
@@ -62,7 +62,7 @@ class PackageController extends Controller
         return redirect('game/soft/' . $game->id);
     }
 
-    public function edit(Game $game, GamePackage $pkg)
+    public function edit(GameSoft $game, GamePackage $pkg)
     {
         return view('game.package.edit')->with([
             'game' => $game,
@@ -70,7 +70,7 @@ class PackageController extends Controller
         ]);
     }
 
-    public function update(UpdateRequest $request, Game $game, GamePackage $pkg)
+    public function update(UpdateRequest $request, GameSoft $game, GamePackage $pkg)
     {
         $pkg->platform_id = $request->get('platform_id');
         $pkg->company_id = $request->get('company_id');

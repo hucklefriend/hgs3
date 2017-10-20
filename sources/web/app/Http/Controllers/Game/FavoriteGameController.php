@@ -5,7 +5,7 @@
 
 namespace Hgs3\Http\Controllers\Game;
 
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\UserFavoriteGame;
 use Hgs3\User;
 use Hgs3\Http\Controllers\Controller;
@@ -24,10 +24,10 @@ class FavoriteGameController extends Controller
     /**
      * お気に入りゲームに登録しているユーザー
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function index(Game $game)
+    public function index(GameSoft $game)
     {
         $pager = UserFavoriteGame::where('game_id', $game->id)
             ->paginate(20);

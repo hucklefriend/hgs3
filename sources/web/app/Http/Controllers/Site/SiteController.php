@@ -13,7 +13,7 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Review\SiteRequest;
 use Hgs3\Models\Site\Good;
 use Hgs3\Models\Site\Searcher;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\Site;
 use Hgs3\Models\User\FavoriteSite;
 use Hgs3\User;
@@ -68,10 +68,10 @@ class SiteController extends Controller
     /**
      * 指定ゲームで検索
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return $this
      */
-    public function game(Game $game)
+    public function game(GameSoft $game)
     {
         $mainContents = intval(Input::get('mc', 0));
         $targetGender = intval(Input::get('tg', 0));
@@ -95,7 +95,7 @@ class SiteController extends Controller
 
         $data['handleGameIds'] = $site->getHandleGames();
         if (!empty($data['handleGameIds'])) {
-            $data['handleGames'] = Game::getNameHash($data['handleGameIds']);
+            $data['handleGames'] = GameSoft::getNameHash($data['handleGameIds']);
         }
 
         $fs = new FavoriteSite;
@@ -144,7 +144,7 @@ class SiteController extends Controller
 
 
         return view('site.add', [
-            'games' => Game::getPhoneticTypeHash(),
+            'games' => GameSoft::getPhoneticTypeHash(),
             'site'  => new Site([
                 'main_contents' => MainContents::WALKTHROUGH,
                 'rate'          => Rate::ALL,
@@ -194,7 +194,7 @@ class SiteController extends Controller
     public function edit(Request $request, Site $site)
     {
         return view('site.edit', [
-            'games' => Game::getPhoneticTypeHash(),
+            'games' => GameSoft::getPhoneticTypeHash(),
             'site'  => $site
         ]);
     }

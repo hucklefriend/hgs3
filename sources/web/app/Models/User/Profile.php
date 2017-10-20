@@ -6,7 +6,7 @@
 
 namespace Hgs3\Models\User;
 use Hgs3\Models\Community\GameCommunity;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GameCommunityMember;
 use Hgs3\Models\Orm\Review;
 use Hgs3\Models\Orm\ReviewGoodHistory;
@@ -232,7 +232,7 @@ class Profile
             array_pluck($data['playedGames']->toArray(), 'game_id')
         );
 
-        return Game::getNameHash($gameIds);
+        return GameSoft::getNameHash($gameIds);
     }
 
     /**

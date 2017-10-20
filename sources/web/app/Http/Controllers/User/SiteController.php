@@ -8,7 +8,7 @@ namespace Hgs3\Http\Controllers\User;
 use Hgs3\Http\Requests\User\Site\AddRequest;
 use Hgs3\Http\Requests\User\Site\UpdateRequest;
 use Hgs3\Models\Game\Soft;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\Site;
 use Hgs3\User;
 use Illuminate\Http\Request;

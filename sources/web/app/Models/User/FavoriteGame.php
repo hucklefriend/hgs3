@@ -16,10 +16,10 @@ class FavoriteGame
      * 登録
      *
      * @param User $user
-     * @param Orm\Game $game
+     * @param Orm\GameSoft $game
      * @return bool
      */
-    public function add(User $user, Orm\Game $game)
+    public function add(User $user, Orm\GameSoft $game)
     {
         $sql =<<< SQL
 INSERT IGNORE INTO user_favorite_games

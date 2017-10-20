@@ -8,7 +8,7 @@ namespace Hgs3\Http\Controllers\Review;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Review\Review;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\ReviewDraft;
 use Hgs3\Models\Orm\ReviewTotal;

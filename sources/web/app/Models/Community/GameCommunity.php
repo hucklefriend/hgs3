@@ -5,7 +5,7 @@
 
 namespace Hgs3\Models\Community;
 
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GameCommunityMember;
 use Hgs3\Models\Orm\GameCommunityTopic;
 use Hgs3\Models\Orm\GameCommunityTopicResponse;
@@ -63,11 +63,11 @@ SQL;
     /**
      * 参加
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @param User $user
      * @return bool
      */
-    public function join(Game $game, User $user)
+    public function join(GameSoft $game, User $user)
     {
         DB::beginTransaction();
 
@@ -110,11 +110,11 @@ SQL;
     /**
      * 脱退
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @param User $user
      * @return bool
      */
-    public function secession(Game $game, User $user)
+    public function secession(GameSoft $game, User $user)
     {
         DB::beginTransaction();
 
@@ -215,12 +215,12 @@ SQL;
     /**
      * トピックを投稿
      *
-     * @param Orm\Game $game
+     * @param Orm\GameSoft $game
      * @param User $user
      * @param int $title
      * @param string $comment
      */
-    public function writeTopic(Orm\Game $game, User $user, $title, $comment)
+    public function writeTopic(Orm\GameSoft $game, User $user, $title, $comment)
     {
         $now = new \DateTime();
 
@@ -341,10 +341,10 @@ SQL;
     /**
      * メンバー一覧を取得
      *
-     * @param Game $game
+     * @param GameSoft $game
      * @return \Illuminate\Support\Collection
      */
-    public function getMembers(Game $game)
+    public function getMembers(GameSoft $game)
     {
         return DB::table('game_community_members')
             ->where('game_id', $game->id)

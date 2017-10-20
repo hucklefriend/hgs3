@@ -21,7 +21,7 @@ abstract class TimelineAbstract
     protected static function setGameName($gameId, &$gameName)
     {
         if (empty($gameName)) {
-            $game = Orm\Game::find($gameId);
+            $game = Orm\GameSoft::find($gameId);
             $gameName = $game !== null ? $game->name : '';
         }
     }

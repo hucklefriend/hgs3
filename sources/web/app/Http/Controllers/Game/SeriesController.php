@@ -6,7 +6,7 @@
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Http\Requests\Game\GameSeriesRequest;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GameSeries;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -44,7 +44,7 @@ class SeriesController extends Controller
     {
         return view('game.series.detail')->with([
             'gameSeries' => $gameSeries,
-            'games'      => Game::where('series_id', $gameSeries->id)->get()
+            'games'      => GameSoft::where('series_id', $gameSeries->id)->get()
         ]);
     }
 

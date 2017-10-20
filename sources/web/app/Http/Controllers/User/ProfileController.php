@@ -9,7 +9,7 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\ChangeIconRequest;
 use Hgs3\Http\Requests\User\Profile\EditRequest;
 use Hgs3\Models\Community\GameCommunity;
-use Hgs3\Models\Orm\Game;
+use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\GamePackage;
 use Hgs3\Models\Orm\Site;
 use Hgs3\Models\Review\Review;
@@ -72,7 +72,7 @@ class ProfileController extends Controller
                 $fg = new \Hgs3\Models\User\FavoriteGame();
                 $data['parts'] = [
                     'favGames' => $fg->get($user->id),
-                    'games'    => Game::getNameHash()
+                    'games'    => GameSoft::getNameHash()
                 ];
             }
                 break;
@@ -114,7 +114,7 @@ class ProfileController extends Controller
                 $communities = $gc->getJoinCommunity($user->id);
                 $data['parts'] = [
                     'communities' => $communities,
-                    'games'       => Game::getNameHash(array_pluck($communities->items(), 'game_id'))
+                    'games'       => GameSoft::getNameHash(array_pluck($communities->items(), 'game_id'))
                 ];
             }
                 break;
@@ -293,7 +293,7 @@ class ProfileController extends Controller
             'user'     => $user,
             'isMyself' => $isMyself,
             'favGames' => $favGames,
-            'games'    => Game::getNameHash(array_pluck($favGames->items(), 'game_id'))
+            'games'    => GameSoft::getNameHash(array_pluck($favGames->items(), 'game_id'))
         ]);
     }
 
@@ -373,7 +373,7 @@ class ProfileController extends Controller
             'user'        => $user,
             'isMyself'    => $isMyself,
             'communities' => $communities,
-            'games'       => Game::getNameHash(array_pluck($communities->items(), 'game_id'))
+            'games'       => GameSoft::getNameHash(array_pluck($communities->items(), 'game_id'))
         ]);
     }
 
