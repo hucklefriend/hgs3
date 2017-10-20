@@ -73,4 +73,14 @@ class Review
             ->get()
             ->pluck('id');
     }
+
+    /**
+     * レビューの配列を取得
+     *
+     * @return array
+     */
+    public static function get()
+    {
+        return Orm\Review::all();
+    }
 }

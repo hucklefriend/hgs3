@@ -19,10 +19,13 @@ class MyPage extends TimelineAbstract
      */
     public function getTimeline($userId, $time, $num)
     {
-        $timeline = [];
+        $favoriteGame = $this->getFavoriteGameTimeline($userId, $time, $num + 1);
+        $toMe = $this->getToMeTimeline($userId, $time, $num + 1);
 
-        $timeline += $this->getFavoriteGameTimeline($userId, $time, $num + 1);
-        //$timeline += $this->getToMeTimeline($userId, $time, $num + 1);
+        $timeline = array_merge($favoriteGame, $toMe);
+
+        unset($favoriteGame);
+        unset($toMe);
 
         if (empty($timeline)) {
             return [
@@ -32,8 +35,11 @@ class MyPage extends TimelineAbstract
             ];
         }
 
-        // 時間順にソート
-        $sort = array_pluck($timeline, 'time');
+        $sort = [];
+        foreach ($timeline as $key => $t) {
+            $sort[$key] = $t['time'] * 1000;
+        }
+
         array_multisort($sort, SORT_DESC, $timeline);
 
         if (count($timeline) <= $num) {
@@ -44,7 +50,7 @@ class MyPage extends TimelineAbstract
             ];
         } else {
             return [
-                'timelines' => array_slice($timeline, 0, $num),
+                'timelines' => $timeline,//array_slice($timeline, 0, $num),
                 'hasNext'   => true,
                 'moreTime'  => $timeline[$num - 1]['time']
             ];
@@ -80,8 +86,6 @@ class MyPage extends TimelineAbstract
         $db = self::getDB();
         return $db->favorite_game_timeline->find($filter, $options)->toArray();
     }
-
-
 
     /**
      * 自分に対してなにかしてくれたタイムライン

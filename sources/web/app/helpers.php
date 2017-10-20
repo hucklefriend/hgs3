@@ -197,3 +197,14 @@ function is_admin()
 {
     return \Hgs3\Constants\UserRole::isAdmin();
 }
+
+function array_to_hash(array $data, $key)
+{
+    $hash = [];
+
+    foreach ($data as $row) {
+        $hash[$row[$key]] = $row;
+    }
+
+    return $hash;
+}

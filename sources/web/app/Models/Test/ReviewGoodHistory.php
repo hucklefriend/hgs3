@@ -18,14 +18,24 @@ class ReviewGoodHistory
     {
         echo 'create review good history test data.'.PHP_EOL;
 
-        Orm\Review::chunk(100, function ($reviews) {
-            $users = User::get();
-            $userMax = $users->count() - 1;
-            $r = new Review;
+        /*
+        DB::table('review_good_histories')
+            ->truncate();
+        */
 
-            foreach ($reviews as $review) {
+        $reviews = \Hgs3\Models\Test\Review::get();
+        $users = User::get();
+        $userMax = $users->count() - 1;
+        $r = new Review;
+
+        foreach ($reviews as $review) {
+            $n = rand(1, 30);
+            for ($i = 0; $i < $n; $i++) {
                 $r->good($review, $users[rand(0, $userMax)]);
             }
-        });
+        }
+
+        unset($users);
+        unset($r);
     }
 }
