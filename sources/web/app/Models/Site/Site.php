@@ -60,7 +60,7 @@ class Site
 
             // TODO ループを回さずに、配列を渡して内部で一括登録するようにしたい
             foreach ($handleGameIds as $gameId) {
-                Timeline\Game::addNewSiteText($gameId, null, $orm->id, $orm->name);
+                Timeline\FavoriteGame::addNewSiteText($gameId, null, $orm->id, $orm->name);
             }
         } else {
             Timeline\User::addUpdateSiteText($user->id, $user->name, $orm->id, $orm->name);
@@ -68,7 +68,7 @@ class Site
             // 直前に取りつかってないゲームを追加
             foreach ($handleGameIds as $gameId) {
                 if (!isset($prevHandleGameIds[$gameId])) {
-                    Timeline\Game::addNewSiteText($gameId, null, $orm->id, $orm->name);
+                    Timeline\FavoriteGame::addNewSiteText($gameId, null, $orm->id, $orm->name);
                 }
             }
         }

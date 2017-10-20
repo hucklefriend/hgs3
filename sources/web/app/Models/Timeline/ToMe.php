@@ -7,7 +7,7 @@ namespace Hgs3\Models\Timeline;
 
 use Illuminate\Support\Facades\Log;
 
-class MySelf extends TimelineAbstract
+class ToMe extends TimelineAbstract
 {
     /**
      * 誰かにフォローされた
@@ -18,7 +18,7 @@ class MySelf extends TimelineAbstract
      */
     public static function addFollowerText($userId, $followerId, $followerName)
     {
-        self::setUserName($userId, $userName);
+        self::setUserName($followerId, $followerName);
 
         $text = sprintf('<a href="%s">%sさん</a>にフォローされました',
             url2('user/profile/' . $followerId),
@@ -40,7 +40,7 @@ class MySelf extends TimelineAbstract
     public static function addSiteGoodText($userId, $goodUserId, $goodUserName, $siteId, $siteName)
     {
         if ($goodUserId != null) {
-            self::setUserName($userId, $userName);
+            self::setUserName($goodUserId, $goodUserName);
         }
         self::setSiteName($siteId, $siteName);
 
@@ -214,7 +214,7 @@ class MySelf extends TimelineAbstract
     private static function insert($userId, $text)
     {
         try {
-            self::getDB()->myself_timeline->insertOne([
+            self::getDB()->to_me_timeline->insertOne([
                 'user_id' => $userId,
                 'text'    => $text,
                 'time'    => microtime(true)

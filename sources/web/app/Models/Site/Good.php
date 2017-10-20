@@ -82,7 +82,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\Site::addGoodNumText($site->id, $site->name, $site->good_num, $maxGoodNum);
+        Timeline\FavoriteSite::addGoodNumText($site->id, $site->name, $site->good_num, $maxGoodNum);
 
         return true;
     }

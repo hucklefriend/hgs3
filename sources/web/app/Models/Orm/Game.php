@@ -78,10 +78,10 @@ class Game extends \Eloquent
             // TODO 新着情報に登録
 
             if ($this->series_id !== null) {
-                Timeline\Game::addSameSeriesGameText($this->id, $this->name, $this->series_id, null);
+                Timeline\FavoriteGame::addSameSeriesGameText($this->id, $this->name, $this->series_id, null);
             }
         } else {
-            Timeline\Game::addUpdateGameSoftText($this->id, $this->name);
+            Timeline\FavoriteGame::addUpdateGameSoftText($this->id, $this->name);
         }
         return true;
     }

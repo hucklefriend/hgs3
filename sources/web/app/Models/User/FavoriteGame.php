@@ -5,6 +5,8 @@
 
 namespace Hgs3\Models\User;
 use Hgs3\Models\Timeline;
+use Hgs3\User;
+use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -13,11 +15,11 @@ class FavoriteGame
     /**
      * 登録
      *
-     * @param int $userId
-     * @param int $gameId
+     * @param User $user
+     * @param Orm\Game $game
      * @return bool
      */
-    public function add($userId, $gameId)
+    public function add(User $user, Orm\Game $game)
     {
         $sql =<<< SQL
 INSERT IGNORE INTO user_favorite_games
@@ -27,7 +29,7 @@ SQL;
 
         DB::beginTransaction();
         try {
-            DB::insert($sql, [$userId, $gameId]);
+            DB::insert($sql, [$user->id, $game->id]);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -40,8 +42,8 @@ SQL;
         }
 
         // TODO 追加->取り消しの繰り返しをさせない
-        Timeline\Game::addFavoriteGameText($gameId, null, $userId, null);
-        Timeline\User::addAddFavoriteGameText($userId, null, $gameId, null);
+        Timeline\FavoriteGame::addFavoriteGameText($game->id, $game->name, $user->id, $user->name);
+        Timeline\User::addAddFavoriteGameText($user->id, $user->name, $game->id, $game->name);
 
         return true;
     }

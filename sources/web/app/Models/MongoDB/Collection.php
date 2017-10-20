@@ -51,21 +51,21 @@ class Collection
         $db = $client->selectDatabase('hgs3');
 
         echo 'create collections'.PHP_EOL;
-        $db->createCollection('game_timeline');
-        $db->createCollection('site_timeline');
+        $db->createCollection('favorite_game_timeline');
+        $db->createCollection('favorite_site_timeline');
         $db->createCollection('follow_user_timeline');
         $db->createCollection('game_community_timeline');
         $db->createCollection('user_community_timeline');
-        $db->createCollection('myself_timeline');
+        $db->createCollection('to_me_timeline');
         $db->createCollection('user_action_timeline');
         $db->createCollection('site_footprint');
 
         echo 'create indexes'.PHP_EOL;
-        $db->game_timeline->createIndex([
+        $db->favorite_game_timeline->createIndex([
             'game_id' => 1,
             'time'    => -1
         ]);
-        $db->site_timeline->createIndex([
+        $db->favorite_site_timeline->createIndex([
             'site_id' => 1,
             'time'    => -1,
         ]);
@@ -81,7 +81,7 @@ class Collection
             'user_community_id' => 1,
             'time'              => -1,
         ]);
-        $db->myself_timeline->createIndex([
+        $db->to_me_timeline->createIndex([
             'user_id' => 1,
             'time'    => -1,
         ]);

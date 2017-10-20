@@ -274,7 +274,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\MySelf::addGameCommunityTopicResponseText(
+        Timeline\ToMe::addGameCommunityTopicResponseText(
             $gameCommunityTopic->user_id, $gameCommunityTopic->game_id, null, $gameCommunityTopic->id
         );
 

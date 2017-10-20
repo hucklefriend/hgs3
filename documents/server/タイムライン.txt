@@ -1,5 +1,5 @@
-○ゲームタイムライン db.hgs3.game_timeline
-お気に入りゲーム
+○お気に入りゲームタイムライン db.hgs3.favorite_game_timeline
+
 
 ・ゲーム情報が更新された
 　「」の情報が更新されました
@@ -19,13 +19,13 @@
 　「」の新しいレビュー(ネタバレあり)が投稿されました。
 
 
-○サイトタイムライン db.hgs3.site_timeline
+○お気に入りサイトタイムライン db.hgs3.favorite_site_timeline
 {
     site_id: サイトID,
     text: 表示テキスト,
     time: 投稿日時(microtime)
 }
-お気に入りサイト
+
 ・サイト更新
 　サイト「××」が更新されました
 

@@ -277,7 +277,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\MySelf::addUserCommunityTopicResponseText(
+        Timeline\ToMe::addUserCommunityTopicResponseText(
             $userCommunityTopic->user_id,
             $userCommunity->id,
             $userCommunity->name,

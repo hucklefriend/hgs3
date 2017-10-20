@@ -19,6 +19,7 @@ use Hgs3\Models\User\Profile;
 use Hgs3\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -374,5 +375,21 @@ class ProfileController extends Controller
             'communities' => $communities,
             'games'       => Game::getNameHash(array_pluck($communities->items(), 'game_id'))
         ]);
+    }
+
+    /**
+     * さらにタイムラインを取得
+     *
+     * @param User $user
+     * @param $time
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function moreTimelineMyPage(User $user, $time)
+    {
+        $time = floatval($time);
+
+        $myPage = new Timeline\MyPage();
+
+        return Response::json($myPage->getTimeline($user->id, $time, 20));
     }
 }

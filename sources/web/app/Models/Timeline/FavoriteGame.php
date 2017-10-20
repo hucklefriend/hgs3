@@ -1,13 +1,13 @@
 <?php
 /**
- * ゲームタイムラインモデル
+ * お気に入りゲームタイムラインモデル
  */
 
 namespace Hgs3\Models\Timeline;
 
 use Illuminate\Support\Facades\Log;
 
-class Game extends TimelineAbstract
+class FavoriteGame extends TimelineAbstract
 {
     /**
      * ゲームソフト追加
@@ -146,7 +146,7 @@ class Game extends TimelineAbstract
     private static function insert($gameId, $text)
     {
         try {
-            self::getDB()->game_timeline->insertOne([
+            self::getDB()->favorite_game_timeline->insertOne([
                 'site_id' => $gameId,
                 'text'    => $text,
                 'time'    => microtime(true)

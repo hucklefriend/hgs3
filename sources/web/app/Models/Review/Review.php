@@ -116,7 +116,7 @@ SQL;
         }
 
         // タイムライン登録
-        Timeline\Game::addNewReviewText($draft->game_id, null, $orm->id, $orm->is_spoiler);
+        Timeline\FavoriteGame::addNewReviewText($draft->game_id, null, $orm->id, $orm->is_spoiler);
 
         return $orm->id;
     }
@@ -268,7 +268,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\MySelf::addReviewGoodText($orm->user_id, $orm->id, $orm->package_id, null, $user->id, $user->name);
+        Timeline\ToMe::addReviewGoodText($orm->user_id, $orm->id, $orm->package_id, null, $user->id, $user->name);
 
         return true;
     }

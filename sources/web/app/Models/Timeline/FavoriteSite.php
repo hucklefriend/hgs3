@@ -7,7 +7,7 @@ namespace Hgs3\Models\Timeline;
 
 use Illuminate\Support\Facades\Log;
 
-class Site extends TimelineAbstract
+class FavoriteSite extends TimelineAbstract
 {
     /**
      * サイト更新
@@ -94,7 +94,7 @@ class Site extends TimelineAbstract
     private static function insert($siteId, $text)
     {
         try {
-            self::getDB()->site_timeline->insertOne([
+            self::getDB()->favorite_site_timeline->insertOne([
                 'site_id' => $siteId,
                 'text'    => $text,
                 'time'    => microtime(true)

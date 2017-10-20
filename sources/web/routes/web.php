@@ -139,6 +139,7 @@ Route::patch('/user/profile/change_icon', 'User\ProfileController@changeIcon')->
 Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon')->middleware('auth');
 Route::get('/user/profile/{user}', 'User\ProfileController@index')->middleware('auth');
 Route::get('/user/profile/{user}/{type}', 'User\ProfileController@index')->middleware('auth');
+Route::get('/user/profile/{user}/timeline/mypage/{time}', 'User\ProfileController@moreTimelineMyPage')->middleware('auth');
 Route::get('/user/profile', 'User\ProfileController@myself')->middleware('auth');
 Route::get('/user/communities/{user}', 'User\ProfileController@community')->middleware('auth');
 Route::get('/mypage/favorite_game', 'User\FavoriteGameController@myself')->middleware('auth');

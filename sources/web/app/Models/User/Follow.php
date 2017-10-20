@@ -85,7 +85,7 @@ SQL;
         DB::insert($sql, [$user->id, $followCategory, $followUserId]);
 
 
-        Timeline\MySelf::addFollowerText($followUserId, $user->id, $user->name);
+        Timeline\ToMe::addFollowerText($followUserId, $user->id, $user->name);
     }
 
     /**

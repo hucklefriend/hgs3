@@ -5,7 +5,6 @@
 
 namespace Hgs3\Models\Timeline;
 
-use Illuminate\Support\Facades\Log;
 
 class MyPage extends TimelineAbstract
 {
@@ -37,12 +36,14 @@ class MyPage extends TimelineAbstract
         if (count($timeline) <= $num) {
             return [
                 'timelines' => $timeline,
-                'hasNext'   => false
+                'hasNext'   => false,
+                'moreTime'  => 0
             ];
         } else {
             return [
                 'timelines' => array_slice($timeline, 0, $num),
-                'hasNext'   => true
+                'hasNext'   => true,
+                'moreTime'  => $timeline[$num - 1]['time']
             ];
         }
     }
@@ -67,6 +68,6 @@ class MyPage extends TimelineAbstract
         ];
 
         $db = self::getDB();
-        return $db->myself_timeline->find($filter, $options)->toArray();
+        return $db->to_me_timeline->find($filter, $options)->toArray();
     }
 }
