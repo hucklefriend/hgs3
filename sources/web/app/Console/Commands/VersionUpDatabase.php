@@ -41,5 +41,7 @@ class VersionUpDatabase extends Command
     {
         $db = new Database;
         $db->versionUp();
+
+        Collection::create();
     }
 }

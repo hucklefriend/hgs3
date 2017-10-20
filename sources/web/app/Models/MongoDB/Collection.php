@@ -21,7 +21,7 @@ class Collection
     {
         $client = new \MongoDB\Client("mongodb://localhost:27017");
 
-        $this->db = $client->hgs3;
+        self::$db = $client->hgs3;
     }
 
     /**

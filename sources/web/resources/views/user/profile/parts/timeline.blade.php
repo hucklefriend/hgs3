@@ -1,9 +1,9 @@
 @foreach ($timelines as $tl)
-    <div>{{ date('Y-m-d H:i:s', $tl['time']) }}</div>
+    <div>{{ date('Y-m-d H:i:s', intval($tl['time'])) }}</div>
     <p>{!!  $tl['text'] !!}</p>
     <hr>
 @endforeach
 
-@if ($timelines)
-{{ $pager->links('vendor.pagination.simple-bootstrap-4') }}
+@if ($hasNext)
+    <div>続きを読み込むようにしたい</div>
 @endif

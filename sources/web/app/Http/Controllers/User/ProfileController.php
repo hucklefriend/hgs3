@@ -85,7 +85,7 @@ class ProfileController extends Controller
             }
                 break;
             case 'site': {
-                $site = new \Hgs3\Models\Site();
+                $site = new \Hgs3\Models\Site\Site();
                 $data['parts'] = [
                     'sites' => $site->get($user->id)
                 ];
@@ -120,10 +120,9 @@ class ProfileController extends Controller
             case 'timeline':
             default: {
                 $show = 'timeline';
+                $myPage = new Timeline\MyPage();
 
-                $data['parts'] = [
-                    'timelines' => []
-                ];
+                $data['parts'] = $myPage->getTimeline($user->id, time(), 20);
             }
                 break;
         }

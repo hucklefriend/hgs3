@@ -5,8 +5,9 @@
 
 
 namespace Hgs3\Models\User;
+use Hgs3\User;
 use Illuminate\Support\Facades\DB;
-use Hgs3\Models\Orm\UserFollow;
+use Hgs3\Models\Timeline;
 
 class Follow
 {
@@ -66,14 +67,14 @@ class Follow
     /**
      * 追加
      *
-     * @param $userId
-     * @param $followUserId
-     * @param $followCategory
+     * @param User $user
+     * @param int $followUserId
+     * @param int $followCategory
      */
-    public function add($userId, $followUserId, $followCategory = 0)
+    public function add(User $user, $followUserId, $followCategory = 0)
     {
-        if ($userId == $followUserId) {
-            return 0;
+        if ($user->id == $followUserId) {
+            return ;
         }
 
         $sql =<<< SQL
@@ -81,7 +82,10 @@ INSERT IGNORE INTO user_follows
 (user_id, category, follow_user_id, created_at, updated_at)
 VALUES (?, ?, ?, NOW(), NOW())
 SQL;
-        DB::insert($sql, [$userId, $followCategory, $followUserId]);
+        DB::insert($sql, [$user->id, $followCategory, $followUserId]);
+
+
+        Timeline\MySelf::addFollowerText($followUserId, $user->id, $user->name);
     }
 
     /**
