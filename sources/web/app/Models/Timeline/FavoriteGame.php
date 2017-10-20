@@ -147,7 +147,7 @@ class FavoriteGame extends TimelineAbstract
     {
         try {
             self::getDB()->favorite_game_timeline->insertOne([
-                'site_id' => $gameId,
+                'game_id' => $gameId,
                 'text'    => $text,
                 'time'    => microtime(true)
             ]);

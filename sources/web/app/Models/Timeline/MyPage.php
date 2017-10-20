@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Timeline;
 
+use Hgs3\Models\Orm;
 
 class MyPage extends TimelineAbstract
 {
@@ -20,12 +21,14 @@ class MyPage extends TimelineAbstract
     {
         $timeline = [];
 
-        $timeline += $this->getMySelfTimeline($userId, $time, $num + 1);
+        $timeline += $this->getFavoriteGameTimeline($userId, $time, $num + 1);
+        //$timeline += $this->getToMeTimeline($userId, $time, $num + 1);
 
         if (empty($timeline)) {
             return [
                 'timelines' => [],
-                'hasNext'   => false
+                'hasNext'   => false,
+                'moreTime'  => 0
             ];
         }
 
@@ -48,6 +51,38 @@ class MyPage extends TimelineAbstract
         }
     }
 
+
+    /**
+     * お気に入りゲームタイムライン
+     *
+     * @param int $userId
+     * @param float $time
+     * @param int $num
+     * @return array
+     */
+    private function getFavoriteGameTimeline($userId, $time, $num)
+    {
+        $gameIds = Orm\UserFavoriteGame::select(['game_id'])
+            ->where('user_id', $userId)
+            ->get()
+            ->pluck('game_id')
+            ->toArray();
+
+        $filter = [
+            'game_id' => ['$in' => $gameIds],
+            'time' => ['$lt' => $time]
+        ];
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $num,
+        ];
+
+        $db = self::getDB();
+        return $db->favorite_game_timeline->find($filter, $options)->toArray();
+    }
+
+
+
     /**
      * 自分に対してなにかしてくれたタイムライン
      *
@@ -56,7 +91,7 @@ class MyPage extends TimelineAbstract
      * @param int $num
      * @return array
      */
-    private function getMySelfTimeline($userId, $time, $num)
+    private function getToMeTimeline($userId, $time, $num)
     {
         $filter = [
             'user_id' => $userId,
