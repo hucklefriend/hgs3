@@ -1,6 +1,6 @@
 <?php
 /**
- * ゲームインポート
+ * ゲームソフトインポート
  */
 
 namespace Hgs3\Models\VersionUp\MasterImport;
@@ -8,7 +8,7 @@ namespace Hgs3\Models\VersionUp\MasterImport;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\File;
 
-class Game extends MasterImportAbstract
+class Soft extends MasterImportAbstract
 {
     public function import()
     {

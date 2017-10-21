@@ -5,15 +5,11 @@
 
 namespace Hgs3\Http\Controllers;
 
-use Hgs3\Constants\UserRole;
-use Hgs3\Http\Controllers\Controller;
+
 use Hgs3\Models\Orm\NewInformation;
-use Hgs3\Models\VersionUp\MasterImport\Company;
-use Hgs3\Models\VersionUp\MasterImport\Platform;
-use Hgs3\Models\VersionUp\MasterImport\Series;
+use Hgs3\Models\VersionUp\Master;
+use Hgs3\Models\VersionUp\Database;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 
 class TopController extends Controller
@@ -75,9 +71,11 @@ class TopController extends Controller
         if (env('APP_ENV') != 'local') {
             return abort(403);
         }
+        $db = new Database;
+        $db->versionUp();
 
-        $test = new Series();
-        $test->import();
+        $master = new Master();
+        $master->import();
 
         return '';
     }

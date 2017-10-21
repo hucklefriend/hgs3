@@ -1,6 +1,6 @@
 <?php
 /**
- * ゲームインポート
+ * プラットフォームインポート
  */
 
 namespace Hgs3\Models\VersionUp\MasterImport;
@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\File;
 
 class Platform extends MasterImportAbstract
 {
+    /**
+     * インポート
+     */
     public function import()
     {
         $this->update();

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 class Series extends MasterImportAbstract
 {
     /**
-     * 会社マスターのインポート
+     * インポート
      */
     public function import()
     {

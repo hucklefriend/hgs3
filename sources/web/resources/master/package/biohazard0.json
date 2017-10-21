@@ -6,6 +6,7 @@
       "company": "カプコン",
       "name": "biohazard0 HD REMASTER",
       "url": "http://www.capcom.co.jp/bio0hd/ja/index.html",
+      "shop": "amazon",
       "asin": "B014U9OPSE",
       "release_int": 20160121,
       "release_date": "2016年1月21日"
@@ -37,7 +38,7 @@
       "url": "http://www.capcom.co.jp/bio0hd/ja/index.html",
       "release_int": 20160121,
       "release_date": "2016年1月21日",
-      "shop": "Microsoft Store",
+      "shop": "Microsoft ストア",
       "shop_url": "https://www.microsoft.com/ja-jp/store/p/biohazard-0-hd-remaster/bxhg2gx28l23?rtc=1"
     },
     {

@@ -8,6 +8,7 @@ namespace Hgs3\Models\VersionUp\MasterImport;
 
 use Hgs3\Constants\Game\Shop;
 use Hgs3\Models\Orm;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class Package extends MasterImportAbstract
@@ -19,7 +20,7 @@ class Package extends MasterImportAbstract
     {
         //$this->update();
 
-        $path = resource_path('master/platform');
+        $path = resource_path('master/package');
 
         $files = File::files($path);
 
@@ -31,42 +32,60 @@ class Package extends MasterImportAbstract
                 continue;
             }
 
+            \ChromePhp::info(File::basename($filePath));
+
             $data = \GuzzleHttp\json_decode(File::get($filePath), true);
 
-            $data['company_id'] = $companies[$data['company']] ?? null;
-            unset($data['company']);
-
             self::insert($data, $companies, $platforms);
-
-
 
             unset($data);
             unset($platform);
         }
     }
 
+    /**
+     * データ登録
+     *
+     * @param array $data
+     * @param array $companies
+     * @param array $platforms
+     */
     public static function insert(array $data, array $companies, array $platforms)
     {
-        $package = new Orm\GamePackage;
+        \ChromePhp::info($data);
 
-        $package->game_id = $data->game_id;
-        $package->name = $data->name;
-        $package->url = $data->url;
-        $package->release_date = $data->release_date;
-        $package->release_int = $data->release_int;
-        $package->shop_id = Shop::getIdByName($data->shop);
+        foreach ($data['soft_id'] as $softId) {
+            foreach ($data['packages'] as $pkg) {
+                $package = new Orm\GamePackage;
+                $package->name = $pkg['name'];
+                $package->url = $pkg['url'];
+                $package->release_date = $pkg['release_date'];
+                $package->shop_id = Shop::getIdByName($pkg['shop']);
+                if (isset($pkg['company']) && isset($companies[$pkg['company']])) {
+                    $package->company_id = $companies[$pkg['company']] ?? null;
+                }
+                if (isset($pkg['platform']) && isset($platforms[$pkg['platform']])) {
+                    $package->platform_id = $platforms[$pkg['platform']] ?? null;
+                }
 
-        if ($package->shop_id == Shop::AMAZON) {
-            //$package->item_url = $data->game_id;
-        } else if ($package->shop_id != null){
-            $package->item_url = $data->shop_url;
+                if ($package->shop_id == Shop::AMAZON) {
+                    $package->asin = $pkg['asin'];
+                } else if ($package->shop_id != null){
+                    $package->item_url = $pkg['shop_url'];
+                }
+
+                $package->save();
+
+                DB::table('game_package_links')
+                    ->insert([
+                        'soft_id'    => $softId,
+                        'package_id' => $package->id,
+                        'sort_order' => $pkg['release_int']
+                    ]);
+
+                unset($package);
+            }
         }
-
-        $package->game_id = $data->game_id;
-        $package->game_id = $data->game_id;
-
-
-        $package->save();
     }
 
     /**

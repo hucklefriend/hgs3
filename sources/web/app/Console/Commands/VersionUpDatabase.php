@@ -3,6 +3,7 @@
 namespace Hgs3\Console\Commands;
 
 use Hgs3\Models\MongoDB\Collection;
+use Hgs3\Models\VersionUp\Master;
 use Illuminate\Console\Command;
 use Hgs3\Models\VersionUp\Database;
 
@@ -41,6 +42,9 @@ class VersionUpDatabase extends Command
     {
         $db = new Database;
         $db->versionUp();
+
+        $master = new Master();
+        $master->import();
 
         Collection::create();
     }

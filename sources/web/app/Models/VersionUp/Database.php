@@ -51,6 +51,8 @@ class Database
      */
     private function copyCompany()
     {
+        DB::table('game_companies')->truncate();
+
         $sql =<<< SQL
 INSERT INTO game_companies
   (id, `name`, acronym, phonetic, url, wikipedia, created_at, updated_at)
@@ -74,6 +76,8 @@ SQL;
      */
     private function copyPlatform()
     {
+        DB::table('game_platforms')->truncate();
+
         $sql =<<< SQL
 INSERT INTO game_platforms
   (id, company_id, `name`, acronym, sort_order, created_at, updated_at)
@@ -97,6 +101,8 @@ SQL;
      */
     private function copySeries()
     {
+        DB::table('game_series')->truncate();
+
         $sql =<<< SQL
 INSERT INTO game_series
 SELECT
@@ -117,6 +123,8 @@ SQL;
      */
     private function copySoft()
     {
+        DB::table('game_softs')->truncate();
+
         $sql =<<< SQL
 INSERT INTO game_softs (
   id, name, phonetic, phonetic_type, phonetic_order, genre,
