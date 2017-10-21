@@ -1,7 +1,8 @@
 <?php
 
 namespace Hgs3\Models\VersionUp;
-use Hgs3\Models\Orm\UserCommunity;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class Database
@@ -30,14 +31,14 @@ class Database
         }
 
         // 管理人を作成
-        \Hgs3\User::create([
+        User::create([
             'name'     => 'huckle',
             'email'    => 'webmaster@horrorgame.net',
             'password' => bcrypt($password),
             'role'     => 100
         ]);
 
-        $user = \Hgs3\User::find(1);
+        $user = User::find(1);
         $user->role = 100;
         $user->save();
 
@@ -117,11 +118,13 @@ SQL;
     private function copySoft()
     {
         $sql =<<< SQL
-INSERT INTO game_softs
-  
+INSERT INTO game_softs (
+  id, name, phonetic, phonetic_type, phonetic_order, genre,
+  series_id, order_in_series, original_package_id, created_at, updated_at
+)
 SELECT
   sf.id, sf.name, sf.hiragana, sf.hiragana_type, 0, sf.genre_name, 
-  sl.series_id, sl.order, NULL, NOW(), NOW()
+  sl.series_id, sl.order, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM
   hgs2.hgs_g_soft sf LEFT OUTER JOIN hgs2.hgs_g_series_list sl ON sf.id = sl.soft_id
 WHERE
@@ -133,7 +136,7 @@ ON DUPLICATE KEY UPDATE
   , `genre` = VALUES(`genre`)
   , `series_id` = VALUES(`series_id`)
   , `order_in_series` = VALUES(`order_in_series`)
-  , `updated_at` = NOW()
+  , `updated_at` = CURRENT_TIMESTAMP
 SQL;
 
         DB::insert($sql);
@@ -144,47 +147,86 @@ SQL;
      */
     private function copyPackage()
     {
+        DB::table('game_packages')->truncate();
+        DB::table('game_package_links')->truncate();
+
         $sql =<<< SQL
-INSERT INTO game_packages
 SELECT
-	s.id, s.hard_id, IF(s.company_id <= 0, null, s.company_id),
-	IF (other_name = '', ss.name, other_name), '', s.url,
-	s.release_date, s.release_int,
-	IF(s.game_type_id IN (1, 3), 0, 1),
-	IF(a.asin IS NULL, null, 1),
-	a.asin, a.item_url,
+    ss.id soft_id
+	, s.id package_id
+	, s.hard_id platform_id
+	, s.short_name
+	, IF(s.company_id <= 0, null, s.company_id) company_id
+	, IF (other_name = '', ss.name, other_name) `name`
+	, s.url
+	, s.release_date
+	, s.release_int
+	, IF(s.game_type_id IN (1, 3), 0, 1) is_adult
+	, IF(a.asin IS NULL, null, 1) shop_id
+	, a.asin
+	, a.item_url,
 	a.small_image_url, a.small_image_width, a.small_image_height,
 	a.medium_image_url, a.medium_image_width, a.medium_image_height,
 	a.large_image_url, a.large_image_width, a.large_image_height,
-	FROM_UNIXTIME(s.registered_date), FROM_UNIXTIME(s.updated_date)
+	CURRENT_TIMESTAMP created_at, CURRENT_TIMESTAMP updated_at
 FROM
 	hgs2.hgs_g_soft_detail s
 	LEFT OUTER JOIN hgs2.hgs_g_soft ss ON s.soft_id = ss.id
 	LEFT OUTER JOIN hgs2.hgs_g_amazon a ON s.asin = a.asin
-ON DUPLICATE KEY UPDATE
-  `name` = VALUES(`name`)
-  , `game_id` = VALUES(`game_id`)
-  , `platform_id` = VALUES(`platform_id`)
-  , `company_id` = VALUES(`company_id`)
-  , `url` = VALUES(`url`)
-  , `release_date` = VALUES(`release_date`)
-  , `release_int` = VALUES(`release_int`)
-  , `game_type_id` = VALUES(`game_type_id`)
-  , `asin` = VALUES(`asin`)
-  , `item_url` = VALUES(`item_url`)
-  , `small_image_url` = VALUES(`small_image_url`)
-  , `small_image_width` = VALUES(`small_image_width`)
-  , `small_image_height` = VALUES(`small_image_height`)
-  , `medium_image_url` = VALUES(`medium_image_url`)
-  , `medium_image_width` = VALUES(`medium_image_width`)
-  , `medium_image_height` = VALUES(`medium_image_height`)
-  , `large_image_url` = VALUES(`large_image_url`)
-  , `large_image_width` = VALUES(`large_image_width`)
-  , `large_image_height` = VALUES(`large_image_height`)
-  , `updated_at` = VALUES(`updated_at`)
 SQL;
 
-        DB::insert($sql);
+        $data = DB::select($sql);
+
+        $nameHash = [];
+        foreach ($data as $row) {
+            $key = $row->platform_id . $row->release_int . $row->asin . $row->short_name;
+            $nameHash[$key][] = $row;
+        }
+
+        foreach ($nameHash as $packages) {
+            $row = $packages[0];
+
+            DB::table('game_packages')
+                ->insert([
+                    'id'                  => $row->package_id,
+                    'platform_id'         => $row->platform_id,
+                    'company_id'          => $row->company_id,
+                    'name'                => $row->name,
+                    'url'                 => $row->url,
+                    'release_date'        => $row->release_date,
+                    'is_adult'            => $row->is_adult,
+                    'shop_id'             => $row->shop_id,
+                    'asin'                => $row->asin,
+                    'item_url'            => $row->item_url,
+                    'small_image_url'     => $row->small_image_url,
+                    'small_image_width'   => $row->small_image_width,
+                    'small_image_height'  => $row->small_image_height,
+                    'medium_image_url'    => $row->medium_image_url,
+                    'medium_image_width'  => $row->medium_image_width,
+                    'medium_image_height' => $row->medium_image_height,
+                    'large_image_url'     => $row->large_image_url,
+                    'large_image_width'   => $row->large_image_width,
+                    'large_image_height'  => $row->large_image_height,
+                    'created_at'          => $row->created_at,
+                    'updated_at'          => $row->updated_at
+                ]);
+
+            foreach ($packages as $pkg) {
+                DB::table('game_package_links')
+                    ->insert([
+                        'soft_id'    => $pkg->soft_id,
+                        'package_id' => $row->package_id,
+                        'sort_order' => $pkg->release_int,
+                        'created_at' => $row->created_at,
+                        'updated_at' => $row->updated_at
+                    ]);
+            }
+        }
+
+
+
+        unset($data);
+        unset($nameHash);
     }
 
     /**
@@ -192,20 +234,22 @@ SQL;
      */
     public function setOriginalPackageId()
     {
-        $games = DB::select('SELECT id FROM game_softs');
+        $gameSofts = Orm\GameSoft::all();
 
-        foreach ($games as $game) {
-            $package = DB::select('SELECT id FROM game_packages WHERE game_id = ? ORDER BY release_int, id', [$game->id]);
+        foreach ($gameSofts as $gameSoft) {
+            $link = DB::table('game_package_links')
+                ->select(['package_id'])
+                ->where('soft_id', $gameSoft->id)
+                ->orderBy('sort_order')
+                ->orderBy('package_id')
+                ->first();
 
-            if (!empty($package)) {
-                DB::table('games')
-                    ->where('id', $game->id)
-                    ->update([
-                        'original_package_id' => $package[0]->id
-                    ]);
+            if (!empty($link)) {
+                $gameSoft->original_package_id = $link->package_id;
+                $gameSoft->save();
             }
 
-            unset($package);
+            unset($link);
         }
     }
 }
