@@ -1,13 +1,13 @@
 <?php
 /**
- * お気に入りゲームテーブルの作成
+ * お気に入りゲームソフトテーブルの作成
  */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserFavoriteGamesTable extends Migration
+class CreateUserFavoriteSoftsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,15 +16,15 @@ class CreateUserFavoriteGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_favorite_games', function (Blueprint $table) {
+        Schema::create('user_favorite_softs', function (Blueprint $table) {
             $table->increments('id')->comment('お気に入りゲームID');
             $table->unsignedInteger('user_id')->comment('ユーザーID');
-            $table->unsignedInteger('game_id')->index()->comment('ゲームID');
+            $table->unsignedInteger('soft_id')->index()->comment('ゲームソフトID');
             $table->unsignedInteger('rank')->nullable()->comment('順位');
             $table->timestamps();
-            $table->unique(['user_id', 'game_id']);
+            $table->unique(['user_id', 'soft_id']);
             $table->index(['user_id', 'rank']);
-            $table->index(['game_id', 'id']);
+            $table->index(['soft_id', 'id']);
         });
     }
 
@@ -35,6 +35,6 @@ class CreateUserFavoriteGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_favorite_games');
+        Schema::dropIfExists('user_favorite_softs');
     }
 }

@@ -34,12 +34,12 @@ class GameCommunity
     /**
      * 古参メンバーを取得
      *
-     * @param int $gameId
+     * @param int $softId
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
      */
-    public function getOlderMembers($gameId)
+    public function getOlderMembers($softId)
     {
-        return GameCommunityMember::where('game_id', $gameId)
+        return GameCommunityMember::where('soft_id', $softId)
             ->orderBy('join_date')
             ->take(5)
             ->get();
@@ -52,7 +52,7 @@ class GameCommunity
     {
         $sql =<<< SQL
 UPDATE game_communities AS uc,
-  (SELECT game_id, COUNT(user_id) user_num FROM game_community_members GROUP BY game_id) AS gcm
+  (SELECT soft_id, COUNT(user_id) user_num FROM game_community_members GROUP BY soft_id) AS gcm
 SET uc.user_num = ucm.user_num
 WHERE uc.id = ucm.user_community_id
 SQL;
@@ -63,33 +63,33 @@ SQL;
     /**
      * 参加
      *
-     * @param GameSoft $game
+     * @param GameSoft $gameSoft
      * @param User $user
      * @return bool
      */
-    public function join(GameSoft $game, User $user)
+    public function join(GameSoft $gameSoft, User $user)
     {
         DB::beginTransaction();
 
         try {
             $sql =<<< SQL
 INSERT IGNORE INTO game_community_members (
-  game_id, user_id, join_date, created_at, updated_at
+  soft_id, user_id, join_date, created_at, updated_at
 ) VALUES (
   ?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 )
 SQL;
-            DB::insert($sql, [$game->id, $user->id]);
+            DB::insert($sql, [$gameSoft->id, $user->id]);
 
             $sql =<<< SQL
 UPDATE game_communities
 SET user_num = user_num + 1
 WHERE id = ?
 SQL;
-            if (DB::update($sql, [$game->id]) == 0) {
+            if (DB::update($sql, [$gameSoft->id]) == 0) {
                 DB::table('game_communities')
                     ->insert([
-                        'id'       => $gameId,
+                        'id'       => $gameSoft->id,
                         'user_num' => 1
                     ]);
             }
@@ -101,8 +101,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\User::addJoinGameCommunityText($user->id, $user->name, $game->id, $game->name);
-
+        Timeline\User::addJoinGameCommunityText($user->id, $user->name, $gameSoft->id, $gameSoft->name);
 
         return true;
     }

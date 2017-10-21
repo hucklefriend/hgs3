@@ -25,7 +25,7 @@ class Soft
      */
     public function getList()
     {
-        $tmp = DB::table('games')
+        $tmp = DB::table('game_softs')
             ->select('id', 'name', 'phonetic_type')
             ->orderBy('phonetic_type', 'asc')
             ->orderBy('phonetic_order', 'asc')

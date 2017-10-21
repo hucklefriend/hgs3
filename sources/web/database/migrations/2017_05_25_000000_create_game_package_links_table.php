@@ -17,10 +17,12 @@ class CreateGamePackageLinksTable extends Migration
     public function up()
     {
         Schema::create('game_package_links', function (Blueprint $table) {
-            $table->unsignedInteger('game_id')->comment('ID');
-            $table->unsignedInteger('package_id')->comment('ゲーム会社ID');
+            $table->unsignedInteger('soft_id')->comment('ゲームソフトID');
+            $table->unsignedInteger('package_id')->comment('パッケージID');
+            $table->unsignedBigInteger('sort_order')->comment('表示順');
             $table->timestamps();
-            $table->index(['game_id', 'package_id']);
+            $table->primary(['soft_id', 'package_id']);
+            $table->index(['soft_id', 'sort_order']);
         });
     }
 
@@ -31,6 +33,6 @@ class CreateGamePackageLinksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('game_packages');
+        Schema::dropIfExists('game_package_links');
     }
 }

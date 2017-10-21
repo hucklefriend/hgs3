@@ -17,12 +17,12 @@ class CreateGameCommunityMembersTable extends Migration
     public function up()
     {
         Schema::create('game_community_members', function (Blueprint $table) {
-            $table->unsignedInteger('game_id')->comment('ゲームID');
+            $table->unsignedInteger('soft_id')->comment('ゲームソフトID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->dateTime('join_date')->comment('参加日時');
             $table->timestamps();
-            $table->primary(['game_id', 'user_id']);
-            $table->index(['game_id', 'join_date']);
+            $table->primary(['soft_id', 'user_id']);
+            $table->index(['soft_id', 'join_date']);
         });
     }
 

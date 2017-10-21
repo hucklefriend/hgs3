@@ -23,7 +23,6 @@ class CreateGamePackagesTable extends Migration
             $table->string('name', 200)->comment('パッケージ名称');
             $table->text('url')->nullable()->comment('公式サイトURL');
             $table->string('release_date', 100)->nullable()->comment('発売日');
-            $table->unsignedInteger('release_int')->comment('発売日（ソート用の数値）');
             $table->unsignedTinyInteger('is_adult')->default(0)->comment('R-18か');
             $table->unsignedSmallInteger('shop_id')->nullable()->comment('ショップID');
             $table->string('asin', 200)->nullable()->comment('ASIN');
@@ -38,7 +37,6 @@ class CreateGamePackagesTable extends Migration
             $table->unsignedSmallInteger('large_image_width')->nullable()->comment('大画像の幅');
             $table->unsignedSmallInteger('large_image_height')->nullable()->comment('大画像の高さ');
             $table->timestamps();
-            $table->index(['game_id', 'release_int']);
         });
     }
 

@@ -7,12 +7,8 @@ namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\InjusticeStatus;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GamePackage;
-use Hgs3\Models\Orm\ReviewFraudReport;
-use Hgs3\Models\Orm\ReviewFraudReportComment;
-use Hgs3\Models\Orm\Review;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

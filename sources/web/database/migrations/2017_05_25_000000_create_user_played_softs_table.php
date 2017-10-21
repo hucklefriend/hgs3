@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserPlayedGamesTable extends Migration
+class CreateUserPlayedSoftsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +16,12 @@ class CreateUserPlayedGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_played_games', function (Blueprint $table) {
+        Schema::create('user_played_softs', function (Blueprint $table) {
             $table->increments('id')->comment('遊んだゲームID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
-            $table->unsignedInteger('game_id')->index()->comment('ゲームID');
+            $table->unsignedInteger('soft_id')->index()->comment('ゲームソフトID');
             $table->text('comment')->nullable()->comment('コメント');
-            $table->unique(['user_id', 'game_id']);
+            $table->unique(['user_id', 'soft_id']);
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateUserPlayedGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_played_games');
+        Schema::dropIfExists('user_played_softs');
     }
 }

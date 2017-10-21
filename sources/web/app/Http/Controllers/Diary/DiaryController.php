@@ -10,7 +10,7 @@ use Hgs3\Http\Requests\User\Site\UpdateRequest;
 use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\Site;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

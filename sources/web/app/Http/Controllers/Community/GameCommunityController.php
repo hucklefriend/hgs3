@@ -5,18 +5,11 @@
 
 namespace Hgs3\Http\Controllers\Community;
 
-use Composer\Package\Package;
 use Hgs3\Constants\PhoneticType;
-use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Community\User\Topic;
 use Hgs3\Http\Requests\Community\User\TopicResponse;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GameComment;
-use Hgs3\Models\Orm\GameCommunity;
-use Hgs3\Models\Orm\GameCommunityTopic;
-use Hgs3\Models\Orm\GameCommunityTopicResponse;
-use Hgs3\Models\Orm\GamePackage;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
 use Illuminate\Support\Facades\Auth;
@@ -52,43 +45,43 @@ class GameCommunityController extends Controller
     /**
      * ゲームコミュニティトップページ
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $gameSoft
      * @return $this
      */
-    public function detail(GameSoft $game)
+    public function detail(Orm\GameSoft $gameSoft)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
 
-        $pkg = GamePackage::find($game->original_package_id);
+        $gamePackage = Orm\GamePackage::find($gameSoft->original_package_id);
 
-        $members = $model->getOlderMembers($game->id);
-        $topics = $model->getLatestTopics($game->id);
+        $members = $model->getOlderMembers($gameSoft->id);
+        $topics = $model->getLatestTopics($gameSoft->id);
 
         $users = User::getNameHash(array_merge(
             array_pluck($members->toArray(), 'user_id'),
             array_pluck($topics->toArray(), 'user_id')
         ));
 
-        $gc = GameCommunity::find($game->id);
+        $gameCommunity = Orm\GameCommunity::find($gameSoft->id);
 
         return view('community.game.detail')->with([
-            'game'       => $game,
-            'pkg'        => $pkg,
-            'memberNum'  => $gc ? $gc->user_num : 0,
-            'members'    => $members,
-            'users'      => $users,
-            'isMember'   => $model->isMember($game->id, Auth::id()),
-            'topics'     => $topics
+            'gameSoft'    => $gameSoft,
+            'gamePackage' => $gamePackage,
+            'memberNum'   => $gameCommunity ? $gameCommunity->user_num : 0,
+            'members'     => $members,
+            'users'       => $users,
+            'isMember'    => $model->isMember($gameSoft->id, Auth::id()),
+            'topics'      => $topics
         ]);
     }
 
     /**
      * 参加
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $game
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function join(GameSoft $game)
+    public function join(Orm\GameSoft $game)
     {
         $model = new \Hgs3\Models\Community\GameCommunity();
         $model->join($game, Auth::user());

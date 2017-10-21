@@ -19,7 +19,7 @@ class CreateReviewsTable extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id')->comment('レビューID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
-            $table->unsignedInteger('game_id')->index()->comment('ゲームソフトID');
+            $table->unsignedInteger('soft_id')->index()->comment('ゲームソフトID');
             $table->unsignedInteger('package_id')->comment('パッケージID');
             $table->string('title', 100)->comment('一言');
             $table->unsignedTinyInteger('point')->comment('ポイント');
@@ -43,7 +43,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedInteger('update_num')->default(0)->comment('更新回数');
             $table->unsignedTinyInteger('status')->default(0)->comment('表示ステータス');
             $table->timestamps();
-            $table->index(['game_id', 'status']);
+            $table->index(['soft_id', 'status']);
             $table->index(['user_id', 'status']);
         });
     }

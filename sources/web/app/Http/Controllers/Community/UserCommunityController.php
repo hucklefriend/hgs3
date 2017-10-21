@@ -8,7 +8,7 @@ namespace Hgs3\Http\Controllers\Community;
 use Hgs3\Http\Requests\Community\User\Topic;
 use Hgs3\Http\Requests\Community\User\TopicResponse;
 use Hgs3\Models\Orm;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 

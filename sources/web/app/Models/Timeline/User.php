@@ -58,13 +58,15 @@ class User extends TimelineAbstract
     /**
      * ゲームコミュニティ参加
      *
-     * @param int $userId
+     * @param U $userId
      * @param string $userName
      * @param int $gameId
      * @param string $gameName
      */
     public static function addJoinGameCommunityText($userId, $userName, $gameId, $gameName)
     {
+        Us
+
         self::setUserName($userId, $userName);
         self::setGameName($gameId, $gameName);
 

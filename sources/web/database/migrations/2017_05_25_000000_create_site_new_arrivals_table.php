@@ -30,6 +30,6 @@ class CreateSiteNewArrivalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sites');
+        Schema::dropIfExists('site_new_arrivals');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Hgs3\Http\Controllers\Account;
 
-use Hgs3\User;
+use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;

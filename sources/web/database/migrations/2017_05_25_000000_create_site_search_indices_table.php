@@ -18,15 +18,15 @@ class CreateSiteSearchIndicesTable extends Migration
     {
         Schema::create('site_search_indices', function (Blueprint $table) {
             $table->unsignedInteger('site_id')->comment('サイトID');
-            $table->unsignedInteger('game_id')->comment('ゲームソフトID');
+            $table->unsignedInteger('soft_id')->comment('ゲームソフトID');
             $table->unsignedTinyInteger('main_contents_id')->comment('メインコンテンツ');
             $table->unsignedTinyInteger('gender')->comment('対象性別');
             $table->unsignedTinyInteger('rate')->comment('年齢');
             $table->unsignedBigInteger('updated_timestamp')->comment('更新日時タイムスタンプ');
             $table->timestamps();
 
-            $table->primary(['site_id', 'game_id']);
-            $table->index(['game_id']);
+            $table->primary(['site_id', 'soft_id']);
+            $table->index(['soft_id']);
         });
     }
 

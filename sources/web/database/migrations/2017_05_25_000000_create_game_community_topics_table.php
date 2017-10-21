@@ -18,7 +18,7 @@ class CreateGameCommunityTopicsTable extends Migration
     {
         Schema::create('game_community_topics', function (Blueprint $table) {
             $table->increments('id')->comment('ゲームコミュニティトピックスID');
-            $table->unsignedInteger('game_id')->comment('ゲームID');
+            $table->unsignedInteger('soft_id')->comment('ゲームソフトID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->text('title')->comment('タイトル');
             $table->text('comment')->comment('本文');

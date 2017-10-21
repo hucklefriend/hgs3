@@ -1,13 +1,13 @@
 <?php
 /**
- * サイトで扱っているゲームの作成
+ * サイトで扱っているゲームソフトの作成
  */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSiteHandleGamesTable extends Migration
+class CreateSiteHandleSoftsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,11 +16,11 @@ class CreateSiteHandleGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('site_handle_games', function (Blueprint $table) {
+        Schema::create('site_handle_softs', function (Blueprint $table) {
             $table->unsignedInteger('site_id')->comment('サイトID');
-            $table->unsignedInteger('game_id')->index()->comment('ゲームソフトID');
+            $table->unsignedInteger('soft_id')->index()->comment('ゲームソフトID');
             $table->timestamps();
-            $table->primary(['site_id', 'game_id']);
+            $table->primary(['site_id', 'soft_id']);
         });
     }
 
@@ -31,6 +31,6 @@ class CreateSiteHandleGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('site_handle_games');
+        Schema::dropIfExists('site_handle_softs');
     }
 }

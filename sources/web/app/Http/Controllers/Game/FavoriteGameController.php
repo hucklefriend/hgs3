@@ -7,7 +7,7 @@ namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\UserFavoriteGame;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 

@@ -9,7 +9,7 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Account\RegisterRequest;
 use Hgs3\Http\Requests\Account\SendPRMailRequest;
 use Hgs3\Models\Account\SignUp;
-use Hgs3\Models\Orm\UserProvisionalRegistration;
+use Hgs3\Models\Orm;
 
 class SignUpController extends Controller
 {
@@ -63,7 +63,7 @@ class SignUpController extends Controller
             $signUp->deleteToken($token);
             return view('account.tokenError');
         } else {
-            $orm = UserProvisionalRegistration::where('token', $token)
+            $orm = Orm\UserProvisionalRegistration::where('token', $token)
                 ->first();
 
             return view('account.register', [

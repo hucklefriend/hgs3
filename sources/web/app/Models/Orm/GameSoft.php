@@ -19,7 +19,8 @@ class GameSoft extends \Eloquent
      */
     public static function getNameHash(array $ids = array())
     {
-        $tbl = DB::table('games');
+        $tbl = DB::table('game_softs')
+            ->select(['id', 'name']);
 
         if (!empty($ids)) {
             $tbl->whereIn('id', $ids);

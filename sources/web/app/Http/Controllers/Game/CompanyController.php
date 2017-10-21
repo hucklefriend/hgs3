@@ -5,12 +5,10 @@
 
 namespace Hgs3\Http\Controllers\Game;
 
-use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Game\GameCompanyRequest;
-use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Collection;
-use Hgs3\Models\Orm\GameCompany;
+use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
@@ -30,31 +28,30 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $company = new Collection;
+        $companies = Orm\GameCommunity::orderBy('phonetic')
+            ->paginate(30);
 
-        return view('game.company.list', [
-            'companies' => $company->getList()
+        return view('game.company.index', [
+            'companies' => $companies
         ]);
     }
 
     /**
      * 会社詳細
      *
-     * @param GameCompany $gameCompany
-     * @return $this
+     * @param Orm\GameCompany $gameCompany
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(GameCompany $gameCompany)
+    public function show(Orm\GameCompany $gameCompany)
     {
-        $company = new Collection;
-
-        return view('game.company.detail')->with([
+        return view('game.company.detail', [
             'company' => $gameCompany,
             'detail'  => $company->getDetail($gameCompany),
         ]);
     }
 
     /**
-     * ゲーム会社追加
+     * 追加画面
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -64,14 +61,14 @@ class CompanyController extends Controller
     }
 
     /**
-     * ゲーム会社追加
+     * データ追加
      *
      * @param GameCompanyRequest $request
      * @return CompanyController
      */
     public function insert(GameCompanyRequest $request)
     {
-        $gameCompany = new GameCompany;
+        $gameCompany = new Orm\GameCompany;
         $gameCompany->name = $request->input('name', '');
         $gameCompany->phonetic = $request->input('phonetic', '');
         $gameCompany->url = $request->input('url');
@@ -83,14 +80,14 @@ class CompanyController extends Controller
     }
 
     /**
-     * データ編集
+     * 編集画面
      *
-     * @param GameCompany $gameCompany
-     * @return $this
+     * @param Orm\GameCompany $gameCompany
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(GameCompany $gameCompany)
+    public function edit(Orm\GameCompany $gameCompany)
     {
-        return view('game.company.edit')->with([
+        return view('game.company.edit', [
             'gameCompany' => $gameCompany
         ]);
     }
@@ -99,10 +96,10 @@ class CompanyController extends Controller
      * データ更新
      *
      * @param GameCompanyRequest $request
-     * @param GameCompany $gameCompany
-     * @return CompanyController
+     * @param Orm\GameCompany $gameCompany
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(GameCompanyRequest $request, GameCompany $gameCompany)
+    public function update(GameCompanyRequest $request, Orm\GameCompany $gameCompany)
     {
         $gameCompany->name = $request->input('name');
         $gameCompany->phonetic = $request->input('phonetic');

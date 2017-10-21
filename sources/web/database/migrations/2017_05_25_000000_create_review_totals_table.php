@@ -17,7 +17,7 @@ class CreateReviewTotalsTable extends Migration
     public function up()
     {
         Schema::create('review_totals', function (Blueprint $table) {
-            $table->unsignedInteger('game_id')->primary()->comment('ゲームソフトID');
+            $table->unsignedInteger('soft_id')->primary()->comment('ゲームソフトID');
             $table->unsignedInteger('review_num')->comment('レビュー数');
             $table->unsignedTinyInteger('point')->comment('ポイント');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
@@ -40,6 +40,6 @@ class CreateReviewTotalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('review_totals');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgs3;
+namespace Hgs3\Models;
 
 use Hgs3\Models\Account\SignUp;
 use Illuminate\Notifications\Notifiable;

@@ -14,4 +14,6 @@
         <li class="list-group-item"><a href="{{ url('game/company') }}/{{ $c->id }}">{{ $c->name }}</a></li>
     @endforeach
     </ul>
+
+    {{ $companies->links() }}
 @endsection
