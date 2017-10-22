@@ -2,20 +2,20 @@
 
 @section('content')
 
-    <h4><a href="{{ url('game/soft/detail') }}/{{ $game->id }}">{{ $game->name }}</a>をお気に入りに登録しているユーザー</h4>
+    <h4><a href="{{ url('game/soft/detail') }}/{{ $gameSoft->id }}">{{ $gameSoft->name }}</a>をお気に入りに登録しているユーザー</h4>
 
-    @foreach ($pager as $item)
+    @foreach ($favoriteUsers as $favoriteUser)
         <div class="row">
             <div class="col-1">
-                @include('user.common.icon', ['u' => $users[$item->user_id]])
+                @include('user.common.icon', ['u' => $users[$favoriteUser->user_id]])
             </div>
             <div class="col-10">
-                @include('user.common.user_name', ['id' => $item->id, 'name' => $users[$item->user_id]->name])
+                @include('user.common.user_name', ['id' => $favoriteUser->id, 'name' => $users[$favoriteUser->user_id]->name])
             </div>
         </div>
         <hr>
     @endforeach
 
-    {{ $pager->links() }}
+    {{ $favoriteUsers->links() }}
 
 @endsection

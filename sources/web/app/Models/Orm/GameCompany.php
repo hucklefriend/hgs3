@@ -17,11 +17,15 @@ class GameCompany extends \Eloquent
      * @param array $companyIds
      * @return array
      */
-    public static function getNameHash(array $companyIds)
+    public static function getNameHash(array $companyIds = [])
     {
-        return self::select(['id', 'name'])
-            ->whereIn('id', $companyIds)
-            ->get()
+        $query = self::select(['id', 'name']);
+
+        if (!empty($companyIds)) {
+            $query->whereIn('id', $companyIds);
+        }
+
+        return $query->get()
             ->pluck('name', 'id')
             ->toArray();
     }

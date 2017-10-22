@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewDraft extends \Eloquent
 {
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = ['user_id', 'package_id'];
     public $incrementing = false;
-    protected $guarded = ['user_id'];
+    protected $guarded = ['user_id', 'package_id'];
 
     /**
      * デフォルト値が設定されているインスタンスを取得

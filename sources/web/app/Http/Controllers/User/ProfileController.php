@@ -9,18 +9,14 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\ChangeIconRequest;
 use Hgs3\Http\Requests\User\Profile\EditRequest;
 use Hgs3\Models\Community\GameCommunity;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GamePackage;
-use Hgs3\Models\Orm\Site;
+use Hgs3\Models\Orm;
 use Hgs3\Models\Review\Review;
 use Hgs3\Models\Timeline;
 use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
-use Hgs3\User;
-use Illuminate\Http\Request;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -36,7 +32,7 @@ class ProfileController extends Controller
      * プロフィール
      *
      * @param User $user
-     * @param int $show
+     * @param string $show
      * @return $this
      */
     public function index(User $user, $show = 'timeline')

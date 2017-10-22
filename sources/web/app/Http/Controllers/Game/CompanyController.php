@@ -39,14 +39,18 @@ class CompanyController extends Controller
     /**
      * 会社詳細
      *
-     * @param Orm\GameCompany $gameCompany
+     * @param Orm\GameCompany $company
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Orm\GameCompany $gameCompany)
+    public function detail(Orm\GameCompany $company)
     {
+        $packages = Orm\GamePackage::where('company_id', $company->id)
+            ->orderBy('release_int')
+            ->get();
+
         return view('game.company.detail', [
-            'company' => $gameCompany,
-            'detail'  => $company->getDetail($gameCompany),
+            'company'  => $company,
+            'packages' => $packages,
         ]);
     }
 
@@ -68,13 +72,13 @@ class CompanyController extends Controller
      */
     public function insert(GameCompanyRequest $request)
     {
-        $gameCompany = new Orm\GameCompany;
-        $gameCompany->name = $request->input('name', '');
-        $gameCompany->phonetic = $request->input('phonetic', '');
-        $gameCompany->url = $request->input('url');
-        $gameCompany->wikipedia = $request->input('wikipedia');
+        $company = new Orm\GameCompany;
+        $company->name = $request->input('name', '');
+        $company->phonetic = $request->input('phonetic', '');
+        $company->url = $request->input('url');
+        $company->wikipedia = $request->input('wikipedia');
 
-        $gameCompany->save();
+        $company->save();
 
         return redirect('game/company');
     }
@@ -82,13 +86,13 @@ class CompanyController extends Controller
     /**
      * 編集画面
      *
-     * @param Orm\GameCompany $gameCompany
+     * @param Orm\GameCompany $company
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Orm\GameCompany $gameCompany)
+    public function edit(Orm\GameCompany $company)
     {
         return view('game.company.edit', [
-            'gameCompany' => $gameCompany
+            'company' => $company
         ]);
     }
 
@@ -96,18 +100,18 @@ class CompanyController extends Controller
      * データ更新
      *
      * @param GameCompanyRequest $request
-     * @param Orm\GameCompany $gameCompany
+     * @param Orm\GameCompany $company
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(GameCompanyRequest $request, Orm\GameCompany $gameCompany)
+    public function update(GameCompanyRequest $request, Orm\GameCompany $company)
     {
-        $gameCompany->name = $request->input('name');
-        $gameCompany->phonetic = $request->input('phonetic');
-        $gameCompany->url = $request->input('url');
-        $gameCompany->wikipedia = $request->input('wikipedia');
+        $company->name = $request->input('name');
+        $company->phonetic = $request->input('phonetic');
+        $company->url = $request->input('url');
+        $company->wikipedia = $request->input('wikipedia');
 
-        $gameCompany->save();
+        $company->save();
 
-        return redirect('game/company/detail/' . $gameCompany->id);
+        return redirect('game/company/detail/' . $company->id);
     }
 }

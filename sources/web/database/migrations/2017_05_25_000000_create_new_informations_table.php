@@ -21,7 +21,7 @@ class CreateNewInformationsTable extends Migration
             $table->increments('id')->comment('新着情報ID');
             $table->unsignedInteger('text_type')->comment('テキスト種類');
             $table->unsignedInteger('user_id')->default(0)->comment('ユーザーID');
-            $table->unsignedInteger('game_id')->default(0)->comment('ゲームID');
+            $table->unsignedInteger('soft_id')->default(0)->comment('ゲームソフトID');
             $table->unsignedInteger('site_id')->default(0)->comment('サイトID');
             $table->unsignedInteger('review_id')->default(0)->comment('レビューID');
             $table->dateTime('date_time')->comment('日時');

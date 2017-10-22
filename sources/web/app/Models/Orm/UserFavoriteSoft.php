@@ -5,7 +5,7 @@
 
 namespace Hgs3\Models\Orm;
 
-class UserFavoriteGame extends \Eloquent
+class UserFavoriteSoft extends \Eloquent
 {
     /**
      * 特定ユーザーのデータ数を取得

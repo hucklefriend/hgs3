@@ -8,11 +8,8 @@ namespace Hgs3\Http\Controllers\Review;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Review\Review;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GamePackage;
-use Hgs3\Models\Orm\ReviewDraft;
-use Hgs3\Models\Orm\ReviewTotal;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -43,24 +40,25 @@ class ReviewController extends Controller
     }
 
     /**
-     * 特定ゲームソフトのレビュー
+     * 特定ゲームソフトのレビュー一覧
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $gameSoft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function game(GameSoft $game)
+    public function game(Orm\GameSoft $gameSoft)
     {
         $data = [
-            'game'  => $game,
-            'total' => null
+            'gameSoft' => $gameSoft,
+            'total'    => null
         ];
 
         $review = new Review();
 
-        $total = ReviewTotal::find($game->id);
+        $total = Orm\ReviewTotal::find($gameSoft->id);
         if ($total !== null) {
             $data['total'] = $total;
 
-            $data['reviews'] = $review->getNewArrivals($game->id, 10);
+            $data['reviews'] = $review->getNewArrivals($gameSoft->id, 10);
 
             $pager = new LengthAwarePaginator([], $total->review_num, 10);
             $pager->setPath('');
@@ -74,18 +72,18 @@ class ReviewController extends Controller
     /**
      * パッケージ選択
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $gameSoft
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function packageSelect(GameSoft $game)
+    public function packageSelect(Orm\GameSoft $gameSoft)
     {
         $review = new \Hgs3\Models\Review\Review();
 
         return view('review.packageSelect', [
-            'game'      => $game,
-            'packages'  => $review->getPackageList($game->id),
-            'drafts'    => ReviewDraft::getHashByGame(Auth::id(), $game->id),
-            'written'   => \Hgs3\Models\Orm\Review::getHashByGame(Auth::id(), $game->id),
+            'gameSoft'  => $gameSoft,
+            'packages'  => $review->getPackageList($gameSoft->id),
+            'drafts'    => Orm\ReviewDraft::getHashByGame(Auth::id(), $gameSoft->id),
+            'written'   => Orm\Review::getHashByGame(Auth::id(), $gameSoft->id),
             'csrfToken' => csrf_token(),
             'dateInt'   => $this->getDateInt()
         ]);
@@ -105,10 +103,10 @@ class ReviewController extends Controller
     /**
      * 入力画面
      *
-     * @param GamePackage $pkg
-     * @return $this
+     * @param Orm\GamePackage $gamePackage
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function input(GamePackage $gamePackage)
+    public function input(Orm\GamePackage $gamePackage)
     {
         // 発売日が過ぎていないパッケージ
         if ($gamePackage->release_int > $this->getDateInt()) {
@@ -117,17 +115,17 @@ class ReviewController extends Controller
 
         $isDraft = false;
         if (!empty(old())) {
-            $draft = new ReviewDraft(old());
+            $draft = new Orm\ReviewDraft(old());
         } else {
-            $draft = ReviewDraft::getData(Auth::id(), $gamePackage->id);
+            $draft = Orm\ReviewDraft::getData(Auth::id(), $gamePackage->id);
             if ($draft == null) {
-                $draft = ReviewDraft::getDefault(Auth::id(), $gamePackage->game_id);
+                $draft = Orm\ReviewDraft::getDefault(Auth::id(), $gamePackage->game_id);
             } else {
                 $isDraft = true;
             }
         }
 
-        return view('review.input')->with([
+        return view('review.input', [
             'gamePackage' => $gamePackage,
             'draft'       => $draft,
             'isDraft'     => $isDraft
@@ -138,12 +136,12 @@ class ReviewController extends Controller
      * 確認
      *
      * @param WriteRequest $request
-     * @param GamePackage $gamePackage
+     * @param Orm\GamePackage $gamePackage
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function confirm(WriteRequest $request, GamePackage $gamePackage)
+    public function confirm(WriteRequest $request, Orm\GamePackage $gamePackage)
     {
-        $draft = new ReviewDraft;
+        $draft = new Orm\ReviewDraft;
         $this->setDraftData($request, $draft);
 
         return view('review.confirm', [
@@ -157,10 +155,10 @@ class ReviewController extends Controller
      * 保存
      *
      * @param WriteRequest $request
-     * @param GamePackage $gamePackage
+     * @param Orm\GamePackage $gamePackage
      * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function save(WriteRequest $request, GamePackage $gamePackage)
+    public function save(WriteRequest $request, Orm\GamePackage $gamePackage)
     {
         // TODO: 発売日が過ぎているか
 
@@ -172,9 +170,9 @@ class ReviewController extends Controller
             return redirect('review/write/' . $gamePackage->id)->withInput();
         } if ($draftType == 1) {
             // 下書き保存
-            $draft = ReviewDraft::getData(Auth::id(), $gamePackage->id);
+            $draft = Orm\ReviewDraft::getData(Auth::id(), $gamePackage->id);
             if ($draft === null) {
-                $draft = new ReviewDraft;
+                $draft = new Orm\ReviewDraft;
             }
 
             $this->setDraftData($request, $draft);
@@ -184,23 +182,23 @@ class ReviewController extends Controller
 
             return view('review.saveDraft', [
                 'gamePackage' => $gamePackage,
-                'game'        => GameSoft::find($gamePackage->game_id)
+                'gameSoft'    => Orm\GameSoft::find($gamePackage->soft_id)
             ]);
         } else {
             // 下書きに保存
-            $draft = new ReviewDraft;
+            $draft = new Orm\ReviewDraft;
             $this->setDraftData($request, $draft);
-            $draft->game_id = $gamePackage->game_id;
+            $draft->soft_id = $gamePackage->soft_id;
             $draft->package_id = $gamePackage->id;
 
             // レビュー投稿
-            $review = new \Hgs3\Models\Orm\Review($draft->toArray());
+            $review = new Orm\Review($draft->toArray());
             $review->save();
 
             return view('review.complete', [
                 'reviewId'    => $review->id,
                 'gamePackage' => $gamePackage,
-                'game'        => GameSoft::find($gamePackage->game_id)
+                'game'        => Orm\GameSoft::find($gamePackage->soft_id)
             ]);
         }
     }
@@ -209,9 +207,9 @@ class ReviewController extends Controller
      * 下書きモデルに値をセット
      *
      * @param WriteRequest $request
-     * @param ReviewDraft $draft
+     * @param Orm\ReviewDraft $draft
      */
-    private function setDraftData(WriteRequest $request, ReviewDraft $draft)
+    private function setDraftData(WriteRequest $request, Orm\ReviewDraft $draft)
     {
         $draft->user_id = \Auth::id();
         $draft->game_id = $request->get('game_id');
@@ -236,10 +234,11 @@ class ReviewController extends Controller
      * 下書き削除
      *
      * @param $packageId
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteDraft($packageId)
     {
-        $draft = ReviewDraft::getData(Auth::id(), $packageId);
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $packageId);
         if ($draft) {
             $draft->delete();
         }
@@ -250,10 +249,10 @@ class ReviewController extends Controller
     /**
      * レビューを編集
      *
-     * @param \Hgs3\Models\Orm\Review $review
+     * @param Orm\Review $review
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(\Hgs3\Models\Orm\Review $review)
+    public function edit(Orm\Review $review)
     {
         if ($review->user_id != Auth::id()) {
             // 他のユーザーのデータを編集しようとしている
@@ -262,7 +261,7 @@ class ReviewController extends Controller
 
         return view('review.edit', [
             'review'      => $review,
-            'gamePackage' => GamePackage::find($review->package_id),
+            'gamePackage' => Orm\GamePackage::find($review->package_id),
             'csrfToken'   => csrf_token()
         ]);
     }
@@ -271,10 +270,10 @@ class ReviewController extends Controller
      * データの修正
      *
      * @param WriteRequest $request
-     * @param \Hgs3\Models\Orm\Review $review
+     * @param Orm\Review $review
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(WriteRequest $request, \Hgs3\Models\Orm\Review $review)
+    public function update(WriteRequest $request, Orm\Review $review)
     {
         if ($review->user_id != Auth::id()) {
             // 他のユーザーのデータを編集しようとしている
@@ -304,10 +303,10 @@ class ReviewController extends Controller
     /**
      * データ削除
      *
-     * @param \Hgs3\Models\Orm\Review $review
+     * @param Orm\Review $review
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(\Hgs3\Models\Orm\Review $review)
+    public function delete(Orm\Review $review)
     {
         if ($review->user_id != Auth::id()) {
             // 他のユーザーのデータを削除しようとしている
@@ -318,17 +317,18 @@ class ReviewController extends Controller
         // β版では論理削除とデータのクリアにして、ID自体は残すようにする
         $review->delete();
 
-        return redirect('review/game/' . $review->game_id);
+        return redirect('review/game/' . $review->soft_id);
     }
 
     /**
      * 詳細
      *
-     * @param \Hgs3\Models\Orm\Review $review
+     * @param Orm\Review $review
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(\Hgs3\Models\Orm\Review $review)
+    public function detail(Orm\Review $review)
     {
-        $game = GameSoft::find($review->game_id);
+        $gameSoft = Orm\GameSoft::find($review->soft_id);
 
         $r = new Review();
 
@@ -342,8 +342,8 @@ class ReviewController extends Controller
         }
 
         return view('review.detail', [
-            'game'      => $game,
-            'pkg'       => GamePackage::find($review->package_id),
+            'gameSoft'  => $gameSoft,
+            'pkg'       => Orm\GamePackage::find($review->package_id),
             'review'    => $review,
             'isWriter'  => $isWriter,
             'hasGood'   => $hasGood,
@@ -359,13 +359,13 @@ class ReviewController extends Controller
      */
     public function newArrivals()
     {
-        $reviews = \Hgs3\Models\Orm\Review::orderBy('id', 'desc')
+        $reviews = Orm\Review::orderBy('id', 'desc')
             ->paginate(20);
 
         return view('review.newArrivals', [
             'reviews'      => $reviews,
             'writers'      => User::getHash(array_pluck($reviews->items(), 'user_id')),
-            'gamePackages' => GamePackage::getHash(array_pluck($reviews->items(), 'package_id'))
+            'gamePackages' => Orm\GamePackage::getHash(array_pluck($reviews->items(), 'package_id'))
         ]);
     }
 }

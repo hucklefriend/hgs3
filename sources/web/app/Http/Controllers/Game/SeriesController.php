@@ -6,10 +6,8 @@
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Http\Requests\Game\GameSeriesRequest;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GameSeries;
+use Hgs3\Models\Orm;
 use Hgs3\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 class SeriesController extends Controller
@@ -25,7 +23,7 @@ class SeriesController extends Controller
     /**
      * シリーズ一覧
      *
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -37,19 +35,19 @@ class SeriesController extends Controller
     /**
      * シリーズ詳細
      *
-     * @param GameSeries $gameSeries
-     * @return $this
+     * @param Orm\GameSeries $gameSeries
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(GameSeries $gameSeries)
+    public function detail(Orm\GameSeries $gameSeries)
     {
-        return view('game.series.detail')->with([
+        return view('game.series.detail', [
             'gameSeries' => $gameSeries,
-            'games'      => GameSoft::where('series_id', $gameSeries->id)->get()
+            'gameSofts'  => Orm\GameSoft::where('series_id', $gameSeries->id)->get()
         ]);
     }
 
     /**
-     * データ
+     * シリーズ追加画面
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -66,7 +64,7 @@ class SeriesController extends Controller
      */
     public function insert(GameSeriesRequest $request)
     {
-        $gameSeries = new GameSeries;
+        $gameSeries = new Orm\GameSeries;
         $gameSeries->name = $request->input('name', '');
         $gameSeries->phonetic = $request->input('phonetic', '');
 
@@ -80,14 +78,14 @@ class SeriesController extends Controller
     }
 
     /**
-     * データ編集
+     * シリーズ編集画面
      *
-     * @param GameSeries $gameSeries
-     * @return $this
+     * @param Orm\GameSeries $gameSeries
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(GameSeries $gameSeries)
+    public function edit(Orm\GameSeries $gameSeries)
     {
-        return view('game.series.edit')->with([
+        return view('game.series.edit', [
             'gameSeries' => $gameSeries
         ]);
     }
@@ -96,10 +94,10 @@ class SeriesController extends Controller
      * データ更新
      *
      * @param GameSeriesRequest $request
-     * @param GameSeries $gameSeries
-     * @return SeriesController
+     * @param Orm\GameSeries $gameSeries
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(GameSeriesRequest $request, GameSeries $gameSeries)
+    public function update(GameSeriesRequest $request, Orm\GameSeries $gameSeries)
     {
         $gameSeries->name = $request->input('name');
         $gameSeries->phonetic = $request->input('phonetic');

@@ -43,7 +43,7 @@ class NewInformation extends \Eloquent
     {
         $orm = new self();
         $orm->text_type = NewInformationText::NEW_GAME;
-        $orm->game_id = $gameId;
+        $orm->soft_id = $gameId;
         $orm->date_time = new \DateTime();
         $orm->save();
     }

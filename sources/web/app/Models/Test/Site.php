@@ -27,7 +27,7 @@ class Site
         $users = User::get();
         $maxUser = $users->count() - 1;
 
-        $gameIds = game::getIds();
+        $gameIds = GameSoft::getIds();
         $maxGame = count($gameIds) - 1;
 
         $rates = [0, 15, 18];

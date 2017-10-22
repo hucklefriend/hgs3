@@ -1,12 +1,11 @@
 <?php
 /**
- * ORM: game_add_request_comments
+ * ORM: site_handle_games
  */
 
 namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 
-class GameRequestComment extends \Eloquent
+class SiteHandleSoft extends \Eloquent
 {
-    //
 }

@@ -18,9 +18,9 @@
         </div>
         <div class="form-group">
             <label for="title">取扱いゲーム</label>
-            <button type="button" class="btn btn-default" id="select_handle_game">ゲームを選択する</button>
-            <p id="selected_game"></p>
-            <input type="hidden" name="handle_game" value="" id="handle_game">
+            <button type="button" class="btn btn-default" id="select_handle_soft">ゲームを選択する</button>
+            <p id="selected_soft"></p>
+            <input type="hidden" name="handle_soft" value="" id="handle_soft">
         </div>
         <fieldset class="form-group">
             <legend>メインコンテンツ</legend>
@@ -119,7 +119,7 @@
         </div>
     </form>
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="handle_game_dialog">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="handle_soft_dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -162,15 +162,15 @@
                         </li>
                     </ul>
                     @for ($phonicType = 1; $phonicType <= 10; $phonicType++)
-                    <div id="handle_games_{{ $phonicType }}" class="handle_game_tab @if ($phonicType == 1) active @endif ">
+                    <div id="handle_softs_{{ $phonicType }}" class="handle_soft_tab @if ($phonicType == 1) active @endif ">
                         <div class="container-fluid">
-                        @if (isset($games[$phonicType]))
-                        @foreach ($games[$phonicType] as $game)
+                        @if (isset($softs[$phonicType]))
+                        @foreach ($softs[$phonicType] as $soft)
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <label>
-                                        <input type="checkbox" class="handle_game_check" name="handle_game[]" value="{{ $game->id }}">
-                                        <span>{{ $game->name }}</span>
+                                        <input type="checkbox" class="handle_soft_check" name="handle_soft[]" value="{{ $soft->id }}">
+                                        <span>{{ $soft->name }}</span>
                                     </label>
                                 </li>
                             </ul>
@@ -181,27 +181,27 @@
                     @endfor
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="handle_game_cancel">キャンセル</button>
-                    <button type="button" class="btn btn-primary" id="handle_game_ok">OK</button>
+                    <button type="button" class="btn btn-secondary" id="handle_soft_cancel">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="handle_soft_ok">OK</button>
                 </div>
             </div>
         </div>
     </div>
 
     <style>
-        .handle_game_tab {
+        .handle_soft_tab {
             display:none;
         }
 
-        .handle_game_tab.active {
+        .handle_soft_tab.active {
             display: block;
         }
     </style>
 
     <script>
         $(function (){
-            $('#select_handle_game').click(function (){
-                $('#handle_game_dialog').modal('show');
+            $('#select_handle_soft').click(function (){
+                $('#handle_soft_dialog').modal('show');
             });
 
             $('.nav-link').click(function (e){
@@ -210,24 +210,24 @@
                 $('.nav-link.active').removeClass('active');
                 $(this).addClass('active');
 
-                $('.handle_game_tab.active').removeClass('active');
-                $('#handle_games_' + $(this).data('phonetic_type')).addClass('active');
+                $('.handle_soft_tab.active').removeClass('active');
+                $('#handle_softs_' + $(this).data('phonetic_type')).addClass('active');
 
                 return false;
             });
 
-            $('#handle_game_ok').click(function (){
-                $('#handle_game_dialog').modal('hide');
+            $('#handle_soft_ok').click(function (){
+                $('#handle_soft_dialog').modal('hide');
 
                 let txt = '';
                 let val = '';
-                $('.handle_game_check:checked').each(function (){
+                $('.handle_soft_check:checked').each(function (){
                     txt += $(this).next('span').text()+'、';
                     val += $(this).val() + ',';
                 });
 
-                $('#selected_game').text(txt);
-                $('#handle_game').val(val);
+                $('#selected_soft').text(txt);
+                $('#handle_soft').val(val);
             });
         });
     </script>

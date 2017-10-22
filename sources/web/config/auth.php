@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Hgs3\User::class,
+            'model' => Hgs3\Models\User::class,
         ],
 
         // 'users' => [

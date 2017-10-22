@@ -5,11 +5,9 @@
 
 namespace Hgs3\Http\Controllers\Game;
 
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\UserPlayedGame;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class PlayedUserController extends Controller
 {
@@ -24,18 +22,18 @@ class PlayedUserController extends Controller
     /**
      * 遊んだゲームに登録しているユーザー
      *
-     * @param GameSoft $game
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Orm\GameSoft $gameSoft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(GameSoft $game)
+    public function index(Orm\GameSoft $gameSoft)
     {
-        $pager = UserPlayedGame::where('game_id', $game->id)
+        $userPlayedSofts = Orm\UserPlayedSoft::where('soft_id', $gameSoft->id)
             ->paginate(30);
 
-        return view('game.played.index')->with([
-            'game' => $game,
-            'pager' => $pager,
-            'users' => User::getNameHash(array_pluck($pager->items(), 'user_id'))
+        return view('game.played.index', [
+            'gameSoft'        => $gameSoft,
+            'userPlayedSofts' => $userPlayedSofts,
+            'users'           => User::getNameHash(array_pluck($userPlayedSofts->items(), 'user_id'))
         ]);
     }
 }

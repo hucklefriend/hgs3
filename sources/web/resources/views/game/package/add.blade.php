@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}のパッケージ追加</h4>
+    <h4>{{ $gameSoft->name }}のパッケージ追加</h4>
 
     <nav style="margin-bottom: 20px;">
-        <a href="{{ url('game/soft') }}/{{ $game->id }}">データ詳細に戻る</a>
+        <a href="{{ url('game/soft/' . $gameSoft->id }}">データ詳細に戻る</a>
     </nav>
 
     <form method="POST">
@@ -22,7 +22,7 @@
 
         <div class="form-group">
             <label for="company_id">メーカー</label>
-            {{ company_select($game->company_id, true) }}
+            {{ company_select($gameSoft->company_id, true) }}
         </div>
 
         <div class="form-group">
@@ -41,13 +41,8 @@
         </div>
 
         <div class="form-group">
-            <label for="release_int">ゲーム区分</label>
-            {{ game_type_select($game->game_type) }}
-        </div>
-
-        <div class="form-group">
             <label for="asin">ASIN</label>
-            <input type="text" class="form-control" id="release_int" value="" name="asin">
+            <input type="text" class="form-control" id="asin" value="" name="asin">
         </div>
 
         <div class="form-group">

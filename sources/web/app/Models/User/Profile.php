@@ -12,7 +12,7 @@ use Hgs3\Models\Orm\Review;
 use Hgs3\Models\Orm\ReviewGoodHistory;
 use Hgs3\Models\Orm\Site;
 use Hgs3\Models\Orm\UserCommunityMember;
-use Hgs3\Models\Orm\UserFavoriteGame;
+use Hgs3\Models\Orm\UserFavoriteSoft;
 use Hgs3\Models\Orm\UserFavoriteSite;
 use Hgs3\User;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +34,7 @@ class Profile
             'followerNum'     => $follow->getFollowerNum($userId),
             'reviewNum'       => Review::getNumByUser($userId),
             'siteNum'         => Site::getNumByUser($userId),
-            'favoriteGameNum' => UserFavoriteGame::getNumByUser($userId),
+            'favoriteGameNum' => UserFavoriteSoft::getNumByUser($userId),
             'favoriteSiteNum' => UserFavoriteSite::getNumByUser($userId),
             'diaryNum'        => 0,     // TODO 日記実装時に実装
             'communityNum'    => UserCommunityMember::getNumByUser($userId) + GameCommunityMember::getNumByUser($userId)
@@ -111,7 +111,7 @@ class Profile
      */
     private function getFavoriteGames($userId)
     {
-        return UserFavoriteGame::where('user_id', $userId)
+        return UserFavoriteSoft::where('user_id', $userId)
             ->orderBy('id')
             ->take(5)
             ->get();

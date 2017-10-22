@@ -6,18 +6,18 @@
             @include('game.common.package_image', ['imageUrl' => $pkg->medium_image_url])
         </div>
         <div class="p-10 align-self-top">
-            <div class="break_word" style="width: 100%;"><h5>{{ $game->name }}<small>のコミュニティ</small></h5></div>
+            <div class="break_word" style="width: 100%;"><h5>{{ $gameSoft->name }}<small>のコミュニティ</small></h5></div>
             <div>
-                <a href="{{ url('game/soft') }}/{{ $game->id }}">ゲームの詳細</a>
+                <a href="{{ url('game/soft') }}/{{ $gameSoft->id }}">ゲームの詳細</a>
             </div>
             <br>
             @if ($isMember)
-                <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/secession">
+                <form method="POST" action="{{ url('community/g') }}/{{ $gameSoft->id }}/secession">
                     {{ csrf_field() }}
                     <button class="btn btn-sm btn-warning">脱退する</button>
                 </form>
             @else
-                <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/join">
+                <form method="POST" action="{{ url('community/g') }}/{{ $gameSoft->id }}/join">
                     {{ csrf_field() }}
                     <button class="btn btn-sm btn-primary">参加する</button>
                 </form>
@@ -36,13 +36,13 @@
                     @foreach ($topics as $t)
                         {{-- TODO レス数と投稿者を出したい --}}
                         <div>
-                            <p class="" style="word-break: break-all;"><a href="{{ url('community/g') }}/{{ $game->id }}/topic/{{ $t->id }}">{{ $t->title }}</a></p>
+                            <p class="" style="word-break: break-all;"><a href="{{ url('community/g') }}/{{ $gameSoft->id }}/topic/{{ $t->id }}">{{ $t->title }}</a></p>
                             <p class="text-muted"><small>{{ $t->wrote_date }}</small></p>
                         </div>
                         <hr>
                     @endforeach
                     <div class="text-center">
-                        <a href="{{ url('community/g') }}/{{ $game->id }}/topics">全てのトピックを見る</a>
+                        <a href="{{ url('community/g') }}/{{ $gameSoft->id }}/topics">全てのトピックを見る</a>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                         <hr>
                     @endforeach
                     <div class="text-center">
-                        <a href="{{ url('community/g') }}/{{ $game->id }}/member">全てのメンバーを見る</a>
+                        <a href="{{ url('community/g') }}/{{ $gameSoft->id }}/member">全てのメンバーを見る</a>
                     </div>
                 </div>
             </div>

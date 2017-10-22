@@ -7,8 +7,8 @@ namespace Hgs3\Http\Controllers\Social;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Account\SignUp;
-use Hgs3\Models\Orm\SocialAccount;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Hgs3\Constants\Social\Mode;
@@ -66,7 +66,7 @@ class TwitterController extends Controller
     {
         $signUp = new SignUp();
 
-        $sa = new SocialAccount;
+        $sa = new Orm\SocialAccount;
         if ($sa->isRegistered(SocialSite::TWITTER, $user->id)) {
             return view('social.twitter.alreadyRegistered');
         } else {

@@ -19,7 +19,7 @@ class UserPlayedGame
         $users = User::getIds();
         $userMax = count($users) - 1;
 
-        $games = Game::getIds();
+        $games = GameSoft::getIds();
 
         $sql =<<< SQL
 INSERT IGNORE INTO user_played_games

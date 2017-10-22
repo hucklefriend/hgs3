@@ -8,7 +8,7 @@
 
     @foreach ($sites as $s)
         <div>
-            <a href="{{ url('site/detail') }}/{{ $s->id }}">{{ $s->name }}</a>
+            <a href="{{ url('site/detail/' . $s->id }}">{{ $s->name }}</a>
         </div>
     @endforeach
 @endsection

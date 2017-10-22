@@ -8,7 +8,7 @@ namespace Hgs3\Http\Controllers\User;
 use Hgs3\Http\Requests\User\PlayedGame\AddRequest;
 use Hgs3\Http\Requests\User\PlayedGame\EditRequest;
 use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\UserPlayedGame;
+use Hgs3\Models\Orm\UserPlayedSoft;
 use Hgs3\User;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
@@ -54,7 +54,7 @@ class PlayedGameController extends Controller
      */
     public function add(AddRequest $request, GameSoft $game)
     {
-        $upg = new UserPlayedGame;
+        $upg = new UserPlayedSoft;
 
         $upg->user_id = Auth::id();
         $upg->game_id = $game->id;
@@ -68,10 +68,10 @@ class PlayedGameController extends Controller
      * 編集
      *
      * @param EditRequest $request
-     * @param UserPlayedGame $upg
+     * @param UserPlayedSoft $upg
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit(EditRequest $request, UserPlayedGame $upg)
+    public function edit(EditRequest $request, UserPlayedSoft $upg)
     {
         $upg->comment = $request->get('comment', '');
         $upg->save();
@@ -82,10 +82,10 @@ class PlayedGameController extends Controller
     /**
      * 削除
      *
-     * @param UserPlayedGame $upg
+     * @param UserPlayedSoft $upg
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function remove(UserPlayedGame $upg)
+    public function remove(UserPlayedSoft $upg)
     {
         if (Auth::id() == $upg->id) {
             $upg->delete();

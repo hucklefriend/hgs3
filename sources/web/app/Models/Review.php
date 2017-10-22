@@ -4,7 +4,7 @@
  */
 
 
-namespace Hgs3\Models\Review;
+namespace Hgs3\Models;
 
 use Hgs3\Constants\Review\Status;
 use Hgs3\Models\Orm;
@@ -83,26 +83,27 @@ SQL;
     /**
      * 保存
      *
+     * @param User $user
      * @param Orm\ReviewDraft $draft
      * @return bool|mixed
      */
-    public function save(Orm\ReviewDraft $draft)
+    public function save(User $user, Orm\ReviewDraft $draft)
     {
-        $orm = new Orm\Review($draft->toArray());
-        $orm->post_date = new \DateTime();
+        $review = new Orm\Review($draft->toArray());
+        $review->post_date = new \DateTime();
 
         DB::beginTransaction();
         try {
             // 保存
-            $orm->save();
+            $review->save();
 
             // 統計
-            Orm\ReviewTotal::calculate($orm->game_id);
+            Orm\ReviewTotal::calculate($review->soft_id);
 
             // 下書き削除
             DB::table('review_drafts')
-                ->where('user_id', $orm->user_id)
-                ->where('game_id', $orm->game_id)
+                ->where('user_id', $review->user_id)
+                ->where('package_id', $review->package_id)
                 ->delete();
 
             DB::commit();
@@ -116,9 +117,11 @@ SQL;
         }
 
         // タイムライン登録
-        Timeline\FavoriteGame::addNewReviewText($draft->game_id, null, $orm->id, $orm->is_spoiler);
+        $soft = Orm\GameSoft::find($draft->soft_id);
+        Timeline\FavoriteGame::addNewReviewText($soft, $review);
+        //Timeline\FollowUser::addNewReviewText();
 
-        return $orm->id;
+        return $review->id;
     }
 
     /**

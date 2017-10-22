@@ -5,20 +5,20 @@
     <h5>{{ $uc->name }}掲示板</h5>
 
     <div>
-        <a href="{{ url2('community/u') }}/{{ $uc->id }}/topics">トピック一覧</a> |
-        <a href="{{ url2('community/u') }}/{{ $uc->id }}">コミュニティトップ</a>
+        <a href="{{ url2('community/u') }}/{{ $userCommuinity->id }}/topics">トピック一覧</a> |
+        <a href="{{ url2('community/u') }}/{{ $userCommuinity->id }}">コミュニティトップ</a>
     </div>
 
     <hr>
 
     <div>
-        <h5>{{ $uct->title }}</h5>
-        <div>{{ $uct->wrote_date }}</div>
+        <h5>{{ $userCommunityTopic->title }}</h5>
+        <div>{{ $userCommunityTopic->wrote_date }}</div>
         <div>writer: <a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a></div>
-        <pre>{{ $uct->comment }}</pre>
+        <pre>{{ $userCommunityTopic->comment }}</pre>
 
-        @if ($uct->user_id == $userId)
-            <form method="POST" action="{{ url('community/u') }}/{{ $uc->id }}/topic/{{ $uct->id }}">
+        @if ($userCommunityTopic->user_id == $userId)
+            <form method="POST" action="{{ url('community/u') }}/{{ $userCommunity->id }}/topic/{{ $userCommunityTopic->id }}">
                 <input type="hidden" name="_token" value="{{ $csrfToken }}">
                 {{ method_field('DELETE') }}
                 <button class="btn btn-danger btn-sm">削除</button>
@@ -26,16 +26,16 @@
         @endif
     </div>
 
-    {{ $pager->links() }}
+    {{ $responses->links() }}
 
-    @foreach ($pager->items() as $r)
+    @foreach ($responses as $res)
         <div>
-            <div>{{ $r->wrote_date }}</div>
-            <div>writer: <a href="{{ url2('user/profile') }}/{{ $r->user_id }}">{{ $users[$r->user_id] }}</a></div>
-            <pre>{{ $r->comment }}</pre>
+            <div>{{ $res->wrote_date }}</div>
+            <div>writer: <a href="{{ url2('user/profile') }}/{{ $res->user_id }}">{{ $users[$res->user_id] }}</a></div>
+            <pre>{{ $res->comment }}</pre>
 
-            @if ($r->user_id == $userId)
-                <form method="POST" action="{{ url2('community/u') }}/{{ $uc->id }}/topic_response/{{ $r->id }}">
+            @if ($res->user_id == $userId)
+                <form method="POST" action="{{ url2('community/u') }}/{{ $userCommunity->id }}/topic_response/{{ $res->id }}">
                     <input type="hidden" name="_token" value="{{ $csrfToken }}">
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger btn-sm">削除</button>
@@ -44,11 +44,11 @@
         </div>
     @endforeach
 
-    {{ $pager->links() }}
+    {{ $responses->links() }}
 
     <hr>
 
-    <form method="POST" action="{{ url('community/u') }}/{{ $uc->id }}/topic/{{ $uct->id }}">
+    <form method="POST" action="{{ url('community/u') }}/{{ $userCommunity->id }}/topic/{{ $userCommunityTopic->id }}">
         <input type="hidden" name="_token" value="{{ $csrfToken }}">
         <div class="form-group row">
             <label for="comment" class="col-3 col-form-label">内容</label>

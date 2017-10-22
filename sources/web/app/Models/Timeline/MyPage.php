@@ -99,7 +99,7 @@ class MyPage extends TimelineAbstract
      */
     private function getFavoriteGameTimeline($userId, $time, $num)
     {
-        $gameIds = Orm\UserFavoriteGame::select(['game_id'])
+        $gameIds = Orm\UserFavoriteSoft::select(['game_id'])
             ->where('user_id', $userId)
             ->get()
             ->pluck('game_id')

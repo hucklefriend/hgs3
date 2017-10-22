@@ -6,8 +6,8 @@
 namespace Hgs3\Models\Site;
 
 use Hgs3\Models\Timeline;
-use Hgs3\Models\Orm\Site;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -16,11 +16,11 @@ class Good
     /**
      * いいね済みか？
      *
-     * @param Site $site
+     * @param Orm\Site $site
      * @param User $user
      * @return bool
      */
-    public function isGood(Site $site, User $user)
+    public function isGood(Orm\Site $site, User $user)
     {
         $num = DB::table('site_good_histories')
             ->where('site_id', $site->id)
@@ -33,11 +33,11 @@ class Good
     /**
      * いいね実行
      *
-     * @param Site $site
+     * @param Orm\Site $site
      * @param User $user
      * @return bool
      */
-    public function good(Site $site, User $user)
+    public function good(Orm\Site $site, User $user)
     {
         $now = (new \DateTime())->format('Y-m-d H:i:s');
 
@@ -91,11 +91,11 @@ SQL;
     /**
      * いいね取り消し
      *
-     * @param Site $site
+     * @param Orm\Site $site
      * @param User $user
      * @return bool
      */
-    public function cancelGood(Site $site, User $user)
+    public function cancelGood(Orm\Site $site, User $user)
     {
         // いいね数を減らす
         $site->good_num--;

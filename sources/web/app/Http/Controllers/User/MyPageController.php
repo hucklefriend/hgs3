@@ -8,9 +8,8 @@ namespace Hgs3\Http\Controllers\User;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Review\Review;
 use Hgs3\Models\User\Follow;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Hgs3\Models\Timeline;
 
 class MyPageController extends Controller
 {

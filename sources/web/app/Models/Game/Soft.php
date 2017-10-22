@@ -7,13 +7,8 @@ namespace Hgs3\Models\Game;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Http\Requests\Game\Soft\AddRequest;
-use Hgs3\Models\Orm\ReviewTotal;
-use Hgs3\Models\Orm\SiteHandleGame;
-use Hgs3\Models\Orm\UserFavoriteGame;
-use Hgs3\Models\Timeline;
+use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GameSeries;
 use Illuminate\Support\Facades\Log;
 
 class Soft
@@ -42,42 +37,32 @@ class Soft
     /**
      * 詳細データ取得
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $gameSoft
      * @return array
      */
-    public function getDetail(GameSoft $game)
+    public function getDetail(Orm\GameSoft $gameSoft)
     {
-        $data = [];
-        $data['game'] = $game;
+        $data = ['gameSoft' => $gameSoft];
 
-        // シリーズ
-        if ($game->series_id != null) {
-            $data['series'] = $this->getDetailSeries($game->id, $game->series_id);
+        // 同じシリーズのソフト取得
+        if ($gameSoft->series_id != null) {
+            $data['gameSeries'] = Orm\GameSeries::find($gameSoft->series_id);
+            if ($data['gameSeries']) {
+                $data['seriesSofts'] = $this->getSameSeries($gameSoft->id, $gameSoft->series_id);
+            }
         } else {
             $data['series'] = null;
         }
 
-        // メーカー
-        // パッケージのメーカーを使うので不要
-/*
-        if ($game->company_id != null) {
-            $data['company'] = GameCompany::find($game->company_id);
-        } else {
-            $data['company'] = null;
-        }
-*/
         // パッケージ情報
-        $data['packages'] = $this->getDetailPackages($game->id);
-        $data['package_num'] = count($data['packages']);
+        $data['packages'] = $this->getPackages($gameSoft->id);
+        $data['packageNum'] = count($data['packages']);
 
         // レビュー
-        $data['review'] = ReviewTotal::find($game->id);
-
-        // ベースデータ
-        $data['base'] = $this->getBaseData($game);
+        $data['reviewTotal'] = Orm\ReviewTotal::find($gameSoft->id);
 
         // お気に入り登録ユーザー
-        $data['favorite'] = $this->getFavoriteUser($game);
+        $data['favorite'] = $this->getFavoriteUser($gameSoft);
 
         // サイト
         $data['site'] = $this->getSite($game);
@@ -94,84 +79,55 @@ class Soft
     /**
      * 同一シリーズのソフトを取得
      *
-     * @param $gameId
-     * @param $seriesId
-     * @return array
+     * @param $gameSoftId
+     * @param $gameSeriesId
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    private function getDetailSeries($gameId, $seriesId)
+    private function getSameSeries($gameSoftId, $gameSeriesId)
     {
-        $series = GameSeries::find($seriesId);
-
-        $data = array(
-            'name' => $series->name
-        );
-
-        $data['list'] = DB::table('games')
-            ->where('series_id', $seriesId)
-            ->where('id', '<>', $gameId)
+        return Orm\GameSoft::select(['id', 'name'])
+            ->where('series_id', $gameSeriesId)
+            ->where('id', '<>', $gameSoftId)
+            ->orderBy('order_in_series')
             ->get();
-
-        return $data;
     }
 
     /**
      * パッケージの一覧を取得
      *
-     * @param $gameId
+     * @param int $gameSoftId
      * @return array
      */
-    private function getDetailPackages($gameId)
+    private function getPackages($gameSoftId)
     {
         $sql =<<< SQL
-SELECT pkg.*, plt.id plt_id, plt.acronym AS platform_name, com.name AS company_name
+SELECT pkg.*, plt.acronym AS platform_name, com.name AS company_name
 FROM (
-  SELECT * FROM game_packages WHERE game_id = ?
+  SELECT id, `name`, platform_id, release_date, company_id FROM game_packages WHERE soft_id = ?
 ) pkg
   LEFT OUTER JOIN game_platforms plt ON pkg.platform_id = plt.id
   LEFT OUTER JOIN game_companies com ON pkg.company_id = com.id
 SQL;
 
-        return DB::select($sql, [$gameId]);
-    }
-
-    /**
-     * ベースデータを取得
-     *
-     * @param GameSoft $game
-     * @return array
-     */
-    private function getBaseData(GameSoft $game)
-    {
-        $baseData = [];
-
-        // お気に入り数
-        $baseData['favorite_num'] = UserFavoriteGame::where('game_id', $game->id)->count('user_id');
-
-        // レビュー数
-        $baseData['review_num'] = \Hgs3\Models\Orm\Review::where('game_id', $game->id)->count('id');
-
-        // サイト数
-        $baseData['site_num'] = SiteHandleGame::where('game_id', $game->id)->count('site_id');
-
-        return $baseData;
+        return DB::select($sql, [$gameSoftId]);
     }
 
     /**
      * お気に入りゲーム登録ユーザーを取得
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $gameSoft
      * @return array
      */
-    private function getFavoriteUser(GameSoft $game)
+    private function getFavoriteUser(Orm\GameSoft $gameSoft)
     {
         $sql =<<< SQL
 SELECT users.id, users.name, users.icon_upload_flag
 FROM (
-  SELECT user_id FROM user_favorite_games WHERE game_id = ? ORDER BY id LIMIT 5
+  SELECT user_id FROM user_favorite_softs WHERE soft_id = ? ORDER BY id LIMIT 5
 ) fav LEFT OUTER JOIN users ON fav.user_id = users.id
 SQL;
 
-        return DB::select($sql, [$game->id]);
+        return DB::select($sql, [$gameSoft->id]);
     }
 
     /**

@@ -18,17 +18,22 @@ class Review
     {
         echo 'create review test data.'.PHP_EOL;
 
-        $users = User::getIds();
-        $pkgs = Package::get();
+        $users = User::get();
+        $packages = Package::get();
 
         $userMax = count($users) - 1;
-        $pkgMax = count($pkgs) - 1;
+        $packageMax = count($packages) - 1;
+
+        $r = new \Hgs3\Models\Review();
+
 
         for ($i = 0; $i < $num; $i++) {
-            $pkg = $pkgs[rand(0, $pkgMax)];
-            $orm = new Orm\Review([
-                'user_id'         => $users[rand(0, $userMax)],
-                'game_id'         => $pkg->game_id,
+            $pkg = $packages[rand(0, $packageMax)];
+            $user = $users[rand(0, $userMax)];
+
+            $orm = new Orm\ReviewDraft([
+                'user_id'         => $user->id,
+                'game_id'         => $pkg->soft_id,
                 'package_id'      => $pkg->id,
                 'fear'            => rand(0, 5),
                 'story'           => rand(0, 5),
@@ -46,14 +51,14 @@ class Review
                 'post_date'       => new \DateTime()
             ]);
 
-            $orm->save();
+            $r->save(user, $orm);
             unset($orm);
         }
 
         unset($users);
         unset($pkgs);
 
-        $games = Game::getIds();
+        $games = GameSoft::getIds();
         foreach ($games as $gameId) {
             Orm\ReviewTotal::calculate($gameId);
         }

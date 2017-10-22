@@ -8,7 +8,7 @@ namespace Hgs3\Http\Controllers\Site;
 
 use Hgs3\Constants\UserRole;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Orm\Site;
+use Hgs3\Models\Orm;
 use Hgs3\Models\Site\Good;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,10 +25,10 @@ class GoodController extends Controller
     /**
      * サイトへのいいね
      *
-     * @param Site $site
+     * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function good(Site $site)
+    public function good(Orm\Site $site)
     {
         $good = new Good();
         $good->good($site, Auth::user());
@@ -39,10 +39,10 @@ class GoodController extends Controller
     /**
      * サイトへのいいね取り消し
      *
-     * @param Site $site
+     * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function cancel(Site $site)
+    public function cancel(Orm\Site $site)
     {
         $good = new Good();
         $good->cancelGood($site, Auth::user());
@@ -53,9 +53,10 @@ class GoodController extends Controller
     /**
      * いいね履歴
      *
-     * @param Site $site
+     * @param Orm\Site $site
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
      */
-    public function history(Site $site)
+    public function history(Orm\Site $site)
     {
         // いいね履歴は登録者本人しか確認できない
         // ただしH.G.N.管理人は除く

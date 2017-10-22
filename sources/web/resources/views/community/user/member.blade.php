@@ -2,11 +2,11 @@
 
 @section('content')
 
-    <h5><a href="{{ url2('community/u') }}/{{ $uc->id }}">{{ $uc->name }}</a>のメンバー一覧</h5>
+    <h5><a href="{{ url2('community/u') }}/{{ $userCommunity->id }}">{{ $userCommunity->name }}</a>のメンバー一覧</h5>
 
     <ul class="list-group">
-        @foreach ($members as $u)
-            <li class="list-group-item"><a href="{{ url2('user/profile') }}/{{ $u->user_id }}">{{ $users[$u->user_id] }}</a></li>
+        @foreach ($members as $member)
+            <li class="list-group-item"><a href="{{ url2('user/profile') }}/{{ $member->user_id }}">{{ $users[$member->user_id] }}</a></li>
         @endforeach
     </ul>
 

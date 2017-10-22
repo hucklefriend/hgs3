@@ -30,12 +30,12 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::post('/game/soft/add', 'Game\SoftController@insert');
 
     // ゲーム編集
-    Route::get('/game/soft/edit/{game}', 'Game\SoftController@edit');
-    Route::patch('/game/soft/edit/{game}', 'Game\SoftController@update');
+    Route::get('/game/soft/edit/{gameSoft}', 'Game\SoftController@edit');
+    Route::patch('/game/soft/edit/{gameSoft}', 'Game\SoftController@update');
 
     // パッケージ登録
-    Route::get('/game/soft/package/add/{game}', 'Game\PackageController@add');
-    Route::post('/game/soft/package/add/{game}', 'Game\PackageController@store');
+    Route::get('/game/soft/package/add/{gameSoft}', 'Game\PackageController@add');
+    Route::post('/game/soft/package/add/{gameSoft}', 'Game\PackageController@store');
 
     // ゲーム会社
     Route::get('/game/company/add', 'Game\CompanyController@add');
@@ -69,7 +69,7 @@ Route::get('/account/signup', 'Account\SignUpController@index');
 
 // ゲーム
 Route::get('/game', 'Game\SoftController@index');
-Route::get('/game/soft/{game}', 'Game\SoftController@show');
+Route::get('/game/soft/{gameSoft}', 'Game\SoftController@detail');
 
 // レビュー
 Route::get('/review', 'Review\ReviewController@index')->name('review');
@@ -78,10 +78,10 @@ Route::get('/review/write/{gamePackage}', 'Review\ReviewController@input')->midd
 Route::post('/review/confirm/{gamePackage}', 'Review\ReviewController@confirm')->middleware('auth');
 Route::post('/review/save/{gamePackage}', 'Review\ReviewController@save')->middleware('auth');
 Route::delete('/review/draft/{packageId}', 'Review\ReviewController@deleteDraft')->middleware('auth');
-Route::get('/review/game/{game}', 'Review\ReviewController@game');
+Route::get('/review/game/{gameSoft}', 'Review\ReviewController@game');
 Route::post('/review/good/{review}', 'Review\GoodController@good')->middleware('auth');
 Route::delete('/review/good/{review}', 'Review\GoodController@cancelGood')->middleware('auth');
-Route::get('/review/detail/{review}', 'Review\ReviewController@show');
+Route::get('/review/detail/{review}', 'Review\ReviewController@detail');
 Route::get('/review/good/history/{review}', 'Review\GoodController@history');
 Route::get('/review/edit/{review}', 'Review\ReviewController@edit');
 Route::patch('/review/edit/{review}', 'Review\ReviewController@update');
@@ -119,15 +119,15 @@ Route::delete('/site/good/{site}', 'Site\GoodController@cancel')->middleware('au
 
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');
-Route::get('/game/company/{gameCompany}', 'Game\CompanyController@show');
+Route::get('/game/company/{gameCompany}', 'Game\CompanyController@detail');
 
 // プラットフォーム
 Route::get('/game/platform', 'Game\PlatformController@index');
-Route::get('/game/platform/{gamePlatform}', 'Game\PlatformController@show');
+Route::get('/game/platform/{gamePlatform}', 'Game\PlatformController@detail');
 
 // シリーズ
 Route::get('/game/series', 'Game\SeriesController@index');
-Route::get('/game/series/{gameSeries}', 'Game\SeriesController@show');
+Route::get('/game/series/{gameSeries}', 'Game\SeriesController@detail');
 
 
 // マイページ
@@ -149,15 +149,15 @@ Route::get('/mypage/follower', 'User\MyPageController@follower')->middleware('au
 Route::get('/mypage/review', 'User\MyPageController@review')->middleware('auth');
 
 // お気に入りゲーム
-Route::get('/game/favorite/{game}', 'Game\FavoriteGameController@index');
+Route::get('/game/favorite/{gameSoft}', 'Game\FavoriteGameController@index');
 Route::post('/user/favorite_game', 'User\FavoriteGameController@add')->middleware('auth');
 Route::delete('/user/favorite_game', 'User\FavoriteGameController@remove')->middleware('auth');
 Route::get('/user/favorite_game/{user}', 'User\ProfileController@favoriteGame');
 
 // 遊んだゲーム
-Route::get('game/played_user/{game}', 'Game\PlayedUserController@index');
+Route::get('game/played_user/{gameSoft}', 'Game\PlayedUserController@index');
 Route::get('user/played_game/{user}', 'User\PlayedGameController@index');
-Route::post('user/played_game/{game}', 'User\PlayedGameController@add')->middleware('auth');
+Route::post('user/played_game/{gameSOft}', 'User\PlayedGameController@add')->middleware('auth');
 Route::put('user/played_game/{upg}', 'User\PlayedGameController@edit')->middleware('auth');
 Route::delete('user/played_game/{upg}', 'User\PlayedGameController@remove')->middleware('auth');
 

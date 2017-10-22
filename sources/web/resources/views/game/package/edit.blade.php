@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}のパッケージ編集</h4>
+    <h4>{{ $gameSoft->name }}のパッケージ編集</h4>
 
     <nav style="margin-bottom: 20px;">
-        <a href="{{ url('game/soft') }}/{{ $game->id }}">データ詳細に戻る</a>
+        <a href="{{ url('game/soft/' . $gameSoft->id }}">データ詳細に戻る</a>
     </nav>
 
     <form method="POST">

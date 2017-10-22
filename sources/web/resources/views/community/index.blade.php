@@ -13,8 +13,8 @@
                 <div>コミュニティ追加</div>
             @endif
 
-            @foreach ($userCommunities as $uc)
-                <div><a href="{{ url2('community/u') }}/{{ $uc->id }}">{{ $uc->name }}</a></div>
+            @foreach ($userCommunities as $userCommunity)
+                <div><a href="{{ url2('community/u') }}/{{ $userCommunity->id }}">{{ $userCommunity->name }}</a></div>
             @endforeach
         </div>
 

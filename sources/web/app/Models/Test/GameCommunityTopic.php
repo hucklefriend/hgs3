@@ -20,21 +20,21 @@ class GameCommunityTopic
 
         $users = User::get();
         $userMax = $users->count() - 1;
-        $games = Game::get();
+        $gameSofts = GameSoft::get();
 
-        foreach ($games as $game) {
+        foreach ($gameSofts as $gameSoft) {
             if (rand(0, 100) > 30) {
                 continue;
             }
 
             $n = rand(0, 10);
             for ($i = 0; $i < $n; $i++) {
-                $gc->writeTopic($game, $users[rand(0, $userMax)], 'テスト' . $i, str_random(500));
+                $gc->writeTopic($gameSoft, $users[rand(0, $userMax)], 'テスト' . $i, str_random(500));
             }
         }
 
         unset($users);
-        unset($games);
+        unset($gameSofts);
     }
 
     /**

@@ -9,20 +9,20 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewTotal extends \Eloquent
 {
-    protected $primaryKey = 'game_id';
+    protected $primaryKey = 'soft_id';
     public $incrementing = false;
-    protected $guarded = ['game_id'];
+    protected $guarded = ['soft_id'];
 
     /**
      * 集計
      *
-     * @param $gameId
+     * @param $softId
      */
     public static function calculate($gameId)
     {
         $sql =<<< SQL
 INSERT INTO review_totals
-(game_id, review_num, point, fear, story, volume, difficulty, graphic, sound, crowded, controllability, recommend)
+(soft_id, review_num, point, fear, story, volume, difficulty, graphic, sound, crowded, controllability, recommend)
 SELECT
   {$gameId}
   , COUNT(id)

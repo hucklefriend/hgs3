@@ -6,25 +6,23 @@
 namespace Hgs3\Models\Timeline;
 
 use Illuminate\Support\Facades\Log;
+use Hgs3\Models\Orm;
 
 class FavoriteGame extends TimelineAbstract
 {
     /**
      * ゲームソフト追加
      *
-     * @param int $gameId
-     * @param string $gameName
+     * @param Orm\GameSoft $soft
      */
-    public static function addNewGameSoftText($gameId, $gameName)
+    public static function addNewGameSoftText(Orm\GameSoft $soft)
     {
-        self::setGameName($gameId, $gameName);
-
         $text = sprintf('「<a href="%s">%s</a>」が追加されました。',
-            url2('game/soft/' . $gameId),
-            $gameName
+            url2('game/soft/' . $soft->id),
+            $soft->name
         );
 
-        self::insert($gameId, $text);
+        self::insert($soft->id, $text);
     }
 
     /**
@@ -99,7 +97,7 @@ class FavoriteGame extends TimelineAbstract
      * @param int $reviewId
      * @param bool $isSpoiler
      */
-    public static function addNewReviewText($gameId, $gameName, $reviewId, $isSpoiler)
+    public static function addNewReviewText()
     {
         self::setGameName($gameId, $gameName);
 

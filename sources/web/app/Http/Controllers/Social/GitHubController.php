@@ -7,8 +7,8 @@ namespace Hgs3\Http\Controllers\Social;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Account\SignUp;
-use Hgs3\Models\Orm\SocialAccount;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Hgs3\Constants\Social\Mode;
@@ -66,7 +66,7 @@ class GitHubController extends Controller
     {
         $signUp = new SignUp();
 
-        $sa = new SocialAccount;
+        $sa = new Orm\SocialAccount;
         if ($sa->isRegistered(SocialSite::GITHUB, $user->id)) {
             return view('social.github.alreadyRegistered');
         } else {
@@ -83,7 +83,7 @@ class GitHubController extends Controller
      */
     private function login(\Laravel\Socialite\One\User $socialUser)
     {
-        $sa = new SocialAccount;
+        $sa = new Orm\SocialAccount;
         $userId = $sa->getUserId(SocialSite::GITHUB, $socialUser->id);
 
         if ($userId != null) {

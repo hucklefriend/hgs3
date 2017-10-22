@@ -6,7 +6,7 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Models\User\Follow;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -28,8 +28,12 @@ class FollowController extends Controller
      */
     public function add(Request $request)
     {
-        $follow = new Follow();
-        $follow->add(Auth::id(), $request->get('follow_user_id'), 0);
+        $followUserId = $request->get('follow_user_id');
+        $followUser = User::find($followUserId);
+        if ($followUser) {
+            $follow = new Follow();
+            $follow->add(Auth::user(), $followUser, 0);
+        }
 
         return redirect()->back();
     }

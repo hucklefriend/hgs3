@@ -5,8 +5,7 @@
 
 namespace Hgs3\Http\Controllers\Game;
 
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\UserFavoriteGame;
+use Hgs3\Models\Orm;
 use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -24,18 +23,18 @@ class FavoriteGameController extends Controller
     /**
      * お気に入りゲームに登録しているユーザー
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $gameSoft
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function index(GameSoft $game)
+    public function index(Orm\GameSoft $gameSoft)
     {
-        $pager = UserFavoriteGame::where('game_id', $game->id)
+        $pager = Orm\UserFavoriteSoft::where('soft_id', $gameSoft->id)
             ->paginate(20);
 
         return view('game.favorite.index')->with([
-            'game'  => $game,
-            'pager' => $pager,
-            'users' => User::getHash(array_pluck($pager->items(), 'user_id'))
+            'gameSoft' => $gameSoft,
+            'pager'    => $pager,
+            'users'    => User::getHash(array_pluck($pager->items(), 'user_id'))
         ]);
     }
 }

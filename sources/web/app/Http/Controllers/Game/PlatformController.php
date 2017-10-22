@@ -5,10 +5,8 @@
 
 namespace Hgs3\Http\Controllers\Game;
 
-use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Game\GamePlatformRequest;
-use Hgs3\Models\Orm\GameCompany;
-use Hgs3\Models\Orm\GamePlatform;
+use Hgs3\Models\Orm;
 use Hgs3\Http\Controllers\Controller;
 
 class PlatformController extends Controller
@@ -24,12 +22,11 @@ class PlatformController extends Controller
     /**
      * プラットフォーム一覧
      *
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $platforms = GamePlatform::orderBy('sort_order')
-            ->get();
+        $platforms = Orm\GamePlatform::orderBy('sort_order')->get();
 
         return view('game.platform.list', [
             'platforms' => $platforms
@@ -39,19 +36,19 @@ class PlatformController extends Controller
     /**
      * プラットフォーム詳細
      *
-     * @param GamePlatform $gamePlatform
-     * @return $this
+     * @param Orm\GamePlatform $gamePlatform
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(GamePlatform $gamePlatform)
+    public function detail(Orm\GamePlatform $gamePlatform)
     {
         $packages = $gamePlatform->getPackages();
-        $companies = GameCompany::getNameHash(array_pluck($packages->items(), 'company_id'));
+        $companies = Orm\GameCompany::getNameHash(array_pluck($packages->items(), 'company_id'));
 
-        return view('game.platform.detail')->with([
-            'platform'  => $gamePlatform,
-            'company'   => GameCompany::find($gamePlatform->company_id),
-            'packages'  => $packages,
-            'companies' => $companies
+        return view('game.platform.detail', [
+            'gamePlatform' => $gamePlatform,
+            'gameCompany'  => Orm\GameCompany::find($gamePlatform->company_id),
+            'packages'     => $packages,
+            'companies'    => $companies
         ]);
     }
 
@@ -69,11 +66,11 @@ class PlatformController extends Controller
      * データ追加
      *
      * @param GamePlatformRequest $request
-     * @return PlatformController
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function insert(GamePlatformRequest $request)
     {
-        $gamePlatform = new GamePlatform;
+        $gamePlatform = new Orm\GamePlatform;
         $gamePlatform->company_id = intval($request->input('company_id', 0));
         $gamePlatform->name = $request->input('name', '');
         $gamePlatform->acronym = $request->input('acronym', '');

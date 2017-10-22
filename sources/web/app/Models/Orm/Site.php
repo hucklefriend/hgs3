@@ -19,7 +19,7 @@ class Site extends \Eloquent
      */
     public function getHandleGames()
     {
-        return SiteHandleGame::where('site_id', $this->id)
+        return SiteHandleSoft::where('site_id', $this->id)
             ->get()
             ->pluck('game_id')
             ->toArray();

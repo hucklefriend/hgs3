@@ -6,11 +6,8 @@
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Game\Package\StoreRequest;
-use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GamePackage;
-use Illuminate\Support\Facades\Auth;
+use Hgs3\Http\Requests\Game\GamePackageRequest;
+use Hgs3\Models\Orm;
 
 class PackageController extends Controller
 {
@@ -25,28 +22,30 @@ class PackageController extends Controller
     /**
      * 追加画面
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $gameSoft
      * @return $this
      */
-    public function add(GameSoft $game)
+    public function add(Orm\GameSoft $gameSoft)
     {
         return view('game.package.add')->with([
-            'game' => $game
+            'gameSoft' => $gameSoft
         ]);
     }
 
     /**
      * 登録
      *
-     * @param StoreRequest $request
-     * @param GameSoft $game
+     * @param GamePackageRequest $request
+     * @param Orm\GameSoft $gameSoft
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreRequest $request, GameSoft $game)
+    public function insert(GamePackageRequest $request, Orm\GameSoft $gameSoft)
     {
-        $pkg = new GamePackage;
+        // TODO GamePackageRequestの実装
 
-        $pkg->game_id = $game->id;
+        $pkg = new Orm\GamePackage;
+
+        $pkg->soft_id = $gameSoft->id;
         $pkg->platform_id = $request->get('platform_id');
         $pkg->company_id = $request->get('company_id');
         $pkg->name = $request->get('name') ?? '';
@@ -62,7 +61,14 @@ class PackageController extends Controller
         return redirect('game/soft/' . $game->id);
     }
 
-    public function edit(GameSoft $game, GamePackage $pkg)
+    /**
+     * パッケージ編集画面
+     *
+     * @param Orm\GameSoft $game
+     * @param Orm\GamePackage $pkg
+     * @return $this
+     */
+    public function edit(Orm\GameSoft $game, Orm\GamePackage $pkg)
     {
         return view('game.package.edit')->with([
             'game' => $game,
@@ -70,26 +76,40 @@ class PackageController extends Controller
         ]);
     }
 
-    public function update(UpdateRequest $request, GameSoft $game, GamePackage $pkg)
+    /**
+     * パッケージ編集
+     *
+     * @param GamePackageRequest $request
+     * @param Orm\GameSoft $gameSoft
+     * @param Orm\GamePackage $gamePackage
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(GamePackageRequest $request, Orm\GameSoft $gameSoft, Orm\GamePackage $gamePackage)
     {
-        $pkg->platform_id = $request->get('platform_id');
-        $pkg->company_id = $request->get('company_id');
-        $pkg->name = $request->get('name') ?? '';
-        $pkg->url = $request->get('url') ?? '';     // TODO: ない時はnullにする
-        $pkg->release_date = $request->get('release_date') ?? '';       // TODO: ない時はnullにする
-        $pkg->release_int = $request->get('release_int') ?? 0;
-        $pkg->game_type_id = $request->get('game_type');
+        $gamePackage->platform_id = $request->get('platform_id');
+        $gamePackage->company_id = $request->get('company_id');
+        $gamePackage->name = $request->get('name') ?? '';
+        $gamePackage->url = $request->get('url') ?? '';     // TODO: ない時はnullにする
+        $gamePackage->release_date = $request->get('release_date') ?? '';       // TODO: ない時はnullにする
+        $gamePackage->release_int = $request->get('release_int') ?? 0;
+        $gamePackage->game_type_id = $request->get('game_type');
 
-        $pkg->save();
+        $gamePackage->save();
 
-        return redirect('game/soft/' . $game->id);
+        return redirect('game/soft/' . $gameSoft->id);
     }
 
-    public function remove(GamePackage $pkg)
+    /**
+     * パッケージ削除
+     *
+     * @param Orm\GamePackage $gamePackage
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function remove(Orm\GamePackage $gamePackage)
     {
-        $gameId = $pkg->game_id;
+        $gameId = $gamePackage->soft_id;
 
-        $pkg->delete();
+        $gamePackage->delete();
 
         return redirect('game/soft/' . $gameId);
     }

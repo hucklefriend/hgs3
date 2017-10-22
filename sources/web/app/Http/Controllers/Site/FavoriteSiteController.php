@@ -5,11 +5,9 @@
 
 namespace Hgs3\Http\Controllers\Site;
 
-use Hgs3\Models\Orm\Site;
-use Hgs3\Models\Orm\UserFavoriteSite;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class FavoriteSiteController extends Controller
 {
@@ -24,12 +22,12 @@ class FavoriteSiteController extends Controller
     /**
      * お気に入りサイトに登録しているユーザー
      *
-     * @param Site $site
+     * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function index(Site $site)
+    public function index(Orm\Site $site)
     {
-        $pager = UserFavoriteSite::where('site_id', $site->id)
+        $pager = Orm\UserFavoriteSite::where('site_id', $site->id)
             ->paginate(30);
 
         return view('site.favorite.index')->with([

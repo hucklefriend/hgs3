@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDiariesTable extends Migration
+class CreateUserDiariesTable extends Migration
 {
     /**
      * Run the migrations.

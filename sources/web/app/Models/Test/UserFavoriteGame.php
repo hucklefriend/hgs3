@@ -19,7 +19,7 @@ class UserFavoriteGame
         $users = User::get();
         $userMax = $users->count() - 1;
 
-        $games = Game::get();
+        $games = GameSoft::get();
 
         $fav = new FavoriteGame();
 

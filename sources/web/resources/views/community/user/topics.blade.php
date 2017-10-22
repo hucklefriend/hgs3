@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <h5>{{ $uc->name }}掲示板</h5>
+    <h5>{{ $userCommunity->name }}掲示板</h5>
 
-    {{ $pager->links() }}
+    {{ $topics->links() }}
 
     <table class="table table-responsive">
         <thead>
@@ -16,22 +16,22 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($pager->items() as $t)
+            @foreach ($topics as $topic)
                 <tr>
-                    <td><a href="{{ url('community/u') }}/{{ $uc->id }}/topic/{{ $t->id }}">{{ $t->title }}</a></td>
-                    <td>{{ $users[$t->user_id] }}</td>
-                    <td>{{ $t->wrote_date }}</td>
-                    <td>{{ $t->response_num }}</td>
+                    <td><a href="{{ url2('community/u') }}/{{ $userCommunity->id }}/topic/{{ $topic->id }}">{{ $topic->title }}</a></td>
+                    <td>{{ $users[$topic->user_id] }}</td>
+                    <td>{{ $topic->wrote_date }}</td>
+                    <td>{{ $topic->response_num }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    {{ $pager->links() }}
+    {{ $topics->links() }}
 
     <hr>
 
-    <form method="POST" action="{{ url('community/u') }}/{{ $uc->id }}/topics">
+    <form method="POST" action="{{ url('community/u') }}/{{ $userCommunity->id }}/topics">
         {{ csrf_field() }}
         <div class="form-group row">
             <label for="title" class="col-3 col-form-label">件名</label>

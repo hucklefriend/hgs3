@@ -16,8 +16,8 @@ class GameCommunityMember
         echo 'create game community member test data.' . PHP_EOL;
 
         $users = User::get();
-        $games = Game::get();
-        $gameMax = $games->count() - 1;
+        $gameSofts = GameSoft::get();
+        $gameSoftMax = $gameSofts->count() - 1;
 
         $gc = new \Hgs3\Models\Community\GameCommunity();
 
@@ -25,11 +25,11 @@ class GameCommunityMember
             $num = rand(0, 30);
 
             for ($i = 0; $i < $num; $i++) {
-                $gc->join($user, $games[rand(0, $gameMax)]);
+                $gc->join($user, $gameSofts[rand(0, $gameSoftMax)]);
             }
         }
 
         unset($users);
-        unset($games);
+        unset($gameSofts);
     }
 }

@@ -17,7 +17,7 @@ class Package
     public static function get()
     {
         return DB::table('game_packages')
-            ->select('id', 'game_id')
+            ->select('id', 'soft_id')
             ->get();
     }
 }

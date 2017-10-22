@@ -5,19 +5,19 @@
 
 namespace Hgs3\Models\Orm;
 
-class UserPlayedGame extends \Eloquent
+class UserPlayedSoft extends \Eloquent
 {
     /**
      * ユーザーとゲームからデータを取得
      *
-     * @param $userId
-     * @param $gameId
+     * @param int $userId
+     * @param int $softId
      * @return \Illuminate\Database\Eloquent\Model|null|static
      */
-    public static function findByUserAndGame($userId, $gameId)
+    public static function findByUserAndGame($userId, $softId)
     {
         return self::where('user_id', $userId)
-            ->where('game_id', $gameId)
+            ->where('soft_id', $softId)
             ->first();
     }
 }

@@ -4,22 +4,22 @@
 
     <div class="d-flex align-items-stretch">
         <div class="p-2 align-self-center" style="min-width: 3em;">
-            @include('game.common.package_image', ['imageUrl' => $pkg->medium_image_url])
+            @include('game.common.package_image', ['imageUrl' => $gamePackge->medium_image_url])
         </div>
         <div class="p-10 align-self-top">
-            <div class="break_word" style="width: 100%;"><h5>{{ $game->name }}<small>のトピックス</small></h5></div>
+            <div class="break_word" style="width: 100%;"><h5>{{ $gameSoft->name }}<small>のトピックス</small></h5></div>
             <div>
-                <a href="{{ url('community/g') }}/{{ $game->id }}">コミュニティトップ</a>　
-                <a href="{{ url('game/soft') }}/{{ $game->id }}">ゲームの詳細</a>
+                <a href="{{ url('community/g') }}/{{ $gameSoft->id }}">コミュニティトップ</a>　
+                <a href="{{ url('game/soft') }}/{{ $gameSoft->id }}">ゲームの詳細</a>
             </div>
             <br>
             @if ($isMember)
-                <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/secession">
+                <form method="POST" action="{{ url('community/g') }}/{{ $gameSoft->id }}/secession">
                     {{ csrf_field() }}
                     <button class="btn btn-sm btn-warning">脱退する</button>
                 </form>
             @else
-                <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/join">
+                <form method="POST" action="{{ url('community/g') }}/{{ $gameSoft->id }}/join">
                     {{ csrf_field() }}
                     <button class="btn btn-sm btn-primary">参加する</button>
                 </form>
@@ -28,7 +28,7 @@
     </div>
     <hr>
 
-    {{ $pager->links() }}
+    {{ $topics->links() }}
 
     <table class="table table-responsive">
         <thead>
@@ -40,22 +40,22 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($pager->items() as $t)
+            @foreach ($topics as $topic)
                 <tr>
-                    <td><a href="{{ url('community/g') }}/{{ $game->id }}/topic/{{ $t->id }}">{{ $t->title }}</a></td>
-                    <td>{{ $users[$t->user_id] }}</td>
-                    <td>{{ $t->wrote_date }}</td>
-                    <td>{{ $t->response_num }}</td>
+                    <td><a href="{{ url('community/g') }}/{{ $gameSoft->id }}/topic/{{ $topic->id }}">{{ $topic->title }}</a></td>
+                    <td>{{ $users[$topic->user_id] }}</td>
+                    <td>{{ $topic->wrote_date }}</td>
+                    <td>{{ $topic->response_num }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    {{ $pager->links() }}
+    {{ $topics->links() }}
 
     <hr>
 
-    <form method="POST" action="{{ url('community/g') }}/{{ $game->id }}/topics">
+    <form method="POST" action="{{ url('community/g') }}/{{ $gameSoft->id }}/topics">
         {{ csrf_field() }}
         <div class="form-group row">
             <label for="title" class="col-3 col-form-label">件名</label>

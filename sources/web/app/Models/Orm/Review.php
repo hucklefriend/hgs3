@@ -42,13 +42,13 @@ class Review extends \Eloquent
             parent::save($options);
 
             // 累計データ
-            ReviewTotal::calculate($this->game_id);
+            ReviewTotal::calculate($this->soft_id);
 
             if ($isNew) {
                 // 下書き削除
                 DB::table('review_drafts')
                     ->where('user_id', $this->user_id)
-                    ->where('game_id', $this->game_id)
+                    ->where('soft_id', $this->soft_id)
                     ->delete();
             }
 
@@ -64,7 +64,7 @@ class Review extends \Eloquent
 
         // タイムライン
         if ($isNew) {
-            Timeline\FavoriteGame::addNewReviewText($this->game_id, null, $this->id, $this->is_spoiler);
+            Timeline\FavoriteGame::addNewReviewText($this->soft_id, null, $this->id, $this->is_spoiler);
             Timeline\User::addWriteReviewText($this->user_id, null, $this->id, $this->is_spoiler, $this->game_id, null);
         }
 
@@ -84,15 +84,15 @@ class Review extends \Eloquent
     /**
      * 同じゲームの下書きを取得
      *
-     * @param $userId
-     * @param $gameId
+     * @param int $userId
+     * @param int $softId
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getHashByGame($userId, $gameId)
+    public static function getHashBySoft($userId, $softId)
     {
         $data = self::where('user_id', $userId)
             ->select(['id', 'package_id'])
-            ->where('game_id', $gameId)
+            ->where('soft_id', $softId)
             ->get();
 
         $result = [];

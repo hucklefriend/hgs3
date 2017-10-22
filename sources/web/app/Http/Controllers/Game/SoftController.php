@@ -6,20 +6,13 @@
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\PhoneticType;
-use Hgs3\Constants\UserRole;
 use Hgs3\Http\Requests\Game\GameSoftRequest;
-use Hgs3\Http\Requests\Game\Soft\AddRequest;
-use Hgs3\Http\Requests\Game\Soft\UpdateRequest;
-use Hgs3\Models\Orm\GameComment;
-use Hgs3\Models\Orm\UserPlayedGame;
+use Hgs3\Models\Orm;
 use Hgs3\Models\User\FavoriteGame;
-use Hgs3\Models\User\PlayedGame;
-use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
-use Hgs3\Models\Orm\GameSoft;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
+
 
 class SoftController extends Controller
 {
@@ -47,24 +40,25 @@ class SoftController extends Controller
     /**
      * 詳細ページ
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $gameSoft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(GameSoft $game)
+    public function show(Orm\GameSoft $gameSoft)
     {
         // TODO 発売日が過ぎていないとレビューを投稿するリンクは出さない
 
         $soft = new Soft;
-        $data = $soft->getDetail($game);
+        $data = $soft->getDetail($gameSoft);
 
         if (Auth::check()) {
             $fav = new FavoriteGame();
             $data['isFavorite'] = $fav->isFavorite(Auth::id(), $game->id);
-            $data['playedGame'] = UserPlayedGame::findByUserAndGame(Auth::id(), $game->id);
+            $data['playedGame'] = UserPlayedSoft::findByUserAndGame(Auth::id(), $game->id);
         }
 
         $data['csrfToken'] = csrf_token();
 
-        return view('game.soft.detail')->with($data);
+        return view('game.soft.detail', $data);
     }
 
     /**
