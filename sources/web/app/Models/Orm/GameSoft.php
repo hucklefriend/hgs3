@@ -50,46 +50,4 @@ class GameSoft extends \Eloquent
 
         return $result;
     }
-
-    /**
-     * 保存
-     *
-     * @param array $options
-     * @return bool
-     */
-    public function save(array $options = [])
-    {
-        $isNew = $this->id === null;
-
-        DB::beginTransaction();
-        try {
-            parent::save($options);
-
-            DB::commit();
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
-        }
-
-        // タイムライン登録しない
-        if (isset($options['timeline']) && !$options['timeline']) {
-            return true;
-        }
-
-
-        if ($isNew) {
-            //Timeline\Game::addNewGameSoftText($this->id, $this->name);
-
-            // TODO 新着情報に登録
-
-            if ($this->series_id !== null) {
-                Timeline\FavoriteGame::addSameSeriesGameText($this->id, $this->name, $this->series_id, null);
-            }
-        } else {
-            Timeline\FavoriteGame::addUpdateGameSoftText($this->id, $this->name);
-        }
-        return true;
-    }
 }

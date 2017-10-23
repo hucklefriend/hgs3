@@ -6,64 +6,58 @@
 namespace Hgs3\Models\Timeline;
 
 use Illuminate\Support\Facades\Log;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 
 class GameCommunity extends TimelineAbstract
 {
     /**
-     * 参加
+     * 新しい参加者
      *
-     * @param int $gameId
-     * @param string $gameName
-     * @param int $userId
-     * @param string $userName
+     * @param Orm\GameSoft $soft
+     * @param User $user
      */
-    public static function addJoinUserText($gameId, $gameName, $userId, $userName)
+    public static function addJoinUserText(Orm\GameSoft $soft, User $user)
     {
-        self::setUserName($userId, $userName);
-        self::setGameName($gameId, $gameName);
-
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">%sさん</a>が参加しました',
-            url2('community/g/' . $gameId),
-            $gameName,
-            url2('user/profile/' . $userId),
-            $userName
+            url2('community/g/' . $soft->id),
+            $soft->name,
+            url2('user/profile/' . $user->id),
+            $user->name
         );
 
-        self::insert($gameId, $text);
+        self::insert($soft->id, $text);
     }
 
     /**
      * 新規トピック
      *
-     * @param int $gameId
-     * @param string $gameName
-     * @param int $topicId
+     * @param Orm\GameSoft $soft
+     * @param Orm\GameCommunityTopic $topic
      */
-    public static function addNewTopicText($gameId, $gameName, $topicId)
+    public static function addNewTopicText(Orm\GameSoft $soft, Orm\GameCommunityTopic $topic)
     {
-        self::setGameName($gameId, $gameName);
-
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">新しいトピック</a>が作成されました',
-            url2('community/g/' . $gameId),
-            $gameName,
-            url2('community/g/' . $gameId . 'topic/' . $topicId)
+            url2('community/g/' . $soft->id),
+            $soft->name,
+            url2('community/g/' . $soft->id . 'topic/' . $topic->id)
         );
 
-        self::insert($gameId, $text);
+        self::insert($soft->id, $text);
     }
 
     /**
      * データ登録
      *
-     * @param int $gameId
+     * @param int $softId
      * @param string $text
      * @return bool
      */
-    private static function insert($gameId, $text)
+    private static function insert($softId, $text)
     {
         try {
             self::getDB()->game_community_timeline->insertOne([
-                'game_id' => $gameId,
+                'soft_id' => $softId,
                 'text'    => $text,
                 'time'    => microtime(true)
             ]);

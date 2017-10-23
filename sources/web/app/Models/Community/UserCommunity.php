@@ -101,7 +101,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\User::addJoinUserCommunityText($user->id, $user->name, $userCommunity->id, $userCommunity->name);
+        Timeline\FollowUser::addJoinUserCommunityText($user->id, $user->name, $userCommunity->id, $userCommunity->name);
 
         return true;
     }
@@ -113,7 +113,7 @@ SQL;
      * @param $userId
      * @return bool
      */
-    public function secession($userCommunityId, $userId)
+    public function leave($userCommunityId, $userId)
     {
         DB::beginTransaction();
 
@@ -137,7 +137,7 @@ SQL;
             return false;
         }
 
-        Timeline\User::addLeaveUserCommunityText($user->id, $user->name, $userCommunity->id, $userCommunity->name);
+        Timeline\FollowUser::addLeaveUserCommunityText($user->id, $user->name, $userCommunity->id, $userCommunity->name);
 
         return true;
     }

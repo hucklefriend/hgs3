@@ -1,10 +1,10 @@
 <?php
 
-namespace Hgs3\Http\Requests\Community\User;
+namespace Hgs3\Http\Requests\Community\Game;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TopicResponse extends FormRequest
+class WriteTopicRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

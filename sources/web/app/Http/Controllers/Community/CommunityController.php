@@ -23,10 +23,10 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $uc = Orm\UserCommunity::orderBy('id')->get();
+        $userCommunities = Orm\UserCommunity::orderBy('id')->get();
 
         return view('community.index')->with([
-            'userCommunities' => $uc
+            'userCommunities' => $userCommunities
         ]);
     }
 }

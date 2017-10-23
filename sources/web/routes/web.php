@@ -183,7 +183,7 @@ Route::get('/community', 'Community\CommunityController@index');
 
 // ユーザーコミュニティ
 Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join')->middleware('auth');
-Route::post('/community/u/{uc}/secession', 'Community\UserCommunityController@secession')->middleware('auth');
+Route::post('/community/u/{uc}/leave', 'Community\UserCommunityController@leave')->middleware('auth');
 Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members')->middleware('auth');
 Route::get('/community/u/{uc}/topics', 'Community\UserCommunityController@topics')->middleware('auth');
 Route::post('/community/u/{uc}/topics', 'Community\UserCommunityController@write')->middleware('auth');
@@ -195,7 +195,7 @@ Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->mid
 
 // ゲームコミュニティ
 Route::post('/community/g/{game}/join', 'Community\GameCommunityController@join')->middleware('auth');
-Route::post('/community/g/{game}/secession', 'Community\GameCommunityController@secession')->middleware('auth');
+Route::post('/community/g/{game}/leave', 'Community\GameCommunityController@leave')->middleware('auth');
 Route::get('/community/g/{game}/member', 'Community\GameCommunityController@members')->middleware('auth');
 Route::get('/community/g/{game}/topics', 'Community\GameCommunityController@topics')->middleware('auth');
 Route::post('/community/g/{game}/topics', 'Community\GameCommunityController@write')->middleware('auth');

@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="text-center">
-        <h1>{{ $game->name }}</h1>
+        <h1>{{ $soft->name }}</h1>
     </div>
 
     @if (is_data_editor())
     <div class="text-right">
-        <a href="{{ url2('game/soft/edit/' . $game->id) }}">データ修正</a>
+        <a href="{{ url2('game/soft/edit/' . $soft->id) }}">データ修正</a>
     </div>
     @endif
     <div class="row">
@@ -20,13 +20,13 @@
                         </div>
                         <div class="col-4 text-right">
                             @if (is_data_editor())
-                            <a href="{{ url('game/soft/package/add') }}/{{ $game->id }}">追加</a>
+                            <a href="{{ url('game/soft/package/add') }}/{{ $soft->id }}">追加</a>
                             @endif
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    @if ($package_num > 2)
+                    @if ($packageNum > 2)
 
                     <script type="text/javascript" src="{{ url2('js/slick.min.js') }}"></script>
                     <link rel="stylesheet" type="text/css" href="{{ url2('css/slick.css') }}">
@@ -69,7 +69,7 @@
 
                     @endif
                     <div class="package_slide">
-                    @for ($i = 0; $i < $package_num; $i += 2)
+                    @for ($i = 0; $i < $packageNum; $i += 2)
                         <div>
                         @php $pkg = $packages[$i]; @endphp
                         <div class="row">
@@ -91,7 +91,7 @@
                                 <hr>
                                 <div class="row" style="margin-bottom: 20px;">
                                     <div class="col-6">
-                                        <a href="{{ url('game/package/edit') }}/{{ $game->id }}/{{ $pkg->id }}">編集</a><br>
+                                        <a href="{{ url('game/package/edit') }}/{{ $soft->id }}/{{ $pkg->id }}">編集</a><br>
                                     </div>
                                     <div class="col-6 text-right">
                                         <form method="POST" action="{{ url('game/package/delete') }}/{{ $pkg->id }}" onsubmit="return confirm('削除します');">
@@ -125,7 +125,7 @@
                                     <hr>
                                     <div class="row" style="margin-bottom: 20px;">
                                         <div class="col-6">
-                                            <a href="{{ url('game/package/edit') }}/{{ $game->id }}/{{ $pkg->id }}">編集</a><br>
+                                            <a href="{{ url('game/package/edit') }}/{{ $soft->id }}/{{ $pkg->id }}">編集</a><br>
                                         </div>
                                         <div class="col-6 text-right">
                                             <form method="POST" action="{{ url('game/package/delete') }}/{{ $pkg->id }}" onsubmit="return confirm('削除します');">
@@ -141,7 +141,7 @@
                         </div>
                     @endfor
                     </div>
-                        @if ($package_num > 2)
+                        @if ($packageNum > 2)
                     <div class="row">
                         <div class="col-2">
                             <button class="btn btn-warning btn-sm" id="package_slider_prev">&lt;</button>
@@ -161,14 +161,14 @@
             <div class="card card-hgn">
                 <div class="card-header">
                     <a name="review">レビュー</a>
-                    {{ $review->review_num ?? 0 }}件
+                    {{ $reviewTotal->review_num ?? 0 }}件
                 </div>
                 <div class="card-body">
-                    @if ($review != null)
+                    @if ($reviewTotal != null)
                         <div class="row" style="margin-bottom: 20px;">
                             <div class="col-3 text-center">
                                 <div class="review_point_outline">
-                                    <p class="review_point">{{ $review->point }}</p>
+                                    <p class="review_point">{{ $reviewTotal->point }}</p>
                                 </div>
                             </div>
                             <div class="col-9">
@@ -191,15 +191,15 @@
                                         borderColor: "red",
                                         pointBackgroundColor: "red",
                                         data: [
-                                            {{ $review->fear }},
-                                            {{ $review->story }},
-                                            {{ $review->volume }},
-                                            {{ $review->graphic }},
-                                            {{ $review->sound }},
-                                            {{ $review->controllability }},
-                                            {{ $review->difficulty }},
-                                            {{ $review->crowded }},
-                                            {{ $review->recommend }}
+                                            {{ $reviewTotal->fear }},
+                                            {{ $reviewTotal->story }},
+                                            {{ $reviewTotal->volume }},
+                                            {{ $reviewTotal->graphic }},
+                                            {{ $reviewTotal->sound }},
+                                            {{ $reviewTotal->controllability }},
+                                            {{ $reviewTotal->difficulty }},
+                                            {{ $reviewTotal->crowded }},
+                                            {{ $reviewTotal->recommend }}
                                         ]
                                     }]
                                 };
@@ -241,19 +241,19 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('review/game') }}/{{ $game->id }}">レビューを見る</a>
+                                        <a href="{{ url('review/game') }}/{{ $soft->id }}">レビューを見る</a>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('review/package_select') }}/{{ $game->id }}">レビューを書く</a>
+                                        <a href="{{ url('review/package_select') }}/{{ $soft->id }}">レビューを書く</a>
                                     </div>
                                 </div>
                             </div>
-                        @elseif ($review !== null)
+                        @elseif ($reviewTotal !== null)
                             <hr>
                             <div class="text-center">
-                                <a href="{{ url('review/soft') }}/{{ $game->id }}">レビューを見る</a>
+                                <a href="{{ url('review/soft') }}/{{ $soft->id }}">レビューを見る</a>
                             </div>
                         @endif
                 </div>
@@ -265,19 +265,19 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
-                    サイト <small>{{ $base['site_num'] }}件</small>
+                    サイト <small>{{ $siteNum }}件</small>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
                         @if (empty($site))
-                            <p>{{ $game->name }}を扱っているサイトは登録されていません。</p>
+                            <p>{{ $soft->name }}を扱っているサイトは登録されていません。</p>
                         @else
                             @foreach ($site as $s)
                                 @include('site.common.minimal', ['s' => $s, 'noUser' => true])
                                 <hr>
                             @endforeach
                             <div class="text-center">
-                                <a href="{{ url('site/game/') }}/{{ $game->id }}">
+                                <a href="{{ url('site/game/') }}/{{ $soft->id }}">
                                     サイトを全て見る
                                 </a>
                             </div>
@@ -289,7 +289,7 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
-                    お気に入り登録ユーザー <small>{{ $base['favorite_num'] }}人</small>
+                    お気に入り登録ユーザー <small>{{ $favoriteNum }}人</small>
                 </div>
                 <div class="card-body">
                     @if (!empty($favorite))
@@ -305,7 +305,7 @@
                             <hr>
                         @endforeach
                         <div class="text-center">
-                            <a href="{{ url('game/favorite/') }}/{{ $game->id }}">
+                            <a href="{{ url('game/favorite/') }}/{{ $soft->id }}">
                                 お気に入り登録ユーザーを全て見る
                             </a>
                         </div>
@@ -318,7 +318,7 @@
                     @if ($isFavorite)
                         <form action="{{ url('user/favorite_game') }}" method="POST">
                             <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                            <input type="hidden" value="{{ $game->id }}" name="game_id">
+                            <input type="hidden" value="{{ $soft->id }}" name="game_id">
                             {{ method_field('DELETE') }}
                             <div class="text-center">
                                 <span style="padding-right: 10px;">登録済み</span>
@@ -328,7 +328,7 @@
                     @else
                         <form action="{{ url('user/favorite_game') }}" method="POST">
                             <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                            <input type="hidden" value="{{ $game->id }}" name="game_id">
+                            <input type="hidden" value="{{ $soft->id }}" name="game_id">
                             <div class="text-center">
                                 <button class="btn btn-info">お気に入りに登録する</button>
                             </div>

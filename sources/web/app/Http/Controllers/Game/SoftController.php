@@ -13,7 +13,6 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
 use Illuminate\Support\Facades\Auth;
 
-
 class SoftController extends Controller
 {
     /**
@@ -40,20 +39,19 @@ class SoftController extends Controller
     /**
      * 詳細ページ
      *
-     * @param Orm\GameSoft $gameSoft
+     * @param Orm\GameSoft $soft
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Orm\GameSoft $gameSoft)
+    public function detail(Orm\GameSoft $soft)
     {
         // TODO 発売日が過ぎていないとレビューを投稿するリンクは出さない
 
-        $soft = new Soft;
-        $data = $soft->getDetail($gameSoft);
+        $data = Soft::getDetail($soft);
 
         if (Auth::check()) {
             $fav = new FavoriteGame();
-            $data['isFavorite'] = $fav->isFavorite(Auth::id(), $game->id);
-            $data['playedGame'] = UserPlayedSoft::findByUserAndGame(Auth::id(), $game->id);
+            $data['isFavorite'] = $fav->isFavorite(Auth::id(), $soft->id);
+            $data['playedGame'] = Orm\UserPlayedSoft::findByUserAndGame(Auth::id(), $soft->id);
         }
 
         $data['csrfToken'] = csrf_token();
@@ -79,50 +77,57 @@ class SoftController extends Controller
      */
     public function insert(GameSoftRequest $request)
     {
-        $game = new GameSoft();
+        $soft = new Orm\GameSoft();
 
-        $game->name = $request->get('name');
-        $game->phonetic = $request->get('phonetic');
-        $game->phonetic_type = PhoneticType::getTypeByPhonetic($game->phonetic);
-        $game->phonetic_order = $request->get('phonetic');
-        $game->genre = $request->get('genre', '');
-        $game->company_id = $request->get('company_id', null);
-        $game->series_id = $request->get('series_id', null);
-        $game->order_in_series = $request->get('order_in_series', null);
-        $game->game_type = 0;
+        $soft->name = $request->get('name');
+        $soft->phonetic = $request->get('phonetic');
+        $soft->phonetic_type = PhoneticType::getTypeByPhonetic($soft->phonetic);
+        $soft->phonetic_order = $request->get('phonetic');
+        $soft->genre = $request->get('genre', '');
+        $soft->company_id = $request->get('company_id', null);
+        $soft->series_id = $request->get('series_id', null);
+        $soft->order_in_series = $request->get('order_in_series', null);
+        $soft->game_type = 0;
 
-        $game->save();
+        Soft::save($soft, true);
 
-        return redirect('game/soft/' . $game->id);
+        return redirect('game/soft/' . $soft->id);
     }
 
     /**
      * 編集画面
      *
-     * @param GameSoft $game
-     * @return $this
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(GameSoft $game)
+    public function edit(Orm\GameSoft $soft)
     {
-        return view('game.soft.edit')->with([
-            'game' => $game
+        return view('game.soft.edit', [
+            'soft' => $soft
         ]);
     }
 
-    public function update(UpdateRequest $request, GameSoft $game)
+    /**
+     * データ更新
+     *
+     * @param GameSoftRequest $request
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(GameSoftRequest $request, Orm\GameSoft $soft)
     {
-        $game->name = $request->get('name');
-        $game->phonetic = $request->get('phonetic', '');
-        $game->phonetic_type = PhoneticType::getTypeByPhonetic($game->phonetic);
-        $game->phonetic_order = $request->get('phonetic_order');
-        $game->genre = $request->get('genre') ?? '';
-        $game->company_id = $request->get('company_id');
-        $game->series_id = $request->get('series_id');
-        $game->order_in_series = $request->get('order_in_series');
-        $game->game_type = $request->get('game_type');
+        $soft->name = $request->get('name');
+        $soft->phonetic = $request->get('phonetic', '');
+        $soft->phonetic_type = PhoneticType::getTypeByPhonetic($soft->phonetic);
+        $soft->phonetic_order = $request->get('phonetic_order');
+        $soft->genre = $request->get('genre') ?? '';
+        $soft->company_id = $request->get('company_id');
+        $soft->series_id = $request->get('series_id');
+        $soft->order_in_series = $request->get('order_in_series');
+        $soft->game_type = $request->get('game_type');
 
-        $game->save();
+        Soft::save($soft, true);
 
-        return redirect('game/soft/' . $game->id);
+        return redirect('game/soft/' . $soft->id);
     }
 }

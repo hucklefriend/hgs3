@@ -60,9 +60,6 @@ class User extends Authenticatable
      */
     public static function getHash(array $userIds)
     {
-        \ChromePhp::info($userIds);
-
-
         if (empty($userIds)) {
             return [];
         }

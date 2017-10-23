@@ -6,205 +6,174 @@
 namespace Hgs3\Models\Timeline;
 
 use Illuminate\Support\Facades\Log;
+use Hgs3\Models\User;
+use Hgs3\Models\Orm;
 
 class ToMe extends TimelineAbstract
 {
     /**
      * 誰かにフォローされた
      *
-     * @param int $userId
-     * @param int $followerId
-     * @param string $followerName
+     * @param User $user
+     * @param User $follower
      */
-    public static function addFollowerText($userId, $followerId, $followerName)
+    public static function addFollowerText(User $user, User $follower)
     {
-        self::setUserName($followerId, $followerName);
-
         $text = sprintf('<a href="%s">%sさん</a>にフォローされました',
-            url2('user/profile/' . $followerId),
-            $followerName
+            url2('user/profile/' . $follower->id),
+            $follower->name
         );
 
-        self::insert($userId, $text);
+        self::insert($user->id, $text);
     }
 
     /**
      * サイトにいいねされた
      *
-     * @param int $userId
-     * @param int $goodUserId
-     * @param string $goodUserName
-     * @param int $siteId
-     * @param string $siteName
+     * @param User $user
+     * @param User $goodUser
+     * @param Orm\Site $site
      */
-    public static function addSiteGoodText($userId, $goodUserId, $goodUserName, $siteId, $siteName)
+    public static function addSiteGoodText(User $user, User $goodUser, Orm\Site $site)
     {
-        if ($goodUserId != null) {
-            self::setUserName($goodUserId, $goodUserName);
-        }
-        self::setSiteName($siteId, $siteName);
-
-        if ($goodUserId != null) {
+        if ($goodUser === null) {
             $text = sprintf('サイト「<a href="%s">%s</a>」がいいねされました。',
-                url2('site/detail/' . $siteId),
-                $siteName
+                url2('site/detail/' . $site->id),
+                $site->name
             );
         } else {
             $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」にいいねしてくれました。',
-                url2('user/profile/' . $goodUserId),
-                $goodUserName,
-                url2('site/detail/' . $siteId),
-                $siteName
+                url2('user/profile/' . $goodUser->id),
+                $goodUser->name,
+                url2('site/detail/' . $site->id),
+                $site->name
             );
         }
 
-        self::insert($userId, $text);
+        self::insert($user->id, $text);
     }
 
     /**
      * サイトへのいいね数がn件を超えた
      *
-     * @param $userId
-     * @param $siteId
-     * @param $siteName
-     * @param $goodNum
+     * @param User $user
+     * @param Orm\Site $site
+     * @param $prevMaxGoodNum
      */
-    public static function addSiteGoodNumText($userId, $siteId, $siteName, $goodNum)
+    public static function addSiteGoodNumText(User $user, Orm\Site $site, $prevMaxGoodNum)
     {
-        self::setSiteName($siteId, $siteName);
+        if ($site->good_num > 100 && $site->good_num > $prevMaxGoodNum && $site->good_num % 100 == 0) {
+            $text = sprintf('サイト「<a href="%s">%s</a>」へのいいねが%dに達しました！',
+                url2('site/detail/' . $site->id),
+                $site->name,
+                $site->good_num
+            );
 
-        $text = sprintf('サイト「<a href="%s">%s</a>」へのいいねが%dに達しました！',
-            url2('site/detail/' . $siteId),
-            $siteName,
-            $goodNum
-        );
-
-        self::insert($userId, $text);
+            self::insert($user->id, $text);
+        }
     }
 
     /**
      * お気に入りサイトに登録してくれた
      *
-     * @param $userId
-     * @param $siteId
-     * @param $siteName
-     * @param $favoriteUserId
-     * @param $favoriteUserName
+     * @param User $user
+     * @param Orm\Site $site
+     * @param User $favoriteUser
      */
-    public static function addSiteFavoriteText($userId, $siteId, $siteName, $favoriteUserId, $favoriteUserName)
+    public static function addSiteFavoriteText(user $user, Orm\Site $site, User $favoriteUser)
     {
-        self::setSiteName($siteId, $siteName);
-        self::setUserName($favoriteUserId, $favoriteUserName);
-
         $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」をお気に入りに登録しました！',
-            $favoriteUserId,
-            $favoriteUserName,
-            url2('site/detail/' . $siteId),
-            $siteName
+            $favoriteUser->id,
+            $favoriteUser->name,
+            url2('site/detail/' . $site->id),
+            $site->name
         );
 
-        self::insert($userId, $text);
+        self::insert($user->id, $text);
     }
 
     /**
      * レビューにいいねしてくれた
      *
-     * @param $userId
-     * @param $reviewId
-     * @param $packageId
-     * @param $packageName
-     * @param $goodUserId
-     * @param $goodUserName
+     * @param User $user
+     * @param Orm\Review $review
+     * @param Orm\GamePackage $package
+     * @param User $goodUser
      */
-    public static function addReviewGoodText($userId, $reviewId, $packageId, $packageName, $goodUserId, $goodUserName)
+    public static function addReviewGoodText(User $user, Orm\Review $review, Orm\GamePackage $package, User $goodUser)
     {
-        if ($goodUserId != null) {
-            self::setUserName($goodUserId, $goodUserName);
-        }
-        self::setPackageName($packageId, $packageName);
-
-        if ($goodUserId != null) {
+        if ($goodUser === null) {
             $text = sprintf('<a href="%s">%sのレビュー</a>がいいねされました。',
-                url2('review/detail/' . $reviewId),
-                $packageName
+                url2('review/detail/' . $review->id),
+                $package->name
             );
         } else {
             $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%sのレビュー</a>にいいねしてくれました。',
-                url2('user/profile/' . $goodUserId),
-                $goodUserName,
-                url2('review/detail/' . $reviewId),
-                $packageName
+                url2('user/profile/' . $goodUser->id),
+                $goodUser->name,
+                url2('review/detail/' . $review->id),
+                $package->name
             );
         }
 
-        self::insert($userId, $text);
+        self::insert($user->id, $text);
     }
 
     /**
      * レビューへのいいねが初めてn件を超えた
      *
-     * @param int $userId
-     * @param int $reviewId
-     * @param int $packageId
-     * @param string $packageName
-     * @param int $prevMaxGoodNum
-     * @param int $maxGoodNum
+     * @param User $user
+     * @param Orm\Review $review
+     * @param Orm\GamePackage $package
+     * @param $prevMaxGoodNum
      */
-    public static function addReviewGoodNumText($userId, $reviewId, $packageId, $packageName, $prevMaxGoodNum, $maxGoodNum)
+    public static function addReviewGoodNumText(User $user, Orm\Review $review, Orm\GamePackage $package, $prevMaxGoodNum)
     {
-        if ($maxGoodNum > 1 && $prevMaxGoodNum < $maxGoodNum && $maxGoodNum % 100 == 0) {
-            self::setPackageName($packageId, $packageName);
-
+        if ($review->max_good_num > 1 && $prevMaxGoodNum < $review->max_good_num && $review->max_good_num % 100 == 0) {
             $text = sprintf('<a href="%s">%sのレビュー</a>へのいいねが%d件に達しました。',
-                url2('review/detail/' . $reviewId),
-                $packageName,
-                $maxGoodNum
+                url2('review/detail/' . $review->id),
+                $package->name,
+                $review->max_good_num
             );
 
-            self::insert($userId, $text);
+            self::insert($user->id, $text);
         }
     }
 
     /**
      * ユーザーコミュニティに投稿したトピックに返信があった
      *
-     * @param $userId
-     * @param $userCommunityId
-     * @param $userCommunityName
-     * @param $topicId
+     * @param User $user
+     * @param Orm\UserCommunity $userCommunity
+     * @param Orm\UserCommunityTopic $topic
      */
-    public static function addUserCommunityTopicResponseText($userId, $userCommunityId, $userCommunityName, $topicId)
+    public static function addUserCommunityTopicResponseText(User $user, Orm\UserCommunity $userCommunity, Orm\UserCommunityTopic $topic)
     {
-        self::setCommunityName($userCommunityId, $userCommunityName);
-
         $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">投稿したトピック</a>に返信がありました。',
-            url2('community/u/' . $userCommunityId),
-            $userCommunityName,
-            url2('community/u/' . $userCommunityId . '/topic/' . $topicId)
+            url2('community/u/' . $userCommunity->id),
+            $userCommunity->name,
+            url2('community/u/' . $userCommunity->id . '/topic/' . $topic->id)
         );
 
-        self::insert($userId, $text);
+        self::insert($user->id, $text);
     }
 
     /**
      * ゲームコミュニティに投稿したトピックに返信があった
      *
-     * @param $userId
-     * @param $gameId
-     * @param $gameName
-     * @param $topicId
+     * @param User $user
+     * @param Orm\GameSoft $soft
+     * @param Orm\GameCommunityTopic $topic
      */
-    public static function addGameCommunityTopicResponseText($userId, $gameId, $gameName, $topicId)
+    public static function addGameCommunityTopicResponseText(User $user, Orm\GameSoft $soft, Orm\GameCommunityTopic $topic)
     {
-        self::setGameName($gameId, $gameName);
-
         $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">投稿したトピック</a>に返信がありました。',
-            url2('community/g/' . $gameId),
-            $gameName,
-            url2('community/g/' . $gameId . '/topic/' . $topicId)
+            url2('community/g/' . $soft->id),
+            $soft->name,
+            url2('community/g/' . $soft->id . '/topic/' . $topic->id)
         );
 
-        self::insert($userId, $text);
+        self::insert($user->id, $text);
     }
 
     /**

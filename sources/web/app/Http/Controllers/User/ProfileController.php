@@ -10,11 +10,12 @@ use Hgs3\Http\Requests\User\Profile\ChangeIconRequest;
 use Hgs3\Http\Requests\User\Profile\EditRequest;
 use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm;
-use Hgs3\Models\Review\Review;
+use Hgs3\Models\Review;
 use Hgs3\Models\Timeline;
 use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
 use Hgs3\Models\User;
+use Hgs3\Models\Site;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
@@ -68,7 +69,7 @@ class ProfileController extends Controller
                 $fg = new \Hgs3\Models\User\FavoriteGame();
                 $data['parts'] = [
                     'favGames' => $fg->get($user->id),
-                    'games'    => GameSoft::getNameHash()
+                    'games'    => Orm\GameSoft::getNameHash()
                 ];
             }
                 break;
@@ -77,12 +78,12 @@ class ProfileController extends Controller
                 $reviews = $r->getMypage($user->id);
                 $data['parts'] = [
                     'reviews'      => $reviews,
-                    'gamePackages' => GamePackage::getHash(array_pluck($reviews->items(), 'package_id')),
+                    'gamePackages' => Orm\GamePackage::getHash(array_pluck($reviews->items(), 'package_id')),
                 ];
             }
                 break;
             case 'site': {
-                $site = new \Hgs3\Models\Site\Site();
+                $site = new Site();
                 $data['parts'] = [
                     'sites' => $site->get($user->id)
                 ];
@@ -92,7 +93,7 @@ class ProfileController extends Controller
                 $fs = new \Hgs3\Models\User\FavoriteSite();
                 $favSites = $fs->get($user->id);
 
-                $sites = Site::getHash(array_pluck($favSites->items(), 'site_id'));
+                $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
 
                 $data['parts'] = [
                     'favSites' => $favSites,
@@ -110,7 +111,7 @@ class ProfileController extends Controller
                 $communities = $gc->getJoinCommunity($user->id);
                 $data['parts'] = [
                     'communities' => $communities,
-                    'games'       => GameSoft::getNameHash(array_pluck($communities->items(), 'game_id'))
+                    'games'       => Orm\GameSoft::getNameHash(array_pluck($communities->items(), 'game_id'))
                 ];
             }
                 break;
@@ -147,11 +148,11 @@ class ProfileController extends Controller
     /**
      * プロフィール編集
      *
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit()
     {
-        return view('user.profile.edit')->with([
+        return view('user.profile.edit', [
             'isUpdated' => false,
             'user'      => Auth::user()
         ]);
@@ -324,7 +325,7 @@ class ProfileController extends Controller
 
         $fs = new \Hgs3\Models\User\FavoriteSite();
         $favSites = $fs->get($user->id);
-        $sites = Site::getHash(array_pluck($favSites->items(), 'site_id'));
+        $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
 
         return view('user.profile.favorite_site')->with([
             'user'     => $user,
@@ -369,7 +370,7 @@ class ProfileController extends Controller
             'user'        => $user,
             'isMyself'    => $isMyself,
             'communities' => $communities,
-            'games'       => GameSoft::getNameHash(array_pluck($communities->items(), 'game_id'))
+            'games'       => Orm\GameSoft::getNameHash(array_pluck($communities->items(), 'game_id'))
         ]);
     }
 

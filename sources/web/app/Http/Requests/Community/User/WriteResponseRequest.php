@@ -4,7 +4,7 @@ namespace Hgs3\Http\Requests\Community\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Topic extends FormRequest
+class WriteResponseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

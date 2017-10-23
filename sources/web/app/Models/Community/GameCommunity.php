@@ -101,7 +101,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\User::addJoinGameCommunityText($user->id, $user->name, $gameSoft->id, $gameSoft->name);
+        Timeline\FollowUser::addJoinGameCommunityText($user->id, $user->name, $gameSoft->id, $gameSoft->name);
 
         return true;
     }
@@ -113,7 +113,7 @@ SQL;
      * @param User $user
      * @return bool
      */
-    public function secession(GameSoft $game, User $user)
+    public function leave(GameSoft $game, User $user)
     {
         DB::beginTransaction();
 
@@ -138,7 +138,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\User::addLeaveGameCommunityText($user->id, $user->name, $game->id, $game->name);
+        Timeline\FollowUser::addLeaveGameCommunityText($user->id, $user->name, $game->id, $game->name);
 
         return true;
     }

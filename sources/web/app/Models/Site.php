@@ -56,14 +56,14 @@ class Site
 
         // タイムライン
         if ($isAdd) {
-            Timeline\User::addAddSiteText($user->id, $user->name, $orm->id, $orm->name);
+            Timeline\FollowUser::addAddSiteText($user->id, $user->name, $orm->id, $orm->name);
 
             // TODO ループを回さずに、配列を渡して内部で一括登録するようにしたい
             foreach ($handleGameIds as $gameId) {
                 Timeline\FavoriteGame::addNewSiteText($gameId, null, $orm->id, $orm->name);
             }
         } else {
-            Timeline\User::addUpdateSiteText($user->id, $user->name, $orm->id, $orm->name);
+            Timeline\FollowUser::addUpdateSiteText($user->id, $user->name, $orm->id, $orm->name);
 
             // 直前に取りつかってないゲームを追加
             foreach ($handleGameIds as $gameId) {

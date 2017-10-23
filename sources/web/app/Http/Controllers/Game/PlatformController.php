@@ -36,19 +36,22 @@ class PlatformController extends Controller
     /**
      * プラットフォーム詳細
      *
-     * @param Orm\GamePlatform $gamePlatform
+     * @param Orm\GamePlatform $platform
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detail(Orm\GamePlatform $gamePlatform)
+    public function detail(Orm\GamePlatform $platform)
     {
-        $packages = $gamePlatform->getPackages();
+        $packages = Orm\GamePackage::where('platform_id', $platform->id)
+            ->orderBy('release_int')
+            ->paginate(30);
+
         $companies = Orm\GameCompany::getNameHash(array_pluck($packages->items(), 'company_id'));
 
         return view('game.platform.detail', [
-            'gamePlatform' => $gamePlatform,
-            'gameCompany'  => Orm\GameCompany::find($gamePlatform->company_id),
-            'packages'     => $packages,
-            'companies'    => $companies
+            'platform'  => $platform,
+            'company'   => Orm\GameCompany::find($platform->company_id),
+            'packages'  => $packages,
+            'companies' => $companies
         ]);
     }
 
@@ -70,14 +73,14 @@ class PlatformController extends Controller
      */
     public function insert(GamePlatformRequest $request)
     {
-        $gamePlatform = new Orm\GamePlatform;
-        $gamePlatform->company_id = intval($request->input('company_id', 0));
-        $gamePlatform->name = $request->input('name', '');
-        $gamePlatform->acronym = $request->input('acronym', '');
-        $gamePlatform->sort_order = intval($request->input('sort_order'));
-        $gamePlatform->wikipedia = $request->input('wikipedia');
+        $platform = new Orm\GamePlatform;
+        $platform->company_id = intval($request->input('company_id', 0));
+        $platform->name = $request->input('name', '');
+        $platform->acronym = $request->input('acronym', '');
+        $platform->sort_order = intval($request->input('sort_order'));
+        $platform->wikipedia = $request->input('wikipedia');
 
-        $gamePlatform->save();
+        $platform->save();
 
         return redirect('game/platform');
     }
@@ -85,13 +88,13 @@ class PlatformController extends Controller
     /**
      * データ編集
      *
-     * @param GamePlatform $gamePlatform
-     * @return $this
+     * @param Orm\GamePlatform $platform
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(GamePlatform $gamePlatform)
+    public function edit(Orm\GamePlatform $platform)
     {
-        return view('game.platform.edit')->with([
-            'gamePlatform' => $gamePlatform
+        return view('game.platform.edit', [
+            'platform' => $platform
         ]);
     }
 
@@ -99,19 +102,19 @@ class PlatformController extends Controller
      * データ更新
      *
      * @param GamePlatformRequest $request
-     * @param GamePlatform $gamePlatform
+     * @param Orm\GamePlatform $platform
      * @return PlatformController
      */
-    public function update(GamePlatformRequest $request, GamePlatform $gamePlatform)
+    public function update(GamePlatformRequest $request, Orm\GamePlatform $platform)
     {
-        $gamePlatform->company_id = intval($request->input('company_id', 0));
-        $gamePlatform->name = $request->input('name', '');
-        $gamePlatform->acronym = $request->input('acronym', '');
-        $gamePlatform->sort_order = intval($request->input('sort_order'));
-        $gamePlatform->wikipedia = $request->input('wikipedia');
+        $platform->company_id = intval($request->input('company_id', 0));
+        $platform->name = $request->input('name', '');
+        $platform->acronym = $request->input('acronym', '');
+        $platform->sort_order = intval($request->input('sort_order'));
+        $platform->wikipedia = $request->input('wikipedia');
 
-        $gamePlatform->save();
+        $platform->save();
 
-        return redirect('game/platform/' . $gamePlatform->id);
+        return redirect('game/platform/' . $platform->id);
     }
 }

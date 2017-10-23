@@ -32,8 +32,6 @@ class Package extends MasterImportAbstract
                 continue;
             }
 
-            \ChromePhp::info(File::basename($filePath));
-
             $data = \GuzzleHttp\json_decode(File::get($filePath), true);
 
             self::insert($data, $companies, $platforms);
@@ -52,8 +50,6 @@ class Package extends MasterImportAbstract
      */
     public static function insert(array $data, array $companies, array $platforms)
     {
-        \ChromePhp::info($data);
-
         foreach ($data['soft_id'] as $softId) {
             foreach ($data['packages'] as $pkg) {
                 $package = new Orm\GamePackage;

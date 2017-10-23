@@ -6,12 +6,14 @@
 namespace Hgs3\Http\Controllers\Community;
 
 use Hgs3\Constants\PhoneticType;
-use Hgs3\Http\Requests\Community\User\Topic;
-use Hgs3\Http\Requests\Community\User\TopicResponse;
+use Hgs3\Constants\UserRole;
+use Hgs3\Http\Requests\Community\User\WriteTopicRequest;
+use Hgs3\Http\Requests\Community\User\WriteResponseRequest;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
+use Hgs3\Models\Community\GameCommunity;
 use Illuminate\Support\Facades\Auth;
 
 class GameCommunityController extends Controller
@@ -32,8 +34,7 @@ class GameCommunityController extends Controller
     public function index()
     {
         $soft = new Soft;
-
-        $gc = new \Hgs3\Models\Community\GameCommunity;
+        $gc = new GameCommunity;
 
         return view('community.game.index', [
             'phoneticList' => PhoneticType::getId2CharData(),
@@ -45,46 +46,45 @@ class GameCommunityController extends Controller
     /**
      * ゲームコミュニティトップページ
      *
-     * @param Orm\GameSoft $gameSoft
+     * @param Orm\GameSoft $soft
      * @return $this
      */
-    public function detail(Orm\GameSoft $gameSoft)
+    public function detail(Orm\GameSoft $soft)
     {
-        $model = new \Hgs3\Models\Community\GameCommunity();
+        $gc = new GameCommunity();
+        $package = Orm\GamePackage::find($soft->original_package_id);
 
-        $gamePackage = Orm\GamePackage::find($gameSoft->original_package_id);
-
-        $members = $model->getOlderMembers($gameSoft->id);
-        $topics = $model->getLatestTopics($gameSoft->id);
+        $members = $gc->getOlderMembers($soft->id);
+        $topics = $gc->getLatestTopics($soft->id);
 
         $users = User::getNameHash(array_merge(
             array_pluck($members->toArray(), 'user_id'),
             array_pluck($topics->toArray(), 'user_id')
         ));
 
-        $gameCommunity = Orm\GameCommunity::find($gameSoft->id);
+        $gameCommunity = Orm\GameCommunity::find($soft->id);
 
-        return view('community.game.detail')->with([
-            'gameSoft'    => $gameSoft,
-            'gamePackage' => $gamePackage,
-            'memberNum'   => $gameCommunity ? $gameCommunity->user_num : 0,
-            'members'     => $members,
-            'users'       => $users,
-            'isMember'    => $model->isMember($gameSoft->id, Auth::id()),
-            'topics'      => $topics
+        return view('community.game.detail', [
+            'soft'      => $soft,
+            'package'   => $package,
+            'memberNum' => $gameCommunity ? $gameCommunity->user_num : 0,
+            'members'   => $members,
+            'users'     => $users,
+            'isMember'  => $gc->isMember($soft->id, Auth::id()),
+            'topics'    => $topics
         ]);
     }
 
     /**
      * 参加
      *
-     * @param Orm\GameSoft $game
+     * @param Orm\GameSoft $soft
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function join(Orm\GameSoft $game)
+    public function join(Orm\GameSoft $soft)
     {
-        $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->join($game, Auth::user());
+        $gc = new GameCommunity();
+        $gc->join($soft, Auth::user());
 
         return redirect()->back();
     }
@@ -92,13 +92,13 @@ class GameCommunityController extends Controller
     /**
      * 脱退
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $soft
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function secession(GameSoft $game)
+    public function leave(Orm\GameSoft $soft)
     {
-        $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->secession($game, Auth::user());
+        $gc = new GameCommunity();
+        $gc->leave($soft, Auth::user());
 
         return redirect()->back();
     }
@@ -106,42 +106,40 @@ class GameCommunityController extends Controller
     /**
      * メンバー一覧
      *
-     * @param GameSoft $game
-     * @return $this
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function members(GameSoft $game)
+    public function members(Orm\GameSoft $soft)
     {
-        $gc = new \Hgs3\Models\Community\GameCommunity;
+        $gc = new GameCommunity;
 
-        $members = $gc->getMembers($game);
+        $members = $gc->getMembers($soft);
 
-        $pkg = GamePackage::find($game->original_package_id);
+        $package = Orm\GamePackage::find($soft->original_package_id);
 
-        return view('community.game.member')->with([
-            'game'     => $game,
+        return view('community.game.member', [
+            'soft'     => $soft,
+            'package'  => $package,
             'members'  => $members,
-            'users'    => User::getNameHash($members),
-            'pkg'      => $pkg,
-            'isMember' => $gc->isMember($game->id, Auth::id())
+            'users'    => User::getNameHash($members->toArray()),
+            'isMember' => $gc->isMember($soft->id, Auth::id())
         ]);
     }
 
     /**
      * トピックス
      *
-     * @param GameSoft $game
-     * @return $this
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function topics(GameSoft $game)
+    public function topics(Orm\GameSoft $soft)
     {
-        $model = new \Hgs3\Models\Community\GameCommunity();
+        $gc = new GameCommunity();
 
-        $pkg = GamePackage::find($game->original_package_id);
-
-        $data = $model->getTopics($game->id);
-        $data['game'] = $game;
-        $data['pkg'] = $pkg;
-        $data['isMember'] = $model->isMember($game->id, Auth::id());
+        $data = $gc->getTopics($soft->id);
+        $data['soft'] = $soft;
+        $data['package'] = Orm\GamePackage::find($soft->original_package_id);
+        $data['isMember'] = $gc->isMember($soft->id, Auth::id());
 
         return view('community.game.topics', $data);
     }
@@ -149,22 +147,22 @@ class GameCommunityController extends Controller
     /**
      * トピックの詳細
      *
-     * @param GameSoft $game
-     * @param GameCommunityTopic $gct
+     * @param Orm\GameSoft $soft
+     * @param Orm\GameCommunityTopic $topic
      * @return $this
      */
-    public function topicDetail(GameSoft $game, GameCommunityTopic $gct)
+    public function topicDetail(Orm\GameSoft $soft, Orm\GameCommunityTopic $topic)
     {
-        $model = new \Hgs3\Models\Community\GameCommunity();
+        $gc = new GameCommunity();
 
-        $data = $model->getTopicDetail($gct);
-        $data['game'] = $game;
-        $data['gct'] = $gct;
-        $data['writer'] = User::find($gct->user_id);
+        $data = $gc->getTopicDetail($topic);
+        $data['soft'] = $soft;
+        $data['topic'] = $topic;
+        $data['writer'] = User::find($topic->user_id);
         $data['csrfToken'] = csrf_token();
         $data['userId'] = Auth::id();
-        $data['pkg'] = GamePackage::find($game->original_package_id);
-        $data['isMember'] = $model->isMember($game->id, Auth::id());
+        $data['package'] = Orm\GamePackage::find($soft->original_package_id);
+        $data['isMember'] = $gc->isMember($soft->id, Auth::id());
 
         return view('community.game.topic', $data);
     }
@@ -172,19 +170,23 @@ class GameCommunityController extends Controller
     /**
      * 投稿
      *
-     * @param Topic $request
-     * @param GameSoft $game
+     * @param WriteTopicRequest $request
+     * @param Orm\GameSoft $soft
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function write(Topic $request, GameSoft $game)
+    public function write(WriteTopicRequest $request, Orm\GameSoft $soft)
     {
-        // TODO メンバーかどうか
+        $gc = new GameCommunity();
+
+        // メンバーかどうか
+        if (!$gc->isMember($soft->id, Auth::id())) {
+            return abort(403);
+        }
 
         $title = $request->get('title');
         $comment = $request->get('comment');
 
-        $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->writeTopic($game, Auth::user(), $title, $comment);
+        $gc->writeTopic($soft, Auth::user(), $title, $comment);
 
         return redirect()->back();
     }
@@ -192,19 +194,23 @@ class GameCommunityController extends Controller
     /**
      * レスの投稿
      *
-     * @param TopicResponse $request
-     * @param GameSoft $game
-     * @param GameCommunityTopic $gct
+     * @param WriteResponseRequest $request
+     * @param Orm\GameSoft $soft
+     * @param Orm\GameCommunityTopic $topic
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function writeResponse(TopicResponse $request, GameSoft $game, GameCommunityTopic $gct)
+    public function writeResponse(WriteResponseRequest $request, Orm\GameSoft $soft, Orm\GameCommunityTopic $topic)
     {
-        // TODO: メンバーかどうか
+        $gc = new GameCommunity();
+
+        // メンバーかどうか
+        if (!$gc->isMember($soft->id, Auth::id())) {
+            return abort(403);
+        }
 
         $comment = $request->get('comment');
 
-        $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->writeResponse($gct->id, Auth::id(), $comment);
+        $gc->writeResponse($topic, Auth::user(), $comment);
 
         return redirect()->back();
     }
@@ -212,35 +218,39 @@ class GameCommunityController extends Controller
     /**
      * 投稿の削除
      *
-     * @param GameSoft $game
-     * @param GameCommunityTopic $gct
+     * @param Orm\GameSoft $soft
+     * @param Orm\GameCommunityTopic $res
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function erase(GameSoft $game, GameCommunityTopic $gct)
+    public function erase(Orm\GameSoft $soft, Orm\GameCommunityTopic $res)
     {
-        // TODO: 投稿者かどうかチェック
+        // 管理人または投稿者かどうかチェック
+        if (!UserRole::isAdmin() || $res->user_id != Auth::id()) {
+            return abort(403);
+        }
 
-        $gameId = $gct->game_id;
+        $gc = new GameCommunity();
+        $gc->eraseTopic($res);
 
-        $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->eraseTopic($gct->id);
-
-        return redirect('community/g/' . $gameId . '/topics');
+        return redirect('community/g/' . $soft->id . '/topics');
     }
 
     /**
      * レスの削除
      *
-     * @param GameSoft $game
-     * @param GameCommunityTopicResponse $gctr
+     * @param Orm\GameSoft $soft
+     * @param Orm\GameCommunityTopicResponse $res
      * @return mixed
      */
-    public function eraseResponse(GameSoft $game, GameCommunityTopicResponse $gctr)
+    public function eraseResponse(Orm\GameSoft $soft, Orm\GameCommunityTopicResponse $res)
     {
-        // TODO: 投稿者かどうかチェック
+        // 管理人または投稿者かどうかチェック
+        if (!UserRole::isAdmin() || $res->user_id != Auth::id()) {
+            return abort(403);
+        }
 
-        $model = new \Hgs3\Models\Community\GameCommunity();
-        $model->eraseTopicResponse($gctr);
+        $gc = new GameCommunity();
+        $gc->eraseTopicResponse($res);
 
         return redirect()->back();
     }

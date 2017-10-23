@@ -65,7 +65,7 @@ class Review extends \Eloquent
         // タイムライン
         if ($isNew) {
             Timeline\FavoriteGame::addNewReviewText($this->soft_id, null, $this->id, $this->is_spoiler);
-            Timeline\User::addWriteReviewText($this->user_id, null, $this->id, $this->is_spoiler, $this->game_id, null);
+            Timeline\FollowUser::addWriteReviewText($this->user_id, null, $this->id, $this->is_spoiler, $this->game_id, null);
         }
 
         return true;

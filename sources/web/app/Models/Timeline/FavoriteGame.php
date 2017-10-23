@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Timeline;
 
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Log;
 use Hgs3\Models\Orm;
 
@@ -28,124 +29,102 @@ class FavoriteGame extends TimelineAbstract
     /**
      * 同じシリーズのゲームソフトが追加された
      *
-     * @param int $gameId
-     * @param string $gameName
-     * @param int $seriesId
-     * @param string $seriesName
+     * @param Orm\GameSoft $soft
+     * @param Orm\GameSeries $series
      */
-    public static function addSameSeriesGameText($gameId, $gameName, $seriesId, $seriesName)
+    public static function addSameSeriesGameText(Orm\GameSoft $soft, Orm\GameSeries $series)
     {
-        self::setGameName($gameId, $gameName);
-        self::setSeriesName($seriesId, $seriesName);
-
         $text = sprintf('<a href="%s">%s</a>シリーズのゲーム「<a href="%s">%s</a>」が追加されました。',
-            url2('game/series/' . $seriesId),
-            $seriesName,
-            url2('game/soft/' . $gameId),
-            $gameName
+            url2('game/series/' . $series->id),
+            $series->name,
+            url2('game/soft/' . $soft->id),
+            $soft->name
         );
 
-        self::insert($gameId, $text);
+        self::insert($soft->id, $text);
     }
 
     /**
      * ゲームソフト更新
      *
-     * @param int $gameId
-     * @param string $gameName
+     * @param Orm\GameSoft $soft
      */
-    public static function addUpdateGameSoftText($gameId, $gameName)
+    public static function addUpdateGameSoftText(Orm\GameSoft $soft)
     {
-        self::setGameName($gameId, $gameName);
-
         $text = sprintf('「<a href="%s">%s</a>」の情報が更新されました。',
-            url2('game/soft/' . $gameId),
-            $gameName
+            url2('game/soft/' . $soft->id),
+            $soft->name
         );
 
-        self::insert($gameId, $text);
+        self::insert($soft->id, $text);
     }
 
     /**
      * お気に入りゲーム登録
      *
-     * @param int $gameId
-     * @param string $gameName
-     * @param int $userId
-     * @param string $userName
+     * @param Orm\GameSoft $soft
+     * @param User $user
      */
-    public static function addFavoriteGameText($gameId, $gameName, $userId, $userName)
+    public static function addFavoriteGameText(Orm\GameSoft $soft, User $user)
     {
-        self::setGameName($gameId, $gameName);
-        self::setUserName($userId, $userName);
-
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%s</a>をお気に入りゲームに登録しました。',
-            url2('user/profile/' . $userId),
-            $userName,
-            url2('game/soft/' . $gameId),
-            $gameName
+            url2('user/profile/' . $user->id),
+            $user->name,
+            url2('game/soft/' . $soft->id),
+            $soft->name
         );
 
-        self::insert($gameId, $text);
+        self::insert($soft->id, $text);
     }
 
     /**
      * レビュー投稿
      *
-     * @param int $gameId
-     * @param string $gameName
-     * @param int $reviewId
-     * @param bool $isSpoiler
+     * @param Orm\GameSoft $soft
+     * @param Orm\Review $review
      */
-    public static function addNewReviewText()
+    public static function addNewReviewText(Orm\GameSoft $soft, Orm\Review $review)
     {
-        self::setGameName($gameId, $gameName);
-
         $text = sprintf('<a href="%s">%s</a>に<a href="%s">新しいレビュー</a>%sが投稿されました。',
-            url2('game/soft/' . $gameId),
-            $gameName,
-            url2('review/' . $reviewId),
-            $isSpoiler ? '(ネタバレあり)' : ''
+            url2('game/soft/' . $soft->id),
+            $soft->name,
+            url2('review/' . $review->id),
+            $review->is_spoiler ? '(ネタバレあり)' : ''
         );
 
-        self::insert($gameId, $text);
+        self::insert($soft->id, $text);
     }
 
     /**
      * 新着サイト
      *
-     * @param int $gameId
-     * @param string $gameName
-     * @param int $siteId
-     * @param string $siteName
+     * @param Orm\GameSoft $soft
+     * @param Orm\Site $site
      */
-    public static function addNewSiteText($gameId, $gameName, $siteId, $siteName)
+    public static function addNewSiteText(Orm\GameSoft $soft, Orm\Site $site)
     {
-        self::setGameName($gameId, $gameName);
-        self::setSiteName($siteId, $siteName);
-
         $text = sprintf('<a href="%s">%s</a>を扱うサイト「<a href="%s">%s</a>」が登録されました。',
-            url2('game/soft/' . $gameId),
-            $gameName,
-            url2('site/detail' . $siteId),
-            $siteName
+            url2('game/soft/' . $soft->id),
+            $soft->name,
+            url2('site/detail' . $site->id),
+            $site->name
         );
 
-        self::insert($gameId, $text);
+        self::insert($soft->id, $text);
     }
 
     /**
      * データ登録
      *
-     * @param int $gameId
+     * @param int $softId
      * @param string $text
      * @return bool
      */
-    private static function insert($gameId, $text)
+    private static function insert($softId, $text)
     {
         try {
             self::getDB()->favorite_game_timeline->insertOne([
-                'game_id' => $gameId,
+                'soft_id' => $softId,
                 'text'    => $text,
                 'time'    => microtime(true)
             ]);
