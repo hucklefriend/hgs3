@@ -16,15 +16,15 @@ class ReviewTotal extends \Eloquent
     /**
      * 集計
      *
-     * @param $softId
+     * @param int $softId
      */
-    public static function calculate($gameId)
+    public static function calculate($softId)
     {
         $sql =<<< SQL
 INSERT INTO review_totals
 (soft_id, review_num, point, fear, story, volume, difficulty, graphic, sound, crowded, controllability, recommend)
 SELECT
-  {$gameId}
+  $softId
   , COUNT(id)
   , IFNULL(AVG(point), 0)
   , IFNULL(AVG(fear), 0)
@@ -39,7 +39,7 @@ SELECT
 FROM
   reviews
 WHERE
-  game_id = ?
+  soft_id = ?
 ON DUPLICATE KEY UPDATE
   review_num = VALUES(review_num)
   , point = VALUES(point)
@@ -55,6 +55,6 @@ ON DUPLICATE KEY UPDATE
   , updated_at = CURRENT_TIMESTAMP
 SQL;
 
-        DB::insert($sql, [$gameId]);
+        DB::insert($sql, [$softId]);
     }
 }

@@ -20,21 +20,18 @@ class Review
 
         $users = User::get();
         $packages = Package::get();
+        $packageLinkHash = Package::getLinkHash();
 
         $userMax = count($users) - 1;
         $packageMax = count($packages) - 1;
 
         $r = new \Hgs3\Models\Review();
 
-
         for ($i = 0; $i < $num; $i++) {
             $pkg = $packages[rand(0, $packageMax)];
             $user = $users[rand(0, $userMax)];
 
-            $orm = new Orm\ReviewDraft([
-                'user_id'         => $user->id,
-                'game_id'         => $pkg->soft_id,
-                'package_id'      => $pkg->id,
+            $draft = new Orm\ReviewDraft([
                 'fear'            => rand(0, 5),
                 'story'           => rand(0, 5),
                 'volume'          => rand(0, 5),
@@ -51,19 +48,23 @@ class Review
                 'post_date'       => new \DateTime()
             ]);
 
-            $r->save(user, $orm);
+            $draft->user_id = $user->id;
+            $draft->soft_id = $packageLinkHash[$pkg->id];
+            $draft->package_id = $pkg->id;
+
+            $r->save($user, $draft);
             unset($orm);
         }
 
         unset($users);
         unset($pkgs);
 
-        $games = GameSoft::getIds();
-        foreach ($games as $gameId) {
-            Orm\ReviewTotal::calculate($gameId);
+        $softIds = GameSoft::getIds();
+        foreach ($softIds as $softId) {
+            Orm\ReviewTotal::calculate($softId);
         }
 
-        unset($games);
+        unset($softIds);
     }
 
     /**

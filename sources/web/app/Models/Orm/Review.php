@@ -37,38 +37,7 @@ class Review extends \Eloquent
             $this->update_num++;
         }
 
-        DB::beginTransaction();
-        try {
-            parent::save($options);
-
-            // 累計データ
-            ReviewTotal::calculate($this->soft_id);
-
-            if ($isNew) {
-                // 下書き削除
-                DB::table('review_drafts')
-                    ->where('user_id', $this->user_id)
-                    ->where('soft_id', $this->soft_id)
-                    ->delete();
-            }
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
-        }
-
-        // タイムライン
-        if ($isNew) {
-            Timeline\FavoriteGame::addNewReviewText($this->soft_id, null, $this->id, $this->is_spoiler);
-            Timeline\FollowUser::addWriteReviewText($this->user_id, null, $this->id, $this->is_spoiler, $this->game_id, null);
-        }
-
-        return true;
+        return parent::save($options);
     }
 
     /**

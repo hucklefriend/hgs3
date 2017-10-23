@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.18 on 2017-10-20 10:14:53.
+ * Generated for Laravel 5.5.18 on 2017-10-23 15:38:25.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1635,7 +1635,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \Hgs3\User|null 
+         * @return \Hgs3\Models\User|null 
          * @static 
          */ 
         public static function user()
@@ -1670,7 +1670,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \Hgs3\User|false 
+         * @return \Hgs3\Models\User|false 
          * @static 
          */ 
         public static function onceUsingId($id)
@@ -1734,7 +1734,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \Hgs3\User|false 
+         * @return \Hgs3\Models\User|false 
          * @static 
          */ 
         public static function loginUsingId($id, $remember = false)
@@ -1781,7 +1781,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \Hgs3\User 
+         * @return \Hgs3\Models\User 
          * @static 
          */ 
         public static function getLastAttempted()
@@ -1883,7 +1883,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Return the currently cached user.
          *
-         * @return \Hgs3\User|null 
+         * @return \Hgs3\Models\User|null 
          * @static 
          */ 
         public static function getUser()
@@ -1929,7 +1929,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated.
          *
-         * @return \Hgs3\User 
+         * @return \Hgs3\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 

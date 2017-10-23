@@ -19,7 +19,7 @@ class User
         echo 'create user test data.'.PHP_EOL;
 
         for ($i = 0; $i < $num; $i++) {
-            $user = new \Hgs3\User([
+            $user = new \Hgs3\Models\User([
                 'name' => str_random(rand(3, 7)),
                 'role' => 1,
                 'adult' => rand(0, 1)
@@ -50,6 +50,6 @@ class User
      */
     public static function get()
     {
-        return \Hgs3\User::all();
+        return \Hgs3\Models\User::all();
     }
 }

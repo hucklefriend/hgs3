@@ -9,7 +9,7 @@ namespace Hgs3\Models;
 use Hgs3\Constants\Review\Status;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -30,6 +30,108 @@ class Review
             ->count(['id']);
     }
 
+    /**
+     * レビュートップページ用のデータを取得する
+     *
+     * @param int $num
+     * @return array
+     */
+    public static function getTopPageData($num)
+    {
+        $data = [];
+
+        // 新着レビュー
+        $data['newArrivals'] = self::getNewArrivals($num);
+
+        // 評価の高いゲームソフト
+        $data['highScore'] = self::getHighScore($num);
+
+        // 直近1ヶ月のいいねが多いレビュー
+        $data['manyGood'] = self::getManyGood($num);
+
+        return $data;
+    }
+
+    /**
+     * 新着順レビューを取得(全ゲーム)
+     *
+     * @param $num
+     * @return array
+     */
+    private static function getNewArrivals($num)
+    {
+        $sql =<<< SQL
+SELECT
+  review.*
+  , users.name AS user_name
+  , game_packages.name AS soft_name
+  , game_packages.item_url
+  , game_packages.small_image_url
+FROM (
+    SELECT id, point, user_id, post_date, title, game_id, good_num, is_spoiler
+    FROM reviews
+    ORDER BY id DESC
+    LIMIT {$num}
+  ) review LEFT OUTER JOIN users ON review.user_id = users.id
+  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
+SQL;
+
+        return DB::select($sql);
+    }
+
+    /**
+     * ポイントの高いゲームを取得
+     *
+     * @param $num
+     * @return array
+     */
+    private static function getHighScore($num)
+    {
+        $sql =<<< SQL
+SELECT
+  review.*
+  , softs.name AS soft_name
+  , game_packages.item_url
+  , game_packages.small_image_url
+FROM (
+  SELECT *
+  FROM review_totals
+  ORDER BY point DESC
+  LIMIT {$num}
+) review LEFT OUTER JOIN game_softs AS softs ON softs.id = review.soft_id
+  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
+SQL;
+
+        return DB::select($sql);
+    }
+
+    /**
+     * 直近1ヶ月のいいねの多いレビューを取得
+     *
+     * @param $num
+     * @return array
+     */
+    private static function getManyGood($num)
+    {
+        $sql =<<< SQL
+SELECT
+  review.*
+  , users.name AS user_name
+  , game_packages.name AS soft_name
+  , game_packages.item_url
+  , game_packages.small_image_url
+FROM (
+    SELECT id, point, user_id, post_date, title, game_id, latest_good_num, good_num, is_spoiler
+    FROM reviews
+    ORDER BY latest_good_num DESC
+    LIMIT {$num}
+  ) review LEFT OUTER JOIN users ON review.user_id = users.id
+  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
+SQL;
+
+        return DB::select($sql);
+    }
+
 
     /**
      * 新着順レビューを取得
@@ -38,7 +140,7 @@ class Review
      * @param $num
      * @param $offset
      */
-    public function getNewArrivals($gameId, $num, $offset = 0)
+    public static function getNewArrivalsBySoft($gameId, $num, $offset = 0)
     {
         $sql =<<< SQL
 SELECT
@@ -65,16 +167,16 @@ SQL;
      * 下書きを取得
      *
      * @param int $userId
-     * @param int $gameId
+     * @param int $softId
      */
-    public function getDraft($userId, $gameId)
+    public function getDraft($userId, $softId)
     {
         if ($userId == null) {
-            return Orm\ReviewDraft::getDefault($userId, $gameId);
+            return Orm\ReviewDraft::getDefault($userId, $softId);
         }
 
         $draft = Orm\ReviewDraft::where('user_id', $userId)
-            ->where('game_id', $gameId)
+            ->where('game_id', $softId)
             ->first();
 
         return $draft;
@@ -118,92 +220,12 @@ SQL;
 
         // タイムライン登録
         $soft = Orm\GameSoft::find($draft->soft_id);
-        Timeline\FavoriteGame::addNewReviewText($soft, $review);
-        //Timeline\FollowUser::addNewReviewText();
+        if ($soft !== null) {
+            Timeline\FavoriteGame::addNewReviewText($soft, $review);
+            //Timeline\FollowUser::addNewReviewText();
+        }
 
         return $review->id;
-    }
-
-    /**
-     * 新着順レビューを取得(全ゲーム)
-     *
-     * @param $num
-     * @return array
-     */
-    public function getNewArrivalsAll($num)
-    {
-        $sql =<<< SQL
-SELECT
-  review.*
-  , users.name AS user_name
-  , games.name AS game_name
-  , game_packages.item_url
-  , game_packages.small_image_url
-FROM (
-    SELECT id, point, user_id, post_date, title, game_id, good_num, is_spoiler
-    FROM reviews
-    ORDER BY id DESC
-    LIMIT {$num}
-  ) review LEFT OUTER JOIN users ON review.user_id = users.id
-  LEFT OUTER JOIN games ON games.id = review.game_id
-  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
-SQL;
-
-        return DB::select($sql);
-    }
-
-    /**
-     * ポイントの高いゲームを取得
-     *
-     * @param $num
-     * @return array
-     */
-    public function getHighScore($num)
-    {
-        $sql =<<< SQL
-SELECT
-  review.*
-  , games.name AS game_name
-  , game_packages.item_url
-  , game_packages.small_image_url
-FROM (
-  SELECT *
-  FROM review_totals
-  ORDER BY point DESC
-  LIMIT {$num}
-) review LEFT OUTER JOIN games ON games.id = review.game_id
-  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
-SQL;
-
-        return DB::select($sql);
-    }
-
-    /**
-     * いいねのレビューを取得
-     *
-     * @param $num
-     * @return array
-     */
-    public function getManyGood($num)
-    {
-        $sql =<<< SQL
-SELECT
-  review.*
-  , users.name AS user_name
-  , game_packages.name AS game_name
-  , game_packages.item_url
-  , game_packages.small_image_url
-FROM (
-    SELECT id, point, user_id, post_date, title, game_id, latest_good_num, good_num, is_spoiler
-    FROM reviews
-    ORDER BY latest_good_num DESC
-    LIMIT {$num}
-  ) review LEFT OUTER JOIN users ON review.user_id = users.id
-  LEFT OUTER JOIN games ON games.id = review.game_id
-  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
-SQL;
-
-        return DB::select($sql);
     }
 
     /**

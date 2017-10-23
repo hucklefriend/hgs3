@@ -9,23 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewDraft extends \Eloquent
 {
-    protected $primaryKey = ['user_id', 'package_id'];
+    protected $primaryKey = ['user_id', 'soft_id', 'package_id'];
     public $incrementing = false;
-    protected $guarded = ['user_id', 'package_id'];
+    protected $guarded = ['user_id', 'soft_id', 'package_id'];
 
     /**
      * デフォルト値が設定されているインスタンスを取得
      *
-     * @param $userId
-     * @param $gameId
+     * @param int $userId
+     * @param int $softId
+     * @param int $packageId
      * @return ReviewDraft
      */
-    public static function getDefault($userId, $gameId)
+    public static function getDefault($userId, $softId, $packageId)
     {
-        return new self([
-            'user_id'         => $userId,
-            'game_id'         => $gameId,
-            'package_id'      => '',
+        $draft = new self([
             'title'           => '',
             'fear'            => 3,
             'story'           => 3,
@@ -40,6 +38,12 @@ class ReviewDraft extends \Eloquent
             'text'            => '',
             'is_spoiler'      => 0
         ]);
+
+        $draft->user_id = $userId;
+        $draft->soft_id = $softId;
+        $draft->package_id = $packageId;
+
+        return $draft;
     }
 
     /**

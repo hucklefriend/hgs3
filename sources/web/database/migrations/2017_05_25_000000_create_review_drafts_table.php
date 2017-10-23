@@ -35,7 +35,7 @@ class CreateReviewDraftsTable extends Migration
             $table->text('text')->comment('レビュー本文');
             $table->unsignedTinyInteger('is_spoiler')->default(0)->comment('ネタバレ有無');
             $table->timestamps();
-            $table->primary(['user_id', 'package_id']);
+            $table->primary(['user_id', 'soft_id', 'package_id']);
         });
     }
 
