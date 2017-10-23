@@ -10,9 +10,9 @@
                 </div>
             </div>
             <div class="p-10 align-self-center">
-                <div class="break_word" style="width: 100%;"><h5>{{ $game->name }}</h5></div>
-                <a href="{{ url('game/soft') }}/{{ $game->id }}">ゲームの詳細</a> |
-                <a href="{{ url('review/package_select') }}/{{ $game->id }}">レビューを投稿する</a>
+                <div class="break_word" style="width: 100%;"><h5>{{ $soft->name }}</h5></div>
+                <a href="{{ url('game/soft') }}/{{ $soft->id }}">ゲームの詳細</a> |
+                <a href="{{ url('review/package_select') }}/{{ $soft->id }}">レビューを投稿する</a>
             </div>
         </div>
 
@@ -21,7 +21,7 @@
     <hr>
     <h5>レビュー一覧</h5>
 
-    {{ $pager }}
+    {{ $pager->links() }}
 
         @foreach ($reviews as $r)
             @include('review.common.normal', ['r' => $r, 'showLastMonthGood' => false])
@@ -30,7 +30,7 @@
             @endif
         @endforeach
 
-    {{ $pager }}
+    {{ $pager->links() }}
     @else
         <p>レビューが投稿されていません。</p>
     @endif

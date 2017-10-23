@@ -60,6 +60,8 @@ class Review
      */
     private static function getNewArrivals($num)
     {
+        // TODO statusで絞り込み
+
         $sql =<<< SQL
 SELECT
   review.*
@@ -87,6 +89,8 @@ SQL;
      */
     private static function getHighScore($num)
     {
+        // TODO statusで絞り込み
+
         $sql =<<< SQL
 SELECT
   review.*
@@ -113,6 +117,8 @@ SQL;
      */
     private static function getManyGood($num)
     {
+        // TODO statusで絞り込み
+
         $sql =<<< SQL
 SELECT
   review.*
@@ -132,27 +138,28 @@ SQL;
         return DB::select($sql);
     }
 
-
     /**
-     * 新着順レビューを取得
+     * 特定ゲームソフトの新着順レビューを取得
      *
-     * @param $gameId
-     * @param $num
-     * @param $offset
+     * @param int $softId
+     * @param int $num
+     * @param int $offset
      */
-    public static function getNewArrivalsBySoft($gameId, $num, $offset = 0)
+    public static function getNewArrivalsBySoft($softId, $num, $offset = 0)
     {
+        // TODO statusで絞り込み
+
         $sql =<<< SQL
 SELECT
   reviews.*
   , users.name AS user_name
-  , pkg.name game_name
-  , pkg.game_type_id
+  , pkg.name soft_name
+  , pkg.is_adult
   , pkg.small_image_url
 FROM (
     SELECT id, point, user_id, post_date, title, good_num, package_id, is_spoiler
     FROM reviews
-    WHERE game_id = ?
+    WHERE soft_id = ?
     ORDER BY id DESC
     LIMIT {$num}
     OFFSET {$offset}
@@ -160,7 +167,7 @@ FROM (
   LEFT OUTER JOIN game_packages pkg ON pkg.id = reviews.package_id
 SQL;
 
-        return DB::select($sql, [$gameId]);
+        return DB::select($sql, [$softId]);
     }
 
     /**
@@ -168,15 +175,17 @@ SQL;
      *
      * @param int $userId
      * @param int $softId
+     * @param int $packageId
      */
-    public function getDraft($userId, $softId)
+    public function getDraft($userId, $softId, $packageId)
     {
         if ($userId == null) {
-            return Orm\ReviewDraft::getDefault($userId, $softId);
+            return Orm\ReviewDraft::getDefault($userId, $softId, $packageId);
         }
 
         $draft = Orm\ReviewDraft::where('user_id', $userId)
-            ->where('game_id', $softId)
+            ->where('soft_id', $softId)
+            ->where('packge_id', $packageId)
             ->first();
 
         return $draft;

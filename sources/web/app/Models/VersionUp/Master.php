@@ -27,5 +27,7 @@ class Master
 
         $soft = new MasterImport\Soft();
         //$soft->import();
+
+        \Hgs3\Models\Orm\GameSoft::updateSortOrder();
     }
 }

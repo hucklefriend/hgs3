@@ -40,7 +40,7 @@ class ReviewController extends Controller
      * @param Orm\GameSoft $soft
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function game(Orm\GameSoft $soft)
+    public function soft(Orm\GameSoft $soft)
     {
         $data = [
             'soft'  => $soft,

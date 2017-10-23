@@ -45,8 +45,8 @@ class Soft
 
         // 同じシリーズのソフト取得
         if ($soft->series_id != null) {
-            $data['gameSeries'] = Orm\GameSeries::find($soft->series_id);
-            if ($data['gameSeries']) {
+            $data['series'] = Orm\GameSeries::find($soft->series_id);
+            if ($data['series']) {
                 $data['seriesSofts'] = self::getSameSeries($soft->id, $soft->series_id);
             }
         } else {
@@ -83,11 +83,19 @@ class Soft
      */
     private static function getSameSeries($softId, $seriesId)
     {
-        return Orm\GameSoft::select(['id', 'name'])
-            ->where('series_id', $seriesId)
-            ->where('id', '<>', $softId)
-            ->orderBy('order_in_series')
-            ->get();
+        $sql =<<< SQL
+SELECT soft.id, soft.name, package.small_image_url AS image_url
+FROM
+  (
+    SELECT id, `name`, original_package_id
+    FROM game_softs
+    WHERE series_id = ?
+      AND id <> ?
+  ) soft
+  LEFT OUTER JOIN game_packages package ON package.id = soft.original_package_id
+SQL;
+
+        return DB::select($sql, [$seriesId, $softId]);
     }
 
     /**
@@ -98,9 +106,12 @@ class Soft
      */
     private static function getPackages($softId)
     {
-        $packageIds = Orm\GamePackageLink::select(['package_id'])
+        $packageIds = DB::table('game_package_links')
+            ->select(['package_id'])
             ->where('soft_id', $softId)
-            ->get()->pluck('package_id')->toArray();
+            ->get()
+            ->pluck('package_id')
+            ->toArray();
 
         if (empty($packageIds)) {
             return [];
@@ -111,7 +122,9 @@ class Soft
         $sql =<<< SQL
 SELECT pkg.*, plt.acronym AS platform_name, com.name AS company_name
 FROM (
-  SELECT id, `name`, platform_id, release_date, company_id FROM game_packages WHERE id IN ({$packageIdsComma})
+  SELECT id, `name`, platform_id, release_date, company_id, medium_image_url, item_url, shop_id
+  FROM game_packages
+  WHERE id IN ({$packageIdsComma})
 ) pkg
   LEFT OUTER JOIN game_platforms plt ON pkg.platform_id = plt.id
   LEFT OUTER JOIN game_companies com ON pkg.company_id = com.id
@@ -202,6 +215,8 @@ SQL;
         try {
             $soft->save();
 
+            $soft::updateSortOrder();
+
             DB::commit();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -214,7 +229,6 @@ SQL;
         if (!$isWriteTimeine) {
             return true;
         }
-
 
         if ($isNew) {
             //Timeline\Game::addNewGameSoftText($this->id, $this->name);

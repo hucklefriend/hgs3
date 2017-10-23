@@ -4,7 +4,7 @@
     </div>
     <div class="align-self-top">
         <div>
-            <strong>{{ $r->game_name }}</strong>
+            <strong>{{ $r->package_name }}</strong>
         </div>
 
         <div class="d-flex align-items-stretch">

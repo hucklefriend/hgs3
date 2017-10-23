@@ -82,7 +82,7 @@ class SoftController extends Controller
         $soft->name = $request->get('name');
         $soft->phonetic = $request->get('phonetic');
         $soft->phonetic_type = PhoneticType::getTypeByPhonetic($soft->phonetic);
-        $soft->phonetic_order = $request->get('phonetic');
+        $soft->phonetic_order = 99999;
         $soft->genre = $request->get('genre', '');
         $soft->company_id = $request->get('company_id', null);
         $soft->series_id = $request->get('series_id', null);
@@ -119,7 +119,6 @@ class SoftController extends Controller
         $soft->name = $request->get('name');
         $soft->phonetic = $request->get('phonetic', '');
         $soft->phonetic_type = PhoneticType::getTypeByPhonetic($soft->phonetic);
-        $soft->phonetic_order = $request->get('phonetic_order');
         $soft->genre = $request->get('genre') ?? '';
         $soft->company_id = $request->get('company_id');
         $soft->series_id = $request->get('series_id');

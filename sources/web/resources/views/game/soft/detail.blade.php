@@ -84,7 +84,7 @@
                                 </div>
                                 <div>{{ $pkg->release_date }}</div>
                                 <div>
-                                    <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
+                                    @include('game.common.shop', ['shopId' => $pkg->shop_id, 'itemUrl' => $pkg->item_url])
                                 </div>
 
                                 @if (is_data_editor())
@@ -348,9 +348,16 @@
                 </div>
                 @if($series != null)
                     <ul class="list-group list-group-flush">
-                        @foreach ($series['list'] as $sl)
+                        @foreach ($seriesSofts as $seriesSoft)
                             <li class="list-group-item">
-                                <a href="{{ url('game/soft') }}/{{ $sl->id }}">{{ $sl->name }}</a>
+                                <div class="row">
+                                    <div class="col-4">
+                                        @include('game.common.package_image_small', ['imageUrl' => $seriesSoft->image_url])
+                                    </div>
+                                    <div class="col-8">
+                                        <a href="{{ url('game/soft') }}/{{ $seriesSoft->id }}">{{ $seriesSoft->name }}</a>
+                                    </div>
+                                </div>
                             </li>
                         @endforeach
                     </ul>

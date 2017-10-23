@@ -50,4 +50,31 @@ class GameSoft extends \Eloquent
 
         return $result;
     }
+
+    /**
+     * 表示順を更新
+     */
+    public static function updateSortOrder()
+    {
+        // SQL文1発でできそうだけど、複雑になるのでループ回して1つずつ更新
+
+        $sql =<<< SQL
+SELECT soft.id, IF(soft.series_id IS NULL, soft.phonetic, series.phonetic) AS phonetic_order
+FROM game_softs AS soft LEFT OUTER JOIN game_series AS series ON 
+  soft.series_id = series.id
+ORDER BY phonetic_order, soft.order_in_series
+SQL;
+
+        $data = DB::select($sql);
+        $n = count($data);
+
+        $update =<<< SQL
+UPDATE game_softs SET phonetic_order = ?
+WHERE id = ?
+SQL;
+
+        for ($i = 1; $i <= $n; $i++) {
+            DB::update($update, [$i, $data[$i - 1]->id]);
+        }
+    }
 }
