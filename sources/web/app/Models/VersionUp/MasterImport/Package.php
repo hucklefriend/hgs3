@@ -56,18 +56,11 @@ class Package extends MasterImportAbstract
                 $package->name = $pkg['name'];
                 $package->url = $pkg['url'];
                 $package->release_date = $pkg['release_date'];
-                $package->shop_id = Shop::getIdByName($pkg['shop']);
                 if (isset($pkg['company']) && isset($companies[$pkg['company']])) {
                     $package->company_id = $companies[$pkg['company']] ?? null;
                 }
                 if (isset($pkg['platform']) && isset($platforms[$pkg['platform']])) {
                     $package->platform_id = $platforms[$pkg['platform']] ?? null;
-                }
-
-                if ($package->shop_id == Shop::AMAZON) {
-                    $package->asin = $pkg['asin'];
-                } else if ($package->shop_id != null){
-                    $package->item_url = $pkg['shop_url'];
                 }
 
                 $package->save();
@@ -78,6 +71,26 @@ class Package extends MasterImportAbstract
                         'package_id' => $package->id,
                         'sort_order' => $pkg['release_int']
                     ]);
+
+                $shopId = Shop::getIdByName($pkg['shop']);
+                if ($shopId) {
+                    if ($package->shop_id == Shop::AMAZON) {
+                        DB::table('game_package_shops')
+                            ->insert([
+                                'package_id' => $package->id,
+                                'shop_id'    => $shopId,
+                                'shop_url'   => '',
+                                'param1'     => $pkg['asin']
+                            ]);
+                    } else if (!empty($pkg['shop_url'])) {
+                        DB::table('game_package_shops')
+                            ->insert([
+                                'package_id' => $package->id,
+                                'shop_id'    => $shopId,
+                                'shop_url'   => $pkg['shop_url']
+                            ]);
+                    }
+                }
 
                 unset($package);
             }

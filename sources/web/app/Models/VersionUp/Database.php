@@ -1,6 +1,7 @@
 <?php
 
 namespace Hgs3\Models\VersionUp;
+use Hgs3\Constants\Game\Shop;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -156,6 +157,7 @@ SQL;
     private function copyPackage()
     {
         DB::table('game_packages')->truncate();
+        DB::table('game_package_shops')->truncate();
         DB::table('game_package_links')->truncate();
 
         $sql =<<< SQL
@@ -203,9 +205,6 @@ SQL;
                     'url'                 => $row->url,
                     'release_date'        => $row->release_date,
                     'is_adult'            => $row->is_adult,
-                    'shop_id'             => $row->shop_id,
-                    'asin'                => $row->asin,
-                    'item_url'            => $row->item_url,
                     'small_image_url'     => $row->small_image_url,
                     'small_image_width'   => $row->small_image_width,
                     'small_image_height'  => $row->small_image_height,
@@ -219,6 +218,17 @@ SQL;
                     'updated_at'          => $row->updated_at
                 ]);
 
+            // H.G.S.2ではショップはAmazonのみだったのでバージョンアップではAmazonしかありえない
+            if ($row->asin !== null) {
+                DB::table('game_package_shops')
+                    ->insert([
+                        'package_id' => $row->package_id,
+                        'shop_id'    => Shop::AMAZON,
+                        'shop_url'   => $row->item_url,
+                        'param1'     => $row->asin
+                    ]);
+            }
+
             foreach ($packages as $pkg) {
                 DB::table('game_package_links')
                     ->insert([
@@ -230,8 +240,6 @@ SQL;
                     ]);
             }
         }
-
-
 
         unset($data);
         unset($nameHash);
