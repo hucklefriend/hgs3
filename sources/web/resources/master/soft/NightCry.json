@@ -1,0 +1,19 @@
+{
+  "name": "NightCry",
+  "phonetic": "ないとくらい",
+  "genre": "ホラーアドベンチャー",
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "エクスペリエンス",
+      "name": "死印",
+      "release_date": "2016年3月29日",
+      "release_int": 20160329,
+      "url":"http://www.night-cry.com/",
+      "shop": {
+        "PLAYISM": "http://playism.jp/game/420/nightcry",
+        "Steam": "http://store.steampowered.com/app/427660/"
+      }
+    }
+  ]
+}

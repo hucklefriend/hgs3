@@ -1,0 +1,35 @@
+{
+  "soft_id": [14],
+  "packages":[
+    {
+      "platform": "PS4",
+      "company": "カプコン",
+      "name": "biohazard4",
+      "url": "http://www.capcom.co.jp/bioDL/4/ja/",
+      "shop": "amazon",
+      "asin": "B01MSFEB6C",
+      "release_int": 20161201,
+      "release_date": "2016年12月1日"
+    },
+    {
+      "platform": "PS4",
+      "company": "カプコン",
+      "name": "biohazard4",
+      "url": "http://www.capcom.co.jp/bioDL/4/ja/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/#!/ja-jp/cid=JP0102-CUSA04714_00-BH4HD00000000001",
+      "release_int": 20160628,
+      "release_date": "2016年6月28日"
+    },
+    {
+      "platform": "XONE",
+      "company": "カプコン",
+      "name": "biohazard4",
+      "url": "http://www.capcom.co.jp/bioDL/4/ja/",
+      "shop": "マイクロソフト Store",
+      "shop_url": "https://store.xbox.com/ja-JP/Xbox-One/Games/biohazard-4/3a446e44-a6ec-46de-9b18-b419454b06e8",
+      "release_int": 20160628,
+      "release_date": "2016年6月28日"
+    },
+  ]
+}

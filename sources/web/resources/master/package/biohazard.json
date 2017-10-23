@@ -30,26 +30,6 @@
       "asin": "B013JWYW4K",
       "release_int": 20150917,
       "release_date": "2015年9月17日"
-    },
-    {
-      "platform": "PS4",
-      "company": "カプコン",
-      "name": "biohazard ORIGINS COLLECTION",
-      "url": "http://www.capcom.co.jp/biohd/ja/",
-      "shop": "amazon",
-      "asin": "B014U9OQOW",
-      "release_int": 20160121,
-      "release_date": "2016年1月21日"
-    },
-    {
-      "platform": "PS4",
-      "company": "カプコン",
-      "name": "biohazard ORIGINS COLLECTION Best Price!",
-      "url": "http://www.capcom.co.jp/biohd/ja/",
-      "shop": "amazon",
-      "asin": "B01MYESO6C",
-      "release_int": 20170323,
-      "release_date": "2017年3月23日"
     }
   ]
 }

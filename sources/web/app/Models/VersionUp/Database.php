@@ -137,7 +137,7 @@ SELECT
 FROM
   hgs2.hgs_g_soft sf LEFT OUTER JOIN hgs2.hgs_g_series_list sl ON sf.id = sl.soft_id
 WHERE
-  sf.id NOT IN (91, 188)
+  sf.id NOT IN (91, 188, 260, 261, 262)
 ON DUPLICATE KEY UPDATE
   `name` = VALUES(`name`)
   , `phonetic` = VALUES(`phonetic`)
@@ -183,6 +183,8 @@ FROM
 	hgs2.hgs_g_soft_detail s
 	LEFT OUTER JOIN hgs2.hgs_g_soft ss ON s.soft_id = ss.id
 	LEFT OUTER JOIN hgs2.hgs_g_amazon a ON s.asin = a.asin
+WHERE
+  ss.id NOT IN (91, 188, 260, 261, 262)
 SQL;
 
         $data = DB::select($sql);

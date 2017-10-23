@@ -1,0 +1,37 @@
+{
+  "name": "Emily Wants to Play",
+  "phonetic": "えみりーうぉんつとぅーぷれい",
+  "genre": "サバイバルホラー",
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "SKH Apps",
+      "name": "Emily Wants to Play",
+      "release_date": "2015年12月10日",
+      "release_int": 20151210,
+      "url":"http://www.emilywantstoplay.com/",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/416590/Emily_Wants_To_Play/"
+    },
+    {
+      "platform": "iOS",
+      "company": "SKH Apps",
+      "name": "Emily Wants to Play",
+      "release_date": "2016年1月30日",
+      "release_int": 20160130,
+      "url":"http://www.emilywantstoplay.com/",
+      "shop": "App Store",
+      "shop_url": "https://itunes.apple.com/jp/app/emily-wants-to-play/id1068366903"
+    },
+    {
+      "platform": "PS4",
+      "company": "日本一ソフトウェア",
+      "name": "Emily Wants to Play",
+      "release_date": "2017年2月9日",
+      "release_int": 20170209,
+      "url":"http://nippon1.jp/consumer/indie_spirits/emily_wants_to_play/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/#!/ja-jp/%e3%82%b2%e3%83%bc%e3%83%a0/emily-wants-to-play/cid=JP0404-CUSA07015_00-EMILYJAPAN000000"
+    }
+  ]
+}

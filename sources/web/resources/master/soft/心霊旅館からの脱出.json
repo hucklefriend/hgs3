@@ -1,0 +1,17 @@
+{
+  "name": "心霊旅館からの脱出",
+  "phonetic": "しんれいりょかんからのだっしゅつ",
+  "genre": "SEEC",
+  "packages":[
+    {
+      "platform": "Android",
+      "company": "",
+      "name": "心霊旅館からの脱出",
+      "release_date": "2017年8月17日",
+      "release_int": 20170817,
+      "url":"",
+      "shop": "Google Play",
+      "shop_url": "https://play.google.com/store/apps/details?id=tokyo.seec.ShinreiRyokan&hl=ja"
+    }
+  ]
+}

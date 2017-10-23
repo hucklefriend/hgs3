@@ -1,0 +1,35 @@
+{
+  "soft_id": [18],
+  "packages":[
+    {
+      "platform": "PS4",
+      "company": "カプコン",
+      "name": "BIOHAZARD5",
+      "url": "http://www.capcom.co.jp/bioDL/5/ja/",
+      "shop": "amazon",
+      "asin": "B01M2CLD4W",
+      "release_int": 20161201,
+      "release_date": "2016年12月1日"
+    },
+    {
+      "platform": "PS4",
+      "company": "カプコン",
+      "name": "BIOHAZARD5",
+      "url": "http://www.capcom.co.jp/bioDL/5/ja/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/#!/ja-jp/cid=JP0102-CUSA04290_00-RE5HDPS400000000",
+      "release_int": 20161201,
+      "release_date": "2016年12月1日"
+    },
+    {
+      "platform": "XONE",
+      "company": "カプコン",
+      "name": "BIOHAZARD5",
+      "url": "http://www.capcom.co.jp/bioDL/5/ja/",
+      "shop": "マイクロソフト Store",
+      "shop_url": "https://store.xbox.com/ja-JP/Xbox-One/Games/RESIDENT-EVIL-5/69a27e70-cd9c-4dcf-a33b-9e3f8730bec6",
+      "release_int": 20161201,
+      "release_date": "2016年12月1日"
+    },
+  ]
+}
