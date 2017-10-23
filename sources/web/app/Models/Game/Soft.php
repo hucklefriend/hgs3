@@ -7,6 +7,8 @@ namespace Hgs3\Models\Game;
 
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
+use Hgs3\Models\User\FavoriteGame;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -71,6 +73,14 @@ class Soft
         // 遊んだゲーム
         $data['playedUsers'] = self::getPlayedUsers($soft->id);
 
+        if (Auth::check()) {
+            $fav = new FavoriteGame();
+            $data['isFavorite'] = $fav->isFavorite(Auth::id(), $soft->id);
+            $data['playedGame'] = Orm\UserPlayedSoft::findByUserAndGame(Auth::id(), $soft->id);
+        }
+
+        $data['csrfToken'] = csrf_token();
+
         return $data;
     }
 
@@ -122,7 +132,7 @@ SQL;
         $sql =<<< SQL
 SELECT pkg.*, plt.acronym AS platform_name, com.name AS company_name
 FROM (
-  SELECT id, `name`, platform_id, release_date, company_id, medium_image_url, item_url, shop_id
+  SELECT id, `name`, platform_id, release_date, company_id, medium_image_url
   FROM game_packages
   WHERE id IN ({$packageIdsComma})
 ) pkg
@@ -130,7 +140,18 @@ FROM (
   LEFT OUTER JOIN game_companies com ON pkg.company_id = com.id
 SQL;
 
-        return DB::select($sql);
+        $data = DB::select($sql);
+
+        $shops = Package::getShopData($packageIds);
+
+        $n = count($data);
+        for ($i = 0; $i < $n; $i++) {
+            $data[$i]->shops = $shops[$data[$i]->id] ?? [];
+        }
+
+        unset($shops);
+
+        return $data;
     }
 
     /**

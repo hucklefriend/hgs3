@@ -23,7 +23,7 @@ class Master
         $series->import();
 
         $package = new MasterImport\Package();
-        $package->import();
+        //$package->import();
 
         $soft = new MasterImport\Soft();
         //$soft->import();

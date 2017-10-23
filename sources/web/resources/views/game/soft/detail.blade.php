@@ -84,7 +84,9 @@
                                 </div>
                                 <div>{{ $pkg->release_date }}</div>
                                 <div>
-                                    @include('game.common.shop', ['shopId' => $pkg->shop_id, 'itemUrl' => $pkg->item_url])
+                                    @foreach ($pkg->shops as $shop)
+                                    @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                                    @endforeach
                                 </div>
 
                                 @if (is_data_editor())
@@ -118,7 +120,9 @@
                                 </div>
                                 <div>{{ $pkg->release_date }}</div>
                                 <div>
-                                    <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
+                                    @foreach ($pkg->shops as $shop)
+                                        @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                                    @endforeach
                                 </div>
 
                                 @if (is_data_editor())

@@ -23,18 +23,18 @@ class FavoriteGameController extends Controller
     /**
      * お気に入りゲームに登録しているユーザー
      *
-     * @param Orm\GameSoft $gameSoft
+     * @param Orm\GameSoft $soft
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function index(Orm\GameSoft $gameSoft)
+    public function index(Orm\GameSoft $soft)
     {
-        $pager = Orm\UserFavoriteSoft::where('soft_id', $gameSoft->id)
+        $favoriteUsers = Orm\UserFavoriteSoft::where('soft_id', $soft->id)
             ->paginate(20);
 
         return view('game.favorite.index')->with([
-            'gameSoft' => $gameSoft,
-            'pager'    => $pager,
-            'users'    => User::getHash(array_pluck($pager->items(), 'user_id'))
+            'soft'          => $soft,
+            'favoriteUsers' => $favoriteUsers,
+            'users'         => User::getHash(array_pluck($favoriteUsers->items(), 'user_id'))
         ]);
     }
 }

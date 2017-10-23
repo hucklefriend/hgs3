@@ -8,10 +8,8 @@ namespace Hgs3\Http\Controllers\Game;
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Http\Requests\Game\GameSoftRequest;
 use Hgs3\Models\Orm;
-use Hgs3\Models\User\FavoriteGame;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
-use Illuminate\Support\Facades\Auth;
 
 class SoftController extends Controller
 {
@@ -46,17 +44,7 @@ class SoftController extends Controller
     {
         // TODO 発売日が過ぎていないとレビューを投稿するリンクは出さない
 
-        $data = Soft::getDetail($soft);
-
-        if (Auth::check()) {
-            $fav = new FavoriteGame();
-            $data['isFavorite'] = $fav->isFavorite(Auth::id(), $soft->id);
-            $data['playedGame'] = Orm\UserPlayedSoft::findByUserAndGame(Auth::id(), $soft->id);
-        }
-
-        $data['csrfToken'] = csrf_token();
-
-        return view('game.soft.detail', $data);
+        return view('game.soft.detail', Soft::getDetail($soft));
     }
 
     /**

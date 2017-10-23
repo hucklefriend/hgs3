@@ -26,12 +26,12 @@ class InjusticeReviewController extends Controller
     /**
      * 不正報告入力画面
      *
-     * @param \Hgs3\Models\Orm\Review $review
-     * @return $this
+     * @param Orm\Review $review
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function input(\Hgs3\Models\Orm\Review $review)
     {
-        return view('game.injustice_review.input')->with([
+        return view('game.injustice_review.input', [
             'review' => $review,
             'pkg'    => GamePackage::find($review->package_id),
             'writer' => User::find($review->user_id)
