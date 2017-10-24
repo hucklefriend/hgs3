@@ -64,8 +64,8 @@
             <div class="card-body">
                 <h5 class="card-title">取扱いゲーム</h5>
                 <p class="card-text">
-                    @foreach ($handleGameIds as $handleGameId)
-                        <a href="{{ url2('game/soft/' . $handleGameId) }}">{{ $handleGames[$handleGameId] }}</a>@if (!$loop->last)、@endif
+                    @foreach ($handleSoftIds as $handleSoftId)
+                        <a href="{{ url2('game/soft/' . $handleSoftId) }}">{{ $handleSofts[$handleSoftId] }}</a>@if (!$loop->last)、@endif
                     @endforeach
                 </p>
             </div>
@@ -73,7 +73,7 @@
         <div class="card card_site">
             <div class="card-body">
                 <h5 class="card-title">紹介文</h5>
-                <p class="card-text">{{ $site->presentation }}</p>
+                <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
             </div>
         </div>
         <div class="card card_site">

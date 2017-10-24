@@ -19,16 +19,13 @@ class Site
         DB::table('sites')->truncate();
         DB::table('site_new_arrivals')->truncate();
         DB::table('site_search_indices')->truncate();
-        DB::table('site_handle_games')->truncate();
-
-
-        $site = new \Hgs3\Models\Site\Site();
+        DB::table('site_handle_softs')->truncate();
 
         $users = User::get();
         $maxUser = $users->count() - 1;
 
-        $gameIds = GameSoft::getIds();
-        $maxGame = count($gameIds) - 1;
+        $softIds = GameSoft::getIds();
+        $maxSoft = count($softIds) - 1;
 
         $rates = [0, 15, 18];
 
@@ -55,15 +52,15 @@ class Site
                 $orm->registered_timestamp = time();
                 $orm->updated_timestamp = time();
 
-                $handleGameNum = rand(5, 20);
-                $handleGame = '';
-                for ($k = 0; $k < $handleGameNum; $k++) {
-                    $handleGame .= $gameIds[rand(0, $maxGame)] . ',';
+                $handleSoftNum = rand(5, 20);
+                $handleSoft = '';
+                for ($k = 0; $k < $handleSoftNum; $k++) {
+                    $handleSoft .= $softIds[rand(0, $maxSoft)] . ',';
                 }
 
-                rtrim($handleGame, ',');
+                rtrim($handleSoft, ',');
 
-                $site->save($u, $orm, $handleGame);
+                \Hgs3\Models\Site::save($u, $orm, $handleSoft);
             }
         }
     }

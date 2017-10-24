@@ -4,7 +4,8 @@
  */
 
 namespace Hgs3\Models\User;
-use Hgs3\User;
+
+use Hgs3\Models\User;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class FavoriteSite
      * @param User $user
      * @param Orm\site $site
      */
-    public function add(User $user, Orm\Site $site)
+    public static function add(User $user, Orm\Site $site)
     {
         $sql =<<< SQL
 INSERT IGNORE INTO user_favorite_sites
@@ -27,31 +28,34 @@ SQL;
 
         DB::insert($sql, [$user->id, $site->id]);
 
-        Timeline\ToMe::addSiteFavoriteText($site->user_id, $site->id, $site->name, $user->id, $user->name);
+        $webmaster = User::find($site->user_id);
+        if ($webmaster) {
+            Timeline\ToMe::addSiteFavoriteText($webmaster, $site, $user);
+        }
     }
 
     /**
      * 削除
      *
-     * @param $userId
-     * @param $siteId
+     * @param User $user
+     * @param Orm\Site $site
      */
-    public function remove($userId, $siteId)
+    public static function remove(User $user, Orm\Site $site)
     {
         DB::table('user_favorite_sites')
-            ->where('user_id', $userId)
-            ->where('site_id', $siteId)
+            ->where('user_id', $user->id)
+            ->where('site_id', $site->id)
             ->delete();
     }
 
     /**
      * お気に入り登録済みか
      *
-     * @param $userId
-     * @param $siteId
+     * @param int $userId
+     * @param int $siteId
      * @return bool
      */
-    public function isFavorite($userId, $siteId)
+    public static function isFavorite($userId, $siteId)
     {
         return DB::table('user_favorite_sites')
             ->where('user_id', $userId)
@@ -62,10 +66,10 @@ SQL;
     /**
      * ユーザーを取得
      *
-     * @param $siteId
+     * @param int $siteId
      * @return \Illuminate\Support\Collection
      */
-    public function getOldUsers($siteId)
+    public static function getOldUsers($siteId)
     {
         return DB::table('user_favorite_sites')
             ->where('site_id', $siteId)
@@ -77,10 +81,10 @@ SQL;
     /**
      * 一覧を取得
      *
-     * @param $userId
+     * @param int $userId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function get($userId)
+    public static function get($userId)
     {
         return DB::table('user_favorite_sites')
             ->where('user_id', $userId)

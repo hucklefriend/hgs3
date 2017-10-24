@@ -20,7 +20,7 @@ class Good
      * @param User $user
      * @return bool
      */
-    public function isGood(Orm\Site $site, User $user)
+    public static function isGood(Orm\Site $site, User $user)
     {
         $num = DB::table('site_good_histories')
             ->where('site_id', $site->id)
@@ -37,12 +37,12 @@ class Good
      * @param User $user
      * @return bool
      */
-    public function good(Orm\Site $site, User $user)
+    public static function good(Orm\Site $site, User $user)
     {
         $now = (new \DateTime())->format('Y-m-d H:i:s');
 
         // 現在の最大いいね数を覚えておく(タイムライン用)
-        $maxGoodNum = $site->max_good_num;
+        $prevMaxGoodNum = $site->max_good_num;
 
         DB::beginTransaction();
         try  {
@@ -82,8 +82,11 @@ SQL;
         }
 
         // タイムライン
-        Timeline\ToMe::addSiteFavoriteText($site->user_id, $site->id, $site->name, $user->id, $user->name);
-        Timeline\FavoriteSite::addGoodNumText($site->id, $site->name, $site->good_num, $maxGoodNum);
+        $webMaster = User::find($site->user_id);
+        if ($webMaster) {
+            Timeline\ToMe::addSiteFavoriteText($webMaster, $site, $user);
+        }
+        Timeline\FavoriteSite::addGoodNumText($site, $prevMaxGoodNum);
 
         return true;
     }
@@ -95,7 +98,7 @@ SQL;
      * @param User $user
      * @return bool
      */
-    public function cancelGood(Orm\Site $site, User $user)
+    public static function cancelGood(Orm\Site $site, User $user)
     {
         // いいね数を減らす
         $site->good_num--;

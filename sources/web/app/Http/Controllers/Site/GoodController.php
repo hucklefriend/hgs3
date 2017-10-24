@@ -64,8 +64,6 @@ class GoodController extends Controller
             return abort(403);
         }
 
-        return view('site.goodHistory', [
-            'site' => $site
-        ]);
+        return view('site.goodHistory', ['site' => $site]);
     }
 }

@@ -52,6 +52,30 @@ class GameSoft extends \Eloquent
     }
 
     /**
+     * データをハッシュで取得
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public static function getHash(array $ids = [])
+    {
+        if (empty($ids)) {
+            $data = self::get();
+        } else {
+            $data = self::whereIn('id', $ids)
+                ->get();
+        }
+
+        $result = [];
+        foreach ($data as $row) {
+            $result[$row->id] = $row;
+        }
+
+        unset($data);
+        return $result;
+    }
+
+    /**
      * 表示順を更新
      */
     public static function updateSortOrder()

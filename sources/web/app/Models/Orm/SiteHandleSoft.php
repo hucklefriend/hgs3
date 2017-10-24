@@ -1,6 +1,6 @@
 <?php
 /**
- * ORM: site_handle_games
+ * ORM: site_handle_softs
  */
 
 namespace Hgs3\Models\Orm;

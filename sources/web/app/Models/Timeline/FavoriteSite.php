@@ -29,16 +29,15 @@ class FavoriteSite extends TimelineAbstract
      * いいねがn件に達した
      *
      * @param Orm\Site $site
-     * @param int $goodNum
      * @param int $prevMaxGoodNum
      */
-    public static function addGoodNumText(Orm\Site $site, $goodNum, $prevMaxGoodNum)
+    public static function addGoodNumText(Orm\Site $site, $prevMaxGoodNum)
     {
-        if ($goodNum > 100 && $prevMaxGoodNum < $goodNum && $goodNum % 100 == 0) {
+        if ($site->good_num > 0 && $prevMaxGoodNum < $site->good_num && $site->good_num % 100 == 0) {
             $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」へのいいねが%dに達しました！',
                 url2('site/detail/' . $site->id),
                 $site->name,
-                $goodNum
+                $site->good_num
             );
 
             self::insert($site->id, $text);

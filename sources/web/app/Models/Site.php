@@ -17,32 +17,32 @@ class Site
      * 登録
      *
      * @param User $user
-     * @param Orm\Site $orm
-     * @param string $handleGamesComma
+     * @param Orm\Site $site
+     * @param string $handleSoftsComma
      */
-    public static function save(User $user, Orm\Site $orm, $handleGamesComma)
+    public static function save(User $user, Orm\Site $site, $handleSoftsComma)
     {
-        $isAdd = $orm->id === null;
+        $isAdd = $site->id === null;
 
-        $handleGameIds = explode(',', $handleGamesComma);
+        $handleSoftIds = explode(',', $handleSoftsComma);
 
         if (!$isAdd) {
             // タイムライン用に現在の取扱いゲームを取得
-            $prevHandleGameIds = DB::table('site_handle_games')
+            $prevHandleSoftIds = DB::table('site_handle_softs')
                 ->select(['game_id'])
-                ->where('site_id', $orm->id)
+                ->where('site_id', $site->id)
                 ->get()
-                ->pluck('game_id', 'game_id')
+                ->pluck('soft_id', 'soft_id')
                 ->toArray();
         }
 
         DB::beginTransaction();
         try {
-            $orm->save();
+            $site->save();
 
-            self::saveHandleGame($orm->user_id, $handleGameIds);
+            self::saveHandleSofts($site->user_id, $handleSoftIds);
 
-            self::saveSearchIndex($orm, $handleGameIds);
+            self::saveSearchIndex($site, $handleSoftIds);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -56,19 +56,26 @@ class Site
 
         // タイムライン
         if ($isAdd) {
-            Timeline\FollowUser::addAddSiteText($user->id, $user->name, $orm->id, $orm->name);
+            Timeline\FollowUser::addAddSiteText($user, $site);
 
-            // TODO ループを回さずに、配列を渡して内部で一括登録するようにしたい
-            foreach ($handleGameIds as $gameId) {
-                Timeline\FavoriteSoft::addNewSiteText($gameId, null, $orm->id, $orm->name);
+            if (!empty($handleSoftIds)) {
+                $softHash = Orm\GameSoft::getHash($handleSoftIds);
+                foreach ($handleSoftIds as $softId) {
+                    if (isset($softHash[$softId])) {
+                        Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
+                    }
+                }
+                unset($softHash);
             }
+
         } else {
-            Timeline\FollowUser::addUpdateSiteText($user->id, $user->name, $orm->id, $orm->name);
+            Timeline\FollowUser::addUpdateSiteText($user, $site);
 
             // 直前に取りつかってないゲームを追加
-            foreach ($handleGameIds as $gameId) {
-                if (!isset($prevHandleGameIds[$gameId])) {
-                    Timeline\FavoriteSoft::addNewSiteText($gameId, null, $orm->id, $orm->name);
+            $softHash = Orm\GameSoft::getHash($handleSoftIds);
+            foreach ($handleSoftIds as $softId) {
+                if (!isset($prevHandleSoftIds[$softId]) && isset($softHash[$softId])) {
+                    Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
                 }
             }
         }
@@ -80,56 +87,92 @@ class Site
      * 取扱いゲームを保存
      *
      * @param int $siteId
-     * @param string $handleGameIds
+     * @param array $handleSoftIds
      */
-    private static function saveHandleGame($siteId, array $handleGameIds)
+    private static function saveHandleSofts($siteId, array $handleSoftIds)
     {
-        DB::table('site_handle_games')
+        DB::table('site_handle_softs')
             ->where('site_id', $siteId)
             ->delete();
 
-        if (!empty($handleGameIds)) {
+        if (!empty($handleSoftIds)) {
             $data = [];
-            foreach ($handleGameIds as $gameId) {
-                if (!empty($gameId)) {
+            foreach ($handleSoftIds as $softId) {
+                if (!empty($softId)) {
                     $data[] = [
                             'site_id' => $siteId,
-                            'game_id' => $gameId
+                            'soft_id' => $softId
                         ];
                 }
             }
 
-            DB::table('site_handle_games')
-                ->insert($data);
+            DB::table('site_handle_softs')->insert($data);
         }
     }
 
     /**
      * 検索インデックステーブルに保存
      *
-     * @param Orm\Site $orm
-     * @param array $handleGames
+     * @param Orm\Site $site
+     * @param array $handleSoftIds
      */
-    private static function saveSearchIndex(Orm\Site $orm, array $handleGames)
+    private static function saveSearchIndex(Orm\Site $site, array $handleSoftIds)
     {
         // 先に消す
         DB::table('site_search_indices')
-            ->where('site_id', $orm->id)
+            ->where('site_id', $site->id)
             ->delete();
 
         // 登録
         $sql =<<< SQL
-INSERT IGNORE INTO site_search_indices (site_id, game_id, main_contents_id, gender, rate, updated_timestamp, created_at, updated_at)
+INSERT IGNORE INTO site_search_indices (site_id, soft_id, main_contents_id, gender, rate, updated_timestamp, created_at, updated_at)
 VALUES (?, ?, ?, ?, ?, UNIX_TIMESTAMP(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
 
-        foreach ($handleGames as $gameId) {
-            DB::insert($sql, [$orm->id, $gameId, $orm->main_contents_id, $orm->gender, $orm->rate]);
+        foreach ($handleSoftIds as $softId) {
+            DB::insert($sql, [$site->id, $softId, $site->main_contents_id, $site->gender, $site->rate]);
         }
     }
 
+    /**
+     * トップページ用データの取得
+     *
+     * @return array
+     */
+    public static function getIndexData()
+    {
+        $data = [];
 
-    public static function getNewcomer()
+        // 新着サイト
+        $data['newcomer'] = self::getNewcomer();
+
+        // 更新サイト
+        $data['updated'] = self::getLatestUpdate();
+
+        // 人気サイト
+        $data['good'] = self::getGoodRanking();
+
+        // アクセス数
+        $data['access'] = self::getAccessRanking();
+
+        $userIds = array_merge(
+            $data['newcomer']->pluck('user_id')->toArray(),
+            $data['updated']->pluck('user_id')->toArray(),
+            $data['newcomer']->pluck('user_id')->toArray(),
+            $data['access']->pluck('user_id')->toArray()
+        );
+
+        $data['users'] = User::getNameHash($userIds);
+
+        return $data;
+    }
+
+    /**
+     * 新着サイト
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private static function getNewcomer()
     {
         return DB::table('sites')
             ->orderBy('registered_timestamp', 'DESC')
@@ -137,7 +180,12 @@ SQL;
             ->get();
     }
 
-    public static function getLatestUpdate()
+    /**
+     * 更新日時の新しいサイト
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private static function getLatestUpdate()
     {
         return DB::table('sites')
             ->orderBy('updated_timestamp', 'DESC')
@@ -145,7 +193,12 @@ SQL;
             ->get();
     }
 
-    public static function getAccessRanking()
+    /**
+     * OUT数が多いサイト
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private static function getAccessRanking()
     {
         return DB::table('sites')
             ->orderBy('out_count', 'DESC')
@@ -153,10 +206,15 @@ SQL;
             ->get();
     }
 
-    public function getGoodRanking()
+    /**
+     * いいね数が多いサイト
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private static function getGoodRanking()
     {
         return DB::table('sites')
-            ->orderBy('good_count', 'DESC')
+            ->orderBy('good_num', 'DESC')
             ->take(5)
             ->get();
     }
@@ -214,5 +272,20 @@ SQL;
         }
 
         return $data;
+    }
+
+    /**
+     * 取扱いゲームのIDを取得
+     *
+     * @param int $siteId
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getHandleSofts($siteId)
+    {
+        return Orm\SiteHandleSoft::where('site_id', $siteId)
+            ->select(['soft_id'])
+            ->get()
+            ->pluck('soft_id')
+            ->toArray();
     }
 }
