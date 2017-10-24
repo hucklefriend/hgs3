@@ -6,7 +6,7 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Models\Orm;
-use Hgs3\Models\User\FavoriteGame;
+use Hgs3\Models\User\FavoriteSoft;
 use Hgs3\Models\User;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
@@ -58,10 +58,10 @@ class FavoriteSoftController extends Controller
      */
     public function add(Request $request)
     {
-        $gameId = $request->get('game_id');
-        if ($gameId != null) {
-            $fav = new FavoriteGame();
-            $fav->add(Auth::id(), $gameId);
+        $softId = $request->get('soft_id');
+        $soft = Orm\GameSoft::find($softId);
+        if ($soft != null) {
+            FavoriteSoft::add(Auth::user(), $soft);
         }
 
         return redirect()->back();
@@ -75,10 +75,10 @@ class FavoriteSoftController extends Controller
      */
     public function remove(Request $request)
     {
-        $gameId = $request->get('game_id');
-        if ($gameId != null) {
-            $fav = new FavoriteGame();
-            $fav->remove(Auth::id(), $gameId);
+        $softId = $request->get('soft_id');
+        $soft = Orm\GameSoft::find($softId);
+        if ($soft != null) {
+            FavoriteSoft::remove(Auth::user(), $soft);
         }
 
         return redirect()->back();

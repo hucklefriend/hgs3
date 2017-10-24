@@ -7,7 +7,7 @@ namespace Hgs3\Models\Game;
 
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
-use Hgs3\Models\User\FavoriteGame;
+use Hgs3\Models\User\FavoriteSoft;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -74,7 +74,7 @@ class Soft
         $data['playedUsers'] = self::getPlayedUsers($soft->id);
 
         if (Auth::check()) {
-            $fav = new FavoriteGame();
+            $fav = new FavoriteSoft();
             $data['isFavorite'] = $fav->isFavorite(Auth::id(), $soft->id);
             $data['playedGame'] = Orm\UserPlayedSoft::findByUserAndGame(Auth::id(), $soft->id);
         }
@@ -260,11 +260,11 @@ SQL;
             if ($soft->series_id !== null) {
                 $series = Orm\GameSeries::find($soft->series_id);
                 if ($series) {
-                    Timeline\FavoriteGame::addSameSeriesGameText($soft, $series);
+                    Timeline\FavoriteSoft::addSameSeriesGameText($soft, $series);
                 }
             }
         } else {
-            Timeline\FavoriteGame::addUpdateGameSoftText($soft);
+            Timeline\FavoriteSoft::addUpdateGameSoftText($soft);
         }
         return true;
     }

@@ -31,7 +31,9 @@
                     <p class="card-text">
                         @isset($shops[$package->id])
                             @foreach ($shops[$package->id] as $shop)
-                                @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                                <div>
+                                    @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                                </div>
                             @endforeach
                         @endisset
                     </p>

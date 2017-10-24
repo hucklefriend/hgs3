@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}のレビューを書く</h4>
+    <h4>{{ $soft->name }}のレビューを書く</h4>
     <div>
-        <a href="{{ url2('game/soft') }}/{{ $game->id }}">{{ $game->name }}の詳細</a> |
-        <a href="{{ url2('review/soft') }}/{{ $game->id }}">{{ $game->name }}のレビュー一覧</a>
+        <a href="{{ url2('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}の詳細</a> |
+        <a href="{{ url2('review/soft') }}/{{ $soft->id }}">{{ $soft->name }}のレビュー一覧</a>
     </div>
 
     <hr>
@@ -19,16 +19,20 @@
                 @include ('game.common.package_image', ['imageUrl' => $pkg->small_image_url])
             </div>
             <div class="align-self-top">
-                <div>
-                    <strong>{{ $pkg->name }}</strong>
-                </div>
+                <div><strong>{{ $pkg->name }}</strong></div>
                 <div>
                     <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
                     <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}<br>
                     <i class="fa fa-calendar" aria-hidden="true"></i> {{ $pkg->release_date }}
                 </div>
                 <div>
-                    <a href="{{ $pkg->item_url }}" target="_blank"><img src="{{ url2('img/assocbutt_or_detail._V371070159_.png') }}"></a>
+                    @isset($shops[$pkg->id])
+                        @foreach ($shops[$pkg->id] as $shop)
+                            <div>
+                                @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                            </div>
+                        @endforeach
+                    @endisset
                 </div>
             </div>
         </div>

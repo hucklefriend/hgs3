@@ -245,7 +245,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('review/game') }}/{{ $soft->id }}">レビューを見る</a>
+                                        <a href="{{ url('review/soft') }}/{{ $soft->id }}">レビューを見る</a>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -281,7 +281,7 @@
                                 <hr>
                             @endforeach
                             <div class="text-center">
-                                <a href="{{ url('site/game/') }}/{{ $soft->id }}">
+                                <a href="{{ url('site/soft/') }}/{{ $soft->id }}">
                                     サイトを全て見る
                                 </a>
                             </div>
@@ -320,9 +320,9 @@
                 @auth
                 <div class="card-footer">
                     @if ($isFavorite)
-                        <form action="{{ url('user/favorite_game') }}" method="POST">
+                        <form action="{{ url('user/favorite_soft') }}" method="POST">
                             <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                            <input type="hidden" value="{{ $soft->id }}" name="game_id">
+                            <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                             {{ method_field('DELETE') }}
                             <div class="text-center">
                                 <span style="padding-right: 10px;">登録済み</span>
@@ -330,9 +330,9 @@
                             </div>
                         </form>
                     @else
-                        <form action="{{ url('user/favorite_game') }}" method="POST">
+                        <form action="{{ url('user/favorite_soft') }}" method="POST">
                             <input type="hidden" name="_token" value="{{ $csrfToken }}">
-                            <input type="hidden" value="{{ $soft->id }}" name="game_id">
+                            <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                             <div class="text-center">
                                 <button class="btn btn-info">お気に入りに登録する</button>
                             </div>

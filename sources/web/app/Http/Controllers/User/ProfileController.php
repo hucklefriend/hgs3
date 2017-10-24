@@ -66,7 +66,7 @@ class ProfileController extends Controller
             }
                 break;
             case 'favorite_game':{
-                $fg = new \Hgs3\Models\User\FavoriteGame();
+                $fg = new \Hgs3\Models\User\FavoriteSoft();
                 $data['parts'] = [
                     'favGames' => $fg->get($user->id),
                     'games'    => Orm\GameSoft::getNameHash()
@@ -283,7 +283,7 @@ class ProfileController extends Controller
     {
         $isMyself = $user->id == Auth::id();
 
-        $fg = new \Hgs3\Models\User\FavoriteGame();
+        $fg = new \Hgs3\Models\User\FavoriteSoft();
         $favGames = $fg->get($user->id);
 
         return view('user.profile.favorite_game')->with([

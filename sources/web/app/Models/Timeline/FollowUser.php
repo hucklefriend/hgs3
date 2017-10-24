@@ -145,7 +145,7 @@ class FollowUser extends TimelineAbstract
      * @param User $user
      * @param Orm\GameSoft $soft
      */
-    public static function addAddFavoriteGameText(User $user, Orm\GameSoft $soft)
+    public static function addAddFavoriteSoftText(User $user, Orm\GameSoft $soft)
     {
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%s</a>をお気に入りゲームに登録しました。',
             url2('user/profile/' . $user->id),

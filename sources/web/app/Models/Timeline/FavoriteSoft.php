@@ -9,14 +9,14 @@ use Hgs3\Models\User;
 use Illuminate\Support\Facades\Log;
 use Hgs3\Models\Orm;
 
-class FavoriteGame extends TimelineAbstract
+class FavoriteSoft extends TimelineAbstract
 {
     /**
      * ゲームソフト追加
      *
      * @param Orm\GameSoft $soft
      */
-    public static function addNewGameSoftText(Orm\GameSoft $soft)
+    public static function addNewSoftText(Orm\GameSoft $soft)
     {
         $text = sprintf('「<a href="%s">%s</a>」が追加されました。',
             url2('game/soft/' . $soft->id),
@@ -32,7 +32,7 @@ class FavoriteGame extends TimelineAbstract
      * @param Orm\GameSoft $soft
      * @param Orm\GameSeries $series
      */
-    public static function addSameSeriesGameText(Orm\GameSoft $soft, Orm\GameSeries $series)
+    public static function addSameSeriesSoftText(Orm\GameSoft $soft, Orm\GameSeries $series)
     {
         $text = sprintf('<a href="%s">%s</a>シリーズのゲーム「<a href="%s">%s</a>」が追加されました。',
             url2('game/series/' . $series->id),
@@ -49,7 +49,7 @@ class FavoriteGame extends TimelineAbstract
      *
      * @param Orm\GameSoft $soft
      */
-    public static function addUpdateGameSoftText(Orm\GameSoft $soft)
+    public static function addUpdateSoftText(Orm\GameSoft $soft)
     {
         $text = sprintf('「<a href="%s">%s</a>」の情報が更新されました。',
             url2('game/soft/' . $soft->id),
@@ -65,7 +65,7 @@ class FavoriteGame extends TimelineAbstract
      * @param Orm\GameSoft $soft
      * @param User $user
      */
-    public static function addFavoriteGameText(Orm\GameSoft $soft, User $user)
+    public static function addFavoriteSoftText(Orm\GameSoft $soft, User $user)
     {
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%s</a>をお気に入りゲームに登録しました。',
             url2('user/profile/' . $user->id),
@@ -123,7 +123,7 @@ class FavoriteGame extends TimelineAbstract
     private static function insert($softId, $text)
     {
         try {
-            self::getDB()->favorite_game_timeline->insertOne([
+            self::getDB()->favorite_soft_timeline->insertOne([
                 'soft_id' => $softId,
                 'text'    => $text,
                 'time'    => microtime(true)

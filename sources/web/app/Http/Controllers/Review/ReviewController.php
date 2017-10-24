@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers\Review;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Review\WriteRequest;
+use Hgs3\Models\Game\Package;
 use Hgs3\Models\Review;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
@@ -50,7 +51,6 @@ class ReviewController extends Controller
         $total = Orm\ReviewTotal::find($soft->id);
         if ($total !== null) {
             $data['total'] = $total;
-
             $data['reviews'] = Review::getNewArrivalsBySoft($soft->id, 10);
 
             $pager = new LengthAwarePaginator([], $total->review_num, 10);
@@ -65,18 +65,20 @@ class ReviewController extends Controller
     /**
      * パッケージ選択
      *
-     * @param Orm\GameSoft $gameSoft
+     * @param Orm\GameSoft $soft
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function packageSelect(Orm\GameSoft $gameSoft)
+    public function packageSelect(Orm\GameSoft $soft)
     {
-        $review = new \Hgs3\Models\Review();
+        $review = new Review();
+        $packages = $review->getPackageList($soft->id);
 
         return view('review.packageSelect', [
-            'gameSoft'  => $gameSoft,
-            'packages'  => $review->getPackageList($gameSoft->id),
-            'drafts'    => Orm\ReviewDraft::getHashByGame(Auth::id(), $gameSoft->id),
-            'written'   => Orm\Review::getHashByGame(Auth::id(), $gameSoft->id),
+            'soft'      => $soft,
+            'packages'  => $packages,
+            'shops'     => Package::getShopData(array_pluck($packages, 'id')),
+            'drafts'    => Orm\ReviewDraft::getHashBySoft(Auth::id(), $soft->id),
+            'written'   => Orm\Review::getHashBySoft(Auth::id(), $soft->id),
             'csrfToken' => csrf_token(),
             'dateInt'   => $this->getDateInt()
         ]);
@@ -96,13 +98,14 @@ class ReviewController extends Controller
     /**
      * 入力画面
      *
-     * @param Orm\GamePackage $gamePackage
+     * @param Orm\GameSoft $soft
+     * @param Orm\GamePackage $package
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function input(Orm\GamePackage $gamePackage)
+    public function input(Orm\gameSoft $soft, Orm\GamePackage $package)
     {
         // 発売日が過ぎていないパッケージ
-        if ($gamePackage->release_int > $this->getDateInt()) {
+        if ($package->release_int > $this->getDateInt()) {
             App::abort(404);
         }
 
@@ -129,16 +132,16 @@ class ReviewController extends Controller
      * 確認
      *
      * @param WriteRequest $request
-     * @param Orm\GamePackage $gamePackage
+     * @param Orm\GamePackage $package
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function confirm(WriteRequest $request, Orm\GamePackage $gamePackage)
+    public function confirm(WriteRequest $request, Orm\GamePackage $package)
     {
         $draft = new Orm\ReviewDraft;
         $this->setDraftData($request, $draft);
 
         return view('review.confirm', [
-            'gamePackage' => $gamePackage,
+            'package' => $package,
             'user'        => Auth::user(),
             'draft'       => $draft
         ]);
@@ -152,7 +155,7 @@ class ReviewController extends Controller
      * @param Orm\GamePackage $package
      * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function save(WriteRequest $request, Orm\GameSoft $soft, Orm\GamePackage $gamePackage)
+    public function save(WriteRequest $request, Orm\GameSoft $soft, Orm\GamePackage $package)
     {
         // TODO: 発売日が過ぎているか
 
@@ -161,38 +164,38 @@ class ReviewController extends Controller
 
         if ($draftType == -1) {
             // 入力画面に戻る
-            return redirect('review/write/' . $gamePackage->id)->withInput();
+            return redirect('review/write/' . $package->id)->withInput();
         } if ($draftType == 1) {
             // 下書き保存
-            $draft = Orm\ReviewDraft::getData(Auth::id(), $gamePackage->id);
+            $draft = Orm\ReviewDraft::getData(Auth::id(), $package->id);
             if ($draft === null) {
                 $draft = new Orm\ReviewDraft;
             }
 
             $this->setDraftData($request, $draft);
-            $draft->game_id = $gamePackage->game_id;
-            $draft->package_id = $gamePackage->id;
+            $draft->soft_id = $soft->id;
+            $draft->package_id = $package->id;
             $draft->save();
 
             return view('review.saveDraft', [
-                'gamePackage' => $gamePackage,
-                'gameSoft'    => Orm\GameSoft::find($gamePackage->soft_id)
+                'package' => $package,
+                'soft'    => $soft
             ]);
         } else {
             // 下書きに保存
             $draft = new Orm\ReviewDraft;
             $this->setDraftData($request, $draft);
-            $draft->soft_id = $gamePackage->soft_id;
-            $draft->package_id = $gamePackage->id;
+            $draft->soft_id = $package->soft_id;
+            $draft->package_id = $package->id;
 
             // レビュー投稿
             $review = new Orm\Review($draft->toArray());
             $review->save();
 
             return view('review.complete', [
-                'reviewId'    => $review->id,
-                'gamePackage' => $gamePackage,
-                'game'        => Orm\GameSoft::find($gamePackage->soft_id)
+                'reviewId' => $review->id,
+                'package'  => $package,
+                'soft'     => $soft
             ]);
         }
     }
@@ -323,7 +326,7 @@ class ReviewController extends Controller
      */
     public function detail(Orm\Review $review)
     {
-        $gameSoft = Orm\GameSoft::find($review->soft_id);
+        $soft = Orm\GameSoft::find($review->soft_id);
 
         $r = new Review();
 
@@ -337,8 +340,8 @@ class ReviewController extends Controller
         }
 
         return view('review.detail', [
-            'gameSoft'  => $gameSoft,
-            'pkg'       => Orm\GamePackage::find($review->package_id),
+            'soft'      => $soft,
+            'package'   => Orm\GamePackage::find($review->package_id),
             'review'    => $review,
             'isWriter'  => $isWriter,
             'hasGood'   => $hasGood,

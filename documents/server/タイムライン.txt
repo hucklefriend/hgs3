@@ -1,4 +1,4 @@
-○お気に入りゲームタイムライン db.hgs3.favorite_game_timeline
+○お気に入りゲームタイムライン db.hgs3.favorite_soft_timeline
 
 
 ・ゲーム情報が更新された

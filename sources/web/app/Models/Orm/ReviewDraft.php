@@ -59,14 +59,14 @@ class ReviewDraft extends \Eloquent
     /**
      * 同じゲームで下書きがあるパッケージIDのハッシュを取得
      *
-     * @param $userId
-     * @param $gameId
+     * @param int $userId
+     * @param int $softId
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getHashByGame($userId, $gameId)
+    public static function getHashBySoft($userId, $softId)
     {
         return self::where('user_id', $userId)
-            ->where('game_id', $gameId)
+            ->where('soft_id', $softId)
             ->get()
             ->pluck('package_id', 'package_id');
     }
@@ -75,12 +75,14 @@ class ReviewDraft extends \Eloquent
      * データを取得
      *
      * @param int $userId
+     * @param int $softId
      * @param int $packageId
      * @return Model|null|static
      */
-    public static function getData($userId, $packageId)
+    public static function getData($userId, $softId, $packageId)
     {
         return ReviewDraft::where('user_id', $userId)
+            ->where('soft_id', $softId)
             ->where('package_id', $packageId)
             ->first();
     }

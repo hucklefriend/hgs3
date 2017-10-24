@@ -25,7 +25,7 @@ class Review
     {
         return DB::table('reviews')
             ->select(['id'])
-            ->where('game_id', $gameId)
+            ->where('soft_id', $gameId)
             ->where('status', Status::OPEN)
             ->count(['id']);
     }
@@ -66,16 +66,15 @@ class Review
 SELECT
   review.*
   , users.name AS user_name
-  , game_packages.name AS soft_name
-  , game_packages.item_url
+  , game_packages.name AS package_name
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, game_id, good_num, is_spoiler
+    SELECT id, point, user_id, post_date, title, soft_id, good_num, is_spoiler, package_id
     FROM reviews
     ORDER BY id DESC
     LIMIT {$num}
   ) review LEFT OUTER JOIN users ON review.user_id = users.id
-  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
+  LEFT OUTER JOIN game_packages ON review.package_id = game_packages.id
 SQL;
 
         return DB::select($sql);
@@ -95,7 +94,6 @@ SQL;
 SELECT
   review.*
   , softs.name AS soft_name
-  , game_packages.item_url
   , game_packages.small_image_url
 FROM (
   SELECT *
@@ -103,7 +101,7 @@ FROM (
   ORDER BY point DESC
   LIMIT {$num}
 ) review LEFT OUTER JOIN game_softs AS softs ON softs.id = review.soft_id
-  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
+  LEFT OUTER JOIN game_packages ON softs.original_package_id = game_packages.id
 SQL;
 
         return DB::select($sql);
@@ -123,16 +121,15 @@ SQL;
 SELECT
   review.*
   , users.name AS user_name
-  , game_packages.name AS soft_name
-  , game_packages.item_url
+  , game_packages.name AS package_name
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, game_id, latest_good_num, good_num, is_spoiler
+    SELECT id, point, user_id, post_date, title, soft_id, latest_good_num, good_num, is_spoiler, package_id
     FROM reviews
     ORDER BY latest_good_num DESC
     LIMIT {$num}
   ) review LEFT OUTER JOIN users ON review.user_id = users.id
-  LEFT OUTER JOIN game_packages ON games.original_package_id = game_packages.id
+  LEFT OUTER JOIN game_packages ON review.package_id = game_packages.id
 SQL;
 
         return DB::select($sql);
@@ -153,7 +150,7 @@ SQL;
 SELECT
   reviews.*
   , users.name AS user_name
-  , pkg.name soft_name
+  , pkg.name AS package_name
   , pkg.is_adult
   , pkg.small_image_url
 FROM (
@@ -230,7 +227,7 @@ SQL;
         // タイムライン登録
         $soft = Orm\GameSoft::find($draft->soft_id);
         if ($soft !== null) {
-            Timeline\FavoriteGame::addNewReviewText($soft, $review);
+            Timeline\FavoriteSoft::addNewReviewText($soft, $review);
             //Timeline\FollowUser::addNewReviewText();
         }
 
@@ -426,9 +423,9 @@ SELECT
   , p.acronym platform_name
   , c.name company_name
 FROM  (
-  SELECT id, platform_id, name, small_image_url, item_url, company_id, release_date, release_int
+  SELECT id, platform_id, `name`, small_image_url, company_id, release_date, release_int
   FROM game_packages
-  WHERE game_id = ?
+  WHERE id IN (SELECT package_id FROM game_package_links WHERE soft_id = ?)
   ORDER BY release_int
 ) pkg INNER JOIN game_platforms p ON pkg.platform_id = p.id
   LEFT OUTER JOIN game_companies c ON c.id = pkg.company_id

@@ -4,12 +4,12 @@
     <section>
         <div class="d-flex align-items-stretch">
             <div class="p-2 text-center">
-                @include('game.common.package_image', ['imageUrl' => $pkg->small_image_url])
+                @include('game.common.package_image', ['imageUrl' => $package->small_image_url])
             </div>
             <div class="p-12">
-                <h4>{{ $pkg->name }}</h4>
-                <a href="{{ url2('game/soft') }}/{{ $game->id }}">ゲームの詳細</a> |
-                <a href="{{ url('review/game') }}/{{ $game->id }}">レビュー一覧</a>
+                <h4>{{ $package->name }}</h4>
+                <a href="{{ url2('game/soft') }}/{{ $soft->id }}">ゲームの詳細</a> |
+                <a href="{{ url('review/soft') }}/{{ $soft->id }}">レビュー一覧</a>
             </div>
         </div>
     </section>

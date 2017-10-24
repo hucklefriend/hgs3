@@ -4,7 +4,7 @@
  */
 
 namespace Hgs3\Models\Test;
-use Hgs3\Models\User\FavoriteGame;
+use Hgs3\Models\User\FavoriteSoft;
 use Illuminate\Support\Facades\DB;
 
 class UserFavoriteGame
@@ -21,7 +21,7 @@ class UserFavoriteGame
 
         $games = GameSoft::get();
 
-        $fav = new FavoriteGame();
+        $fav = new FavoriteSoft();
 
         /*
         DB::table('user_favorite_games')

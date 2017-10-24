@@ -5,31 +5,31 @@
 
 namespace Hgs3\Models\User;
 use Hgs3\Models\Timeline;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class FavoriteGame
+class FavoriteSoft
 {
     /**
      * 登録
      *
      * @param User $user
-     * @param Orm\GameSoft $game
+     * @param Orm\GameSoft $soft
      * @return bool
      */
-    public function add(User $user, Orm\GameSoft $game)
+    public static function add(User $user, Orm\GameSoft $soft)
     {
         $sql =<<< SQL
-INSERT IGNORE INTO user_favorite_games
-(user_id, game_id, rank, created_at, updated_at)
+INSERT IGNORE INTO user_favorite_softs
+(user_id, soft_id, rank, created_at, updated_at)
 VALUES (?, ?, null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
 
         DB::beginTransaction();
         try {
-            DB::insert($sql, [$user->id, $game->id]);
+            DB::insert($sql, [$user->id, $soft->id]);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -42,8 +42,8 @@ SQL;
         }
 
         // TODO 追加->取り消しの繰り返しをさせない
-        Timeline\FavoriteGame::addFavoriteGameText($game->id, $game->name, $user->id, $user->name);
-        Timeline\FollowUser::addAddFavoriteGameText($user->id, $user->name, $game->id, $game->name);
+        Timeline\FavoriteSoft::addFavoriteSoftText($soft, $user);
+        Timeline\FollowUser::addAddFavoriteSoftText($user, $soft);
 
         return true;
     }
@@ -51,41 +51,41 @@ SQL;
     /**
      * 削除
      *
-     * @param $userId
-     * @param $gameId
+     * @param User $user
+     * @param Orm\GameSoft $soft
      */
-    public function remove($userId, $gameId)
+    public static function remove(User $user, Orm\GameSoft $soft)
     {
-        DB::table('user_favorite_games')
-            ->where('user_id', $userId)
-            ->where('game_id', $gameId)
+        DB::table('user_favorite_softs')
+            ->where('user_id', $user->id)
+            ->where('soft_id', $soft->id)
             ->delete();
     }
 
     /**
      * お気に入り登録済みか
      *
-     * @param $userId
-     * @param $gameId
+     * @param int $userId
+     * @param int $softId
      * @return bool
      */
-    public function isFavorite($userId, $gameId)
+    public function isFavorite($userId, $softId)
     {
-        return DB::table('user_favorite_games')
+        return DB::table('user_favorite_softs')
             ->where('user_id', $userId)
-            ->where('game_id', $gameId)
+            ->where('soft_id', $softId)
             ->count('user_id') > 0;
     }
 
     /**
      * 取得
      *
-     * @param $userId
+     * @param int $userId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function get($userId)
     {
-        return DB::table('user_favorite_games')
+        return DB::table('user_favorite_softs')
             ->where('user_id', $userId)
             ->orderBy('id', 'DESC')
             ->paginate(20);
