@@ -74,9 +74,9 @@ Route::get('/game/soft/{soft}', 'Game\SoftController@detail');
 // レビュー
 Route::get('/review', 'Review\ReviewController@index')->name('review');
 Route::get('/review/package_select/{soft}', 'Review\ReviewController@packageSelect')->middleware('auth');
-Route::get('/review/write/{package}', 'Review\ReviewController@input')->middleware('auth');
-Route::post('/review/confirm/{package}', 'Review\ReviewController@confirm')->middleware('auth');
-Route::post('/review/save/{package}', 'Review\ReviewController@save')->middleware('auth');
+Route::get('/review/write/{soft}/{package}', 'Review\ReviewController@input')->middleware('auth');
+Route::post('/review/confirm/{soft}/{package}', 'Review\ReviewController@confirm')->middleware('auth');
+Route::post('/review/save/{soft}/{package}', 'Review\ReviewController@save')->middleware('auth');
 Route::delete('/review/draft/{softId}/{packageId}', 'Review\ReviewController@deleteDraft')->middleware('auth');
 Route::get('/review/soft/{soft}', 'Review\ReviewController@soft');
 Route::post('/review/good/{review}', 'Review\GoodController@good')->middleware('auth');
@@ -115,8 +115,6 @@ Route::get('/site/{site}', 'Site\SiteController@detail')->middleware('auth');
 Route::post('/site/good/{site}', 'Site\GoodController@good')->middleware('auth');
 Route::delete('/site/good/{site}', 'Site\GoodController@cancel')->middleware('auth');
 
-
-
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');
 Route::get('/game/company/{company}', 'Game\CompanyController@detail');
@@ -128,7 +126,6 @@ Route::get('/game/platform/{platform}', 'Game\PlatformController@detail');
 // シリーズ
 Route::get('/game/series', 'Game\SeriesController@index');
 Route::get('/game/series/{series}', 'Game\SeriesController@detail');
-
 
 // マイページ
 Route::get('/mypage', 'User\MyPageController@index')->middleware('auth');

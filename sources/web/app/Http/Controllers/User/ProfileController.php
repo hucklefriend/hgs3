@@ -65,11 +65,11 @@ class ProfileController extends Controller
                 ];
             }
                 break;
-            case 'favorite_game':{
+            case 'favorite_soft':{
                 $fg = new \Hgs3\Models\User\FavoriteSoft();
                 $data['parts'] = [
-                    'favGames' => $fg->get($user->id),
-                    'games'    => Orm\GameSoft::getNameHash()
+                    'favoriteSofts' => $fg->get($user->id),
+                    'softs'         => Orm\GameSoft::getNameHash()
                 ];
             }
                 break;
@@ -90,7 +90,7 @@ class ProfileController extends Controller
             }
                 break;
             case 'favorite_site': {
-                $fs = new \Hgs3\Models\User\FavoriteSite();
+                $fs = User\FavoriteSite();
                 $favSites = $fs->get($user->id);
 
                 $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
@@ -283,14 +283,13 @@ class ProfileController extends Controller
     {
         $isMyself = $user->id == Auth::id();
 
-        $fg = new \Hgs3\Models\User\FavoriteSoft();
-        $favGames = $fg->get($user->id);
+        $favoriteSofts = FavoriteSoft::get($user->id);
 
-        return view('user.profile.favorite_game')->with([
-            'user'     => $user,
-            'isMyself' => $isMyself,
-            'favGames' => $favGames,
-            'games'    => GameSoft::getNameHash(array_pluck($favGames->items(), 'game_id'))
+        return view('user.profile.favorite_soft')->with([
+            'user'          => $user,
+            'isMyself'      => $isMyself,
+            'favoriteSofts' => $favoriteSofts,
+            'softs'         => Orm\GameSoft::getNameHash(array_pluck($favoriteSofts->items(), 'soft_id'))
         ]);
     }
 
@@ -304,12 +303,10 @@ class ProfileController extends Controller
     {
         $isMyself = $user->id == Auth::id();
 
-        $site = new \Hgs3\Models\Site();
-
         return view('user.profile.site')->with([
             'user'     => $user,
             'isMyself' => $isMyself,
-            'sites'    => $site->get($user->id)
+            'sites'    => Site::get($user->id)
         ]);
     }
 
@@ -323,8 +320,7 @@ class ProfileController extends Controller
     {
         $isMyself = $user->id == Auth::id();
 
-        $fs = new \Hgs3\Models\User\FavoriteSite();
-        $favSites = $fs->get($user->id);
+        $favSites = FavoriteSiteget($user->id);
         $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
 
         return view('user.profile.favorite_site')->with([

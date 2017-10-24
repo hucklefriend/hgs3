@@ -21,7 +21,7 @@
             <div class="align-self-top">
                 <div><strong>{{ $pkg->name }}</strong></div>
                 <div>
-                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
+                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company/' . $pkg->company_id) }}">{{ $pkg->company_name }}</a>
                     <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}<br>
                     <i class="fa fa-calendar" aria-hidden="true"></i> {{ $pkg->release_date }}
                 </div>
@@ -43,19 +43,19 @@
             <div style="padding: 5px 0;">
                     @if (isset($written[$pkg->id]))
                 <p>このパッケージのレビューは投稿済みです。</p>
-                <a href="{{ url2('review/detail') }}/{{ $written[$pkg->id] }}">このパッケージのレビューを確認</a>
+                <a href="{{ url2('review/detail/' . $written[$pkg->id]) }}">このパッケージのレビューを確認</a>
                     @else
                         @if (isset($drafts[$pkg->id]))
                 <span class="badge badge-info">下書き保存中</span><br>
                         @endif
                 <i class="fa fa-pencil" aria-hidden="true"></i>
-                <a href="{{ url2('review/write') }}/{{ $pkg->id }}">このパッケージのレビューを書く</a>
+                <a href="{{ url2('review/write/' . $soft->id . '/' . $pkg->id) }}">このパッケージのレビューを書く</a>
                     @endif
             </div>
 
             @if (isset($drafts[$pkg->id]))
                 <div class="align-self-end" style="margin-left: 10px;">
-                    <form method="POST" action="{{ url2('review/draft') }}/{{ $pkg->id }}" onsubmit="return confirm('下書きを削除してよろしいですか？');">
+                    <form method="POST" action="{{ url2('review/draft/' . $pkg->id) }}" onsubmit="return confirm('下書きを削除してよろしいですか？');">
                         {{ csrf_tag($csrfToken) }}
                         {{ method_field('DELETE') }}
                         <button class="btn btn-warning btn-sm">下書きを削除</button>

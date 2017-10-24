@@ -5,10 +5,10 @@
 
     <ul class="list-group">
         <li class="list-group-item">
-            <a href="{{ url2('review/soft') }}/{{ $game->id }}" class="block_link">{{ $game->name }}のレビュー一覧</a>
+            <a href="{{ url2('review/soft/' . $soft->id) }}" class="block_link">{{ $soft->name }}のレビュー一覧</a>
         </li>
         <li class="list-group-item">
-            <a href="{{ url2('review/detail') }}/{{ $reviewId }}" class="block_link">{{ $game->name }}投稿したレビューの確認</a>
+            <a href="{{ url2('review/detail/' . $reviewId) }}" class="block_link">{{ $soft->name }}投稿したレビューの確認</a>
         </li>
         <li class="list-group-item">
             <a href="{{ url2('user/review') }}" class="block_link">自分のレビュー一覧</a>

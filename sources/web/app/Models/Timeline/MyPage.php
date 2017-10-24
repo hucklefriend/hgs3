@@ -115,7 +115,7 @@ class MyPage extends TimelineAbstract
         ];
 
         $db = self::getDB();
-        return $db->favorite_game_timeline->find($filter, $options)->toArray();
+        return $db->favorite_soft_timeline->find($filter, $options)->toArray();
     }
 
     /**

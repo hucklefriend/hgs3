@@ -113,18 +113,19 @@ class ReviewController extends Controller
         if (!empty(old())) {
             $draft = new Orm\ReviewDraft(old());
         } else {
-            $draft = Orm\ReviewDraft::getData(Auth::id(), $gamePackage->id);
+            $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id, $package->id);
             if ($draft == null) {
-                $draft = Orm\ReviewDraft::getDefault(Auth::id(), $gamePackage->game_id);
+                $draft = Orm\ReviewDraft::getDefault(Auth::id(), $soft->id, $package->id);
             } else {
                 $isDraft = true;
             }
         }
 
         return view('review.input', [
-            'gamePackage' => $gamePackage,
-            'draft'       => $draft,
-            'isDraft'     => $isDraft
+            'soft'    => $soft,
+            'package' => $package,
+            'draft'   => $draft,
+            'isDraft' => $isDraft
         ]);
     }
 
@@ -133,17 +134,19 @@ class ReviewController extends Controller
      *
      * @param WriteRequest $request
      * @param Orm\GamePackage $package
+     * @param Orm\gameSoft $soft
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function confirm(WriteRequest $request, Orm\GamePackage $package)
+    public function confirm(WriteRequest $request, Orm\gameSoft $soft, Orm\GamePackage $package)
     {
         $draft = new Orm\ReviewDraft;
         $this->setDraftData($request, $draft);
 
         return view('review.confirm', [
+            'soft'    => $soft,
             'package' => $package,
-            'user'        => Auth::user(),
-            'draft'       => $draft
+            'user'    => Auth::user(),
+            'draft'   => $draft
         ]);
     }
 
@@ -164,10 +167,10 @@ class ReviewController extends Controller
 
         if ($draftType == -1) {
             // 入力画面に戻る
-            return redirect('review/write/' . $package->id)->withInput();
+            return redirect('review/write/' . $soft->id . '/' . $package->id)->withInput();
         } if ($draftType == 1) {
             // 下書き保存
-            $draft = Orm\ReviewDraft::getData(Auth::id(), $package->id);
+            $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id, $package->id);
             if ($draft === null) {
                 $draft = new Orm\ReviewDraft;
             }

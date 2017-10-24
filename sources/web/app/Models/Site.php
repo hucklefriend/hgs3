@@ -20,7 +20,7 @@ class Site
      * @param Orm\Site $orm
      * @param string $handleGamesComma
      */
-    public function save(User $user, Orm\Site $orm, $handleGamesComma)
+    public static function save(User $user, Orm\Site $orm, $handleGamesComma)
     {
         $isAdd = $orm->id === null;
 
@@ -40,9 +40,9 @@ class Site
         try {
             $orm->save();
 
-            $this->saveHandleGame($orm->user_id, $handleGameIds);
+            self::saveHandleGame($orm->user_id, $handleGameIds);
 
-            $this->saveSearchIndex($orm, $handleGameIds);
+            self::saveSearchIndex($orm, $handleGameIds);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -82,7 +82,7 @@ class Site
      * @param int $siteId
      * @param string $handleGameIds
      */
-    private function saveHandleGame($siteId, array $handleGameIds)
+    private static function saveHandleGame($siteId, array $handleGameIds)
     {
         DB::table('site_handle_games')
             ->where('site_id', $siteId)
@@ -110,7 +110,7 @@ class Site
      * @param Orm\Site $orm
      * @param array $handleGames
      */
-    private function saveSearchIndex(Orm\Site $orm, array $handleGames)
+    private static function saveSearchIndex(Orm\Site $orm, array $handleGames)
     {
         // 先に消す
         DB::table('site_search_indices')
@@ -129,7 +129,7 @@ SQL;
     }
 
 
-    public function getNewcomer()
+    public static function getNewcomer()
     {
         return DB::table('sites')
             ->orderBy('registered_timestamp', 'DESC')
@@ -137,7 +137,7 @@ SQL;
             ->get();
     }
 
-    public function getLatestUpdate()
+    public static function getLatestUpdate()
     {
         return DB::table('sites')
             ->orderBy('updated_timestamp', 'DESC')
@@ -145,7 +145,7 @@ SQL;
             ->get();
     }
 
-    public function getAccessRanking()
+    public static function getAccessRanking()
     {
         return DB::table('sites')
             ->orderBy('out_count', 'DESC')
@@ -167,12 +167,13 @@ SQL;
      * @param $userId
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function get($userId)
+    public static function get($userId)
     {
-        return \Hgs3\Models\Orm\Site::where('user_id', $userId)
+        return Orm\Site::where('user_id', $userId)
             ->orderBy( 'id')
             ->get();
     }
+
     /**
      * 検索
      *
@@ -183,7 +184,7 @@ SQL;
      * @param $pagePerNum
      * @return array
      */
-    public function search($gameId, $mainContents, $targetGender, $rate, $pagePerNum)
+    public static function search($gameId, $mainContents, $targetGender, $rate, $pagePerNum)
     {
         $data = [];
 

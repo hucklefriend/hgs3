@@ -3,11 +3,11 @@
 @section('content')
     <div class="d-flex align-items-stretch">
         <div class="align-self-top p-2">
-            @include ('game.common.package_image', ['imageUrl' => $gamePackage->small_image_url])
+            @include ('game.common.package_image', ['imageUrl' => $package->small_image_url])
         </div>
         <div class="align-self-top">
             <div>
-                <h4>{{ $gamePackage->name }}のレビュー入力内容確認</h4>
+                <h4>{{ $package->name }}のレビュー入力内容確認</h4>
             </div>
         </div>
     </div>
@@ -39,11 +39,9 @@
         </div>
     </section>
 
-    <form method="POST" action="{{ url('review/save') }}/{{ $gamePackage->id }}">
+    <form method="POST" action="{{ url('review/save/' . $soft->id . '/' . $package->id) }}">
         {{ csrf_field() }}
 
-        <input type="hidden" name="game_id" value="{{ $draft->game_id }}">
-        <input type="hidden" name="package_id" value="{{ $draft->package_id }}">
         <input type="hidden" name="title" value="{{ $draft->title }}">
         <input type="hidden" name="fear" value="{{ $draft->fear }}">
         <input type="hidden" name="story" value="{{ $draft->story }}">

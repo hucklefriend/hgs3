@@ -13,14 +13,14 @@
 
     <div class="d-flex align-items-stretch">
         <div class="align-self-top p-2">
-            @include ('game.common.package_image', ['imageUrl' => $gamePackage->small_image_url])
+            @include ('game.common.package_image', ['imageUrl' => $package->small_image_url])
         </div>
         <div class="align-self-top">
             <div>
-                <h4>{{ $gamePackage->name }}のレビューを書く</h4>
+                <h4>{{ $package->name }}のレビューを書く</h4>
             </div>
             <div>
-                <a href="{{ url2('review/package_select') }}/{{ $gamePackage->game_id }}">パッケージを選び直す</a>
+                <a href="{{ url2('review/package_select') }}/{{ $soft->id }}">パッケージを選び直す</a>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
     </div>
     @endif
 
-    <form method="POST" action="{{ url2('review/confirm') }}/{{ $gamePackage->id }}">
+    <form method="POST" action="{{ url2('review/confirm/' . $soft->id . '/' . $package->id) }}">
         {{ csrf_field() }}
 
         <div class="form-group">
