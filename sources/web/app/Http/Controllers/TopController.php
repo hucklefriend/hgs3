@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers;
 
 
+use Hgs3\Models\Game\Shop\Amazon;
 use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\NewInformation;
 use Hgs3\Models\VersionUp\Master;
@@ -72,9 +73,5 @@ class TopController extends Controller
         if (env('APP_ENV') != 'local') {
             return abort(403);
         }
-
-        GameSoft::updateSortOrder();
-
-        return '';
     }
 }
