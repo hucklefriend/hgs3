@@ -8,6 +8,7 @@ namespace Hgs3\Http\Controllers\Game;
 use Hgs3\Http\Requests\Game\GameCompanyRequest;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Collection;
+use Hgs3\Models\Game\Package;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,11 +47,19 @@ class CompanyController extends Controller
     {
         $packages = Orm\GamePackage::where('company_id', $company->id)
             ->orderBy('release_int')
-            ->get();
+            ->paginate(15);
+
+        $shops = [];
+        $items = $packages->items();
+        if (!empty($items)) {
+            \ChromePhp::info($items);
+            $shops = Package::getShopData(array_pluck($items, 'id'));
+        }
 
         return view('game.company.detail', [
             'company'  => $company,
             'packages' => $packages,
+            'shops'    => $shops
         ]);
     }
 

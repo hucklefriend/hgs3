@@ -7,12 +7,7 @@ namespace Hgs3\Models\Game;
 
 use Hgs3\Constants\Game\Shop;
 use Hgs3\Models\Game\Shop\Amazon;
-use Hgs3\Models\Orm;
-use Hgs3\Models\Timeline;
-use Hgs3\Models\User\FavoriteGame;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class Package
 {
@@ -25,8 +20,8 @@ class Package
     public static function getShopData(array $packageIds)
     {
         $data = DB::table('game_package_shops')
-            ->select(['shop_id', 'shop_url'])
-            ->where('package_id', 'in', $packageIds)
+            ->select(['package_id', 'shop_id', 'shop_url'])
+            ->whereIn('package_id', $packageIds)
             ->get();
 
         $hash = [];

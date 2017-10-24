@@ -21,11 +21,25 @@
 
     <hr>
 
-    <ul class="list-group">
-    @foreach ($detail['soft'] as $soft)
-        <li class="list-group-item">
-            <a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a>
-        </li>
+    <div class="d-flex flex-wrap">
+
+    @foreach ($packages as $package)
+            <div class="card" style="width: 250px;margin: 10px;padding-top: 10px;">
+                @include('game.common.package_image', ['imageUrl' => $package->medium_image_url])
+                <div class="card-body">
+                    <h4 class="card-title">{{ $package->name }}</h4>
+                    <p class="card-text">
+                        @isset($shops[$package->id])
+                            @foreach ($shops[$package->id] as $shop)
+                                @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                            @endforeach
+                        @endisset
+                    </p>
+                </div>
+            </div>
     @endforeach
-    </ul>
+    </div>
+
+
+    {{ $packages->links() }}
 @endsection

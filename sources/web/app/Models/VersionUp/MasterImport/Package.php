@@ -55,6 +55,7 @@ class Package extends MasterImportAbstract
                 $package = new Orm\GamePackage;
                 $package->name = $pkg['name'];
                 $package->url = $pkg['url'];
+                $package->release_int = $pkg['release_int'];
                 $package->release_date = $pkg['release_date'];
                 if (isset($pkg['company']) && isset($companies[$pkg['company']])) {
                     $package->company_id = $companies[$pkg['company']] ?? null;

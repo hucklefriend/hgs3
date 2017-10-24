@@ -205,6 +205,7 @@ SQL;
                     'company_id'          => $row->company_id,
                     'name'                => $row->name,
                     'url'                 => $row->url,
+                    'release_int'         => $row->release_int,
                     'release_date'        => $row->release_date,
                     'is_adult'            => $row->is_adult,
                     'small_image_url'     => $row->small_image_url,

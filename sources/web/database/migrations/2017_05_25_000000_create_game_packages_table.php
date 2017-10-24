@@ -22,7 +22,8 @@ class CreateGamePackagesTable extends Migration
             $table->unsignedInteger('company_id')->nullable()->index()->comment('ゲーム会社ID');
             $table->string('name', 200)->comment('パッケージ名称');
             $table->text('url')->nullable()->comment('公式サイトURL');
-            $table->string('release_date', 100)->nullable()->comment('発売日');
+            $table->unsignedInteger('release_int')->default(0)->comment('発売日(数値)');
+            $table->string('release_date', 100)->default('')->comment('発売日');
             $table->unsignedTinyInteger('is_adult')->default(0)->comment('R-18か');
             $table->text('small_image_url')->nullable()->comment('小画像URL');
             $table->unsignedSmallInteger('small_image_width')->nullable()->comment('小画像の幅');
