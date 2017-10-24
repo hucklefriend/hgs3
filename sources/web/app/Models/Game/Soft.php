@@ -260,11 +260,11 @@ SQL;
             if ($soft->series_id !== null) {
                 $series = Orm\GameSeries::find($soft->series_id);
                 if ($series) {
-                    Timeline\FavoriteSoft::addSameSeriesGameText($soft, $series);
+                    //Timeline\FavoriteSoft::addSameSeriesGameText($soft, $series);
                 }
             }
         } else {
-            Timeline\FavoriteSoft::addUpdateGameSoftText($soft);
+            //Timeline\FavoriteSoft::addUpdateGameSoftText($soft);
         }
         return true;
     }

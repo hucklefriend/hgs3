@@ -12,6 +12,7 @@ use Hgs3\Models\Orm\NewInformation;
 use Hgs3\Models\VersionUp\Master;
 use Hgs3\Models\VersionUp\Database;
 use Hgs3\Models\VersionUp\MasterImport\Package;
+use Hgs3\Models\VersionUp\MasterImport\Soft;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
@@ -75,7 +76,7 @@ class TopController extends Controller
             return abort(403);
         }
 
-        $pkg = new Package();
-        $pkg->import();
+        $soft = new Soft();
+        $soft->import();
     }
 }

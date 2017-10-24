@@ -10,44 +10,50 @@ use Illuminate\Support\Facades\File;
 
 class Soft extends MasterImportAbstract
 {
+    /**
+     * インポート
+     */
     public function import()
     {
-        $path = resource_path('master/game');
+        // 既存データのアップデート
+        //$this->update();
+
+        $path = resource_path('master/soft');
 
         $files = File::files($path);
 
-        $companies = $this->getCompanyHash();
-        $platforms = $this->getPlatformHash();
         $series = $this->getSeriesHash();
 
         foreach ($files as $filePath) {
-            $data = \GuzzleHttp\json_decode(File::get($filePath));
-
-            $game = new Orm\GameSoft;
-            $game->name = $data->name;
-            $game->phonetic = $data->phonetic;
-            $game->phonetic_order = $data->phonetic;
-            $game->genre = $data->genre;
-            $game->company_id = $companies[$data->company] ?? null;
-
-            if (isset($series[$data->series])) {
-                $game->series_id = $series[$data->series];
-            } else {
-                $s = new Orm\GameSeries;
-                $s->name = $data->series;
-                $s->save();
-
-                $game->series_id = $s->id;
-                unset($s);
+            if (ends_with($filePath, 'update.php')) {
+                continue;
             }
 
-            $game->save();
+            $data = json_decode(File::get($filePath), true);
 
+            $soft = new Orm\GameSoft;
+            $soft->name = $data['name'];
+            $soft->phonetic = $data['phonetic'];
+            $soft->genre = $data['genre'];
 
+            if (isset($data['series'])) {
+                if (isset($series[$data['series']])) {
+                    $soft->series_id = $series[$data['series']];
+                } else {
+                    $s = new Orm\GameSeries;
+                    $s->name = $data['series'];
+                    $s->save();
 
-            $game->save(['timeline' => false]);
+                    $soft->series_id = $s->id;
+                    unset($s);
+                }
+            }
 
+            $soft->save();
             unset($data);
         }
+
+
+        Orm\GameSoft::updateSortOrder();
     }
 }

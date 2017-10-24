@@ -24,6 +24,7 @@ class Package extends MasterImportAbstract
 
         $files = File::files($path);
 
+        $softs = $this->getSoftHash();
         $companies = $this->getCompanyHash();
         $platforms = $this->getPlatformHash();
 
@@ -32,9 +33,9 @@ class Package extends MasterImportAbstract
                 continue;
             }
 
-            $data = \GuzzleHttp\json_decode(File::get($filePath), true);
+            $data = json_decode(File::get($filePath), true);
 
-            self::insert($data, $companies, $platforms);
+            self::insert($data, $softs, $companies, $platforms);
 
             unset($data);
             unset($platform);
@@ -45,12 +46,25 @@ class Package extends MasterImportAbstract
      * データ登録
      *
      * @param array $data
+     * @param array $softs
      * @param array $companies
      * @param array $platforms
      */
-    public static function insert(array $data, array $companies, array $platforms)
+    public static function insert(array $data, array $softs, array $companies, array $platforms)
     {
-        foreach ($data['soft_id'] as $softId) {
+        if (isset($data['soft_id'])) {
+            $softIds = $data['soft_id'];
+        } else if (isset($data['soft_name'])) {
+            $softIds = [];
+            foreach($data['soft_name'] as $softName) {
+                $softIds[] = $softs[$softName];
+            }
+        } else {
+            throw new \Exception('ソフトが指定されてません。');
+        }
+
+
+        foreach ($softIds as $softId) {
             foreach ($data['packages'] as $pkg) {
                 $package = new Orm\GamePackage;
                 $package->name = $pkg['name'];
@@ -73,17 +87,35 @@ class Package extends MasterImportAbstract
                         'sort_order' => $pkg['release_int']
                     ]);
 
-                $shopId = Shop::getIdByName($pkg['shop']);
-                if ($shopId) {
-                    if ($shopId == Shop::AMAZON) {
-                        \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $pkg['asin']);
-                    } else if (!empty($pkg['shop_url'])) {
-                        DB::table('game_package_shops')
-                            ->insert([
-                                'package_id' => $package->id,
-                                'shop_id'    => $shopId,
-                                'shop_url'   => $pkg['shop_url']
-                            ]);
+                if (is_array($pkg['shop'])) {
+                    foreach ($pkg['shop'] as $shop => $shopUrl) {
+                        $shopId = Shop::getIdByName($shop);
+                        if ($shopId) {
+                            if ($shopId == Shop::AMAZON) {
+                                \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
+                            } else if ($shopUrl) {
+                                DB::table('game_package_shops')
+                                    ->insert([
+                                        'package_id' => $package->id,
+                                        'shop_id' => $shopId,
+                                        'shop_url' => $shopUrl
+                                    ]);
+                            }
+                        }
+                    }
+                } else {
+                    $shopId = Shop::getIdByName($pkg['shop']);
+                    if ($shopId) {
+                        if ($shopId == Shop::AMAZON) {
+                            \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $pkg['asin']);
+                        } else if (!empty($pkg['shop_url'])) {
+                            DB::table('game_package_shops')
+                                ->insert([
+                                    'package_id' => $package->id,
+                                    'shop_id' => $shopId,
+                                    'shop_url' => $pkg['shop_url']
+                                ]);
+                        }
                     }
                 }
 

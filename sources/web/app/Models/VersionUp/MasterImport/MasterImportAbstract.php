@@ -10,6 +10,19 @@ use Hgs3\Models\Orm;
 abstract class MasterImportAbstract
 {
     /**
+     * ソフトのハッシュを取得
+     *
+     * @return array
+     */
+    protected function getSoftHash()
+    {
+        return Orm\GameSoft::select(['id', 'name'])
+            ->get()
+            ->pluck('id', 'name')
+            ->toArray();
+    }
+
+    /**
      * 会社のハッシュを取得
      *
      * @return array

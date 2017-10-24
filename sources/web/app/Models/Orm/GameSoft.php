@@ -4,6 +4,7 @@
  */
 
 namespace Hgs3\Models\Orm;
+use Hgs3\Constants\PhoneticType;
 use Hgs3\Models\Timeline;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -100,5 +101,18 @@ SQL;
         for ($i = 1; $i <= $n; $i++) {
             DB::update($update, [$i, $data[$i - 1]->id]);
         }
+    }
+
+    /**
+     * 保存
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = [])
+    {
+        $this->phonetic_type = PhoneticType::getTypeByPhonetic($this->phonetic);
+
+        return parent::save();
     }
 }

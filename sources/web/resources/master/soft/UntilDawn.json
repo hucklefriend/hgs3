@@ -2,29 +2,5 @@
   "name": "Until Dawn - 惨劇の山荘 -",
   "phonetic": "あんてぃるどーんさんげきのさんそう",
   "genre": "ホラーアドベンチャー",
-  "company": "SIE",
-  "packages":[
-    {
-      "platform": "PS4",
-      "company": "SIE",
-      "name": "Until Dawn - 惨劇の山荘 -",
-      "release_date": "2015年8月27日",
-      "release_int": 20150827,
-      "url":"http://www.jp.playstation.com/scej/title/untildawn/",
-      "is_adult": 1,
-      "shop": "amazon",
-      "asin": "B00YGXGVNW"
-    },
-    {
-      "platform": "PS4",
-      "company": "SIE",
-      "name": "Until Dawn - 惨劇の山荘 -",
-      "release_date": "2015年8月27日",
-      "release_int": 20150827,
-      "url":"http://www.jp.playstation.com/scej/title/untildawn/",
-      "is_adult": 1,
-      "shop": "PlayStation Store",
-      "shop_url": "https://store.playstation.com/#!/ja-jp/%e3%82%b2%e3%83%bc%e3%83%a0/until-dawn-%e6%83%a8%e5%8a%87%e3%81%ae%e5%b1%b1%e8%8d%98-/cid=JP9000-CUSA00902_00-UNTILDAWN0000001"
-    }
-  ]
+  "company": "SIE"
 }

@@ -22,11 +22,11 @@ class Master
         $series = new MasterImport\Series();
         $series->import();
 
-        $package = new MasterImport\Package();
-        //$package->import();
-
         $soft = new MasterImport\Soft();
         //$soft->import();
+
+        $package = new MasterImport\Package();
+        //$package->import();
 
         \Hgs3\Models\Orm\GameSoft::updateSortOrder();
     }
