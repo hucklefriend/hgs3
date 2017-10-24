@@ -106,7 +106,7 @@ class FavoriteSoft extends TimelineAbstract
         $text = sprintf('<a href="%s">%s</a>を扱うサイト「<a href="%s">%s</a>」が登録されました。',
             url2('game/soft/' . $soft->id),
             $soft->name,
-            url2('site/detail' . $site->id),
+            url2('site/detail/' . $site->id),
             $site->name
         );
 

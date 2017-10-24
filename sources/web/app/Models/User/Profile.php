@@ -216,15 +216,15 @@ class Profile
      */
     private static function getSoftMaster(array $data)
     {
-        $gameIds = array_merge(
-            array_pluck($data['favoriteGames']->toArray(), 'game_id'),
-            array_pluck($data['reviews']->toArray(), 'game_id'),
-            array_pluck(array_pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'game_id'),
+        $softIds = array_merge(
+            array_pluck($data['favoriteSofts']->toArray(), 'soft_id'),
+            array_pluck($data['reviews']->toArray(), 'soft_id'),
+            array_pluck(array_pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'soft_id'),
             $data['communities'],
-            array_pluck($data['playedGames']->toArray(), 'game_id')
+            array_pluck($data['playedSofts']->toArray(), 'soft_id')
         );
 
-        return Orm\GameSoft::getNameHash($gameIds);
+        return Orm\GameSoft::getNameHash($softIds);
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $soft->name }}のパッケージ追加</h4>
+    <h4>{{ $soft->name }}のパッケージリンク追加</h4>
 
     <nav style="margin-bottom: 20px;">
         <a href="{{ url('game/soft/' . $soft->id }}">データ詳細に戻る</a>

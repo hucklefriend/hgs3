@@ -22,16 +22,17 @@ class MyPage extends TimelineAbstract
         // 各タイムラインのデータを必要数+1取得
         // +1取るのは、次があるかのチェックのため
         $favoriteSoft = self::getFavoriteSoftTimeline($userId, $time, $num + 1);
-        //$favoriteSite = self::getFavoriteSiteTimeline($userId, $time, $num + 1);
+        $favoriteSite = self::getFavoriteSiteTimeline($userId, $time, $num + 1);
         $toMe = self::getToMeTimeline($userId, $time, $num + 1);
         $followUser = self::getFollowUserTimeline($userId, $time, $num + 1);
         $gameCommunity = self::getGameCommunityTimeline($userId, $time, $num + 1);
         $userCommunity = self::getUserCommunityTimeline($userId, $time, $num + 1);
 
         // 混ぜる
-        $timeline = array_merge($favoriteSoft, $toMe, $followUser, $gameCommunity, $userCommunity);
+        $timeline = array_merge($favoriteSoft, $favoriteSite, $toMe, $followUser, $gameCommunity, $userCommunity);
 
-        unset($favoriteGame);
+        unset($favoriteSoft);
+        unset($favoriteSite);
         unset($toMe);
         unset($followUser);
         unset($gameCommunity);
@@ -92,8 +93,7 @@ class MyPage extends TimelineAbstract
             'limit' => $num,
         ];
 
-        $db = self::getDB();
-        return $db->follow_user_timeline->find($filter, $options)->toArray();
+        return self::getDB()->follow_user_timeline->find($filter, $options)->toArray();
     }
 
     /**
@@ -121,8 +121,35 @@ class MyPage extends TimelineAbstract
             'limit' => $num,
         ];
 
-        $db = self::getDB();
-        return $db->favorite_soft_timeline->find($filter, $options)->toArray();
+        return self::getDB()->favorite_soft_timeline->find($filter, $options)->toArray();
+    }
+
+    /**
+     * お気に入りサイトタイムライン
+     *
+     * @param int $userId
+     * @param float $time
+     * @param int $num
+     * @return array
+     */
+    private static function getFavoriteSiteTimeline($userId, $time, $num)
+    {
+        $siteIds = Orm\UserFavoriteSite::select(['site_id'])
+            ->where('user_id', $userId)
+            ->get()
+            ->pluck('site_id')
+            ->toArray();
+
+        $filter = [
+            'site_id' => ['$in' => $siteIds],
+            'time'    => ['$lt' => $time]
+        ];
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $num,
+        ];
+
+        return self::getDB()->favorite_site_timeline->find($filter, $options)->toArray();
     }
 
     /**
@@ -144,8 +171,7 @@ class MyPage extends TimelineAbstract
             'limit' => $num,
         ];
 
-        $db = self::getDB();
-        return $db->to_me_timeline->find($filter, $options)->toArray();
+        return self::getDB()->to_me_timeline->find($filter, $options)->toArray();
     }
 
     /**
@@ -173,8 +199,7 @@ class MyPage extends TimelineAbstract
             'limit' => $num,
         ];
 
-        $db = self::getDB();
-        return $db->user_community_timeline->find($filter, $options)->toArray();
+        return self::getDB()->user_community_timeline->find($filter, $options)->toArray();
     }
 
     /**
@@ -202,7 +227,6 @@ class MyPage extends TimelineAbstract
             'limit' => $num,
         ];
 
-        $db = self::getDB();
-        return $db->game_community_timeline->find($filter, $options)->toArray();
+        return self::getDB()->game_community_timeline->find($filter, $options)->toArray();
     }
 }

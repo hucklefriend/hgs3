@@ -45,17 +45,15 @@ class SiteController extends Controller
      * 指定ゲームで検索
      *
      * @param Orm\GameSoft $soft
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function game(Orm\GameSoft $soft)
+    public function soft(Orm\GameSoft $soft)
     {
         $mainContents = intval(Input::get('mc', 0));
         $targetGender = intval(Input::get('tg', 0));
         $rate = intval(Input::get('r', 0));
-        $data = Site::search($soft->id, $mainContents, $targetGender, $rate, 20);
-        $data['soft'] = $soft;
 
-        return view('site.search.soft', $data);
+        return view('site.soft', Site::search($soft, $mainContents, $targetGender, $rate, 20));
     }
 
     /**
@@ -166,7 +164,7 @@ class SiteController extends Controller
     public function edit(Request $request, Orm\Site $site)
     {
         return view('site.edit', [
-            'games' => Orm\GameSoft::getPhoneticTypeHash(),
+            'softs' => Orm\GameSoft::getPhoneticTypeHash(),
             'site'  => $site
         ]);
     }

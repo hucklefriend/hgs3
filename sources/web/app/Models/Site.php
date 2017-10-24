@@ -235,21 +235,21 @@ SQL;
     /**
      * 検索
      *
-     * @param $gameId
-     * @param $mainContents
-     * @param $targetGender
-     * @param $rate
-     * @param $pagePerNum
+     * @param Orm\GameSoft $soft
+     * @param int $mainContents
+     * @param int $targetGender
+     * @param int $rate
+     * @param int $pagePerNum
      * @return array
      */
-    public static function search($gameId, $mainContents, $targetGender, $rate, $pagePerNum)
+    public static function search(Orm\GameSoft $soft, $mainContents, $targetGender, $rate, $pagePerNum)
     {
-        $data = [];
+        $data = ['soft' => $soft];
 
         // 検索テーブルからIDを取得
         $data['pager'] = DB::table('site_search_indices')
             ->select('site_id')
-            ->where('game_id', '=', $gameId)
+            ->where('soft_id', '=', $soft->id)
             //->where('main_contents_id', '=', $mainContents)
             //->where('gender', '=', $targetGender)
             //->where('rate', '=', $rate)
@@ -258,16 +258,7 @@ SQL;
 
         $data['sites'] = [];
         if (!empty($data['pager'])) {
-            $siteIds = array_pluck($data['pager']->items(), 'site_id');
-            $sites = DB::table('sites')
-                ->whereIn('id', $siteIds)
-                ->get();
-
-            // 連想配列化しとく
-            foreach ($sites as $s) {
-                $data['sites'][$s->id] = $s;
-            }
-
+            $data['sites'] = Orm\Site::getHash(array_pluck($data['pager']->items(), 'site_id'));
             $data['users'] = User::getNameHash(array_pluck($data['sites'], 'user_id'));
         }
 

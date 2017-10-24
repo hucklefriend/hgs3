@@ -8,14 +8,14 @@
     <div class="row">
         <div class="col-4">参加中</div>
         <div class="col-8">
-            <form method="POST" action="{{ url('community/u') }}/{{ $userCommunity->id }}/secession">Member
+            <form method="POST" action="{{ url2('community/u') }}/{{ $userCommunity->id }}/secession">Member
                 {{ csrf_field() }}
                 <button class="btn btn-primary">脱退する</button>
             </form>
         </div>
     </div>
     @else
-        <form method="POST" action="{{ url('community/u') }}/{{ $userCommunity->id }}/join">
+        <form method="POST" action="{{ url2('community/u') }}/{{ $userCommunity->id }}/join">
             {{ csrf_field() }}
             <button class="btn btn-primary">参加する</button>
         </form>
@@ -35,7 +35,7 @@
                             <li class="list-group-item">{{ $users[$member->user_id] }}</li>
                         @endforeach
                     </ul>
-                    ⇒ <a href="{{ url('community/u') }}/{{ $userCommunity->id }}/member">もっと見る</a>
+                    ⇒ <a href="{{ url2('community/u') }}/{{ $userCommunity->id }}/member">もっと見る</a>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                         <tbody>
                             @foreach ($topics as $topic)
                             <tr>
-                                <td><a href="{{ url('community/u') }}/{{ $userCommunity->id }}/topic/{{ $topic->id }}">{{ $topic->title }}</a></td>
+                                <td><a href="{{ url2('community/u') }}/{{ $userCommunity->id }}/topic/{{ $topic->id }}">{{ $topic->title }}</a></td>
                                 <td>{{ $t->wrote_date }}</td>
                             </tr>
                             @endforeach
