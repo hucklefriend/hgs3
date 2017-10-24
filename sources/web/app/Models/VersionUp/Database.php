@@ -252,19 +252,19 @@ SQL;
      */
     public function setOriginalPackageId()
     {
-        $gameSofts = Orm\GameSoft::all();
+        $softs = Orm\GameSoft::all();
 
-        foreach ($gameSofts as $gameSoft) {
+        foreach ($softs as $soft) {
             $link = DB::table('game_package_links')
                 ->select(['package_id'])
-                ->where('soft_id', $gameSoft->id)
+                ->where('soft_id', $soft->id)
                 ->orderBy('sort_order')
                 ->orderBy('package_id')
                 ->first();
 
             if (!empty($link)) {
-                $gameSoft->original_package_id = $link->package_id;
-                $gameSoft->save();
+                $soft->original_package_id = $link->package_id;
+                $soft->save();
             }
 
             unset($link);

@@ -11,6 +11,7 @@ use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\NewInformation;
 use Hgs3\Models\VersionUp\Master;
 use Hgs3\Models\VersionUp\Database;
+use Hgs3\Models\VersionUp\MasterImport\Package;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
@@ -73,5 +74,8 @@ class TopController extends Controller
         if (env('APP_ENV') != 'local') {
             return abort(403);
         }
+
+        $pkg = new Package();
+        $pkg->import();
     }
 }
