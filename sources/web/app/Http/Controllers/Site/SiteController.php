@@ -116,12 +116,13 @@ class SiteController extends Controller
 
 
         return view('site.add', [
-            'games' => Orm\GameSoft::getPhoneticTypeHash(),
+            'softs' => Orm\GameSoft::getPhoneticTypeHash(),
             'site'  => new Orm\Site([
                 'main_contents' => MainContents::WALKTHROUGH,
                 'rate'          => Rate::ALL,
                 'gender'        => Gender::NONE
-            ])
+            ]),
+            'handleGames' => ''
         ]);
     }
 

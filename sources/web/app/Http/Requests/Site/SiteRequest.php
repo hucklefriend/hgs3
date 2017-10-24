@@ -27,9 +27,10 @@ class SiteRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'    => 'required|max:100',
-            'progress' => 'required|max:300',
-            'text'     => 'required|max:10000'
+            'name'    => 'required|max:100',
+            'url' => 'required|max:300',
+            'handle_game'     => 'required',
+            'presentation' => 'required|max:1000',
         ];
     }
 }

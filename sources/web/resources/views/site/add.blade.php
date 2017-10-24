@@ -12,6 +12,6 @@
     </form>
 
 
-    @include('site.common.handleGameSelect')
+    @include('site.common.handleSoftSelect')
 
 @endsection

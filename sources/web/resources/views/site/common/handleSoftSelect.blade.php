@@ -67,13 +67,13 @@
                 @for ($phonicType = 1; $phonicType <= 10; $phonicType++)
                     <div id="handle_games_{{ $phonetics[$phonicType] }}gyo" class="handle_game_tab @if ($phonicType == 1) active @endif ">
                         <div class="container-fluid p-3" style="overflow-y: scroll; height: 300px;">
-                            @if (isset($games[$phonicType]))
-                                @foreach ($games[$phonicType] as $game)
+                            @if (isset($softs[$phonicType]))
+                                @foreach ($softs[$phonicType] as $soft)
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
                                             <label>
-                                                <input type="checkbox" class="handle_game_check" name="handle_game[]" value="{{ $game->id }}" id="handle_game_check_{{ $game->id }}">
-                                                <span>{{ $game->name }}</span>
+                                                <input type="checkbox" class="handle_game_check" name="handle_game[]" value="{{ $soft->id }}" id="handle_game_check_{{ $soft->id }}">
+                                                <span>{{ $soft->name }}</span>
                                             </label>
                                         </li>
                                     </ul>
