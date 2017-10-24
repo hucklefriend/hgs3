@@ -5,11 +5,10 @@
 
 namespace Hgs3\Http\Controllers\User;
 
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\UserFavoriteSite;
+use Hgs3\Models\Orm;
 use Hgs3\Models\Site;
 use Hgs3\Models\User\FavoriteSite;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -32,15 +31,13 @@ class FavoriteSiteController extends Controller
     public function index(User $user)
     {
         $isMyself = $user->id == Auth::id();
-        $fav = UserFavoriteSite::where('user_id', $user->id)->get();
-
-
+        $fav = Orm\UserFavoriteSite::where('user_id', $user->id)->get();
 
         return view('user.site.favorite')->with([
             'user'     => $user,
             'isMyself' => $isMyself,
             'favSites' => $fav,
-            'sites'    => GameSoft::getNameHash(array_pluck($fav->toArray(), 'site_id'))
+            'sites'    => Orm\GameSoft::getNameHash(array_pluck($fav->toArray(), 'site_id'))
         ]);
     }
 
@@ -58,15 +55,12 @@ class FavoriteSiteController extends Controller
      * お気に入りサイト追加
      *
      * @param Request $request
+     * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add(Request $request)
+    public function add(Request $request, Orm\Site $site)
     {
-        $siteId = $request->get('site_id');
-        if ($siteId != null) {
-            $fav = new FavoriteSite();
-            $fav->add(Auth::id(), $siteId);
-        }
+        FavoriteSite::add(Auth::user(), $site);
 
         return redirect()->back();
     }
@@ -75,15 +69,12 @@ class FavoriteSiteController extends Controller
      * お気に入りサイト削除
      *
      * @param Request $request
+     * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function remove(Request $request)
+    public function remove(Request $request, Orm\Site $site)
     {
-        $siteId = $request->get('site_id');
-        if ($siteId != null) {
-            $fav = new FavoriteSite();
-            $fav->remove(Auth::id(), $siteId);
-        }
+        FavoriteSite::remove(Auth::user(), $site);
 
         return redirect()->back();
     }

@@ -137,16 +137,14 @@
                     <h5 class="card-title">お気に入り</h5>
                     <p class="card-text">
                         @if ($isFavorite)
-                        <form method="POST" action="{{ url('user/favorite_site') }}">
+                        <form method="POST" action="{{ url('user/favorite_site/' . $site->id) }}">
                             {{ csrf_tag($csrfToken) }}
                             {{ method_field('DELETE') }}
-                            <input type="hidden" name="site_id" value="{{ $site->id }}">
                             <button class="btn btn-warning btn-sm">解除する</button>
                         </form>
                         @else
-                        <form method="POST" action="{{ url('user/favorite_site') }}">
+                        <form method="POST" action="{{ url('user/favorite_site/' . $site->id) }}">
                             {{ csrf_tag($csrfToken) }}
-                            <input type="hidden" name="site_id" value="{{ $site->id }}">
                             <button class="btn btn-info btn-sm">登録する</button>
                         </form>
                         @endif

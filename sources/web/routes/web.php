@@ -161,8 +161,8 @@ Route::delete('user/played_soft/{upg}', 'User\PlayedSoftController@remove')->mid
 
 // お気に入りサイト
 Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@index');
-Route::post('/user/favorite_site', 'User\FavoriteSiteController@add')->middleware('auth');
-Route::delete('/user/favorite_site', 'User\FavoriteSiteController@remove')->middleware('auth');
+Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add')->middleware('auth');
+Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove')->middleware('auth');
 Route::get('/user/favorite_site/{user}', 'User\ProfileController@favoriteSite')->middleware('auth');
 
 // 自分のサイト

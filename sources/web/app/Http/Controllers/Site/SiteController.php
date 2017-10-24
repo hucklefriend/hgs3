@@ -116,8 +116,8 @@ class SiteController extends Controller
 
 
         return view('site.add', [
-            'games' => GameSoft::getPhoneticTypeHash(),
-            'site'  => new Site([
+            'games' => Orm\GameSoft::getPhoneticTypeHash(),
+            'site'  => new Orm\Site([
                 'main_contents' => MainContents::WALKTHROUGH,
                 'rate'          => Rate::ALL,
                 'gender'        => Gender::NONE
@@ -133,7 +133,7 @@ class SiteController extends Controller
      */
     public function insert(SiteRequest $request)
     {
-        $site = new Site;
+        $site = new Orm\Site;
 
         $this->setRequestData($site, $request);
         $site->open_type = 0;
@@ -145,8 +145,7 @@ class SiteController extends Controller
         $site->registered_timestamp = time();
         $site->updated_timestamp = 0;
 
-        $s = new \Hgs3\Models\Site\Site();
-        if (!$s->save(Auth::user(), $site, $request->get('handle_game', ''))) {
+        if (!Site::save(Auth::user(), $site, $request->get('handle_game', ''))) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         }
@@ -160,13 +159,13 @@ class SiteController extends Controller
      * 編集画面
      *
      * @param Request $request
-     * @param Site $site
+     * @param Orm\Site $site
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Request $request, Site $site)
+    public function edit(Request $request, Orm\Site $site)
     {
         return view('site.edit', [
-            'games' => GameSoft::getPhoneticTypeHash(),
+            'games' => Orm\GameSoft::getPhoneticTypeHash(),
             'site'  => $site
         ]);
     }
@@ -175,16 +174,15 @@ class SiteController extends Controller
      * データ更新
      *
      * @param SiteRequest $request
-     * @param Site $site
+     * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(SiteRequest $request, Site $site)
+    public function update(SiteRequest $request, Orm\Site $site)
     {
         $this->setRequestData($site, $request);
         $site->updated_timestamp = time();
 
-        $s = new \Hgs3\Models\Site\Site();
-        if (!$s->save(Auth::user(), $site, $request->get('handle_game', ''))) {
+        if (!Site::save(Auth::user(), $site, $request->get('handle_game', ''))) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         }
@@ -197,10 +195,10 @@ class SiteController extends Controller
     /**
      * リクエストの値をO/Rマッパーにセット
      *
-     * @param Site $site
+     * @param Orm\Site $site
      * @param SiteRequest $request
      */
-    private function setRequestData(Site $site, SiteRequest $request)
+    private function setRequestData(Orm\Site $site, SiteRequest $request)
     {
         $site->user_id = Auth::id();
         $site->name = $request->get('name', '');
