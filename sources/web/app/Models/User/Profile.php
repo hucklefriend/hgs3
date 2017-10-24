@@ -6,15 +6,8 @@
 
 namespace Hgs3\Models\User;
 use Hgs3\Models\Community\GameCommunity;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GameCommunityMember;
-use Hgs3\Models\Orm\Review;
-use Hgs3\Models\Orm\ReviewGoodHistory;
-use Hgs3\Models\Orm\Site;
-use Hgs3\Models\Orm\UserCommunityMember;
-use Hgs3\Models\Orm\UserFavoriteSoft;
-use Hgs3\Models\Orm\UserFavoriteSite;
-use Hgs3\User;
+use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class Profile
@@ -25,19 +18,19 @@ class Profile
      * @param $userId
      * @return array
      */
-    public function getDataNum($userId)
+    public static function getDataNum($userId)
     {
         $follow = new Follow();
 
         return [
             'followNum'       => $follow->getFollowNum($userId),
             'followerNum'     => $follow->getFollowerNum($userId),
-            'reviewNum'       => Review::getNumByUser($userId),
-            'siteNum'         => Site::getNumByUser($userId),
-            'favoriteGameNum' => UserFavoriteSoft::getNumByUser($userId),
-            'favoriteSiteNum' => UserFavoriteSite::getNumByUser($userId),
+            'reviewNum'       => Orm\Review::getNumByUser($userId),
+            'siteNum'         => Orm\Site::getNumByUser($userId),
+            'favoriteSoftNum' => Orm\UserFavoriteSoft::getNumByUser($userId),
+            'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId),
             'diaryNum'        => 0,     // TODO 日記実装時に実装
-            'communityNum'    => UserCommunityMember::getNumByUser($userId) + GameCommunityMember::getNumByUser($userId)
+            'communityNum'    => Orm\UserCommunityMember::getNumByUser($userId) + Orm\GameCommunityMember::getNumByUser($userId)
         ];
     }
 
@@ -48,7 +41,7 @@ class Profile
      *
      * @param $userId
      */
-    public function get($userId)
+    public static function get($userId)
     {
         $data = [];
 
@@ -59,32 +52,31 @@ class Profile
         $data['follower_num'] = 0;
 
         // 自分のサイト
-        $data['sites'] = $this->getSites($userId);
+        $data['sites'] = self::getSites($userId);
 
         // お気に入りゲーム
-        $data['favoriteGames'] = $this->getFavoriteGames($userId);
+        $data['favoriteSofts'] = self::getFavoriteSofts($userId);
 
         // お気に入りサイト
-        $data['favoriteSites'] = $this->getFavoriteSites($userId);
+        $data['favoriteSites'] = self::getFavoriteSites($userId);
 
         // レビュー
-        $data['reviews'] = $this->getReviews($userId);
+        $data['reviews'] = self::getReviews($userId);
 
         // いいねしたレビュー
-        $data['goodReviews'] = $this->getGoodReviews($userId);
+        $data['goodReviews'] = self::getGoodReviews($userId);
 
         // コミュニティ
-        $gc = new GameCommunity();
-        $data['communities'] = $gc->getNewerJoinCommunity($userId);
+        $data['communities'] = GameCommunity::getNewerJoinCommunity($userId);
 
         // 遊んだゲーム
-        $data['playedGames'] = $this->getPlayedGames($userId);
+        $data['playedSofts'] = self::getPlayedSofts($userId);
 
 
         // ゲームマスター
-        $data['games'] = $this->getGameMaster($data);
+        $data['softs'] = self::getSoftMaster($data);
         // ユーザーマスター
-        $data['users'] = $this->getUserMaster($data);
+        $data['users'] = self::getUserMaster($data);
 
         return $data;
     }
@@ -92,12 +84,12 @@ class Profile
     /**
      * サイトを取得
      *
-     * @param $userId
+     * @param int $userId
      * @return mixed
      */
-    private function getSites($userId)
+    private static function getSites($userId)
     {
-        return Site::where('user_id', $userId)
+        return Orm\Site::where('user_id', $userId)
             ->orderBy('id')
             ->take(3)
             ->get();
@@ -106,26 +98,26 @@ class Profile
     /**
      * お気に入りゲームを取得
      *
-     * @param $userId
+     * @param int $userId
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
      */
-    private function getFavoriteGames($userId)
+    private static function getFavoriteSofts($userId)
     {
-        return UserFavoriteSoft::where('user_id', $userId)
+        return Orm\UserFavoriteSoft::where('user_id', $userId)
             ->orderBy('id')
             ->take(5)
             ->get();
     }
 
     /**
-     * レビューをshつ億
+     * レビューを取得
      *
-     * @param $userId
+     * @param int $userId
      * @return mixed
      */
-    private function getReviews($userId)
+    private static function getReviews($userId)
     {
-        return Review::where('user_id', $userId)
+        return Orm\Review::where('user_id', $userId)
             ->orderBy('id', 'DESC')
             ->take(3)
             ->get();
@@ -134,17 +126,17 @@ class Profile
     /**
      * いいねしたレビュー
      *
-     * @param $userId
+     * @param int $userId
      * @return array
      */
-    private function getGoodReviews($userId)
+    private static function getGoodReviews($userId)
     {
         $result = [
             'order' => [],
             'reviews' => []
         ];
 
-        $result['order'] = ReviewGoodHistory::where('user_id', $userId)
+        $result['order'] = Orm\ReviewGoodHistory::where('user_id', $userId)
             ->orderBy('good_date', 'DESC')
             ->take(3)
             ->get();
@@ -153,7 +145,7 @@ class Profile
             return $result;
         }
 
-        $reviews = Review::whereIn('id', array_pluck($result['order']->toArray(), 'review_id'))->get();
+        $reviews = Orm\Review::whereIn('id', array_pluck($result['order']->toArray(), 'review_id'))->get();
         foreach ($reviews as $r) {
             $result['reviews'][$r->id] = $r;
         }
@@ -167,7 +159,7 @@ class Profile
      * @param $userId
      * @return array
      */
-    private function getFavoriteSites($userId)
+    private static function getFavoriteSites($userId)
     {
         $result = [
             'order' => [],
@@ -184,7 +176,7 @@ class Profile
             return $result;
         }
 
-        $sites = Site::whereIn('id', $result['order'])->get();
+        $sites = Orm\Site::whereIn('id', $result['order'])->get();
 
         foreach ($sites as $s) {
             $result['sites'][$s->id] = $s;
@@ -193,7 +185,7 @@ class Profile
         return $result;
     }
 
-    private function getCommunities($userId)
+    private static function getCommunities($userId)
     {
         // ゲームコミュニティのみ取得
 
@@ -206,9 +198,9 @@ class Profile
      * @param $userId
      * @return \Illuminate\Support\Collection
      */
-    private function getPlayedGames($userId)
+    private static function getPlayedSofts($userId)
     {
-        return DB::table('user_played_games')
+        return DB::table('user_played_softs')
             ->select(['game_id', 'comment'])
             ->where('user_id', $userId)
             ->orderBy('id', 'DESC')
@@ -222,7 +214,7 @@ class Profile
      * @param array $data
      * @return array
      */
-    private function getGameMaster(array $data)
+    private static function getSoftMaster(array $data)
     {
         $gameIds = array_merge(
             array_pluck($data['favoriteGames']->toArray(), 'game_id'),
@@ -232,7 +224,7 @@ class Profile
             array_pluck($data['playedGames']->toArray(), 'game_id')
         );
 
-        return GameSoft::getNameHash($gameIds);
+        return Orm\GameSoft::getNameHash($gameIds);
     }
 
     /**

@@ -69,7 +69,7 @@ SQL;
      * @param int $softId
      * @return bool
      */
-    public function isFavorite($userId, $softId)
+    public static function isFavorite($userId, $softId)
     {
         return DB::table('user_favorite_softs')
             ->where('user_id', $userId)
@@ -83,7 +83,7 @@ SQL;
      * @param int $userId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function get($userId)
+    public static function get($userId)
     {
         return DB::table('user_favorite_softs')
             ->where('user_id', $userId)

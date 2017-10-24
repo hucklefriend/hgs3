@@ -5,12 +5,8 @@
 
 namespace Hgs3\Models\Community;
 
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\GameCommunityMember;
-use Hgs3\Models\Orm\GameCommunityTopic;
-use Hgs3\Models\Orm\GameCommunityTopicResponse;
 use Hgs3\Models\Orm;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +17,7 @@ class GameCommunity
      *
      * @return array
      */
-    public function getMemberNum()
+    public static function getMemberNum()
     {
         return DB::table('game_communities')
             ->select(['id', 'user_num'])
@@ -37,9 +33,9 @@ class GameCommunity
      * @param int $softId
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
      */
-    public function getOlderMembers($softId)
+    public static function getOlderMembers($softId)
     {
-        return GameCommunityMember::where('soft_id', $softId)
+        return Orm\GameCommunityMember::where('soft_id', $softId)
             ->orderBy('join_date')
             ->take(5)
             ->get();
@@ -63,11 +59,11 @@ SQL;
     /**
      * 参加
      *
-     * @param GameSoft $gameSoft
+     * @param Orm\GameSoft $soft
      * @param User $user
      * @return bool
      */
-    public function join(GameSoft $gameSoft, User $user)
+    public static function join(Orm\GameSoft $soft, User $user)
     {
         DB::beginTransaction();
 
@@ -79,17 +75,17 @@ INSERT IGNORE INTO game_community_members (
   ?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 )
 SQL;
-            DB::insert($sql, [$gameSoft->id, $user->id]);
+            DB::insert($sql, [$soft->id, $user->id]);
 
             $sql =<<< SQL
 UPDATE game_communities
 SET user_num = user_num + 1
 WHERE id = ?
 SQL;
-            if (DB::update($sql, [$gameSoft->id]) == 0) {
+            if (DB::update($sql, [$soft->id]) == 0) {
                 DB::table('game_communities')
                     ->insert([
-                        'id'       => $gameSoft->id,
+                        'id'       => $soft->id,
                         'user_num' => 1
                     ]);
             }
@@ -101,7 +97,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\FollowUser::addJoinGameCommunityText($user->id, $user->name, $gameSoft->id, $gameSoft->name);
+        Timeline\FollowUser::addJoinGameCommunityText($user, $soft);
 
         return true;
     }
@@ -109,11 +105,11 @@ SQL;
     /**
      * 脱退
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $soft
      * @param User $user
      * @return bool
      */
-    public function leave(GameSoft $game, User $user)
+    public static function leave(Orm\GameSoft $soft, User $user)
     {
         DB::beginTransaction();
 
@@ -122,14 +118,14 @@ SQL;
 DELETE FROM game_community_members
 WHERE game_id = ? AND user_id = ?
 SQL;
-            DB::insert($sql, [$game->id, $user->id]);
+            DB::insert($sql, [$soft->id, $user->id]);
 
             $sql =<<< SQL
 UPDATE game_communities
 SET user_num = user_num - 1
 WHERE id = ?
 SQL;
-            DB::update($sql, [$game->id]);
+            DB::update($sql, [$soft->id]);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -138,7 +134,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\FollowUser::addLeaveGameCommunityText($user->id, $user->name, $game->id, $game->name);
+        Timeline\FollowUser::addLeaveGameCommunityText($user, $soft);
 
         return true;
     }
@@ -146,14 +142,14 @@ SQL;
     /**
      * 参加しているか？
      *
-     * @param int $gameId
+     * @param int $softId
      * @param int $userId
      * @return bool
      */
-    public function isMember($gameId, $userId)
+    public static function isMember($softId, $userId)
     {
         return DB::table('game_community_members')
-            ->where('game_id', $gameId)
+            ->where('soft_id', $softId)
             ->where('user_id', $userId)
             ->count() > 0;
     }
@@ -161,13 +157,13 @@ SQL;
     /**
      * トピックを取得
      *
-     * @param int $gameId
+     * @param int $softId
      * @return array
      */
-    public function getTopics($gameId)
+    public static function getTopics($softId)
     {
         $pager = DB::table('game_community_topics')
-            ->where('game_id', $gameId)
+            ->where('soft_id', $softId)
             ->orderBy('id', 'DESC')
             ->paginate(20);
 
@@ -180,13 +176,13 @@ SQL;
     /**
      * 直近のトピックを取得
      *
-     * @param int $gameId
+     * @param int $softId
      * @return \Illuminate\Support\Collection
      */
-    public function getLatestTopics($gameId)
+    public static function getLatestTopics($softId)
     {
         return DB::table('game_community_topics')
-            ->where('game_id', $gameId)
+            ->where('soft_id', $softId)
             ->orderBy('id', 'DESC')
             ->take(5)
             ->get();
@@ -195,13 +191,13 @@ SQL;
     /**
      * トピックの詳細を取得
      *
-     * @param GameCommunityTopic $gct
+     * @param Orm\GameCommunityTopic $topic
      * @return array
      */
-    public function getTopicDetail(GameCommunityTopic $gct)
+    public static function getTopicDetail(Orm\GameCommunityTopic $topic)
     {
         $pager = DB::table('game_community_topic_responses')
-            ->where('game_community_topic_id', $gct->id)
+            ->where('game_community_topic_id', $topic->id)
             ->orderBy('id', 'DESC')
             ->paginate(30);
 
@@ -214,17 +210,17 @@ SQL;
     /**
      * トピックを投稿
      *
-     * @param Orm\GameSoft $game
+     * @param Orm\GameSoft $soft
      * @param User $user
      * @param int $title
      * @param string $comment
      */
-    public function writeTopic(Orm\GameSoft $game, User $user, $title, $comment)
+    public static function writeTopic(Orm\GameSoft $soft, User $user, $title, $comment)
     {
         $now = new \DateTime();
 
-        $topicId = GameCommunityTopic::insertGetId([
-            'game_id'       => $game->id,
+        $topic = new Orm\GameCommunityTopic([
+            'soft_id'       => $soft->id,
             'user_id'       => $user->id,
             'title'         => $title,
             'comment'       => $comment,
@@ -233,26 +229,29 @@ SQL;
             'response_num'  => 0
         ]);
 
+        $topic->save();
+
         // タイムライン
-        Timeline\GameCommunity::addNewTopicText($game->id, $game->name, $topicId);
+        Timeline\GameCommunity::addNewTopicText($soft, $topic);
     }
 
     /**
      * レスを投稿
      *
-     * @param Orm\GameCommunityTopic $gameCommunityTopic
+     * @param Orm\GameSoft $soft
+     * @param Orm\GameCommunityTopic $topic
      * @param User $user
      * @param $comment
      */
-    public function writeResponse(Orm\GameCommunityTopic $gameCommunityTopic, User $user, $comment)
+    public static function writeResponse(Orm\GameSoft $soft, Orm\GameCommunityTopic $topic, User $user, $comment)
     {
         $now = new \DateTime();
 
         DB::beginTransaction();
 
         try {
-            GameCommunityTopicResponse::insert([
-                'game_community_topic_id' => $gameCommunityTopic->id,
+            Orm\GameCommunityTopicResponse::insert([
+                'game_community_topic_id' => $topic->id,
                 'user_id'                 => $user->id,
                 'comment'                 => $comment,
                 'wrote_date'              => $now
@@ -264,7 +263,7 @@ SET response_num = response_num + 1
   , response_date = NOW()
 WHERE id = ?
 SQL;
-            DB::update($updSql, [$gameCommunityTopic->id]);
+            DB::update($updSql, [$topic->id]);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -273,9 +272,7 @@ SQL;
         }
 
         // タイムライン
-        Timeline\ToMe::addGameCommunityTopicResponseText(
-            $gameCommunityTopic->user_id, $gameCommunityTopic->game_id, null, $gameCommunityTopic->id
-        );
+        Timeline\ToMe::addGameCommunityTopicResponseText($user, $soft, $topic);
 
         return true;
     }
@@ -286,7 +283,7 @@ SQL;
      * @param $topicId
      * @return bool
      */
-    public function eraseTopic($topicId)
+    public static function eraseTopic($topicId)
     {
         DB::beginTransaction();
 
@@ -311,10 +308,10 @@ SQL;
     /**
      * レスの消去
      *
-     * @param GameCommunityTopicResponse $gctr
+     * @param Orm\GameCommunityTopicResponse $res
      * @return bool
      */
-    public function eraseTopicResponse(GameCommunityTopicResponse $gctr)
+    public function eraseTopicResponse(Orm\GameCommunityTopicResponse $res)
     {
         DB::beginTransaction();
 
@@ -324,9 +321,9 @@ UPDATE game_community_topics
 SET response_num = response_num - 1
 WHERE id = ?
 SQL;
-            DB::update($updSql, [$gctr->topic_id]);
+            DB::update($updSql, [$res->topic_id]);
 
-            $gctr->delete();
+            $res->delete();
 
             DB::commit();
         } catch (\Exception $e) {
@@ -340,13 +337,13 @@ SQL;
     /**
      * メンバー一覧を取得
      *
-     * @param GameSoft $game
+     * @param Orm\GameSoft $soft
      * @return \Illuminate\Support\Collection
      */
-    public function getMembers(GameSoft $game)
+    public static function getMembers(Orm\GameSoft $soft)
     {
         return DB::table('game_community_members')
-            ->where('game_id', $game->id)
+            ->where('soft_id', $soft->id)
             ->orderBy('join_date')
             ->get()
             ->pluck('user_id')
@@ -359,14 +356,14 @@ SQL;
      * @param $userId
      * @return array
      */
-    public function getNewerJoinCommunity($userId)
+    public static function getNewerJoinCommunity($userId)
     {
         return DB::table('game_community_members')
             ->where('user_id', $userId)
             ->orderBy('join_date', 'DESC')
             ->take(5)
             ->get()
-            ->pluck('game_id')
+            ->pluck('soft_id')
             ->toArray();
     }
 
@@ -376,7 +373,7 @@ SQL;
      * @param $userId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getJoinCommunity($userId)
+    public static function getJoinCommunity($userId)
     {
         return DB::table('game_community_members')
             ->where('user_id', $userId)

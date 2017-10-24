@@ -66,9 +66,8 @@ class ProfileController extends Controller
             }
                 break;
             case 'favorite_soft':{
-                $fg = new \Hgs3\Models\User\FavoriteSoft();
                 $data['parts'] = [
-                    'favoriteSofts' => $fg->get($user->id),
+                    'favoriteSofts' => User\FavoriteSoft::get($user->id),
                     'softs'         => Orm\GameSoft::getNameHash()
                 ];
             }
@@ -90,9 +89,7 @@ class ProfileController extends Controller
             }
                 break;
             case 'favorite_site': {
-                $fs = User\FavoriteSite();
-                $favSites = $fs->get($user->id);
-
+                $favSites = User\FavoriteSite::get($user->id);
                 $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
 
                 $data['parts'] = [
@@ -107,20 +104,17 @@ class ProfileController extends Controller
             }
                 break;
             case 'community': {
-                $gc = new GameCommunity();
-                $communities = $gc->getJoinCommunity($user->id);
+                $communities = GameCommunity::getJoinCommunity($user->id);
                 $data['parts'] = [
                     'communities' => $communities,
-                    'games'       => Orm\GameSoft::getNameHash(array_pluck($communities->items(), 'game_id'))
+                    'softs'       => Orm\GameSoft::getNameHash(array_pluck($communities->items(), 'soft_id'))
                 ];
             }
                 break;
             case 'timeline':
             default: {
                 $show = 'timeline';
-                $myPage = new Timeline\MyPage();
-
-                $data['parts'] = $myPage->getTimeline($user->id, time(), 20);
+                $data['parts'] = Timeline\MyPage::getTimeline($user->id, time(), 20);
             }
                 break;
         }
@@ -241,8 +235,7 @@ class ProfileController extends Controller
     {
         $isMyself = $user->id == Auth::id();
 
-        $follow = new Follow;
-        $follows = $follow->getFollow($user->id);
+        $follows = Follow::getFollow($user->id);
 
         return view('user.profile.follow')->with([
             'user'     => $user,
@@ -261,9 +254,7 @@ class ProfileController extends Controller
     public function follower(User $user)
     {
         $isMyself = $user->id == Auth::id();
-
-        $follow = new Follow;
-        $follows = $follow->getFollower($user->id);
+        $follows = Follow::getFollower($user->id);
 
         return view('user.profile.follower')->with([
             'user'       => $user,
@@ -279,11 +270,11 @@ class ProfileController extends Controller
      * @param User $user
      * @return $this
      */
-    public function favoriteGame(User $user)
+    public function favoriteSoft(User $user)
     {
         $isMyself = $user->id == Auth::id();
 
-        $favoriteSofts = FavoriteSoft::get($user->id);
+        $favoriteSofts = User\FavoriteSoft::get($user->id);
 
         return view('user.profile.favorite_soft')->with([
             'user'          => $user,
@@ -320,7 +311,9 @@ class ProfileController extends Controller
     {
         $isMyself = $user->id == Auth::id();
 
-        $favSites = FavoriteSiteget($user->id);
+
+
+        $favSites = User\FavoriteSite::get($user->id);
         $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
 
         return view('user.profile.favorite_site')->with([
@@ -358,15 +351,13 @@ class ProfileController extends Controller
     public function community(User $user)
     {
         $isMyself = $user->id == Auth::id();
-
-        $gc = new GameCommunity();
-        $communities = $gc->getJoinCommunity($user->id);
+        $communities = GameCommunity::getJoinCommunity($user->id);
 
         return view('user.profile.community')->with([
             'user'        => $user,
             'isMyself'    => $isMyself,
             'communities' => $communities,
-            'games'       => Orm\GameSoft::getNameHash(array_pluck($communities->items(), 'game_id'))
+            'softs'       => Orm\GameSoft::getNameHash(array_pluck($communities->items(), 'soft_id'))
         ]);
     }
 
@@ -380,9 +371,6 @@ class ProfileController extends Controller
     public function moreTimelineMyPage(User $user, $time)
     {
         $time = floatval($time);
-
-        $myPage = new Timeline\MyPage();
-
-        return Response::json($myPage->getTimeline($user->id, $time, 20));
+        return Response::json(Timeline\MyPage::getTimeline($user->id, $time, 20));
     }
 }

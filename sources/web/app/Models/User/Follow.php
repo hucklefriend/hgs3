@@ -5,7 +5,8 @@
 
 
 namespace Hgs3\Models\User;
-use Hgs3\User;
+
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Timeline;
 
@@ -16,8 +17,9 @@ class Follow
      *
      * @param int $userId
      * @param int $followUserId
+     * @return bool
      */
-    public function isFollow($userId, $followUserId)
+    public static function isFollow($userId, $followUserId)
     {
         return DB::table('user_follows')
             ->where('user_id', $userId)
@@ -30,20 +32,21 @@ class Follow
      *
      * @param int $userId
      * @param int $followerUserId
+     * @return bool
      */
-    public function isFollower($userId, $followerUserId)
+    public static function isFollower($userId, $followerUserId)
     {
-        return $this->isFollow($followerUserId, $userId);
+        return self::isFollow($followerUserId, $userId);
     }
 
     /**
      * フォローしているユーザーの一覧を取得
      *
-     * @param $userId
+     * @param int $userId
      * @param int $category
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getFollow($userId, $category = 0)
+    public static function getFollow($userId, $category = 0)
     {
         return DB::table('user_follows')
             ->where('user_id', $userId)
@@ -57,7 +60,7 @@ class Follow
      * @param int $category
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getFollower($userId, $category = 0)
+    public static function getFollower($userId, $category = 0)
     {
         return DB::table('user_follows')
             ->where('follow_user_id', $userId)
@@ -68,12 +71,12 @@ class Follow
      * 追加
      *
      * @param User $user
-     * @param int $followUserId
+     * @param User $followUser
      * @param int $followCategory
      */
-    public function add(User $user, $followUserId, $followCategory = 0)
+    public static function add(User $user, User $followUser, $followCategory = 0)
     {
-        if ($user->id == $followUserId) {
+        if ($user->id == $followUser->id) {
             return ;
         }
 
@@ -82,20 +85,20 @@ INSERT IGNORE INTO user_follows
 (user_id, category, follow_user_id, created_at, updated_at)
 VALUES (?, ?, ?, NOW(), NOW())
 SQL;
-        DB::insert($sql, [$user->id, $followCategory, $followUserId]);
+        DB::insert($sql, [$user->id, $followCategory, $followUser->id]);
 
 
-        Timeline\ToMe::addFollowerText($followUserId, $user->id, $user->name);
+        Timeline\ToMe::addFollowerText($followUser, $user);
     }
 
     /**
      * 削除
      *
-     * @param $userId
-     * @param $followUserId
+     * @param int $userId
+     * @param int $followUserId
      * @return int
      */
-    public function remove($userId, $followUserId)
+    public static function remove($userId, $followUserId)
     {
         return DB::table('user_follows')
             ->where('user_id', $userId)
@@ -106,10 +109,10 @@ SQL;
     /**
      * フォロー数を取得
      *
-     * @param $userId
+     * @param int $userId
      * @return int
      */
-    public function getFollowNum($userId)
+    public static function getFollowNum($userId)
     {
         return DB::table('user_follows')
             ->where('user_id', $userId)
@@ -119,10 +122,10 @@ SQL;
     /**
      * フォロワー数を取得
      *
-     * @param $userId
+     * @param int $userId
      * @return int
      */
-    public function getFollowerNum($userId)
+    public static function getFollowerNum($userId)
     {
         return DB::table('user_follows')
             ->where('follow_user_id', $userId)
