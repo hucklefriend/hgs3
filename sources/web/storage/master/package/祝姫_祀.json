@@ -1,0 +1,38 @@
+{
+  "soft_name": ["祝姫"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "DMM GAMES",
+      "name": "祝姫",
+      "url": "http://www.capcom.co.jp/biohd/ja/",
+      "shop": "DMM GAMES",
+      "shop_url": "http://dlsoft.dmm.com/detail/dmmgames_0001/",
+      "is_adult" : 0,
+      "release_int": 20160129,
+      "release_date": "2016年1月29日"
+    },
+    {
+      "platform": "PS4",
+      "company": "日本一ソフトウェア",
+      "name": "祝姫 -祀-",
+      "url": "http://nippon1.jp/consumer/iwaihime/",
+      "shop": "amazon",
+      "asin": "B06ZY9ZF2J",
+      "is_adult" : 1,
+      "release_int": 20170907,
+      "release_date": "2017年9月7日"
+    },
+    {
+      "platform": "Vita",
+      "company": "日本一ソフトウェア",
+      "name": "祝姫 -祀-",
+      "url": "http://nippon1.jp/consumer/iwaihime/",
+      "shop": "amazon",
+      "asin": "B06Y6749X4",
+      "is_adult" : 1,
+      "release_int": 20170907,
+      "release_date": "2017年9月7日"
+    }
+  ]
+}

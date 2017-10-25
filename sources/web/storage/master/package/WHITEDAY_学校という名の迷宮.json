@@ -1,0 +1,27 @@
+{
+  "soft_name": ["WHITEDAY～学校という名の迷宮～"],
+  "packages":[
+    {
+      "platform": "Vita",
+      "company": "エクスペリエンス",
+      "name": "死印",
+      "release_date": "2017年6月1日",
+      "release_int": 20170601,
+      "url":"http://shiin.jp/",
+      "game_type_id": 1,
+      "shop": "amazon",
+      "asin": "B06WWQY414"
+    },
+    {
+      "platform": "Vita",
+      "company": "エクスペリエンス",
+      "name": "死印",
+      "release_date": "2017年6月1日",
+      "release_int": 20170601,
+      "url":"http://shiin.jp/",
+      "game_type_id": 1,
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/#!/ja-jp/%e6%ad%bb%e5%8d%b0(ps-vita)/cid=JP0091-PCSG01005_00-EXPHORROR2017HRV"
+    }
+  ]
+}

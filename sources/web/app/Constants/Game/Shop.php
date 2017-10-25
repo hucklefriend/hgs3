@@ -13,6 +13,7 @@ class Shop
     const MICROSOFT_STORE = 13;
     const NINTENDO_STORE = 14;
     const NINTENDO_E_SHOP = 15;
+    const DMM_GAMES = 16;
     const APP_STORE = 31;
     const GOOGLE_PLAY = 32;
 
@@ -23,6 +24,7 @@ class Shop
         self::MICROSOFT_STORE    => 'Microsoft ストア',
         self::NINTENDO_STORE     => 'My Nintendo Store',
         self::NINTENDO_E_SHOP    => 'ニンテンドーeショップ',
+        self::DMM_GAMES          => 'DMM GAMES',
         self::APP_STORE          => 'App Store',
         self::GOOGLE_PLAY        => 'Google Play',
     ];
