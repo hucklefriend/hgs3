@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
 

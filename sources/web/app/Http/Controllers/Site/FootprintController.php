@@ -33,6 +33,10 @@ class FootprintController extends Controller
      */
     public function site(Orm\Site $site)
     {
+        if ($site->user_id != Auth::id() && !is_admin()) {
+            return abort(403);
+        }
+
         $data = ['site' => $site];
 
         $pager = new LengthAwarePaginator([], Site\Footprint::getNumBySite($site->id), self::ITEMS_PER_PAGE);
@@ -50,9 +54,20 @@ class FootprintController extends Controller
      * ユーザーの足跡
      *
      * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function user(User $user)
     {
+        $data = ['user' => $user];
 
+        $pager = new LengthAwarePaginator([], Site\Footprint::getNumBySite($site->id), self::ITEMS_PER_PAGE);
+        $pager->setPath('');
+
+        $data['pager'] = $pager;
+
+        $data['footprints'] = Site\Footprint::getBySite($site->id, self::ITEMS_PER_PAGE, ($pager->currentPage() - 1) * self::ITEMS_PER_PAGE);
+        $data['sites'] = User::getHash(array_pluck($data['footprints'], 'site_id'));
+
+        return view('user.site.footprint', $data);
     }
 }

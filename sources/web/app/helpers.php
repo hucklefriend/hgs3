@@ -208,3 +208,19 @@ function array_to_hash(array $data, $key)
 
     return $hash;
 }
+
+/**
+ * 条件に一致しなければdisplay:noneを返す
+ *
+ * @param mixed $param
+ * @param mixed $value
+ * @return string
+ */
+function display_none($param, $value)
+{
+    if ($param != $value) {
+        return 'display:none;';
+    }
+
+    return '';
+}

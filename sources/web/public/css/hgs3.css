@@ -106,7 +106,13 @@ code {
     max-width: 100px;
 }
 
-
+a:link .no_image_text_inner,
+a:visited .no_image_text_inner,
+a:hover .no_image_text_inner,
+a:active .no_image_text_inner {
+    color: black;
+    text-decoration: none !important;
+}
 
 @media (min-width: 320px) {
     .no_image_text_inner {

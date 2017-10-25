@@ -39,7 +39,6 @@ class Site
                 $orm->user_id = $u->id;
                 $orm->name = str_random(rand(3, 30));
                 $orm->url = 'http://fake.' . str_random(rand(3, 10)) . '.com/';
-                $orm->banner_url = '';
                 $orm->presentation = str_random(rand(50, 500));
                 $orm->rate = $rates[rand(0, 2)];
                 $orm->main_contents_id = rand(1, 7);
@@ -60,7 +59,7 @@ class Site
 
                 rtrim($handleSoft, ',');
 
-                \Hgs3\Models\Site::save($u, $orm, $handleSoft);
+                \Hgs3\Models\Site::save($u, $orm, $handleSoft, null, null);
             }
         }
     }

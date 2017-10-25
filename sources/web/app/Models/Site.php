@@ -7,8 +7,10 @@ namespace Hgs3\Models;
 
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 use Hgs3\Models\Timeline;
 
 class Site
@@ -16,11 +18,14 @@ class Site
     /**
      * 登録
      *
-     * @param User $user
+     * @param \Hgs3\Models\User $user
      * @param Orm\Site $site
-     * @param string $handleSoftsComma
+     * @param $handleSoftsComma
+     * @param UploadedFile|null $listBanner
+     * @param UploadedFile|null $detailBanner
+     * @return bool
      */
-    public static function save(User $user, Orm\Site $site, $handleSoftsComma)
+    public static function save(User $user, Orm\Site $site, $handleSoftsComma, ?UploadedFile $listBanner, ?UploadedFile $detailBanner)
     {
         $isAdd = $site->id === null;
 
@@ -38,11 +43,22 @@ class Site
 
         DB::beginTransaction();
         try {
+            if (!$isAdd) {
+                // 更新の場合はサイトIDがわかるので、先にバナー保存
+                self::saveBanner($site, $listBanner, $detailBanner);
+            }
+
             $site->save();
 
             self::saveHandleSofts($site->user_id, $handleSoftIds);
 
             self::saveSearchIndex($site, $handleSoftIds);
+
+            if ($isAdd) {
+                // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
+                self::saveBanner($site, $listBanner, $detailBanner);
+                $site->save();
+            }
 
             DB::commit();
         } catch (\Exception $e) {
@@ -81,6 +97,32 @@ class Site
         }
 
         return true;
+    }
+
+    private static function saveBanner(Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner)
+    {
+        $bannerDirectoryPath = base_path() . '/public/img/site_banner/' . $site->id;
+
+        // バナー用ディレクトリ作成
+        if (!File::exists($bannerDirectoryPath)) {
+            File::makeDirectory($bannerDirectoryPath);
+        }
+
+        $listBannerFileName = 'list.' . $listBanner->getClientOriginalExtension();
+        if ($site->list_banner_upload_flag == 2 && $listBanner !== null) {
+            $listBanner->move($bannerDirectoryPath, $listBannerFileName);
+            $site->list_banner_url = url2('img/site_banner/' . $site->id . '/' . $listBannerFileName);
+        } else if ($site->list_banner_upload_flag == 0) {
+            $site->list_banner_url = null;
+        }
+
+        $detailBannerFileName = 'detail.' . $detailBanner->getClientOriginalExtension();
+        if ($site->detail_banner_upload_flag == 2 && $detailBanner !== null) {
+            $listBanner->move($bannerDirectoryPath, $detailBannerFileName);
+            $site->detail_banner_url = url2('img/site_banner/' . $site->id . '/' . $listBannerFileName);
+        } else if ($site->detail_banner_upload_flag == 0) {
+            $site->detail_banner_url = null;
+        }
     }
 
     /**
