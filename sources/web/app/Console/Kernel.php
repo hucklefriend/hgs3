@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
         Commands\TestData\Review::class,
         Commands\TestData\Site::class,
         Commands\TestData\SiteGood::class,
+        Commands\TestData\SiteFootprint::class,
         Commands\TestData\UserFavoriteSite::class,
         Commands\TestData\UserFollow::class,
         Commands\TestData\UserCommunity::class,

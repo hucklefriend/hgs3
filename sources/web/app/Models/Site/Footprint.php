@@ -8,6 +8,7 @@ namespace Hgs3\Models\Site;
 use Hgs3\Models\MongoDB\Collection;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class Footprint
 {
@@ -22,11 +23,11 @@ class Footprint
     public static function getBySite($siteId, $limit, $skip)
     {
         $filter = [
-            'soft_id' => $siteId
+            'site_id' => $siteId
         ];
         $options = [
             'limit' => $limit,
-            'skiop' => $skip
+            'skip'  => $skip
         ];
 
         return self::getCollection()->find($filter, $options)->toArray();
@@ -41,7 +42,7 @@ class Footprint
     public static function getNumBySite($siteId)
     {
         $filter = [
-            'soft_id' => $siteId
+            'site_id' => $siteId
         ];
 
         return self::getCollection()->count($filter);
@@ -86,6 +87,9 @@ class Footprint
             ];
             self::getCollection()->insertOne($document);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
             return false;
         }
 
@@ -100,6 +104,6 @@ class Footprint
      */
     private static function getCollection()
     {
-        return Collection::getInstance()->getDatabase()->site_update_history;
+        return Collection::getInstance()->getDatabase()->site_footprint;
     }
 }

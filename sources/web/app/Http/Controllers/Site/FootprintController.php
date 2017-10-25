@@ -41,6 +41,7 @@ class FootprintController extends Controller
         $data['pager'] = $pager;
 
         $data['footprints'] = Site\Footprint::getBySite($site->id, self::ITEMS_PER_PAGE, ($pager->currentPage() - 1) * self::ITEMS_PER_PAGE);
+        $data['users'] = User::getHash(array_pluck($data['footprints'], 'user_id'));
 
         return view('site.footprint', $data);
     }

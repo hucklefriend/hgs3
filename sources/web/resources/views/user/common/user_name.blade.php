@@ -1,1 +1,1 @@
-<a href="{{ url('user/profile') }}/{{ $id }}">{{ $name }}</a>
+<a href="{{ url('user/profile') }}/{{ $id }}">{{ $name }}さん</a>
