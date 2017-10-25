@@ -228,7 +228,7 @@ SQL;
         $soft = Orm\GameSoft::find($draft->soft_id);
         if ($soft !== null) {
             Timeline\FavoriteSoft::addNewReviewText($soft, $review);
-            //Timeline\FollowUser::addNewReviewText();
+            Timeline\FollowUser::addWriteReviewText($user, $soft, $review);
         }
 
         return $review->id;

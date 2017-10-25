@@ -112,7 +112,6 @@ class SiteController extends Controller
     {
         // TODO サイト登録可能数チェック
 
-
         return view('site.add', [
             'softs' => Orm\GameSoft::getPhoneticTypeHash(),
             'site'  => new Orm\Site([
@@ -207,5 +206,26 @@ class SiteController extends Controller
         $site->main_contents_id = intval($request->get('main_contents', MainContents::OTHER));
         $site->rate = intval($request->get('rate',Rate::ALL));
         $site->gender = intval($request->get('gender', Gender::NONE));
+    }
+
+    /**
+     * サイトへGO
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function go(Orm\Site $site)
+    {
+        if (Auth::check()) {
+            if (Auth::user()->footprint == 1) {
+                Site\Footprint::add($site, Auth::user());
+            } else {
+                Site\Footprint::add($site, null);
+            }
+        } else {
+            Site\Footprint::add($site, null);
+        }
+
+        return redirect($site->url);
     }
 }

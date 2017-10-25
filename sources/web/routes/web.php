@@ -114,6 +114,7 @@ Route::delete('/site/{site}', 'Site\SiteController@delete')->middleware('auth');
 Route::get('/site/{site}', 'Site\SiteController@detail')->middleware('auth');
 Route::post('/site/good/{site}', 'Site\GoodController@good')->middleware('auth');
 Route::delete('/site/good/{site}', 'Site\GoodController@cancel')->middleware('auth');
+Route::get('/site/go/{site}', 'Site\SiteController@go');
 
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');
