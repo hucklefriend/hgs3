@@ -6,20 +6,20 @@
 namespace Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class PlayedGame
+class PlayedSoft
 {
     /**
-     * お気に入り登録済みか
+     * 遊んだゲーム登録済みか
      *
-     * @param $userId
-     * @param $gameId
+     * @param int $userId
+     * @param int $softId
      * @return bool
      */
-    public function isPlayed($userId, $gameId)
+    public function isPlayed($userId, $softId)
     {
-        return DB::table('user_played_games')
+        return DB::table('user_played_softs')
             ->where('user_id', $userId)
-            ->where('game_id', $gameId)
+            ->where('soft_id', $softId)
             ->count('user_id') > 0;
     }
 }

@@ -6,50 +6,44 @@
 namespace Hgs3\Models\Timeline;
 
 use Illuminate\Support\Facades\Log;
+use Hgs3\Models\User;
+use Hgs3\Models\Orm;
 
 class UserCommunity extends TimelineAbstract
 {
     /**
      * 参加
      *
-     * @param int $userCommunityId
-     * @param string $userCommunityName
-     * @param int $userId
-     * @param string $userName
+     * @param Orm\UserCommunity $userCommunity
+     * @param User $user
      */
-    public static function addJoinUserText($userCommunityId, $userCommunityName, $userId, $userName)
+    public static function addJoinUserText(Orm\UserCommunity $userCommunity, User $user)
     {
-        self::setUserName($userId, $userName);
-        self::setCommunityName($userCommunityId, $userCommunityName);
-
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">%sさん</a>が参加しました',
-            url2('community/u/' . $userCommunityId),
-            $userCommunityName,
-            url2('user/profile/' . $userId),
-            $userName
+            url2('community/u/' . $userCommunity->id),
+            $userCommunity->name,
+            url2('user/profile/' . $user->id),
+            $user->name
         );
 
-        self::insert($userCommunityId, $text);
+        self::insert($userCommunity->id, $text);
     }
 
     /**
-     * 新規トピック
+     * 新規トピック作成
      *
-     * @param int $userCommunityId
-     * @param string $userCommunityName
-     * @param int $topicId
+     * @param Orm\UserCommunity $userCommunity
+     * @param Orm\UserCommunityTopic $topic
      */
-    public static function addNewTopicText($userCommunityId, $userCommunityName, $topicId)
+    public static function addNewTopicText(Orm\UserCommunity $userCommunity, Orm\UserCommunityTopic $topic)
     {
-        self::setCommunityName($userCommunityId, $userCommunityName);
-
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">新しいトピック</a>が作成されました',
-            url2('community/u/' . $userCommunityId),
-            $userCommunityName,
-            url2('community/u/' . $userCommunityId . 'topic/' . $topicId)
+            url2('community/u/' . $userCommunity->id),
+            $userCommunity->name,
+            url2('community/u/' . $userCommunity->id . 'topic/' . $topic->id)
         );
 
-        self::insert($userCommunityId, $text);
+        self::insert($userCommunity->id, $text);
     }
 
     /**

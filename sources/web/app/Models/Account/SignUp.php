@@ -8,7 +8,7 @@ namespace Hgs3\Models\Account;
 use Hgs3\Mail\ProvisionalRegistration;
 use Hgs3\Models\Orm\SocialAccount;
 use Hgs3\Models\Orm\UserProvisionalRegistration;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 

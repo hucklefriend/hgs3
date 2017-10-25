@@ -3,10 +3,7 @@
 namespace Hgs3\Models\Community;
 
 use Hgs3\Models\Orm;
-use Hgs3\Models\Orm\UserCommunityMember;
-use Hgs3\Models\Orm\UserCommunityTopic;
-use Hgs3\Models\Orm\UserCommunityTopicResponse;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +15,7 @@ class UserCommunity
      */
     public static function createDefaultCommunity()
     {
-        $uc = new \Hgs3\Models\Orm\UserCommunity([
+        $uc = new Orm\UserCommunity([
             'user_id'  => 1,
             'name'     => 'テスト',
             'user_num' => 1,
@@ -28,14 +25,26 @@ class UserCommunity
 
     }
 
+    /**
+     * 参加の古い順にユーザーを太く
+     *
+     * @param int $userCommunityId
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
+     */
     public function getOlderMembers($userCommunityId)
     {
-        return UserCommunityMember::where('user_community_id', $userCommunityId)
+        return Orm\UserCommunityMember::where('user_community_id', $userCommunityId)
             ->orderBy('join_date')
             ->take(5)
             ->get();
     }
 
+    /**
+     * メンバーを追加
+     *
+     * @param $userCommunityId
+     * @param $userId
+     */
     public function add($userCommunityId, $userId)
     {
         $sql =<<< SQL
@@ -101,7 +110,8 @@ SQL;
         }
 
         // タイムライン
-        Timeline\FollowUser::addJoinUserCommunityText($user->id, $user->name, $userCommunity->id, $userCommunity->name);
+        Timeline\FollowUser::addJoinUserCommunityText($user, $userCommunity);
+        Timeline\UserCommunity::addJoinUserText();
 
         return true;
     }
@@ -109,11 +119,11 @@ SQL;
     /**
      * 脱退
      *
-     * @param $userCommunityId
-     * @param $userId
+     * @param Orm\UserCommunity $userCommunity
+     * @param User $user
      * @return bool
      */
-    public function leave($userCommunityId, $userId)
+    public function leave(Orm\UserCommunity $userCommunity, User $user)
     {
         DB::beginTransaction();
 
@@ -122,14 +132,14 @@ SQL;
 DELETE FROM user_community_members
 WHERE user_community_id = ? AND user_id = ?
 SQL;
-            DB::insert($sql, [$userCommunityId, $userId]);
+            DB::insert($sql, [$userCommunity->id, $user->id]);
 
             $sql =<<< SQL
 UPDATE user_communities
 SET user_num = user_num - 1
 WHERE id = ?
 SQL;
-            DB::update($sql, [$userCommunityId]);
+            DB::update($sql, [$userCommunity->id]);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -137,7 +147,8 @@ SQL;
             return false;
         }
 
-        Timeline\FollowUser::addLeaveUserCommunityText($user->id, $user->name, $userCommunity->id, $userCommunity->name);
+        // タイムライン
+        Timeline\FollowUser::addLeaveUserCommunityText($user, $userCommunity);
 
         return true;
     }
@@ -179,7 +190,7 @@ SQL;
     /**
      * 直近のトピックを取得
      *
-     * @param $userCommunityId
+     * @param int $userCommunityId
      * @return \Illuminate\Support\Collection
      */
     public function getLatestTopics($userCommunityId)
@@ -194,10 +205,10 @@ SQL;
     /**
      * トピックの詳細を取得
      *
-     * @param UserCommunityTopic $uct
+     * @param Orm\UserCommunityTopic $uct
      * @return array
      */
-    public function getTopicDetail(UserCommunityTopic $uct)
+    public function getTopicDetail(Orm\UserCommunityTopic $uct)
     {
         $pager = DB::table('user_community_topic_responses')
             ->where('user_community_topic_id', $uct->id)
@@ -214,15 +225,15 @@ SQL;
      * トピックを投稿
      *
      * @param Orm\UserCommunity $userCommunity
-     * @param $userId
-     * @param $title
-     * @param $comment
+     * @param int $userId
+     * @param string $title
+     * @param string $comment
      */
     public function writeTopic(Orm\UserCommunity $userCommunity, $userId, $title, $comment)
     {
         $now = new \DateTime();
 
-        $topicId = UserCommunityTopic::insertGetId([
+        $topicId = Orm\UserCommunityTopic::insertGetId([
             'user_community_id' => $userCommunity->id,
             'user_id'           => $userId,
             'title'             => $title,
@@ -251,7 +262,7 @@ SQL;
         DB::beginTransaction();
 
         try {
-            UserCommunityTopicResponse::insert([
+            Orm\UserCommunityTopicResponse::insert([
                 'user_community_topic_id' => $userCommunityTopic->id,
                 'user_id'                 => $user->id,
                 'comment'                 => $comment,
@@ -277,13 +288,10 @@ SQL;
         }
 
         // タイムライン
-        Timeline\ToMe::addUserCommunityTopicResponseText(
-            $userCommunityTopic->user_id,
-            $userCommunity->id,
-            $userCommunity->name,
-            $userCommunityTopic->id
-        );
-
+        $topicMaster = User::find($topic->user_id);
+        if ($topicMaster) {
+            Timeline\ToMe::addUserCommunityTopicResponseText($topicMaster, $userCommunity, $topic);
+        }
 
         return true;
     }
@@ -291,7 +299,7 @@ SQL;
     /**
      * トピックの消去
      *
-     * @param $topicId
+     * @param int $topicId
      * @return bool
      */
     public function eraseTopic($topicId)
@@ -323,10 +331,10 @@ SQL;
     /**
      * レスの消去
      *
-     * @param UserCommunityTopicResponse $userCommunityTopicResponse
+     * @param Orm\UserCommunityTopicResponse $res
      * @return bool
      */
-    public function eraseTopicResponse(UserCommunityTopicResponse $userCommunityTopicResponse)
+    public function eraseTopicResponse(Orm\UserCommunityTopicResponse $res)
     {
         DB::beginTransaction();
 
@@ -336,9 +344,9 @@ UPDATE user_community_topics
 SET response_num = response_num - 1
 WHERE id = ?
 SQL;
-            DB::update($updSql, [$userCommunityTopicResponse->topic_id]);
+            DB::update($updSql, [$res->topic_id]);
 
-            $userCommunityTopicResponse->delete();
+            $res->delete();
 
             DB::commit();
         } catch (\Exception $e) {

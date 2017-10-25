@@ -233,7 +233,7 @@ class Profile
      * @param array $data
      * @return
      */
-    private function getUserMaster(array $data)
+    private static function getUserMaster(array $data)
     {
         $userIds = array_merge(
             array_pluck($data['favoriteSites']['sites'], 'user_id'),
