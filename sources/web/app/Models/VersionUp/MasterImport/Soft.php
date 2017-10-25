@@ -18,7 +18,7 @@ class Soft extends MasterImportAbstract
         // 既存データのアップデート
         //$this->update();
 
-        $path = resource_path('master/soft');
+        $path = storage_path('master/soft');
 
         $files = File::files($path);
 

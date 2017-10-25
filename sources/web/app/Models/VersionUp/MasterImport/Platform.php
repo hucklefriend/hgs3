@@ -17,7 +17,7 @@ class Platform extends MasterImportAbstract
     {
         $this->update();
 
-        $path = resource_path('master/platform');
+        $path = storage_path('master/platform');
 
         $files = File::files($path);
 
@@ -47,7 +47,7 @@ class Platform extends MasterImportAbstract
      */
     private function update()
     {
-        $platforms = include(resource_path('master/platform/update.php'));
+        $platforms = include(storage_path('master/platform/update.php'));
 
         foreach ($platforms as $p) {
             $platform = Orm\GamePlatform::find($p['id']);

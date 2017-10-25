@@ -16,7 +16,7 @@ class Series extends MasterImportAbstract
     public function import()
     {
         // 新規データの追加
-        $path = resource_path('master/series');
+        $path = storage_path('master/series');
 
         $files = File::files($path);
         foreach ($files as $filePath) {

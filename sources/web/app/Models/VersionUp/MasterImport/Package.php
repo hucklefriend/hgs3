@@ -20,7 +20,7 @@ class Package extends MasterImportAbstract
     {
         //$this->update();
 
-        $path = resource_path('master/package');
+        $path = storage_path('master/package');
 
         $files = File::files($path);
 
@@ -129,7 +129,7 @@ class Package extends MasterImportAbstract
      */
     private function update()
     {
-        $packages = include(resource_path('master/package/update.php'));
+        $packages = include(storage_path('master/package/update.php'));
 
         foreach ($packages as $p) {
             $pkg = Orm\GamePackage::find($p['id']);

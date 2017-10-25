@@ -1,0 +1,25 @@
+{
+  "soft_name": ["ホラート －ディアトロフ峠の惨劇－"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "IMGN.PRO",
+      "name": "KHOLAT",
+      "release_date": "2015年6月10日",
+      "release_int": 20150610,
+      "url":"http://kholat.com/",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/343710/Kholat/?l=japanese"
+    },
+    {
+      "platform": "PS4",
+      "company": "インターグロー",
+      "name": "ホラート －ディアトロフ峠の惨劇－",
+      "release_date": "2016年11月11日",
+      "release_int": 20161111,
+      "url":"http://kholat.com/jp/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/#!/ja-jp/%e3%82%b2%e3%83%bc%e3%83%a0/%e3%83%9b%e3%83%a9%e3%83%bc%e3%83%88-%e3%83%87%e3%82%a3%e3%82%a2%e3%83%88%e3%83%ad%e3%83%95%e5%b3%a0%e3%81%ae%e6%83%a8%e5%8a%87-/cid=JP0075-CUSA05919_00-KHOLATGAME000000?SMCID=pscomjp_catalog_lead-product-info"
+    }
+  ]
+}

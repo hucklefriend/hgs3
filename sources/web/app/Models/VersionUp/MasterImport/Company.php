@@ -19,7 +19,7 @@ class Company extends MasterImportAbstract
         $this->update();
 
         // 新規データの追加
-        $path = resource_path('master/company');
+        $path = storage_path('master/company');
 
         $files = File::files($path);
         foreach ($files as $filePath) {
@@ -42,7 +42,7 @@ class Company extends MasterImportAbstract
      */
     private function update()
     {
-        $companies = include(resource_path('master/company/update.php'));
+        $companies = include(storage_path('master/company/update.php'));
 
         foreach ($companies as $c) {
             $company = Orm\GameCompany::find($c['id']);

@@ -1,0 +1,15 @@
+{
+  "soft_name": ["ドラキュラ ～復活～"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "ツクダシナジー",
+      "name": "ドラキュラ ～復活～",
+      "release_date": "2001年10月26日",
+      "release_int": 20011026,
+      "url":"",
+      "shop": "amazon",
+      "asin": "B00005V7C0"
+    }
+  ]
+}
