@@ -67,10 +67,7 @@ class SiteController extends Controller
     {
         $data = ['site' => $site];
 
-        $data['handleSoftIds'] = Site::getHandleSofts($site->id);
-        if (!empty($data['handleSoftIds'])) {
-            $data['handleSofts'] = Orm\GameSoft::getNameHash($data['handleSoftIds']);
-        }
+        $data['handleSofts'] = Site::getSoftWithOriginalPackage($site->id);
 
         $isLogin = Auth::check();
         $data['isFavorite'] = false;

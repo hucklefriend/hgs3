@@ -35,7 +35,7 @@ class Site
 
             $orm = new Orm\Site();
             for ($j = 0; $j < $n; $j++) {
-                $orm->id = null;
+                unset($orm->id);
                 $orm->user_id = $u->id;
                 $orm->name = str_random(rand(3, 30));
                 $orm->url = 'http://fake.' . str_random(rand(3, 10)) . '.com/';

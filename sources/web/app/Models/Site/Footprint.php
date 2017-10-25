@@ -15,22 +15,36 @@ class Footprint
      * 履歴を取得
      *
      * @param int $siteId
-     * @param int $time
-     * @param int $num
+     * @param int $limit
+     * @param int $skip
      * @return array
      */
-    public static function get($siteId, $time, $num)
+    public static function getBySite($siteId, $limit, $skip)
     {
         $filter = [
-            'soft_id'          => $siteId,
-            'update_timestamp' => ['$lt' => $time]
+            'soft_id' => $siteId
         ];
         $options = [
-            'sort'  => ['time' => -1],
-            'limit' => $num,
+            'limit' => $limit,
+            'skiop' => $skip
         ];
 
         return self::getCollection()->find($filter, $options)->toArray();
+    }
+
+    /**
+     * 履歴の件数を取得
+     *
+     * @param int $siteId
+     * @return int
+     */
+    public static function getNumBySite($siteId)
+    {
+        $filter = [
+            'soft_id' => $siteId
+        ];
+
+        return self::getCollection()->count($filter);
     }
 
     /**

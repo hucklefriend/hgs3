@@ -3,186 +3,118 @@
 @section('content')
     @verbatim
     <style>
-        @media (min-width: 576px) {
-            .card-columns {
-                column-count: 2;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .card-columns {
-                column-count: 3;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .card-columns {
-                column-count: 4;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .card-columns {
-                column-count: 5;
-            }
+        .card_soft {
+            margin: 5px 5px;
+            width: 120px;
         }
     </style>
     @endverbatim
 
-    <div>
-        <h4>{{ $site->name }}</h4>
 
-        <div class="d-sm-none">
-            <img src="{{ url2('img/banner/test/200x40.gif') }}">
-        </div>
-        <div class="d-md-none d-none d-sm-block">
-            <img src="{{ url2('img/banner/test/300x100.png') }}" style="width: 100%;max-width:300px;">
-        </div>
-        <div class="d-none d-md-block">
-            <img src="{{ url2('img/banner/test/728x90.gif') }}">
+    <h4 class="card-title">{{ $site->name }}</h4>
+    <div class="d-flex flex-wrap">
+        <div class=""><img src="{{ url2('img/banner/test/240x400.jpg') }}" class="img-responsive"></div>
+        <div style="padding: 0 15px;min-width: 300px;">
+            <h4>
+                <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
+                @if ($site->rate > 0)
+                    <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
+                @endif
+                @if ($site->gender != \Hgs3\Constants\Site\Gender::NONE)
+                    <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
+                @endif
+            </h4>
+            <table class="table table-responsive" style="width: 100%">
+                <tbody>
+                    <tr>
+                        <th>URL</th>
+                        <td>
+                            <a href="{{ url('/site/go/' . $site->id) }}">{{ $site->url }}</a>
+                            <small>[<a href="{{ url('/site/go/' . $site->id) }}" target="_blank">別窓</a>]</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>管理人</th>
+                        <td><a href="{{ url2('user/profile/' . $webMaster->id) }}">{{ $webMaster->name }}さん</a></td>
+                    </tr>
+                    <tr>
+                        <th>お気に入り人数</th>
+                        <td>
+                            <div class="d-flex">
+                                <div class="mr-auto">{{ '0' }}人</div>
+                                <div class="text-right">
+                                    @if ($isWebMaster)
+                                        <small><a href="{{ url2('site/favorite/' . $site->id) }}">登録者一覧</a></small>
+                                    @endif
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>いいね数</th>
+                        <td>
+                            <div class="d-flex">
+                                <div class="mr-auto">{{ number_format($site->good_num) }}</div>
+                                <div class="text-right">
+                                    @if ($isWebMaster)
+                                        <small><a href="{{ url2('site/good_history/' . $site->id) }}">履歴</a></small>
+                                    @endif
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>アクセス数</th>
+                        <td>
+                            <div class="d-flex">
+                                <div class="mr-auto">{{ number_format($site->out_count) }}</div>
+                                <div class="text-right">
+                                @if ($isWebMaster)
+                                    <small><a href="{{ url2('site/footprint/' . $site->id) }}">足跡</a></small>
+                                @endif
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @if ($isWebMaster)
+                <div class="text-right">
+                    <a href="{{ url2('site/edit/' . $site->id) }}">サイト情報を編集</a>
+                </div>
+            @endif
         </div>
     </div>
     <br>
-    <div class="card-columns">
-        <div class="card card_site">
-            <div class="card-body">
-                <h6 class="card-title">ウェブ・マスター</h6>
-                <p class="card-text">
-                    <a href="{{ url2('user/profile/' . $webMaster->id) }}">{{ $webMaster->name }}さん</a>
-                </p>
-            </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">紹介</h5>
+            <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
         </div>
-        <div class="card card_site">
-            <div class="card-body">
-                <h5 class="card-title">メインコンテンツ</h5>
-                <p class="card-text">
-                    {{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}
-                </p>
-            </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">このサイトで扱っているゲーム</h5>
         </div>
-        <div class="card card_site">
-            <div class="card-body">
-                <h5 class="card-title">取扱いゲーム</h5>
-                <p class="card-text">
-                    @foreach ($handleSoftIds as $handleSoftId)
-                        <a href="{{ url2('game/soft/' . $handleSoftId) }}">{{ $handleSofts[$handleSoftId] }}</a>@if (!$loop->last)、@endif
-                    @endforeach
-                </p>
-            </div>
-        </div>
-        <div class="card card_site">
-            <div class="card-body">
-                <h5 class="card-title">紹介文</h5>
-                <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
-            </div>
-        </div>
-        <div class="card card_site">
-            <div class="card-body">
-                <h5 class="card-title">対象年齢</h5>
-                <p class="card-text">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</p>
-            </div>
-        </div>
-        <div class="card card_site">
-            <div class="card-body">
-                <h5 class="card-title">性別傾向</h5>
-                <p class="card-text">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</p>
-            </div>
-        </div>
-        <div class="card card_site">
-            <div class="card-body">
-                <h5 class="card-title">アクセス</h5>
-                <p class="card-text">
-                    <a href="{{ url('/site/go') }}/{{ $site->id }}">{{ $site->url }}</a>
-                    <small>[<a href="{{ url('/site/go') }}/{{ $site->id }}" target="_blank">別窓</a>]</small>
-                </p>
-            </div>
-        </div>
-        <div class="card card_site">
-            <div class="card-body">
-                <h5 class="card-title">アクセス数</h5>
-                <p class="card-text">
-                    {{ number_format($site->out_count) }}
-                </p>
-            </div>
-        </div>
-        <div class="card card_site">
-            <div class="card-body">
-                <h5 class="card-title">いいね数</h5>
-                <p class="card-text">
-                    {{ number_format($site->good_num) }}
-                    @if (Auth::check() && !$isWebMaster)
-                        <div>
-                            @if ($isGood)
-                            <form method="POST" action="{{ url('site/good/' . $site->id) }}">
-                                {{ csrf_tag($csrfToken) }}
-                                {{ method_field('DELETE') }}
-                                <input type="hidden" name="site_id" value="{{ $site->id }}">
-                                <button class="btn btn-warning btn-sm">取り消し</button>
-                            </form>
-                            @else
-                            <form method="POST" action="{{ url('site/good/' . $site->id) }}">
-                                {{ csrf_tag($csrfToken) }}
-                                <input type="hidden" name="site_id" value="{{ $site->id }}">
-                                <button class="btn btn-info btn-sm">いいね</button>
-                            </form>
-                            @endif
+        <div class="d-flex flex-wrap">
+            @foreach ($handleSofts as $soft)
+                <div>
+                    <div class="card card_soft text-center">
+                        <div class="card-body">
+                            <a href="{{ url2('game/soft/' . $soft->id) }}">
+                                @include('game.common.package_image_small', ['imageUrl' => $soft->small_image_url])
+                            </a>
+                            <a href="{{ url2('game/soft/' . $soft->id) }}"><small>{{ $soft->name }}</small></a>
                         </div>
-                    @endif
-                </p>
-            </div>
-        </div>
-        @if (Auth::check() && !$isWebMaster)
-            <div class="card card_site">
-                <div class="card-body">
-                    <h5 class="card-title">お気に入り</h5>
-                    <p class="card-text">
-                        @if ($isFavorite)
-                        <form method="POST" action="{{ url('user/favorite_site/' . $site->id) }}">
-                            {{ csrf_tag($csrfToken) }}
-                            {{ method_field('DELETE') }}
-                            <button class="btn btn-warning btn-sm">解除する</button>
-                        </form>
-                        @else
-                        <form method="POST" action="{{ url('user/favorite_site/' . $site->id) }}">
-                            {{ csrf_tag($csrfToken) }}
-                            <button class="btn btn-info btn-sm">登録する</button>
-                        </form>
-                        @endif
-                    </p>
+                    </div>
                 </div>
-            </div>
-        @endif
+            @endforeach
+        </div>
     </div>
 
     @if ($isWebMaster)
-    <p class="text-muted">※これより下はサイト登録をしたユーザー本人のみ確認できます。</p>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5>お気に入り登録者</h5>
-                    @foreach ($favoriteUsers as $fu)
-                        @include('user.common.icon', ['u' => $fu])
-                        @include('user.common.user_name', ['id' => $fu->id, 'name' => $fu->name])
-                        <hr>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5>足跡</h5>
-                    @foreach ($footprint as $fp)
-                        <div class="row">
-                            <div class="col-4">{{ $fp->user_id }}</div>
-                            <div class="col-8"></div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
     @endif
 
 @endsection

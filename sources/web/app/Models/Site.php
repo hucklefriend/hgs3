@@ -95,14 +95,17 @@ class Site
             ->where('site_id', $siteId)
             ->delete();
 
+        $hash = [];
+
         if (!empty($handleSoftIds)) {
             $data = [];
             foreach ($handleSoftIds as $softId) {
-                if (!empty($softId)) {
+                if (!empty($softId) && !isset($hash[$softId])) {
                     $data[] = [
                             'site_id' => $siteId,
                             'soft_id' => $softId
                         ];
+                    $hash[$softId] = 1;
                 }
             }
 
@@ -129,8 +132,12 @@ INSERT IGNORE INTO site_search_indices (site_id, soft_id, main_contents_id, gend
 VALUES (?, ?, ?, ?, ?, UNIX_TIMESTAMP(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
 
+        $hash = [];
         foreach ($handleSoftIds as $softId) {
-            DB::insert($sql, [$site->id, $softId, $site->main_contents_id, $site->gender, $site->rate]);
+            if (!isset($hash[$softId])) {
+                DB::insert($sql, [$site->id, $softId, $site->main_contents_id, $site->gender, $site->rate]);
+                $hash[$softId] = 1;
+            }
         }
     }
 
@@ -271,12 +278,37 @@ SQL;
      * @param int $siteId
      * @return \Illuminate\Support\Collection
      */
-    public static function getHandleSofts($siteId)
+    public static function getHandleSoftIds($siteId)
     {
         return Orm\SiteHandleSoft::where('site_id', $siteId)
             ->select(['soft_id'])
             ->get()
             ->pluck('soft_id')
             ->toArray();
+    }
+
+    /**
+     * オリジナルパッケージ情報付きでソフトデータを取得
+     *
+     * @param int $siteId
+     * @return array
+     */
+    public static function getSoftWithOriginalPackage($siteId)
+    {
+        $softIds = self::getHandleSoftIds($siteId);
+        if (empty($softIds)) {
+            return [];
+        }
+
+        $softIdsComma = implode(',', $softIds);
+
+        $sql =<<< SQL
+SELECT soft.id, soft.name, package.small_image_url 
+FROM (
+SELECT * FROM game_softs WHERE id IN ({$softIdsComma})
+) soft LEFT OUTER JOIN game_packages AS package ON soft.original_package_id = package.id
+SQL;
+
+        return DB::select($sql);
     }
 }
