@@ -34,7 +34,7 @@ class Site
         if (!$isAdd) {
             // タイムライン用に現在の取扱いゲームを取得
             $prevHandleSoftIds = DB::table('site_handle_softs')
-                ->select(['game_id'])
+                ->select(['soft_id'])
                 ->where('site_id', $site->id)
                 ->get()
                 ->pluck('soft_id', 'soft_id')
@@ -58,6 +58,8 @@ class Site
                 // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
                 self::saveBanner($site, $listBanner, $detailBanner);
                 $site->save();
+
+                // TODO 新着サイトに登録
             }
 
             DB::commit();
@@ -67,7 +69,9 @@ class Site
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
 
-            throw $e;
+            if (env('APP_ENV') == 'local') {
+                throw $e;
+            }
 
             return false;
         }
@@ -85,11 +89,10 @@ class Site
                 }
                 unset($softHash);
             }
-
         } else {
             Timeline\FollowUser::addUpdateSiteText($user, $site);
 
-            // 直前に取りつかってないゲームを追加
+            // 直前に取り扱ってないゲームを追加
             $softHash = Orm\GameSoft::getHash($handleSoftIds);
             foreach ($handleSoftIds as $softId) {
                 if (!isset($prevHandleSoftIds[$softId]) && isset($softHash[$softId])) {
@@ -101,6 +104,13 @@ class Site
         return true;
     }
 
+    /**
+     * バナー情報の保存
+     *
+     * @param Orm\Site $site
+     * @param UploadedFile|null $listBanner
+     * @param UploadedFile|null $detailBanner
+     */
     private static function saveBanner(Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner)
     {
         $bannerDirectoryPath = base_path() . '/public/img/site_banner/' . $site->id;
@@ -110,28 +120,55 @@ class Site
             File::makeDirectory($bannerDirectoryPath);
         }
 
-        if ($site->list_banner_upload_flag == 2 && $listBanner !== null) {
-            $listBannerFileName = 'list.' . $listBanner->getClientOriginalExtension();
+        // 一覧用バナーに何かしら変更が発生する
+        if ($site->list_banner_upload_flag != -1) {
+            // 今何かファイルが上がっていたら削除
+            if (!empty($site->list_banner_url)) {
+                $listBannerFileName = 'list.' . substr($site->list_banner_url, strrpos($site->list_banner_url, '.'));
 
-            if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
-                File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
+                if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
+                    File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
+                }
             }
 
-            $listBanner->move($bannerDirectoryPath, $listBannerFileName);
-            $site->list_banner_url = url2('img/site_banner/' . $site->id . '/' . $listBannerFileName);
-        } else if ($site->list_banner_upload_flag == 0) {
-            $site->list_banner_url = null;
+            if ($site->list_banner_upload_flag == 2 && $listBanner !== null) {
+                // アップロード
+                $listBannerFileName = 'list.' . $listBanner->getClientOriginalExtension();
+
+                if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
+                    File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
+                }
+
+                $listBanner->move($bannerDirectoryPath, $listBannerFileName);
+                $site->list_banner_url = url2('img/site_banner/' . $site->id . '/' . $listBannerFileName);
+            } else if ($site->list_banner_upload_flag == 0) {
+                // 削除(またはアップしない)
+                $site->list_banner_url = null;
+            }
         }
 
-        if ($site->detail_banner_upload_flag == 2 && $detailBanner !== null) {
-            $detailBannerFileName = 'detail.' . $detailBanner->getClientOriginalExtension();
-            if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
-                File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
+        // 詳細用バナーに何かしら変更が発生する
+        if ($site->detail_banner_upload_flag != -1) {
+            // 今何かファイルが上がっていたら削除
+            if (!empty($site->detail_banner_url)) {
+                $detailBannerFileName = 'detail.' . substr($site->detail_banner_url, strrpos($site->detail_banner_url, '.'));
+                if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
+                    File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
+                }
             }
-            $detailBanner->move($bannerDirectoryPath, $detailBannerFileName);
-            $site->detail_banner_url = url2('img/site_banner/' . $site->id . '/' . $detailBannerFileName);
-        } else if ($site->detail_banner_upload_flag == 0) {
-            $site->detail_banner_url = null;
+
+            if ($site->detail_banner_upload_flag == 2 && $detailBanner !== null) {
+                // アップロード
+                $detailBannerFileName = 'detail.' . $detailBanner->getClientOriginalExtension();
+                if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
+                    File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
+                }
+                $detailBanner->move($bannerDirectoryPath, $detailBannerFileName);
+                $site->detail_banner_url = url2('img/site_banner/' . $site->id . '/' . $detailBannerFileName);
+            } else if ($site->detail_banner_upload_flag == 0) {
+                // 削除(またはアップしない)
+                $site->detail_banner_url = null;
+            }
         }
     }
 

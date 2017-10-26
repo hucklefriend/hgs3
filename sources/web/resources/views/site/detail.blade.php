@@ -13,7 +13,11 @@
 
     <h4 class="card-title">{{ $site->name }}</h4>
     <div class="d-flex flex-wrap">
-        <div class=""><img src="{{ url2('img/banner/test/240x400.jpg') }}" class="img-responsive"></div>
+        @if (!empty($site->detail_banner_url))
+            <div class="detail_site_banner_outline">
+                <img src="{{ $site->detail_banner_url }}" class="img-responsive">
+            </div>
+        @endif
         <div style="padding: 0 15px;min-width: 300px;">
             <h4>
                 <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>

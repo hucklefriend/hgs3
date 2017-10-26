@@ -4,7 +4,11 @@ if (!isset($noUser))
 @endphp
 <div>
     <h5><a href="{{ url('site/detail') }}/{{ $s->id }}">{{ $s->name }}</a></h5>
-    <img src="{{ url2('img/banner/test/200x40.gif') }}">
+    @if (!empty($s->list_banner_url))
+        <div class="list_site_banner_outline">
+            <a href="{{ url('site/detail') }}/{{ $s->id }}"><img src="{{ $s->list_banner_url }}" class="img-responsive"></a>
+        </div>
+    @endif
     <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
     <div class="site_presentation"><small>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</small></div>
     @if (!$noUser)

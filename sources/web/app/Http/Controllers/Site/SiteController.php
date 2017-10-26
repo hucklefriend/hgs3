@@ -131,6 +131,10 @@ class SiteController extends Controller
         $site = new Orm\Site;
 
         $this->setRequestData($site, $request);
+        $site->list_banner_upload_flag = $request->get('list_banner_upload_flag');
+        $site->list_banner_url = $request->get('list_banner_url');
+        $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
+        $site->detail_banner_url = $request->get('detail_banner_url');
         $site->open_type = 0;
         $site->in_count = 0;
         $site->out_count = 0;
@@ -165,6 +169,10 @@ class SiteController extends Controller
      */
     public function edit(Request $request, Orm\Site $site)
     {
+        // バナーのフラグを-1（変更しない）にしとく
+        $site->list_banner_upload_flag = -1;
+        $site->detail_banner_upload_flag = -1;
+
         return view('site.edit', [
             'softs' => Orm\GameSoft::getPhoneticTypeHash(),
             'site'  => $site
@@ -181,11 +189,23 @@ class SiteController extends Controller
     public function update(SiteRequest $request, Orm\Site $site)
     {
         $this->setRequestData($site, $request);
+        if ($request->get('list_banner_upload_flag') != -1) {
+            $site->list_banner_upload_flag = $request->get('list_banner_upload_flag');
+            $site->list_banner_url = $request->get('list_banner_url');
+        }
+        if ($request->get('detail_banner_upload_flag') != -1) {
+            $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
+            $site->detail_banner_url = $request->get('detail_banner_url');
+        }
         $site->updated_timestamp = time();
 
-        if (!Site::save(Auth::user(), $site, $request->get('handle_game', ''))) {
+        $handleSoft = $request->get('handle_soft', '');
+        $listBanner = $request->file('list_banner_upload');
+        $detailBanner = $request->file('detail_banner_upload');
+
+        if (!Site::save(Auth::user(), $site, $handleSoft, $listBanner, $detailBanner)) {
             session(['se' => 1]);
-            return 'error';//redirect()->back()->withInput();
+            return redirect()->back()->withInput();
         }
 
         session(['u' => 1]);
@@ -204,10 +224,6 @@ class SiteController extends Controller
         $site->user_id = Auth::id();
         $site->name = $request->get('name', '');
         $site->url = $request->get('url', '');
-        $site->list_banner_upload_flag = $request->get('list_banner_upload_flag');
-        $site->list_banner_url = $request->get('list_banner_url');
-        $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
-        $site->detail_banner_url = $request->get('detail_banner_url');
         $site->presentation = $request->get('presentation', '');
         $site->main_contents_id = intval($request->get('main_contents', MainContents::OTHER));
         $site->rate = intval($request->get('rate',Rate::ALL));
