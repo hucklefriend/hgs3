@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="handle_game_dialog">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="handle_soft_dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,36 +9,36 @@
             </div>
             <div class="modal-body">
                 <div class="d-none d-sm-block">
-                    <ul class="nav nav-tabs text-center" id="handle_game_tab">
+                    <ul class="nav nav-tabs text-center" id="handle_soft_tab">
                         <li class="nav-item">
-                            <a class="nav-link active game_tab" href="#" id="handle_games_tab_agyo" data-target="agyo">あ</a>
+                            <a class="nav-link active soft_tab" href="#" id="handle_softs_tab_agyo" data-target="agyo">あ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_kagyo" data-target="kagyo">か</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_kagyo" data-target="kagyo">か</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_sagyo" data-target="sagyo">さ</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_sagyo" data-target="sagyo">さ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_tagyo" data-target="tagyo">た</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_tagyo" data-target="tagyo">た</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_nagyo" data-target="nagyo">な</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_nagyo" data-target="nagyo">な</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_hagyo" data-target="hagyo">は</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_hagyo" data-target="hagyo">は</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_magyo" data-target="magyo">ま</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_magyo" data-target="magyo">ま</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_yagyo" data-target="yagyo">や</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_yagyo" data-target="yagyo">や</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_ragyo" data-target="ragyo">ら</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_ragyo" data-target="ragyo">ら</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link game_tab" href="#" id="handle_games_tab_wagyo" data-target="wagyo">わ</a>
+                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_wagyo" data-target="wagyo">わ</a>
                         </li>
                     </ul>
                 </div>
@@ -65,14 +65,14 @@
                 @endphp
 
                 @for ($phonicType = 1; $phonicType <= 10; $phonicType++)
-                    <div id="handle_games_{{ $phonetics[$phonicType] }}gyo" class="handle_game_tab @if ($phonicType == 1) active @endif ">
+                    <div id="handle_softs_{{ $phonetics[$phonicType] }}gyo" class="handle_soft_tab @if ($phonicType == 1) active @endif ">
                         <div class="container-fluid p-3" style="overflow-y: scroll; height: 300px;">
                             @if (isset($softs[$phonicType]))
                                 @foreach ($softs[$phonicType] as $soft)
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
                                             <label>
-                                                <input type="checkbox" class="handle_game_check" name="handle_game[]" value="{{ $soft->id }}" id="handle_game_check_{{ $soft->id }}">
+                                                <input type="checkbox" class="handle_soft_check" name="handle_soft[]" value="{{ $soft->id }}" id="handle_soft_check_{{ $soft->id }}">
                                                 <span>{{ $soft->name }}</span>
                                             </label>
                                         </li>
@@ -84,54 +84,67 @@
                 @endfor
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="handle_game_cancel" data-dismiss="modal">キャンセル</button>
-                <button type="button" class="btn btn-primary" id="handle_game_ok">OK</button>
+                <button type="button" class="btn btn-secondary" id="handle_soft_cancel" data-dismiss="modal">キャンセル</button>
+                <button type="button" class="btn btn-primary" id="handle_soft_ok">OK</button>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-    .handle_game_tab {
+    .handle_soft_tab {
         display:none;
     }
 
-    .handle_game_tab.active {
+    .handle_soft_tab.active {
         display: block;
     }
 
-    #handle_game_tab .nav-link {
+    #handle_soft_tab .nav-link {
         padding: 12px !important;
     }
 </style>
 
 <script>
     $(function (){
-        $('#select_handle_game').click(function (){
+        let handleSofts = $('#handle_soft').val();
+        if (handleSofts.length > 0) {
+            let softs = handleSofts.split(',');
+            let txt = '';
+            softs.forEach(function (currentValue, index, array){
+                txt += $('#handle_soft_check_' + currentValue).next('span').text() + '、';
+            });
+            if (txt.length > 0) {
+                txt = txt.slice(0, -1);
+            }
+
+            $('#selected_soft').text(txt);
+        }
+
+        $('#select_handle_soft').click(function (){
             // TODO 現在の選択にチェック
-            $('.handle_game_check').prop('checked', false);
-            let handleGames = $('#handle_game').val();
-            if (handleGames.length > 0) {
-                let games = handleGames.split(',');
-                games.forEach(function (currentValue, index, array){
-                    $('#handle_game_check_' + currentValue).prop('checked', true);
+            $('.handle_soft_check').prop('checked', false);
+            let handleSofts = $('#handle_soft').val();
+            if (handleSofts.length > 0) {
+                let softs = handleSofts.split(',');
+                softs.forEach(function (currentValue, index, array){
+                    $('#handle_soft_check_' + currentValue).prop('checked', true);
                 });
             }
 
-
-            $('#handle_game_dialog').modal('show');
+            $('#handle_soft_dialog').modal('show');
         });
 
-        $('.game_tab').click(function (e){
+        $('.soft_tab').click(function (e){
             e.preventDefault();
-            let prevTarget = $('#handle_game_tab .active').data('target');
+            let prevTarget = $('#handle_soft_tab .active').data('target');
             let target = $(this).data('target');
 
-            $('#handle_games_' + prevTarget).hide();
-            $('#handle_game_tab .active').removeClass('active');
+            $('#handle_softs_' + prevTarget).hide();
+            $('#handle_soft_tab .active').removeClass('active');
 
-            $('#handle_games_' + target).show();
-            $('#handle_games_tab_' + target).addClass('active');
+            $('#handle_softs_' + target).show();
+            $('#handle_softs_tab_' + target).addClass('active');
 
             $('#gyo_select').val(target);
 
@@ -139,28 +152,32 @@
         });
 
         $('#gyo_select').on('change', function (){
-            let prevTarget = $('#handle_game_tab .active').data('target');
+            let prevTarget = $('#handle_soft_tab .active').data('target');
             let target = $(this).val();
 
-            $('#handle_games_' + prevTarget).hide();
-            $('#handle_game_tab .active').removeClass('active');
+            $('#handle_softs_' + prevTarget).hide();
+            $('#handle_soft_tab .active').removeClass('active');
 
-            $('#handle_games_' + target).show();
-            $('#handle_games_tab_' + target).addClass('active');
+            $('#handle_softs_' + target).show();
+            $('#handle_softs_tab_' + target).addClass('active');
         });
 
-        $('#handle_game_ok').click(function (){
-            $('#handle_game_dialog').modal('hide');
+        $('#handle_soft_ok').click(function (){
+            $('#handle_soft_dialog').modal('hide');
 
             let txt = '';
             let val = '';
-            $('.handle_game_check:checked').each(function (){
+            $('.handle_soft_check:checked').each(function (){
                 txt += $(this).next('span').text()+'、';
                 val += $(this).val() + ',';
             });
+            if (txt.length > 0) {
+                txt = txt.slice(0, -1);
+                val = val.slice(0, -1);
+            }
 
-            $('#selected_game').text(txt);
-            $('#handle_game').val(val);
+            $('#selected_soft').text(txt);
+            $('#handle_soft').val(val);
         });
     });
 </script>

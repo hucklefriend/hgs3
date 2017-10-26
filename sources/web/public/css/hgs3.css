@@ -211,3 +211,18 @@ a:active .no_image_text_inner {
     max-width: 5rem;
     max-height: 5rem;
 }
+
+.list_site_banner_outline {
+    max-width: 468px;
+    height: 60px;
+    width: 100%;
+    overflow:hidden;
+}
+
+
+.detail_site_banner_outline {
+    max-width: 250px;
+    height: 400px;
+    width: 100%;
+    overflow:hidden;
+}

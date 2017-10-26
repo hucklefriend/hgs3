@@ -67,6 +67,8 @@ class Site
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
 
+            throw $e;
+
             return false;
         }
 
@@ -108,18 +110,26 @@ class Site
             File::makeDirectory($bannerDirectoryPath);
         }
 
-        $listBannerFileName = 'list.' . $listBanner->getClientOriginalExtension();
         if ($site->list_banner_upload_flag == 2 && $listBanner !== null) {
+            $listBannerFileName = 'list.' . $listBanner->getClientOriginalExtension();
+
+            if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
+                File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
+            }
+
             $listBanner->move($bannerDirectoryPath, $listBannerFileName);
             $site->list_banner_url = url2('img/site_banner/' . $site->id . '/' . $listBannerFileName);
         } else if ($site->list_banner_upload_flag == 0) {
             $site->list_banner_url = null;
         }
 
-        $detailBannerFileName = 'detail.' . $detailBanner->getClientOriginalExtension();
         if ($site->detail_banner_upload_flag == 2 && $detailBanner !== null) {
-            $listBanner->move($bannerDirectoryPath, $detailBannerFileName);
-            $site->detail_banner_url = url2('img/site_banner/' . $site->id . '/' . $listBannerFileName);
+            $detailBannerFileName = 'detail.' . $detailBanner->getClientOriginalExtension();
+            if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
+                File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
+            }
+            $detailBanner->move($bannerDirectoryPath, $detailBannerFileName);
+            $site->detail_banner_url = url2('img/site_banner/' . $site->id . '/' . $detailBannerFileName);
         } else if ($site->detail_banner_upload_flag == 0) {
             $site->detail_banner_url = null;
         }

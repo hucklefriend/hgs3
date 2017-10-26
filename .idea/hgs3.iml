@@ -149,7 +149,6 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/routing" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/translation" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/var-dumper" />
-          <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/yaml" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/tijsverkoyen/css-to-inline-styles" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/webmozart/assert" />
@@ -222,7 +221,6 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/routing" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/translation" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/var-dumper" />
-          <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/yaml" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/tijsverkoyen/css-to-inline-styles" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/webmozart/assert" />
@@ -232,11 +230,13 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phar-io/manifest/tests/_fixture/test.phar/" />
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.1.phar/" />
           <root url="phar://$MODULE_DIR$/sources/web/composer.phar/" />
         </CLASSES>
         <SOURCES>
-          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phar-io/manifest/tests/_fixture/test.phar/" />
+          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.1.phar/" />
           <root url="phar://$MODULE_DIR$/sources/web/composer.phar/" />
         </SOURCES>
       </library>

@@ -10,3 +10,4 @@ Homestead.yaml
 npm-debug.log
 .env
 /public/img/user_icon/*
+/public/img/site_banner/*

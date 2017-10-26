@@ -10,7 +10,7 @@ use Hgs3\Constants\Site\Gender;
 use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Review\SiteRequest;
+use Hgs3\Http\Requests\Site\SiteRequest;
 use Hgs3\Models\Site;
 use Hgs3\Models\Site\Good;
 use Hgs3\Models\Orm;
@@ -140,10 +140,16 @@ class SiteController extends Controller
         $site->registered_timestamp = time();
         $site->updated_timestamp = 0;
 
-        if (!Site::save(Auth::user(), $site, $request->get('handle_game', ''))) {
+        $handleSoft = $request->get('handle_soft', '');
+        $listBanner = $request->file('list_banner_upload');
+        $detailBanner = $request->file('detail_banner_upload');
+
+        if (!Site::save(Auth::user(), $site, $handleSoft, $listBanner, $detailBanner)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         }
+
+        \ChromePhp::info('test');
 
         session(['a' => 1]);
 
@@ -179,7 +185,7 @@ class SiteController extends Controller
 
         if (!Site::save(Auth::user(), $site, $request->get('handle_game', ''))) {
             session(['se' => 1]);
-            return redirect()->back()->withInput();
+            return 'error';//redirect()->back()->withInput();
         }
 
         session(['u' => 1]);
@@ -198,11 +204,15 @@ class SiteController extends Controller
         $site->user_id = Auth::id();
         $site->name = $request->get('name', '');
         $site->url = $request->get('url', '');
-        $site->banner_url = $request->get('banner_url', '');
+        $site->list_banner_upload_flag = $request->get('list_banner_upload_flag');
+        $site->list_banner_url = $request->get('list_banner_url');
+        $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
+        $site->detail_banner_url = $request->get('detail_banner_url');
         $site->presentation = $request->get('presentation', '');
         $site->main_contents_id = intval($request->get('main_contents', MainContents::OTHER));
         $site->rate = intval($request->get('rate',Rate::ALL));
         $site->gender = intval($request->get('gender', Gender::NONE));
+        $site->handle_soft = $request->get('handle_soft');
     }
 
     /**
