@@ -25,11 +25,11 @@ class Site
      * @param UploadedFile|null $detailBanner
      * @return bool
      */
-    public static function save(User $user, Orm\Site $site, $handleSoftsComma, ?UploadedFile $listBanner, ?UploadedFile $detailBanner)
+    public static function save(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner)
     {
         $isAdd = $site->id === null;
 
-        $handleSoftIds = explode(',', $handleSoftsComma);
+        $handleSoftIds = explode(',', $site->handle_soft);
 
         if (!$isAdd) {
             // タイムライン用に現在の取扱いゲームを取得
@@ -50,7 +50,7 @@ class Site
 
             $site->save();
 
-            self::saveHandleSofts($site->user_id, $handleSoftIds);
+            self::saveHandleSofts($site->id, $handleSoftIds);
 
             self::saveSearchIndex($site, $handleSoftIds);
 
@@ -185,6 +185,10 @@ class Site
             ->delete();
 
         $hash = [];
+
+        Log::debug('---------');
+        Log::debug($siteId);
+        Log::debug(var_export($handleSoftIds, true));
 
         if (!empty($handleSoftIds)) {
             $data = [];

@@ -112,11 +112,12 @@ class SiteController extends Controller
         return view('site.add', [
             'softs' => Orm\GameSoft::getPhoneticTypeHash(),
             'site'  => new Orm\Site([
-                'main_contents' => MainContents::WALKTHROUGH,
-                'rate'          => Rate::ALL,
-                'gender'        => Gender::NONE
-            ]),
-            'handleGames' => ''
+                'main_contents_id' => MainContents::WALKTHROUGH,
+                'rate'             => Rate::ALL,
+                'gender'           => Gender::NONE,
+                'list_banner_upload_flag'   => 0,
+                'detail_banner_upload_flag' => 0
+            ])
         ]);
     }
 
@@ -144,16 +145,13 @@ class SiteController extends Controller
         $site->registered_timestamp = time();
         $site->updated_timestamp = 0;
 
-        $handleSoft = $request->get('handle_soft', '');
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
 
-        if (!Site::save(Auth::user(), $site, $handleSoft, $listBanner, $detailBanner)) {
+        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         }
-
-        \ChromePhp::info('test');
 
         session(['a' => 1]);
 
@@ -199,11 +197,10 @@ class SiteController extends Controller
         }
         $site->updated_timestamp = time();
 
-        $handleSoft = $request->get('handle_soft', '');
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
 
-        if (!Site::save(Auth::user(), $site, $handleSoft, $listBanner, $detailBanner)) {
+        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         }

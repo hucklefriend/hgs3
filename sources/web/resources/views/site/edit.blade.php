@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @foreach ($errors->all() as $msg)
+        {{ $msg }}<br>
+    @endforeach
+
     <form method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
 
         @include('site.common.form')
-
 
         <div class="form-group">
             <label for="list_banner_upload_flag">一覧用バナー</label>
@@ -42,7 +46,10 @@
                 </div>
             </div>
             <div class="form-group show_list_banner_url" id="list_banner_url_form" style="{!! display_none(old('list_banner_upload_flag'), 1) !!} }">
-                <input type="text" class="form-control{{ invalid($errors, 'list_banner_url') }}" id="list_banner_url" name="list_banner_url" value="{{ old('list_banner_url', $site->list_banner_url) }}">
+                @php
+                $listBannerUrl = $site->list_banner_upload_flag == 1 ? $site->list_banner_url : '';
+                @endphp
+                <input type="text" class="form-control{{ invalid($errors, 'list_banner_url') }}" id="list_banner_url" name="list_banner_url" value="{{ old('list_banner_url', $listBannerUrl) }}">
                 @include('common.error', ['formName' => 'list_banner_url'])
                 <div>
                     <p class="text-muted">
@@ -107,7 +114,10 @@
                 </div>
             </div>
             <div class="form-group show_detail_banner_url" id="detail_banner_url_form" style="{!! display_none(old('list_banner_upload_flag'), 1) !!} }">
-                <input type="text" class="form-control{{ invalid($errors, 'detail_banner_url') }}" id="detail_banner_url" name="detail_banner_url" value="{{ old('detail_banner_url', $site->detail_banner_url) }}">
+                @php
+                    $detailBannerUrl = $site->detail_banner_upload_flag == 1 ? $site->detail_banner_url : '';
+                @endphp
+                <input type="text" class="form-control{{ invalid($errors, 'detail_banner_url') }}" id="detail_banner_url" name="detail_banner_url" value="{{ old('detail_banner_url', $detailBannerUrl) }}">
                 @include('common.error', ['formName' => 'detail_banner_url'])
                 <div>
                     <p class="text-muted">
@@ -144,15 +154,15 @@
         $(function (){
             $('input[name="list_banner_upload_flag"]:radio').change(function() {
                 let flag = $(this).val();
-                changeUploadForm('list', flag);
+                changeUploadForm('list', flag, true);
             });
             $('input[name="detail_banner_upload_flag"]:radio').change(function() {
                 let flag = $(this).val();
-                changeUploadForm('detail', flag);
+                changeUploadForm('detail', flag, true);
             });
 
-            changeUploadForm('list', {{ old('list_banner_upload_flag', $site->list_banner_upload_flag) }});
-            changeUploadForm('detail', {{ old('detail_banner_upload_flag', $site->detail_banner_upload_flag) }});
+            changeUploadForm('list', {{ old('list_banner_upload_flag', $site->list_banner_upload_flag) }}, false);
+            changeUploadForm('detail', {{ old('detail_banner_upload_flag', $site->detail_banner_upload_flag) }}, false);
 
             // アップロードするファイルを選択
             $('#list_banner_upload').change(function() {
@@ -191,8 +201,23 @@
             }
         }
 
-        function changeUploadImage(target, file)
+        /**
+         *
+         *
+         * @param target
+         * @param file
+         * @param isReset
+         * @returns {boolean}
+         */
+        function changeUploadImage(target, file, isReset)
         {
+            if (isReset) {
+                $('#' + target + '_banner_url').val('');
+                $('#' + target + '_banner_upload').val('');
+                $('#' + target + '_banner_url_thumbnail').attr('src', '');
+                $('#' + target + '_banner_upload_thumbnail').attr('src', '');
+            }
+
             // 画像以外は処理を停止
             if (!file.type.match('image.*')) {
                 // クリア

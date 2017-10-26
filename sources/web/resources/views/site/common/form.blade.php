@@ -37,7 +37,7 @@
 
     <div class="form-check">
         <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="main_contents" id="main_contents{{ $loop->index }}" value="{{ $mcId }}"{{ checked($mcId, old('main_contents', $site->main_contents)) }}>
+            <input type="radio" class="form-check-input" name="main_contents" id="main_contents{{ $loop->index }}" value="{{ $mcId }}"{{ checked($mcId, old('main_contents', $site->main_contents_id)) }}>
             {{ $mcName }}
         </label>
     </div>
