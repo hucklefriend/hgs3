@@ -17,8 +17,8 @@ class CreateSiteNewArrivalsTable extends Migration
     public function up()
     {
         Schema::create('site_new_arrivals', function (Blueprint $table) {
-            $table->unsignedInteger('site_id')->comment('サイトID');
-            $table->unsignedBigInteger('registered_timestamp')->comment('登録日時タイムスタンプ');
+            $table->unsignedInteger('site_id')->primary()->comment('サイトID');
+            $table->unsignedBigInteger('registered_timestamp')->index()->comment('登録日時タイムスタンプ');
             $table->timestamps();
         });
     }

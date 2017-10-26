@@ -96,6 +96,19 @@ class Footprint
         return true;
     }
 
+    /**
+     * 削除
+     *
+     * @param $siteId
+     */
+    public static function delete($siteId)
+    {
+        $filter = [
+            'site_id' => $siteId
+        ];
+
+        self::getCollection()->deleteMany($filter);
+    }
 
     /**
      * コレクションを取得

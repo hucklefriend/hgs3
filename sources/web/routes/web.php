@@ -118,6 +118,7 @@ Route::get('/site/good_history/{site}', 'Site\GoodController@history')->middlewa
 Route::get('/site/go/{site}', 'Site\SiteController@go');
 Route::get('/site/footprint/{site}', 'Site\FootprintController@site')->middleware('auth');
 Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@site')->middleware('auth');
+Route::delete('/site/delete/{site}', 'Site\SiteController@delete')->middleware('auth');
 
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');

@@ -41,6 +41,11 @@ class SiteController extends Controller
         return view('site.index', Site::getIndexData());
     }
 
+    public function newArrival()
+    {
+
+    }
+
     /**
      * 指定ゲームで検索
      *
@@ -77,15 +82,9 @@ class SiteController extends Controller
             $data['isGood'] = Good::isGood($site, Auth::user());
         }
 
-        $data['favoriteUsers'] = FavoriteSite::getOldUsers($site->id);
-
         $data['webMaster'] = User::find($site->user_id);
         $data['isWebMaster'] = $data['webMaster']->id == Auth::id();
 
-        // TODO 足跡
-        $data['footprint'] = [];
-
-        $data['users'] = User::getNameHash(array_pluck($data['favoriteUsers']->toArray(), 'user_id'));
         $data['csrfToken'] = csrf_token();
 
         if ($request->session()->pull('a') != null) {
@@ -167,6 +166,11 @@ class SiteController extends Controller
      */
     public function edit(Request $request, Orm\Site $site)
     {
+        // 本人しか更新できない
+        if ($site->user_id != Auth::id()) {
+            return abort(403);
+        }
+
         // バナーのフラグを-1（変更しない）にしとく
         $site->list_banner_upload_flag = -1;
         $site->detail_banner_upload_flag = -1;
@@ -186,6 +190,11 @@ class SiteController extends Controller
      */
     public function update(SiteRequest $request, Orm\Site $site)
     {
+        // 本人しか更新できない
+        if ($site->user_id != Auth::id()) {
+            return abort(403);
+        }
+
         $this->setRequestData($site, $request);
         if ($request->get('list_banner_upload_flag') != -1) {
             $site->list_banner_upload_flag = $request->get('list_banner_upload_flag');
@@ -226,6 +235,24 @@ class SiteController extends Controller
         $site->rate = intval($request->get('rate',Rate::ALL));
         $site->gender = intval($request->get('gender', Gender::NONE));
         $site->handle_soft = $request->get('handle_soft');
+    }
+
+    /**
+     * 削除
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|void
+     */
+    public function delete(Orm\Site $site)
+    {
+        // 本人しか削除できない
+        if ($site->user_id != Auth::id()) {
+            return abort(403);
+        }
+
+        Site::delete($site);
+
+        return redirect('user/profile/' . Auth::id() . '/site');
     }
 
     /**

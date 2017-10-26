@@ -10,7 +10,6 @@
     </style>
     @endverbatim
 
-
     <h4 class="card-title">{{ $site->name }}</h4>
     <div class="d-flex flex-wrap">
         @if (!empty($site->detail_banner_url))
@@ -119,6 +118,17 @@
     </div>
 
     @if ($isWebMaster)
+
+
+        <div style="margin-top: 3rem;">
+            <form method="POST" action="{{ url2('/site/delete/' . $site->id) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')">
+                {{ csrf_tag($csrfToken) }}
+                {{ method_field('DELETE') }}
+
+                <button class="btn btn-danger">サイトを削除する</button>
+            </form>
+        </div>
+
     @endif
 
 @endsection

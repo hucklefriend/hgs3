@@ -6,6 +6,8 @@
 namespace Hgs3\Models;
 
 use Hgs3\Models\Orm;
+use Hgs3\Models\Site\Footprint;
+use Hgs3\Models\Site\NewArrival;
 use Hgs3\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -244,7 +246,7 @@ SQL;
         $data = [];
 
         // 新着サイト
-        $data['newcomer'] = self::getNewcomer();
+        $data['newArrivals'] = NewArrival::get(5);
 
         // 更新サイト
         $data['updated'] = self::getLatestUpdate();
@@ -268,19 +270,6 @@ SQL;
     }
 
     /**
-     * 新着サイト
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    private static function getNewcomer()
-    {
-        return DB::table('sites')
-            ->orderBy('registered_timestamp', 'DESC')
-            ->take(5)
-            ->get();
-    }
-
-    /**
      * 更新日時の新しいサイト
      *
      * @return \Illuminate\Support\Collection
@@ -290,7 +279,8 @@ SQL;
         return DB::table('sites')
             ->orderBy('updated_timestamp', 'DESC')
             ->take(5)
-            ->get();
+            ->get()
+            ->toArray();
     }
 
     /**
@@ -403,5 +393,63 @@ SELECT * FROM game_softs WHERE id IN ({$softIdsComma})
 SQL;
 
         return DB::select($sql);
+    }
+
+    /**
+     * サイトを削除
+     *
+     * @param Orm\Site $site
+     * @return bool
+     */
+    public static function delete(Orm\Site $site)
+    {
+        /**
+         * タイムラインは残しておく
+         */
+
+        DB::beginTransaction();
+        try {
+            // 足跡を削除
+            Footprint::delete($site->id);
+
+            DB::table('user_favorite_sites')
+                ->where('site_id', $site->id)
+                ->delete();
+
+            DB::table('site_handle_softs')
+                ->where('site_id', $site->id)
+                ->delete();
+
+            DB::table('site_search_indices')
+                ->where('site_id', $site->id)
+                ->delete();
+
+            NewArrival::delete($site->id);
+
+            DB::table('site_goods')
+                ->where('site_id', $site->id)
+                ->delete();
+
+            DB::table('site_good_histories')
+                ->where('site_id', $site->id)
+                ->delete();
+
+            $site->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getMessage());
+
+            if (env('APP_ENV') == 'local') {
+                throw $e;
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }
