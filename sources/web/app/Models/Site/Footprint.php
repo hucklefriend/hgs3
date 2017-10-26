@@ -8,6 +8,7 @@ namespace Hgs3\Models\Site;
 use Hgs3\Models\MongoDB\Collection;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class Footprint
@@ -118,5 +119,24 @@ class Footprint
     private static function getCollection()
     {
         return Collection::getInstance()->getDatabase()->site_footprint;
+    }
+
+    /**
+     * 日別のアクセス数を取得
+     *
+     * @param Orm\Site $site
+     * @param int $year
+     * @param int $month
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getDailyAccess(Orm\Site $site, $year, $month)
+    {
+        $date = new \DateTime($year . '-' . $month . '-1');
+
+        return Orm\SiteDailyAccess::select([DB::raw('DATE_FORMAT(`date`, "%e") AS `date`'), 'out_count'])
+            ->where('site_id', $site->id)
+            ->whereBetween('date', [$date->format('Y-m-01'), $date->format('Y-m-t')])
+            ->get()
+            ->pluck('out_count', 'date');
     }
 }

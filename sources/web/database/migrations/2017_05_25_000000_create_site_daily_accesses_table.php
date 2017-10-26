@@ -22,7 +22,7 @@ class CreateSiteDailyAccessesTable extends Migration
             $table->unsignedInteger('in_count')->comment('INカウント');
             $table->unsignedInteger('out_count')->comment('OUTカウント');
             $table->timestamps();
-            $table->primary('site_id');
+            $table->primary(['site_id', 'date']);
         });
     }
 

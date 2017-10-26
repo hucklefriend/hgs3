@@ -452,4 +452,48 @@ SQL;
 
         return true;
     }
+
+    /**
+     * アクセス
+     *
+     * @param Orm\Site $site
+     * @return bool
+     */
+    public static function access(Orm\Site $site)
+    {
+        DB::beginTransaction();
+        try {
+            // 日単位をアクセス数加算
+            $sql =<<< SQL
+INSERT INTO site_daily_accesses (
+  site_id, `date`, in_count, out_count, created_at, updated_at
+) VALUES (
+  ?, CURDATE(), 0, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+)
+ON DUPLICATE KEY UPDATE
+  out_count = out_count + 1
+  , updated_at = CURRENT_TIMESTAMP
+SQL;
+
+            DB::insert($sql, [$site->id]);
+
+            // 累計アクセス数加算
+            DB::table('sites')
+                ->where('id', $site->id)
+                ->update([
+                    'out_count' => DB::raw('out_count + 1')
+                ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return false;
+        }
+
+        return true;
+    }
 }

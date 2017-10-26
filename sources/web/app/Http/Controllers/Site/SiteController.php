@@ -263,6 +263,7 @@ class SiteController extends Controller
      */
     public function go(Orm\Site $site)
     {
+        // TODO 終了処理ミドルウェアを使って、リダイレクト後に処理させる
         if (Auth::check()) {
             if (Auth::user()->footprint == 1) {
                 Site\Footprint::add($site, Auth::user());
@@ -272,6 +273,8 @@ class SiteController extends Controller
         } else {
             Site\Footprint::add($site, null);
         }
+
+        Site::access($site);
 
         return redirect($site->url);
     }

@@ -12,6 +12,7 @@ use Hgs3\Models\User;
 use Hgs3\Models\Site;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class FootprintController extends Controller
 {
@@ -69,5 +70,33 @@ class FootprintController extends Controller
         $data['sites'] = User::getHash(array_pluck($data['footprints'], 'site_id'));
 
         return view('user.site.footprint', $data);
+    }
+
+    /**
+     * 日単位のアクセス数
+     *
+     * @param Orm\Site $site
+     */
+    public function daily(Orm\Site $site)
+    {
+        $now = new \DateTime();
+        $year = intval(Input::get('y'));
+        $month = intval(Input::get('m'));
+        if ($year === null || $month === null) {
+            $year = $now->format('Y');
+            $month = $now->format('m');
+        }
+
+        $years = [];
+        $maxYear = intval($now->format('Y'));
+        for ($y = 2017; $y <= $maxYear; $y++) {
+            $years[$y] = $y;
+        }
+
+        $data['daily'] = Site\Footprint::getDailyAccess($site, $year, $month);
+        $data['maxDays'] = intval($now->fomat('t'));
+        $data['site'] = $site;
+
+        return view('user.site.dailyAccess', $data);
     }
 }
