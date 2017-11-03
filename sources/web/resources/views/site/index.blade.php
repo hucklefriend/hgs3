@@ -7,7 +7,7 @@
             <div class="card card-hgn">
                 <div class="card-header">新着サイト</div>
                 <div class="card-body">
-                    @foreach ($newcomer as $site)
+                    @foreach ($newArrivals as $site)
                         @include('site.common.normal', ['s' => $site, 'users' => $users])
                         @if (!$loop->last) <hr> @endif
                     @endforeach

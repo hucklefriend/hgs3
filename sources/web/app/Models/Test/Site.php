@@ -58,8 +58,9 @@ class Site
                 }
 
                 rtrim($handleSoft, ',');
+                $orm->handle_soft = $handleSoft;
 
-                \Hgs3\Models\Site::save($u, $orm, $handleSoft, null, null);
+                \Hgs3\Models\Site::save($u, $orm, null, null);
             }
         }
     }

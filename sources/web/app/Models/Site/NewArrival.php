@@ -23,7 +23,7 @@ class NewArrival
     {
         return DB::table('site_new_arrivals')
             ->select(['site_id'])
-            ->orderBy('registered_date', 'DESC')
+            ->orderBy('registered_timestamp', 'DESC')
             ->take($num)
             ->get()
             ->toArray();

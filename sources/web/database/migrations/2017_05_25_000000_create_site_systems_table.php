@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSiteLatestGoodRankingsTable extends Migration
+class CreateSiteSystemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -30,6 +30,6 @@ class CreateSiteLatestGoodRankingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('site_latest_good_rankings');
+        Schema::dropIfExists('site_systems');
     }
 }

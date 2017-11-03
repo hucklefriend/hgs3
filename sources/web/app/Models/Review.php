@@ -9,7 +9,6 @@ namespace Hgs3\Models;
 use Hgs3\Constants\Review\Status;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
-use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -141,6 +140,7 @@ SQL;
      * @param int $softId
      * @param int $num
      * @param int $offset
+     * @return array
      */
     public static function getNewArrivalsBySoft($softId, $num, $offset = 0)
     {
@@ -173,6 +173,7 @@ SQL;
      * @param int $userId
      * @param int $softId
      * @param int $packageId
+     * @return Orm\ReviewDraft|\Illuminate\Database\Eloquent\Model|null|static
      */
     public function getDraft($userId, $softId, $packageId)
     {
@@ -250,8 +251,9 @@ SQL;
     /**
      * いいね済か
      *
-     * @param $reviewId
-     * @param $userId
+     * @param int $reviewId
+     * @param int $userId
+     * @return bool
      */
     public function hasGood($reviewId, $userId)
     {
@@ -301,9 +303,12 @@ SQL;
         }
 
         // タイムライン
-        Timeline\ToMe::addReviewGoodText($orm->user_id, $orm->id, $orm->package_id, null, $user->id, $user->name);
-        Timeline\ToMe::addReviewGoodNumText($orm->user_id, $orm->id, $orm->package_id, null, $prevMaxGood, $orm->max_good_num);
-
+        $writer = \Hgs3\Models\User\find($orm->user_id);
+        $package = Orm\GamePackage::find($orm->package_id);
+        if ($writer != null && $package != null) {
+            Timeline\ToMe::addReviewGoodText($writer, $orm, $package, $user);
+            Timeline\ToMe::addReviewGoodNumText($writer, $orm, $package, $prevMaxGood);
+        }
 
         return true;
     }

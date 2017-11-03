@@ -22,10 +22,10 @@ class Site
      *
      * @param \Hgs3\Models\User $user
      * @param Orm\Site $site
-     * @param $handleSoftsComma
      * @param UploadedFile|null $listBanner
      * @param UploadedFile|null $detailBanner
      * @return bool
+     * @throws \Exception
      */
     public static function save(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner)
     {
@@ -52,16 +52,18 @@ class Site
 
             $site->save();
 
-            self::saveHandleSofts($site->id, $handleSoftIds);
+            if ($site->id) {
+                self::saveHandleSofts($site->id, $handleSoftIds);
 
-            self::saveSearchIndex($site, $handleSoftIds);
+                self::saveSearchIndex($site, $handleSoftIds);
 
-            if ($isAdd) {
-                // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
-                self::saveBanner($site, $listBanner, $detailBanner);
-                $site->save();
+                if ($isAdd) {
+                    // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
+                    self::saveBanner($site, $listBanner, $detailBanner);
+                    $site->save();
 
-                // TODO 新着サイトに登録
+                    // TODO 新着サイトに登録
+                }
             }
 
             DB::commit();
@@ -188,10 +190,6 @@ class Site
 
         $hash = [];
 
-        Log::debug('---------');
-        Log::debug($siteId);
-        Log::debug(var_export($handleSoftIds, true));
-
         if (!empty($handleSoftIds)) {
             $data = [];
             foreach ($handleSoftIds as $softId) {
@@ -258,10 +256,10 @@ SQL;
         $data['access'] = self::getAccessRanking();
 
         $userIds = array_merge(
-            $data['newcomer']->pluck('user_id')->toArray(),
-            $data['updated']->pluck('user_id')->toArray(),
-            $data['newcomer']->pluck('user_id')->toArray(),
-            $data['access']->pluck('user_id')->toArray()
+            array_pluck($data['newArrivals'],'user_id'),
+            array_pluck($data['updated'], 'user_id'),
+            array_pluck($data['good'], 'user_id'),
+            array_pluck($data['access'], 'user_id')
         );
 
         $data['users'] = User::getNameHash($userIds);

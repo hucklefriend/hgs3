@@ -26,6 +26,7 @@ class CreateSitesTable extends Migration
             $table->unsignedTinyInteger('detail_banner_upload_flag')->nullable()->comment('詳細用バナーアップロードフラグ');
             $table->string('detail_banner_url', 200)->nullable()->comment('詳細用バナーURL');
             $table->text('presentation')->comment('紹介文');
+            $table->text('handle_soft')->comment('取扱ソフト');
             $table->unsignedTinyInteger('rate')->comment('対象年齢');
             $table->unsignedTinyInteger('gender')->comment('対象性別');
             $table->unsignedSmallInteger('main_contents_id')->comment('メインコンテンツ');

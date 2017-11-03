@@ -80,7 +80,7 @@ Route::post('/review/save/{soft}/{package}', 'Review\ReviewController@save')->mi
 Route::delete('/review/draft/{softId}/{packageId}', 'Review\ReviewController@deleteDraft')->middleware('auth');
 Route::get('/review/soft/{soft}', 'Review\ReviewController@soft');
 Route::post('/review/good/{review}', 'Review\GoodController@good')->middleware('auth');
-Route::delete('/review/good/{review}', 'Review\GoodController@cancelGood')->middleware('auth');
+Route::delete('/review/good/{review}', 'Review\GoodController@cancel')->middleware('auth');
 Route::get('/review/detail/{review}', 'Review\ReviewController@detail');
 Route::get('/review/good/history/{review}', 'Review\GoodController@history');
 Route::get('/review/edit/{review}', 'Review\ReviewController@edit');
