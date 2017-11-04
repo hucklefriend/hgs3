@@ -10,7 +10,7 @@ use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class FavoriteGameController extends Controller
+class FavoriteSoftController extends Controller
 {
     /**
      * コンストラクタ
@@ -31,7 +31,7 @@ class FavoriteGameController extends Controller
         $favoriteUsers = Orm\UserFavoriteSoft::where('soft_id', $soft->id)
             ->paginate(20);
 
-        return view('game.favorite.index')->with([
+        return view('game.favoriteSoft.index')->with([
             'soft'          => $soft,
             'favoriteUsers' => $favoriteUsers,
             'users'         => User::getHash(array_pluck($favoriteUsers->items(), 'user_id'))

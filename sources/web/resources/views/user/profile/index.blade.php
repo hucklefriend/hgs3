@@ -39,15 +39,15 @@
         <div class="d-flex flex-row">
             <div class="p-2" style="width: 270px;">
                 <div class="nav flex-column nav-pills">
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/timeline" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/follow" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/follower" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/favorite_soft" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/review" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/site" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/favorite_site" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/diary" class="nav-link @if($show == 'diary') active @endif" aria-expanded="true">日記 {{ $diaryNum }}件</a>
-                    <a href="{{ url2('user/profile') }}/{{ $user->id }}/community" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/timeline" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/follow" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/follower" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/favorite_soft" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/review" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/site" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/favorite_site" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/diary" class="nav-link @if($show == 'diary') active @endif" aria-expanded="true">日記 {{ $diaryNum }}件</a>
+                    <a href="{{ url2('user/profile/' . $user->id) }}/community" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
                 </div>
             </div>
             <div class="p-10" style="width: 100%;">
@@ -59,13 +59,15 @@
     <!-- 最小表示時はメニューのみ -->
     <div class="d-sm-none">
         <ul class="list-group">
-            <li class="list-group-item"><a href="{{ url2('user/follow') }}/{{ $user->id }}">フォロー {{ $followNum }}人</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/follower') }}/{{ $user->id }}">フォロワー {{ $followerNum }}人</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/favorite_soft') }}/{{ $user->id }}">お気に入りゲーム {{ $favoriteSoftNum }}個</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/site') }}/{{ $user->id }}">サイト {{ $siteNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/favorite_site') }}/{{ $user->id }}">お気に入りサイト {{ $favoriteSiteNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/diary') }}/{{ $user->id }}">日記 {{ $diaryNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/communities') }}/{{ $user->id }}">コミュニティ {{ $communityNum }}個</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/timeline/' . $user->id) }}">タイムライン</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/follow/' . $user->id) }}">フォロー {{ $followNum }}人</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/follower/' . $user->id) }}">フォロワー {{ $followerNum }}人</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/favorite_soft/' . $user->id) }}">お気に入りゲーム {{ $favoriteSoftNum }}個</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/review/' . $user->id) }}">レビュー {{ $reviewNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/site/' . $user->id) }}">サイト {{ $siteNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/favorite_site/' . $user->id) }}">お気に入りサイト {{ $favoriteSiteNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/diary/' . $user->id) }}">日記 {{ $diaryNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/communities/' . $user->id) }}">コミュニティ {{ $communityNum }}個</a></li>
         </ul>
     </div>
 @endsection

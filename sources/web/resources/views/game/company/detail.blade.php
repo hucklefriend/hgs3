@@ -21,12 +21,17 @@
 
     <hr>
 
+    <p>
+        {{ $company->name }}から発売されているパッケージ
+    </p>
+
+
     <div class="d-flex flex-wrap">
 
     @foreach ($packages as $package)
             <div class="card" style="width: 250px;margin: 10px;padding-top: 10px;">
                 @include('game.common.package_image', ['imageUrl' => $package->medium_image_url])
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h4 class="card-title">{{ $package->name }}</h4>
                     <p class="card-text">
                         @isset($shops[$package->id])
@@ -36,6 +41,9 @@
                                 </div>
                             @endforeach
                         @endisset
+                    </p>
+                    <p>
+
                     </p>
                 </div>
             </div>

@@ -303,7 +303,7 @@ SQL;
         }
 
         // タイムライン
-        $writer = \Hgs3\Models\User\find($orm->user_id);
+        $writer = \Hgs3\Models\Userfind($orm->user_id);
         $package = Orm\GamePackage::find($orm->package_id);
         if ($writer != null && $package != null) {
             Timeline\ToMe::addReviewGoodText($writer, $orm, $package, $user);

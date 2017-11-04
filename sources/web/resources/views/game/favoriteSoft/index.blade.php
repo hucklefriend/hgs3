@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h4><a href="{{ url('game/soft/detail') }}/{{ $gameSoft->id }}">{{ $gameSoft->name }}</a>をお気に入りに登録しているユーザー</h4>
+    <h4><a href="{{ url2('game/soft/' . $soft->id) }}">{{ $soft->name }}</a>をお気に入りに登録しているユーザー</h4>
 
     @foreach ($favoriteUsers as $favoriteUser)
         <div class="row">

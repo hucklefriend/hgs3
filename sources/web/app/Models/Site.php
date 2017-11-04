@@ -62,7 +62,8 @@ class Site
                     self::saveBanner($site, $listBanner, $detailBanner);
                     $site->save();
 
-                    // TODO 新着サイトに登録
+                    // 新着サイトに登録
+                    NewArrival::add($site->id);
                 }
             }
 
