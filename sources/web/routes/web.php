@@ -150,6 +150,10 @@ Route::get('/mypage/follow', 'User\MyPageController@follow')->middleware('auth')
 Route::get('/mypage/follower', 'User\MyPageController@follower')->middleware('auth');
 Route::get('/mypage/review', 'User\MyPageController@review')->middleware('auth');
 
+// タイムライン
+Route::get('/user/timeline', 'User\ProfileController@timeline')->middleware('auth');
+Route::get('/user/user_action_timeline/{user}', 'User\ProfileController@userActionTimeline')->middleware('auth');
+
 // お気に入りゲーム
 Route::get('/game/favorite/{soft}', 'Game\FavoriteSoftController@index');
 Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->middleware('auth');

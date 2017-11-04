@@ -59,7 +59,7 @@
     <!-- 最小表示時はメニューのみ -->
     <div class="d-sm-none">
         <ul class="list-group">
-            <li class="list-group-item"><a href="{{ url2('user/timeline/' . $user->id) }}">タイムライン</a></li>
+            <li class="list-group-item"><a href="{{ url2('user/timeline/') }}">タイムライン</a></li>
             <li class="list-group-item"><a href="{{ url2('user/follow/' . $user->id) }}">フォロー {{ $followNum }}人</a></li>
             <li class="list-group-item"><a href="{{ url2('user/follower/' . $user->id) }}">フォロワー {{ $followerNum }}人</a></li>
             <li class="list-group-item"><a href="{{ url2('user/favorite_soft/' . $user->id) }}">お気に入りゲーム {{ $favoriteSoftNum }}個</a></li>

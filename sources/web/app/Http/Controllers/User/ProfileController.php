@@ -229,7 +229,24 @@ class ProfileController extends Controller
     }
 
     /**
+     * タイムライン
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function timeline()
+    {
+        $data = Timeline\MyPage::getTimeline(Auth::id(), time(), 20);
+        $data['user'] = Auth::user();
+        $data['isMyself'] = true;
+
+        return view('user.profile.timeline', $data);
+    }
+
+    /**
      * フォロー一覧
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function follow(User $user)
     {
@@ -237,7 +254,7 @@ class ProfileController extends Controller
 
         $follows = Follow::getFollow($user->id);
 
-        return view('user.profile.follow')->with([
+        return view('user.profile.follow', [
             'user'     => $user,
             'isMyself' => $isMyself,
             'follows'  => $follows,
@@ -249,14 +266,14 @@ class ProfileController extends Controller
      * フォロワー一覧
      *
      * @param User $user
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function follower(User $user)
     {
         $isMyself = $user->id == Auth::id();
         $follows = Follow::getFollower($user->id);
 
-        return view('user.profile.follower')->with([
+        return view('user.profile.follower', [
             'user'       => $user,
             'isMyself'   => $isMyself,
             'followers'  => $follows,
@@ -268,7 +285,7 @@ class ProfileController extends Controller
      * お気に入りゲーム一覧
      *
      * @param User $user
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function favoriteSoft(User $user)
     {
@@ -276,7 +293,7 @@ class ProfileController extends Controller
 
         $favoriteSofts = User\FavoriteSoft::get($user->id);
 
-        return view('user.profile.favorite_soft')->with([
+        return view('user.profile.favorite_soft', [
             'user'          => $user,
             'isMyself'      => $isMyself,
             'favoriteSofts' => $favoriteSofts,
@@ -288,13 +305,13 @@ class ProfileController extends Controller
      * サイト一覧
      *
      * @param User $user
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function site(User $user)
     {
         $isMyself = $user->id == Auth::id();
 
-        return view('user.profile.site')->with([
+        return view('user.profile.site', [
             'user'     => $user,
             'isMyself' => $isMyself,
             'sites'    => Site::get($user->id)
@@ -305,18 +322,16 @@ class ProfileController extends Controller
      * お気に入りサイト一覧
      *
      * @param User $user
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function favoriteSite(User $user)
     {
         $isMyself = $user->id == Auth::id();
 
-
-
         $favSites = User\FavoriteSite::get($user->id);
         $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
 
-        return view('user.profile.favorite_site')->with([
+        return view('user.profile.favorite_site', [
             'user'     => $user,
             'isMyself' => $isMyself,
             'favSites' => $favSites,
@@ -329,13 +344,13 @@ class ProfileController extends Controller
      * 日記
      *
      * @param User $user
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function diary(User $user)
     {
         $isMyself = $user->id == Auth::id();
 
-        return view('user.profile.diary')->with([
+        return view('user.profile.diary', [
             'user'     => $user,
             'isMyself' => $isMyself,
             'diaries'  => []
@@ -346,14 +361,14 @@ class ProfileController extends Controller
      * コミュニティ
      *
      * @param User $user
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function community(User $user)
     {
         $isMyself = $user->id == Auth::id();
         $communities = GameCommunity::getJoinCommunity($user->id);
 
-        return view('user.profile.community')->with([
+        return view('user.profile.community', [
             'user'        => $user,
             'isMyself'    => $isMyself,
             'communities' => $communities,
