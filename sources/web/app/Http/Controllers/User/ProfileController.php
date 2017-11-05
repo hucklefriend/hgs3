@@ -34,7 +34,7 @@ class ProfileController extends Controller
      *
      * @param User $user
      * @param string $show
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(User $user, $show = 'timeline')
     {
@@ -132,7 +132,7 @@ class ProfileController extends Controller
     /**
      * プロフィール
      *
-     * @return $this
+     * @return ProfileController
      */
     public function myself()
     {

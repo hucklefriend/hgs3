@@ -20,26 +20,23 @@ class Profile
      */
     public static function getDataNum($userId)
     {
-        $follow = new Follow();
-
         return [
-            'followNum'       => $follow->getFollowNum($userId),
-            'followerNum'     => $follow->getFollowerNum($userId),
+            'followNum'       => Follow::getFollowNum($userId),
+            'followerNum'     => Follow::getFollowerNum($userId),
             'reviewNum'       => Orm\Review::getNumByUser($userId),
             'siteNum'         => Orm\Site::getNumByUser($userId),
             'favoriteSoftNum' => Orm\UserFavoriteSoft::getNumByUser($userId),
             'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId),
             'diaryNum'        => 0,     // TODO 日記実装時に実装
-            'communityNum'    => Orm\UserCommunityMember::getNumByUser($userId) + Orm\GameCommunityMember::getNumByUser($userId)
+            'communityNum'    => 0,     // TODO β版で実装 //Orm\UserCommunityMember::getNumByUser($userId) + Orm\GameCommunityMember::getNumByUser($userId)
         ];
     }
-
-
 
     /**
      * データ取得
      *
-     * @param $userId
+     * @param int $userId
+     * @return array
      */
     public static function get($userId)
     {

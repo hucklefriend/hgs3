@@ -13,12 +13,13 @@
         <li class="list-group-item"><a href="{{ url2('site') }}">サイト</a></li>
         <li class="list-group-item"><a href="{{ url2('diary') }}">日記</a></li>
         <li class="list-group-item"><a href="{{ url2('community') }}">コミュニティ</a></li>
+
+        @if (\Illuminate\Support\Facades\Auth::check())
+        <li class="list-group-item"><a href="{{ url2('mypage') }}">マイページ</a></li>
+        @else
         <li class="list-group-item"><a href="{{ url2('') }}">ログイン</a></li>
         <li class="list-group-item"><a href="{{ url2('') }}">新規登録</a></li>
-
-        @auth
-            <li class="list-group-item"><a href="{{ url2('mypage') }}">マイページ</a></li>
-        @endauth
+        @endif
 
         @if (is_data_editor())
         @endif

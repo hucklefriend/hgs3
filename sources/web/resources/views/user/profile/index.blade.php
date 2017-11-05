@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="p-10" style="width: 100%;">
-                @include('user.profile.parts.'.$show, $parts)
+                @include('user.profile.parts.' . camel_case($show), $parts)
             </div>
         </div>
     </div>

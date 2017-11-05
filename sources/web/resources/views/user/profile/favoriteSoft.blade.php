@@ -13,5 +13,5 @@
         </div>
     </div>
     <hr>
-    @include('user.profile.parts.favorite_soft')
+    @include('user.profile.parts.favoriteSoft')
 @endsection
