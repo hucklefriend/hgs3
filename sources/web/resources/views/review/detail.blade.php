@@ -36,7 +36,7 @@
             <h5>プレイ状況</h5>
             <p class="break_word">{{ $review->progress }}</p>
             <h5>レビュー @if($review->is_spoiler == 1) <span class="badge badge-pill badge-danger">ネタバレあり！</span> @endif </h5>
-            <p class="break_word">{{ $review->text }}</p>
+            <p class="break_word">{!!  nl2br(e($review->text)) !!}</p>
         </div>
 
         <div>

@@ -20,13 +20,46 @@ class User
 
         for ($i = 0; $i < $num; $i++) {
             $user = new \Hgs3\Models\User([
-                'name' => str_random(rand(3, 7)),
-                'role' => 1,
+                'name'  => self::getSampleName(),
+                'role'  => 1,
                 'adult' => rand(0, 1)
             ]);
             $user->save();
             unset($user);
         }
+    }
+
+    /**
+     * サンプルの名前を取得
+     *
+     * @return string
+     */
+    private static function getSampleName()
+    {
+        $names = [
+            '香華園',
+            '桜雪',
+            'いずみ沙羅',
+            'よるとり',
+            '南町奉行屯所',
+            'KINCZEM',
+            'ＧＯＭＢＥ',
+            '豪腕はりー',
+            '松永朝美',
+            'いちゃいちゃNavi WebMaster',
+            'yowamax',
+            '霜月茶柚',
+            '澪つくし',
+            'ＪＩＭ．Ｋ',
+            'MILK COCOA',
+            'RedChedar',
+            'アメット',
+            'プシュケリア',
+            '和泉凛香',
+        ];
+
+        $i = rand(0, count($names) - 1);
+        return $names[$i];
     }
 
     /**
