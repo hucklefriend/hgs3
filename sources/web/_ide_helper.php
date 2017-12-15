@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.19 on 2017-11-03 10:02:54.
+ * Generated for Laravel 5.5.25 on 2017-12-15 15:05:56.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -374,6 +374,18 @@ namespace Illuminate\Support\Facades {
         public static function getProvider($provider)
         {
             return \Illuminate\Foundation\Application::getProvider($provider);
+        }
+        
+        /**
+         * Get the registered service provider instances if any exist.
+         *
+         * @param \Illuminate\Support\ServiceProvider|string $provider
+         * @return array 
+         * @static 
+         */ 
+        public static function getProviders($provider)
+        {
+            return \Illuminate\Foundation\Application::getProviders($provider);
         }
         
         /**
@@ -7409,8 +7421,8 @@ namespace Illuminate\Support\Facades {
          * 
          * Order of precedence: PATH (routing placeholders or custom attributes), GET, BODY
          *
-         * @param string $key the key
-         * @param mixed $default the default value if the parameter key does not exist
+         * @param string $key The key
+         * @param mixed $default The default value if the parameter key does not exist
          * @return mixed 
          * @static 
          */ 
@@ -8043,6 +8055,24 @@ namespace Illuminate\Support\Facades {
         {
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
             return \Illuminate\Http\Request::isMethodCacheable();
+        }
+        
+        /**
+         * Returns the protocol version.
+         * 
+         * If the application is behind a proxy, the protocol version used in the
+         * requests between the client and the proxy and between the proxy and the
+         * server might be different. This returns the former (from the "Via" header)
+         * if the proxy is trusted (see "setTrustedProxies()"), otherwise it returns
+         * the latter (from the "SERVER_PROTOCOL" server parameter).
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getProtocolVersion()
+        {
+            //Method inherited from \Symfony\Component\HttpFoundation\Request            
+            return \Illuminate\Http\Request::getProtocolVersion();
         }
         
         /**
@@ -9023,7 +9053,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Route an api resource to a controller.
+         * Register an array of API resource controllers.
+         *
+         * @param array $resources
+         * @return void 
+         * @static 
+         */ 
+        public static function apiResources($resources)
+        {
+            \Illuminate\Routing\Router::apiResources($resources);
+        }
+        
+        /**
+         * Route an API resource to a controller.
          *
          * @param string $name
          * @param string $controller
@@ -10604,6 +10646,35 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Create a streamed response for a given file.
+         *
+         * @param string $path
+         * @param string|null $name
+         * @param array|null $headers
+         * @param string|null $disposition
+         * @return \Symfony\Component\HttpFoundation\StreamedResponse 
+         * @static 
+         */ 
+        public static function response($path, $name = null, $headers = array(), $disposition = 'inline')
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::response($path, $name, $headers, $disposition);
+        }
+        
+        /**
+         * Create a streamed download response for a given file.
+         *
+         * @param string $path
+         * @param string|null $name
+         * @param array|null $headers
+         * @return \Symfony\Component\HttpFoundation\StreamedResponse 
+         * @static 
+         */ 
+        public static function download($path, $name = null, $headers = array())
+        {
+            return \Illuminate\Filesystem\FilesystemAdapter::download($path, $name, $headers);
+        }
+        
+        /**
          * Write the contents of a file.
          *
          * @param string $path
@@ -10820,7 +10891,7 @@ namespace Illuminate\Support\Facades {
          * @param \League\Flysystem\Rackspace\RackspaceAdapter $adapter
          * @param string $path
          * @param \DateTimeInterface $expiration
-         * @param $options
+         * @param array $options
          * @return string 
          * @static 
          */ 
@@ -10901,6 +10972,17 @@ namespace Illuminate\Support\Facades {
         public static function deleteDirectory($directory)
         {
             return \Illuminate\Filesystem\FilesystemAdapter::deleteDirectory($directory);
+        }
+        
+        /**
+         * Flush the Flysystem cache.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushCache()
+        {
+            \Illuminate\Filesystem\FilesystemAdapter::flushCache();
         }
         
         /**
@@ -13294,6 +13376,148 @@ namespace Laravel\Socialite\Facades {
  
 }
 
+namespace Revolution\Amazon\ProductAdvertising\Facades { 
+
+    class AmazonProduct {
+        
+        /**
+         * 
+         *
+         * @param \Revolution\Amazon\ProductAdvertising\ApaiIO $api
+         * @return void 
+         * @static 
+         */ 
+        public static function config($api)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::config($api);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Revolution\Amazon\ProductAdvertising\OperationInterface $operation
+         * @return mixed 
+         * @static 
+         */ 
+        public static function run($operation)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::run($operation);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $category
+         * @param string $keyword
+         * @param int $page
+         * @return mixed 
+         * @static 
+         */ 
+        public static function search($category, $keyword = null, $page = 1)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::search($category, $keyword, $page);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $node
+         * @param string $response
+         * @return mixed 
+         * @static 
+         */ 
+        public static function browse($node, $response = 'TopSellers')
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::browse($node, $response);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $asin
+         * @return mixed 
+         * @static 
+         */ 
+        public static function item($asin)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::item($asin);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $asin
+         * @return mixed 
+         * @static 
+         */ 
+        public static function items($asin)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::items($asin);
+        }
+        
+        /**
+         * 
+         *
+         * @inheritDoc 
+         * @static 
+         */ 
+        public static function setIdType($idType)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::setIdType($idType);
+        }
+        
+        /**
+         * 
+         *
+         * @inheritDoc 
+         * @static 
+         */ 
+        public static function getIdType()
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::getIdType();
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::macro($name, $macro);
+        }
+        
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @return void 
+         * @static 
+         */ 
+        public static function mixin($mixin)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::mixin($mixin);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::hasMacro($name);
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -15412,6 +15636,8 @@ namespace  {
     class Html extends \Collective\Html\HtmlFacade {}
 
     class Socialite extends \Laravel\Socialite\Facades\Socialite {}
+
+    class AmazonProduct extends \Revolution\Amazon\ProductAdvertising\Facades\AmazonProduct {}
  
 }
 

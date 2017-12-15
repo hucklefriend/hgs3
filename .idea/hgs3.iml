@@ -68,6 +68,7 @@
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/http-foundation" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/http-kernel" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/polyfill-php70" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/process" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/sources/web/vendor/symfony/translation" />
@@ -145,6 +146,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/http-foundation" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/http-kernel" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/polyfill-mbstring" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/polyfill-php70" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/process" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/routing" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/translation" />
@@ -217,6 +219,7 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/http-foundation" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/http-kernel" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/polyfill-mbstring" />
+          <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/polyfill-php70" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/process" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/routing" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/symfony/translation" />
@@ -224,20 +227,6 @@
           <root url="file://$MODULE_DIR$/sources/web/vendor/tijsverkoyen/css-to-inline-styles" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/vlucas/phpdotenv" />
           <root url="file://$MODULE_DIR$/sources/web/vendor/webmozart/assert" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="PHARS">
-        <CLASSES>
-          <root url="phar://$MODULE_DIR$/sources/web/vendor/phar-io/manifest/tests/_fixture/test.phar/" />
-          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.1.phar/" />
-          <root url="phar://$MODULE_DIR$/sources/web/composer.phar/" />
-        </CLASSES>
-        <SOURCES>
-          <root url="phar://$MODULE_DIR$/sources/web/vendor/phar-io/manifest/tests/_fixture/test.phar/" />
-          <root url="phar://$MODULE_DIR$/sources/web/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.1.phar/" />
-          <root url="phar://$MODULE_DIR$/sources/web/composer.phar/" />
         </SOURCES>
       </library>
     </orderEntry>

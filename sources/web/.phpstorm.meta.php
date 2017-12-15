@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-11-03 10:02:54.
+    * Generated on 2017-12-15 15:05:56.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -137,9 +137,10 @@ namespace PHPSTORM_META {
         'translator' => \Illuminate\Translation\Translator::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'command.tinker' => \Laravel\Tinker\Console\TinkerCommand::class,
-        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
         'html' => \Collective\Html\HtmlBuilder::class,
         'form' => \Collective\Html\FormBuilder::class,
+        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
+        'Revolution\Amazon\ProductAdvertising\AmazonClient' => \Revolution\Amazon\ProductAdvertising\AmazonClient::class,
     ]));
     override(\Illuminate\Contracts\Container\Container::make(0), map([
         '' => '@',
@@ -270,9 +271,10 @@ namespace PHPSTORM_META {
         'translator' => \Illuminate\Translation\Translator::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'command.tinker' => \Laravel\Tinker\Console\TinkerCommand::class,
-        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
         'html' => \Collective\Html\HtmlBuilder::class,
         'form' => \Collective\Html\FormBuilder::class,
+        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
+        'Revolution\Amazon\ProductAdvertising\AmazonClient' => \Revolution\Amazon\ProductAdvertising\AmazonClient::class,
     ]));
     override(\Illuminate\Contracts\Container\Container::makeWith(0), map([
         '' => '@',
@@ -403,9 +405,10 @@ namespace PHPSTORM_META {
         'translator' => \Illuminate\Translation\Translator::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'command.tinker' => \Laravel\Tinker\Console\TinkerCommand::class,
-        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
         'html' => \Collective\Html\HtmlBuilder::class,
         'form' => \Collective\Html\FormBuilder::class,
+        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
+        'Revolution\Amazon\ProductAdvertising\AmazonClient' => \Revolution\Amazon\ProductAdvertising\AmazonClient::class,
     ]));
     override(\App::make(0), map([
         '' => '@',
@@ -536,9 +539,10 @@ namespace PHPSTORM_META {
         'translator' => \Illuminate\Translation\Translator::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'command.tinker' => \Laravel\Tinker\Console\TinkerCommand::class,
-        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
         'html' => \Collective\Html\HtmlBuilder::class,
         'form' => \Collective\Html\FormBuilder::class,
+        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
+        'Revolution\Amazon\ProductAdvertising\AmazonClient' => \Revolution\Amazon\ProductAdvertising\AmazonClient::class,
     ]));
     override(\App::makeWith(0), map([
         '' => '@',
@@ -669,9 +673,10 @@ namespace PHPSTORM_META {
         'translator' => \Illuminate\Translation\Translator::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'command.tinker' => \Laravel\Tinker\Console\TinkerCommand::class,
-        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
         'html' => \Collective\Html\HtmlBuilder::class,
         'form' => \Collective\Html\FormBuilder::class,
+        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
+        'Revolution\Amazon\ProductAdvertising\AmazonClient' => \Revolution\Amazon\ProductAdvertising\AmazonClient::class,
     ]));
     override(\app(0), map([
         '' => '@',
@@ -802,9 +807,10 @@ namespace PHPSTORM_META {
         'translator' => \Illuminate\Translation\Translator::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'command.tinker' => \Laravel\Tinker\Console\TinkerCommand::class,
-        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
         'html' => \Collective\Html\HtmlBuilder::class,
         'form' => \Collective\Html\FormBuilder::class,
+        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
+        'Revolution\Amazon\ProductAdvertising\AmazonClient' => \Revolution\Amazon\ProductAdvertising\AmazonClient::class,
     ]));
     override(\resolve(0), map([
         '' => '@',
@@ -935,9 +941,10 @@ namespace PHPSTORM_META {
         'translator' => \Illuminate\Translation\Translator::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'command.tinker' => \Laravel\Tinker\Console\TinkerCommand::class,
-        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
         'html' => \Collective\Html\HtmlBuilder::class,
         'form' => \Collective\Html\FormBuilder::class,
+        'Laravel\Socialite\Contracts\Factory' => \Laravel\Socialite\SocialiteManager::class,
+        'Revolution\Amazon\ProductAdvertising\AmazonClient' => \Revolution\Amazon\ProductAdvertising\AmazonClient::class,
     ]));
 
     override(\Illuminate\Support\Arr::add(0), type(0));
