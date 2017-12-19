@@ -71,6 +71,40 @@ alias /hgn /var/hgs3/web/public
 # sudo a2enmod rewrite
 
 
+○自前証明書
+
+a2enmod ssl
+a2ensite default-ssl
+system ctl reload apache2
+
+openssl genrsa -aes128 2048 > server.key
+openssl rsa -in server.key -out server.key
+openssl req -utf8 -new -key server.key -out server.csr
+Country Name (2 letter code) [GB]:JP
+State or Province Name (full name) [Berkshire]:Tokyo
+Locality Name (eg, city) [Newbury]:(空白)
+Organization Name (eg, company) [My Company Ltd]:HGS
+Organizational Unit Name (eg, section) []:(空白)
+Common Name (eg, your name or your server's hostname) []:hgs.com
+Email Address []:Enter
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:Enterキー
+An optional company name []:Enterキー
+
+openssl x509 -in server.csr -out server.crt -req -signkey server.key -days 3650
+chmod 400 server.*
+
+sudo mv ./server.crt /etc/ssl/certs/server.crt
+sudo mv ./server.key /etc/ssl/private/server.key
+
+sudo vi /etc/apache2/sites-available/default-ssl.conf
+
+SSLCertificateFile /etc/ssl/certs/server.crt
+SSLCertificateKeyFile /etc/ssl/private/server.key
+
+sudo service apache2 restart
+
 
 ○ Laravel設定
 
@@ -153,3 +187,8 @@ IPtables
 sudo vi /etc/iptables/iptables.rules
 sudo iptables-restore < /etc/iptables/iptables.rules
 
+sudo vi /etc/apache2/envvars
+実行ユーザーを変更
+
+sudo vi /etc/apache2/conf-enabled/security.conf
+ServerSignature Off
