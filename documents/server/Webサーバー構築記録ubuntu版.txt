@@ -79,6 +79,7 @@ chmod 777 -R storage
 chmod 777 -R bootstrap/cache
 
 
+
 php artisan key:generate
 php artisan config:clear
 
@@ -143,3 +144,12 @@ db.site_footprint.remove({});
 
 ○16.04からアップグレードできない場合の対処
 After changing the setting in /etc/update-manager/releases-upgrades from lts to normal, you need to run sudo apt-get update.
+
+
+○VPSの設定
+mysqlのパスワードは管理用ユーザのパスワードと同じ
+
+IPtables
+sudo vi /etc/iptables/iptables.rules
+sudo iptables-restore < /etc/iptables/iptables.rules
+
