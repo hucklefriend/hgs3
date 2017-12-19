@@ -138,3 +138,8 @@ db.user_action_timeline.createIndex({user_id: 1, time: -1});
 db.timeline.remove({});
 db.user_action_timeline.remove({});
 db.site_footprint.remove({});
+
+
+
+○16.04からアップグレードできない場合の対処
+After changing the setting in /etc/update-manager/releases-upgrades from lts to normal, you need to run sudo apt-get update.
