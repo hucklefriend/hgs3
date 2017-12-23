@@ -192,3 +192,21 @@ sudo vi /etc/apache2/envvars
 
 sudo vi /etc/apache2/conf-enabled/security.conf
 ServerSignature Off
+
+○Let's Encrypt
+cd /opt
+git clone https://github.com/letsencrypt/letsencrypt
+
+systemctl stop apache2
+
+./letsencrypt-auto certonly -a standalone -d EXAMPLE.COM
+
+http://sig9.hatenablog.com/entry/2016/06/27/225403
+
+こっちのほうがよさげ
+https://blog.hrendoh.com/how-to-secure-apache-with-lets-encrypt-on-ubuntu-16-04/
+
+
+
+○TODO
+ログのローテーション
