@@ -210,3 +210,11 @@ https://blog.hrendoh.com/how-to-secure-apache-with-lets-encrypt-on-ubuntu-16-04/
 
 ○TODO
 ログのローテーション
+Apache: http://logic.moo.jp/data/archives/312.html
+        http://higherhope.net/?p=2539
+        https://humo-life.net/blog/centos/187/
+Laravel: https://blog.e2info.co.jp/2016/10/05/laravel_log_split/
+
+鍵認証
+https://runble1.com/ubuntu-config-ssh/
+http://zorinos.seesaa.net/article/416007439.html
