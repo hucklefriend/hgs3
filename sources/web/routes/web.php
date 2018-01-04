@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
 
 // エディターのみ
 Route::group(['middleware' => ['auth', 'can:editor']], function () {
+
     // ゲーム追加
     Route::get('/game/soft/add', 'Game\SoftController@add');
     Route::post('/game/soft/add', 'Game\SoftController@insert');
@@ -230,3 +231,7 @@ Route::get('/sitemap', 'TopController@sitemap');
 
 // デバッグ用
 Route::get('/test', 'TopController@test');
+
+
+// マスター
+Route::get('/master', 'Master\TopController@index');

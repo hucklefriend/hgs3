@@ -2,10 +2,10 @@
 
 有効期限6時間
 
-{{ url2('account/register') }}/{{ urlencode($email) }}/{{ urlencode($token) }}
+{{ env('APP_URL') }}/account/register/{{ $token }}
 
 
 ----------
 H.G.N.
-https://horrorgame.net/
+{{ env('APP_URL') }}
 ----------

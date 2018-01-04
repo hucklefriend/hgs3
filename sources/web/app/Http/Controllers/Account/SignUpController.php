@@ -36,10 +36,15 @@ class SignUpController extends Controller
      *
      * @param SendPRMailRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function sendPRMail(SendPRMailRequest $request)
     {
+        // TODO いたずら対策
+
         $email = $request->get('email');
+
+        // 登録済み
 
         $signUp = new SignUp();
         $token = $signUp->sendProvisionalRegistrationMail($email);
@@ -76,6 +81,7 @@ class SignUpController extends Controller
      * 本登録
      *
      * @param RegisterRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function registration(RegisterRequest $request)
     {

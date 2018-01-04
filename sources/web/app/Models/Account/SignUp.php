@@ -11,6 +11,7 @@ use Hgs3\Models\Orm\UserProvisionalRegistration;
 use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class SignUp
 {
@@ -19,6 +20,7 @@ class SignUp
      *
      * @param $email
      * @return bool
+     * @throws \Exception
      */
     public function sendProvisionalRegistrationMail($email)
     {
@@ -28,15 +30,23 @@ class SignUp
         DB::beginTransaction();
         try {
             $sql =<<< SQL
-INSERT IGNORE INTO
+INSERT INTO
 user_provisional_registrations (email, token, limit_date, created_at, updated_at)
 VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON DUPLICATE KEY UPDATE
+  token = VALUES(token)
+  , limit_date = VALUES(limit_date)
+  , updated_at = CURRENT_TIMESTAMP
 SQL;
 
             $limitDate = new \DateTime();
             $limitDate->add(new \DateInterval('PT6H'));
 
             DB::insert($sql, [$email, $token, $limitDate]);
+
+            // メール送信
+            Mail::to($email)
+                ->send(new ProvisionalRegistration($token));
 
             DB::commit();
         } catch (\Exception $e) {
@@ -47,12 +57,8 @@ SQL;
 
             return false;
         }
-/*
-        \Mail::to($email)
-            ->send(new ProvisionalRegistration($email, $token));
-*/
-        return $token;
-        // return true;
+
+        return true;
     }
 
     /**
@@ -108,7 +114,7 @@ SQL;
 
         DB::beginTransaction();
         try {
-            \Hgs3\User::create([
+            User::create([
                 'name'     => $name,
                 'email'    => $orm->email,
                 'password' => bcrypt($password),

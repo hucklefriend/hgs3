@@ -14,7 +14,6 @@ class ProvisionalRegistration extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $email;
     protected $token;
 
     /**
@@ -23,9 +22,8 @@ class ProvisionalRegistration extends Mailable
      * @param $email
      * @param $token
      */
-    public function __construct($email, $token)
+    public function __construct($token)
     {
-        $this->email = $email;
         $this->token = $token;
     }
 
@@ -39,6 +37,6 @@ class ProvisionalRegistration extends Mailable
         return $this
             ->from('webmaster@horrorgame.net', 'H.G.N.管理人')
             ->subject('仮登録のお知らせ')
-            ->text('mail.pr', ['token' => $this->token, 'mail' => $this->email]);
+            ->text('mail.pr', ['token' => $this->token]);
     }
 }

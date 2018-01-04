@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.25 on 2017-12-15 15:05:56.
+ * Generated for Laravel 5.5.28 on 2018-01-04 16:18:26.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1884,7 +1884,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the session store used by the guard.
          *
-         * @return \Illuminate\Contracts\Session\Session. 
+         * @return \Illuminate\Contracts\Session\Session 
          * @static 
          */ 
         public static function getSession()
@@ -6935,24 +6935,24 @@ namespace Illuminate\Support\Facades {
          * Merge new input into the current request's input array.
          *
          * @param array $input
-         * @return void 
+         * @return \Illuminate\Http\Request 
          * @static 
          */ 
         public static function merge($input)
         {
-            \Illuminate\Http\Request::merge($input);
+            return \Illuminate\Http\Request::merge($input);
         }
         
         /**
          * Replace the input for the current request.
          *
          * @param array $input
-         * @return void 
+         * @return \Illuminate\Http\Request 
          * @static 
          */ 
         public static function replace($input)
         {
-            \Illuminate\Http\Request::replace($input);
+            return \Illuminate\Http\Request::replace($input);
         }
         
         /**
@@ -13512,6 +13512,44 @@ namespace Revolution\Amazon\ProductAdvertising\Facades {
         public static function hasMacro($name)
         {
             return \Revolution\Amazon\ProductAdvertising\AmazonClient::hasMacro($name);
+        }
+        
+        /**
+         * Add hook
+         *
+         * @param string $name
+         * @param callable $hook
+         * @return void 
+         * @static 
+         */ 
+        public static function hook($name, $hook)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::hook($name, $hook);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasHook($name)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::hasHook($name);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $name
+         * @param \Revolution\Amazon\ProductAdvertising\OperationInterface $operation
+         * @return mixed 
+         * @static 
+         */ 
+        public static function callHook($name, $operation)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::callHook($name, $operation);
         }
          
     }

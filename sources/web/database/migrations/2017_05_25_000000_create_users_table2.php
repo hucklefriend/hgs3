@@ -19,6 +19,7 @@ class CreateUsersTable2 extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id')->comment('ユーザーID');
+            $table->unsignedBigInteger('show_id')->unique()->comment('表示用ID');
             $table->string('name', 200)->index()->comment('ユーザー名');
             $table->unsignedSmallInteger('role')->default(1)->comment('ロール');
             $table->unsignedTinyInteger('adult')->default(0)->comment('18歳以上');

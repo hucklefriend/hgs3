@@ -2,10 +2,7 @@
 
 @section('content')
 
-
-    <p>メール送信は後回しでとりあえずアクセス</p>
-    <div>
-        <a href="{{ url2('account/register') }}/{{ urlencode($token) }}">ここから</a>
-    </div>
+    <p>仮登録メールを送信</p>
+    <p>メールからアクセスしてね</p>
 
 @endsection
