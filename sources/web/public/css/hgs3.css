@@ -226,3 +226,7 @@ a:active .no_image_text_inner {
     width: 100%;
     overflow:hidden;
 }
+
+.table-clickable-row tr:hover {
+    cursor: pointer;
+}

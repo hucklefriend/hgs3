@@ -8,7 +8,9 @@
                 <div class="card-header">ようこそ</div>
                 <div class="card-body">
                     <p class="card-text">
-                        人というものは、はじめから悪の道を知っているわけではない。何かの拍子で、小さな悪事を起こしてしまい、それを世間の目にふれさせぬため、また、つぎの悪事をする。そして、これを隠そうとして、さらに大きな悪の道へ踏み込んで行くものなのだ
+                        H.G.N.-Horror Game Network-は、ホラーゲーム好きが集まるSNSとして現在開発中のものです。<br>
+                        <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
+                        公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。
                     </p>
                     <div class="text-center" style="font-size: 150%;">
                         <a href="{{ url2('account/signup') }}">新規登録</a>

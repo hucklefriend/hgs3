@@ -25,6 +25,13 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
 
 // エディターのみ
 Route::group(['middleware' => ['auth', 'can:editor']], function () {
+    // マスター
+    Route::get('/master', 'Master\TopController@index');
+
+    // ゲーム会社
+    Route::get('/master/game_company', 'Master\GameCompanyController@index');
+    Route::get('/master/game_company/edit/{gameCompany}', 'Master\GameCompanyController@edit');
+    Route::patch('/master/game_company/edit/{gameCompany}', 'Master\GameCompanyController@update');
 
     // ゲーム追加
     Route::get('/game/soft/add', 'Game\SoftController@add');
@@ -131,7 +138,7 @@ Route::get('/game/platform/{platform}', 'Game\PlatformController@detail');
 
 // シリーズ
 Route::get('/game/series', 'Game\SeriesController@index');
-Route::get('/game/series/{series}', 'Game\SeriesController@detail');
+Route::get('/game/series/{gameSeries}', 'Game\SeriesController@detail');
 
 // マイページ
 Route::get('/mypage', 'User\MyPageController@index')->middleware('auth');
@@ -232,6 +239,3 @@ Route::get('/sitemap', 'TopController@sitemap');
 // デバッグ用
 Route::get('/test', 'TopController@test');
 
-
-// マスター
-Route::get('/master', 'Master\TopController@index');

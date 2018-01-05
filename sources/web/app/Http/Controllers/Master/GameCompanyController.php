@@ -1,25 +1,40 @@
 <?php
+/**
+ * ゲーム会社マスター
+ */
+
 namespace Hgs3\Http\Controllers\Master;
 
+use Hgs3\Http\Requests\Master\GameCompanyRequest;
 use Illuminate\Http\Request;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests;
-use Hgs3\Models\Orm\GameCompany;
+use Hgs3\Models\Orm;
 
 class GameCompanyController extends Controller
 {
+    /**
+     * 一覧
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $companies = GameCompany::All();
+        $gameCompanies = Orm\GameCompany::All();
 
-        return view('master.game_company.list')->with([
-            "list"   => $companies
+        return view('master.game_company.list', [
+            'gameCompanies' => $gameCompanies
         ]);
     }
 
-    public function show(GameCompany $gameCompany)
+    /**
+     * 詳細
+     *
+     * @param Orm\GameCompany $gameCompany
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function detail(Orm\GameCompany $gameCompany)
     {
-        return view('master.game_company.detail')->with([
+        return view('master.game_company.detail', [
             'gameCompany' => $gameCompany
         ]);
     }
@@ -42,7 +57,7 @@ class GameCompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $gameCompany = new GameCompany;
+        $gameCompany = new Orm\GameCompany;
         $gameCompany->name = $request->input('name');
         $gameCompany->name_hiragana = $request->input('name_hiragana');
         $gameCompany->url = $request->input('url');
@@ -52,25 +67,44 @@ class GameCompanyController extends Controller
         return $this->index();
     }
 
-    public function edit(GameCompany $gameCompany)
+    /**
+     * 編集画面
+     *
+     * @param Orm\GameCompany $gameCompany
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Orm\GameCompany $gameCompany)
     {
-        return view('master.game_company.edit')->with([
-            'gameCompany' => $gameCompany
+        return view('master.game_company.edit', [
+            'gameCompany' => $gameCompany,
+            'isComplete'  => false
         ]);
     }
 
-    public function update(Request $request, GameCompany $gameCompany)
+    /**
+     * 編集処理
+     *
+     * @param Request $request
+     * @param Orm\GameCompany $gameCompany
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function update(GameCompanyRequest $request, Orm\GameCompany $gameCompany)
     {
         $gameCompany->name = $request->input('name');
-        $gameCompany->name_hiragana = $request->input('name_hiragana');
+        $gameCompany->acronym = $request->input('acronym');
+        $gameCompany->phonetic = $request->input('phonetic');
         $gameCompany->url = $request->input('url');
+        $gameCompany->wikipedia = $request->input('wikipedia');
 
         $gameCompany->save();
 
-        return $this->edit($gameCompany);
+        return view('master.game_company.edit', [
+            'gameCompany' => $gameCompany,
+            'isComplete'  => true
+        ]);
     }
 
-    public function destroy(GameCompany $gameCompany)
+    public function destroy(Orm\GameCompany $gameCompany)
     {
         $gameCompany->delete();
 

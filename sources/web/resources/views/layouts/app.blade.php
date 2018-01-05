@@ -31,8 +31,6 @@
                 <li class="nav-item @if ($navActive == 'home') active @endif">
                     @if (Auth::check())
                         <a class="nav-link" href="{{ url2('mypage') }}">マイページ</a>
-                    @else
-                        <a class="nav-link" href="{{ url2('/') }}">トップページ</a>
                     @endif
                 </li>
                 <li class="nav-item @if ($navActive == 'game') active @endif">
@@ -62,22 +60,13 @@
     </nav>
 
 </div>
-<div class="container-fluid">
+<div class="container-fluid" style="padding-bottom: 20px;">
     @yield('content')
 </div>
 
 <footer class="footer">
     <div class="container-fluid">
         <div style="display:flex;">
-            <div>
-                webmaster:yu-ki
-                <a href="mailto:webmaster@horrogame.net" style="text-decoration: none;">
-                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                </a>
-                <a href="https://twitter.com/huckle_friend" style="color: #55acee;text-decoration: none;">
-                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                </a>
-            </div>
             <div style="margin-left: auto;font-size: 80%;">
                 <a href="{{ url2('sitemap') }}">サイトマップ</a>
             </div>
