@@ -84,6 +84,7 @@ class User extends Authenticatable
      *
      * @param \Illuminate\Contracts\Pagination\LengthAwarePaginator $pager
      * @param string $key
+     * @return array
      */
     public static function getNameHashByPager(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager, $key = 'user_id')
     {
@@ -101,6 +102,25 @@ class User extends Authenticatable
             if (file_exists($path)) {
                 unlink($path);
             }
+        }
+    }
+
+    /**
+     * 表示用IDの
+     *
+     * @return int|mixed
+     */
+    public static function generateShowId()
+    {
+        $usedShowIds = new Orm\UsedShowIds();
+
+        while(true) {
+            try {
+                $usedShowIds->show_id = rand(10000, 9999999);
+                $usedShowIds->save();
+
+                return $usedShowIds->show_id;
+            } catch (\Exception $e) {}
         }
     }
 }
