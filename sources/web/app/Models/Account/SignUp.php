@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Account;
 
+use Hgs3\Constants\UserRole;
 use Hgs3\Mail\ProvisionalRegistration;
 use Hgs3\Models\Orm\SocialAccount;
 use Hgs3\Models\Orm\UserProvisionalRegistration;
@@ -114,11 +115,11 @@ SQL;
 
         DB::beginTransaction();
         try {
-            User::create([
+            User::register([
                 'name'     => $name,
                 'email'    => $orm->email,
                 'password' => bcrypt($password),
-                'role'     => 1
+                'role'     => UserRole::USER
             ]);
 
             $this->deleteToken($token);
@@ -148,7 +149,7 @@ SQL;
         DB::beginTransaction();
 
         try {
-            $user = User::create([
+            $user = User::register([
                 'name'   => $socialUser->getName(),
             ]);
 
@@ -186,7 +187,7 @@ SQL;
         DB::beginTransaction();
 
         try {
-            $user = User::create([
+            $user = User::register([
                 'name'   => $socialUser->getName(),
             ]);
 

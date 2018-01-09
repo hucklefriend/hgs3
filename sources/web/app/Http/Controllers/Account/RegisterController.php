@@ -2,6 +2,7 @@
 
 namespace Hgs3\Http\Controllers\Account;
 
+use Hgs3\Constants\UserRole;
 use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -62,10 +63,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $data['role'] = UserRole::USER;
+
+        return User::register($data);
     }
 }

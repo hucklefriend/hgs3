@@ -18,9 +18,10 @@ class CreateUsedShowIdsTable extends Migration
     public function up()
     {
         Schema::create('used_show_ids', function (Blueprint $table) {
-            $table->unsignedBigInteger('show_id')->primary()->comment('表示用ID');
+            $table->string('show_id', 100)->unique()->comment('表示用ID');
             $table->timestamps();
         });
+        DB::statement('ALTER TABLE used_show_ids MODIFY show_id varchar(100) BINARY');
     }
 
     /**

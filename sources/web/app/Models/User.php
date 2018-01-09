@@ -2,6 +2,7 @@
 
 namespace Hgs3\Models;
 
+use Hgs3\Constants\UserRole;
 use Hgs3\Models\Account\SignUp;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -106,7 +107,26 @@ class User extends Authenticatable
     }
 
     /**
-     * 表示用IDの
+     * データ登録
+     *
+     * @param $data
+     * @return User
+     */
+    public static function register($data)
+    {
+        $self = new self;
+        $self->show_id = self::generateShowId();
+        $self->name = $data['name'];
+        $self->email = $data['email'] ?? null;
+        $self->password = bcrypt($data['password']) ?? null;
+        $self->role = $data['role']  ?? UserRole::USER;
+
+        $self->save();
+        return $self;
+    }
+
+    /**
+     * 表示用IDの生成
      *
      * @return int|mixed
      */

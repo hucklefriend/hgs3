@@ -32,16 +32,12 @@ class Database
         }
 
         // 管理人を作成
-        User::create([
+        User::register([
             'name'     => 'huckle',
             'email'    => 'webmaster@horrorgame.net',
-            'password' => bcrypt($password),
+            'password' => $password,
             'role'     => 100
         ]);
-
-        $user = User::find(1);
-        $user->role = 100;
-        $user->save();
 
         // 運営用ユーザーコミュニティを作成
         //UserCommunity::createDefault();

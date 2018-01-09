@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserRole
 {
-    const USER = 0;
+    const USER = 10;
     const EDITOR = 50;
     const ADMIN = 100;
 

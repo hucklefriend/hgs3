@@ -5,7 +5,7 @@
 
 
 namespace Hgs3\Models\Test;
-use Hgs3\Models\Review\Review;
+use Hgs3\Models\Review;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm;
 
