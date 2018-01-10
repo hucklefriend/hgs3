@@ -7,9 +7,8 @@ namespace Hgs3\Models\Account;
 
 use Hgs3\Constants\UserRole;
 use Hgs3\Mail\ProvisionalRegistration;
-use Hgs3\Models\Orm\SocialAccount;
-use Hgs3\Models\Orm\UserProvisionalRegistration;
 use Hgs3\Models\User;
+use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -17,59 +16,13 @@ use Illuminate\Support\Facades\Mail;
 class SignUp
 {
     /**
-     * 仮登録メールを送信
-     *
-     * @param $email
-     * @return bool
-     * @throws \Exception
-     */
-    public function sendProvisionalRegistrationMail($email)
-    {
-        // トークンを生成
-        $token = str_random(rand(10, 15));
-
-        DB::beginTransaction();
-        try {
-            $sql =<<< SQL
-INSERT INTO
-user_provisional_registrations (email, token, limit_date, created_at, updated_at)
-VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-ON DUPLICATE KEY UPDATE
-  token = VALUES(token)
-  , limit_date = VALUES(limit_date)
-  , updated_at = CURRENT_TIMESTAMP
-SQL;
-
-            $limitDate = new \DateTime();
-            $limitDate->add(new \DateInterval('PT6H'));
-
-            DB::insert($sql, [$email, $token, $limitDate]);
-
-            // メール送信
-            Mail::to($email)
-                ->send(new ProvisionalRegistration($token));
-
-            DB::commit();
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            DB::rollBack();
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * トークンが有効か確認
      *
      * @param $email
      * @param $token
      * @return bool
      */
-    public function validateToken($token)
+    public static function validateToken($token)
     {
         return DB::table('user_provisional_registrations')
             ->where('token', $token)
@@ -82,7 +35,7 @@ SQL;
      *
      * @param string $token
      */
-    public function deleteToken($token)
+    public static function deleteToken($token)
     {
         DB::table('user_provisional_registrations')
                 ->where('token', $token)
@@ -92,7 +45,7 @@ SQL;
     /**
      * タイムリミットがきているトークンを削除
      */
-    public function deleteTimeLimit()
+    public static function deleteTimeLimit()
     {
         DB::table('user_provisional_registrations')
             ->whereRaw('limit_date < NOW()')
@@ -102,19 +55,20 @@ SQL;
     /**
      * 本登録
      *
-     * @param string $token
-     * @param string $name
-     * @param string $email
-     * @param string $password
+     * @param $token
+     * @param $name
+     * @param $password
      * @return bool
+     * @throws \Exception
      */
-    public function register($token, $name, $password)
+    public static function register($token, $name, $password)
     {
-        $orm = UserProvisionalRegistration::where('token', $token)
+        $orm = Orm\UserProvisionalRegistration::where('token', $token)
             ->first();
 
         DB::beginTransaction();
         try {
+            // ユーザーテーブルに登録
             User::register([
                 'name'     => $name,
                 'email'    => $orm->email,
@@ -122,7 +76,8 @@ SQL;
                 'role'     => UserRole::USER
             ]);
 
-            $this->deleteToken($token);
+            // 無視メールリストに登録
+            Orm\IgnoreProvisionalRegistrations::ignoreInsert($orm->email);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -143,8 +98,9 @@ SQL;
      * @param \Laravel\Socialite\One\User $socialUser
      * @param $socialSiteId
      * @return bool
+     * @throws \Exception
      */
-    public function registerBySocialite(\Laravel\Socialite\One\User $socialUser, $socialSiteId)
+    public static function registerBySocialite(\Laravel\Socialite\One\User $socialUser, $socialSiteId)
     {
         DB::beginTransaction();
 
@@ -153,7 +109,7 @@ SQL;
                 'name'   => $socialUser->getName(),
             ]);
 
-            $sa = new SocialAccount;
+            $sa = new Orm\SocialAccount;
 
             $sa->user_id = $user->id;
             $sa->social_site_id = $socialSiteId;
@@ -181,8 +137,9 @@ SQL;
      * @param \Laravel\Socialite\Two\User $socialUser
      * @param $socialSiteId
      * @return bool
+     * @throws \Exception
      */
-    public function registerBySocialite2(\Laravel\Socialite\Two\User $socialUser, $socialSiteId)
+    public static function registerBySocialite2(\Laravel\Socialite\Two\User $socialUser, $socialSiteId)
     {
         DB::beginTransaction();
 
@@ -191,7 +148,7 @@ SQL;
                 'name'   => $socialUser->getName(),
             ]);
 
-            $sa = new SocialAccount;
+            $sa = new Orm\SocialAccount;
 
             $sa->user_id = $user->id;
             $sa->social_site_id = $socialSiteId;

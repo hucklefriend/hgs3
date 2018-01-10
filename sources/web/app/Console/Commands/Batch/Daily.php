@@ -2,6 +2,7 @@
 
 namespace Hgs3\Console\Commands\Batch;
 
+use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Site\NewArrival;
 use Illuminate\Console\Command;
 
@@ -46,5 +47,9 @@ class Daily extends Command
         if (!NewArrival::deleteOld()) {
             $this->error('error!! NewArrival::deleteOld');
         }
+
+        // タイムリミットが過ぎた仮登録データを削除
+        $this->info('delete time limit pr token');
+        SignUp::deleteTimeLimit();
     }
 }

@@ -8,8 +8,11 @@ namespace Hgs3\Http\Controllers\Account;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Account\RegisterRequest;
 use Hgs3\Http\Requests\Account\SendPRMailRequest;
+use Hgs3\Mail\ProvisionalRegistration;
 use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class SignUpController extends Controller
 {
@@ -40,18 +43,45 @@ class SignUpController extends Controller
      */
     public function sendPRMail(SendPRMailRequest $request)
     {
-        // TODO いたずら対策
-
         $email = $request->get('email');
 
-        // 登録済み
+        $emailHash = md5($email);
 
-        $signUp = new SignUp();
-        $token = $signUp->sendProvisionalRegistrationMail($email);
+        // 登録無視対象か？
+        $ignore = Orm\IgnoreProvisionalRegistrations::find($emailHash);
+        if ($ignore != null) {
+            return view('account.alreadyRegistered');
+        }
 
-        return view('account.sendPRMail', [
-            'token' => $token
-        ]);
+        // 現状のデータを取得
+        $pr = Orm\UserProvisionalRegistration::find($email);
+        if ($pr == null) {
+            // 未登録なので新規に登録
+            $pr = new Orm\UserProvisionalRegistration;
+            $pr->email = $email;
+        }
+
+        // リミットは1日後
+        $limitDate = new \DateTime();
+        $limitDate->add(new \DateInterval('P1D'));
+        $pr->limit_date = $limitDate->format('Y-m-d H:i:s');
+
+        if ($pr->save()) {
+            try {
+                // メール送信
+                Mail::to($email)
+                    ->send(new ProvisionalRegistration($pr->token));
+            } catch (\Exception $e) {
+                Log::error($e->getMessage());
+                Log::error($e->getTraceAsString());
+
+                return view('account.sendPRMailError');
+            }
+
+            return view('account.sendPRMail');
+        } else {
+            return view('common.systemError');
+        }
     }
 
     /**
