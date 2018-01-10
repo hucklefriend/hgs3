@@ -240,4 +240,9 @@ class Profile
 
         return User::getNameHash($userIds);
     }
+
+    public static function changeMail()
+    {
+
+    }
 }

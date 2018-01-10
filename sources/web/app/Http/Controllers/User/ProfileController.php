@@ -388,4 +388,14 @@ class ProfileController extends Controller
         $time = floatval($time);
         return Response::json(Timeline\MyPage::getTimeline($user->id, $time, 20));
     }
+
+    public function changeMail()
+    {
+
+    }
+
+    public function updateMail()
+    {
+
+    }
 }
