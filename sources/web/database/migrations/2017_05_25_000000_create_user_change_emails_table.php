@@ -16,15 +16,11 @@ class CreateUserChangeEmailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_emails', function (Blueprint $table) {
+        Schema::create('user_change_emails', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->primary()->comment('ユーザーID');
             $table->string('email', 200)->unique()->comment('メールアドレス');
-            $table->string('token', 50)->nullable()->comment('パスワード再発行時のトークン');
-            $table->dateTime('limit_date')->nullable()->comment('パスワード再発行時の有効期限');
-            $table->string('password', 100)->comment('パスワード');
+            $table->string('token', 50)->nullable()->comment('メールアドレス変更時のトークン');
             $table->timestamps();
-
-
         });
     }
 
@@ -35,6 +31,6 @@ class CreateUserChangeEmailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_emails');
+        Schema::dropIfExists('user_change_emails');
     }
 }

@@ -36,7 +36,7 @@ class CreateUsersTable2 extends Migration
             $table->unsignedTinyInteger('footprint')->default(1)->comment('サイトへの足跡を残すフラグ');
             $table->timestamps();
         });
-        DB::statement('ALTER TABLE users MODIFY show_id varchar(100) BINARY');
+        DB::statement('ALTER TABLE `used_show_ids` CHANGE `show_id` `show_id` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL  COMMENT "表示用ID"');
     }
 
     /**

@@ -21,7 +21,7 @@ class CreateUsedShowIdsTable extends Migration
             $table->string('show_id', 100)->unique()->comment('表示用ID');
             $table->timestamps();
         });
-        DB::statement('ALTER TABLE used_show_ids MODIFY show_id varchar(100) BINARY');
+        DB::statement('ALTER TABLE `used_show_ids` CHANGE `show_id` `show_id` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL  COMMENT "表示用ID"');
     }
 
     /**
