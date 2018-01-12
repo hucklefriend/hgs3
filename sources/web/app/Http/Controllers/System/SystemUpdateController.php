@@ -3,7 +3,7 @@
  * システム更新コントローラー
  */
 
-namespace Hgs3\Http\Controllers\Admin;
+namespace Hgs3\Http\Controllers\System;
 
 use Hgs3\Http\Requests\Game\GameCompanyRequest;
 use Hgs3\Http\Controllers\Controller;

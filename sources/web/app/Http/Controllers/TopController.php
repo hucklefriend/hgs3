@@ -56,7 +56,7 @@ class TopController extends Controller
      */
     public function admin()
     {
-        return view('admin.top');
+        return view('top.admin');
     }
 
     /**

@@ -14,6 +14,18 @@
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
+    Route::get('/admin', 'TopController@admin');
+
+    // お知らせ
+    Route::get('/system/notice', 'System\NoticeController@index');
+    Route::get('/system/notice/add', 'System\NoticeController@add');
+    Route::post('/system/notice/add', 'System\NoticeController@insert');
+    Route::get('/system/notice/edit/{notice}', 'System\NoticeController@edit');
+    Route::patch('/system/notice/edit/{notice}', 'System\NoticeController@update');
+    Route::delete('/system/notice/{notice}', 'System\NoticeController@delete');
+
+
+
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
 
