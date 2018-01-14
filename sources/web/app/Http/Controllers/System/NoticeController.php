@@ -89,32 +89,36 @@ class NoticeController extends Controller
     /**
      * 編集画面
      *
-     * @param Orm\GameCompany $company
+     * @param Orm\SystemNotice $notice
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Orm\GameCompany $company)
+    public function edit(Orm\SystemNotice $notice)
     {
-        return view('game.company.edit', [
-            'company' => $company
+        $notice->open_at = format_date_local($notice->open_at);
+        $notice->close_at = format_date_local($notice->close_at);
+
+        return view('system.notice.edit', [
+            'notice' => $notice
         ]);
     }
 
     /**
      * データ更新
      *
-     * @param GameCompanyRequest $request
-     * @param Orm\GameCompany $company
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param NoticeRequest $request
+     * @param Orm\SystemNotice $notice
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function update(GameCompanyRequest $request, Orm\GameCompany $company)
+    public function update(NoticeRequest $request, Orm\SystemNotice $notice)
     {
-        $company->name = $request->input('name');
-        $company->phonetic = $request->input('phonetic');
-        $company->url = $request->input('url');
-        $company->wikipedia = $request->input('wikipedia');
+        $notice->title = $request->input('title');
+        $notice->message = $request->input('message');
+        $notice->type = $request->input('type');
+        $notice->open_at = $request->input('open_at');
+        $notice->close_at = $request->input('close_at');
 
-        $company->save();
+        $notice->save();
 
-        return redirect('game/company/detail/' . $company->id);
+        return $this->edit($notice);
     }
 }

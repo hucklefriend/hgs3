@@ -224,3 +224,10 @@ function display_none($param, $value)
 
     return '';
 }
+
+function format_date_local($date)
+{
+    $timestamp = strtotime($date);
+
+    return date('Y-m-d', $timestamp) . 'T' . date('H:i', $timestamp);
+}

@@ -18,7 +18,7 @@ class CreateSystemNoticesTable extends Migration
     public function up()
     {
         Schema::create('system_notices', function (Blueprint $table) {
-            $table->increments('id')->primary()->comment('ID');
+            $table->increments('id')->comment('ID');
             $table->string('title', 200)->comment('タイトル');
             $table->text('message')->comment('内容');
             $table->unsignedTinyInteger('type')->comment('種別');

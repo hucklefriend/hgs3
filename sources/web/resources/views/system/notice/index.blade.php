@@ -1,7 +1,17 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h4>ゲーム会社一覧</h4>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-master">
+            <li class="breadcrumb-item"><a href="{{ url2('') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ url2('/admin') }}">管理トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">お知らせ</li>
+        </ol>
+    </nav>
+
+
+    <h4>お知らせ</h4>
 
     <div class="text-right">
         <a href="{{ url2('system/notice/add') }}">追加</a>

@@ -6,14 +6,11 @@
 namespace Hgs3\Http\Controllers;
 
 
-use Hgs3\Models\Game\Shop\Amazon;
-use Hgs3\Models\Orm\GameSoft;
+use Hgs3\Models\Orm;
 use Hgs3\Models\Orm\NewInformation;
-use Hgs3\Models\VersionUp\Master;
-use Hgs3\Models\VersionUp\Database;
-use Hgs3\Models\VersionUp\MasterImport\Package;
 use Hgs3\Models\VersionUp\MasterImport\Soft;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 class TopController extends Controller
@@ -43,9 +40,16 @@ class TopController extends Controller
         $newInfo = NewInformation::getPager();
         $newInfoData = NewInformation::getPagerData($newInfo);
 
+        $notices = Orm\SystemNotice::where('open_at', '<=', DB::raw('NOW()'))
+            ->where('close_at', '>=', DB::raw('NOW()'))
+            ->orderBy('open_at', 'DESC')
+            ->take(5)
+            ->get();
+
         return view('top', [
             'newInfo'     => $newInfo,
             'newInfoData' => $newInfoData,
+            'notices'     => $notices
         ]);
     }
 

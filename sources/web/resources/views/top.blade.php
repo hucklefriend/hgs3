@@ -69,4 +69,19 @@
             </p>
         </div>
     </div>
+
+
+    <div class="card card-hgn">
+        <div class="card-header">お知らせ</div>
+        <div class="card-body">
+            @foreach ($notices as $notice)
+            {{ $notice->title }}
+
+                @if (!$loop->last)
+                    <hr>
+                @endif
+            @endforeach
+        </div>
+    </div>
+
 @endsection

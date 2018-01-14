@@ -13,14 +13,21 @@ class Database
      */
     public function versionUp()
     {
+        echo 'copy company'.PHP_EOL;
         $this->copyCompany();
+        echo 'copy platform'.PHP_EOL;
         $this->copyPlatform();
+        echo 'copy series'.PHP_EOL;
         $this->copySeries();
+        echo 'copy soft'.PHP_EOL;
         $this->copySoft();
+        echo 'copy package'.PHP_EOL;
         $this->copyPackage();
 
+        echo 'copy original package id'.PHP_EOL;
         $this->setOriginalPackageId();
 
+        echo 'generate password'.PHP_EOL;
         if (env('APP_ENV') == 'local') {
             $password = 'huckle';
         } else {
@@ -31,6 +38,7 @@ class Database
             file_put_contents($path, $password);
         }
 
+        echo 'create admin'.PHP_EOL;
         // 管理人を作成
         User::register([
             'name'     => 'huckle',

@@ -144,9 +144,7 @@ sudo apt-get update
 sudo apt-get install mongodb-org
 sudo apt-get install php-dev
 sudo apt-get install pkg-config libssl-dev libsslcommon2-dev
-sudo pecl install mongodb
-sudo phpenmod mongodb
-
+sudo apt-get install php-mongodb
 sudo service mongod start
 sudo service apache2 restart
 
@@ -201,11 +199,14 @@ systemctl stop apache2
 
 ./letsencrypt-auto certonly -a standalone -d EXAMPLE.COM
 
+
 http://sig9.hatenablog.com/entry/2016/06/27/225403
 
-こっちのほうがよさげ
-https://blog.hrendoh.com/how-to-secure-apache-with-lets-encrypt-on-ubuntu-16-04/
+lets encrypt の自動更新
+https://qiita.com/takahiko/items/a08895550727b95b6c36
 
+
+http://blog.net-hut.com/vps/544/
 
 
 ○TODO
@@ -218,3 +219,10 @@ Laravel: https://blog.e2info.co.jp/2016/10/05/laravel_log_split/
 鍵認証
 https://runble1.com/ubuntu-config-ssh/
 http://zorinos.seesaa.net/article/416007439.html
+
+○調べればわかるけど、やったこと
+httpにきたのをhttpsに（rewrite）
+SSL強制(httpd.confにSSLRequireSSL)
+
+apt-get install imagemagick
+apt-get install libimage-magick-perl

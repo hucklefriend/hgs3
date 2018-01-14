@@ -13,6 +13,10 @@
         <li class="list-group-item"><a href="{{ url2('site') }}">サイト</a></li>
         <li class="list-group-item"><a href="{{ url2('diary') }}">日記</a></li>
         <li class="list-group-item"><a href="{{ url2('community') }}">コミュニティ</a></li>
+        <li class="list-group-item"><a href="{{ url2('notice') }}">お知らせ</a></li>
+        <li class="list-group-item"><a href="{{ url2('system-update') }}">システム更新記録</a></li>
+        <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
+        <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
 
         @if (\Illuminate\Support\Facades\Auth::check())
         <li class="list-group-item"><a href="{{ url2('mypage') }}">マイページ</a></li>
