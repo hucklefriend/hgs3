@@ -17,6 +17,16 @@ use Hgs3\Constants\SocialSite;
 class GoogleController extends Controller
 {
     /**
+     * コンストラクタ
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'community');
+    }
+
+    /**
      * Google+認証画面へ遷移
      *
      * @param $mode

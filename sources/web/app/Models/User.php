@@ -2,6 +2,7 @@
 
 namespace Hgs3\Models;
 
+use Hgs3\Constants\SocialSite;
 use Hgs3\Constants\UserRole;
 use Hgs3\Models\Account\SignUp;
 use Illuminate\Notifications\Notifiable;
@@ -118,7 +119,7 @@ class User extends Authenticatable
         $self->show_id = self::generateShowId();
         $self->name = $data['name'];
         $self->email = $data['email'] ?? null;
-        $self->password = bcrypt($data['password']) ?? null;
+        $self->password = isset($data['password']) ? bcrypt($data['password']) : null;
         $self->role = $data['role']  ?? UserRole::USER;
 
         $self->save();
@@ -142,5 +143,39 @@ class User extends Authenticatable
                 return $usedShowIds->show_id;
             } catch (\Exception $e) {}
         }
+    }
+
+    /**
+     * HGS2のユーザーIDを取得
+     *
+     * @return mixed|null
+     */
+    public function getHgs2UserId()
+    {
+        if ($this->email !== null) {
+            // メールアドレスからIDを抽出
+            $id = DB::table('hgs2.hgs_u_user')
+                ->where('mail', $this->email)
+                ->value('id');
+
+            if (!empty($id)) {
+                return $id;
+            }
+        }
+
+        $twitter_id = Orm\SocialAccount::where('user_id', $this->id)
+            ->where('social_site_id', SocialSite::TWITTER)
+            ->value('social_user_id');
+        if ($twitter_id !== null) {
+            $id = DB::table('hgs2.hgs_u_user')
+                ->where('twitter_id', $twitter_id)
+                ->value('id');
+
+            if (!empty($id)) {
+                return $id;
+            }
+        }
+
+        return null;
     }
 }

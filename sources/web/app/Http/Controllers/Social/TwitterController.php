@@ -17,6 +17,16 @@ use Hgs3\Constants\SocialSite;
 class TwitterController extends Controller
 {
     /**
+     * コンストラクタ
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'community');
+    }
+
+    /**
      * Twitter認証画面へ遷移
      *
      * @param $mode
@@ -70,7 +80,7 @@ class TwitterController extends Controller
         if ($sa->isRegistered(SocialSite::TWITTER, $user->id)) {
             return view('social.twitter.alreadyRegistered');
         } else {
-            $signUp->registerBySocialite($user, SocialSite::TWITTER);
+            SignUp::registerBySocialite($user, SocialSite::TWITTER);
             return view('social.twitter.createAccount');
         }
     }

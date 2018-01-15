@@ -17,6 +17,16 @@ use Hgs3\Constants\SocialSite;
 class GitHubController extends Controller
 {
     /**
+     * コンストラクタ
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        \Illuminate\Support\Facades\View::share('navActive', 'community');
+    }
+
+    /**
      * Twitter認証画面へ遷移
      *
      * @param $mode
