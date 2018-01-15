@@ -9,7 +9,7 @@
       "shop": "amazon",
       "asin": "B014U9OPSE",
       "release_int": 20160121,
-      "release_date": "2016年1月21日"
+      "release_at": "2016年1月21日"
     },
     {
       "platform": "Wii",
@@ -19,7 +19,7 @@
       "shop": "amazon",
       "asin": "B0052WAHKO",
       "release_int": 20110630,
-      "release_date": "2011年6月30日"
+      "release_at": "2011年6月30日"
     },
     {
       "platform": "PS4",
@@ -27,7 +27,7 @@
       "name": "biohazard0 HD REMASTER",
       "url": "http://www.capcom.co.jp/bio0hd/ja/index.html",
       "release_int": 20160121,
-      "release_date": "2016年1月21日",
+      "release_at": "2016年1月21日",
       "shop": "PlayStation Store",
       "shop_url": "https://store.playstation.com/#!/ja-jp/%e3%82%b2%e3%83%bc%e3%83%a0/biohazard-0-hd-remaster/cid=JP0102-CUSA01905_00-BH0HD00000000001"
     },
@@ -37,7 +37,7 @@
       "name": "biohazard0 HD REMASTER",
       "url": "http://www.capcom.co.jp/bio0hd/ja/index.html",
       "release_int": 20160121,
-      "release_date": "2016年1月21日",
+      "release_at": "2016年1月21日",
       "shop": "Microsoft ストア",
       "shop_url": "https://www.microsoft.com/ja-jp/store/p/biohazard-0-hd-remaster/bxhg2gx28l23?rtc=1"
     },
@@ -47,7 +47,7 @@
       "name": "biohazard0 HD REMASTER",
       "url": "http://www.capcom.co.jp/bio0hd/ja/index.html",
       "release_int": 20160121,
-      "release_date": "2016年1月21日",
+      "release_at": "2016年1月21日",
       "shop": "Steam",
       "shop_url": "http://store.steampowered.com/agecheck/app/339340/"
     }

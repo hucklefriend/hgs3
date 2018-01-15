@@ -132,7 +132,7 @@ SQL;
         $sql =<<< SQL
 SELECT pkg.*, plt.acronym AS platform_name, com.name AS company_name
 FROM (
-  SELECT id, `name`, platform_id, release_date, company_id, medium_image_url
+  SELECT id, `name`, platform_id, release_at, company_id, medium_image_url
   FROM game_packages
   WHERE id IN ({$packageIdsComma})
 ) pkg

@@ -34,7 +34,7 @@
                             <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company/' . $gamePackage->company_id }}">{{ $companyNameHash[$pkg->company_id] }}</a>
                         </div>
                     @endisset
-                    <div>{{ $gamePackage->release_date }}</div>
+                    <div>{{ $gamePackage->release_at }}</div>
                     <div>
                         @isset($gamePackage->item_url)
                             <a href="{{ $gamePackage->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>

@@ -19,10 +19,10 @@ class CreateGameCommunityMembersTable extends Migration
         Schema::create('game_community_members', function (Blueprint $table) {
             $table->unsignedInteger('soft_id')->comment('ゲームソフトID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
-            $table->dateTime('join_date')->comment('参加日時');
+            $table->dateTime('join_at')->comment('参加日時');
             $table->timestamps();
             $table->primary(['soft_id', 'user_id']);
-            $table->index(['soft_id', 'join_date']);
+            $table->index(['soft_id', 'join_at']);
         });
     }
 

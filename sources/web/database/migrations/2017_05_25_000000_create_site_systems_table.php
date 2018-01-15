@@ -18,7 +18,7 @@ class CreateSiteSystemsTable extends Migration
     {
         Schema::create('site_systems', function (Blueprint $table) {
             $table->unsignedInteger('id')->primary()->comment('ID');
-            $table->dateTime('ranking_collect_date')->comment('ランキング集計日時');
+            $table->dateTime('ranking_collect_at')->comment('ランキング集計日時');
             $table->timestamps();
         });
     }

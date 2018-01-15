@@ -35,7 +35,7 @@ class UserCommunity
                 ->insert([
                     'user_community_id' => $uc->id,
                     'user_id'           => 1,
-                    'join_date'         => $now->format('Y-m-d H:i:s')
+                    'join_at'           => $now->format('Y-m-d H:i:s')
                 ]);
         }
     }

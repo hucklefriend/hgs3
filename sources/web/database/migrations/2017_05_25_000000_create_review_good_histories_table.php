@@ -19,7 +19,7 @@ class CreateReviewGoodHistoriesTable extends Migration
         Schema::create('review_good_histories', function (Blueprint $table) {
             $table->unsignedInteger('review_id')->comment('レビューID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
-            $table->dateTime('good_date')->comment('いいねした日時');
+            $table->dateTime('good_at')->comment('いいねした日時');
             $table->timestamps();
             $table->primary(['review_id', 'user_id']);
         });

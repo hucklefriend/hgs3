@@ -82,7 +82,7 @@
                                     <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
                                     <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
                                 </div>
-                                <div>{{ $pkg->release_date }}</div>
+                                <div>{{ $pkg->release_at }}</div>
                                 <div>
                                     @foreach ($pkg->shops as $shop)
                                     @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
@@ -118,7 +118,7 @@
                                     <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
                                     <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
                                 </div>
-                                <div>{{ $pkg->release_date }}</div>
+                                <div>{{ $pkg->release_at }}</div>
                                 <div>
                                     @foreach ($pkg->shops as $shop)
                                         @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])

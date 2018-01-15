@@ -134,7 +134,7 @@ class Profile
         ];
 
         $result['order'] = Orm\ReviewGoodHistory::where('user_id', $userId)
-            ->orderBy('good_date', 'DESC')
+            ->orderBy('good_at', 'DESC')
             ->take(3)
             ->get();
 

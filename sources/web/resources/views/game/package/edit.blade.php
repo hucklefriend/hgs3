@@ -32,8 +32,8 @@
         </div>
 
         <div class="form-group">
-            <label for="release_date">発売日</label>
-            <input type="text" class="form-control" id="release_date" value="{{ $pkg->release_date }}" name="release_date">
+            <label for="release_at">発売日</label>
+            <input type="text" class="form-control" id="release_at" value="{{ $pkg->release_at }}" name="release_at">
         </div>
 
         <div class="form-group">

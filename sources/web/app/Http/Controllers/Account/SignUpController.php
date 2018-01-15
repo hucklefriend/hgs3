@@ -64,7 +64,7 @@ class SignUpController extends Controller
         // リミットは1日後
         $limitDate = new \DateTime();
         $limitDate->add(new \DateInterval('P1D'));
-        $pr->limit_date = $limitDate->format('Y-m-d H:i:s');
+        $pr->limit_at = $limitDate->format('Y-m-d H:i:s');
 
         if ($pr->save()) {
             try {

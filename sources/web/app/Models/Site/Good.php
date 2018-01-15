@@ -58,7 +58,7 @@ class Good
                 ->insert([
                     'user_id'    => $user->id,
                     'site_id'    => $site->id,
-                    'good_date'  => $now,
+                    'good_at'    => $now,
                     'created_at' => $now,
                     'updated_at' => $now
                 ]);

@@ -23,7 +23,7 @@
                 <div>
                     <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company/' . $pkg->company_id) }}">{{ $pkg->company_name }}</a>
                     <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}<br>
-                    <i class="fa fa-calendar" aria-hidden="true"></i> {{ $pkg->release_date }}
+                    <i class="fa fa-calendar" aria-hidden="true"></i> {{ $pkg->release_at }}
                 </div>
                 <div>
                     @isset($shops[$pkg->id])

@@ -22,8 +22,8 @@ class CreateUserCommunityTopicsTable extends Migration
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->text('title')->comment('タイトル');
             $table->text('comment')->comment('本文');
-            $table->dateTime('wrote_date')->comment('書き込み日時');
-            $table->dateTime('response_date')->comment('一番最新のレスがあった日時');
+            $table->dateTime('write_at')->comment('書き込み日時');
+            $table->dateTime('response_at')->comment('一番最新のレスがあった日時');
             $table->unsignedInteger('response_num')->comment('レス数');
             $table->timestamps();
         });

@@ -25,8 +25,8 @@ class CreateUsersTable2 extends Migration
             $table->unsignedTinyInteger('adult')->default(0)->comment('18歳以上');
             $table->text('profile')->default('')->comment('自己紹介');
             $table->unsignedInteger('point')->default(0)->comment('ポイント');
-            $table->dateTime('last_login_date')->nullable()->comment('最終ログイン日時');
-            $table->dateTime('sign_up_date')->nullable()->comment('登録日時');
+            $table->dateTime('last_login_at')->nullable()->comment('最終ログイン日時');
+            $table->dateTime('sign_up_at')->nullable()->comment('登録日時');
             $table->tinyInteger('hgs12_user')->default(0)->comment('旧HGSユーザーフラグ');
             $table->string('email', 200)->nullable()->comment('メールアドレス');
             $table->string('password', 200)->nullable()->comment('パスワード');

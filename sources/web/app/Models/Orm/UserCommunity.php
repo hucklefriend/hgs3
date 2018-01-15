@@ -23,7 +23,7 @@ class UserCommunity extends \Eloquent
     {
         return DB::table('user_community_members')
             ->where('user_community_id', $this->id)
-            ->orderBy('join_date')
+            ->orderBy('join_at')
             ->get();
     }
 
@@ -57,8 +57,8 @@ class UserCommunity extends \Eloquent
 ・お使いのブラウザ
 COMMENT;
 
-        $topic->wrote_date = new \DateTime();
-        $topic->response_date = new \DateTime();
+        $topic->wrote_at = new \DateTime();
+        $topic->response_at = new \DateTime();
         $topic->save();
 
 

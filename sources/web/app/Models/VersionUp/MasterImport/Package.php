@@ -49,6 +49,7 @@ class Package extends MasterImportAbstract
      * @param array $softs
      * @param array $companies
      * @param array $platforms
+     * @throws \Exception
      */
     public static function insert(array $data, array $softs, array $companies, array $platforms)
     {
@@ -70,7 +71,7 @@ class Package extends MasterImportAbstract
                 $package->name = $pkg['name'];
                 $package->url = $pkg['url'];
                 $package->release_int = $pkg['release_int'];
-                $package->release_date = $pkg['release_date'];
+                $package->release_at = $pkg['release_date'];
                 if (isset($pkg['company']) && isset($companies[$pkg['company']])) {
                     $package->company_id = $companies[$pkg['company']] ?? null;
                 }

@@ -13,7 +13,7 @@
 
     <div>
         <h5>{{ $userCommunityTopic->title }}</h5>
-        <div>{{ $userCommunityTopic->wrote_date }}</div>
+        <div>{{ $userCommunityTopic->wrote_at }}</div>
         <div>writer: <a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a></div>
         <pre>{{ $userCommunityTopic->comment }}</pre>
 
@@ -30,7 +30,7 @@
 
     @foreach ($responses as $res)
         <div>
-            <div>{{ $res->wrote_date }}</div>
+            <div>{{ $res->wrote_at }}</div>
             <div>writer: <a href="{{ url2('user/profile') }}/{{ $res->user_id }}">{{ $users[$res->user_id] }}</a></div>
             <pre>{{ $res->comment }}</pre>
 

@@ -22,7 +22,7 @@ class CreateUserCommunityTopicResponsesTable extends Migration
             $table->unsignedInteger('user_community_topic_response_id')->nullable()->comment('レスID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->text('comment')->comment('本文');
-            $table->dateTime('wrote_date')->comment('書き込み日時');
+            $table->dateTime('write_at')->comment('書き込み日時');
             $table->timestamps();
         });
     }

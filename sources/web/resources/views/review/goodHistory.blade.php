@@ -15,7 +15,7 @@
             <div class="col-10">
                 @include('user.common.user_name', ['id' => $u->id, 'name' => $u->name])
                 <br>
-                {{ $history->good_date }}
+                {{ $history->good_at }}
             </div>
         </div>
         <hr>

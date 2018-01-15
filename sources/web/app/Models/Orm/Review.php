@@ -30,7 +30,7 @@ class Review extends \Eloquent
             // 新規登録
             $this->sort_order = 0;
             $this->good_num = 0;
-            $this->post_date = new \DateTime();
+            $this->post_at = new \DateTime();
             $this->update_num = 0;
         } else {
             // データ修正
@@ -83,7 +83,7 @@ class Review extends \Eloquent
     {
         return DB::table('review_good_histories')
             ->where('review_id', $this->id)
-            ->orderBy('good_date', 'DESC')
+            ->orderBy('good_at', 'DESC')
             ->paginate(20);
     }
 

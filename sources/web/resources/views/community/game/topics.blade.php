@@ -44,7 +44,7 @@
                 <tr>
                     <td><a href="{{ url2('community/g/' . $soft->id . '/topic/' . $topic->id) }}">{{ $topic->title }}</a></td>
                     <td>{{ $users[$topic->user_id] }}</td>
-                    <td>{{ $topic->wrote_date }}</td>
+                    <td>{{ $topic->wrote_at }}</td>
                     <td>{{ $topic->response_num }}</td>
                 </tr>
             @endforeach

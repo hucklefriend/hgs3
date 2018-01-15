@@ -68,7 +68,7 @@ SELECT
   , game_packages.name AS package_name
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, soft_id, good_num, is_spoiler, package_id
+    SELECT id, point, user_id, post_at, title, soft_id, good_num, is_spoiler, package_id
     FROM reviews
     ORDER BY id DESC
     LIMIT {$num}
@@ -123,7 +123,7 @@ SELECT
   , game_packages.name AS package_name
   , game_packages.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, soft_id, latest_good_num, good_num, is_spoiler, package_id
+    SELECT id, point, user_id, post_at, title, soft_id, latest_good_num, good_num, is_spoiler, package_id
     FROM reviews
     ORDER BY latest_good_num DESC
     LIMIT {$num}
@@ -154,7 +154,7 @@ SELECT
   , pkg.is_adult
   , pkg.small_image_url
 FROM (
-    SELECT id, point, user_id, post_date, title, good_num, package_id, is_spoiler
+    SELECT id, point, user_id, post_at, title, good_num, package_id, is_spoiler
     FROM reviews
     WHERE soft_id = ?
     ORDER BY id DESC
@@ -199,7 +199,7 @@ SQL;
     public function save(User $user, Orm\ReviewDraft $draft)
     {
         $review = new Orm\Review($draft->toArray());
-        $review->post_date = new \DateTime();
+        $review->post_at = new \DateTime();
 
         DB::beginTransaction();
         try {
@@ -278,7 +278,7 @@ SQL;
         DB::beginTransaction();
         try {
             $sql =<<< SQL
-INSERT IGNORE INTO review_good_histories (review_id, user_id, good_date, created_at, updated_at)
+INSERT IGNORE INTO review_good_histories (review_id, user_id, good_at, created_at, updated_at)
 VALUES (?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
             $insNum = DB::insert($sql, [$orm->id, $user->id]);
@@ -362,7 +362,7 @@ SQL;
 
         $latestGoodNum = Db::table('review_good_histories')
             ->where('review_id', $reviewId)
-            ->where('good_date', '>=', $now->format('Y-m-d 00:00:00'))
+            ->where('good_at', '>=', $now->format('Y-m-d 00:00:00'))
             ->count();
 
         DB::table('reviews')
@@ -383,7 +383,7 @@ SQL;
     {
         return DB::table('review_good_histories')
             ->where('review_id', $reviewId)
-            ->orderBy('good_date', 'DESC')
+            ->orderBy('good_at', 'DESC')
             ->paginate(20);
     }
 
@@ -428,7 +428,7 @@ SELECT
   , p.acronym platform_name
   , c.name company_name
 FROM  (
-  SELECT id, platform_id, `name`, small_image_url, company_id, release_date, release_int
+  SELECT id, platform_id, `name`, small_image_url, company_id, release_at, release_int
   FROM game_packages
   WHERE id IN (SELECT package_id FROM game_package_links WHERE soft_id = ?)
   ORDER BY release_int

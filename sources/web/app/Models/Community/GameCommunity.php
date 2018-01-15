@@ -36,7 +36,7 @@ class GameCommunity
     public static function getOlderMembers($softId)
     {
         return Orm\GameCommunityMember::where('soft_id', $softId)
-            ->orderBy('join_date')
+            ->orderBy('join_at')
             ->take(5)
             ->get();
     }
@@ -70,7 +70,7 @@ SQL;
         try {
             $sql =<<< SQL
 INSERT IGNORE INTO game_community_members (
-  soft_id, user_id, join_date, created_at, updated_at
+  soft_id, user_id, join_at, created_at, updated_at
 ) VALUES (
   ?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 )
@@ -224,8 +224,8 @@ SQL;
             'user_id'       => $user->id,
             'title'         => $title,
             'comment'       => $comment,
-            'wrote_date'    => $now,
-            'response_date' => $now,
+            'write_at'      => $now,
+            'response_at'   => $now,
             'response_num'  => 0
         ]);
 
@@ -254,13 +254,13 @@ SQL;
                 'game_community_topic_id' => $topic->id,
                 'user_id'                 => $user->id,
                 'comment'                 => $comment,
-                'wrote_date'              => $now
+                'write_at'                => $now
             ]);
 
             $updSql =<<< SQL
 UPDATE game_community_topics
 SET response_num = response_num + 1
-  , response_date = NOW()
+  , response_at = NOW()
 WHERE id = ?
 SQL;
             DB::update($updSql, [$topic->id]);
@@ -344,7 +344,7 @@ SQL;
     {
         return DB::table('game_community_members')
             ->where('soft_id', $soft->id)
-            ->orderBy('join_date')
+            ->orderBy('join_at')
             ->get()
             ->pluck('user_id')
             ->toArray();
@@ -360,7 +360,7 @@ SQL;
     {
         return DB::table('game_community_members')
             ->where('user_id', $userId)
-            ->orderBy('join_date', 'DESC')
+            ->orderBy('join_at', 'DESC')
             ->take(5)
             ->get()
             ->pluck('soft_id')
@@ -377,7 +377,7 @@ SQL;
     {
         return DB::table('game_community_members')
             ->where('user_id', $userId)
-            ->orderBy('join_date', 'DESC')
+            ->orderBy('join_at', 'DESC')
             ->paginate(30);
     }
 }

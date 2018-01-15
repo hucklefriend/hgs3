@@ -37,7 +37,7 @@
                         {{-- TODO レス数と投稿者を出したい --}}
                         <div>
                             <p class="" style="word-break: break-all;"><a href="{{ url('community/g/' . $soft->id . '/topic/' . $topic->id) }}">{{ $topic->title }}</a></p>
-                            <p class="text-muted"><small>{{ $topic->wrote_date }}</small></p>
+                            <p class="text-muted"><small>{{ $topic->wrote_at }}</small></p>
                         </div>
                         <hr>
                     @endforeach

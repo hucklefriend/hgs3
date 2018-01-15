@@ -9,7 +9,7 @@
       "shop": "amazon",
       "asin": "B00MGHDAGG",
       "release_int": 20141127,
-      "release_date": "2014年11月27日"
+      "release_at": "2014年11月27日"
     },
     {
       "platform": "PS3",
@@ -19,7 +19,7 @@
       "shop": "amazon",
       "asin": "B00MGHDAUC",
       "release_int": 20141127,
-      "release_date": "2014年11月27日"
+      "release_at": "2014年11月27日"
     },
     {
       "platform": "PS3",
@@ -29,7 +29,7 @@
       "shop": "amazon",
       "asin": "B013JWYW4K",
       "release_int": 20150917,
-      "release_date": "2015年9月17日"
+      "release_at": "2015年9月17日"
     }
   ]
 }

@@ -39,7 +39,7 @@ class CreateReviewsTable extends Migration
             $table->unsignedInteger('good_num')->default(0)->comment('いいね数');
             $table->unsignedInteger('latest_good_num')->default(0)->comment('直近のいいね数');
             $table->unsignedInteger('max_good_num')->default(0)->comment('いいね数');
-            $table->dateTime('post_date')->comment('投稿日時');
+            $table->dateTime('post_at')->comment('投稿日時');
             $table->unsignedInteger('update_num')->default(0)->comment('更新回数');
             $table->unsignedTinyInteger('status')->default(0)->comment('表示ステータス');
             $table->timestamps();

@@ -5,12 +5,8 @@
 
 namespace Hgs3\Http\Controllers\System;
 
-use Hgs3\Http\Requests\Game\GameCompanyRequest;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Game\Collection;
-use Hgs3\Models\Game\Package;
 use Hgs3\Models\Orm;
-use Illuminate\Support\Facades\Auth;
 
 class SystemUpdateController extends Controller
 {

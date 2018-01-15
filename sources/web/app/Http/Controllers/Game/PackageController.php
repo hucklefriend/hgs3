@@ -50,7 +50,7 @@ class PackageController extends Controller
         $pkg->company_id = $request->get('company_id');
         $pkg->name = $request->get('name') ?? '';
         $pkg->url = $request->get('url') ?? '';     // TODO: ない時はnullにする
-        $pkg->release_date = $request->get('release_date') ?? '';       // TODO: ない時はnullにする
+        $pkg->release_at = $request->get('release_at') ?? '';       // TODO: ない時はnullにする
         $pkg->release_int = $request->get('release_int') ?? 0;
         $pkg->game_type_id = $request->get('game_type');
 
@@ -90,7 +90,7 @@ class PackageController extends Controller
         $gamePackage->company_id = $request->get('company_id');
         $gamePackage->name = $request->get('name') ?? '';
         $gamePackage->url = $request->get('url') ?? '';     // TODO: ない時はnullにする
-        $gamePackage->release_date = $request->get('release_date') ?? '';       // TODO: ない時はnullにする
+        $gamePackage->release_at = $request->get('release_at') ?? '';       // TODO: ない時はnullにする
         $gamePackage->release_int = $request->get('release_int') ?? 0;
         $gamePackage->game_type_id = $request->get('game_type');
 

@@ -24,7 +24,7 @@
                 <div class="break_word" style="width: 100%;"><h5>{{ $draft->title }}</h5></div>
                 <div>
                     <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<a href="{{ url2('user/profile') }}/{{ $user->id }}">{{ $user->name }}</a>
-                    {{ $draft->post_date }}
+                    {{ $draft->post_at }}
                 </div>
             </div>
         </div>

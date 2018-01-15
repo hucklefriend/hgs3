@@ -34,5 +34,5 @@
         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;{{ $r->good_num }}&nbsp;
     @endif
     <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<a href="{{ url2('user/profile') }}/{{ $r->user_id }}">{{ $r->user_name }}</a>
-        <i class="fa fa-clock-o" aria-hidden="true"></i> {{ $r->post_date }}
+        <i class="fa fa-clock-o" aria-hidden="true"></i> {{ $r->post_at }}
 </div>

@@ -7,7 +7,7 @@
       "name": "バイオハザード リベレーションズ Best Price!",
       "url": "http://www.capcom.co.jp/bhrev/index2.html",
       "release_int": 20131121,
-      "release_date": "2013年11月21日",
+      "release_at": "2013年11月21日",
       "shop": "amazon",
       "asin": "B00FQD9AFW"
     },
@@ -17,7 +17,7 @@
       "name": "バイオハザード リベレーションズ アンベールド エディション",
       "url": "http://www.capcom.co.jp/bhrev_ue/",
       "release_int": 20130523,
-      "release_date": "2013年5月23日",
+      "release_at": "2013年5月23日",
       "shop": "amazon",
       "asin": "B073TZ58WK"
     },
@@ -27,7 +27,7 @@
       "name": "バイオハザード リベレーションズ アンベールド エディション",
       "url": "http://www.capcom.co.jp/bhrev_ue/",
       "release_int": 20130523,
-      "release_date": "2013年5月23日",
+      "release_at": "2013年5月23日",
       "shop": "amazon",
       "asin": "B00B5QIU1O"
     },
@@ -37,7 +37,7 @@
       "name": "バイオハザード リベレーションズ アンベールド エディション",
       "url": "http://www.capcom.co.jp/bhrev_ue/",
       "release_int": 20170831,
-      "release_date": "2017年8月31日",
+      "release_at": "2017年8月31日",
       "shop": "amazon",
       "asin": "B072LQ2MKW"
     },
@@ -47,7 +47,7 @@
       "name": "バイオハザード リベレーションズ アンベールド エディション",
       "url": "http://www.capcom.co.jp/bhrev_ue/",
       "release_int": 20171130,
-      "release_date": "2017年11月30日",
+      "release_at": "2017年11月30日",
       "shop": "amazon",
       "asin": "B075F7DT43"
     },
@@ -57,7 +57,7 @@
       "name": "バイオハザード リベレーションズ コレクション",
       "url": "http://www.capcom.co.jp/bhrev_ue/",
       "release_int": 20171130,
-      "release_date": "2017年11月30日",
+      "release_at": "2017年11月30日",
       "shop": "amazon",
       "asin": "B075F5TYMM"
     }

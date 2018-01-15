@@ -9,7 +9,7 @@
       "shop": "amazon",
       "asin": "B01M2CLAG3",
       "release_int": 20161201,
-      "release_date": "2016年12月1日"
+      "release_at": "2016年12月1日"
     },
     {
       "platform": "PS4",
@@ -19,7 +19,7 @@
       "shop": "PlayStation Store",
       "shop_url": "https://store.playstation.com/#!/ja-jp/cid=JP0102-CUSA03838_00-BH6HDPS400000000",
       "release_int": 20160329,
-      "release_date": "2016年3月29日"
+      "release_at": "2016年3月29日"
     },
     {
       "platform": "XONE",
@@ -29,7 +29,7 @@
       "shop": "マイクロソフト Store",
       "shop_url": "https://store.xbox.com/Xbox-One/Games/Resident-Evil-6/d17c7138-fa59-4dc8-987c-eb5873f1f317",
       "release_int": 20160329,
-      "release_date": "2016年3月29日"
+      "release_at": "2016年3月29日"
     }
   ]
 }

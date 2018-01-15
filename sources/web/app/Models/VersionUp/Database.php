@@ -210,7 +210,7 @@ SQL;
                     'name'                => $row->name,
                     'url'                 => $row->url,
                     'release_int'         => $row->release_int,
-                    'release_date'        => $row->release_date,
+                    'release_at'          => $row->release_date,
                     'is_adult'            => $row->is_adult,
                     'small_image_url'     => $row->small_image_url,
                     'small_image_width'   => $row->small_image_width,

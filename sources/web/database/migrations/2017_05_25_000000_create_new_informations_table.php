@@ -24,7 +24,7 @@ class CreateNewInformationsTable extends Migration
             $table->unsignedInteger('soft_id')->default(0)->comment('ゲームソフトID');
             $table->unsignedInteger('site_id')->default(0)->comment('サイトID');
             $table->unsignedInteger('review_id')->default(0)->comment('レビューID');
-            $table->dateTime('date_time')->comment('日時');
+            $table->dateTime('open_at')->comment('公開日時');
             $table->timestamps();
         });
     }

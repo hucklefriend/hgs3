@@ -26,7 +26,7 @@ class SignUp
     {
         return DB::table('user_provisional_registrations')
             ->where('token', $token)
-            ->whereRaw('limit_date >= NOW()')
+            ->whereRaw('limit_at >= NOW()')
             ->count() == 1;
     }
 
@@ -48,7 +48,7 @@ class SignUp
     public static function deleteTimeLimit()
     {
         DB::table('user_provisional_registrations')
-            ->whereRaw('limit_date < NOW()')
+            ->whereRaw('limit_at < NOW()')
             ->delete();
     }
 

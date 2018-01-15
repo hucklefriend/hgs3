@@ -9,7 +9,7 @@
       "shop": "amazon",
       "asin": "B014U9OQOW",
       "release_int": 20160121,
-      "release_date": "2016年1月21日"
+      "release_at": "2016年1月21日"
     },
     {
       "platform": "PS4",
@@ -19,7 +19,7 @@
       "shop": "amazon",
       "asin": "B01MYESO6C",
       "release_int": 20170323,
-      "release_date": "2017年3月23日"
+      "release_at": "2017年3月23日"
     }
   ]
 }

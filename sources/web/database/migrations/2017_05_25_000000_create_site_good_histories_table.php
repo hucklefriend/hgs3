@@ -19,7 +19,7 @@ class CreateSiteGoodHistoriesTable extends Migration
         Schema::create('site_good_histories', function (Blueprint $table) {
             $table->unsignedInteger('site_id')->comment('サイトID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
-            $table->dateTime('good_date')->comment('いいねした日時');
+            $table->dateTime('good_at')->comment('いいねした日時');
             $table->timestamps();
             $table->primary(['site_id', 'user_id']);
         });

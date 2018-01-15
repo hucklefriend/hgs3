@@ -50,7 +50,7 @@
                             @foreach ($topics as $topic)
                             <tr>
                                 <td><a href="{{ url2('community/u') }}/{{ $userCommunity->id }}/topic/{{ $topic->id }}">{{ $topic->title }}</a></td>
-                                <td>{{ $t->wrote_date }}</td>
+                                <td>{{ $t->wrote_at }}</td>
                             </tr>
                             @endforeach
                         </tbody>

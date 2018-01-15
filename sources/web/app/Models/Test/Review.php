@@ -46,7 +46,7 @@ class Review
                 'progress'        => str_random(rand(50, 300)),
                 'text'            => self::getSampleReview(),
                 'title'           => self::getSampleTitle(),
-                'post_date'       => new \DateTime()
+                'post_at'         => new \DateTime()
             ]);
 
             $draft->user_id = $user->id;

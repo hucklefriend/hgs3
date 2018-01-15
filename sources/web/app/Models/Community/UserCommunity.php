@@ -34,7 +34,7 @@ class UserCommunity
     public function getOlderMembers($userCommunityId)
     {
         return Orm\UserCommunityMember::where('user_community_id', $userCommunityId)
-            ->orderBy('join_date')
+            ->orderBy('join_at')
             ->take(5)
             ->get();
     }
@@ -49,7 +49,7 @@ class UserCommunity
     {
         $sql =<<< SQL
 INSERT IGNORE INTO user_community_members (
-  user_community_id, user_id, join_date, created_at, updated_at
+  user_community_id, user_id, join_at, created_at, updated_at
 ) VALUES (
   ?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 )
@@ -89,7 +89,7 @@ SQL;
         try {
             $sql =<<< SQL
 INSERT IGNORE INTO user_community_members (
-  user_community_id, user_id, join_date, created_at, updated_at
+  user_community_id, user_id, join_at, created_at, updated_at
 ) VALUES (
   ?, ?, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 )
@@ -238,8 +238,8 @@ SQL;
             'user_id'           => $userId,
             'title'             => $title,
             'comment'           => $comment,
-            'wrote_date'        => $now,
-            'response_date'     => $now,
+            'write_at'          => $now,
+            'response_at'       => $now,
             'response_num'      => 0
         ]);
 
@@ -266,13 +266,13 @@ SQL;
                 'user_community_topic_id' => $userCommunityTopic->id,
                 'user_id'                 => $user->id,
                 'comment'                 => $comment,
-                'wrote_date'              => $now
+                'wrote_at'                => $now
             ]);
 
             $updSql =<<< SQL
 UPDATE user_community_topics
 SET response_num = response_num + 1
-  , response_date = NOW()
+  , response_at = NOW()
 WHERE id = ?
 SQL;
             DB::update($updSql, [$userCommunityTopic->id]);

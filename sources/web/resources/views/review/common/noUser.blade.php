@@ -29,5 +29,5 @@
 </div>
 <div>
     <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;{{ $r->good_num }}&nbsp;
-    <i class="fa fa-clock-o" aria-hidden="true"></i> {{ $r->post_date }}
+    <i class="fa fa-clock-o" aria-hidden="true"></i> {{ $r->post_at }}
 </div>

@@ -6,7 +6,7 @@
         <h4>{{ $topic->title }}</h4>
         <div>
             <i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile/' . $writer->id) }}">{{ $writer->name }}</a>
-            {{ $topic->wrote_date }}
+            {{ $topic->wrote_at }}
             @if ($topic->user_id == $userId)
                 <form method="POST" action="{{ url('community/g/' . $soft->id  . '/topic/' . $topic->id) }}" class="d-inline">
                     <input type="hidden" name="_token" value="{{ $csrfToken }}">
@@ -26,7 +26,7 @@
         <div>
             <div>
                 <i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile/' . $res->user_id) }}">{{ $users[$r->user_id] }}</a>
-                {{ $res->wrote_date }}
+                {{ $res->wrote_at }}
             </div>
             <p class="community_topic_comment">{{ $res->comment }}</p>
 

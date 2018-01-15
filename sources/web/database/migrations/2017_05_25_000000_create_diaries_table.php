@@ -20,7 +20,7 @@ class CreateDiariesTable extends Migration
             $table->increments('id')->comment('攻略日記ID');
             $table->unsignedInteger('user_id')->index()->comment('ユーザーID');
             $table->unsignedInteger('package_id')->index()->comment('パッケージID');
-            $table->date('play_date')->comment('遊んだ日');
+            $table->date('play_at')->comment('遊んだ日');
             $table->text('text')->comment('内容');
             $table->timestamps();
         });
