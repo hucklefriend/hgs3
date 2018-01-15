@@ -14,7 +14,7 @@
         <li class="list-group-item"><a href="{{ url2('diary') }}">日記</a></li>
         <li class="list-group-item"><a href="{{ url2('community') }}">コミュニティ</a></li>
         <li class="list-group-item"><a href="{{ url2('notice') }}">お知らせ</a></li>
-        <li class="list-group-item"><a href="{{ url2('system-update') }}">システム更新記録</a></li>
+        <li class="list-group-item"><a href="{{ url2('system_update') }}">システム更新記録</a></li>
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
 
@@ -26,10 +26,6 @@
         @endif
 
         @if (is_data_editor())
-        @endif
-
-        @if (is_admin())
-            <li class="list-group-item"><a href="{{ url2('') }}"></a></li>
         @endif
 
         <li class="list-group-item"><a href="{{ url2('') }}"></a></li>

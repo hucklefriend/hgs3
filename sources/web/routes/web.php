@@ -17,14 +17,20 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/admin', 'TopController@admin');
 
     // お知らせ
-    Route::get('/system/notice', 'System\NoticeController@index');
+    Route::get('/system/notice/admin', 'System\NoticeController@admin');
     Route::get('/system/notice/add', 'System\NoticeController@add');
     Route::post('/system/notice/add', 'System\NoticeController@insert');
     Route::get('/system/notice/edit/{notice}', 'System\NoticeController@edit');
     Route::patch('/system/notice/edit/{notice}', 'System\NoticeController@update');
     Route::delete('/system/notice/{notice}', 'System\NoticeController@delete');
 
-
+    // システム更新履歴
+    Route::get('/system/update_history/admin', 'System\UpdateHistoryController@admin');
+    Route::get('/system/update_history/add', 'System\UpdateHistoryController@add');
+    Route::post('/system/update_history/add', 'System\UpdateHistoryController@insert');
+    Route::get('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@edit');
+    Route::patch('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@update');
+    Route::delete('/system/update_history/{updateHistory}', 'System\UpdateHistoryController@delete');
 
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
@@ -80,6 +86,12 @@ Route::get('/', 'TopController@index');
 Route::get('/auth/login', 'Account\LoginController@login')->name('login');
 Route::post('/auth/login', 'Account\LoginController@authenticate');
 Route::get('/auth/logout', 'Account\LoginController@logout');
+
+
+Route::get('/notice', 'System\NoticeController@index');
+Route::get('/system_update', 'System\UpdateHistoryController@index');
+Route::get('/system_update/{updateHistory}', 'System\UpdateHistoryController@detail');
+
 
 // アカウント作成
 Route::post('/account/signup/pr', 'Account\SignUpController@sendPRMail');

@@ -27,9 +27,9 @@ class UpdateHistoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'      => 'required|max:100',
-            'detail'     => 'required',
-            'updated_at' => 'required|date',
+            'title'     => 'required|max:100',
+            'detail'    => 'required',
+            'update_at' => 'required|date',
         ];
     }
 }

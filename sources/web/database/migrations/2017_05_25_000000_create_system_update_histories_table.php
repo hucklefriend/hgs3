@@ -19,7 +19,7 @@ class CreateSystemUpdateHistoriesTable extends Migration
         Schema::create('system_update_histories', function (Blueprint $table) {
             $table->increments('id')->comment('システム更新ID');
             $table->string('title', 200)->comment('タイトル');
-            $table->datetime('updated_at')->comment('更新日時');
+            $table->datetime('update_at')->index()->comment('更新日時');
             $table->text('detail')->comment('詳細');
             $table->timestamps();
         });
