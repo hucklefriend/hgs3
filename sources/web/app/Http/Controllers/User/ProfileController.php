@@ -82,9 +82,9 @@ class ProfileController extends Controller
             }
                 break;
             case 'site': {
-                $site = new Site();
                 $data['parts'] = [
-                    'sites' => $site->get($user->id)
+                    'sites'       => Site::getUserSites($user->id),
+                    'hasHgs2Site' => Site\TakeOver::hasHgs2Site($user)
                 ];
             }
                 break;
@@ -132,7 +132,7 @@ class ProfileController extends Controller
     /**
      * プロフィール
      *
-     * @return ProfileController
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function myself()
     {

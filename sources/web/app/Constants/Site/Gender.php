@@ -7,9 +7,9 @@ namespace Hgs3\Constants\Site;
 
 class Gender
 {
-    const NONE = 1;
-    const MALE = 2;
-    const FEMALE = 3;
+    const NONE = 0;
+    const MALE = 1;
+    const FEMALE = 2;
 
     private static $text = [
         self::NONE   => 'なし',

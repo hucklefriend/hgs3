@@ -16,5 +16,5 @@
 
     <hr>
 
-    @include('user.profile.parts.site', ['sites' => $sites])
+    @include('user.profile.parts.site', ['sites' => $sites, 'hasHgs2Site' => $hasHgs2Site])
 @endsection

@@ -82,6 +82,96 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::patch('/game/series/edit/{series}', 'Game\SeriesController@update');
 });
 
+
+// ユーザーのみ
+Route::group(['middleware' => ['auth']], function () {
+    // レビュー
+    Route::get('/review/package_select/{soft}', 'Review\ReviewController@packageSelect');
+    Route::get('/review/write/{soft}/{package}', 'Review\ReviewController@input');
+    Route::post('/review/confirm/{soft}/{package}', 'Review\ReviewController@confirm');
+    Route::post('/review/save/{soft}/{package}', 'Review\ReviewController@save');
+    Route::delete('/review/draft/{softId}/{packageId}', 'Review\ReviewController@deleteDraft');
+    Route::post('/review/good/{review}', 'Review\GoodController@good');
+    Route::delete('/review/good/{review}', 'Review\GoodController@cancel');
+
+    // サイト管理
+    Route::get('/user/site_manage', 'User\SiteManageController@index');
+    Route::get('/user/site_manage/add', 'User\SiteManageController@add');
+    Route::post('/user/site_manage/add', 'User\SiteManageController@insert');
+    Route::get('/user/site_manage/edit/{site}', 'User\SiteManageController@edit');
+    Route::patch('/user/site_manage/edit/{site}', 'User\SiteManageController@update');
+    Route::get('/user/site_manage/takeover', 'User\SiteManageController@takeOverSelect');
+    Route::get('/user/site_manage/takeover/{hgs2SiteId}', 'User\SiteManageController@takeOver');
+    Route::delete('/user/site_manage/{site}', 'User\SiteManageController@delete');
+
+    // サイト
+    Route::post('/site/good/{site}', 'Site\GoodController@good');
+    Route::delete('/site/good/{site}', 'Site\GoodController@cancel');
+    Route::get('/site/good_history/{site}', 'Site\GoodController@history');
+    Route::get('/site/footprint/{site}', 'Site\FootprintController@site');
+    Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@site');
+    
+    // マイページ
+    Route::get('/mypage', 'User\MyPageController@index');
+    Route::get('/user/profile/edit', 'User\ProfileController@edit');
+    Route::patch('/user/profile/edit', 'User\ProfileController@update');
+    Route::get('/user/profile/change_icon', 'User\ProfileController@selectIcon');
+    Route::patch('/user/profile/change_icon', 'User\ProfileController@changeIcon');
+    Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon');
+    Route::get('/user/profile/{user}', 'User\ProfileController@index');
+    Route::get('/user/profile/{user}/{type}', 'User\ProfileController@index');
+    Route::get('/user/profile/{user}/timeline/mypage/{time}', 'User\ProfileController@moreTimelineMyPage');
+    Route::get('/user/profile', 'User\ProfileController@myself');
+    Route::get('/user/communities/{user}', 'User\ProfileController@community');
+    Route::get('/mypage/favorite_soft', 'User\FavoriteSoftController@myself');
+    Route::get('/mypage/favorite_site', 'User\FavoriteSiteController@myself');
+    Route::get('/mypage/follow', 'User\MyPageController@follow');
+    Route::get('/mypage/follower', 'User\MyPageController@follower');
+    Route::get('/mypage/review', 'User\MyPageController@review');
+    
+    // タイムライン
+    Route::get('/user/timeline', 'User\ProfileController@timeline');
+    Route::get('/user/user_action_timeline/{user}', 'User\ProfileController@userActionTimeline');
+    Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add');
+    Route::delete('/user/favorite_soft', 'User\FavoriteSoftController@remove');
+    Route::post('user/played_soft/{soft}', 'User\PlayedSoftController@add');
+    Route::put('user/played_soft/{upg}', 'User\PlayedSoftController@edit');
+    Route::delete('user/played_soft/{upg}', 'User\PlayedSoftController@remove');
+    Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add');
+    Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove');
+    Route::get('/user/favorite_site/{user}', 'User\ProfileController@favoriteSite');
+    Route::get('/user/follow/{user}', 'User\ProfileController@follow');
+    Route::get('/user/follower/{user}', 'User\ProfileController@follower');
+    Route::post('/user/follow', 'User\FollowController@add');
+    Route::delete('/user/follow', 'User\FollowController@remove');
+
+    // ユーザーコミュニティ
+    Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join');
+    Route::post('/community/u/{uc}/leave', 'Community\UserCommunityController@leave');
+    Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members');
+    Route::get('/community/u/{uc}/topics', 'Community\UserCommunityController@topics');
+    Route::post('/community/u/{uc}/topics', 'Community\UserCommunityController@write');
+    Route::get('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@topicDetail');
+    Route::post('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@writeResponse');
+    Route::delete('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@erase');
+    Route::delete('/community/u/{uc}/topic_response/{uctr}', 'Community\UserCommunityController@eraseResponse');
+    Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail');
+
+    // ゲームコミュニティ
+    Route::post('/community/g/{soft}/join', 'Community\GameCommunityController@join');
+    Route::post('/community/g/{soft}/leave', 'Community\GameCommunityController@leave');
+    Route::get('/community/g/{soft}/member', 'Community\GameCommunityController@members');
+    Route::get('/community/g/{soft}/topics', 'Community\GameCommunityController@topics');
+    Route::post('/community/g/{soft}/topics', 'Community\GameCommunityController@write');
+    Route::get('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@topicDetail');
+    Route::post('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@writeResponse');
+    Route::delete('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@erase');
+    Route::delete('/community/g/{soft}/topic_response/{gctr}', 'Community\GameCommunityController@eraseResponse');
+    Route::get('/community/g/{soft}', 'Community\GameCommunityController@detail');
+});
+
+
+
 Route::get('/', 'TopController@index');
 Route::get('/auth/login', 'Account\LoginController@login')->name('login');
 Route::post('/auth/login', 'Account\LoginController@authenticate');
@@ -105,14 +195,7 @@ Route::get('/game/soft/{soft}', 'Game\SoftController@detail');
 
 // レビュー
 Route::get('/review', 'Review\ReviewController@index')->name('review');
-Route::get('/review/package_select/{soft}', 'Review\ReviewController@packageSelect')->middleware('auth');
-Route::get('/review/write/{soft}/{package}', 'Review\ReviewController@input')->middleware('auth');
-Route::post('/review/confirm/{soft}/{package}', 'Review\ReviewController@confirm')->middleware('auth');
-Route::post('/review/save/{soft}/{package}', 'Review\ReviewController@save')->middleware('auth');
-Route::delete('/review/draft/{softId}/{packageId}', 'Review\ReviewController@deleteDraft')->middleware('auth');
 Route::get('/review/soft/{soft}', 'Review\ReviewController@soft');
-Route::post('/review/good/{review}', 'Review\GoodController@good')->middleware('auth');
-Route::delete('/review/good/{review}', 'Review\GoodController@cancel')->middleware('auth');
 Route::get('/review/detail/{review}', 'Review\ReviewController@detail');
 Route::get('/review/good/history/{review}', 'Review\GoodController@history');
 Route::get('/review/edit/{review}', 'Review\ReviewController@edit');
@@ -138,19 +221,7 @@ Route::get('/site/search', 'Site\SiteController@search');
 Route::get('/site/soft/{soft}', 'Site\SiteController@soft');
 Route::get('/site/user/{user}', 'Site\SiteController@user');
 Route::get('/site/detail/{site}', 'Site\SiteController@detail');
-Route::get('/site/add', 'Site\SiteController@add')->middleware('auth');
-Route::post('/site/add', 'Site\SiteController@insert')->middleware('auth');
-Route::get('/site/edit/{site}', 'Site\SiteController@edit')->middleware('auth');
-Route::patch('/site/edit/{site}', 'Site\SiteController@update')->middleware('auth');
-Route::delete('/site/{site}', 'Site\SiteController@delete')->middleware('auth');
-Route::get('/site/{site}', 'Site\SiteController@detail')->middleware('auth');
-Route::post('/site/good/{site}', 'Site\GoodController@good')->middleware('auth');
-Route::delete('/site/good/{site}', 'Site\GoodController@cancel')->middleware('auth');
-Route::get('/site/good_history/{site}', 'Site\GoodController@history')->middleware('auth');
 Route::get('/site/go/{site}', 'Site\SiteController@go');
-Route::get('/site/footprint/{site}', 'Site\FootprintController@site')->middleware('auth');
-Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@site')->middleware('auth');
-Route::delete('/site/delete/{site}', 'Site\SiteController@delete')->middleware('auth');
 
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');
@@ -164,84 +235,22 @@ Route::get('/game/platform/{platform}', 'Game\PlatformController@detail');
 Route::get('/game/series', 'Game\SeriesController@index');
 Route::get('/game/series/{gameSeries}', 'Game\SeriesController@detail');
 
-// マイページ
-Route::get('/mypage', 'User\MyPageController@index')->middleware('auth');
-Route::get('/user/profile/edit', 'User\ProfileController@edit')->middleware('auth');
-Route::patch('/user/profile/edit', 'User\ProfileController@update')->middleware('auth');
-Route::get('/user/profile/change_icon', 'User\ProfileController@selectIcon')->middleware('auth');
-Route::patch('/user/profile/change_icon', 'User\ProfileController@changeIcon')->middleware('auth');
-Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon')->middleware('auth');
-Route::get('/user/profile/{user}', 'User\ProfileController@index')->middleware('auth');
-Route::get('/user/profile/{user}/{type}', 'User\ProfileController@index')->middleware('auth');
-Route::get('/user/profile/{user}/timeline/mypage/{time}', 'User\ProfileController@moreTimelineMyPage')->middleware('auth');
-Route::get('/user/profile', 'User\ProfileController@myself')->middleware('auth');
-Route::get('/user/communities/{user}', 'User\ProfileController@community')->middleware('auth');
-Route::get('/mypage/favorite_soft', 'User\FavoriteSoftController@myself')->middleware('auth');
-Route::get('/mypage/favorite_site', 'User\FavoriteSiteController@myself')->middleware('auth');
-Route::get('/mypage/follow', 'User\MyPageController@follow')->middleware('auth');
-Route::get('/mypage/follower', 'User\MyPageController@follower')->middleware('auth');
-Route::get('/mypage/review', 'User\MyPageController@review')->middleware('auth');
-
-// タイムライン
-Route::get('/user/timeline', 'User\ProfileController@timeline')->middleware('auth');
-Route::get('/user/user_action_timeline/{user}', 'User\ProfileController@userActionTimeline')->middleware('auth');
-
 // お気に入りゲーム
 Route::get('/game/favorite/{soft}', 'Game\FavoriteSoftController@index');
-Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->middleware('auth');
-Route::delete('/user/favorite_soft', 'User\FavoriteSoftController@remove')->middleware('auth');
 Route::get('/user/favorite_soft/{user}', 'User\ProfileController@favoriteSoft');
 
 // 遊んだゲーム
 Route::get('game/played_user/{soft}', 'Game\PlayedUserController@index');
 Route::get('user/played_soft/{user}', 'User\PlayedSoftController@index');
-Route::post('user/played_soft/{soft}', 'User\PlayedSoftController@add')->middleware('auth');
-Route::put('user/played_soft/{upg}', 'User\PlayedSoftController@edit')->middleware('auth');
-Route::delete('user/played_soft/{upg}', 'User\PlayedSoftController@remove')->middleware('auth');
 
 
 // お気に入りサイト
 Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@index');
-Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add')->middleware('auth');
-Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove')->middleware('auth');
-Route::get('/user/favorite_site/{user}', 'User\ProfileController@favoriteSite')->middleware('auth');
-
-// 自分のサイト
-Route::get('/user/site/myself', 'User\SiteController@myself')->middleware('auth');
-
 
 // フォロー
-Route::get('/user/follow/{user}', 'User\ProfileController@follow')->middleware('auth');
-Route::get('/user/follower/{user}', 'User\ProfileController@follower')->middleware('auth');
-Route::post('/user/follow', 'User\FollowController@add')->middleware('auth');
-Route::delete('/user/follow', 'User\FollowController@remove')->middleware('auth');
 
 // コミュニティ
 Route::get('/community', 'Community\CommunityController@index');
-
-// ユーザーコミュニティ
-Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join')->middleware('auth');
-Route::post('/community/u/{uc}/leave', 'Community\UserCommunityController@leave')->middleware('auth');
-Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members')->middleware('auth');
-Route::get('/community/u/{uc}/topics', 'Community\UserCommunityController@topics')->middleware('auth');
-Route::post('/community/u/{uc}/topics', 'Community\UserCommunityController@write')->middleware('auth');
-Route::get('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@topicDetail')->middleware('auth');
-Route::post('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@writeResponse')->middleware('auth');
-Route::delete('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@erase')->middleware('auth');
-Route::delete('/community/u/{uc}/topic_response/{uctr}', 'Community\UserCommunityController@eraseResponse')->middleware('auth');
-Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->middleware('auth');
-
-// ゲームコミュニティ
-Route::post('/community/g/{soft}/join', 'Community\GameCommunityController@join')->middleware('auth');
-Route::post('/community/g/{soft}/leave', 'Community\GameCommunityController@leave')->middleware('auth');
-Route::get('/community/g/{soft}/member', 'Community\GameCommunityController@members')->middleware('auth');
-Route::get('/community/g/{soft}/topics', 'Community\GameCommunityController@topics')->middleware('auth');
-Route::post('/community/g/{soft}/topics', 'Community\GameCommunityController@write')->middleware('auth');
-Route::get('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@topicDetail')->middleware('auth');
-Route::post('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@writeResponse')->middleware('auth');
-Route::delete('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@erase')->middleware('auth');
-Route::delete('/community/g/{soft}/topic_response/{gctr}', 'Community\GameCommunityController@eraseResponse')->middleware('auth');
-Route::get('/community/g/{soft}', 'Community\GameCommunityController@detail')->middleware('auth');
 Route::get('/community/g', 'Community\GameCommunityController@index');
 
 // 日記

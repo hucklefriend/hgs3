@@ -8,7 +8,6 @@ namespace Hgs3\Models;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Site\Footprint;
 use Hgs3\Models\Site\NewArrival;
-use Hgs3\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -314,7 +313,7 @@ SQL;
      * @param $userId
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function get($userId)
+    public static function getUserSites($userId)
     {
         return Orm\Site::where('user_id', $userId)
             ->orderBy( 'id')
@@ -399,6 +398,7 @@ SQL;
      *
      * @param Orm\Site $site
      * @return bool
+     * @throws \Exception
      */
     public static function delete(Orm\Site $site)
     {
@@ -457,6 +457,7 @@ SQL;
      *
      * @param Orm\Site $site
      * @return bool
+     * @throws \Exception
      */
     public static function access(Orm\Site $site)
     {
@@ -494,5 +495,18 @@ SQL;
         }
 
         return true;
+    }
+
+    /**
+     * 登録数を超えていないか
+     *
+     * @param $userId
+     * @return bool
+     */
+    public static function isMax($userId)
+    {
+        return DB::table('sites')
+            ->where('user_id', $userId)
+            ->count('id') >= env('MAX_SITES');
     }
 }

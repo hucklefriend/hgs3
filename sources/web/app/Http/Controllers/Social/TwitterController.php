@@ -43,7 +43,8 @@ class TwitterController extends Controller
     /**
      * Twitterからのコールバック
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @throws \Exception
      */
     public function callback()
     {
@@ -71,11 +72,10 @@ class TwitterController extends Controller
      *
      * @param \Laravel\Socialite\One\User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     private function createAccount(\Laravel\Socialite\One\User $user)
     {
-        $signUp = new SignUp();
-
         $sa = new Orm\SocialAccount;
         if ($sa->isRegistered(SocialSite::TWITTER, $user->id)) {
             return view('social.twitter.alreadyRegistered');
@@ -93,7 +93,7 @@ class TwitterController extends Controller
      */
     private function login(\Laravel\Socialite\One\User $socialUser)
     {
-        $sa = new SocialAccount;
+        $sa = new Orm\SocialAccount;
         $userId = $sa->getUserId(SocialSite::TWITTER, $socialUser->id);
 
         if ($userId != null) {

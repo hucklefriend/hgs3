@@ -3,7 +3,7 @@
 @section('content')
 
     <div>
-        <a href="{{ url('user/site/add') }}">追加</a>
+        <a href="{{ url('user/site_manage/add') }}">追加</a>
     </div>
 
     @foreach ($sites as $s)

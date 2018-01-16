@@ -1,10 +1,10 @@
 <?php
 /**
- * サイトコントローラー
+ * サイト管理コントローラー
  */
 
 
-namespace Hgs3\Http\Controllers\Site;
+namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Constants\Site\Gender;
 use Hgs3\Constants\Site\MainContents;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
-class SiteController extends Controller
+class SiteManageController extends Controller
 {
     /**
      * コンストラクタ
@@ -38,64 +38,11 @@ class SiteController extends Controller
      */
     public function index()
     {
-        return view('site.index', Site::getIndexData());
-    }
-
-    public function newArrival()
-    {
-
-    }
-
-    /**
-     * 指定ゲームで検索
-     *
-     * @param Orm\GameSoft $soft
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function soft(Orm\GameSoft $soft)
-    {
-        $mainContents = intval(Input::get('mc', 0));
-        $targetGender = intval(Input::get('tg', 0));
-        $rate = intval(Input::get('r', 0));
-
-        return view('site.soft', Site::search($soft, $mainContents, $targetGender, $rate, 20));
-    }
-
-    /**
-     * 詳細表示
-     *
-     * @param Request $request
-     * @param Orm\Site $site
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function detail(Request $request, Orm\Site $site)
-    {
-        $data = ['site' => $site];
-
-        $data['handleSofts'] = Site::getSoftWithOriginalPackage($site->id);
-
-        $isLogin = Auth::check();
-        $data['isFavorite'] = false;
-        $data['isGood'] = false;
-        if ($isLogin) {
-            $data['isFavorite'] = FavoriteSite::isFavorite(Auth::id(), $site->id);
-            $data['isGood'] = Good::isGood($site, Auth::user());
-        }
-
-        $data['webMaster'] = User::find($site->user_id);
-        $data['isWebMaster'] = $data['webMaster']->id == Auth::id();
-
-        $data['csrfToken'] = csrf_token();
-
-        if ($request->session()->pull('a') != null) {
-            $data['defaultMessage'] = '';
-        }
-
-        if ($request->session()->pull('u') != null) {
-            $data['defaultMessage'] = '';
-        }
-
-        return view('site.detail', $data);
+        return view('user.profile.site', [
+            'user'     => Auth::user(),
+            'isMyself' => true,
+            'sites'    => Site::getUserSites(Auth::id())
+        ]);
     }
 
     /**
@@ -110,7 +57,7 @@ class SiteController extends Controller
             return abort(403);
         }
 
-        return view('site.add', [
+        return view('user.siteManage.add', [
             'isTakeOver' => false,
             'softs'      => Orm\GameSoft::getPhoneticTypeHash(),
             'site'       => new Orm\Site([
@@ -130,7 +77,7 @@ class SiteController extends Controller
      */
     public function takeOverSelect()
     {
-        return view('site.takeOverSelect', [
+        return view('user.siteManage.takeOverSelect', [
             'hgs2Sites' => Site\TakeOver::getHgs2Sites(Auth::user())
         ]);
     }
@@ -153,7 +100,7 @@ class SiteController extends Controller
             return abort(403);
         }
 
-        return view('site.add', [
+        return view('user.siteManage.add', [
             'isTakeOver' => true,
             'softs'      => Orm\GameSoft::getPhoneticTypeHash(),
             'site'       => Site\TakeOver::getHgs2Site(Auth::user(), $hgs2SiteId)
@@ -232,7 +179,7 @@ class SiteController extends Controller
         $site->list_banner_upload_flag = -1;
         $site->detail_banner_upload_flag = -1;
 
-        return view('site.edit', [
+        return view('user.siteManage.edit', [
             'softs' => Orm\GameSoft::getPhoneticTypeHash(),
             'site'  => $site
         ]);
@@ -312,30 +259,5 @@ class SiteController extends Controller
         Site::delete($site);
 
         return redirect('user/profile/' . Auth::id() . '/site');
-    }
-
-    /**
-     * サイトへGO
-     *
-     * @param Orm\Site $site
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Exception
-     */
-    public function go(Orm\Site $site)
-    {
-        // TODO 終了処理ミドルウェアを使って、リダイレクト後に処理させる
-        if (Auth::check()) {
-            if (Auth::user()->footprint == 1) {
-                Site\Footprint::add($site, Auth::user());
-            } else {
-                Site\Footprint::add($site, null);
-            }
-        } else {
-            Site\Footprint::add($site, null);
-        }
-
-        Site::access($site);
-
-        return redirect($site->url);
     }
 }
