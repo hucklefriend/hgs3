@@ -29,7 +29,8 @@
         @if ($isMyself)
             <a href="{{ url2('user/profile/change_icon') }}">アイコン変更</a> |
             <a href="{{ url2('user/profile/edit') }}">プロフィール編集</a> |
-            <a href="{{ url2('user/profile/config') }}">設定</a>
+            <a href="{{ url2('user/profile/config') }}">設定</a> |
+            <a href="{{ url2('auth/logout') }}">ログアウト</a>
         @endif
     </div>
 

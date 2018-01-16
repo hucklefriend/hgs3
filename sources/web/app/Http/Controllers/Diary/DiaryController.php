@@ -18,14 +18,6 @@ use Illuminate\Support\Facades\Auth;
 class DiaryController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'diary');
-    }
-
-    /**
      * 日記トップページ
      *
      * @param User $user

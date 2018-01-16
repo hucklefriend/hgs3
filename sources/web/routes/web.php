@@ -25,12 +25,12 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::delete('/system/notice/{notice}', 'System\NoticeController@delete');
 
     // システム更新履歴
-    Route::get('/system/update_history/admin', 'System\UpdateHistoryController@admin');
-    Route::get('/system/update_history/add', 'System\UpdateHistoryController@add');
-    Route::post('/system/update_history/add', 'System\UpdateHistoryController@insert');
-    Route::get('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@edit');
-    Route::patch('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@update');
-    Route::delete('/system/update_history/{updateHistory}', 'System\UpdateHistoryController@delete');
+    Route::get('/system/update_history/admin', 'System\UpdateHistoryController@admin')->name('システム更新履歴管理');
+    Route::get('/system/update_history/add', 'System\UpdateHistoryController@add')->name('システム更新履歴登録');
+    Route::post('/system/update_history/add', 'System\UpdateHistoryController@insert')->name('システム更新履歴登録処理');
+    Route::get('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@edit')->name('システム更新履歴更新');
+    Route::patch('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@update')->name('システム更新履歴更新処理');
+    Route::delete('/system/update_history/{updateHistory}', 'System\UpdateHistoryController@delete')->name('システム更新履歴削除');
 
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/timeline/add', 'TimelineController@input');
     Route::post('/timeline/add', 'TimelineController@add');
     Route::delete('/timeline/', 'TimelineController@remove');
+
+    // デバッグ用
+    Route::get('/test', 'TopController@test');
 });
 
 // エディターのみ
@@ -172,32 +175,31 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-Route::get('/', 'TopController@index');
-Route::get('/auth/login', 'Account\LoginController@login')->name('login');
-Route::post('/auth/login', 'Account\LoginController@authenticate');
-Route::get('/auth/logout', 'Account\LoginController@logout');
+Route::get('/', 'TopController@index')->name('トップ');
+Route::get('/auth/login', 'Account\LoginController@login')->name('ログイン');
+Route::post('/auth/login', 'Account\LoginController@authenticate')->name('ログイン処理');
+Route::get('/auth/logout', 'Account\LoginController@logout')->name('ログアウト');
 
-
-Route::get('/notice', 'System\NoticeController@index');
-Route::get('/system_update', 'System\UpdateHistoryController@index');
-Route::get('/system_update/{updateHistory}', 'System\UpdateHistoryController@detail');
+Route::get('/notice', 'System\NoticeController@index')->name('お知らせ');
+Route::get('/system_update', 'System\UpdateHistoryController@index')->name('システム更新履歴');
+Route::get('/system_update/{updateHistory}', 'System\UpdateHistoryController@detail')->name('システム更新履歴詳細');
 
 
 // アカウント作成
-Route::post('/account/signup/pr', 'Account\SignUpController@sendPRMail');
-Route::get('/account/register/{token}', 'Account\SignUpController@register');
-Route::post('/account/register', 'Account\SignUpController@registration');
-Route::get('/account/signup', 'Account\SignUpController@index');
+Route::get('/account/signup', 'Account\SignUpController@index')->name('ユーザー登録');
+Route::post('/account/signup/pr', 'Account\SignUpController@sendPRMail')->name('仮登録メール送信');
+Route::get('/account/register/{token}', 'Account\SignUpController@register')->name('本登録');
+Route::post('/account/register', 'Account\SignUpController@registration')->name('本登録処理');
 
 // ゲーム
-Route::get('/game', 'Game\SoftController@index');
-Route::get('/game/soft/{soft}', 'Game\SoftController@detail');
+Route::get('/game/soft', 'Game\SoftController@index')->name('ゲーム一覧');
+Route::get('/game/soft/{soft}', 'Game\SoftController@detail')->name('ゲーム詳細');
 
 // レビュー
-Route::get('/review', 'Review\ReviewController@index')->name('review');
-Route::get('/review/soft/{soft}', 'Review\ReviewController@soft');
-Route::get('/review/detail/{review}', 'Review\ReviewController@detail');
-Route::get('/review/good/history/{review}', 'Review\GoodController@history');
+Route::get('/review', 'Review\ReviewController@index')->name('レビュートップ');
+Route::get('/review/soft/{soft}', 'Review\ReviewController@soft')->name('ソフト別レビュー一覧');
+Route::get('/review/detail/{review}', 'Review\ReviewController@detail')->name('レビュー');
+Route::get('/review/good/history/{review}', 'Review\GoodController@history')->name('レビューいいね履歴');
 Route::get('/review/edit/{review}', 'Review\ReviewController@edit');
 Route::patch('/review/edit/{review}', 'Review\ReviewController@update');
 Route::delete('/review/edit/{review}', 'Review\ReviewController@delete');
@@ -267,8 +269,5 @@ Route::get('/social/google/callback', 'Social\GoogleController@callback');
 Route::get('/social/google/{mode}', 'Social\GoogleController@redirect');
 
 // サイトマップ
-Route::get('/sitemap', 'TopController@sitemap');
-
-// デバッグ用
-Route::get('/test', 'TopController@test');
+Route::get('/sitemap', 'TopController@sitemap')->name('サイトマップ');
 

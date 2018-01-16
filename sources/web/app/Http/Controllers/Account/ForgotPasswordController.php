@@ -28,6 +28,5 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        \Illuminate\Support\Facades\View::share('navActive', 'home');
     }
 }

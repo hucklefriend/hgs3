@@ -18,12 +18,16 @@ class UserRole
      */
     public static function isDataEditor()
     {
-        $user = Auth::user();
-        if ($user != null) {
-            return $user->role >= self::EDITOR;
+        static $isDataEditor = null;
+
+        if ($isDataEditor === null) {
+            $user = Auth::user();
+            if ($user != null) {
+                $isDataEditor = $user->role >= self::EDITOR;
+            }
         }
 
-        return false;
+        return $isDataEditor;
     }
 
     /**
@@ -33,11 +37,15 @@ class UserRole
      */
     public static function isAdmin()
     {
-        $user = Auth::user();
-        if ($user != null) {
-            return $user->role >= self::ADMIN;
+        static $isAdmin = null;
+
+        if ($isAdmin === null) {
+            $user = Auth::user();
+            if ($user != null) {
+                $isAdmin = $user->role >= self::ADMIN;
+            }
         }
 
-        return false;
+        return $isAdmin;
     }
 }

@@ -11,14 +11,6 @@ use Hgs3\Http\Controllers\Controller;
 class CommunityController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'community');
-    }
-
-    /**
      * 一覧ページ
      */
     public function index()

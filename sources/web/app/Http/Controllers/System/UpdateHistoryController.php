@@ -93,8 +93,6 @@ class UpdateHistoryController extends Controller
      */
     public function index()
     {
-        \Illuminate\Support\Facades\View::share('navActive', '');
-
         $histories = Orm\SystemUpdateHistory::select(array('id', 'title', DB::raw('DATE_FORMAT(update_at, "%Y/%m/%d %H:%i") AS update_at')))
             ->where('update_at', '<=', DB::raw('NOW()'))
             ->orderBy('update_at', 'DESC')
@@ -113,8 +111,6 @@ class UpdateHistoryController extends Controller
      */
     public function detail(Orm\SystemUpdateHistory $updateHistory)
     {
-        \Illuminate\Support\Facades\View::share('navActive', '');
-
         $updateHistory->update_at = date('Y/m/d H:i', strtotime($updateHistory->update_at));
 
         return view('system.updateHistory.detail', [

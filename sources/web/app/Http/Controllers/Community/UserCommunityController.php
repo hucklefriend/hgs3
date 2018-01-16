@@ -17,14 +17,6 @@ use Hgs3\Models\Community\UserCommunity;
 class UserCommunityController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'community');
-    }
-
-    /**
      * ユーザーコミュニティトップページ
      *
      * @param Orm\UserCommunity $userCommunity

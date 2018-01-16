@@ -24,14 +24,6 @@ use Illuminate\Support\Facades\Session;
 class SiteManageController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'site');
-    }
-
-    /**
      * トップ
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

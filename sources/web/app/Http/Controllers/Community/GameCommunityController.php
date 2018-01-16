@@ -19,14 +19,6 @@ use Illuminate\Support\Facades\Auth;
 class GameCommunityController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'community');
-    }
-
-    /**
      * 一覧ページ
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

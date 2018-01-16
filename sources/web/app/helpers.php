@@ -225,6 +225,12 @@ function display_none($param, $value)
     return '';
 }
 
+/**
+ * input[type=datetime_local]用の値生成
+ *
+ * @param $date
+ * @return string
+ */
 function format_date_local($date)
 {
     $timestamp = strtotime($date);

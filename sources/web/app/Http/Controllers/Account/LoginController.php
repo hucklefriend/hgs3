@@ -12,14 +12,6 @@ use Hgs3\Http\Requests\AuthenticateRequest;
 class LoginController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'home');
-    }
-
-    /**
      * ログイン画面
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

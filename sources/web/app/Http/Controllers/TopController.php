@@ -16,16 +16,6 @@ use Illuminate\Support\Facades\View;
 class TopController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        View::share('navActive', 'home');
-    }
-
-    /**
      * トップページ
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

@@ -230,3 +230,23 @@ a:active .no_image_text_inner {
 .table-clickable-row tr:hover {
     cursor: pointer;
 }
+
+.breadcrumb_footer {
+    padding: unset;
+    margin: unset;
+    background-color: transparent;
+    font-size: 0.8rem;
+}
+
+.pagination {
+    margin: 0.5rem 0;
+}
+
+h1 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.add_group {
+    margin: 1rem 0;
+}

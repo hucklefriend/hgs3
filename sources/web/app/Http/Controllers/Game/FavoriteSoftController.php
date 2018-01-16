@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Auth;
 class FavoriteSoftController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * お気に入りゲームに登録しているユーザー
      *
      * @param Orm\GameSoft $soft

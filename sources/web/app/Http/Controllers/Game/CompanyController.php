@@ -15,14 +15,6 @@ use Illuminate\Support\Facades\Auth;
 class CompanyController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * 会社一覧
      *
      * @return $this
