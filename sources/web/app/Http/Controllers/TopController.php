@@ -44,16 +44,6 @@ class TopController extends Controller
     }
 
     /**
-     * 管理トップ
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function admin()
-    {
-        return view('top.admin');
-    }
-
-    /**
      * サイトマップ
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

@@ -14,18 +14,14 @@
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
-    Route::get('/admin', 'TopController@admin');
-
     // お知らせ
-    Route::get('/system/notice/admin', 'System\NoticeController@admin');
-    Route::get('/system/notice/add', 'System\NoticeController@add');
-    Route::post('/system/notice/add', 'System\NoticeController@insert');
-    Route::get('/system/notice/edit/{notice}', 'System\NoticeController@edit');
-    Route::patch('/system/notice/edit/{notice}', 'System\NoticeController@update');
-    Route::delete('/system/notice/{notice}', 'System\NoticeController@delete');
+    Route::get('/system/notice/add', 'System\NoticeController@add')->name('お知らせ登録');
+    Route::post('/system/notice/add', 'System\NoticeController@insert')->name('お知らせ登録処理');
+    Route::get('/system/notice/edit/{notice}', 'System\NoticeController@edit')->name('お知らせ編集');
+    Route::patch('/system/notice/edit/{notice}', 'System\NoticeController@update')->name('お知らせ編集処理');
+    Route::delete('/system/notice/{notice}', 'System\NoticeController@delete')->name('お知らせ削除');
 
     // システム更新履歴
-    Route::get('/system/update_history/admin', 'System\UpdateHistoryController@admin')->name('システム更新履歴管理');
     Route::get('/system/update_history/add', 'System\UpdateHistoryController@add')->name('システム更新履歴登録');
     Route::post('/system/update_history/add', 'System\UpdateHistoryController@insert')->name('システム更新履歴登録処理');
     Route::get('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@edit')->name('システム更新履歴更新');
@@ -181,8 +177,11 @@ Route::post('/auth/login', 'Account\LoginController@authenticate')->name('ログ
 Route::get('/auth/logout', 'Account\LoginController@logout')->name('ログアウト');
 
 Route::get('/notice', 'System\NoticeController@index')->name('お知らせ');
+Route::get('/notice/{notice}', 'System\NoticeController@detail')->name('お知らせ内容');
+
+// システム更新履歴
 Route::get('/system_update', 'System\UpdateHistoryController@index')->name('システム更新履歴');
-Route::get('/system_update/{updateHistory}', 'System\UpdateHistoryController@detail')->name('システム更新履歴詳細');
+Route::get('/system_update/{updateHistory}', 'System\UpdateHistoryController@detail')->name('システム更新内容');
 
 
 // アカウント作成

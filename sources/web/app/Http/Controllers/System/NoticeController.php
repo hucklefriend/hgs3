@@ -33,26 +33,13 @@ class NoticeController extends Controller
     /**
      * 詳細
      *
-     * @param Orm\GameCompany $company
+     * @param Orm\SystemNotice $notice
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detail(Orm\GameCompany $company)
+    public function detail(Orm\SystemNotice $notice)
     {
-        $packages = Orm\GamePackage::where('company_id', $company->id)
-            ->orderBy('release_int')
-            ->paginate(15);
-
-        $shops = [];
-        $items = $packages->items();
-        if (!empty($items)) {
-            \ChromePhp::info($items);
-            $shops = Package::getShopData(array_pluck($items, 'id'));
-        }
-
-        return view('game.company.detail', [
-            'company'  => $company,
-            'packages' => $packages,
-            'shops'    => $shops
+        return view('system.notice.detail', [
+            'notice' => $notice
         ]);
     }
 

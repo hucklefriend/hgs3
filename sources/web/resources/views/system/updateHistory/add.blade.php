@@ -1,15 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-master">
-            <li class="breadcrumb-item"><a href="{{ url2('') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ url2('/admin') }}">管理トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ url2('/system/update_history/admin') }}">システム更新履歴</a></li>
-            <li class="breadcrumb-item active" aria-current="page">システム更新履歴登録</li>
-        </ol>
-    </nav>
-
     <form method="POST" autocomplete="off">
         {{ csrf_field() }}
         <div class="form-group">
@@ -29,4 +20,14 @@
         </div>
         <button type="submit" class="btn btn-primary">登録</button>
     </form>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('システム更新履歴') }}">システム更新履歴</a></li>
+            <li class="breadcrumb-item active" aria-current="page">システム更新内容</li>
+        </ol>
+    </nav>
 @endsection

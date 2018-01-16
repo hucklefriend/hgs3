@@ -1,21 +1,14 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-master">
-            <li class="breadcrumb-item"><a href="{{ url2('') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ url2('/admin') }}">管理トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">お知らせ</li>
-        </ol>
-    </nav>
+    <h1>お知らせ</h1>
 
 
-    <h4>お知らせ</h4>
-
-    <div class="text-right">
-        <a href="{{ url2('system/notice/add') }}">追加</a>
-    </div>
+    @if(is_admin())
+        <div class="btn_area">
+            <a class="btn btn-sm btn-outline-dark" href="{{ route('お知らせ登録') }}" role="button">お知らせの新規登録</a>
+        </div>
+    @endif
 
     <table class="table table-bordered">
         <thead>
@@ -33,8 +26,10 @@
                 <td>{{ str_limit($notice->title, 20) }}</td>
                 <td>{{ $notice->open_at }}</td>
                 <td>{{ $notice->close_at }}</td>
-                <td><a href="{{ url2('system/notice/edit/' . $notice->id) }}">編集</a></td>
+                @if (is_admin())
+                <td><a class="btn btn-sm btn-outline-info" href="{{ route('お知らせ編集', ['notice' => $notice->id]) }}" role="button">更新</a></td>
                 <td><button class="btn btn-danger btn-sm" onclick="deleteNotice({{ $notice->id }});">削除</button></td>
+                @endif
             </tr>
         @endforeach
         </tbody>
@@ -57,5 +52,13 @@
             }
         }
     </script>
+@endsection
 
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">お知らせ</li>
+        </ol>
+    </nav>
 @endsection

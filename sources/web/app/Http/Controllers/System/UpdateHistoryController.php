@@ -13,21 +13,6 @@ use Illuminate\Support\Facades\DB;
 class UpdateHistoryController extends Controller
 {
     /**
-     * 管理用一覧
-     *
-     * @return $this
-     */
-    public function admin()
-    {
-        $histories = Orm\SystemUpdateHistory::orderBy('update_at', 'DESC')
-            ->paginate(30);
-
-        return view('system.updateHistory.adminIndex', [
-            'histories' => $histories
-        ]);
-    }
-
-    /**
      * 追加画面
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -84,6 +69,20 @@ class UpdateHistoryController extends Controller
         $updateHistory->save();
 
         return redirect('system/update_history/admin');
+    }
+
+    /**
+     * 削除
+     *
+     * @param Orm\SystemUpdateHistory $updateHistory
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function delete(Orm\SystemUpdateHistory $updateHistory)
+    {
+        $updateHistory->delete();
+
+        return redirect()->back();
     }
 
     /**

@@ -4,7 +4,7 @@
     <h1>システム更新履歴</h1>
 
     @if(is_admin())
-    <div class="add_group">
+    <div class="btn_area">
         <a class="btn btn-sm btn-outline-dark" href="{{ route('システム更新履歴登録') }}" role="button">更新履歴の新規登録</a>
     </div>
     @endif
@@ -14,7 +14,17 @@
             @foreach ($histories as $history)
                 <tr>
                     <td class="history_date">{{ $history->update_at }}</td>
-                    <td><a href="{{ route('システム更新履歴詳細', ['updateHistory' => $history->id]) }}">{{ $history->title }}</a></td>
+                    <td><a href="{{ route('システム更新内容', ['updateHistory' => $history->id]) }}">{{ $history->title }}</a></td>
+                    @if (is_admin())
+                        <td><a class="btn btn-sm btn-outline-info" href="{{ route('システム更新履歴更新', ['updateHistory' => $history->id]) }}" role="button">編集</a></td>
+                        <td>
+                            <form action="{{ route('システム更新履歴削除', ['updateHistory' => $history->id]) }}" onsubmit="return confirm('削除してよろしいですか？');" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button class="btn btn-sm btn-danger" type="submit">削除</button>
+                            </form>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </table>

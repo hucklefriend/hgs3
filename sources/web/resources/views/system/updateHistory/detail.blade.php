@@ -12,8 +12,21 @@
             <p class="card-text">
                 {!! nl2br(e($updateHistory->detail)) !!}
             </p>
+            @if (is_admin())
+            <a class="btn btn-sm btn-outline-info" href="{{ route('システム更新履歴更新', ['updateHistory' => $updateHistory->id]) }}" role="button">編集</a>
+            @endif
         </div>
     </div>
+
+    @if (is_admin())
+    <div class="btn_area">
+        <form action="{{ route('システム更新履歴削除', ['updateHistory' => $updateHistory->id]) }}" onsubmit="return confirm('削除してよろしいですか？');" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('DELETE') }}
+            <button class="btn btn-sm btn-danger" type="submit">削除</button>
+        </form>
+    </div>
+    @endif
 @endsection
 
 @section('breadcrumb')

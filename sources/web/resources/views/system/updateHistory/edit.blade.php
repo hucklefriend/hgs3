@@ -1,15 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-master">
-            <li class="breadcrumb-item"><a href="{{ url2('') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ url2('/admin') }}">管理トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ url2('/system/update_history/admin') }}">システム更新履歴</a></li>
-            <li class="breadcrumb-item active" aria-current="page">システム更新履歴編集</li>
-        </ol>
-    </nav>
-
     <form method="POST" autocomplete="off">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
@@ -30,4 +21,15 @@
         </div>
         <button type="submit" class="btn btn-primary">更新</button>
     </form>
+@endsection
+
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('システム更新履歴') }}">システム更新履歴</a></li>
+            <li class="breadcrumb-item active" aria-current="page">システム更新内容更新</li>
+        </ol>
+    </nav>
 @endsection
