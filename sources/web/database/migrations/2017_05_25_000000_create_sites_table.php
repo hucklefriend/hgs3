@@ -36,6 +36,8 @@ class CreateSitesTable extends Migration
             $table->unsignedInteger('good_num')->default(0)->comment('いいね数');
             $table->unsignedInteger('max_good_num')->default(0)->comment('最高いいね数');
             $table->unsignedInteger('bad_num')->default(0)->comment('BAD数');
+            $table->unsignedTinyInteger('approval_status')->index()->comment('承認ステータス');
+            $table->text('reject_reason')->nullable()->comment('リジェクト理由');
             $table->unsignedBigInteger('registered_timestamp')->comment('登録日時タイムスタンプ');
             $table->unsignedBigInteger('updated_timestamp')->comment('最終更新タイムスタンプ');
             $table->timestamps();

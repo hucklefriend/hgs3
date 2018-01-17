@@ -5,13 +5,9 @@
 
 namespace Hgs3\Http\Controllers;
 
-
 use Hgs3\Models\Orm;
 use Hgs3\Models\Orm\NewInformation;
-use Hgs3\Models\VersionUp\MasterImport\Soft;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
 
 class TopController extends Controller
 {
@@ -47,15 +43,5 @@ class TopController extends Controller
     public function sitemap()
     {
         return view('sitemap');
-    }
-
-    public function test()
-    {
-        if (env('APP_ENV') != 'local') {
-            return abort(403);
-        }
-
-        $soft = new Soft();
-        $soft->import();
     }
 }

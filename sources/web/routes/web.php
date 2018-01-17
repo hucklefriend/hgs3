@@ -94,14 +94,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/review/good/{review}', 'Review\GoodController@cancel');
 
     // サイト管理
-    Route::get('/user/site_manage', 'User\SiteManageController@index');
-    Route::get('/user/site_manage/add', 'User\SiteManageController@add');
-    Route::post('/user/site_manage/add', 'User\SiteManageController@insert');
-    Route::get('/user/site_manage/edit/{site}', 'User\SiteManageController@edit');
-    Route::patch('/user/site_manage/edit/{site}', 'User\SiteManageController@update');
-    Route::get('/user/site_manage/takeover', 'User\SiteManageController@takeOverSelect');
-    Route::get('/user/site_manage/takeover/{hgs2SiteId}', 'User\SiteManageController@takeOver');
-    Route::delete('/user/site_manage/{site}', 'User\SiteManageController@delete');
+    Route::get('/user/site_manage', 'User\SiteManageController@index')->name('サイト管理');
+    Route::get('/user/site_manage/add', 'User\SiteManageController@add')->name('サイト登録');
+    Route::post('/user/site_manage/add', 'User\SiteManageController@insert')->name('サイト登録処理');
+    Route::get('/user/site_manage/edit/{site}', 'User\SiteManageController@edit')->name('サイト編集');
+    Route::patch('/user/site_manage/edit/{site}', 'User\SiteManageController@update')->name('サイト編集処理');
+    Route::get('/user/site_manage/takeover', 'User\SiteManageController@takeOverSelect')->name('サイト引継選択');
+    Route::get('/user/site_manage/takeover/{hgs2SiteId}', 'User\SiteManageController@takeOver')->name('サイト引継登録');
+    Route::delete('/user/site_manage/{site}', 'User\SiteManageController@delete')->name('サイト削除');
 
     // サイト
     Route::post('/site/good/{site}', 'Site\GoodController@good');
@@ -215,20 +215,14 @@ Route::get('/review/new_arrivals', 'Review\ReviewController@newArrivals');
 Route::get('/review/fraud_report/report/{review}', 'Review\FraudReportController@input');
 Route::post('/review/fraud_report/report/{review}', 'Review\FraudReportController@report');
 Route::get('/review/fraud_report/list/{review}', 'Review\FraudReportController@list');
-/*
-Route::post('/game/injustice_review/input/{review}', 'Game\InjusticeReviewController@report');
-Route::get('/game/injustice_review/detail/{ir}', 'Game\InjusticeReviewController@detail');
-Route::post('/game/injustice_review/comment/{ir}', 'Game\InjusticeReviewController@comment');
-Route::get('/game/injustice_review/{review}', 'Game\InjusticeReviewController@list');
-*/
 
 // サイト
-Route::get('/site', 'Site\SiteController@index');
-Route::get('/site/search', 'Site\SiteController@search');
-Route::get('/site/soft/{soft}', 'Site\SiteController@soft');
-Route::get('/site/user/{user}', 'Site\SiteController@user');
-Route::get('/site/detail/{site}', 'Site\SiteController@detail');
-Route::get('/site/go/{site}', 'Site\SiteController@go');
+Route::get('/site', 'Site\SiteController@index')->name('サイト');
+Route::get('/site/search', 'Site\SiteController@search')->name('サイト検索');
+Route::get('/site/soft/{soft}', 'Site\SiteController@soft')->name('ソフト別サイト');
+Route::get('/site/user/{user}', 'Site\SiteController@user')->name('ユーザーサイト');
+Route::get('/site/detail/{site}', 'Site\SiteController@detail')->name('サイト詳細');
+Route::get('/site/go/{site}', 'Site\SiteController@go')->name('サイト遷移');
 
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index');

@@ -46,7 +46,7 @@ class SiteManageController extends Controller
     {
         // サイト登録可能数チェック
         if (Site::isMax(Auth::id())) {
-            return abort(403);
+            return view('user.siteManage.max');
         }
 
         return view('user.siteManage.add', [
@@ -69,6 +69,11 @@ class SiteManageController extends Controller
      */
     public function takeOverSelect()
     {
+        // サイト登録可能数チェック
+        if (Site::isMax(Auth::id())) {
+            return view('user.siteManage.max');
+        }
+
         return view('user.siteManage.takeOverSelect', [
             'hgs2Sites' => Site\TakeOver::getHgs2Sites(Auth::user())
         ]);
@@ -84,7 +89,7 @@ class SiteManageController extends Controller
     {
         // サイト登録可能数チェック
         if (Site::isMax(Auth::id())) {
-            return abort(403);
+            return view('user.siteManage.max');
         }
 
         // 本人しか引き継げない
@@ -110,7 +115,7 @@ class SiteManageController extends Controller
     {
         // サイト登録可能数チェック
         if (Site::isMax(Auth::id())) {
-            return abort(403);
+            return view('user.siteManage.max');
         }
 
         $site = new Orm\Site;
@@ -135,7 +140,7 @@ class SiteManageController extends Controller
         $site->list_banner_url = $request->get('list_banner_url');
         $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
         $site->detail_banner_url = $request->get('detail_banner_url');
-        $site->open_type = 0;
+        $site->open_type = $request->get('open_type');
         $site->good_num = 0;
         $site->max_good_num = 0;
         $site->bad_num = 0;
@@ -151,7 +156,7 @@ class SiteManageController extends Controller
 
         session(['a' => 1]);
 
-        return redirect('site/detail/' . $site->id);
+        return redirect()->route('サイト詳細', ['site' => $site->id]);
     }
 
     /**

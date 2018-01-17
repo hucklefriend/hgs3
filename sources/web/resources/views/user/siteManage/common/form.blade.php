@@ -9,6 +9,20 @@
     @include('common.error', ['formName' => 'url'])
 </div>
 <div class="form-group">
+    <label for="open_type">公開範囲</label>
+
+    @foreach (\Hgs3\Constants\Site\OpenType::getData() as $openType => $openTypeText)
+
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="open_type" id="open_type{{ $loop->index }}" value="{{ $openType }}"{{ checked($openType, old('open_type', $site->open_type)) }}>
+                {{ $openTypeText }}
+            </label>
+        </div>
+
+    @endforeach
+</div>
+<div class="form-group">
     <label for="title">取扱いゲーム</label>
     @if ($errors->has('handle_soft'))
         <button type="button" class="btn btn-danger" id="select_handle_soft">ゲームを選択する</button>
