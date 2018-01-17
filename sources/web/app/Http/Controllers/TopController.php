@@ -49,7 +49,6 @@ class TopController extends Controller
         return view('sitemap');
     }
 
-
     public function test()
     {
         if (env('APP_ENV') != 'local') {

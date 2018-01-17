@@ -169,20 +169,26 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/community/g/{soft}', 'Community\GameCommunityController@detail');
 });
 
-
-
+// トップ
 Route::get('/', 'TopController@index')->name('トップ');
+
+// 認証
 Route::get('/auth/login', 'Account\LoginController@login')->name('ログイン');
 Route::post('/auth/login', 'Account\LoginController@authenticate')->name('ログイン処理');
 Route::get('/auth/logout', 'Account\LoginController@logout')->name('ログアウト');
+Route::get('/auth/forget', 'Account\ForgotController@index')->name('パスワード再設定');
+Route::post('/auth/send_forget', 'Account\ForgotController@sendPasswordResetMail')->name('パスワード再設定メール送信');
+Route::get('/auth/password_reset', 'Account\ForgotController@input')->name('パスワード再設定入力');
+Route::post('/auth/password_reset', 'Account\ForgotController@reset')->name('パスワード再設定処理');
+Route::get('/auth/password_reset_complete', 'Account\ForgotController@complete')->name('パスワード再設定完了');
 
+// お知らせ
 Route::get('/notice', 'System\NoticeController@index')->name('お知らせ');
 Route::get('/notice/{notice}', 'System\NoticeController@detail')->name('お知らせ内容');
 
 // システム更新履歴
 Route::get('/system_update', 'System\UpdateHistoryController@index')->name('システム更新履歴');
 Route::get('/system_update/{updateHistory}', 'System\UpdateHistoryController@detail')->name('システム更新内容');
-
 
 // アカウント作成
 Route::get('/account/signup', 'Account\SignUpController@index')->name('ユーザー登録');

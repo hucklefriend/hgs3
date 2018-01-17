@@ -1,6 +1,6 @@
 <?php
 /**
- * 仮登録メーラブル
+ * パスワード再設定メーラブル
  */
 
 namespace Hgs3\Mail;
@@ -10,16 +10,15 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ProvisionalRegistration extends Mailable
+class PasswordReset extends Mailable
 {
     use Queueable, SerializesModels;
 
     protected $token;
 
     /**
-     * ProvisionalRegistration constructor.
+     * コンストラクタ
      *
-     * @param $email
      * @param $token
      */
     public function __construct($token)
@@ -36,7 +35,7 @@ class ProvisionalRegistration extends Mailable
     {
         return $this
             ->from('webmaster@horrorgame.net', 'H.G.N.管理人')
-            ->subject('仮登録のお知らせ')
-            ->text('mail.provisionalRegistration', ['token' => $this->token]);
+            ->subject('パスワード再設定のお知らせ')
+            ->text('mail.passwordReset', ['token' => $this->token]);
     }
 }

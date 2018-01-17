@@ -1,4 +1,3 @@
-<!-- マスター用テンプレート -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
