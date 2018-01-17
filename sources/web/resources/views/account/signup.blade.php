@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('トップ') }}">&lt;</a>
+@endsection
+
 @section('content')
     <section>
         <h4>SNSのアカウントで登録</h4>
@@ -9,10 +13,10 @@
         </p>
         <div class="row">
             <div class="col-sm-3 text-center sns_link_outline text-warning">
-                <a href="{{ url2('social/twitter') }}/{{ \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT }}" class="block_link sns_link sns_link_twitter">Twitter</a>
+                <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT]) }}" class="block_link sns_link sns_link_twitter">Twitter</a>
             </div>
             <div class="col-sm-3 text-center sns_link_outline text-warning">
-                <a href="{{ url2('social/facebook') }}/{{ \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT }}" class="block_link sns_link sns_link_facebook">facebook</a>
+                <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT]) }}" class="block_link sns_link sns_link_facebook">facebook</a>
             </div>
             <div class="col-sm-3 text-center sns_link_outline" style="display:none;">
                 GitHub
@@ -40,7 +44,7 @@
             ※SNSのアカウントで登録した後に、メールアドレスによるログイン設定を行うこともできます。
         </p>
 
-        <form method="POST" action="{{ url2('account/signup/pr') }}">
+        <form method="POST" action="{{ route('仮登録メール送信') }}">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="mail">メールアドレス</label>
@@ -55,8 +59,18 @@
     <section>
         <h4>H.G.S.から引き継ぎ</h4>
         <p>
-            H.G.S.からサイト情報を引き継げるようにする予定です。<br>
-            いずれ実装しますので、H.G.S.で利用していたメールアドレスまたはTwitterアカウントで登録を行ってください。
+            H.G.S.で登録していたメールアドレス、またはTwitterアカウントで登録すると、サイト情報を引き継ぐことができます。<br>
+            アカウント登録後に、H.G.S.で利用していたメールアドレスまたはTwitterアカウントへ変更しても引き継げます。<br>
+            引き継ぎはサイト登録画面で行えます。
         </p>
     </section>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ユーザー登録</li>
+        </ol>
+    </nav>
 @endsection

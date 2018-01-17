@@ -89,7 +89,7 @@
     <div class="container-fluid">
         <div style="display:flex;">
             <div>
-                <div class="d-none d-sm-none d-md-block">@yield('breadcrumb')</div>
+                <div class="d-none d-sm-block">@yield('breadcrumb')</div>
             </div>
             <div style="margin-left: auto;font-size: 80%;">
                 <a href="{{ route('サイトマップ') }}">サイトマップ</a>

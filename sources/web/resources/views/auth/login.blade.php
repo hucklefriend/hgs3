@@ -1,14 +1,18 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('トップ') }}">&lt;</a>
+@endsection
+
 @section('content')
 
     <h4>SNSのアカウントでログイン</h4>
     <div class="row">
         <div class="col-sm-3 text-center sns_link_outline text-warning">
-            <a href="{{ url2('social/twitter') }}/{{ \Hgs3\Constants\Social\Twitter\Mode::LOGIN }}" class="block_link sns_link sns_link_twitter">Twitter</a>
+            <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="block_link sns_link sns_link_twitter">Twitter</a>
         </div>
         <div class="col-sm-3 text-center sns_link_outline text-warning">
-            <a href="{{ url2('social/facebook') }}/{{ \Hgs3\Constants\Social\Twitter\Mode::LOGIN }}" class="block_link sns_link sns_link_facebook">facebook</a>
+            <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="block_link sns_link sns_link_facebook">facebook</a>
         </div>
         <div class="col-sm-3 text-center sns_link_outline">
             GitHub
@@ -27,7 +31,7 @@
     <br><br>
 
     <h4>メールアドレスでログイン</h4>
-    <form class="form-horizontal" method="POST">
+    <form class="form-horizontal" method="POST" action="{{ route('ログイン処理') }}">
         {{ csrf_field() }}
 
         <div class="form-group">
@@ -48,4 +52,13 @@
         <button type="submit" class="btn btn-primary">ログイン</button>
     </form>
 
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ログイン</li>
+        </ol>
+    </nav>
 @endsection

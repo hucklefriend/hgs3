@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('トップ') }}">&lt;</a>
+@endsection
+
 @section('content')
     <h1>お知らせ</h1>
 

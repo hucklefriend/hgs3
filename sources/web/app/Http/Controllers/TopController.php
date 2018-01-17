@@ -22,11 +22,6 @@ class TopController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            // ログイン中ならマイページに飛ばす
-            return redirect('mypage');
-        }
-
         $newInfo = NewInformation::getPager();
         $newInfoData = NewInformation::getPagerData($newInfo);
 

@@ -12,25 +12,28 @@
                         <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
                         公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。
                     </p>
-                    <div class="text-center" style="font-size: 150%;">
-                        <a href="{{ url2('account/signup') }}">新規登録</a>
+                    @if (!Auth::check())
+                    <div class="text-center">
+                        <a href="{{ route('ユーザー登録') }}" class="btn btn-primary btn-lg" role="button" aria-pressed="true">新規登録</a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
 
+        @if (!Auth::check())
         <div class="col-md-5">
             <div class="card card-hgn">
                 <div class="card-header">ログイン</div>
                 <div class="card-body">
-                    <a href="{{ url2('social/twitter') }}/{{ \Hgs3\Constants\Social\Mode::LOGIN }}" style="color: #55acee;margin-right: 5px;text-decoration: none;">
+                    <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" style="color: #55acee;margin-right: 5px;text-decoration: none;">
                         <i class="fa fa-twitter" aria-hidden="true" style="font-size: 150%;"></i>
                     </a>
-                    <a href="{{ url2('social/facebook') }}/{{ \Hgs3\Constants\Social\Mode::LOGIN }}" style="color: #315096;text-decoration: none;">
+                    <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" style="color: #315096;text-decoration: none;">
                         <i class="fa fa-facebook-official" aria-hidden="true" style="font-size: 150%;"></i>
                     </a>
                     <hr>
-                    <form method="POST" action="{{ url2('auth/login') }}">
+                    <form method="POST" action="{{ route('ログイン') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group form-group-sm">
@@ -44,6 +47,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 
     <div class="card card-hgn">
@@ -51,9 +55,7 @@
         <div class="card-body">
             <p class="card-text">
                 {{ $newInfo->render() }}
-
                 @foreach ($newInfo as $nf)
-
                     @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
                     <p><a href="{{ url2('game/soft/' . $nf->soft_id) }}">「{{ get_hash($newInfoData['game_hash'], $nf->soft_id) }}」</a>が追加されました。</p>
                     @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)

@@ -252,17 +252,16 @@ h1 {
 }
 
 #global_back_link {
-    width: 20px;
+    width: 25px;
     height: 100%;
 }
 
 #global_back_link a {
-    display: block;
-    margin: auto;
     font-size: 1.5rem;
     text-decoration: none;
+    color: #2a2a2a;
 }
-#global_back_link a img {
-    width: 15px;
-    height: 20px;
+
+#global_back_link a:hover {
+    color: #777777;
 }

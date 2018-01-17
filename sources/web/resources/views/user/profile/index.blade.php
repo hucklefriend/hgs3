@@ -27,10 +27,12 @@
         <p class="profile_text">{!! nl2br(e($user->profile)) !!}</p>
 
         @if ($isMyself)
-            <a href="{{ url2('user/profile/change_icon') }}">アイコン変更</a> |
-            <a href="{{ url2('user/profile/edit') }}">プロフィール編集</a> |
-            <a href="{{ url2('user/profile/config') }}">設定</a> |
-            <a href="{{ url2('auth/logout') }}">ログアウト</a>
+            <div class="btn-group" role="group" aria-label="プロフィール">
+                <a href="{{ url2('user/profile/change_icon') }}" class="btn btn-outline-dark">アイコン変更</a>
+                <a href="{{ url2('user/profile/edit') }}" class="btn btn-outline-dark">プロフィール編集</a>
+                <a href="{{ url2('user/profile/config') }}" class="btn btn-outline-dark">設定</a>
+            </div>
+            <a href="{{ url2('auth/logout') }}" class="btn btn-outline-danger">ログアウト</a>
         @endif
     </div>
 

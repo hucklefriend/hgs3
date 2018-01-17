@@ -258,14 +258,14 @@ Route::get('/community/g', 'Community\GameCommunityController@index');
 Route::get('/diary', 'Diary\DiaryController@index');
 
 // SNS
-Route::get('/social/twitter/callback', 'Social\TwitterController@callback');
-Route::get('/social/twitter/{mode}', 'Social\TwitterController@redirect');
-Route::get('/social/facebook/callback', 'Social\FacebookController@callback');
-Route::get('/social/facebook/{mode}', 'Social\FacebookController@redirect');
-Route::get('/social/github/callback', 'Social\GitHubController@callback');
-Route::get('/social/github/{mode}', 'Social\GitHubController@redirect');
-Route::get('/social/google/callback', 'Social\GoogleController@callback');
-Route::get('/social/google/{mode}', 'Social\GoogleController@redirect');
+Route::get('/social/twitter/callback', 'Social\TwitterController@callback')->name('Twitterコールバック');
+Route::get('/social/twitter/{mode}', 'Social\TwitterController@redirect')->name('Twitter');
+Route::get('/social/facebook/callback', 'Social\FacebookController@callback')->name('facebookコールバック');
+Route::get('/social/facebook/{mode}', 'Social\FacebookController@redirect')->name('facebook');
+Route::get('/social/github/callback', 'Social\GitHubController@callback')->name('GitHubコールバック');
+Route::get('/social/github/{mode}', 'Social\GitHubController@redirect')->name('GitHub');
+Route::get('/social/google/callback', 'Social\GoogleController@callback')->name('Googleコールバック');
+Route::get('/social/google/{mode}', 'Social\GoogleController@redirect')->name('Google');
 
 // サイトマップ
 Route::get('/sitemap', 'TopController@sitemap')->name('サイトマップ');
