@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('システム更新履歴') }}">&lt;</a>
+@endsection
+
 @section('content')
     <form method="POST" autocomplete="off">
         {{ csrf_field() }}
@@ -15,7 +19,7 @@
         </div>
         <div class="form-group">
             <label for="open_at">更新日時</label>
-            <input type="datetime-local" name="update_at" id="update_at" class="form-control{{ invalid($errors, 'update_at') }}" value="{{ old('update_at') }}" required>
+            <input type="datetime-local" name="update_at" id="update_at" class="form-control{{ invalid($errors, 'update_at') }}" value="{{ old('update_at') }}" required max="2100-12-31T23:59">
             @include('common.error', ['formName' => 'update_at'])
         </div>
         <button type="submit" class="btn btn-primary">登録</button>
@@ -27,7 +31,7 @@
         <ol class="breadcrumb breadcrumb_footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('システム更新履歴') }}">システム更新履歴</a></li>
-            <li class="breadcrumb-item active" aria-current="page">システム更新内容</li>
+            <li class="breadcrumb-item active" aria-current="page">システム更新履歴登録</li>
         </ol>
     </nav>
 @endsection

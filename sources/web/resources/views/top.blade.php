@@ -70,12 +70,12 @@
         </div>
     </div>
 
-
     <div class="card card-hgn">
         <div class="card-header">お知らせ</div>
         <div class="card-body">
             @foreach ($notices as $notice)
-            {{ $notice->title }}
+                <span style="margin-right: 10px;">{{ $notice->open_at_str }}</span>
+                <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}">{{ $notice->title }}</a>
 
                 @if (!$loop->last)
                     <hr>

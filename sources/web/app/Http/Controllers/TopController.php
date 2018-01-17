@@ -30,7 +30,8 @@ class TopController extends Controller
         $newInfo = NewInformation::getPager();
         $newInfoData = NewInformation::getPagerData($newInfo);
 
-        $notices = Orm\SystemNotice::where('open_at', '<=', DB::raw('NOW()'))
+        $notices = Orm\SystemNotice::select(array('id', 'title', DB::raw('DATE_FORMAT(open_at, "%Y/%m/%d %H:%i") AS open_at_str')))
+            ->where('open_at', '<=', DB::raw('NOW()'))
             ->where('close_at', '>=', DB::raw('NOW()'))
             ->orderBy('open_at', 'DESC')
             ->take(5)

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('システム更新履歴') }}">&lt;</a>
+@endsection
+
 @section('content')
     <h1>システム更新内容</h1>
 

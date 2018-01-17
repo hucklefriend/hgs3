@@ -1,15 +1,10 @@
 @extends('layouts.admin')
 
-@section('content')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-master">
-            <li class="breadcrumb-item"><a href="{{ url2('') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ url2('/admin') }}">管理トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ url2('/system/notice') }}">お知らせ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">お知らせ編集</li>
-        </ol>
-    </nav>
+@section('global_back_link')
+    <a href="{{ route('お知らせ') }}">&lt;</a>
+@endsection
 
+@section('content')
     <form method="POST" autocomplete="off">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
@@ -38,14 +33,24 @@
         </div>
         <div class="form-group">
             <label for="open_at">公開日</label>
-            <input type="datetime-local" name="open_at" id="open_at" class="form-control{{ invalid($errors, 'open_at') }}" value="{{ old('open_at', $notice->open_at) }}" required>
+            <input type="datetime-local" name="open_at" id="open_at" class="form-control{{ invalid($errors, 'open_at') }}" value="{{ old('open_at', $notice->open_at) }}" required max="2100-12-31T23:59">
             @include('common.error', ['formName' => 'open_at'])
         </div>
         <div class="form-group">
             <label for="close_at">公開終了日</label>
-            <input type="datetime-local" name="close_at" id="close_at" class="form-control{{ invalid($errors, 'close_at') }}" value="{{ old('close_at', $notice->close_at) }}" required>
+            <input type="datetime-local" name="close_at" id="close_at" class="form-control{{ invalid($errors, 'close_at') }}" value="{{ old('close_at', $notice->close_at) }}" required max="2100-12-31T23:59">
             @include('common.error', ['formName' => 'close_at'])
         </div>
         <button type="submit" class="btn btn-primary">登録</button>
     </form>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('お知らせ') }}">お知らせ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">お知らせ更新</li>
+        </ol>
+    </nav>
 @endsection

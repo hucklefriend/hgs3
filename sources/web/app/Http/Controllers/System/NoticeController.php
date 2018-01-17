@@ -70,7 +70,7 @@ class NoticeController extends Controller
 
         $notice->save();
 
-        return redirect('system/notice');
+        return redirect()->route('お知らせ');
     }
 
     /**
@@ -107,5 +107,19 @@ class NoticeController extends Controller
         $notice->save();
 
         return $this->edit($notice);
+    }
+
+    /**
+     * 削除
+     *
+     * @param Orm\SystemNotice $notice
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function delete(Orm\SystemNotice $notice)
+    {
+        $notice->delete();
+
+        return redirect()->route('お知らせ');
     }
 }

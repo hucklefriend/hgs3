@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('システム更新履歴更新', ['updateHistory' => $updateHistory->id]) }}">&lt;</a>
+@endsection
+
 @section('content')
     <form method="POST" autocomplete="off">
         {{ method_field('PATCH') }}

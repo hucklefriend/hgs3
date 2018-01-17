@@ -31,7 +31,10 @@
 <body>
 <div class="fixed-top">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url2('') }}">β版</a>
+        <span id="global_back_link">
+            @yield('global_back_link')
+        </span>
+        <a class="navbar-brand" href="{{ route('トップ') }}">β版</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -86,7 +89,7 @@
     <div class="container-fluid">
         <div style="display:flex;">
             <div>
-                @yield('breadcrumb')
+                <div class="d-none d-sm-none d-md-block">@yield('breadcrumb')</div>
             </div>
             <div style="margin-left: auto;font-size: 80%;">
                 <a href="{{ route('サイトマップ') }}">サイトマップ</a>

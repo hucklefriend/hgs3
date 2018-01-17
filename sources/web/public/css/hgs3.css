@@ -250,3 +250,19 @@ h1 {
 .btn_area {
     margin: 1rem 0;
 }
+
+#global_back_link {
+    width: 20px;
+    height: 100%;
+}
+
+#global_back_link a {
+    display: block;
+    margin: auto;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+#global_back_link a img {
+    width: 15px;
+    height: 20px;
+}
