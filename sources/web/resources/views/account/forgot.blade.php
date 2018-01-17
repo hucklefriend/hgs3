@@ -11,7 +11,7 @@
         パスワード再設定のURLをお送りしますので、URLにアクセスしてパスワードを再設定してください。
     </p>
 
-    <form method="POST" action="{{ route('仮パスワードメール送信') }}">
+    <form method="POST" action="{{ route('パスワード再設定メール送信') }}">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="mail">メールアドレス</label>

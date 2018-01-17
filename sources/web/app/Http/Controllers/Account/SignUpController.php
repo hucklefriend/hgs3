@@ -42,7 +42,7 @@ class SignUpController extends Controller
         // 登録無視対象か？
         $ignore = Orm\IgnoreProvisionalRegistrations::find($emailHash);
         if ($ignore != null) {
-            return view('account.alreadyRegistered');
+            return view('account.signup.registeredError');
         }
 
         // 現状のデータを取得
@@ -67,10 +67,10 @@ class SignUpController extends Controller
                 Log::error($e->getMessage());
                 Log::error($e->getTraceAsString());
 
-                return view('account.sendPRMailError');
+                return view('account.signup.mailError');
             }
 
-            return view('account.sendPRMail');
+            return view('account.signup.mailSent');
         } else {
             return view('common.systemError');
         }
@@ -84,16 +84,12 @@ class SignUpController extends Controller
      */
     public function register($token)
     {
-        $signUp = new SignUp();
-
-        if (!$signUp->validateToken($token)) {
-            $signUp->deleteToken($token);
-            return view('account.tokenError');
+        if (!SignUp::validateToken($token)) {
+            SignUp::deleteToken($token);
+            return view('account.singup.tokenError');
         } else {
-            $orm = Orm\UserProvisionalRegistration::where('token', $token)
-                ->first();
-
-            return view('account.register', [
+            $orm = Orm\UserProvisionalRegistration::where('token', $token)->first();
+            return view('account.singup.register', [
                 'pr' => $orm
             ]);
         }
@@ -104,20 +100,18 @@ class SignUpController extends Controller
      *
      * @param RegisterRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function registration(RegisterRequest $request)
     {
-        $signUp = new SignUp();
-
         $token = $request->get('token');
 
-        if (!$signUp->validateToken($token)) {
-            $signUp->deleteToken($token);
-            return view('account.tokenError');
+        if (!SignUp::validateToken($token)) {
+            SignUp::deleteToken($token);
+            return view('account.signup.tokenError');
         } else {
-            $signUp->register($token, $request->get('name'), $request->get('password'));
-
-            return view('account.complete');
+            SignUp::register($token, $request->get('name'), $request->get('password'));
+            return view('account.signup.complete');
         }
     }
 }

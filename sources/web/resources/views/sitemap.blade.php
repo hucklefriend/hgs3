@@ -26,7 +26,8 @@
         <li class="list-group-item"><a href="{{ url2('mypage') }}">マイページ</a></li>
         @else
         <li class="list-group-item"><a href="{{ route('ログイン') }}">ログイン</a></li>
-        <li class="list-group-item"><a href="{{ route('ユーザー登録') }}">ユーザー登録</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザー登録') }}">ユーザー登録</a></li>
+            <li class="list-group-item"><a href="{{ route('パスワード再設定') }}">パスワードを忘れた</a></li>
         @endif
 
         @if (is_data_editor())

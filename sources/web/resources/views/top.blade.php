@@ -42,7 +42,14 @@
                         <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                             <input id="password" type="password" class="form-control form-control-sm" name="password" required placeholder="パスワード">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-sm">ログイン</button>
+                        <div style="display:flex;">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-sm">ログイン</button>
+                            </div>
+                            <div style="margin-left: auto;">
+                                <a href="{{ route('パスワード再設定') }}">パスワードを忘れた</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

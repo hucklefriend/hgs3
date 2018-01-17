@@ -6,10 +6,9 @@
 namespace Hgs3\Http\Controllers\Account;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Account\RegisterRequest;
-use Hgs3\Http\Requests\Account\SendPRMailRequest;
-use Hgs3\Mail\PasswordReset;
-use Hgs3\Mail\ProvisionalRegistration;
+use Hgs3\Http\Requests\Account\PasswordResetRequest;
+use Hgs3\Http\Requests\Account\PasswordResetMailRequest;
+use Hgs3\Models\Account\PasswordReset;
 use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
@@ -31,21 +30,20 @@ class ForgotController extends Controller
     /**
      * メール送信
      *
-     * @param SendPRMailRequest $request
+     * @param PasswordResetMailRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function sendPasswordResetMail(SendPRMailRequest $request)
+    public function sendPasswordResetMail(PasswordResetMailRequest $request)
     {
         $email = $request->get('email');
 
         // 登録されているメールアドレスか？
-        $user = User::where('email', $email)
-            ->first();
+        $user = User::where('email', $email)->first();
 
         // メールアドレスが存在しない
         if (empty($user)) {
-            return view('account.sendPasswordResetMailError');
+            return view('account.forgot.mailError');
         }
 
         // メール送信済みか？
@@ -57,7 +55,7 @@ class ForgotController extends Controller
         } else {
             // 無視対象
             if ($passwordReset->ignore == 1) {
-                return view('account.sendPasswordResetMailError');
+                return view('account.forgot.mailError');
             }
         }
 
@@ -73,39 +71,34 @@ class ForgotController extends Controller
             try {
                 // メール送信
                 Mail::to($email)
-                    ->send(new PasswordReset($passwordReset->token));
+                    ->send(new \Hgs3\Mail\PasswordReset($passwordReset->token));
             } catch (\Exception $e) {
                 Log::error($e->getMessage());
                 Log::error($e->getTraceAsString());
 
-                return view('account.sendPasswordResetMailError');
+                return view('account.forgot.mailError');
             }
 
-            return view('account.sendPRMail');
+            return view('account.forgot.mailSent');
         } else {
             return view('common.systemError');
         }
     }
 
     /**
-     * 登録画面
+     * パスワード入力画面
      *
      * @param string $token
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function register($token)
+    public function reset($token)
     {
-        $signUp = new SignUp();
-
-        if (!$signUp->validateToken($token)) {
-            $signUp->deleteToken($token);
-            return view('account.tokenError');
+        if (!PasswordReset::validateToken($token)) {
+            PasswordReset::deleteToken($token);
+            return view('account.forgot.tokenError');
         } else {
-            $orm = Orm\UserProvisionalRegistration::where('token', $token)
-                ->first();
-
-            return view('account.register', [
-                'pr' => $orm
+            return view('account.forgot.reset', [
+                'token' => $token
             ]);
         }
     }
@@ -113,22 +106,20 @@ class ForgotController extends Controller
     /**
      * 本登録
      *
-     * @param RegisterRequest $request
+     * @param PasswordResetRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function registration(RegisterRequest $request)
+    public function update(PasswordResetRequest $request)
     {
-        $signUp = new SignUp();
-
         $token = $request->get('token');
 
-        if (!$signUp->validateToken($token)) {
-            $signUp->deleteToken($token);
-            return view('account.tokenError');
+        if (!PasswordReset::validateToken($token)) {
+            PasswordReset::deleteToken($token);
+            return view('account.forgot.tokenError');
         } else {
-            $signUp->register($token, $request->get('name'), $request->get('password'));
+            PasswordReset::reset($token, $request->get('password'));
 
-            return view('account.complete');
+            return view('account.forgot.complete');
         }
     }
 }
