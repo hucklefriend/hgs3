@@ -39,6 +39,10 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::post('/timeline/add', 'TimelineController@add');
     Route::delete('/timeline/', 'TimelineController@remove');
 
+
+    // 管理者によるサイト管理
+    Route::get('/admin/site/approval', 'Site\ApprovalController@index')->name('承認待ちサイト一覧');
+
     // デバッグ用
     Route::get('/test', 'TopController@test');
 });
@@ -114,9 +118,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@site');
     
     // マイページ
-    Route::get('/mypage', 'User\MyPageController@index');
-    Route::get('/user/profile/edit', 'User\ProfileController@edit');
-    Route::patch('/user/profile/edit', 'User\ProfileController@update');
+    Route::get('/mypage', 'User\MyPageController@index')->name('マイページ');
+    Route::get('/user/profile/edit', 'User\ProfileController@edit')->name('プロフィール編集');
+    Route::patch('/user/profile/edit', 'User\ProfileController@update')->name('プロフィール編集実行');
     Route::get('/user/profile/change_icon', 'User\ProfileController@selectIcon');
     Route::patch('/user/profile/change_icon', 'User\ProfileController@changeIcon');
     Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon');

@@ -33,9 +33,9 @@
                 <a href="{{ url2('user/profile/config') }}" class="btn btn-outline-dark">設定</a>
             </div>
             @if (is_admin())
-            <a href="{{ url2('user/profile/config') }}" class="btn btn-outline-success">管理メニュー</a>
+            <a href="{{ route('管理メニュー') }}" class="btn btn-outline-success">管理メニュー</a>
             @endif
-            <a href="{{ url2('auth/logout') }}" class="btn btn-outline-danger" style="margin-left: 20px;">ログアウト</a>
+            <a href="{{ route('ログアウト') }}" class="btn btn-outline-danger" style="margin-left: 20px;">ログアウト</a>
         @endif
     </div>
 
