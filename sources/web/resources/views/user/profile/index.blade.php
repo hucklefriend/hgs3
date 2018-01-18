@@ -32,7 +32,10 @@
                 <a href="{{ url2('user/profile/edit') }}" class="btn btn-outline-dark">プロフィール編集</a>
                 <a href="{{ url2('user/profile/config') }}" class="btn btn-outline-dark">設定</a>
             </div>
-            <a href="{{ url2('auth/logout') }}" class="btn btn-outline-danger">ログアウト</a>
+            @if (is_admin())
+            <a href="{{ url2('user/profile/config') }}" class="btn btn-outline-success">管理メニュー</a>
+            @endif
+            <a href="{{ url2('auth/logout') }}" class="btn btn-outline-danger" style="margin-left: 20px;">ログアウト</a>
         @endif
     </div>
 

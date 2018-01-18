@@ -14,6 +14,9 @@
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
+    // 管理メニュー
+    Route::get('/admin', 'AdminController@index')->name('管理メニュー');
+
     // お知らせ
     Route::get('/system/notice/add', 'System\NoticeController@add')->name('お知らせ登録');
     Route::post('/system/notice/add', 'System\NoticeController@insert')->name('お知らせ登録処理');

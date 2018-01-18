@@ -11,15 +11,10 @@ use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Site\SiteRequest;
+use Hgs3\Log;
 use Hgs3\Models\Site;
-use Hgs3\Models\Site\Good;
 use Hgs3\Models\Orm;
-use Hgs3\Models\User\FavoriteSite;
-use Hgs3\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
 
 class SiteManageController extends Controller
 {
@@ -94,7 +89,7 @@ class SiteManageController extends Controller
 
         // 本人しか引き継げない
         if (!Site\TakeOver::isOwner(Auth::user(), $hgs2SiteId)) {
-            return abort(403);
+            return $this->forbidden(['site_id' => $hgs2SiteId]);
         }
 
         return view('user.siteManage.add', [
@@ -129,10 +124,14 @@ class SiteManageController extends Controller
                 $site->out_count = $hgs2Site->out;
                 $site->registered_timestamp = $hgs2Site->registered_date;
             }
+
+            $isTakeOver = true;
         } else {
             $site->in_count = 0;
             $site->out_count = 0;
             $site->registered_timestamp = time();
+
+            $isTakeOver = false;
         }
 
         $this->setRequestData($site, $request);
@@ -149,9 +148,11 @@ class SiteManageController extends Controller
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
 
-        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner)) {
+        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner, $isTakeOver)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
+        } else {
+            Log::info('サイト登録成功' . Auth::id(), $request->toArray());
         }
 
         session(['a' => 1]);
@@ -169,7 +170,7 @@ class SiteManageController extends Controller
     {
         // 本人しか更新できない
         if ($site->user_id != Auth::id()) {
-            return abort(403);
+            return $this->forbidden(['site_id' => $site->id]);
         }
 
         // バナーのフラグを-1（変更しない）にしとく
@@ -194,7 +195,7 @@ class SiteManageController extends Controller
     {
         // 本人しか更新できない
         if ($site->user_id != Auth::id()) {
-            return abort(403);
+            return $this->forbidden(['site_id' => $site->id]);
         }
 
         $this->setRequestData($site, $request);
@@ -211,14 +212,16 @@ class SiteManageController extends Controller
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
 
-        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner)) {
+        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner, false)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
+        } else {
+            Log::info('サイト更新成功' . Auth::id(), $request->toArray());
         }
 
         session(['u' => 1]);
 
-        return redirect('site/detail/' . $site->id);
+        return redirect()->route('サイト詳細', ['site' => $site->id]);
     }
 
     /**
@@ -250,11 +253,13 @@ class SiteManageController extends Controller
     {
         // 本人しか削除できない
         if ($site->user_id != Auth::id()) {
-            return abort(403);
+            return $this->forbidden(['site_id' => $site->id]);
         }
 
-        Site::delete($site);
+        if (Site::delete($site)) {
+            Log::info('サイト削除成功' . Auth::id(), $site->toArray());
+        }
 
-        return redirect('user/profile/' . Auth::id() . '/site');
+        return redirect()->route('サイト管理');
     }
 }

@@ -23,10 +23,11 @@ class Site
      * @param Orm\Site $site
      * @param UploadedFile|null $listBanner
      * @param UploadedFile|null $detailBanner
+     * @param bool $isTakeOver
      * @return bool
      * @throws \Exception
      */
-    public static function save(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner)
+    public static function save(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isTakeOver)
     {
         $isAdd = $site->id === null;
 
@@ -54,15 +55,23 @@ class Site
             if ($site->id) {
                 self::saveHandleSofts($site->id, $handleSoftIds);
 
-                self::saveSearchIndex($site, $handleSoftIds);
-
                 if ($isAdd) {
                     // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
                     self::saveBanner($site, $listBanner, $detailBanner);
                     $site->save();
 
-                    // 新着サイトに登録
-                    NewArrival::add($site->id);
+                    // 引き継ぎの場合は新着サイトに登録
+                    if ($isTakeOver) {
+                        NewArrival::add($site->id);
+
+                        // 検索インデックスへの登録
+                        self::saveSearchIndex($site, $handleSoftIds);
+                    }
+
+                    // 新規登録の場合、認証が必要なので検索インデックスへは登録しない
+                } else {
+                    // 更新の場合は検索インデックスの更新
+                    self::saveSearchIndex($site, $handleSoftIds);
                 }
             }
 
@@ -80,20 +89,26 @@ class Site
             return false;
         }
 
-        // タイムライン
+        // サイト追加タイムライン
         if ($isAdd) {
-            Timeline\FollowUser::addAddSiteText($user, $site);
+            // 引き継ぎはこのまま登録させるのでタイムラインに登録
+            if ($isTakeOver) {
+                Timeline\FollowUser::addAddSiteText($user, $site);
 
-            if (!empty($handleSoftIds)) {
-                $softHash = Orm\GameSoft::getHash($handleSoftIds);
-                foreach ($handleSoftIds as $softId) {
-                    if (isset($softHash[$softId])) {
-                        Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
+                if (!empty($handleSoftIds)) {
+                    $softHash = Orm\GameSoft::getHash($handleSoftIds);
+                    foreach ($handleSoftIds as $softId) {
+                        if (isset($softHash[$softId])) {
+                            Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
+                        }
                     }
+                    unset($softHash);
                 }
-                unset($softHash);
+            } else {
+                // 新規登録は、管理人に通知
             }
         } else {
+            // サイト更新タイムライン
             Timeline\FollowUser::addUpdateSiteText($user, $site);
 
             // 直前に取り扱ってないゲームを追加
