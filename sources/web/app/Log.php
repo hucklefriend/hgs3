@@ -110,4 +110,15 @@ class Log extends \Illuminate\Support\Facades\Log
     {
         return parent::emergency($message, $context);
     }
+
+    /**
+     * 例外エラー
+     *
+     * @param \Exception $e
+     */
+    public static function exceptionError(\Exception $e)
+    {
+        self::error($e->getMessage());
+        self::error($e->getTraceAsString());
+    }
 }

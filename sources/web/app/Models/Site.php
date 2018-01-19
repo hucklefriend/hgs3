@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models;
 
+use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Site\Footprint;
 use Hgs3\Models\Site\NewArrival;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Hgs3\Models\Timeline;
+use Illuminate\Support\Facades\Mail;
 
 class Site
 {
@@ -56,6 +58,8 @@ class Site
                 self::saveHandleSofts($site->id, $handleSoftIds);
 
                 if ($isAdd) {
+                    $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
+
                     // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
                     self::saveBanner($site, $listBanner, $detailBanner);
                     $site->save();
@@ -106,6 +110,21 @@ class Site
                 }
             } else {
                 // 新規登録は、管理人に通知
+                // TODO 実装
+
+                // TODO 管理人のタイムラインに流す
+
+                // 管理人にメールを飛ばす
+                try {
+                    // メール送信
+                    Mail::to(env('ADMIN_MAIL'))
+                        ->send(new \Hgs3\Mail\SiteApprovalWait($site));
+
+                    Log::info('管理人にメール飛ばした');
+                } catch (\Exception $e) {
+                    Log::error($e->getMessage());
+                    Log::error($e->getTraceAsString());
+                }
             }
         } else {
             // サイト更新タイムライン

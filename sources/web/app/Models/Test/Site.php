@@ -11,6 +11,8 @@ class Site
 {
     /**
      * テストデータ生成
+     *
+     * @throws \Exception
      */
     public static function create()
     {
@@ -60,7 +62,7 @@ class Site
                 rtrim($handleSoft, ',');
                 $orm->handle_soft = $handleSoft;
 
-                \Hgs3\Models\Site::save($u, $orm, null, null);
+                \Hgs3\Models\Site::save($u, $orm, null, null, rand(0, 100) > 80);
             }
         }
     }

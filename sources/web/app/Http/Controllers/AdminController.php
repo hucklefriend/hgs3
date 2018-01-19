@@ -6,8 +6,7 @@
 namespace Hgs3\Http\Controllers;
 
 use Hgs3\Models\Orm;
-use Hgs3\Models\Orm\NewInformation;
-use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Site;
 
 class AdminController extends Controller
 {
@@ -19,7 +18,7 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin', [
-            'approvalWaitNum' => 0
+            'approvalWaitNum' => Site\Approval::getWaitNum()
         ]);
     }
 }

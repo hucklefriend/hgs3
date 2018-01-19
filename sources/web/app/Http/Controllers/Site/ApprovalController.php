@@ -6,20 +6,9 @@
 
 namespace Hgs3\Http\Controllers\Site;
 
-use Hgs3\Constants\Site\Gender;
-use Hgs3\Constants\Site\MainContents;
-use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Site\SiteRequest;
 use Hgs3\Models\Site;
-use Hgs3\Models\Site\Good;
 use Hgs3\Models\Orm;
-use Hgs3\Models\User\FavoriteSite;
-use Hgs3\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
 
 class ApprovalController extends Controller
 {
@@ -30,8 +19,34 @@ class ApprovalController extends Controller
      */
     public function index()
     {
-        return view('site.index', Site::getIndexData());
+        return view('site.approval.index', Site\Approval::getWaitList());
     }
 
 
+    public function judge(Orm\Site $site)
+    {
+
+    }
+
+    /**
+     * 承認
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function approve(Orm\Site $site)
+    {
+        return redirect()->back();
+    }
+
+    /**
+     * 拒否
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function reject(Orm\Site $site)
+    {
+        return redirect()->back();
+    }
 }

@@ -123,6 +123,10 @@ class SiteManageController extends Controller
                 $site->in_count = $hgs2Site->in;
                 $site->out_count = $hgs2Site->out;
                 $site->registered_timestamp = $hgs2Site->registered_date;
+            } else {
+                $site->in_count = 0;
+                $site->out_count = 0;
+                $site->registered_timestamp = time();
             }
 
             $isTakeOver = true;
