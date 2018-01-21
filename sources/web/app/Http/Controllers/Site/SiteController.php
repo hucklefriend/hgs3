@@ -63,8 +63,6 @@ class SiteController extends Controller
     public function detail(Request $request, Orm\Site $site)
     {
         // アクセスできるか
-        
-
 
         $data = ['site' => $site];
 

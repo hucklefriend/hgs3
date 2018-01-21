@@ -5,9 +5,28 @@
 @endsection
 
 @section('content')
-    <table>
 
+    <h1>承認待ちサイト一覧</h1>
+
+    <table class="table table-responsive">
+        <tr>
+            <th>サイト名</th>
+            <th>登録日時</th>
+        </tr>
+        @foreach ($sites as $site)
+            <tr>
+                <td>
+                    <a href="{{ route('サイト判定', ['site' => $site->id]) }}">{{ $site->name }}</a>
+                </td>
+                <td>
+                    {{ $site->created_at }}
+                </td>
+            </tr>
+        @endforeach
     </table>
+
+    {{ $sites->render() }}
+
 @endsection
 
 @section('breadcrumb')

@@ -50,6 +50,8 @@ class Site
             if (!$isAdd) {
                 // 更新の場合はサイトIDがわかるので、先にバナー保存
                 self::saveBanner($site, $listBanner, $detailBanner);
+            } else {
+                $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
             }
 
             $site->save();
@@ -58,8 +60,6 @@ class Site
                 self::saveHandleSofts($site->id, $handleSoftIds);
 
                 if ($isAdd) {
-                    $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
-
                     // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
                     self::saveBanner($site, $listBanner, $detailBanner);
                     $site->save();
@@ -216,8 +216,12 @@ class Site
      * @param int $siteId
      * @param array $handleSoftIds
      */
-    private static function saveHandleSofts($siteId, array $handleSoftIds)
+    private static function saveHandleSofts($siteId, ?array $handleSoftIds = null)
     {
+        if ($handleSoftIds === null) {
+            $handleSoftIds = explode(',', $site->handle_soft);
+        }
+
         DB::table('site_handle_softs')
             ->where('site_id', $siteId)
             ->delete();
@@ -246,8 +250,12 @@ class Site
      * @param Orm\Site $site
      * @param array $handleSoftIds
      */
-    private static function saveSearchIndex(Orm\Site $site, array $handleSoftIds)
+    private static function saveSearchIndex(Orm\Site $site, ?array $handleSoftIds = null)
     {
+        if ($handleSoftIds === null) {
+            $handleSoftIds = explode(',', $site->handle_soft);
+        }
+
         // 先に消す
         DB::table('site_search_indices')
             ->where('site_id', $site->id)

@@ -9,6 +9,8 @@ namespace Hgs3\Http\Controllers\Site;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Site;
 use Hgs3\Models\Orm;
+use Hgs3\Models\User;
+use Illuminate\Http\Request;
 
 class ApprovalController extends Controller
 {
@@ -19,34 +21,57 @@ class ApprovalController extends Controller
      */
     public function index()
     {
-        return view('site.approval.index', Site\Approval::getWaitList());
+        return view('site.approval.index', [
+            'sites' => Site\Approval::getWaitList()
+        ]);
     }
 
-
+    /**
+     * 判定画面
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function judge(Orm\Site $site)
     {
-
+        return view('site.approval.judge', [
+            'site'        => $site,
+            'handleSofts' => Site::getSoftWithOriginalPackage($site->id),
+            'webMaster'   => User::find($site->user_id),
+            'isWebMaster' => false
+        ]);
     }
 
     /**
      * 承認
      *
+     * @param Request $request
      * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function approve(Orm\Site $site)
+    public function approve(Request $request, Orm\Site $site)
     {
-        return redirect()->back();
+        Site\Approval::approve($site, '');
+
+        return redirect()->route('承認待ちサイト一覧');
     }
 
     /**
      * 拒否
      *
+     * @param Request $request
      * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function reject(Orm\Site $site)
+    public function reject(Request $request, Orm\Site $site)
     {
-        return redirect()->back();
+        $message = $request->input('message', '');
+        Site\Approval::reject($site, $message);
+
+
+
+        return redirect()->route('承認待ちサイト一覧');
     }
 }

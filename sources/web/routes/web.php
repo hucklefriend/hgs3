@@ -42,6 +42,9 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
 
     // 管理者によるサイト管理
     Route::get('/admin/site/approval', 'Site\ApprovalController@index')->name('承認待ちサイト一覧');
+    Route::get('/admin/site/approval/judge/{site}', 'Site\ApprovalController@judge')->name('サイト判定');
+    Route::patch('/admin/site/approval/judge/{site}/approve', 'Site\ApprovalController@approve')->name('サイト承認');
+    Route::patch('/admin/site/approval/judge/{site}/reject', 'Site\ApprovalController@reject')->name('サイト拒否');
 
     // デバッグ用
     Route::get('/test', 'TopController@test');

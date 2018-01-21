@@ -19,13 +19,9 @@ class User
         echo 'create user test data.'.PHP_EOL;
 
         for ($i = 0; $i < $num; $i++) {
-            $user = new \Hgs3\Models\User([
-                'name'  => self::getSampleName(),
-                'role'  => 1,
-                'adult' => rand(0, 1)
+            \Hgs3\Models\User::register([
+                'name'  => self::getSampleName()
             ]);
-            $user->save();
-            unset($user);
         }
     }
 
