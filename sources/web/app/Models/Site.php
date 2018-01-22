@@ -233,7 +233,7 @@ class Site
             foreach ($handleSoftIds as $softId) {
                 if (!empty($softId) && !isset($hash[$softId])) {
                     $data[] = [
-                            'site_id' => $siteId,
+                            'site_id' => $site->id,
                             'soft_id' => $softId
                         ];
                     $hash[$softId] = 1;
