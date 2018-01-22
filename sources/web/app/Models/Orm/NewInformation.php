@@ -39,6 +39,11 @@ class NewInformation extends \Eloquent
         return $data;
     }
 
+    /**
+     * 新着ゲーム
+     *
+     * @param $gameId
+     */
     public static function addNewGame($gameId)
     {
         $orm = new self();
@@ -48,6 +53,11 @@ class NewInformation extends \Eloquent
         $orm->save();
     }
 
+    /**
+     * 新着サイト
+     *
+     * @param $siteId
+     */
     public static function addNewSite($siteId)
     {
         $orm = new self();
@@ -57,6 +67,11 @@ class NewInformation extends \Eloquent
         $orm->save();
     }
 
+    /**
+     * 更新サイト
+     *
+     * @param $siteId
+     */
     public static function addUpdateSite($siteId)
     {
         $orm = new self();
@@ -66,6 +81,12 @@ class NewInformation extends \Eloquent
         $orm->save();
     }
 
+    /**
+     * 新着レビュー
+     *
+     * @param $gameId
+     * @param $reviewId
+     */
     public static function addNewReview($gameId, $reviewId)
     {
         $orm = new self();

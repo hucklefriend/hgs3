@@ -11,10 +11,10 @@ use Hgs3\Models\Site\Footprint;
 use Hgs3\Models\Site\NewArrival;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\Mail;
+use Hgs3\Log;
 
 class Site
 {
@@ -57,7 +57,7 @@ class Site
             $site->save();
 
             if ($site->id) {
-                self::saveHandleSofts($site->id, $handleSoftIds);
+                self::saveHandleSofts($site, $handleSoftIds);
 
                 if ($isAdd) {
                     // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
@@ -213,17 +213,17 @@ class Site
     /**
      * 取扱いゲームを保存
      *
-     * @param int $siteId
+     * @param Orm\Site $site
      * @param array $handleSoftIds
      */
-    private static function saveHandleSofts($siteId, ?array $handleSoftIds = null)
+    public static function saveHandleSofts(Orm\Site $site, ?array $handleSoftIds = null)
     {
         if ($handleSoftIds === null) {
             $handleSoftIds = explode(',', $site->handle_soft);
         }
 
         DB::table('site_handle_softs')
-            ->where('site_id', $siteId)
+            ->where('site_id', $site->id)
             ->delete();
 
         $hash = [];
@@ -250,7 +250,7 @@ class Site
      * @param Orm\Site $site
      * @param array $handleSoftIds
      */
-    private static function saveSearchIndex(Orm\Site $site, ?array $handleSoftIds = null)
+    public static function saveSearchIndex(Orm\Site $site, ?array $handleSoftIds = null)
     {
         if ($handleSoftIds === null) {
             $handleSoftIds = explode(',', $site->handle_soft);
@@ -550,5 +550,37 @@ SQL;
         return DB::table('sites')
             ->where('user_id', $userId)
             ->count('id') >= env('MAX_SITES');
+    }
+
+    /**
+     * 新着サイトのお知らせやタイムラインなどを登録
+     *
+     * @param User $user
+     * @param Orm\Site $site
+     * @param array $handleGameSoftIds
+     */
+    public static function saveNewSiteInformation(User $user, Orm\Site $site, array $handleSoftIds)
+    {
+        try {
+            // フォローユーザータイムライン
+            Timeline\FollowUser::addAddSiteText($user, $site);
+
+            if (!empty($handleSoftIds)) {
+                $softHash = Orm\GameSoft::getHash($handleSoftIds);
+                foreach ($handleSoftIds as $softId) {
+                    if (isset($softHash[$softId])) {
+                        // ゲームソフトタイムライン
+                        Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
+                    }
+                }
+                unset($softHash);
+            }
+
+            // お知らせ
+            Orm\NewInformation::addNewSite($site->id);
+
+        } catch (\Exception $e) {
+            Log::exceptionError($e);
+        }
     }
 }

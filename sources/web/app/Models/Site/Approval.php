@@ -8,7 +8,9 @@ namespace Hgs3\Models\Site;
 use Hgs3\Models\Orm;
 use Hgs3\Constants;
 use Hgs3\Models\Site;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Timeline;
 
 class Approval
 {
@@ -48,13 +50,28 @@ class Approval
             $site->approve_status = Constants\Site\ApprovalStatus::OK;
 
             // 検索インデックスに登録
-            Site::
+            Site::saveHandleSofts($site);
+            Site::saveSearchIndex($site);
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
 
             \Hgs3\Log::exceptionError($e);
+        }
+
+        // タイムラインに登録
+        $user = User::find($site->user_id);
+        Timeline\FollowUser::addAddSiteText($user, $site);
+
+        if (!empty($handleSoftIds)) {
+            $softHash = Orm\GameSoft::getHash($handleSoftIds);
+            foreach ($handleSoftIds as $softId) {
+                if (isset($softHash[$softId])) {
+                    Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
+                }
+            }
+            unset($softHash);
         }
     }
 
@@ -76,5 +93,10 @@ class Approval
             DB::rollBack();
             \Hgs3\Log::exceptionError($e);
         }
+
+        // タイムラインに登録
+
+
+        //
     }
 }
