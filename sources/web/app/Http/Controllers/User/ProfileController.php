@@ -83,7 +83,7 @@ class ProfileController extends Controller
                 break;
             case 'site': {
                 $data['parts'] = [
-                    'sites'       => Site::getUserSites($user->id),
+                    'sites'       => Site::getUserSites($user->id, $data['isMyself']),
                     'hasHgs2Site' => Site\TakeOver::hasHgs2Site($user)
                 ];
             }

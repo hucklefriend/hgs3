@@ -6,6 +6,7 @@
 namespace Hgs3\Models;
 
 use Hgs3\Constants\Site\ApprovalStatus;
+use Hgs3\Constants\Site\OpenType;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Site\Footprint;
 use Hgs3\Models\Site\NewArrival;
@@ -97,17 +98,7 @@ class Site
         if ($isAdd) {
             // 引き継ぎはこのまま登録させるのでタイムラインに登録
             if ($isTakeOver) {
-                Timeline\FollowUser::addAddSiteText($user, $site);
-
-                if (!empty($handleSoftIds)) {
-                    $softHash = Orm\GameSoft::getHash($handleSoftIds);
-                    foreach ($handleSoftIds as $softId) {
-                        if (isset($softHash[$softId])) {
-                            Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
-                        }
-                    }
-                    unset($softHash);
-                }
+                self::saveNewSiteInformation($user, $site, $handleSoftIds);
             } else {
                 // 新規登録は、管理人に通知
                 // TODO 実装
@@ -352,12 +343,20 @@ SQL;
     /**
      * ユーザーのサイトを取得
      *
-     * @param $userId
+     * @param int $userId
+     * @param bool $isWebmaster
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getUserSites($userId)
+    public static function getUserSites($userId, $isWebmaster)
     {
-        return Orm\Site::where('user_id', $userId)
+        $query = Orm\Site::where('user_id', $userId);
+
+        if (!$isWebmaster) {
+            $query->where('approve_status', ApprovalStatus::OK)
+                ->where('open_type', OpenType::ALL);
+        }
+
+        return $query
             ->orderBy( 'id')
             ->get();
     }
@@ -557,7 +556,7 @@ SQL;
      *
      * @param User $user
      * @param Orm\Site $site
-     * @param array $handleGameSoftIds
+     * @param array $handleSoftIds
      */
     public static function saveNewSiteInformation(User $user, Orm\Site $site, array $handleSoftIds)
     {

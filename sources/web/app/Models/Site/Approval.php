@@ -62,17 +62,7 @@ class Approval
 
         // タイムラインに登録
         $user = User::find($site->user_id);
-        Timeline\FollowUser::addAddSiteText($user, $site);
-
-        if (!empty($handleSoftIds)) {
-            $softHash = Orm\GameSoft::getHash($handleSoftIds);
-            foreach ($handleSoftIds as $softId) {
-                if (isset($softHash[$softId])) {
-                    Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
-                }
-            }
-            unset($softHash);
-        }
+        Site::saveNewSiteInformation($user, $site, explode(',', $site->handle_soft));
     }
 
     /**
