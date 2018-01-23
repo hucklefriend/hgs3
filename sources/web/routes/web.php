@@ -53,24 +53,24 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
 // エディターのみ
 Route::group(['middleware' => ['auth', 'can:editor']], function () {
     // マスター
-    Route::get('/master', 'Master\TopController@index');
+    Route::get('/master', 'Master\TopController@index')->name('マスターメニュー');
 
     // ゲーム会社
-    Route::get('/master/game_company', 'Master\GameCompanyController@index');
-    Route::get('/master/game_company/edit/{gameCompany}', 'Master\GameCompanyController@edit');
-    Route::patch('/master/game_company/edit/{gameCompany}', 'Master\GameCompanyController@update');
+    Route::get('/master/game_company', 'Master\GameCompanyController@index')->name('ゲーム会社マスター');
+    Route::get('/master/game_company/edit/{gameCompany}', 'Master\GameCompanyController@edit')->name('ゲーム会社編集');
+    Route::patch('/master/game_company/edit/{gameCompany}', 'Master\GameCompanyController@update')->name('ゲーム会社編集処理');
 
-    // ゲーム追加
-    Route::get('/game/soft/add', 'Game\SoftController@add');
-    Route::post('/game/soft/add', 'Game\SoftController@insert');
+    // ゲーム登録
+    Route::get('/game/soft/add', 'Game\SoftController@add')->name('ゲームソフト登録');
+    Route::post('/game/soft/add', 'Game\SoftController@insert')->name('ゲームソフト登録処理');
 
     // ゲーム編集
-    Route::get('/game/soft/edit/{soft}', 'Game\SoftController@edit');
-    Route::patch('/game/soft/edit/{soft}', 'Game\SoftController@update');
+    Route::get('/game/soft/edit/{soft}', 'Game\SoftController@edit')->name('ゲームソフト編集');
+    Route::patch('/game/soft/edit/{soft}', 'Game\SoftController@update')->name('ゲームソフト編集処理');
 
     // パッケージ登録
-    Route::get('/game/soft/package/add/{soft}', 'Game\PackageController@add');
-    Route::post('/game/soft/package/add/{soft}', 'Game\PackageController@store');
+    Route::get('/game/soft/package/add/{soft}', 'Game\PackageController@add')->name('パッケージ登録');
+    Route::post('/game/soft/package/add/{soft}', 'Game\PackageController@store')->name('パッケージ登録処理');
 
     // ゲーム会社
     Route::get('/game/company/add', 'Game\CompanyController@add');
@@ -261,11 +261,11 @@ Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@index');
 // フォロー
 
 // コミュニティ
-Route::get('/community', 'Community\CommunityController@index');
-Route::get('/community/g', 'Community\GameCommunityController@index');
+Route::get('/community', 'Community\CommunityController@index')->name('コミュニティトップ');
+Route::get('/community/g', 'Community\GameCommunityController@index')->name('ゲームコミュニティトップ');
 
 // 日記
-Route::get('/diary', 'Diary\DiaryController@index');
+Route::get('/diary', 'Diary\DiaryController@index')->name('日記トップ');
 
 // SNS
 Route::get('/social/twitter/callback', 'Social\TwitterController@callback')->name('Twitterコールバック');

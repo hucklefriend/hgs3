@@ -83,9 +83,7 @@ class Site
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
+            Log::exceptionError($e);
 
             if (env('APP_ENV') == 'local') {
                 throw $e;
@@ -100,14 +98,12 @@ class Site
             if ($isTakeOver) {
                 self::saveNewSiteInformation($user, $site, $handleSoftIds);
             } else {
-                // 新規登録は、管理人に通知
-                // TODO 実装
-
-                // TODO 管理人のタイムラインに流す
-
-                // 管理人にメールを飛ばす
                 try {
-                    // メール送信
+                    // 管理人のタイムラインに流す
+                    $admin = User::getAdmin();
+                    Timeline\ToMe::addSiteApproveText($admin, $site);
+
+                    // 管理人にメール送信
                     Mail::to(env('ADMIN_MAIL'))
                         ->send(new \Hgs3\Mail\SiteApprovalWait($site));
 
@@ -120,6 +116,8 @@ class Site
         } else {
             // サイト更新タイムライン
             Timeline\FollowUser::addUpdateSiteText($user, $site);
+            Timeline\ToMe::addSiteUpdatedText($user, $site);
+            Timeline\FavoriteSite::addUpdateSiteText($site);
 
             // 直前に取り扱ってないゲームを追加
             $softHash = Orm\GameSoft::getHash($handleSoftIds);
@@ -480,8 +478,7 @@ SQL;
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error($e->getMessage());
-            Log::error($e->getMessage());
+            Log::exceptionError($e);
 
             if (env('APP_ENV') == 'local') {
                 throw $e;
@@ -563,12 +560,14 @@ SQL;
         try {
             // フォローユーザータイムライン
             Timeline\FollowUser::addAddSiteText($user, $site);
+            // 個人タイムライン
+            Timeline\ToMe::addSiteRegisteredText($user, $site);
 
             if (!empty($handleSoftIds)) {
                 $softHash = Orm\GameSoft::getHash($handleSoftIds);
                 foreach ($handleSoftIds as $softId) {
                     if (isset($softHash[$softId])) {
-                        // ゲームソフトタイムライン
+                        // お気に入りゲームソフトタイムライン
                         Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
                     }
                 }
@@ -577,7 +576,6 @@ SQL;
 
             // お知らせ
             Orm\NewInformation::addNewSite($site->id);
-
         } catch (\Exception $e) {
             Log::exceptionError($e);
         }

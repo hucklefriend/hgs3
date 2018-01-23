@@ -24,7 +24,7 @@ class Site
         DB::table('site_handle_softs')->truncate();
 
         $users = User::get();
-        $maxUser = $users->count() - 1;
+        $maxUser = $users->count();
 
         $softIds = GameSoft::getIds();
         $maxSoft = count($softIds) - 1;
@@ -35,9 +35,8 @@ class Site
             $u = $users[$i];
             $n = rand(5, 10);
 
-            $orm = new Orm\Site();
             for ($j = 0; $j < $n; $j++) {
-                unset($orm->id);
+                $orm = new Orm\Site();
                 $orm->user_id = $u->id;
                 $orm->name = self::getSampleTitle();
                 $orm->url = 'http://fake.' . str_random(rand(3, 10)) . '.com/';
@@ -63,6 +62,7 @@ class Site
                 $orm->handle_soft = $handleSoft;
 
                 \Hgs3\Models\Site::save($u, $orm, null, null, rand(0, 100) > 80);
+                unset($orm);
             }
         }
     }

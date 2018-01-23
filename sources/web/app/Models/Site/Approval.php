@@ -85,8 +85,7 @@ class Approval
         }
 
         // タイムラインに登録
-
-
-        //
+        $user = User::find($site->user_id);
+        Timeline\ToMe::addSiteRejectText($user, $site);
     }
 }

@@ -178,4 +178,18 @@ class User extends Authenticatable
 
         return null;
     }
+
+    /**
+     * 管理者を取得
+     *
+     * @return mixed
+     */
+    public static function getAdmin()
+    {
+        $mail = env('ADMIN_MAIL');
+
+        return self::where('email', $mail)
+            ->first();
+
+    }
 }

@@ -177,6 +177,71 @@ class ToMe extends TimelineAbstract
     }
 
     /**
+     * サイト登録が完了した
+     *
+     * @param User $user
+     * @param Orm\Site $site
+     */
+    public static function addSiteRegisteredText(User $user, Orm\Site $site)
+    {
+        $text = sprintf('「<a href="%s">%s</a>」の登録が完了しました。',
+            route('サイト詳細', ['site' => $site->id]),
+            $site->name
+        );
+
+        self::insert($user->id, $text);
+    }
+
+    /**
+     * サイト更新が完了した
+     *
+     * @param User $user
+     * @param Orm\Site $site
+     */
+    public static function addSiteUpdatedText(User $user, Orm\Site $site)
+    {
+        $text = sprintf('「<a href="%s">%s</a>」を更新しました。',
+            route('サイト詳細', ['site' => $site->id]),
+            $site->name
+        );
+
+        self::insert($user->id, $text);
+    }
+
+    /**
+     * サイト承認してね
+     *
+     * @param User $user
+     * @param Orm\Site $site
+     */
+    public static function addSiteApproveText(User $user, Orm\Site $site)
+    {
+        $text = sprintf('サイト承認を行ってください。<a href="%s">%s</a>',
+            route('サイト判定', ['site' => $site->id]),
+            $site->name
+        );
+
+        self::insert($user->id, $text);
+    }
+
+    /**
+     * サイトをリジェクトしました
+     *
+     * @param User $user
+     * @param Orm\Site $site
+     */
+    public static function addSiteRejectText(User $user, Orm\Site $site)
+    {
+        $text = sprintf('「<a href="%s">%s</a>」を登録できませんでした。詳しくは詳細画面でご確認ください。',
+            route('サイト詳細', ['site' => $site->id]),
+            $site->name
+        );
+
+        self::insert($user->id, $text);
+    }
+
+
+    /**
      * データ登録
      *
      * @param int $userId
