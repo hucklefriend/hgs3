@@ -33,7 +33,7 @@ class Site
 
         for ($i = 0; $i < $maxUser; $i++) {
             $u = $users[$i];
-            $n = rand(0, 3);
+            $n = rand(5, 10);
 
             $orm = new Orm\Site();
             for ($j = 0; $j < $n; $j++) {

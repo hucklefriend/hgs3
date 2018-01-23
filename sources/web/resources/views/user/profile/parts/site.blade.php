@@ -1,4 +1,13 @@
 @foreach ($sites as $s)
+    <div>
+    @if ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
+        <span class="badge badge-success">公開中</span>
+    @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
+        <span class="badge badge-danger">承認NG</span>
+    @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
+        <span class="badge badge-secondary">承認待ち</span>
+    @endif
+    </div>
     @include('site.common.normal', ['s' => $s, 'noUser' => true])
     @if (!$loop->last) <hr> @endif
 @endforeach

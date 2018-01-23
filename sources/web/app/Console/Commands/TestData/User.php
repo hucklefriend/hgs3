@@ -37,6 +37,6 @@ class User extends Command
      */
     public function handle()
     {
-        \Hgs3\Models\Test\User::create(100);
+        \Hgs3\Models\Test\User::create(20);
     }
 }
