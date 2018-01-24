@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('ゲーム一覧') }}">&lt;</a>
+@endsection
+
 @section('content')
     <div class="text-center">
         <h1>{{ $soft->name }}</h1>
@@ -7,7 +11,7 @@
 
     @if (is_data_editor())
     <div class="text-right">
-        <a href="{{ url2('game/soft/edit/' . $soft->id) }}">データ修正</a>
+        <a href="{{ route('ゲームソフト編集', ['soft' => $soft->id]) }}">データ修正</a>
     </div>
     @endif
     <div class="row">
@@ -20,7 +24,7 @@
                         </div>
                         <div class="col-4 text-right">
                             @if (is_data_editor())
-                            <a href="{{ url('game/soft/package/add') }}/{{ $soft->id }}">追加</a>
+                            <a href="{{ route('パッケージ登録', ['soft' => $soft->id]) }}">追加</a>
                             @endif
                         </div>
                     </div>
@@ -29,8 +33,8 @@
                     @if ($packageNum > 2)
 
                     <script type="text/javascript" src="{{ url2('js/slick.min.js') }}"></script>
-                    <link rel="stylesheet" type="text/css" href="{{ url2('css/slick.css') }}">
-                    <link rel="stylesheet" type="text/css" href="{{ url2('css/slick-theme.css') }}">
+                    <link rel="stylesheet" type="text/css" href="{{ url('css/slick.css') }}">
+                    <link rel="stylesheet" type="text/css" href="{{ url('css/slick-theme.css') }}">
                     <style>
                         .slick-dots {
                             bottom: 0 !important;
@@ -79,7 +83,7 @@
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
                                 <div>
-                                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
+                                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
                                     <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
                                 </div>
                                 <div>{{ $pkg->release_at }}</div>
@@ -93,10 +97,11 @@
                                 <hr>
                                 <div class="row" style="margin-bottom: 20px;">
                                     <div class="col-6">
-                                        <a href="{{ url('game/package/edit') }}/{{ $soft->id }}/{{ $pkg->id }}">編集</a><br>
+                                        <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}">編集</a><br>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <form method="POST" action="{{ url('game/package/delete') }}/{{ $pkg->id }}" onsubmit="return confirm('削除します');">
+                                        <form method="POST" action="{{ route('パッケージ削除処理', ['package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
+                                            {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <button type="submit" class="btn btn-danger btn-sm">削除</button>
                                         </form>
@@ -115,7 +120,7 @@
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
                                 <div>
-                                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company') }}/{{ $pkg->company_id }}">{{ $pkg->company_name }}</a>
+                                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
                                     <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
                                 </div>
                                 <div>{{ $pkg->release_at }}</div>
@@ -129,10 +134,10 @@
                                     <hr>
                                     <div class="row" style="margin-bottom: 20px;">
                                         <div class="col-6">
-                                            <a href="{{ url('game/package/edit') }}/{{ $soft->id }}/{{ $pkg->id }}">編集</a><br>
+                                            <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}">編集</a><br>
                                         </div>
                                         <div class="col-6 text-right">
-                                            <form method="POST" action="{{ url('game/package/delete') }}/{{ $pkg->id }}" onsubmit="return confirm('削除します');">
+                                            <form method="POST" action="{{ route('パッケージ削除処理', ['package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
                                                 {{ method_field('DELETE') }}
                                                 <button type="submit" class="btn btn-danger btn-sm">削除</button>
                                             </form>
@@ -245,19 +250,19 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('review/soft') }}/{{ $soft->id }}">レビューを見る</a>
+                                        <a href="{{ route('ソフト別レビュー一覧', ['soft', $soft->id]) }}">レビューを見る</a>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="text-center">
-                                        <a href="{{ url('review/package_select') }}/{{ $soft->id }}">レビューを書く</a>
+                                        <a href="{{ route('レビューパッケージ選択', ['soft', $soft->id]) }}">レビューを書く</a>
                                     </div>
                                 </div>
                             </div>
                         @elseif ($reviewTotal !== null)
                             <hr>
                             <div class="text-center">
-                                <a href="{{ url('review/soft') }}/{{ $soft->id }}">レビューを見る</a>
+                                <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}">レビューを見る</a>
                             </div>
                         @endif
                 </div>
@@ -281,7 +286,7 @@
                                 <hr>
                             @endforeach
                             <div class="text-center">
-                                <a href="{{ url('site/soft/') }}/{{ $soft->id }}">
+                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}">
                                     サイトを全て見る
                                 </a>
                             </div>
@@ -309,7 +314,7 @@
                             <hr>
                         @endforeach
                         <div class="text-center">
-                            <a href="{{ url('game/favorite/') }}/{{ $soft->id }}">
+                            <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}">
                                 お気に入り登録ユーザーを全て見る
                             </a>
                         </div>
@@ -320,8 +325,8 @@
                 @auth
                 <div class="card-footer">
                     @if ($isFavorite)
-                        <form action="{{ url('user/favorite_soft') }}" method="POST">
-                            <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                        <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST">
+                            {{ csrf_field() }}
                             <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                             {{ method_field('DELETE') }}
                             <div class="text-center">
@@ -330,8 +335,8 @@
                             </div>
                         </form>
                     @else
-                        <form action="{{ url('user/favorite_soft') }}" method="POST">
-                            <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                        <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
+                            {{ csrf_field() }}
                             <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                             <div class="text-center">
                                 <button class="btn btn-info">お気に入りに登録する</button>
@@ -359,7 +364,7 @@
                                         @include('game.common.package_image_small', ['imageUrl' => $seriesSoft->image_url])
                                     </div>
                                     <div class="col-8">
-                                        <a href="{{ url('game/soft') }}/{{ $seriesSoft->id }}">{{ $seriesSoft->name }}</a>
+                                        <a href="{{ route('ゲーム詳細', ['soft' => $seriesSoft->id]) }}">{{ $seriesSoft->name }}</a>
                                     </div>
                                 </div>
                             </li>
@@ -375,4 +380,14 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ str_limit($soft->name, 20) }}</li>
+        </ol>
+    </nav>
 @endsection

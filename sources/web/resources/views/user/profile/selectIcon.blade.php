@@ -5,7 +5,7 @@
 
     <form method="POST" enctype="multipart/form-data">
         {{ method_field('PATCH') }}
-        {{ csrf_tag($csrfToken) }}
+        {{ csrf_field() }}
 
         <p>
             アイコン画像に使える形式は、jpg/gif/png/svg/bmpです。<br>
@@ -46,7 +46,7 @@
     @if ($user->icon_upload_flag)
     <form method="POST" style="margin-top: 20px;">
         {{ method_field('DELETE') }}
-        {{ csrf_tag($csrfToken) }}
+        {{ csrf_field() }}
         <p>デフォルトのアイコン(<i class="fa fa-user-circle user_icon" aria-hidden="true"></i>)に戻す場合はこちら</p>
 
         <button class="btn btn-warning">デフォルトのアイコンに戻す</button>

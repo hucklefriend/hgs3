@@ -141,17 +141,6 @@ function get_hash(array $hash, $id, $default = '---')
 }
 
 /**
- * CSRF用のタグを生成
- *
- * @param $token
- * @return string
- */
-function csrf_tag($token)
-{
-    return new \Illuminate\Support\HtmlString('<input type="hidden" name="_token" value="'.$token.'">');
-}
-
-/**
  * checkboxとradioボタンのchecked判定
  *
  * @param $val1

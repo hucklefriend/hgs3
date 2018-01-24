@@ -181,8 +181,7 @@ class ProfileController extends Controller
     public function selectIcon()
     {
         return view('user.profile.selectIcon', [
-            'user'      => Auth::user(),
-            'csrfToken' => csrf_token()
+            'user' => Auth::user()
         ]);
     }
 

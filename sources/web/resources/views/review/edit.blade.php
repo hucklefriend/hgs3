@@ -23,7 +23,7 @@
         <div class="align-self-top p-3">
             <form method="POST" onsubmit="return confirm('このレビューを削除します。');">
                 {{ method_field('DELETE') }}
-                {{ csrf_tag($csrfToken) }}
+                {{ csrf_field() }}
                 <button class="btn btn-danger">削除</button>
             </form>
         </div>
@@ -33,7 +33,7 @@
 
     <form method="POST">
         {{ method_field('PATCH') }}
-        {{ csrf_tag($csrfToken) }}
+        {{ csrf_field() }}
 
         <div class="form-group">
             <label for="title">一言(タイトル)</label>

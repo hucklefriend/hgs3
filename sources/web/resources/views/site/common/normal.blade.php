@@ -3,18 +3,18 @@ if (!isset($noUser))
     $noUser = false;
 @endphp
 <div>
-    <h5><a href="{{ url('site/detail') }}/{{ $s->id }}">{{ $s->name }}</a></h5>
+    <h5><a href="{{ route('サイト詳細', ['site' => $s->id]) }}">{{ $s->name }}</a></h5>
     @if (!empty($s->list_banner_url))
         <div class="list_site_banner_outline">
-            <a href="{{ url('site/detail') }}/{{ $s->id }}"><img src="{{ $s->list_banner_url }}" class="img-responsive"></a>
+            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img src="{{ $s->list_banner_url }}" class="img-responsive"></a>
         </div>
     @endif
-    <div><a href="{{ $s->url }}" target="_blank">{{ $s->url }}</a></div>
+    <div><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank">{{ $s->url }}</a></div>
     <div class="site_presentation"><small>{{ mb_strimwidth($s->presentation, 0, 100, '...') }}</small></div>
     @if (!$noUser)
     <div>
         <i class="fa fa-user-o" aria-hidden="true"></i>
-        <a href="{{ url('user/profile') }}/{{ $s->user_id }}">{{ un($users, $s->user_id) }}</a>
+        <a href="{{ route('プロフィール', ['showId' => $s->show_id]) }}">{{ un($users, $s->user_id) }}</a>
     </div>
     @endif
 </div>

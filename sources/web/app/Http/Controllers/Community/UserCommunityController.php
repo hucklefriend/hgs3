@@ -119,7 +119,6 @@ class UserCommunityController extends Controller
         $data['userCommunity'] = $userCommunity;
         $data['topic'] = $topic;
         $data['writer'] = User::find($topic->user_id);
-        $data['csrfToken'] = csrf_token();
         $data['userId'] = Auth::id();
 
         return view('community.user.topic', $data);

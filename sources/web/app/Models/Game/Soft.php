@@ -79,8 +79,6 @@ class Soft
             $data['playedGame'] = Orm\UserPlayedSoft::findByUserAndGame(Auth::id(), $soft->id);
         }
 
-        $data['csrfToken'] = csrf_token();
-
         return $data;
     }
 

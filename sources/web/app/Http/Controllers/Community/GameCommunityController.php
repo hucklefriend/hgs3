@@ -151,7 +151,6 @@ class GameCommunityController extends Controller
         $data['soft'] = $soft;
         $data['topic'] = $topic;
         $data['writer'] = User::find($topic->user_id);
-        $data['csrfToken'] = csrf_token();
         $data['userId'] = Auth::id();
         $data['package'] = Orm\GamePackage::find($soft->original_package_id);
         $data['isMember'] = $gc->isMember($soft->id, Auth::id());

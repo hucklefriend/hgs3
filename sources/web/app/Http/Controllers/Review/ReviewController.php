@@ -74,13 +74,12 @@ class ReviewController extends Controller
         $packages = $review->getPackageList($soft->id);
 
         return view('review.packageSelect', [
-            'soft'      => $soft,
-            'packages'  => $packages,
-            'shops'     => Package::getShopData(array_pluck($packages, 'id')),
-            'drafts'    => Orm\ReviewDraft::getHashBySoft(Auth::id(), $soft->id),
-            'written'   => Orm\Review::getHashBySoft(Auth::id(), $soft->id),
-            'csrfToken' => csrf_token(),
-            'dateInt'   => $this->getDateInt()
+            'soft'     => $soft,
+            'packages' => $packages,
+            'shops'    => Package::getShopData(array_pluck($packages, 'id')),
+            'drafts'   => Orm\ReviewDraft::getHashBySoft(Auth::id(), $soft->id),
+            'written'  => Orm\Review::getHashBySoft(Auth::id(), $soft->id),
+            'dateInt'  => $this->getDateInt()
         ]);
     }
 
@@ -262,8 +261,7 @@ class ReviewController extends Controller
 
         return view('review.edit', [
             'review'      => $review,
-            'gamePackage' => Orm\GamePackage::find($review->package_id),
-            'csrfToken'   => csrf_token()
+            'gamePackage' => Orm\GamePackage::find($review->package_id)
         ]);
     }
 
@@ -343,13 +341,12 @@ class ReviewController extends Controller
         }
 
         return view('review.detail', [
-            'soft'      => $soft,
-            'package'   => Orm\GamePackage::find($review->package_id),
-            'review'    => $review,
-            'isWriter'  => $isWriter,
-            'hasGood'   => $hasGood,
-            'user'      => User::find($review->user_id),
-            'csrfToken' => csrf_token()
+            'soft'     => $soft,
+            'package'  => Orm\GamePackage::find($review->package_id),
+            'review'   => $review,
+            'isWriter' => $isWriter,
+            'hasGood'  => $hasGood,
+            'user'     => User::find($review->user_id)
         ]);
     }
 

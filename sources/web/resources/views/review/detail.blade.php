@@ -44,13 +44,13 @@
                 @if ($hasGood)
                     <form action="{{ url('review/good') }}/{{ $review->id }}" method="POST">
                         {{ method_field('DELETE') }}
-                        <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                        {{ csrf_field() }}
                         {{ $review->post_at }}
                         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $review->good_num }}&nbsp;<button class="btn btn-sm btn-warning">いいね取り消し</button>
                     </form>
                 @else
                     <form action="{{ url('review/good') }}/{{ $review->id }}" method="POST">
-                        <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                        {{ csrf_field() }}
                         {{ $review->post_at }}
                         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $review->good_num }} &nbsp;<button class="btn btn-sm btn-info">いいね</button>
                     </form>

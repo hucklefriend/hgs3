@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('サイト') }}">&lt;</a>
+    <a href="{{ route('サイトトップ') }}">&lt;</a>
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@
                 </li>
                 <li style="margin-left: 20px;">
                     <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')">
-                        {{ csrf_tag($csrfToken) }}
+                        {{ csrf_field() }}
                         {{ method_field('DELETE') }}
 
                         <button class="btn btn-danger">サイトを削除する</button>
@@ -50,7 +50,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb_footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイト') }}">サイト</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
             <li class="breadcrumb-item active" aria-current="page">サイト詳細</li>
         </ol>
     </nav>

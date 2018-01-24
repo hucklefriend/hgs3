@@ -56,7 +56,7 @@
             @if (isset($drafts[$pkg->id]))
                 <div class="align-self-end" style="margin-left: 10px;">
                     <form method="POST" action="{{ url2('review/draft/' . $pkg->id) }}" onsubmit="return confirm('下書きを削除してよろしいですか？');">
-                        {{ csrf_tag($csrfToken) }}
+                        {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <button class="btn btn-warning btn-sm">下書きを削除</button>
                     </form>

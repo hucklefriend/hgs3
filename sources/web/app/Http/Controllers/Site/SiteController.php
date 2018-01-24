@@ -85,9 +85,7 @@ class SiteController extends Controller
         }
 
         $data['webMaster'] = User::find($site->user_id);
-        $data['isWebMaster'] = $data['webMaster']->id == Auth::id();
-
-        $data['csrfToken'] = csrf_token();
+        $data['isWebMaster'] = $isWebMaster;
 
         if ($request->session()->pull('a') != null) {
             $data['defaultMessage'] = '';

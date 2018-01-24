@@ -9,7 +9,7 @@
             {{ $topic->wrote_at }}
             @if ($topic->user_id == $userId)
                 <form method="POST" action="{{ url('community/g/' . $soft->id  . '/topic/' . $topic->id) }}" class="d-inline">
-                    <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                    {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger btn-sm">削除</button>
                 </form>
@@ -32,7 +32,7 @@
 
             @if ($res->user_id == $userId)
                 <form method="POST" action="{{ url2('community/g/' . $soft->id . '/topic_response/' . $res->id) }}">
-                    <input type="hidden" name="_token" value="{{ $csrfToken }}">
+                    {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger btn-sm">削除</button>
                 </form>
@@ -45,7 +45,7 @@
     <hr>
 
     <form method="POST" action="{{ url('community/g/' . $gameSoft->id . '/topic/' . $topic->id) }}">
-        <input type="hidden" name="_token" value="{{ $csrfToken }}">
+        {{ csrf_field() }}
         <div class="form-group row">
             <label for="comment" class="col-3 col-form-label">内容</label>
             <div class="col-9">

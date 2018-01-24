@@ -1,10 +1,14 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('トップ') }}">&lt;</a>
+@endsection
+
 @section('content')
 
     @if (is_data_editor())
     <div class="text-right">
-        <a href="{{ url2('game/soft/add') }}">ゲーム追加</a>
+        <a href="{{ route('ゲームソフト登録') }}">ゲーム追加</a>
     </div>
     @endif
     <div class="card">
@@ -94,7 +98,7 @@
                 <section id="{{ $p[0] }}gyo"@if (!$loop->first) style="display:none;"@endif>
                     @if (isset($list[$p[1]]))
                         @foreach ($list[$p[1]] as $soft)
-                            <a href="{{ url('game/soft') }}/{{ $soft->id }}">{{ $soft->name }}</a>
+                            <a href="{{ route('ゲーム詳細', ['soft' => $soft->id]) }}">{{ $soft->name }}</a>
                             @if (!$loop->last)
                                 <hr>
                             @endif
