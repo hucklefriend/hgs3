@@ -75,12 +75,6 @@
             </tr>
             </tbody>
         </table>
-
-        @if ($isWebMaster)
-            <div class="text-right">
-                <a href="{{ url2('site/edit/' . $site->id) }}">サイト情報を編集</a>
-            </div>
-        @endif
     </div>
 </div>
 <br>

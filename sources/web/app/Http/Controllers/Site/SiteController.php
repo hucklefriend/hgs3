@@ -6,6 +6,7 @@
 
 namespace Hgs3\Http\Controllers\Site;
 
+use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Constants\Site\Gender;
 use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
@@ -62,7 +63,14 @@ class SiteController extends Controller
      */
     public function detail(Request $request, Orm\Site $site)
     {
+        $isWebMaster = $site->user_id == Auth::id();
+
         // アクセスできるか
+        if ($site->approval_status != ApprovalStatus::OK) {
+            if (!$isWebMaster) {
+                return view('site.private');
+            }
+        }
 
         $data = ['site' => $site];
 

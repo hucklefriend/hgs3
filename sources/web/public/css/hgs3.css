@@ -265,3 +265,16 @@ h1 {
 #global_back_link a:hover {
     color: #777777;
 }
+
+.card_soft {
+    margin: 5px 5px;
+    width: 120px;
+}
+
+ul.horizontal li{
+    display: inline-block;
+}
+
+button.btn:hover {
+    cursor: pointer;
+}

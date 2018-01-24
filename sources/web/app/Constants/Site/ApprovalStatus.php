@@ -13,8 +13,8 @@ class ApprovalStatus
 
     private static $text = [
         self::WAIT   => '承認待ち',
-        self::REJECT => 'NG',
-        self::OK     => 'OK'
+        self::REJECT => '登録NG',
+        self::OK     => '公開中'
     ];
 
     /**

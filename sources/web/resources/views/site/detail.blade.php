@@ -1,26 +1,57 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('サイト') }}">&lt;</a>
+@endsection
+
 @section('content')
-    @verbatim
-    <style>
-        .card_soft {
-            margin: 5px 5px;
-            width: 120px;
-        }
-    </style>
-    @endverbatim
 
-    @include('site.common.detail')
-
-    @if ($isWebMaster)
-        <div style="margin-top: 3rem;">
-            <form method="POST" action="{{ url2('/site/delete/' . $site->id) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')">
-                {{ csrf_tag($csrfToken) }}
-                {{ method_field('DELETE') }}
-
-                <button class="btn btn-danger">サイトを削除する</button>
-            </form>
+    @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
+        <div>
+            <span class="badge badge-secondary">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($site->approval_status) }}</span>
+            <p>承認待ち状態です。登録者以外は閲覧できません。</p>
+        </div>
+    @elseif ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">登録できませんでした。</h4>
+            <p>
+                内容に問題があるため、登録できませんでした。<br>
+                下記に記載の問題点をご確認いただき、サイト情報を修正してください。
+            </p>
+            <hr>
+            <p>{!! nl2br(e($site->reject_reason)) !!}</p>
         </div>
     @endif
 
+
+    @if ($isWebMaster)
+        <div class="text-right">
+            <ul class="horizontal">
+                <li>
+                    <a href="{{ route('サイト編集', ['site' => $site->id]) }}" class="btn btn-outline-primary">サイト情報を編集</a>
+                </li>
+                <li style="margin-left: 20px;">
+                    <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')">
+                        {{ csrf_tag($csrfToken) }}
+                        {{ method_field('DELETE') }}
+
+                        <button class="btn btn-danger">サイトを削除する</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    @endif
+
+    @include('site.common.detail')
+
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('サイト') }}">サイト</a></li>
+            <li class="breadcrumb-item active" aria-current="page">サイト詳細</li>
+        </ol>
+    </nav>
 @endsection
