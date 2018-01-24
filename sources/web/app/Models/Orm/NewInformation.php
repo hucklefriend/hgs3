@@ -42,14 +42,14 @@ class NewInformation extends \Eloquent
     /**
      * 新着ゲーム
      *
-     * @param $gameId
+     * @param int $softId
      */
-    public static function addNewGame($gameId)
+    public static function addNewGame($softId)
     {
         $orm = new self();
         $orm->text_type = NewInformationText::NEW_GAME;
-        $orm->soft_id = $gameId;
-        $orm->date_time = new \DateTime();
+        $orm->soft_id = $softId;
+        $orm->open_at = new \DateTime();
         $orm->save();
     }
 
@@ -63,7 +63,7 @@ class NewInformation extends \Eloquent
         $orm = new self();
         $orm->text_type = NewInformationText::NEW_SITE;
         $orm->site_id = $siteId;
-        $orm->date_time = new \DateTime();
+        $orm->open_at = new \DateTime();
         $orm->save();
     }
 
@@ -77,7 +77,7 @@ class NewInformation extends \Eloquent
         $orm = new self();
         $orm->text_type = NewInformationText::UPDATE_SITE;
         $orm->site_id = $siteId;
-        $orm->date_time = new \DateTime();
+        $orm->open_at = new \DateTime();
         $orm->save();
     }
 
@@ -93,7 +93,7 @@ class NewInformation extends \Eloquent
         $orm->text_type = NewInformationText::UPDATE_SITE;
         $orm->game_id = $gameId;
         $orm->review_id = $reviewId;
-        $orm->date_time = new \DateTime();
+        $orm->open_at = new \DateTime();
         $orm->save();
     }
 }

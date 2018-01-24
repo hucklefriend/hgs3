@@ -40,6 +40,7 @@ class Approval
      *
      * @param Orm\Site $site
      * @param $message
+     * @return bool
      * @throws \Exception
      */
     public static function approve(Orm\Site $site, $message)
@@ -47,7 +48,9 @@ class Approval
         DB::beginTransaction();
         try {
             // 承認
-            $site->approve_status = Constants\Site\ApprovalStatus::OK;
+            $site->approval_status = Constants\Site\ApprovalStatus::OK;
+            $site->reject_reason = null;
+            $site->save();
 
             // 検索インデックスに登録
             Site::saveHandleSofts($site);
@@ -58,11 +61,14 @@ class Approval
             DB::rollBack();
 
             \Hgs3\Log::exceptionError($e);
+            return false;
         }
 
         // タイムラインに登録
         $user = User::find($site->user_id);
         Site::saveNewSiteInformation($user, $site, explode(',', $site->handle_soft));
+
+        return true;
     }
 
     /**
@@ -70,22 +76,28 @@ class Approval
      *
      * @param Orm\Site $site
      * @param $message
+     * @return bool
      * @throws \Exception
      */
     public static function reject(Orm\Site $site, $message)
     {
         DB::beginTransaction();
         try {
-            $site->approve_status = Constants\Site\ApprovalStatus::REJECT;
-            $site->reject_message = $message;
+            $site->approval_status = Constants\Site\ApprovalStatus::REJECT;
+            $site->reject_reason = $message;
+            $site->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             \Hgs3\Log::exceptionError($e);
+
+            return false;
         }
 
         // タイムラインに登録
         $user = User::find($site->user_id);
         Timeline\ToMe::addSiteRejectText($user, $site);
+
+        return true;
     }
 }
