@@ -54,28 +54,31 @@
                         サイト
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownSite">
-                        <a class="dropdown-item" href="{{ url2('site') }}">サイト一覧</a>
+                        <a class="dropdown-item" href="{{ route('サイトトップ') }}">サイト一覧</a>
                     </div>
                 </li>
+                @if (is_admin())
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('管理メニュー') }}">管理メニュー</a>
+                </li>
+                @endif
+            </ul>
+            @if (Auth::check())
+            <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCommunity" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        コミュニティ
+                    <a class="nav-link dropdown-toggle" href="{{ route('マイページ') }}" id="navbarDropdownGame" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        マイページ
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownCommunity">
-                        <a class="dropdown-item" href="{{ url2('game/soft') }}">ゲーム一覧</a>
-                        <a class="dropdown-item" href="{{ url2('game/review') }}">レビュー</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownGame">
+                        <a class="dropdown-item" href="{{ route('ログアウト') }}">ログアウト</a>
                     </div>
                 </li>
             </ul>
-            <span class="navbar-text">
-                @if (Auth::check())
-                    <a class="nav-link" href="{{ url2('mypage') }}">マイページ</a>
-                @else
-                    <a class="nav-link" href="{{ url2('auth/login') }}">ログイン</a>
-                @endif
-            </span>
+            @else
+                <span class="navbar-text">
+                    <a class="nav-link" href="{{ route('ログイン') }}">ログイン</a>
+                </span>
+            @endif
         </div>
     </nav>
 

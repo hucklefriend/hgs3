@@ -36,10 +36,6 @@
                 <a href="{{ route('プロフィール編集') }}" class="btn btn-outline-dark">プロフィール編集</a>
                 <a href="{{ route('コンフィグ') }}" class="btn btn-outline-dark">設定</a>
             </div>
-            @if (is_admin())
-            <a href="{{ route('管理メニュー') }}" class="btn btn-outline-success">管理メニュー</a>
-            @endif
-            <a href="{{ route('ログアウト') }}" class="btn btn-outline-danger" style="margin-left: 20px;">ログアウト</a>
         @endif
     </div>
 

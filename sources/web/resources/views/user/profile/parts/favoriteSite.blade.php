@@ -5,5 +5,4 @@
     @if (!$loop->last) <hr> @endif
 @endforeach
 
-<hr>
 {{ $favSites->links('vendor.pagination.simple-bootstrap-4') }}
