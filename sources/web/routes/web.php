@@ -235,7 +235,9 @@ Route::get('/review/fraud_report/list/{review}', 'Review\FraudReportController@l
 
 // サイト
 Route::get('/site', 'Site\SiteController@index')->name('サイトトップ');
-Route::get('/site/search', 'Site\SiteController@search')->name('サイト検索');
+Route::get('/site/new_arrival', 'Site\SiteController@newArrival')->name('新着サイト一覧');
+Route::get('/site/update', 'Site\SiteController@index')->name('更新サイト一覧');
+Route::get('/site/soft', 'Site\SiteController@soft')->name('サイト');
 Route::get('/site/soft/{soft}', 'Site\SiteController@soft')->name('ソフト別サイト一覧');
 Route::get('/site/user/{showId}', 'Site\SiteController@user')->name('ユーザーサイト一覧');
 Route::get('/site/detail/{site}', 'Site\SiteController@detail')->name('サイト詳細');

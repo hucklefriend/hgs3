@@ -53,7 +53,6 @@ class User extends Authenticatable
         return $tbl->get()->pluck('name', 'id')->toArray();
     }
 
-
     /**
      * ハッシュでデータを取得
      *
@@ -67,7 +66,7 @@ class User extends Authenticatable
         }
 
         $data = DB::table('users')
-            ->select(['id', 'name', 'icon_upload_flag'])
+            ->select(['id', 'name', 'icon_upload_flag', 'show_id'])
             ->whereIn('id', $userIds)
             ->get();
 

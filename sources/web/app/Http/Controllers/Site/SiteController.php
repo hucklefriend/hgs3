@@ -7,20 +7,16 @@
 namespace Hgs3\Http\Controllers\Site;
 
 use Hgs3\Constants\Site\ApprovalStatus;
-use Hgs3\Constants\Site\Gender;
-use Hgs3\Constants\Site\MainContents;
-use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Site\SiteRequest;
 use Hgs3\Models\Site;
 use Hgs3\Models\Site\Good;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User\FavoriteSite;
 use Hgs3\Models\User;
+use Hgs3\Models\Timeline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
 
 class SiteController extends Controller
 {
@@ -29,9 +25,15 @@ class SiteController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index($time = null)
     {
-        return view('site.index', Site::getIndexData());
+        if ($time === null) {
+            $time = time();
+        }
+
+        return view('site.index', [
+            'timeline' => Timeline\Site::get($time, 20)
+        ]);
     }
 
     public function newArrival()

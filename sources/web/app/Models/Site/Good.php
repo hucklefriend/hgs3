@@ -87,6 +87,7 @@ SQL;
             Timeline\ToMe::addSiteFavoriteText($webMaster, $site, $user);
         }
         Timeline\FavoriteSite::addGoodNumText($site, $prevMaxGoodNum);
+        Timeline\Site::addGoodNumText($site, $prevMaxGoodNum);
 
         return true;
     }

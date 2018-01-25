@@ -1,6 +1,12 @@
 @php
-if (!isset($noUser))
+if (!isset($noUser)) {
     $noUser = false;
+}
+
+if (!$noUser) {
+    $u = $users[$s->user_id];
+}
+
 @endphp
 <div>
     <h5><a href="{{ route('サイト詳細', ['site' => $s->id]) }}">{{ $s->name }}</a></h5>
@@ -14,7 +20,7 @@ if (!isset($noUser))
     @if (!$noUser)
     <div>
         <i class="fa fa-user-o" aria-hidden="true"></i>
-        <a href="{{ route('プロフィール', ['showId' => $s->show_id]) }}">{{ un($users, $s->user_id) }}</a>
+        <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}">{{ $u->name }}</a>
     </div>
     @endif
 </div>

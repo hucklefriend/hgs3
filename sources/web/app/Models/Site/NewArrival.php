@@ -17,7 +17,7 @@ class NewArrival
      * 新着サイトを取得
      *
      * @param $num
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
     public static function get($num)
     {
@@ -26,7 +26,7 @@ class NewArrival
             ->orderBy('registered_timestamp', 'DESC')
             ->take($num)
             ->get()
-            ->toArray();
+            ->pluck('site_id');
     }
 
     /**

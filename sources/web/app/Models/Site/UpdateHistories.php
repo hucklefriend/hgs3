@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Site;
 
+use Hgs3\Log;
 use Hgs3\Models\MongoDB\Collection;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
@@ -38,8 +39,9 @@ class UpdateHistories
      * サイト更新履歴に登録
      *
      * @param Orm\Site $site
-     * @param $comment
+     * @param string $comment
      * @return bool
+     * @throws \Exception
      */
     public static function add(Orm\Site $site, $comment)
     {
@@ -54,6 +56,7 @@ class UpdateHistories
             ];
             $result = $collection->insertOne($document);
         } catch (\Exception $e) {
+            Log::exceptionError($e);
             return false;
         }
 
@@ -69,6 +72,7 @@ class UpdateHistories
 
             DB::commit();
         } catch (\Exception $e) {
+            Log::exceptionError($e);
             DB::rollBack();
 
             // 先ほど登録した履歴を削除
@@ -79,6 +83,7 @@ class UpdateHistories
 
         // タイムラインに登録
         Timeline\FavoriteSite::addUpdateSiteText($site);
+        Timeline\Site::addUpdateText($site);
 
         return true;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * サイトタイムラインモデル
+ * お気に入りサイトタイムラインモデル
  */
 
 namespace Hgs3\Models\Timeline;

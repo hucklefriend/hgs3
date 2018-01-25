@@ -1,54 +1,30 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('トップ') }}">&lt;</a>
+@endsection
+
 @section('content')
+    <h1>サイト</h1>
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card card-hgn">
-                <div class="card-header">新着サイト</div>
-                <div class="card-body">
-                    @foreach ($newArrivals as $site)
-                        @include('site.common.normal', ['s' => $site, 'users' => $users])
-                        @if (!$loop->last) <hr> @endif
-                    @endforeach
-                </div>
-            </div>
+    <div class="d-flex flex-row d-none d-sm-block">
+        <div style="width: 250px;">
+            @include('site.common.sideMenu', ['active' => ''])
         </div>
-        <div class="col-sm-6">
-            <div class="card card-hgn">
-                <div class="card-header">更新サイト</div>
-                <div class="card-body">
-                    @foreach ($updated as $site)
-                        @include('site.common.normal', ['s' => $site, 'users' => $users])
-                        @if (!$loop->last) <hr> @endif
-                    @endforeach
-                </div>
-            </div>
+        <div style="width: 100%;">
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card card-hgn">
-                <div class="card-header">人気サイト</div>
-                <div class="card-body">
-                    @foreach ($good as $site)
-                        @include('site.common.normal', ['s' => $site, 'users' => $users])
-                        @if (!$loop->last) <hr> @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card card-hgn">
-                <div class="card-header">アクセスランキング</div>
-                <div class="card-body">
-                    @foreach ($access as $site)
-                        @include('site.common.normal', ['s' => $site, 'users' => $users])
-                        @if (!$loop->last) <hr> @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
+    <div class="d-sm-none">
+        @include('site.common.sideMenu', ['active' => ''])
     </div>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">サイト</li>
+        </ol>
+    </nav>
 @endsection

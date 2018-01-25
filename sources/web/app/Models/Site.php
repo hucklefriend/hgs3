@@ -118,6 +118,7 @@ class Site
             Timeline\FollowUser::addUpdateSiteText($user, $site);
             Timeline\ToMe::addSiteUpdatedText($user, $site);
             Timeline\FavoriteSite::addUpdateSiteText($site);
+            Timeline\Site::addUpdateText($site);
 
             // 直前に取り扱ってないゲームを追加
             $softHash = Orm\GameSoft::getHash($handleSoftIds);
@@ -275,7 +276,7 @@ SQL;
         $data = [];
 
         // 新着サイト
-        $data['newArrivals'] = NewArrival::get(5);
+        $data['newArrivals'] = self::getNewArrival();
 
         // 更新サイト
         $data['updated'] = self::getLatestUpdate();
@@ -293,33 +294,51 @@ SQL;
             array_pluck($data['access'], 'user_id')
         );
 
-        $data['users'] = User::getNameHash($userIds);
+        $data['users'] = User::getHash($userIds);
 
         return $data;
     }
 
     /**
+     * 新着サイトを取得
+     *
+     * @return array|\Illuminate\Database\Eloquent\Collection|static[]
+     */
+    private static function getNewArrival()
+    {
+        $arrivals = NewArrival::get(5);
+        if (empty($arrivals)) {
+            return [];
+        }
+
+        Log::debug(var_export($arrivals, true));
+
+        return Orm\Site::whereIn('id', $arrivals)
+            ->orderBy('updated_timestamp', 'DESC')
+            ->get();
+    }
+
+    /**
      * 更新日時の新しいサイト
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
      */
     private static function getLatestUpdate()
     {
-        return DB::table('sites')
+        return Orm\Site::where('approval_status', ApprovalStatus::OK)
             ->orderBy('updated_timestamp', 'DESC')
             ->take(5)
-            ->get()
-            ->toArray();
+            ->get();
     }
 
     /**
      * OUT数が多いサイト
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
      */
     private static function getAccessRanking()
     {
-        return DB::table('sites')
+        return Orm\Site::where('approval_status', ApprovalStatus::OK)
             ->orderBy('out_count', 'DESC')
             ->take(5)
             ->get();
@@ -328,11 +347,11 @@ SQL;
     /**
      * いいね数が多いサイト
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
      */
     private static function getGoodRanking()
     {
-        return DB::table('sites')
+        return Orm\Site::where('approval_status', ApprovalStatus::OK)
             ->orderBy('good_num', 'DESC')
             ->take(5)
             ->get();
