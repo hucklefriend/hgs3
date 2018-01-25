@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('トップ') }}">&lt;</a>
+@endsection
+
 @section('content')
-    <h4>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのプロフィール</h4>
+    <h1>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのページ</h1>
 
     <div>
         @if (!$isMyself)
             @if ($isFollow)
-                <form action="{{ url2('user/follow') }}" method="POST">
+                <form action="{{ route('フォロー登録') }}" method="POST">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
@@ -14,7 +18,7 @@
                     <button class="btn btn-danger btn-sm">解除</button>
                 </form>
             @else
-                <form action="{{ url2('user/follow') }}" method="POST">
+                <form action="{{ route('フォロー解除') }}" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
                     <button class="btn btn-primary btn-sm">フォローする</button>
@@ -28,9 +32,9 @@
 
         @if ($isMyself)
             <div class="btn-group" role="group" aria-label="プロフィール">
-                <a href="{{ url2('user/profile/change_icon') }}" class="btn btn-outline-dark">アイコン変更</a>
-                <a href="{{ url2('user/profile/edit') }}" class="btn btn-outline-dark">プロフィール編集</a>
-                <a href="{{ url2('user/profile/config') }}" class="btn btn-outline-dark">設定</a>
+                <a href="{{ route('アイコン変更') }}" class="btn btn-outline-dark">アイコン変更</a>
+                <a href="{{ route('プロフィール編集') }}" class="btn btn-outline-dark">プロフィール編集</a>
+                <a href="{{ route('コンフィグ') }}" class="btn btn-outline-dark">設定</a>
             </div>
             @if (is_admin())
             <a href="{{ route('管理メニュー') }}" class="btn btn-outline-success">管理メニュー</a>
@@ -46,15 +50,15 @@
         <div class="d-flex flex-row">
             <div class="p-2" style="width: 270px;">
                 <div class="nav flex-column nav-pills">
-                    <a href="{{ url2('user/profile/' . $user->id) }}/timeline" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
-                    <a href="{{ url2('user/profile/' . $user->id) }}/follow" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
-                    <a href="{{ url2('user/profile/' . $user->id) }}/follower" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
-                    <a href="{{ url2('user/profile/' . $user->id) }}/favorite_soft" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
-                    <a href="{{ url2('user/profile/' . $user->id) }}/review" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
-                    <a href="{{ url2('user/profile/' . $user->id) }}/site" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
-                    <a href="{{ url2('user/profile/' . $user->id) }}/favorite_site" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
-                    <a href="{{ url2('user/profile/' . $user->id) }}/diary" class="nav-link @if($show == 'diary') active @endif" aria-expanded="true">日記 {{ $diaryNum }}件</a>
-                    <a href="{{ url2('user/profile/' . $user->id) }}/community" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'diary']) }}" class="nav-link @if($show == 'diary') active @endif" aria-expanded="true">日記 {{ $diaryNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'community']) }}" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
                 </div>
             </div>
             <div class="p-10" style="width: 100%;">
@@ -66,15 +70,29 @@
     <!-- 最小表示時はメニューのみ -->
     <div class="d-sm-none">
         <ul class="list-group">
-            <li class="list-group-item"><a href="{{ url2('user/timeline/') }}">タイムライン</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/follow/' . $user->id) }}">フォロー {{ $followNum }}人</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/follower/' . $user->id) }}">フォロワー {{ $followerNum }}人</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/favorite_soft/' . $user->id) }}">お気に入りゲーム {{ $favoriteSoftNum }}個</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/review/' . $user->id) }}">レビュー {{ $reviewNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/site/' . $user->id) }}">サイト {{ $siteNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/favorite_site/' . $user->id) }}">お気に入りサイト {{ $favoriteSiteNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/diary/' . $user->id) }}">日記 {{ $diaryNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ url2('user/communities/' . $user->id) }}">コミュニティ {{ $communityNum }}個</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーのタイムライン',     ['showId' => $user->show_id]) }}">タイムライン</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーのフォロー',         ['showId' => $user->show_id]) }}">フォロー {{ $followNum }}人</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーのフォロワー',       ['showId' => $user->show_id]) }}">フォロワー {{ $followerNum }}人</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーのお気に入りゲーム', ['showId' => $user->show_id]) }}">お気に入りゲーム {{ $favoriteSoftNum }}個</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーのレビュー',         ['showId' => $user->show_id]) }}">レビュー {{ $reviewNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーのサイト',           ['showId' => $user->show_id]) }}">サイト {{ $siteNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーのお気に入りサイト', ['showId' => $user->show_id]) }}">お気に入りサイト {{ $favoriteSiteNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーの日記',             ['showId' => $user->show_id]) }}">日記 {{ $diaryNum }}件</a></li>
+            <li class="list-group-item"><a href="{{ route('ユーザーのコミュニティ',     ['showId' => $user->show_id]) }}">コミュニティ {{ $communityNum }}個</a></li>
         </ul>
     </div>
+@endsection
+
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            @if ($isMyself)
+                <li class="breadcrumb-item active" aria-current="page">マイページ</li>
+            @else
+                <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}さんのページ</li>
+            @endif
+        </ol>
+    </nav>
 @endsection

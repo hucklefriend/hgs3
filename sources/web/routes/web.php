@@ -128,22 +128,29 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/mypage', 'User\MyPageController@index')->name('マイページ');
     Route::get('/user/profile/edit', 'User\ProfileController@edit')->name('プロフィール編集');
     Route::patch('/user/profile/edit', 'User\ProfileController@update')->name('プロフィール編集実行');
-    Route::get('/user/profile/change_icon', 'User\ProfileController@selectIcon');
-    Route::patch('/user/profile/change_icon', 'User\ProfileController@changeIcon');
-    Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon');
-    Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');
-    Route::get('/user/profile/{showId}/{type}', 'User\ProfileController@index')->name('タイプ別プロフィール');
-    Route::get('/user/profile/{showId}/timeline/mypage/{time}', 'User\ProfileController@moreTimelineMyPage')->name('タイムライン追加取得');
-    Route::get('/user/communities/{user}', 'User\ProfileController@community');
+    Route::get('/user/profile/change_icon', 'User\ProfileController@selectIcon')->name('アイコン変更');
+    Route::patch('/user/profile/change_icon', 'User\ProfileController@changeIcon')->name('アイコン変更処理');
+    Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon')->name('アイコン削除');
     Route::get('/mypage/favorite_soft', 'User\FavoriteSoftController@myself');
     Route::get('/mypage/favorite_site', 'User\FavoriteSiteController@myself');
     Route::get('/mypage/follow', 'User\MyPageController@follow');
     Route::get('/mypage/follower', 'User\MyPageController@follower');
     Route::get('/mypage/review', 'User\MyPageController@review');
-    
-    // タイムライン
-    Route::get('/user/timeline', 'User\ProfileController@timeline');
-    Route::get('/user/user_action_timeline/{user}', 'User\ProfileController@userActionTimeline');
+    Route::get('/user/config', 'User\ProfileController@config')->name('コンフィグ');
+
+    // プロフィール
+    Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');
+    Route::get('/user/profile/{showId}/{show}', 'User\ProfileController@index')->name('プロフィール2');
+    Route::get('/user/profile/{showId}/timeline/mypage/{time}', 'User\ProfileController@moreTimelineMyPage')->name('タイムライン追加取得');
+    Route::get('/user/communities/{showId}', 'User\ProfileController@community')->name('ユーザーのコミュニティ');
+    Route::get('/user/timeline', 'User\ProfileController@timeline')->name('ユーザーのタイムライン');
+    Route::get('/user/user_action_timeline/{showId}', 'User\ProfileController@userActionTimeline')->name('ユーザーの行動タイムライン');
+    Route::get('/user/favorite_site/{showId}', 'User\ProfileController@favoriteSite')->name('ユーザーのお気に入りサイト');
+    Route::get('/user/follow/{showId}', 'User\ProfileController@follow')->name('ユーザーのフォロー');
+    Route::get('/user/follower/{showId}', 'User\ProfileController@follower')->name('ユーザーのフォロワー');
+    Route::get('/user/review/{showId}', 'User\ProfileController@follower')->name('ユーザーのレビュー');
+    Route::get('/user/diary/{showId}', 'User\ProfileController@follower')->name('ユーザーの日記');
+    Route::get('/user/site/{showId}', 'User\SiteManageController@index')->name('ユーザーのサイト');
 
 
     Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->name('お気に入りゲーム登録処理');
@@ -154,11 +161,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('user/played_soft/{upg}', 'User\PlayedSoftController@remove');
     Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add');
     Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove');
-    Route::get('/user/favorite_site/{user}', 'User\ProfileController@favoriteSite');
-    Route::get('/user/follow/{user}', 'User\ProfileController@follow');
-    Route::get('/user/follower/{user}', 'User\ProfileController@follower');
-    Route::post('/user/follow', 'User\FollowController@add');
-    Route::delete('/user/follow', 'User\FollowController@remove');
+    Route::post('/user/follow', 'User\FollowController@add')->name('フォロー登録');
+    Route::delete('/user/follow', 'User\FollowController@remove')->name('フォロー解除');
 
     // ユーザーコミュニティ
     Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join');
@@ -251,7 +255,7 @@ Route::get('/game/series/{gameSeries}', 'Game\SeriesController@detail')->name('�
 
 // お気に入りゲーム
 Route::get('/game/favorite/{soft}', 'Game\FavoriteSoftController@index')->name('お気に入りゲーム登録ユーザー一覧');
-Route::get('/user/favorite_soft/{showId}', 'User\ProfileController@favoriteSoft')->name('ユーザーお気に入りゲーム一覧');
+Route::get('/user/favorite_soft/{showId}', 'User\ProfileController@favoriteSoft')->name('ユーザーのお気に入りゲーム');
 
 // 遊んだゲーム
 Route::get('game/played_user/{soft}', 'Game\PlayedUserController@index');

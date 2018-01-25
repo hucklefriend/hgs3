@@ -116,7 +116,7 @@ class User extends Authenticatable
     public static function register($data)
     {
         $self = new self;
-        $self->show_id = self::generateShowId();
+        $self->show_id = $data['show_id'] ?? self::generateShowId();
         $self->name = $data['name'];
         $self->email = $data['email'] ?? null;
         $self->password = isset($data['password']) ? bcrypt($data['password']) : null;
@@ -190,6 +190,17 @@ class User extends Authenticatable
 
         return self::where('email', $mail)
             ->first();
+    }
 
+    /**
+     * 表示用IDからデータを取得
+     *
+     * @param $showId
+     * @return mixed
+     */
+    public static function findByShowId($showId)
+    {
+        return self::where('show_id', $showId)
+            ->first();
     }
 }

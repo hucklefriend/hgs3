@@ -32,12 +32,17 @@ class ProfileController extends Controller
     /**
      * プロフィール
      *
-     * @param User $user
+     * @param string $showId
      * @param string $show
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user, $show = 'timeline')
+    public function index($showId, $show = 'timeline')
     {
+        $user = User::findByShowId($showId);
+        if ($user == null) {
+            return view('user.profile.notExist');
+        }
+
         $profile = new Profile();
 
         // データ数を取得

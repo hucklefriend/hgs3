@@ -44,7 +44,8 @@ class Database
             'name'     => 'huckle',
             'email'    => 'webmaster@horrorgame.net',
             'password' => $password,
-            'role'     => 100
+            'role'     => 100,
+            'show_id'  => 'huckle'
         ]);
 
         // 運営用ユーザーコミュニティを作成

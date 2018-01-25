@@ -6,8 +6,12 @@
 
 @section('content')
 
-    <p>システムエラー</p>
-    <p>申し訳ありません、もう一度やり直してみてください。</p>
+    <h1>ユーザーが見つかりませんでした。</h1>
+
+    <p>
+        指定されたユーザーが見つかりませんでした。<br>
+        退会されたのかもしれません。
+    </p>
 
 @endsection
 
@@ -15,7 +19,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb_footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">システムエラー</li>
+            <li class="breadcrumb-item active" aria-current="page">ユーザー</li>
         </ol>
     </nav>
 @endsection
