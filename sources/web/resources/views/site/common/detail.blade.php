@@ -26,13 +26,13 @@
             <tr>
                 <th>URL</th>
                 <td>
-                    <a href="{{ url('/site/go/' . $site->id) }}">{{ $site->url }}</a>
-                    <small>[<a href="{{ url('/site/go/' . $site->id) }}" target="_blank">別窓</a>]</small>
+                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}">{{ $site->url }}</a>
+                    <small>[<a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">別窓</a>]</small>
                 </td>
             </tr>
             <tr>
                 <th>管理人</th>
-                <td><a href="{{ url2('user/profile/' . $webMaster->id) }}">{{ $webMaster->name }}さん</a></td>
+                <td><a href="{{ route('プロフィール', ['showId' => $webMaster->show_id]) }}">{{ $webMaster->name }}さん</a></td>
             </tr>
             <tr>
                 <th>お気に入り人数</th>
@@ -94,10 +94,10 @@
             <div>
                 <div class="card card_soft text-center">
                     <div class="card-body">
-                        <a href="{{ url2('game/soft/' . $soft->id) }}">
+                        <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">
                             @include('game.common.package_image_small', ['imageUrl' => $soft->small_image_url])
                         </a>
-                        <a href="{{ url2('game/soft/' . $soft->id) }}"><small>{{ $soft->name }}</small></a>
+                        <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}"><small>{{ $soft->name }}</small></a>
                     </div>
                 </div>
             </div>
