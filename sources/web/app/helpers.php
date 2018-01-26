@@ -115,30 +115,19 @@ function url2($path)
     return env('URL_BASE', '/') . ltrim($path, '/');
     //return url($path, $parameters, false);
 }
-
 /**
- * ユーザー名を表示
+ * ハッシュからキーの値を取得
+ * hv は hash_valueの略
  *
  * @param array $hash
  * @param $userId
  * @return mixed|string
  */
-function un(array $hash, $userId)
+function hv(array $hash, $key, $default = '---')
 {
-    return $hash[$userId] ?? '---';
+    return $hash[$key] ?? $default;
 }
 
-/**
- * ユーザー名を表示
- *
- * @param array $hash
- * @param $userId
- * @return mixed|string
- */
-function get_hash(array $hash, $id, $default = '---')
-{
-    return $hash[$id] ?? $default;
-}
 
 /**
  * checkboxとradioボタンのchecked判定

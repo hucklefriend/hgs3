@@ -405,7 +405,7 @@ SQL;
         $data['sites'] = [];
         if (!empty($data['pager'])) {
             $data['sites'] = Orm\Site::getHash(array_pluck($data['pager']->items(), 'site_id'));
-            $data['users'] = User::getNameHash(array_pluck($data['sites'], 'user_id'));
+            $data['users'] = User::getHash(array_pluck($data['sites'], 'user_id'));
         }
 
         return $data;

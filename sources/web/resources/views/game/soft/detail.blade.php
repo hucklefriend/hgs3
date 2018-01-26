@@ -274,7 +274,7 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-header">
-                    サイト <small>{{ $siteNum }}件</small>
+                    サイト <small>全{{ $siteNum }}件</small>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
@@ -286,9 +286,7 @@
                                 <hr>
                             @endforeach
                             <div class="text-center">
-                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}">
-                                    サイトを全て見る
-                                </a>
+                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}">サイトを全て見る</a>
                             </div>
                         @endif
                     </div>

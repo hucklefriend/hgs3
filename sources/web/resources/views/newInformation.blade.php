@@ -11,11 +11,11 @@
         <div>
             {{ $nf->open_at }}<br>
             @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
-                <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ get_hash($gameHash, $nf->soft_id) }}」</a>が追加されました。
+                <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
             @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
-                新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ get_hash($siteHash, $nf->site_id) }}」</a>
+                新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ hv($siteHash, $nf->site_id) }}」</a>
             @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
-                <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ get_hash($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
+                <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
             @endif
             <hr>
         </div>

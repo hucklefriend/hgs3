@@ -191,7 +191,7 @@ SQL;
         $siteIdComma = implode(',', $siteIds);
 
         $sql =<<< SQL
-SELECT users.id, users.name, s.id, s.name, s.url, s.presentation, s.rate,
+SELECT users.id user_id, users.name user_name, users.show_id, s.id, s.name, s.url, s.presentation, s.rate,
   s.gender, s.main_contents_id, s.out_count, s.in_count, s.good_num
 FROM (
   SELECT * FROM sites WHERE id IN ({$siteIdComma})
