@@ -60,22 +60,21 @@
     <div class="card card-hgn">
         <div class="card-header">新着情報</div>
         <div class="card-body">
-            <p class="card-text">
-                {{ $newInfo->render() }}
-                @foreach ($newInfo as $nf)
-                    @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
-                    <p><a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ get_hash($newInfoData['game_hash'], $nf->soft_id) }}」</a>が追加されました。</p>
-                    @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
-                    <p>新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ get_hash($newInfoData['site_hash'], $nf->site_id) }}」</a></p>
-                    @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
-                    <p><a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ get_hash($newInfoData['game_hash'], $nf->soft_id) }}」</a>の新しいレビューが投稿されました！</p>
-                    @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_DIARY)
-                    <p></p>
-                    @endif
-
-                    <div>{{ $nf->date_time }}</div>
-                @endforeach
-            </p>
+            @foreach ($newInfo as $nf)
+                <p class="card-text">
+                {{ $nf->open_at }}<br>
+                @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
+                    <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ get_hash($gameHash, $nf->soft_id) }}」</a>が追加されました。
+                @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
+                    新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ get_hash($siteHash, $nf->site_id) }}」</a>
+                @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
+                    <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ get_hash($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
+                @endif
+                </p>
+            @endforeach
+            @if (!empty($newInfo))
+                <a href="{{ route('新着情報') }}">新着情報を全て見る</a>
+            @endif
         </div>
     </div>
 

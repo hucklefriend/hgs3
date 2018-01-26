@@ -6,7 +6,6 @@
 namespace Hgs3\Models\Orm;
 
 use Hgs3\Constants\NewInformationText;
-use Hgs3\User;
 
 class NewInformation extends \Eloquent
 {
@@ -33,8 +32,8 @@ class NewInformation extends \Eloquent
     {
         $data = [];
 
-        $data['game_hash'] = GameSoft::getNameHash(array_pluck($pager->items(), 'game_id'));
-        $data['site_hash'] = Site::getNameHash(array_pluck($pager->items(), 'site_id'));
+        $data['gameHash'] = GameSoft::getNameHash(array_pluck($pager->items(), 'game_id'));
+        $data['siteHash'] = Site::getNameHash(array_pluck($pager->items(), 'site_id'));
 
         return $data;
     }

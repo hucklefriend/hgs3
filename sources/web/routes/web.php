@@ -286,6 +286,6 @@ Route::get('/social/github/{mode}', 'Social\GitHubController@redirect')->name('G
 Route::get('/social/google/callback', 'Social\GoogleController@callback')->name('Googleコールバック');
 Route::get('/social/google/{mode}', 'Social\GoogleController@redirect')->name('Google');
 
-// サイトマップ
+// その他
 Route::get('/sitemap', 'TopController@sitemap')->name('サイトマップ');
-
+Route::get('/new_information', 'TopController@newInformation')->name('新着情報');
