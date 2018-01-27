@@ -15,6 +15,7 @@ use Hgs3\Http\Requests\Site\UpdateHistoryRequest;
 use Hgs3\Log;
 use Hgs3\Models\Site;
 use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Hgs3\Models\Timeline;
 
@@ -269,6 +270,12 @@ class SiteManageController extends Controller
         return redirect()->route('サイト管理');
     }
 
+    /**
+     * サイト更新履歴の登録
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addUpdateHistory(Orm\Site $site)
     {
         // 本人チェック
@@ -276,9 +283,21 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
-        return view('');
+        return view('user.siteManage.updateHistory', [
+            'isEdit'        => false,
+            'site'          => $site,
+            'updateHistory' => new Orm\SiteUpdateHistory
+        ]);
     }
 
+    /**
+     * サイト更新履歴の登録処理
+     *
+     * @param UpdateHistoryRequest $request
+     * @param Orm\Site $site
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function insertUpdateHistory(UpdateHistoryRequest $request, Orm\Site $site)
     {
         // 本人チェック
@@ -286,11 +305,22 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
+        $siteUpdateHistory = new Orm\SiteUpdateHistory();
+        $siteUpdateHistory->site_id = $site->id;
+        $siteUpdateHistory->site_updated_at = $request->get('site_updated_at');
+        $siteUpdateHistory->site_updated_at = $request->get('site_updated_at');
 
+        Site::saveUpdateHistory($site, $siteUpdateHistory, true);
 
         return redirect()->route('サイト詳細', ['site' => $site->id]);
     }
 
+    /**
+     * サイト更新履歴の更新処理
+     *
+     * @param Orm\SiteUpdateHistory $siteUpdateHistory
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editUpdateHistory(Orm\SiteUpdateHistory $siteUpdateHistory)
     {
         $site = Orm\Site::find($siteUpdateHistory->site_id);
@@ -303,10 +333,21 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
-
-        return view('');
+        return view('user.siteManage.updateHistory', [
+            'isEdit'        => true,
+            'site'          => $site,
+            'updateHistory' => $siteUpdateHistory
+        ]);
     }
 
+    /**
+     * サイト更新履歴の更新処理
+     *
+     * @param UpdateHistoryRequest $request
+     * @param Orm\SiteUpdateHistory $siteUpdateHistory
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function updateUpdateHistory(UpdateHistoryRequest $request, Orm\SiteUpdateHistory $siteUpdateHistory)
     {
         $site = Orm\Site::find($siteUpdateHistory->site_id);
@@ -319,21 +360,18 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
-        // 更新
-
-        $siteUpdateHistory->save();
-        $site->updated_timestamp = time();
-        $site->save();
-
-        // サイト更新タイムライン
-        Timeline\FollowUser::addUpdateSiteText($user, $site);
-        Timeline\ToMe::addSiteUpdatedText($user, $site);
-        Timeline\FavoriteSite::addUpdateSiteText($site);
-        Timeline\Site::addUpdateText($site);
+        Site::saveUpdateHistory($site, $siteUpdateHistory, false);
 
         return redirect()->route('サイト詳細', ['site' => $site->id]);
     }
 
+    /**
+     * サイト更新履歴の削除
+     *
+     * @param Orm\SiteUpdateHistory $siteUpdateHistory
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function deleteUpdateHistory(Orm\SiteUpdateHistory $siteUpdateHistory)
     {
         $site = Orm\Site::find($siteUpdateHistory->site_id);

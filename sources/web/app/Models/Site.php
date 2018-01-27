@@ -602,4 +602,41 @@ SQL;
             Log::exceptionError($e);
         }
     }
+
+    /**
+     * 更新履歴の登録
+     *
+     * @param Orm\Site $site
+     * @param Orm\SiteUpdateHistory $siteUpdateHistory
+     * @param bool $addTimeline
+     * @return bool
+     * @throws \Exception
+     */
+    public static function saveUpdateHistory(Orm\Site $site, Orm\SiteUpdateHistory $siteUpdateHistory, $addTimeline)
+    {
+        DB::beginTransaction();
+        try {
+            $siteUpdateHistory->save();
+            $site->updated_timestamp = time();
+            $site->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::exceptionError($e);
+            return false;
+        }
+
+        // サイト更新タイムライン
+        if ($addTimeline) {
+            $user = User::find($site->user_id);
+            Timeline\FollowUser::addUpdateSiteText($user, $site);
+            Timeline\ToMe::addSiteUpdatedText($user, $site);
+            Timeline\FavoriteSite::addUpdateSiteText($site);
+            Timeline\Site::addUpdateText($site);
+        }
+
+        return true;
+    }
 }

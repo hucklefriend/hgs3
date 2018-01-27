@@ -30,9 +30,6 @@
             <button class="btn">編集</button>
         </div>
     </form>
-
-    @include('site.common.handleSoftSelect')
-
 @endsection
 
 @section('breadcrumb')

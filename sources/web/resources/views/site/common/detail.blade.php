@@ -93,7 +93,7 @@
                             <h5 class="card-title">更新履歴</h5>
                         </div>
                         <div style="margin-left: auto;">
-                            <a href="{{ route('サイトマップ') }}">サイトマップ</a>
+                            <a href="{{ route('サイト更新履歴登録', ['site' => $site->id]) }}" class="btn btn-sm btn-outline-info">登録</a>
                         </div>
                     </div>
                 @else
