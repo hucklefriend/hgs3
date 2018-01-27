@@ -6,7 +6,7 @@
             <a href="{{ url('master/game_platform') }}/{{ $gamePlatform->id }}">戻る</a>
         </div>
 
-        <form method="POST" action="{{ url('master/game_platform') }}/{{ $gamePlatform->id }}">
+        <form method="POST" action="{{ url('master/game_platform') }}/{{ $gamePlatform->id }}" autocomplete="off">
             {{ method_field('PUT') }}
             {{ csrf_field() }}
             <div class="form-group">

@@ -78,6 +78,12 @@ class SiteController extends Controller
 
         $data['handleSofts'] = Site::getSoftWithOriginalPackage($site->id);
 
+        // 更新履歴
+        $data['updateHistories'] = Orm\SiteUpdateHistory::where('site_id', $site->id)
+            ->orderBy('site_updated_at', 'DESC')
+            ->take(3)
+            ->get();
+
         $isLogin = Auth::check();
         $data['isFavorite'] = false;
         $data['isGood'] = false;

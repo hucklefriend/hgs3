@@ -33,7 +33,7 @@
     </div>
     @endif
 
-    <form method="POST" action="{{ url2('review/confirm/' . $soft->id . '/' . $package->id) }}">
+    <form method="POST" action="{{ url2('review/confirm/' . $soft->id . '/' . $package->id) }}" autocomplete="off">
         {{ csrf_field() }}
 
         <div class="form-group">

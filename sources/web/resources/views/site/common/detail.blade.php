@@ -18,9 +18,6 @@
         </div>
     @endif
     <div style="padding: 0 15px;min-width: 300px;">
-        <h4>
-
-        </h4>
         <table class="table table-responsive" style="width: 100%">
             <tbody>
             <tr>
@@ -78,10 +75,46 @@
     </div>
 </div>
 <br>
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">紹介</h5>
-        <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">紹介</h5>
+                <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                @if ($isWebMaster)
+                    <div style="display:flex;">
+                        <div>
+                            <h5 class="card-title">更新履歴</h5>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <a href="{{ route('サイトマップ') }}">サイトマップ</a>
+                        </div>
+                    </div>
+                @else
+                <h5 class="card-title">更新履歴</h5>
+                @endif
+
+                @if ($updateHistories->count() > 0)
+                    @foreach ($updateHistories as $uh)
+                        <p class="card-text">
+                            {{ $uh->site_updated_at }}<br>
+                            {!! nl2br(e($uh->detail)) !!}
+                        </p>
+                    @endforeach
+                    <div class="text-center">
+                        <a>全て見る</a>
+                    </div>
+                @else
+                    <p class="card-text">更新履歴はありません。</p>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 <br>

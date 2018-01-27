@@ -18,11 +18,12 @@ class CreateSiteUpdateHistoriesTable extends Migration
     {
         Schema::create('site_update_histories', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('サイト更新ID');
-            $table->unsignedInteger('site_id')->index()->comment('サイトID');
+            $table->unsignedInteger('site_id')->comment('サイトID');
+            $table->date('site_updated_at')->comment('サイトの更新日時');
             $table->text('detail')->comment('詳細');
             $table->timestamps();
 
-            $table->index(['site_id', 'created_at']);
+            $table->unique(['site_id', 'site_updated_at']);
         });
     }
 

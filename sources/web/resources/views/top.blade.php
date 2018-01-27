@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="@if(!Auth::check()) col-md-7 @else col-md-12 @endif">
             <div class="card card-hgn">
                 <div class="card-header">ようこそ</div>
                 <div class="card-body">

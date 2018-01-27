@@ -282,7 +282,7 @@
                             <p>{{ $soft->name }}を扱っているサイトは登録されていません。</p>
                         @else
                             @foreach ($site as $s)
-                                @include('site.common.minimal', ['s' => $s, 'noUser' => true])
+                                @include('site.common.minimal', ['s' => $s, 'u' => $siteUsers[$s->user_id]])
                                 <hr>
                             @endforeach
                             <div class="text-center">

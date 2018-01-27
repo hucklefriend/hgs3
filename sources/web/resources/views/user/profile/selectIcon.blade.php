@@ -3,7 +3,7 @@
 @section('content')
     <h4>{{ $user->name }}さんのアイコン変更</h4>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" autocomplete="off">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
 

@@ -3,7 +3,7 @@
 @section('content')
     <h3>パスワード再設定</h3>
 
-    <form method="POST" action="{{ route('パスワード再設定処理') }}">
+    <form method="POST" action="{{ route('パスワード再設定処理') }}" autocomplete="off">
         {{ csrf_field() }}
         <input type="hidden" name="token" value="{{ $pr->token }}">
         <div class="form-group">

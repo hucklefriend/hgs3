@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
         <div class="form-group">

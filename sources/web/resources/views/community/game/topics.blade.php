@@ -55,7 +55,7 @@
 
     <hr>
 
-    <form method="POST" action="{{ url2('community/g/' . $soft->id . '/topics') }}">
+    <form method="POST" action="{{ url2('community/g/' . $soft->id . '/topics') }}" autocomplete="off">
         {{ csrf_field() }}
         <div class="form-group row">
             <label for="title" class="col-3 col-form-label">件名</label>

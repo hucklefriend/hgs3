@@ -31,7 +31,7 @@
 
     <hr>
 
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
 

@@ -7,6 +7,7 @@ namespace Hgs3\Models\Game;
 
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
+use Hgs3\Models\User;
 use Hgs3\Models\User\FavoriteSoft;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -68,6 +69,7 @@ class Soft
 
         // サイト
         $data['site'] = self::getSite($soft->id);
+        $data['siteUsers'] = User::getHash(array_pluck($data['site'], 'user_id'));
         $data['siteNum'] = Orm\SiteSearchIndex::where('soft_id', $soft->id)->count(['site_id']);
 
         // 遊んだゲーム
@@ -173,8 +175,8 @@ SQL;
     /**
      * サイト情報を取得
      *
-     * @param int $softId
-     * @return array
+     * @param $softId
+     * @return array|\Illuminate\Database\Eloquent\Collection|static[]
      */
     private static function getSite($softId)
     {
@@ -182,23 +184,17 @@ SQL;
             ->select(['site_id'])
             ->where('soft_id', $softId)
             ->orderBy('updated_timestamp', 'DESC')
-            ->take(5)->get()->pluck('site_id')->toArray();
+            ->take(5)
+            ->get()
+            ->pluck('site_id')->toArray();
 
         if (empty($siteIds)) {
             return [];
         }
 
-        $siteIdComma = implode(',', $siteIds);
-
-        $sql =<<< SQL
-SELECT users.id user_id, users.name user_name, users.show_id, s.id, s.name, s.url, s.presentation, s.rate,
-  s.gender, s.main_contents_id, s.out_count, s.in_count, s.good_num
-FROM (
-  SELECT * FROM sites WHERE id IN ({$siteIdComma})
-) s LEFT OUTER JOIN users ON s.user_id = users.id
-SQL;
-
-        return DB::select($sql, [$softId]);
+        return Orm\Site::whereIn('id', $siteIds)
+            ->orderBy('updated_at', 'DESC')
+            ->get();
     }
 
     /**

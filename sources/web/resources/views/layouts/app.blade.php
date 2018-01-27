@@ -16,14 +16,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <style>
-        .dropdown:hover > .dropdown-menu {
-            display: block;
-        }
-        .dropdown > .dropdown-toggle:active {
-            pointer-events: none;
-        }
-    </style>
 </head>
 <body>
 <div class="fixed-top">
@@ -64,10 +56,11 @@
             @if (Auth::check())
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{{ route('マイページ') }}" id="navbarDropdownGame" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        マイページ
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownGame" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        アカウント
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownGame">
+                        <a class="dropdown-item" href="{{ route('マイページ') }}">マイページ</a>
                         <a class="dropdown-item" href="{{ route('ログアウト') }}">ログアウト</a>
                     </div>
                 </li>

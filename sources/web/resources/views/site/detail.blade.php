@@ -7,9 +7,8 @@
 @section('content')
 
     @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
-        <div>
-            <span class="badge badge-secondary">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($site->approval_status) }}</span>
-            <p>承認待ち状態です。登録者以外は閲覧できません。</p>
+        <div class="alert alert-warning" role="alert">
+            承認待ち状態です。登録者と管理人以外には表示されません。
         </div>
     @elseif ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
         <div class="alert alert-danger" role="alert">
@@ -28,14 +27,14 @@
         <div class="text-right">
             <ul class="horizontal">
                 <li>
-                    <a href="{{ route('サイト編集', ['site' => $site->id]) }}" class="btn btn-outline-primary">サイト情報を編集</a>
+                    <a href="{{ route('サイト編集', ['site' => $site->id]) }}" class="btn btn-outline-primary btn-sm">サイト情報を編集</a>
                 </li>
-                <li style="margin-left: 20px;">
+                <li style="margin-left: 10px;">
                     <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
 
-                        <button class="btn btn-danger">サイトを削除する</button>
+                        <button class="btn btn-danger btn-sm">サイトを削除する</button>
                     </form>
                 </li>
             </ul>

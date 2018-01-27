@@ -3,7 +3,7 @@
 @section('content')
     <h4>プラットフォーム追加</h4>
 
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="name">メーカー</label>

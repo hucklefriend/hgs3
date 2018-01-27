@@ -11,10 +11,12 @@ use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Site\SiteRequest;
+use Hgs3\Http\Requests\Site\UpdateHistoryRequest;
 use Hgs3\Log;
 use Hgs3\Models\Site;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\Auth;
+use Hgs3\Models\Timeline;
 
 class SiteManageController extends Controller
 {
@@ -28,7 +30,7 @@ class SiteManageController extends Controller
         return view('user.profile.site', [
             'user'     => Auth::user(),
             'isMyself' => true,
-            'sites'    => Site::getUserSites(Auth::id())
+            'sites'    => Site::getUserSites(Auth::id(), true)
         ]);
     }
 
@@ -265,5 +267,87 @@ class SiteManageController extends Controller
         }
 
         return redirect()->route('サイト管理');
+    }
+
+    public function addUpdateHistory(Orm\Site $site)
+    {
+        // 本人チェック
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
+        }
+
+        return view('');
+    }
+
+    public function insertUpdateHistory(UpdateHistoryRequest $request, Orm\Site $site)
+    {
+        // 本人チェック
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
+        }
+
+
+
+        return redirect()->route('サイト詳細', ['site' => $site->id]);
+    }
+
+    public function editUpdateHistory(Orm\SiteUpdateHistory $siteUpdateHistory)
+    {
+        $site = Orm\Site::find($siteUpdateHistory->site_id);
+        if ($site == null) {
+            return abort(404);
+        }
+
+        // 本人チェック
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
+        }
+
+
+        return view('');
+    }
+
+    public function updateUpdateHistory(UpdateHistoryRequest $request, Orm\SiteUpdateHistory $siteUpdateHistory)
+    {
+        $site = Orm\Site::find($siteUpdateHistory->site_id);
+        if ($site == null) {
+            return abort(404);
+        }
+
+        // 本人チェック
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
+        }
+
+        // 更新
+
+        $siteUpdateHistory->save();
+        $site->updated_timestamp = time();
+        $site->save();
+
+        // サイト更新タイムライン
+        Timeline\FollowUser::addUpdateSiteText($user, $site);
+        Timeline\ToMe::addSiteUpdatedText($user, $site);
+        Timeline\FavoriteSite::addUpdateSiteText($site);
+        Timeline\Site::addUpdateText($site);
+
+        return redirect()->route('サイト詳細', ['site' => $site->id]);
+    }
+
+    public function deleteUpdateHistory(Orm\SiteUpdateHistory $siteUpdateHistory)
+    {
+        $site = Orm\Site::find($siteUpdateHistory->site_id);
+        if ($site == null) {
+            return abort(404);
+        }
+
+        // 本人チェック
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
+        }
+
+        $siteUpdateHistory->delete();
+
+        return redirect()->route('サイト詳細', ['site' => $site->id]);
     }
 }

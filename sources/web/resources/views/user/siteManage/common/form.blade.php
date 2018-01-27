@@ -1,11 +1,11 @@
 <div class="form-group">
     <label for="name">サイト名</label>
-    <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}" autocomplete="off">
+    <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}">
     @include('common.error', ['formName' => 'name'])
 </div>
 <div class="form-group">
     <label for="url">URL</label>
-    <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}" autocomplete="off">
+    <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}">
     @include('common.error', ['formName' => 'url'])
 </div>
 <div class="form-group">

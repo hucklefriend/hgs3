@@ -364,7 +364,7 @@ SQL;
      * @param bool $isWebmaster
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getUserSites($userId, $isWebmaster)
+    public static function getUserSites($userId, $isWebmaster = false)
     {
         $query = Orm\Site::where('user_id', $userId);
 
@@ -489,6 +489,9 @@ SQL;
 
             DB::table('site_good_histories')
                 ->where('site_id', $site->id)
+                ->delete();
+
+            Orm\SiteUpdateHistory::where('site_id', $site->id)
                 ->delete();
 
             $site->delete();

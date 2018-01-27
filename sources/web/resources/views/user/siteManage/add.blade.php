@@ -9,7 +9,7 @@
         </p>
     @endif
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" autocomplete="off">
         {{ csrf_field() }}
         @include('user.siteManage.common.form')
 

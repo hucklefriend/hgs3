@@ -59,7 +59,6 @@ class Collection
         $db->createCollection('to_me_timeline');
         $db->createCollection('user_action_timeline');
         $db->createCollection('site_footprint');
-        $db->createCollection('site_update_history');
         $db->createCollection('site_timeline');
 
         echo 'create indexes'.PHP_EOL;
@@ -98,10 +97,6 @@ class Collection
         $db->site_footprint->createIndex([
             'site_id' => 1,
             'time'    => -1,
-        ]);
-        $db->site_update_history->createIndex([
-            'site_id' => 1,
-            'update_timestamp' => -1,
         ]);
         $db->site_timeline->createIndex([
             'time' => -1

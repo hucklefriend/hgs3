@@ -44,7 +44,7 @@
 
     <hr>
 
-    <form method="POST" action="{{ url('community/g/' . $gameSoft->id . '/topic/' . $topic->id) }}">
+    <form method="POST" action="{{ url('community/g/' . $gameSoft->id . '/topic/' . $topic->id) }}" autocomplete="off">
         {{ csrf_field() }}
         <div class="form-group row">
             <label for="comment" class="col-3 col-form-label">内容</label>

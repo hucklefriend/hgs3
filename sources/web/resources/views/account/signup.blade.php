@@ -44,7 +44,7 @@
             ※SNSのアカウントで登録した後に、メールアドレスによるログイン設定を行うこともできます。
         </p>
 
-        <form method="POST" action="{{ route('仮登録メール送信') }}">
+        <form method="POST" action="{{ route('仮登録メール送信') }}" autocomplete="off">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="mail">メールアドレス</label>

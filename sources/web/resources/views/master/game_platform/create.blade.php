@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST" action="{{ url('master/game_platform') }}">
+    <form method="POST" action="{{ url('master/game_platform') }}" autocomplete="off">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="name">名称</label>
