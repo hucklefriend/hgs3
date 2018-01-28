@@ -18,6 +18,31 @@
         </div>
     @endif
     <div style="padding: 0 15px;min-width: 300px;">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Information</h5>
+                <p class="card-text">
+                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}">{{ $site->url }}</a>
+                    <small>[<a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">別窓</a>]</small>
+                </p>
+                <small>
+                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                    <a href="{{ route('プロフィール', ['showId' => $webMaster->show_id]) }}">{{ $webMaster->name }}</a>
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                    {{ date('Y-m-d H:i', $site->updated_timestamp) }}
+                    <i class="fa fa-paw" aria-hidden="true"></i>
+                    {{ number_format($site->out_count) }}
+                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                    {{ number_format($site->good_num) }}
+                    <i class="fa fa-paw" aria-hidden="true"></i>
+                    {{ number_format($site->out_count) }}
+                </small>
+            </div>
+        </div>
+
+
+
         <table class="table table-responsive" style="width: 100%">
             <tbody>
             <tr>

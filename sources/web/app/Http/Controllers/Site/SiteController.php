@@ -76,6 +76,7 @@ class SiteController extends Controller
 
         $data = ['site' => $site];
 
+        $data['favoriteNum'] = $site->getFavoriteNum();
         $data['handleSofts'] = Site::getSoftWithOriginalPackage($site->id);
 
         // 更新履歴

@@ -81,4 +81,15 @@ class Site extends \Eloquent
         return self::where('user_id', $userId)
             ->count('id');
     }
+
+    /**
+     * お気に入り数を取得
+     *
+     * @return int
+     */
+    public function getFavoriteNum()
+    {
+        return UserFavoriteSite::where('site_id', $this->id)
+            ->count('site_id');
+    }
 }
