@@ -283,10 +283,13 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
+        $updateHistory = new Orm\SiteUpdateHistory;
+        $updateHistory->site_updated_at = date('Y-m-d');
+
         return view('user.siteManage.updateHistory', [
             'isEdit'        => false,
             'site'          => $site,
-            'updateHistory' => new Orm\SiteUpdateHistory
+            'updateHistory' => $updateHistory
         ]);
     }
 
@@ -308,7 +311,7 @@ class SiteManageController extends Controller
         $siteUpdateHistory = new Orm\SiteUpdateHistory();
         $siteUpdateHistory->site_id = $site->id;
         $siteUpdateHistory->site_updated_at = $request->get('site_updated_at');
-        $siteUpdateHistory->site_updated_at = $request->get('site_updated_at');
+        $siteUpdateHistory->detail = $request->get('detail');
 
         Site::saveUpdateHistory($site, $siteUpdateHistory, true);
 

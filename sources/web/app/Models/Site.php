@@ -617,6 +617,23 @@ SQL;
         DB::beginTransaction();
         try {
             $siteUpdateHistory->save();
+
+            $sql =<<< SQL
+INSERT INTO site_update_histories (site_id, site_updated_at, detail, created_at, updated_at)
+VALUES (:site_id, :site_updated_at, :detail, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON DUPLICATE KEY UPDATE
+  site_id = VALUES(site_id),
+  site_updated_at = VALUES(site_updated_at),
+  detail = VALUES(detail),
+  updated_at = VALUES(updated_at)
+SQL;
+
+            DB::insert($sql, [
+                'site_id'         => $site->id,
+                'site_updated_at' => $siteUpdateHistory->site_updated_at,
+                'detail'          => $siteUpdateHistory->detail
+            ]);
+
             $site->updated_timestamp = time();
             $site->save();
 
