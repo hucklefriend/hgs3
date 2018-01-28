@@ -9,9 +9,3 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
-/public/img/user_icon/*
-/public/img/site_banner/*.jpg
-/public/img/site_banner/*.png
-/public/img/site_banner/*.jpeg
-/public/img/site_banner/*.gif
-/public/img/site_banner/*.svg
