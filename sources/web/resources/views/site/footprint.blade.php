@@ -14,7 +14,7 @@
             </div>
             <div class="col-10">
                 @if (isset($users[$footprint->user_id]))
-                @include('user.common.user_name', ['id' => $footprint->user_id, 'name' => $users[$footprint->user_id]->name])
+                @include('user.common.user_name', ['id' => $users[$footprint->user_id]])
                 @else
                     ゲストさん
                 @endif

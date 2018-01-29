@@ -7,7 +7,7 @@
             @include('user.common.icon', ['u' => $user])
         </div>
         <div class="p-10 align-self-center">
-            <h5>@include('user.common.user_name', ['id' => $user->id, 'name' => $user->name])さんのタイムライン</h5>
+            <h5>@include('user.common.user_name', ['u' => $user])さんのタイムライン</h5>
             <div>
                 <a href="{{ url2('user/profile') }}">プロフィール</a>
             </div>

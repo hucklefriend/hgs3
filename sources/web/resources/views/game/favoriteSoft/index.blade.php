@@ -10,7 +10,7 @@
                 @include('user.common.icon', ['u' => $users[$favoriteUser->user_id]])
             </div>
             <div class="col-10">
-                @include('user.common.user_name', ['id' => $favoriteUser->id, 'name' => $users[$favoriteUser->user_id]->name])
+                @include('user.common.user_name', ['u' => $users[$favoriteUser->user_id]])
             </div>
         </div>
         <hr>

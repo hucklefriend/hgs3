@@ -247,45 +247,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * フォロー一覧
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function follow(User $user)
-    {
-        $isMyself = $user->id == Auth::id();
-
-        $follows = Follow::getFollow($user->id);
-
-        return view('user.profile.follow', [
-            'user'     => $user,
-            'isMyself' => $isMyself,
-            'follows'  => $follows,
-            'users'    => User::getHash(array_pluck($follows->items(), 'follow_user_id'))
-        ]);
-    }
-
-    /**
-     * フォロワー一覧
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function follower(User $user)
-    {
-        $isMyself = $user->id == Auth::id();
-        $follows = Follow::getFollower($user->id);
-
-        return view('user.profile.follower', [
-            'user'       => $user,
-            'isMyself'   => $isMyself,
-            'followers'  => $follows,
-            'users'      => User::getNameHash(array_pluck($follows->items(), 'user_id'))
-        ]);
-    }
-
-    /**
      * お気に入りゲーム一覧
      *
      * @param User $user
@@ -302,45 +263,6 @@ class ProfileController extends Controller
             'isMyself'      => $isMyself,
             'favoriteSofts' => $favoriteSofts,
             'softs'         => Orm\GameSoft::getNameHash(array_pluck($favoriteSofts->items(), 'soft_id'))
-        ]);
-    }
-
-    /**
-     * サイト一覧
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function site(User $user)
-    {
-        $isMyself = $user->id == Auth::id();
-
-        return view('user.profile.site', [
-            'user'     => $user,
-            'isMyself' => $isMyself,
-            'sites'    => Site::get($user->id)
-        ]);
-    }
-
-    /**
-     * お気に入りサイト一覧
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function favoriteSite(User $user)
-    {
-        $isMyself = $user->id == Auth::id();
-
-        $favSites = User\FavoriteSite::get($user->id);
-        $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
-
-        return view('user.profile.favorite_site', [
-            'user'     => $user,
-            'isMyself' => $isMyself,
-            'favSites' => $favSites,
-            'sites'    => $sites,
-            'users'    => User::getNameHash(array_pluck($sites, 'user_id'))
         ]);
     }
 

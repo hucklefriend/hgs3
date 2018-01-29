@@ -24,7 +24,7 @@ class UserFollow
         foreach ($users as $user) {
             $num = rand(1, $userMax);
             for ($i = 0; $i < $num; $i++) {
-                $follow->add($user, $users[rand(0, $userMax)]->id);
+                $follow->add($user, $users[rand(0, $userMax)]);
             }
         }
     }

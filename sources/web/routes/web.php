@@ -151,10 +151,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/timeline', 'User\ProfileController@timeline')->name('ユーザーのタイムライン');
     Route::get('/user/user_action_timeline/{showId}', 'User\ProfileController@userActionTimeline')->name('ユーザーの行動タイムライン');
     Route::get('/user/favorite_site/{showId}', 'User\ProfileController@favoriteSite')->name('ユーザーのお気に入りサイト');
-    Route::get('/user/follow/{showId}', 'User\ProfileController@follow')->name('ユーザーのフォロー');
-    Route::get('/user/follower/{showId}', 'User\ProfileController@follower')->name('ユーザーのフォロワー');
-    Route::get('/user/review/{showId}', 'User\ProfileController@follower')->name('ユーザーのレビュー');
-    Route::get('/user/diary/{showId}', 'User\ProfileController@follower')->name('ユーザーの日記');
+    Route::get('/user/follow/{showId}', 'User\FollowController@index')->name('ユーザーのフォロー');
+    Route::get('/user/follower/{showId}', 'User\FollowController@follower')->name('ユーザーのフォロワー');
+    Route::get('/user/review/{showId}', 'User\ReviewController@index')->name('ユーザーのレビュー');
+    Route::get('/user/diary/{showId}', 'User\Diary@index')->name('ユーザーの日記');
     Route::get('/user/site/{showId}', 'User\SiteManageController@index')->name('ユーザーのサイト');
 
 

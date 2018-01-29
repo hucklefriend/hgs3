@@ -14,6 +14,54 @@ use Illuminate\Support\Facades\Auth;
 class FollowController extends Controller
 {
     /**
+     * フォロー一覧
+     *
+     * @param string $showId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index($showId)
+    {
+        $user = User::findByShowId($showId);
+        if ($user == null) {
+            return view('user.profile.notExist');
+        }
+
+        $isMyself = $user->id == Auth::id();
+        $follows = Follow::getFollow($user->id);
+
+        return view('user.profile.follow', [
+            'user'     => $user,
+            'isMyself' => $isMyself,
+            'follows'  => $follows,
+            'users'    => User::getHash(array_pluck($follows->items(), 'follow_user_id'))
+        ]);
+    }
+
+    /**
+     * フォロワー一覧
+     *
+     * @param string $showId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function follower($showId)
+    {
+        $user = User::findByShowId($showId);
+        if ($user == null) {
+            return view('user.profile.notExist');
+        }
+
+        $isMyself = $user->id == Auth::id();
+        $follows = Follow::getFollower($user->id);
+
+        return view('user.profile.follower', [
+            'user'       => $user,
+            'isMyself'   => $isMyself,
+            'followers'  => $follows,
+            'users'      => User::getHash(array_pluck($follows->items(), 'user_id'))
+        ]);
+    }
+
+    /**
      * フォローする
      *
      * @return \Illuminate\Http\RedirectResponse

@@ -306,7 +306,7 @@
                                     @include('user.common.icon', ['u' => $fu])
                                 </div>
                                 <div class="col-10">
-                                    @include('user.common.user_name', ['id' => $fu->id, 'name' => $fu->name])
+                                    @include('user.common.user_name', ['u' => $fu])
                                 </div>
                             </div>
                             <hr>

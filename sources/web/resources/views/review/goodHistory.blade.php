@@ -13,7 +13,7 @@
                 @include('user.common.icon', ['u' => $u])
             </div>
             <div class="col-10">
-                @include('user.common.user_name', ['id' => $u->id, 'name' => $u->name])
+                @include('user.common.user_name', ['u' => $u])
                 <br>
                 {{ $history->good_at }}
             </div>

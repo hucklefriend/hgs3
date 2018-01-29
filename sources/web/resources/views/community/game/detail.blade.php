@@ -60,7 +60,7 @@
                                 @include('user.common.icon', ['u' => $u])
                             </div>
                             <div class="col-10">
-                                @include('user.common.user_name', ['id' => $u->id, 'name' => hv($users, $u->user_id)])
+                                @include('user.common.user_name', ['u' => $u])
                             </div>
                         </div>
                         <hr>

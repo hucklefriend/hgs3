@@ -7,6 +7,7 @@
 namespace Hgs3\Models\User;
 
 use Hgs3\Models\User;
+use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Timeline;
 
@@ -42,14 +43,14 @@ class Follow
     /**
      * フォローしているユーザーの一覧を取得
      *
-     * @param int $userId
+     * @param $userId
      * @param int $category
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public static function getFollow($userId, $category = 0)
     {
-        return DB::table('user_follows')
-            ->where('user_id', $userId)
+        return Orm\UserFollow::where('user_id', $userId)
+            ->orderBy('created_at', 'DESC')
             ->paginate(30);
     }
 
@@ -62,8 +63,8 @@ class Follow
      */
     public static function getFollower($userId, $category = 0)
     {
-        return DB::table('user_follows')
-            ->where('follow_user_id', $userId)
+        return Orm\UserFollow::where('follow_user_id', $userId)
+            ->orderBy('created_at', 'DESC')
             ->paginate(30);
     }
 

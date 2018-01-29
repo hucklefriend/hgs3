@@ -1,1 +1,1 @@
-<a href="{{ url('user/profile') }}/{{ $id }}">{{ $name }}さん</a>
+<a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}">{{ $u->name }}さん</a>
