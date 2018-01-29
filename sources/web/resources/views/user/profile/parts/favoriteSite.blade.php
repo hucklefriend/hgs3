@@ -1,8 +1,12 @@
-@foreach ($favSites as $fs)
+@if ($favoriteSites->count() == 0)
+    お気に入りサイトはありません。
+@endif
+@foreach ($favoriteSites as $fs)
     @isset($sites[$fs->site_id])
-    @include('site.common.normal', ['s' => $sites[$fs->site_id], 'noUser' => false])
+        @php $s = $sites[$fs->site_id]; @endphp
+    @include('site.common.normal', ['s' => $s, 'u' => $users[$s->user_id]])
     @endif
     @if (!$loop->last) <hr> @endif
 @endforeach
 
-{{ $favSites->links('vendor.pagination.simple-bootstrap-4') }}
+{{ $favoriteSites->links('vendor.pagination.simple-bootstrap-4') }}

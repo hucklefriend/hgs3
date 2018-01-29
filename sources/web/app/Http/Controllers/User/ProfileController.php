@@ -57,7 +57,7 @@ class ProfileController extends Controller
                 $follows = $follow->getFollow($user->id);
                 $data['parts'] = [
                     'follows' => $follows,
-                    'users'   => User::getHash(array_pluck($follows->items(), 'follow_user_id')),
+                    'users'   => User::getHash(page_pluck($follows, 'follow_user_id')),
                 ];
             }
                 break;
@@ -66,7 +66,7 @@ class ProfileController extends Controller
                 $follows = $follow->getFollower($user->id);
                 $data['parts'] = [
                     'followers' => $follows,
-                    'users'     => User::getHash(array_pluck($follows->items(), 'user_id')),
+                    'users'     => User::getHash(page_pluck($follows, 'user_id')),
                 ];
             }
                 break;
@@ -82,7 +82,7 @@ class ProfileController extends Controller
                 $reviews = $r->getMypage($user->id);
                 $data['parts'] = [
                     'reviews'      => $reviews,
-                    'gamePackages' => Orm\GamePackage::getHash(array_pluck($reviews->items(), 'package_id')),
+                    'gamePackages' => Orm\GamePackage::getHash(page_pluck($reviews, 'package_id')),
                 ];
             }
                 break;
@@ -94,13 +94,13 @@ class ProfileController extends Controller
             }
                 break;
             case 'favorite_site': {
-                $favSites = User\FavoriteSite::get($user->id);
-                $sites = Orm\Site::getHash(array_pluck($favSites->items(), 'site_id'));
+                $favoriteSites = User\FavoriteSite::get($user->id);
+                $sites = Orm\Site::getHash(page_pluck($favoriteSites, 'site_id'));
 
                 $data['parts'] = [
-                    'favSites' => $favSites,
-                    'sites'    => $sites,
-                    'users'    => User::getNameHash(array_pluck($sites, 'user_id'))
+                    'favoriteSites' => $favoriteSites,
+                    'sites'         => $sites,
+                    'users'         => User::getHash(array_pluck($sites, 'user_id'))
                 ];
             }
                 break;

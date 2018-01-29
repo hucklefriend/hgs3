@@ -18,7 +18,7 @@ class UserFavoriteSite
         $users = User::get();
         $userMax = $users->count() - 1;
 
-        $sites = Site::get();
+        $sites = Site::getOpen();
         $fav = new FavoriteSite();
 
         foreach ($sites as $site) {

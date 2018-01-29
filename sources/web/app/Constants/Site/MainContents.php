@@ -20,7 +20,7 @@ class MainContents
         self::ILLUSTRATION => 'イラスト/漫画',
         self::TEXT         => '小説/テキスト',
         self::CREATION     => 'その他創作',
-        self::SNS          => 'SNS/同盟/検索エンジン/ウェブ・リング',
+        self::SNS          => 'SNS/検索エンジン',
         self::NEWS         => 'ニュース/情報',
         self::OTHER        => 'その他',
     ];

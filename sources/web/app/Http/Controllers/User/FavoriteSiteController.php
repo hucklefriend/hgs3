@@ -5,8 +5,8 @@
 
 namespace Hgs3\Http\Controllers\User;
 
+use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Models\Orm;
-use Hgs3\Models\Site;
 use Hgs3\Models\User\FavoriteSite;
 use Hgs3\Models\User;
 use Illuminate\Http\Request;
@@ -16,28 +16,28 @@ use Illuminate\Support\Facades\Auth;
 class FavoriteSiteController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * お気に入りサイトリスト
      *
+     * @param string $showId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user)
+    public function index($showId)
     {
-        $isMyself = $user->id == Auth::id();
-        $fav = Orm\UserFavoriteSite::where('user_id', $user->id)->get();
+        $user = User::findByShowId($showId);
+        if ($user == null) {
+            return view('user.profile.notExist');
+        }
 
-        return view('user.site.favorite')->with([
-            'user'     => $user,
-            'isMyself' => $isMyself,
-            'favSites' => $fav,
-            'sites'    => Orm\GameSoft::getNameHash(array_pluck($fav->toArray(), 'site_id'))
+        $isMyself = $user->id == Auth::id();
+        $favoriteSites = FavoriteSite::get($user->id);
+        $sites = Orm\Site::getHash(page_pluck($favoriteSites, 'site_id'));
+
+        return view('user.profile.favoriteSite')->with([
+            'user'          => $user,
+            'isMyself'      => $isMyself,
+            'favoriteSites' => $favoriteSites,
+            'sites'         => $sites,
+            'users'         => User::getHash(array_pluck($sites, 'user_id'))
         ]);
     }
 
@@ -60,7 +60,13 @@ class FavoriteSiteController extends Controller
      */
     public function add(Request $request, Orm\Site $site)
     {
-        FavoriteSite::add(Auth::user(), $site);
+        if ($site->approval_status != ApprovalStatus::OK) {
+            return $this->forbidden(403);
+        }
+
+        if ($site->user_id != Auth::id()) {
+            FavoriteSite::add(Auth::user(), $site);
+        }
 
         return redirect()->back();
     }

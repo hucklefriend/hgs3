@@ -215,3 +215,16 @@ function format_date_local($date)
 
     return date('Y-m-d', $timestamp) . 'T' . date('H:i', $timestamp);
 }
+
+
+/**
+ * ページャーからキーの配列を取得
+ *
+ * @param \Illuminate\Contracts\Pagination\LengthAwarePaginator $pager
+ * @param string $key
+ * @return array
+ */
+function page_pluck(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager, $key)
+{
+    return $pager->pluck($key)->toArray();
+}
