@@ -168,7 +168,7 @@ class Site
                 }
 
                 $listBanner->move($bannerDirectoryPath, $listBannerFileName);
-                $site->list_banner_url = url2('img/site_banner/' . $site->id . '/' . $listBannerFileName);
+                $site->list_banner_url = url('img/site_banner/' . $site->id . '/' . $listBannerFileName);
             } else if ($site->list_banner_upload_flag == 0) {
                 // 削除(またはアップしない)
                 $site->list_banner_url = null;
@@ -192,7 +192,7 @@ class Site
                     File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
                 }
                 $detailBanner->move($bannerDirectoryPath, $detailBannerFileName);
-                $site->detail_banner_url = url2('img/site_banner/' . $site->id . '/' . $detailBannerFileName);
+                $site->detail_banner_url = url('img/site_banner/' . $site->id . '/' . $detailBannerFileName);
             } else if ($site->detail_banner_upload_flag == 0) {
                 // 削除(またはアップしない)
                 $site->detail_banner_url = null;

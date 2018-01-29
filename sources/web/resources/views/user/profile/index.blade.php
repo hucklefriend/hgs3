@@ -33,8 +33,6 @@
     </div>
     @endif
 
-    <hr>
-
     <div class="d-none d-sm-block">
 
         @if ($isMyself)
@@ -46,12 +44,12 @@
         @endif
     </div>
 
-    <hr class="d-none d-sm-block">
+    <hr>
 
     <!-- 最小表示以外はメニューと内容を表示 -->
     <div class="d-none d-sm-block">
         <div class="d-flex flex-row">
-            <div class="p-2" style="width: 270px;">
+            <div class="p-2" style="width: 300px;">
                 <div class="nav flex-column nav-pills">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>

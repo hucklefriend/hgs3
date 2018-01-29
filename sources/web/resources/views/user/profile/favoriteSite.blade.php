@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">&lt;</a>
+    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}">&lt;</a>
 @endsection
 
 @section('content')

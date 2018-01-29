@@ -1,20 +1,21 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'diary']) }}">&lt;</a>
+@endsection
+
 @section('content')
-
-    <div class="d-flex align-items-stretch">
-        <div class="p-2 align-self-center" style="min-width: 3em;">
-            @include('user.common.icon', ['u' => $user])
-        </div>
-        <div class="p-10 align-self-center">
-            <h5>@include('user.common.user_name', ['id' => $user->id, 'name' => $user->name])さんの日記</h5>
-            <div>
-                <a href="{{ url2('user/profile') }}">プロフィール</a>
-            </div>
-        </div>
-    </div>
-
+    <h1>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんの日記</h1>
     <hr>
+    <p>日記は実装中</p>
+@endsection
 
-    @include('user.profile.parts.diary', ['users' => $users, 'follows' => $follows])
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb_footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">ユーザーページ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ユーザーの日記</li>
+        </ol>
+    </nav>
 @endsection

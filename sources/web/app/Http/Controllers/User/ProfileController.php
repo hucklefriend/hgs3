@@ -17,6 +17,7 @@ use Hgs3\Models\User\Profile;
 use Hgs3\Models\User;
 use Hgs3\Models\Site;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 
 class ProfileController extends Controller
@@ -289,12 +290,11 @@ class ProfileController extends Controller
      * さらにタイムラインを取得
      *
      * @param User $user
-     * @param $time
      * @return \Illuminate\Http\JsonResponse
      */
-    public function moreTimelineMyPage(User $user, $time)
+    public function moreTimelineMyPage(User $user)
     {
-        $time = floatval($time);
+        $time = floatval(Input::get('time', 0));
         return Response::json(Timeline\MyPage::getTimeline($user->id, $time, 20));
     }
 

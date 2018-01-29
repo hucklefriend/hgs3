@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+
+
 @section('content')
     <h4>{{ $user->name }}さんのアイコン変更</h4>
 
@@ -22,15 +24,10 @@
             </div>
         </div>
 
-
-
         <div class="row" style="margin-bottom: 10px;">
             <div class="col-sm-5 text-center">
                 <div>現在のアイコン</div>
                 @include('user.common.icon', ['u' => $user, 'isLarge' => true])
-                <div style="margin-top: 10px;">
-                    <button class="btn btn-default" type="button" onclick="location.href='{{ url2('mypage') }}';" style="margin-right:30px;">アイコン変更しない</button>
-                </div>
             </div>
             <div class="col-sm-5 text-center">
                 <div>選択したアイコン</div>

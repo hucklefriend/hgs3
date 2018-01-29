@@ -20,9 +20,9 @@ class FollowUser extends TimelineAbstract
     public static function addAddSiteText(User $user, Orm\Site $site)
     {
         $text = sprintf('<a href="%s">%sさん</a>が新しいサイト「<a href="%s">%s</a>」を登録しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
-            url2('site/detail/' . $site->id),
+            route('サイト詳細', ['site' => $site->id]),
             $site->name
         );
 
@@ -38,9 +38,9 @@ class FollowUser extends TimelineAbstract
     public static function addUpdateSiteText(User $user, Orm\Site $site)
     {
         $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」の情報を更新しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
-            url2('site/detail/' . $site->id),
+            route('サイト詳細', ['site' => $site->id]),
             $site->name
         );
 
@@ -56,7 +56,7 @@ class FollowUser extends TimelineAbstract
     public static function addJoinGameCommunityText(User $user, Orm\GameSoft $soft)
     {
         $text = sprintf('<a href="%s">%sさん</a>がコミュニティ「<a href="%s">%s</a>」に参加しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
             url2('community/g/' . $soft->id),
             $soft->name
@@ -74,7 +74,7 @@ class FollowUser extends TimelineAbstract
     public static function addJoinUserCommunityText(User $user, Orm\UserCommunity $userCommunity)
     {
         $text = sprintf('<a href="%s">%sさん</a>がコミュニティ「<a href="%s">%s</a>」に参加しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
             url2('community/u/' . $userCommunity->id),
             $userCommunity->name
@@ -92,7 +92,7 @@ class FollowUser extends TimelineAbstract
     public static function addLeaveGameCommunityText(User $user, Orm\GameSoft $soft)
     {
         $text = sprintf('<a href="%s">%sさん</a>がコミュニティ「<a href="%s">%s</a>」を脱退しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
             url2('community/g/' . $soft->id),
             $soft->name
@@ -110,7 +110,7 @@ class FollowUser extends TimelineAbstract
     public static function addLeaveUserCommunityText(User $user, Orm\UserCommunity $userCommunity)
     {
         $text = sprintf('<a href="%s">%sさん</a>がコミュニティ「<a href="%s">%s</a>」を脱退しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
             url2('community/u/' . $userCommunity->id),
             $userCommunity->name
@@ -129,7 +129,7 @@ class FollowUser extends TimelineAbstract
     public static function addWriteReviewText(User $user, Orm\GameSoft $soft, Orm\Review $review)
     {
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%sのレビュー</a>%sを投稿しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
             url2('review/detail/' . $review->id),
             $soft->name,
@@ -148,7 +148,7 @@ class FollowUser extends TimelineAbstract
     public static function addAddFavoriteSoftText(User $user, Orm\GameSoft $soft)
     {
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%s</a>をお気に入りゲームに登録しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
             url2('game/soft/' . $soft->id),
             $soft->name

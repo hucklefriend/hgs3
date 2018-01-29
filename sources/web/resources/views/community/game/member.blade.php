@@ -6,7 +6,7 @@
 
     <ul class="list-group">
         @foreach ($members as $u)
-            <li class="list-group-item"><a href="{{ url2('user/profile/' . $u) }}">{{ $users[$u] ?? '---' }}</a></li>
+            <li class="list-group-item"><a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}">{{ $users[$u] ?? '---' }}</a></li>
         @endforeach
     </ul>
 

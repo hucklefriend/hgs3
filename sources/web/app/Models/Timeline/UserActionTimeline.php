@@ -5,13 +5,8 @@
 
 namespace Hgs3\Models;
 
-use Hgs3\Constants\TimelineType;
 use Hgs3\Constants\UserActionTimelineType;
-use Hgs3\Models\Orm\GameSoft;
-use Hgs3\Models\Orm\Review;
-use Hgs3\Models\Orm\UserCommunity;
-use Hgs3\Models\User\Mongo;
-use Hgs3\User;
+use Hgs3\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserActionTimeline
@@ -31,19 +26,23 @@ class UserActionTimeline
         $this->user = $user;
     }
 
-
+    /**
+     * マイページ
+     *
+     * @param $userId
+     * @param $num
+     * @return array
+     */
     public function getMyPage($userId, $num)
     {
-        $user = new Mongo($userId);
-
         $collection = self::getMongoCollection();
 
         $filter = [
             '$or' => [
                 ['target_user_id' => 1],
-                ['game_id' => ['$in' => $user->getFavoriteGame()]],
-                ['user_id' => ['$in' =>$user->getFollow()]],
-                ['site_id' => ['$in' =>$user->getFavoriteSite()]]
+                ['game_id' => ['$in' => $this->user->getFavoriteGame()]],
+                ['user_id' => ['$in' => $this->user->getFollow()]],
+                ['site_id' => ['$in' => $this->user->getFavoriteSite()]]
             ],
             'user_id' => ['$ne' => 1]
         ];
@@ -78,15 +77,14 @@ class UserActionTimeline
     /**
      * フォロー
      *
-     * @param $followUserId
-     * @param $followUserName
+     * @param User $followUser
      */
-    public function addFollowText($followUserId, $followUserName)
+    public function addFollowText(User $followUser)
     {
         $text = sprintf(
             '<a href="%s">%sさん</a>をフォローしました。',
-            url2('user/profile/' . $followUserId),
-            $followUserName
+            route('プロフィール', ['showId' => $followUser->show_id]),
+            $followUser->name
         );
 
         $this->insert(UserActionTimelineType::SIGN_UP, $text);

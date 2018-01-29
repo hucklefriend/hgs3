@@ -146,7 +146,7 @@ Route::group(['middleware' => ['auth']], function () {
     // プロフィール
     Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');
     Route::get('/user/profile/{showId}/{show}', 'User\ProfileController@index')->name('プロフィール2');
-    Route::get('/user/profile/{showId}/timeline/mypage/{time}', 'User\ProfileController@moreTimelineMyPage')->name('タイムライン追加取得');
+    Route::get('/user/profile/{showId}/timeline/mypage', 'User\ProfileController@moreTimelineMyPage')->name('タイムライン追加取得');
     Route::get('/user/communities/{showId}', 'User\ProfileController@community')->name('ユーザーのコミュニティ');
     Route::get('/user/timeline', 'User\ProfileController@timeline')->name('ユーザーのタイムライン');
     Route::get('/user/user_action_timeline/{showId}', 'User\ProfileController@userActionTimeline')->name('ユーザーの行動タイムライン');
@@ -171,28 +171,28 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/user/follow', 'User\FollowController@remove')->name('フォロー解除');
 
     // ユーザーコミュニティ
-    Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join');
-    Route::post('/community/u/{uc}/leave', 'Community\UserCommunityController@leave');
-    Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members');
-    Route::get('/community/u/{uc}/topics', 'Community\UserCommunityController@topics');
-    Route::post('/community/u/{uc}/topics', 'Community\UserCommunityController@write');
-    Route::get('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@topicDetail');
-    Route::post('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@writeResponse');
-    Route::delete('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@erase');
-    Route::delete('/community/u/{uc}/topic_response/{uctr}', 'Community\UserCommunityController@eraseResponse');
-    Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail');
+    Route::post('/community/u/{uc}/join', 'Community\UserCommunityController@join')->name('ユーザーコミュニティ参加処理');
+    Route::post('/community/u/{uc}/leave', 'Community\UserCommunityController@leave')->name('ユーザーコミュニティ脱退処理');
+    Route::get('/community/u/{uc}/member', 'Community\UserCommunityController@members')->name('ユーザーコミュニティメンバー');
+    Route::get('/community/u/{uc}/topics', 'Community\UserCommunityController@topics')->name('ユーザーコミュニティ投稿一覧');
+    Route::post('/community/u/{uc}/topics', 'Community\UserCommunityController@write')->name('ユーザーコミュニティ投稿処理');
+    Route::get('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@topicDetail')->name('ユーザーコミュニティ投稿詳細');
+    Route::post('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@writeResponse')->name('ユーザーコミュニティレス投稿処理');
+    Route::delete('/community/u/{uc}/topic/{uct}', 'Community\UserCommunityController@erase')->name('ユーザーコミュニティ投稿削除処理');
+    Route::delete('/community/u/{uc}/topic_response/{uctr}', 'Community\UserCommunityController@eraseResponse')->name('ユーザーコミュニティレス削除処理');
+    Route::get('/community/u/{uc}', 'Community\UserCommunityController@detail')->name('ユーザーコミュニティ');
 
     // ゲームコミュニティ
-    Route::post('/community/g/{soft}/join', 'Community\GameCommunityController@join');
-    Route::post('/community/g/{soft}/leave', 'Community\GameCommunityController@leave');
-    Route::get('/community/g/{soft}/member', 'Community\GameCommunityController@members');
-    Route::get('/community/g/{soft}/topics', 'Community\GameCommunityController@topics');
-    Route::post('/community/g/{soft}/topics', 'Community\GameCommunityController@write');
-    Route::get('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@topicDetail');
-    Route::post('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@writeResponse');
-    Route::delete('/community/g/{soft}/topic/{gct}', 'Community\GameCommunityController@erase');
-    Route::delete('/community/g/{soft}/topic_response/{gctr}', 'Community\GameCommunityController@eraseResponse');
-    Route::get('/community/g/{soft}', 'Community\GameCommunityController@detail');
+    Route::post('/community/g/{soft}/join', 'Community\GameCommunityController@join')->name('ゲームコミュニティ参加処理');;
+    Route::post('/community/g/{soft}/leave', 'Community\GameCommunityController@leave')->name('ゲームコミュニティ脱退処理');
+    Route::get('/community/g/{soft}/member', 'Community\GameCommunityController@members')->name('ゲームコミュニティメンバー');
+    Route::get('/community/g/{soft}/topics', 'Community\GameCommunityController@topics')->name('ゲームコミュニティ投稿一覧');
+    Route::post('/community/g/{soft}/topics', 'Community\GameCommunityController@write')->name('ゲームコミュニティ投稿処理');
+    Route::get('/community/g/{soft}/topic/{topic}', 'Community\GameCommunityController@topicDetail')->name('ゲームコミュニティ投稿詳細');
+    Route::post('/community/g/{soft}/topic/{topic}', 'Community\GameCommunityController@writeResponse')->name('ゲームコミュニティレス投稿処理');
+    Route::delete('/community/g/{soft}/topic/{topic}', 'Community\GameCommunityController@erase')->name('ゲームコミュニティ投稿削除処理');
+    Route::delete('/community/g/{soft}/topic_response/{topicResponse}', 'Community\GameCommunityController@eraseResponse')->name('ゲームコミュニティレス削除処理');
+    Route::get('/community/g/{soft}', 'Community\GameCommunityController@detail')->name('ゲームコミュニティ');
 });
 
 // トップ
@@ -259,7 +259,7 @@ Route::get('/game/platform/{platform}', 'Game\PlatformController@detail')->name(
 
 // シリーズ
 Route::get('/game/series', 'Game\SeriesController@index')->name('シリーズ一覧');
-Route::get('/game/series/{gameSeries}', 'Game\SeriesController@detail')->name('シリーズ詳細');
+Route::get('/game/series/{series}', 'Game\SeriesController@detail')->name('シリーズ詳細');
 
 // お気に入りゲーム
 Route::get('/game/favorite/{soft}', 'Game\FavoriteSoftController@index')->name('お気に入りゲーム登録ユーザー一覧');

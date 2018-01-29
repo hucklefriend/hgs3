@@ -28,7 +28,6 @@
             <small class="form-text text-muted">18禁ゲームへのアクセスができるようになります。</small>
         </div>
         <div class="form-group">
-            <button class="btn btn-default" type="button" onclick="location.href='{{ url2('mypage') }}';" style="margin-right:30px;">キャンセル</button>
             <button class="btn btn-info">プロフィール更新</button>
         </div>
     </form>

@@ -22,7 +22,7 @@ class GameCommunity extends TimelineAbstract
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">%sさん</a>が参加しました',
             url2('community/g/' . $soft->id),
             $soft->name,
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name
         );
 

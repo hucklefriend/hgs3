@@ -18,7 +18,7 @@ class FavoriteSite extends TimelineAbstract
     public static function addUpdateSiteText(Orm\Site $site)
     {
         $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」が更新されました。',
-            url2('site/detail/' . $site->id),
+            route('サイト詳細', ['site' => $site->id]),
             $site->name
         );
 
@@ -35,7 +35,7 @@ class FavoriteSite extends TimelineAbstract
     {
         if ($site->good_num > 0 && $prevMaxGoodNum < $site->good_num && $site->good_num % 100 == 0) {
             $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」へのいいねが%dに達しました！',
-                url2('site/detail/' . $site->id),
+                route('サイト詳細', ['site' => $site->id]),
                 $site->name,
                 $site->good_num
             );
@@ -54,7 +54,7 @@ class FavoriteSite extends TimelineAbstract
     {
         if ($outCount > 100 && $outCount % 100 == 1) {
             $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」へのアクセス数が%dを超えました！',
-                url2('site/detail/' . $site->id),
+                route('サイト詳細', ['site' => $site->id]),
                 $site->name,
                 intval($outCount / 100) * 100
             );
@@ -71,7 +71,7 @@ class FavoriteSite extends TimelineAbstract
     public static function addDeleteText(Orm\Site $site)
     {
         $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」が削除されました。',
-            url2('site/detail/' . $site->id),
+            route('サイト詳細', ['site' => $site->id]),
             $site->name
         );
 

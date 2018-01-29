@@ -20,7 +20,7 @@ class ToMe extends TimelineAbstract
     public static function addFollowerText(User $user, User $follower)
     {
         $text = sprintf('<a href="%s">%sさん</a>にフォローされました',
-            url2('user/profile/' . $follower->id),
+            route('プロフィール', ['showId' => $follower->show_id]),
             $follower->name
         );
 
@@ -38,14 +38,14 @@ class ToMe extends TimelineAbstract
     {
         if ($goodUser === null) {
             $text = sprintf('サイト「<a href="%s">%s</a>」がいいねされました。',
-                url2('site/detail/' . $site->id),
+                route('サイト詳細', ['site' => $site->id]),
                 $site->name
             );
         } else {
             $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」にいいねしてくれました。',
-                url2('user/profile/' . $goodUser->id),
+                route('プロフィール', ['showId' => $goodUser->show_id]),
                 $goodUser->name,
-                url2('site/detail/' . $site->id),
+                route('サイト詳細', ['site' => $site->id]),
                 $site->name
             );
         }
@@ -64,7 +64,7 @@ class ToMe extends TimelineAbstract
     {
         if ($site->good_num > 100 && $site->good_num > $prevMaxGoodNum && $site->good_num % 100 == 0) {
             $text = sprintf('サイト「<a href="%s">%s</a>」へのいいねが%dに達しました！',
-                url2('site/detail/' . $site->id),
+                route('サイト詳細', ['site' => $site->id]),
                 $site->name,
                 $site->good_num
             );
@@ -85,7 +85,7 @@ class ToMe extends TimelineAbstract
         $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」をお気に入りに登録しました！',
             $favoriteUser->id,
             $favoriteUser->name,
-            url2('site/detail/' . $site->id),
+            route('サイト詳細', ['site' => $site->id]),
             $site->name
         );
 
@@ -104,14 +104,14 @@ class ToMe extends TimelineAbstract
     {
         if ($goodUser === null) {
             $text = sprintf('<a href="%s">%sのレビュー</a>がいいねされました。',
-                url2('review/detail/' . $review->id),
+                route('レビュー詳細', ['review' => $review->id]),
                 $package->name
             );
         } else {
             $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%sのレビュー</a>にいいねしてくれました。',
-                url2('user/profile/' . $goodUser->id),
+                route('プロフィール', ['showId' => $goodUser->show_id]),
                 $goodUser->name,
-                url2('review/detail/' . $review->id),
+                route('レビュー詳細', ['review' => $review->id]),
                 $package->name
             );
         }
@@ -131,7 +131,7 @@ class ToMe extends TimelineAbstract
     {
         if ($review->max_good_num > 1 && $prevMaxGoodNum < $review->max_good_num && $review->max_good_num % 100 == 0) {
             $text = sprintf('<a href="%s">%sのレビュー</a>へのいいねが%d件に達しました。',
-                url2('review/detail/' . $review->id),
+                route('レビュー詳細', ['review' => $review->id]),
                 $package->name,
                 $review->max_good_num
             );
@@ -150,9 +150,9 @@ class ToMe extends TimelineAbstract
     public static function addUserCommunityTopicResponseText(User $user, Orm\UserCommunity $userCommunity, Orm\UserCommunityTopic $topic)
     {
         $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">投稿したトピック</a>に返信がありました。',
-            url2('community/u/' . $userCommunity->id),
+            route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
             $userCommunity->name,
-            url2('community/u/' . $userCommunity->id . '/topic/' . $topic->id)
+            route('ユーザーコミュニティ投稿詳細', ['uc' => $userCommunity->id, 'uct' => $topic->id])
         );
 
         self::insert($user->id, $text);
@@ -168,9 +168,9 @@ class ToMe extends TimelineAbstract
     public static function addGameCommunityTopicResponseText(User $user, Orm\GameSoft $soft, Orm\GameCommunityTopic $topic)
     {
         $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">投稿したトピック</a>に返信がありました。',
-            url2('community/g/' . $soft->id),
+            route('ゲームコミュニティ', ['soft' => $soft->id]),
             $soft->name,
-            url2('community/g/' . $soft->id . '/topic/' . $topic->id)
+            route('ゲームコミュニティ投稿詳細', ['soft' => $soft->id, 'topic' => $topic->id])
         );
 
         self::insert($user->id, $text);

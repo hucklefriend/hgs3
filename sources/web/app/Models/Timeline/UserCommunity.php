@@ -20,9 +20,9 @@ class UserCommunity extends TimelineAbstract
     public static function addJoinUserText(Orm\UserCommunity $userCommunity, User $user)
     {
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">%sさん</a>が参加しました',
-            url2('community/u/' . $userCommunity->id),
+            route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
             $userCommunity->name,
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name
         );
 
@@ -38,9 +38,9 @@ class UserCommunity extends TimelineAbstract
     public static function addNewTopicText(Orm\UserCommunity $userCommunity, Orm\UserCommunityTopic $topic)
     {
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">新しいトピック</a>が作成されました',
-            url2('community/u/' . $userCommunity->id),
+            route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
             $userCommunity->name,
-            url2('community/u/' . $userCommunity->id . 'topic/' . $topic->id)
+            route('ユーザーコミュニティ投稿詳細', ['uc' => $userCommunity->id, 'uct' => $topic->id])
         );
 
         self::insert($userCommunity->id, $text);

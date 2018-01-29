@@ -9,7 +9,7 @@
     <ul class="list-group">
     @foreach ($hgs2Sites as $hgs2Site)
         <li class="list-group-item">
-            <a href="{{ url2('user/site_manage/takeover/' . $hgs2Site->id) }}">{{ $hgs2Site->site_name }}</a>
+            <a href="{{ route('サイト引継登録', ['hgs2SiteId' => $hgs2Site->id]) }}">{{ $hgs2Site->site_name }}</a>
         </li>
     @endforeach
     </ul>

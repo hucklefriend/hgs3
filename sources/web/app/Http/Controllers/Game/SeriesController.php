@@ -38,11 +38,11 @@ class SeriesController extends Controller
      * @param Orm\GameSeries $gameSeries
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detail(Orm\GameSeries $gameSeries)
+    public function detail(Orm\GameSeries $series)
     {
         return view('game.series.detail', [
-            'gameSeries' => $gameSeries,
-            'gameSofts'  => Orm\GameSoft::where('series_id', $gameSeries->id)->get()
+            'gameSeries' => $series,
+            'gameSofts'  => Orm\GameSoft::where('series_id', $series->id)->get()
         ]);
     }
 

@@ -19,7 +19,7 @@ class FavoriteSoft extends TimelineAbstract
     public static function addNewSoftText(Orm\GameSoft $soft)
     {
         $text = sprintf('「<a href="%s">%s</a>」が追加されました。',
-            url2('game/soft/' . $soft->id),
+            route('ゲーム詳細', ['soft' => $soft->id]),
             $soft->name
         );
 
@@ -35,9 +35,9 @@ class FavoriteSoft extends TimelineAbstract
     public static function addSameSeriesSoftText(Orm\GameSoft $soft, Orm\GameSeries $series)
     {
         $text = sprintf('<a href="%s">%s</a>シリーズのゲーム「<a href="%s">%s</a>」が追加されました。',
-            url2('game/series/' . $series->id),
+            route('シリーズ詳細', ['series' => $series->id]),
             $series->name,
-            url2('game/soft/' . $soft->id),
+            route('ゲーム詳細', ['soft' => $soft->id]),
             $soft->name
         );
 
@@ -52,7 +52,7 @@ class FavoriteSoft extends TimelineAbstract
     public static function addUpdateSoftText(Orm\GameSoft $soft)
     {
         $text = sprintf('「<a href="%s">%s</a>」の情報が更新されました。',
-            url2('game/soft/' . $soft->id),
+            route('ゲーム詳細', ['soft' => $soft->id]),
             $soft->name
         );
 
@@ -68,9 +68,9 @@ class FavoriteSoft extends TimelineAbstract
     public static function addFavoriteSoftText(Orm\GameSoft $soft, User $user)
     {
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%s</a>をお気に入りゲームに登録しました。',
-            url2('user/profile/' . $user->id),
+            route('プロフィール', ['showId' => $user->show_id]),
             $user->name,
-            url2('game/soft/' . $soft->id),
+            route('ゲーム詳細', ['soft' => $soft->id]),
             $soft->name
         );
 
@@ -86,9 +86,9 @@ class FavoriteSoft extends TimelineAbstract
     public static function addNewReviewText(Orm\GameSoft $soft, Orm\Review $review)
     {
         $text = sprintf('<a href="%s">%s</a>に<a href="%s">新しいレビュー</a>%sが投稿されました。',
-            url2('game/soft/' . $soft->id),
+            route('ゲーム詳細', ['soft' => $soft->id]),
             $soft->name,
-            url2('review/' . $review->id),
+            route('レビュー', ['review' => $review->id]),
             $review->is_spoiler ? '(ネタバレあり)' : ''
         );
 
@@ -104,9 +104,9 @@ class FavoriteSoft extends TimelineAbstract
     public static function addNewSiteText(Orm\GameSoft $soft, Orm\Site $site)
     {
         $text = sprintf('<a href="%s">%s</a>を扱うサイト「<a href="%s">%s</a>」が登録されました。',
-            url2('game/soft/' . $soft->id),
+            route('ゲーム詳細', ['soft' => $soft->id]),
             $soft->name,
-            url2('site/detail/' . $site->id),
+            route('サイト詳細', ['site' => $site->id]),
             $site->name
         );
 

@@ -11,14 +11,16 @@
 
 
     <script>
-        let url = '{{ url2('/user/profile/' . $user->id . '/timeline/mypage/') }}';
+        {{ route('マイページ') }}
+        let url = '{{ route('タイムライン追加取得', ['showId' => $user->show_id]) }}';
         let moreTime = {{ $moreTime }};
 
         $(function (){
             $('#more_btn').click(function (){
                 $.ajax({
                     type: "GET",
-                    url: url + moreTime,
+                    url: url,
+                    data: {time: moreTIme},
                     timeout: 3000
                 }).done(function (data){
                     if (!data.hasNext) {
