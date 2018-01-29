@@ -33,6 +33,8 @@
     </div>
     @endif
 
+    <hr>
+
     <div class="d-none d-sm-block">
 
         @if ($isMyself)
@@ -103,7 +105,7 @@
                 <span class="badge badge-secondary">{{ $diaryNum }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーのコミュニティ', ['showId' => $user->show_id]) }}">コミュニティ {{ $communityNum }}個</a>
+                <a href="{{ route('ユーザーのコミュニティ', ['showId' => $user->show_id]) }}">コミュニティ</a>
                 <span class="badge badge-secondary">{{ $communityNum }}</span>
             </li>
         </ul>

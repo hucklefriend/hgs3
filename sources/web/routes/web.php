@@ -156,6 +156,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/review/{showId}', 'User\ReviewController@index')->name('ユーザーのレビュー');
     Route::get('/user/diary/{showId}', 'User\Diary@index')->name('ユーザーの日記');
     Route::get('/user/site/{showId}', 'User\SiteManageController@index')->name('ユーザーのサイト');
+    Route::get('/user/favorite_soft/{showId}', 'User\FavoriteSoftController@index')->name('ユーザーのお気に入りゲーム');
 
 
     Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->name('お気に入りゲーム登録処理');
@@ -262,7 +263,6 @@ Route::get('/game/series/{gameSeries}', 'Game\SeriesController@detail')->name('�
 
 // お気に入りゲーム
 Route::get('/game/favorite/{soft}', 'Game\FavoriteSoftController@index')->name('お気に入りゲーム登録ユーザー一覧');
-Route::get('/user/favorite_soft/{showId}', 'User\ProfileController@favoriteSoft')->name('ユーザーのお気に入りゲーム');
 
 // 遊んだゲーム
 Route::get('game/played_user/{soft}', 'Game\PlayedUserController@index');

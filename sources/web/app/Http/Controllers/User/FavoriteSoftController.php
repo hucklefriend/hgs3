@@ -15,28 +15,26 @@ use Illuminate\Support\Facades\Auth;
 class FavoriteSoftController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * お気に入りゲームリスト
      *
+     * @param string $showId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user)
+    public function index($showId)
     {
-        $isMyself = $user->id == Auth::id();
-        $fav = UserFavoriteSoft::where('user_id', $user->id)->get();
+        $user = User::findByShowId($showId);
+        if ($user == null) {
+            return view('user.profile.notExist');
+        }
 
-        return view('user.game.favorite')->with([
-            'user'     => $user,
-            'isMyself' => $isMyself,
-            'favGames' => $fav,
-            'games'    => GameSoft::getNameHash(array_pluck($fav->toArray(), 'game_id'))
+        $isMyself = $user->id == Auth::id();
+        $favoriteSofts = FavoriteSoft::get($user->id);
+
+        return view('user.profile.favoriteSoft', [
+            'user'          => $user,
+            'isMyself'      => $isMyself,
+            'favoriteSofts' => $favoriteSofts,
+            'softs'         => Orm\GameSoft::getHash(page_pluck($favoriteSofts, 'soft_id'))
         ]);
     }
 

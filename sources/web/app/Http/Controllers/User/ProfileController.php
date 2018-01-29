@@ -71,9 +71,12 @@ class ProfileController extends Controller
             }
                 break;
             case 'favorite_soft':{
+
+                $favoriteSofts = User\FavoriteSoft::get($user->id);
+
                 $data['parts'] = [
-                    'favoriteSofts' => User\FavoriteSoft::get($user->id),
-                    'softs'         => Orm\GameSoft::getNameHash()
+                    'favoriteSofts' => $favoriteSofts,
+                    'softs'         => Orm\GameSoft::getHash(page_pluck($favoriteSofts, 'soft_id'))
                 ];
             }
                 break;
@@ -244,26 +247,6 @@ class ProfileController extends Controller
         $data['isMyself'] = true;
 
         return view('user.profile.timeline', $data);
-    }
-
-    /**
-     * お気に入りゲーム一覧
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function favoriteSoft(User $user)
-    {
-        $isMyself = $user->id == Auth::id();
-
-        $favoriteSofts = User\FavoriteSoft::get($user->id);
-
-        return view('user.profile.favorite_soft', [
-            'user'          => $user,
-            'isMyself'      => $isMyself,
-            'favoriteSofts' => $favoriteSofts,
-            'softs'         => Orm\GameSoft::getNameHash(array_pluck($favoriteSofts->items(), 'soft_id'))
-        ]);
     }
 
     /**
