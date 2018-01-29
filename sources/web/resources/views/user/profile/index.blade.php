@@ -27,8 +27,13 @@
         @endif
     </div>
 
-    <div>
+    @if (!empty($user->profile))
+    <div style="max-height: 3rem;overflow-y: scroll;">
         <p class="profile_text">{!! nl2br(e($user->profile)) !!}</p>
+    </div>
+    @endif
+
+    <div class="d-none d-sm-block">
 
         @if ($isMyself)
             <div class="btn-group" role="group" aria-label="プロフィール">
@@ -39,7 +44,7 @@
         @endif
     </div>
 
-    <hr>
+    <hr class="d-none d-sm-block">
 
     <!-- 最小表示以外はメニューと内容を表示 -->
     <div class="d-none d-sm-block">
@@ -66,16 +71,59 @@
     <!-- 最小表示時はメニューのみ -->
     <div class="d-sm-none">
         <ul class="list-group">
-            <li class="list-group-item"><a href="{{ route('ユーザーのタイムライン',     ['showId' => $user->show_id]) }}">タイムライン</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザーのフォロー',         ['showId' => $user->show_id]) }}">フォロー {{ $followNum }}人</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザーのフォロワー',       ['showId' => $user->show_id]) }}">フォロワー {{ $followerNum }}人</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザーのお気に入りゲーム', ['showId' => $user->show_id]) }}">お気に入りゲーム {{ $favoriteSoftNum }}個</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザーのレビュー',         ['showId' => $user->show_id]) }}">レビュー {{ $reviewNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザーのサイト',           ['showId' => $user->show_id]) }}">サイト {{ $siteNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザーのお気に入りサイト', ['showId' => $user->show_id]) }}">お気に入りサイト {{ $favoriteSiteNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザーの日記',             ['showId' => $user->show_id]) }}">日記 {{ $diaryNum }}件</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザーのコミュニティ',     ['showId' => $user->show_id]) }}">コミュニティ {{ $communityNum }}個</a></li>
+            <li class="list-group-item">
+                <a href="{{ route('ユーザーのタイムライン', ['showId' => $user->show_id]) }}">タイムライン</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{ route('ユーザーのフォロー', ['showId' => $user->show_id]) }}">フォロー</a>
+                <span class="badge badge-secondary">{{ $followNum }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{ route('ユーザーのフォロワー', ['showId' => $user->show_id]) }}">フォロワー</a>
+                <span class="badge badge-secondary">{{ $followerNum }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{ route('ユーザーのお気に入りゲーム', ['showId' => $user->show_id]) }}">お気に入りゲーム</a>
+                <span class="badge badge-secondary">{{ $favoriteSoftNum }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{ route('ユーザーのレビュー', ['showId' => $user->show_id]) }}">レビュー</a>
+                <span class="badge badge-secondary">{{ $reviewNum }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{ route('ユーザーのサイト', ['showId' => $user->show_id]) }}">サイト</a>
+                <span class="badge badge-secondary">{{ $siteNum }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{ route('ユーザーのお気に入りサイト', ['showId' => $user->show_id]) }}">お気に入りサイト</a>
+                <span class="badge badge-secondary">{{ $favoriteSiteNum }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{ route('ユーザーの日記', ['showId' => $user->show_id]) }}">日記</a>
+                <span class="badge badge-secondary">{{ $diaryNum }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{ route('ユーザーのコミュニティ', ['showId' => $user->show_id]) }}">コミュニティ {{ $communityNum }}個</a>
+                <span class="badge badge-secondary">{{ $communityNum }}</span>
+            </li>
         </ul>
+
+
+        @if ($isMyself)
+            <hr>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{{ route('アイコン変更') }}">アイコン変更</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ route('プロフィール編集') }}">プロフィール編集</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ route('コンフィグ') }}">設定</a>
+                </li>
+            </ul>
+        @endif
+
     </div>
 @endsection
 
@@ -87,7 +135,7 @@
             @if ($isMyself)
                 <li class="breadcrumb-item active" aria-current="page">マイページ</li>
             @else
-                <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}さんのページ</li>
+                <li class="breadcrumb-item active" aria-current="page">ユーザーページ</li>
             @endif
         </ol>
     </nav>

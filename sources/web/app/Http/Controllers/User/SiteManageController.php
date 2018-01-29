@@ -24,14 +24,23 @@ class SiteManageController extends Controller
     /**
      * トップ
      *
+     * @param string $showId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index($showId)
     {
+        $user = User::findByShowId($showId);
+        if ($user == null) {
+            return view('user.profile.notExist');
+        }
+
+        $isMyself = Auth::id() == $user->id;
+
         return view('user.profile.site', [
-            'user'     => Auth::user(),
-            'isMyself' => true,
-            'sites'    => Site::getUserSites(Auth::id(), true)
+            'user'        => $user,
+            'isMyself'    => $isMyself,
+            'sites'       => Site::getUserSites($user->id, $isMyself),
+            'hasHgs2Site' => Site\TakeOver::hasHgs2Site($user)
         ]);
     }
 

@@ -369,7 +369,7 @@ SQL;
         $query = Orm\Site::where('user_id', $userId);
 
         if (!$isWebmaster) {
-            $query->where('approve_status', ApprovalStatus::OK)
+            $query->where('approval_status', ApprovalStatus::OK)
                 ->where('open_type', OpenType::ALL);
         }
 
