@@ -163,7 +163,7 @@ SQL;
     private static function getFavoriteUser($softId)
     {
         $sql =<<< SQL
-SELECT users.id, users.name, users.icon_upload_flag
+SELECT users.id, users.name, users.icon_upload_flag, users.show_id
 FROM (
   SELECT user_id FROM user_favorite_softs WHERE soft_id = ? ORDER BY id LIMIT 5
 ) fav LEFT OUTER JOIN users ON fav.user_id = users.id
@@ -206,7 +206,7 @@ SQL;
     private static function getPlayedUsers($softId)
     {
         $sql =<<< SQL
-SELECT users.id, users.name
+SELECT users.id, users.name, users.show_id
 FROM (
   SELECT user_id FROM user_played_softs WHERE soft_id = ? ORDER BY id LIMIT 5
 ) fav LEFT OUTER JOIN users ON fav.user_id = users.id
@@ -221,6 +221,7 @@ SQL;
      * @param Orm\GameSoft $soft
      * @param bool $isWriteTimeine
      * @return bool
+     * @throws \Exception
      */
     public static  function save(Orm\GameSoft $soft, $isWriteTimeine)
     {
