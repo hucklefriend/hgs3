@@ -4,10 +4,10 @@
 
     <div class="d-flex align-items-stretch">
         <div class="p-2 align-self-center" style="min-width: 3em;">
-            @include('game.common.package_image', ['imageUrl' => $package->medium_image_url])
+            @include('game.common.packageImage', ['imageUrl' => $package->medium_image_url])
         </div>
         <div class="p-10 align-self-top">
-            <div class="break_word" style="width: 100%;"><h5>{{ $soft->name }}<small>のトピックス</small></h5></div>
+            <div class="break-word" style="width: 100%;"><h5>{{ $soft->name }}<small>のトピックス</small></h5></div>
             <div>
                 <a href="{{ url2('community/g/' . $soft->id) }}">コミュニティトップ</a>　
                 <a href="{{ url2('game/soft/' . $soft->id) }}">ゲームの詳細</a>

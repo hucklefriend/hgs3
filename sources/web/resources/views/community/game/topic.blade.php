@@ -19,7 +19,7 @@
 
         </div>
 
-        <p class="community_topic_comment">{{ $gct->comment }}</p>
+        <p class="community-topic-comment">{{ $gct->comment }}</p>
     </div>
 
     @foreach ($responses as $res)
@@ -28,7 +28,7 @@
                 <i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile/' . $res->user_id) }}">{{ $users[$r->user_id] }}</a>
                 {{ $res->wrote_at }}
             </div>
-            <p class="community_topic_comment">{{ $res->comment }}</p>
+            <p class="community-topic-comment">{{ $res->comment }}</p>
 
             @if ($res->user_id == $userId)
                 <form method="POST" action="{{ url2('community/g/' . $soft->id . '/topic_response/' . $res->id) }}">

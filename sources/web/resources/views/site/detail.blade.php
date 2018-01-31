@@ -22,7 +22,6 @@
         </div>
     @endif
 
-
     @if ($isWebMaster)
         <div class="text-right">
             <ul class="horizontal">
@@ -43,11 +42,24 @@
 
     @include('site.common.detail')
 
+    @if ($isWebMaster)
+
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h5 class="card-title">管理人さま用</h5>
+                <p class="card-text">
+                    足跡を見る
+                </p>
+            </div>
+        </div>
+
+
+    @endif
 @endsection
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
             <li class="breadcrumb-item active" aria-current="page">サイト詳細</li>

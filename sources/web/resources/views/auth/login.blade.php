@@ -8,24 +8,24 @@
 
     <h4>SNSのアカウントでログイン</h4>
     <div class="row">
-        <div class="col-sm-3 text-center sns_link_outline text-warning">
-            <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="block_link sns_link sns_link_twitter">Twitter</a>
+        <div class="col-sm-3 text-center sns-link-outline text-warning">
+            <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="block-link sns-link sns-link-twitter">Twitter</a>
         </div>
-        <div class="col-sm-3 text-center sns_link_outline text-warning">
-            <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="block_link sns_link sns_link_facebook">facebook</a>
+        <div class="col-sm-3 text-center sns-link-outline text-warning">
+            <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="block-link sns-link sns-link-facebook">facebook</a>
         </div>
-        <div class="col-sm-3 text-center sns_link_outline">
+        <div class="col-sm-3 text-center sns-link-outline">
             GitHub
         </div>
-        <div class="col-sm-3 text-center sns_link_outline">
+        <div class="col-sm-3 text-center sns-link-outline">
             Instagarm
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3 text-center sns_link_outline">Google+</div>
-        <div class="col-sm-3 text-center sns_link_outline">Yahoo!</div>
-        <div class="col-sm-3 text-center sns_link_outline">mixi</div>
-        <div class="col-sm-3 text-center sns_link_outline">LINE</div>
+        <div class="col-sm-3 text-center sns-link-outline">Google+</div>
+        <div class="col-sm-3 text-center sns-link-outline">Yahoo!</div>
+        <div class="col-sm-3 text-center sns-link-outline">mixi</div>
+        <div class="col-sm-3 text-center sns-link-outline">LINE</div>
     </div>
 
     <br><br>
@@ -56,7 +56,7 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item active" aria-current="page">ログイン</li>
         </ol>

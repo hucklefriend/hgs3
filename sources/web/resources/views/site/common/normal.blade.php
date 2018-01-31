@@ -11,11 +11,11 @@
             @endif
     </div>
     @if (!empty($s->list_banner_url))
-        <div class="list_site_banner_outline">
+        <div class="list-site-banner-outline">
             <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img src="{{ $s->list_banner_url }}" class="img-responsive"></a>
         </div>
     @endif
-    <div class="site_presentation"><small>{!! nl2br(e($s->presentation)) !!}</small></div>
+    <div class="site-presentation"><small>{!! nl2br(e($s->presentation)) !!}</small></div>
     <div><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank">{{ $s->url }}</a></div>
 
     <div>

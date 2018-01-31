@@ -31,7 +31,7 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('マイページ') }}">マイページ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('管理メニュー') }}">管理メニュー</a></li>

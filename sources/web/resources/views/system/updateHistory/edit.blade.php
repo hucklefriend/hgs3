@@ -30,7 +30,7 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('システム更新履歴') }}">システム更新履歴</a></li>
             <li class="breadcrumb-item active" aria-current="page">システム更新内容更新</li>

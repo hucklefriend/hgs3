@@ -8,7 +8,7 @@
     <h1>お知らせ</h1>
 
     @if(is_admin())
-        <div class="btn_area">
+        <div class="btn-area">
             <a class="btn btn-sm btn-outline-dark" href="{{ route('お知らせ登録') }}" role="button">お知らせの新規登録</a>
         </div>
     @endif
@@ -39,7 +39,7 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item active" aria-current="page">お知らせ</li>
         </ol>

@@ -5,13 +5,13 @@
     <section>
         <div class="d-flex align-items-stretch">
             <div class="p-2 align-self-center">
-                <div class="review_point_outline">
-                    <p class="review_point">{{ $review->point }}</p>
+                <div class="review-point-outline">
+                    <p class="review-point">{{ $review->point }}</p>
                 </div>
             </div>
             <div class="p-12 align-self-center">
                 @if($review->is_spoiler == 1) <span class="badge badge-pill badge-danger">ネタバレあり！</span> @endif
-                <div class="break_word" style="width: 100%;">
+                <div class="break-word" style="width: 100%;">
                     <h5>
                         <a href="{{ url2('review/detail') }}/{{ $review->id }}">{{ $review->title }}</a>
                     </h5>

@@ -1,6 +1,6 @@
 <div class="d-flex align-items-stretch">
     <div class="align-self-top p-2">
-        @include ('game.common.package_image', ['imageUrl' => $r->small_image_url])
+        @include ('game.common.packageImage', ['imageUrl' => $r->small_image_url])
     </div>
     <div class="align-self-top">
         <div>
@@ -9,8 +9,8 @@
 
         <div class="d-flex align-items-stretch">
             <div>
-                <div class="review_point_outline">
-                    <div class="review_point text-center">
+                <div class="review-point-outline">
+                    <div class="review-point text-center">
                         {{ $r->point }}
                     </div>
                 </div>

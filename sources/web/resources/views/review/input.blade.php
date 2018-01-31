@@ -13,7 +13,7 @@
 
     <div class="d-flex align-items-stretch">
         <div class="align-self-top p-2">
-            @include ('game.common.package_image', ['imageUrl' => $package->small_image_url])
+            @include ('game.common.packageImage', ['imageUrl' => $package->small_image_url])
         </div>
         <div class="align-self-top">
             <div>
@@ -254,9 +254,9 @@
     <script>
         $(function (){
             $('.package_check').on('click', function(){
-                $('.package_select_item.selected').removeClass('selected');
+                $('.package-select-item.selected').removeClass('selected');
 
-                $(this).parents('.package_select_item').addClass('selected');
+                $(this).parents('.package-select-item').addClass('selected');
             });
         });
     </script>

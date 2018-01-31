@@ -30,7 +30,7 @@
 
     @foreach ($packages as $package)
             <div class="card" style="width: 250px;margin: 10px;padding-top: 10px;">
-                @include('game.common.package_image', ['imageUrl' => $package->medium_image_url])
+                @include('game.common.packageImage', ['imageUrl' => $package->medium_image_url])
                 <div class="card-body text-center">
                     <h4 class="card-title">{{ $package->name }}</h4>
                     <p class="card-text">

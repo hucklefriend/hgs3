@@ -1,6 +1,6 @@
 <div class="d-flex align-items-stretch">
     <div class="align-self-top p-2">
-        @include ('game.common.package_image', ['imageUrl' => $gamePackage->small_image_url])
+        @include ('game.common.packageImage', ['imageUrl' => $gamePackage->small_image_url])
     </div>
     <div class="align-self-top">
         <div>
@@ -9,14 +9,14 @@
 
         <div class="d-flex align-items-stretch">
             <div>
-                <div class="review_point_outline">
-                    <div class="review_point text-center">
+                <div class="review-point-outline">
+                    <div class="review-point text-center">
                         {{ $r->point }}
                     </div>
                 </div>
             </div>
             <div>
-                <div class="review_title" style="margin-left: 10px;">
+                <div class="review-title" style="margin-left: 10px;">
                     @if($r->is_spoiler == 1)
                         <span class="badge badge-pill badge-danger">ネタバレあり！</span><br>
                     @endif

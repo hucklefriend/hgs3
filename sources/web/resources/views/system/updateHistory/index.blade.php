@@ -8,7 +8,7 @@
     <h1>システム更新履歴</h1>
 
     @if(is_admin())
-    <div class="btn_area">
+    <div class="btn-area">
         <a class="btn btn-sm btn-outline-dark" href="{{ route('システム更新履歴登録') }}" role="button">更新履歴の新規登録</a>
     </div>
     @endif
@@ -44,7 +44,7 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item active" aria-current="page">システム更新履歴</li>
         </ol>

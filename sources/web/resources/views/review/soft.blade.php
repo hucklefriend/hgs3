@@ -5,12 +5,12 @@
 
         <div class="d-flex align-items-stretch">
             <div class="p-2 align-self-center" style="min-width: 3em;">
-                <div class="review_point_outline">
-                    <p class="review_point">{{ $total->point }}</p>
+                <div class="review-point-outline">
+                    <p class="review-point">{{ $total->point }}</p>
                 </div>
             </div>
             <div class="p-10 align-self-center">
-                <div class="break_word" style="width: 100%;"><h5>{{ $soft->name }}</h5></div>
+                <div class="break-word" style="width: 100%;"><h5>{{ $soft->name }}</h5></div>
                 <a href="{{ url('game/soft') }}/{{ $soft->id }}">ゲームの詳細</a> |
                 <a href="{{ url('review/package_select') }}/{{ $soft->id }}">レビューを投稿する</a>
             </div>

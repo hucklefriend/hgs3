@@ -78,7 +78,7 @@
                         @php $pkg = $packages[$i]; @endphp
                         <div class="row">
                             <div class="col-4">
-                                @include('game.common.package_image', ['imageUrl' => $pkg->medium_image_url])
+                                @include('game.common.packageImage', ['imageUrl' => $pkg->medium_image_url])
                             </div>
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
@@ -115,7 +115,7 @@
                         <br>
                         <div class="row">
                             <div class="col-4">
-                                @include('game.common.package_image', ['imageUrl' => $pkg->medium_image_url])
+                                @include('game.common.packageImage', ['imageUrl' => $pkg->medium_image_url])
                             </div>
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
@@ -176,8 +176,8 @@
                     @if ($reviewTotal != null)
                         <div class="row" style="margin-bottom: 20px;">
                             <div class="col-3 text-center">
-                                <div class="review_point_outline">
-                                    <p class="review_point">{{ $reviewTotal->point }}</p>
+                                <div class="review-point-outline">
+                                    <p class="review-point">{{ $reviewTotal->point }}</p>
                                 </div>
                             </div>
                             <div class="col-9">
@@ -359,7 +359,7 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-4">
-                                        @include('game.common.package_image_small', ['imageUrl' => $seriesSoft->image_url])
+                                        @include('game.common.packageImageSmall', ['imageUrl' => $seriesSoft->image_url])
                                     </div>
                                     <div class="col-8">
                                         <a href="{{ route('ゲーム詳細', ['soft' => $seriesSoft->id]) }}">{{ $seriesSoft->name }}</a>
@@ -382,10 +382,10 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ str_limit($soft->name, 20) }}</li>
+            <li class="breadcrumb-item active" aria-current="page">ゲーム情報</li>
         </ol>
     </nav>
 @endsection

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}">&lt;</a>
+@endsection
+
 @section('content')
 
     <h4>プロフィール編集</h4>
@@ -32,4 +36,14 @@
         </div>
     </form>
 
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">ユーザー</a></li>
+            <li class="breadcrumb-item active" aria-current="page">プロフィール編集</li>
+        </ol>
+    </nav>
 @endsection

@@ -59,7 +59,7 @@
     </div>
     <div class="p-6">
         <div class="hidden-sm-down">
-            <table class="table table-sm no_border">
+            <table class="table table-sm no-border">
                 <tr>
                     <td>怖さ</td>
                     <td>@for ($i = 0; $i < $r->fear; $i++) ★@endfor</td>

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-
+@section('global_back_link')
+    <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">&lt;</a>
+@endsection
 
 @section('content')
     <h4>{{ $user->name }}さんのアイコン変更</h4>
@@ -31,7 +33,7 @@
             </div>
             <div class="col-sm-5 text-center">
                 <div>選択したアイコン</div>
-                <img id="thumbnail" class="img-responsive user_icon_img_large">
+                <img id="thumbnail" class="img-responsive user-icon-img-large">
                 <p id="select_message" class="text-muted">画像ファイルを選択すると<br>ここに表示されます。</p>
                 <div style="margin-top: 10px;">
                     <button class="btn btn-info" id="submit_button" style="display:none;">このアイコンにする</button>
@@ -44,7 +46,7 @@
     <form method="POST" style="margin-top: 20px;">
         {{ method_field('DELETE') }}
         {{ csrf_field() }}
-        <p>デフォルトのアイコン(<i class="fa fa-user-circle user_icon" aria-hidden="true"></i>)に戻す場合はこちら</p>
+        <p>デフォルトのアイコン(<i class="fa fa-user-circle user-icn" aria-hidden="true"></i>)に戻す場合はこちら</p>
 
         <button class="btn btn-warning">デフォルトのアイコンに戻す</button>
     </form>
@@ -82,4 +84,14 @@
     </script>
 
 
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">ユーザー</a></li>
+            <li class="breadcrumb-item active" aria-current="page">アイコン変更</li>
+        </ol>
+    </nav>
 @endsection

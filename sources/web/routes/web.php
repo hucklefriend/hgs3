@@ -158,7 +158,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/site/{showId}', 'User\SiteManageController@index')->name('ユーザーのサイト');
     Route::get('/user/favorite_soft/{showId}', 'User\FavoriteSoftController@index')->name('ユーザーのお気に入りゲーム');
 
-
     Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->name('お気に入りゲーム登録処理');
     Route::delete('/user/favorite_soft', 'User\FavoriteSoftController@remove')->name('お気に入りゲーム削除処理');
 
@@ -232,7 +231,6 @@ Route::get('/review/soft/{soft}', 'Review\ReviewController@soft')->name('ソフ�
 Route::get('/review/detail/{review}', 'Review\ReviewController@detail')->name('レビュー');
 Route::get('/review/good/history/{review}', 'Review\GoodController@history')->name('レビューいいね履歴');
 Route::get('/review/new_arrivals', 'Review\ReviewController@newArrivals')->name('新着レビュー一覧');
-
 
 // 不正レビュー
 Route::get('/review/fraud_report/report/{review}', 'Review\FraudReportController@input');

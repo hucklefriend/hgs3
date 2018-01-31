@@ -16,7 +16,7 @@
     @foreach ($packages as $pkg)
         <div class="d-flex align-items-stretch">
             <div class="align-self-top p-2">
-                @include ('game.common.package_image', ['imageUrl' => $pkg->small_image_url])
+                @include ('game.common.packageImage', ['imageUrl' => $pkg->small_image_url])
             </div>
             <div class="align-self-top">
                 <div><strong>{{ $pkg->name }}</strong></div>

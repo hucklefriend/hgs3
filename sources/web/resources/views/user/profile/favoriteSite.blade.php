@@ -12,10 +12,10 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">ユーザーページ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ユーザーのお気に入りサイト</li>
+            <li class="breadcrumb-item"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">ユーザー</a></li>
+            <li class="breadcrumb-item active" aria-current="page">お気に入りサイト</li>
         </ol>
     </nav>
 @endsection

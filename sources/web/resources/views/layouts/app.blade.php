@@ -72,21 +72,22 @@
             @endif
         </div>
     </nav>
-
 </div>
-<div class="container-fluid" style="padding-bottom: 20px;">
+<div class="container-fluid" style="padding-bottom: 40px;">
     @yield('content')
 </div>
 
 <footer class="footer">
     <div class="container-fluid">
         <div style="display:flex;">
-            <div>
-                <div class="d-none d-sm-block">@yield('breadcrumb')</div>
+            <div style="max-height: 60px;overflow: hidden;">@yield('breadcrumb')</div>
+            <div style="margin-left: auto;white-space: nowrap;">
+                <a href="{{ route('サイトマップ') }}" class="align-self-center">サイトマップ</a>
             </div>
-            <div style="margin-left: auto;font-size: 80%;">
-                <a href="{{ route('サイトマップ') }}">サイトマップ</a>
-            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            &copy; <a href="{{ route('プロフィール', ['showId' => 'huckle']) }}">yu-ki</a>
+            since 2003.9.28
         </div>
     </div>
 </footer>

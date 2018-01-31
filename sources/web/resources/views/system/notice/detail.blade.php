@@ -23,7 +23,7 @@
     </div>
 
     @if (is_admin())
-    <div class="btn_area">
+    <div class="btn-area">
         <form action="{{ route('お知らせ削除', ['notice' => $notice->id]) }}" onsubmit="return confirm('削除してよろしいですか？');" method="POST">
             {{ csrf_field() }}
             {{ method_field('DELETE') }}
@@ -35,7 +35,7 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('お知らせ') }}">お知らせ</a></li>
             <li class="breadcrumb-item active" aria-current="page">お知らせ内容</li>

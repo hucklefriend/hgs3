@@ -18,7 +18,7 @@
                 @if (empty($site->list_banner_url))
                     一覧用バナーは登録されていません。
                 @else
-                    <div class="list_site_banner_outline">
+                    <div class="list-site-banner-outline">
                         <img src="{{ $site->list_banner_url }}" class="img-responsive">
                     </div>
                 @endif
@@ -59,7 +59,7 @@
                         </small>
                     </p>
                 </div>
-                <div class="list_site_banner_outline">
+                <div class="list-site-banner-outline">
                     <img src="{{ old('list_banner_url') }}" class="img-responsive" id="list_banner_url_thumbnail">
                 </div>
             </div>
@@ -74,7 +74,7 @@
                         </small>
                     </p>
                 </div>
-                <div class="list_site_banner_outline">
+                <div class="list-site-banner-outline">
                     <img src="" class="img-responsive" id="list_banner_upload_thumbnail">
                 </div>
             </div>
@@ -86,7 +86,7 @@
             @if (empty($site->detail_banner_url))
                 詳細用バナーは登録されていません。
             @else
-                <div class="detail_site_banner_outline">
+                <div class="detail-site-banner-outline">
                     <img src="{{ $site->detail_banner_url }}" class="img-responsive">
                 </div>
             @endif
@@ -126,7 +126,7 @@
                             幅に合わせて自動で縮小されますが、高さが400pxを超えている分はカットされます。
                         </small>
                     </p>
-                    <div class="detail_site_banner_outline">
+                    <div class="detail-site-banner-outline">
                         <img src="{{ old('detail_banner_url') }}" class="img-responsive" id="detail_banner_url_thumbnail">
                     </div>
                 </div>
@@ -141,7 +141,7 @@
                             幅に合わせて自動で縮小されますが、高さが400pxを超えている分はカットされます。
                         </small>
                     </p>
-                    <div class="detail_site_banner_outline">
+                    <div class="detail-site-banner-outline">
                         <img src="" class="img-responsive" id="detail_banner_upload_thumbnail">
                     </div>
                 </div>

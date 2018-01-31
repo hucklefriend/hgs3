@@ -208,7 +208,7 @@ class ProfileController extends Controller
         $user->deleteIconFile();
 
         $request->file('icon')->move(
-            base_path() . '/public/img/user_icon/', $fileName
+            base_path() . '/public/img/user-icn/', $fileName
         );
 
         $user->icon_upload_flag = 1;

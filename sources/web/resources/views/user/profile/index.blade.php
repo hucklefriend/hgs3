@@ -29,7 +29,7 @@
 
     @if (!empty($user->profile))
     <div style="max-height: 3rem;overflow-y: scroll;">
-        <p class="profile_text">{!! nl2br(e($user->profile)) !!}</p>
+        <p class="profile-text">{!! nl2br(e($user->profile)) !!}</p>
     </div>
     @endif
 
@@ -130,13 +130,9 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            @if ($isMyself)
-                <li class="breadcrumb-item active" aria-current="page">マイページ</li>
-            @else
-                <li class="breadcrumb-item active" aria-current="page">ユーザーページ</li>
-            @endif
+            <li class="breadcrumb-item active" aria-current="page">ユーザー</li>
         </ol>
     </nav>
 @endsection

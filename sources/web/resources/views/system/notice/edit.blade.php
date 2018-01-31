@@ -47,7 +47,7 @@
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb_footer">
+        <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('お知らせ') }}">お知らせ</a></li>
             <li class="breadcrumb-item active" aria-current="page">お知らせ更新</li>
