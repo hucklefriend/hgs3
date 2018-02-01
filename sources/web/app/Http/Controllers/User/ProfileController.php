@@ -23,14 +23,6 @@ use Illuminate\Support\Facades\Response;
 class ProfileController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'home');
-    }
-
-    /**
      * プロフィール
      *
      * @param string $showId

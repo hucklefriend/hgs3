@@ -22,7 +22,7 @@
     </div>
 
     <div class="d-sm-none">
-        @include('site.common.sideMenu', ['active' => 'タイムライン'])
+        @include('site.common.sideMenu', ['active' => ''])
     </div>
 @endsection
 

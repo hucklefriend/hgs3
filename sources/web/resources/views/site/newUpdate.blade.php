@@ -10,7 +10,7 @@
     <div class="d-flex flex-row">
         <div class="d-none d-sm-block">
             <div class="site-side-menu">
-                @include('site.common.sideMenu', ['active' => '新着'])
+                @include('site.common.sideMenu', ['active' => '更新'])
             </div>
         </div>
         <div style="width: 100%;">
@@ -19,7 +19,7 @@
                     $u = $users[$s->user_id];
                 @endphp
 
-                <div class="alert alert-success d-inline-block" role="alert" style="padding:0.5rem;">{{ date('Y/m/d H:i', $sites->updated_timestamp) }}更新！</div>
+                <div class="alert alert-success d-inline-block" role="alert" style="padding:0.5rem;">{{ date('Y/m/d H:i', $s->updated_timestamp) }}更新！</div>
                 @include('site.common.normal', ['s' => $s, 'u' => $u])
                 @if (!$loop->last) <hr> @endif
             @endforeach

@@ -4,7 +4,10 @@
  */
 
 namespace Hgs3\Models\Orm;
+use Hgs3\Constants\Site\ApprovalStatus;
+use Hgs3\Constants\Site\OpenType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -78,8 +81,14 @@ class Site extends \Eloquent
      */
     public static function getNumByUser($userId)
     {
-        return self::where('user_id', $userId)
-            ->count('id');
+        $query = self::where('user_id', $userId);
+
+        if ($userId != Auth::id()) {
+            $query->where('approval_status', ApprovalStatus::OK)
+                ->where('open_type', OpenType::ALL);
+        }
+
+        return $query->count('id');
     }
 
     /**
