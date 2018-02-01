@@ -21,9 +21,9 @@ class FollowUser extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>が新しいサイト「<a href="%s">%s</a>」を登録しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
+            e($user->name),
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($user->id, $text);
@@ -39,9 +39,9 @@ class FollowUser extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」の情報を更新しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
+            e($user->name),
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($user->id, $text);
@@ -57,9 +57,9 @@ class FollowUser extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>がコミュニティ「<a href="%s">%s</a>」に参加しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
-            url2('community/g/' . $soft->id),
-            $soft->name
+            e($user->name),
+            route('ゲームコミュニティ',['soft' => $soft->id]),
+            e($soft->name)
         );
 
         self::insert($user->id, $text);
@@ -75,9 +75,9 @@ class FollowUser extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>がコミュニティ「<a href="%s">%s</a>」に参加しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
-            url2('community/u/' . $userCommunity->id),
-            $userCommunity->name
+            e($user->name),
+            route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
+            e($userCommunity->name)
         );
 
         self::insert($user->id, $text);
@@ -93,9 +93,9 @@ class FollowUser extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>がコミュニティ「<a href="%s">%s</a>」を脱退しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
-            url2('community/g/' . $soft->id),
-            $soft->name
+            e($user->name),
+            route('ゲームコミュニティ',['soft' => $soft->id]),
+            e($soft->name)
         );
 
         self::insert($user->id, $text);
@@ -111,9 +111,9 @@ class FollowUser extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>がコミュニティ「<a href="%s">%s</a>」を脱退しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
-            url2('community/u/' . $userCommunity->id),
-            $userCommunity->name
+            e($user->name),
+            route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
+            e($userCommunity->name)
         );
 
         self::insert($user->id, $text);
@@ -130,9 +130,9 @@ class FollowUser extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%sのレビュー</a>%sを投稿しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
-            url2('review/detail/' . $review->id),
-            $soft->name,
+            e($user->name),
+            route('レビュー', ['review' => $review->id]),
+            e($soft->name),
             $review->is_spoiler ? '(ネタバレあり)' : ''
         );
 
@@ -149,9 +149,9 @@ class FollowUser extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%s</a>をお気に入りゲームに登録しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
-            url2('game/soft/' . $soft->id),
-            $soft->name
+            e($user->name),
+            route('ゲーム詳細', ['ゲーム詳細' => $soft->id]),
+            e($soft->name)
         );
 
         self::insert($user->id, $text);

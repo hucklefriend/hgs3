@@ -19,7 +19,7 @@ class FavoriteSite extends TimelineAbstract
     {
         $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」が更新されました。',
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($site->id, $text);
@@ -36,8 +36,8 @@ class FavoriteSite extends TimelineAbstract
         if ($site->good_num > 0 && $prevMaxGoodNum < $site->good_num && $site->good_num % 100 == 0) {
             $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」へのいいねが%dに達しました！',
                 route('サイト詳細', ['site' => $site->id]),
-                $site->name,
-                $site->good_num
+                e($site->name),
+                number_format($site->good_num)
             );
 
             self::insert($site->id, $text);
@@ -54,8 +54,8 @@ class FavoriteSite extends TimelineAbstract
         if ($site->out_count > 100 && $site->out_count % 100 == 1) {
             $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」へのアクセス数が%dを超えました！',
                 route('サイト詳細', ['site' => $site->id]),
-                $site->name,
-                intval($site->out_count / 100) * 100
+                e($site->name),
+                number_format(intval($site->out_count / 100) * 100)
             );
 
             self::insert($site->id, $text);
@@ -71,7 +71,7 @@ class FavoriteSite extends TimelineAbstract
     {
         $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」が削除されました。',
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($site->id, $text);

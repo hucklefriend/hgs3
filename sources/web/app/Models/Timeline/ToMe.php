@@ -5,7 +5,7 @@
 
 namespace Hgs3\Models\Timeline;
 
-use Illuminate\Support\Facades\Log;
+use Hgs3\Log;
 use Hgs3\Models\User;
 use Hgs3\Models\Orm;
 
@@ -21,7 +21,7 @@ class ToMe extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>にフォローされました',
             route('プロフィール', ['showId' => $follower->show_id]),
-            $follower->name
+            e($follower->name)
         );
 
         self::insert($user->id, $text);
@@ -39,14 +39,14 @@ class ToMe extends TimelineAbstract
         if ($goodUser === null) {
             $text = sprintf('サイト「<a href="%s">%s</a>」がいいねされました。',
                 route('サイト詳細', ['site' => $site->id]),
-                $site->name
+                e($site->name)
             );
         } else {
             $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」にいいねしてくれました。',
                 route('プロフィール', ['showId' => $goodUser->show_id]),
-                $goodUser->name,
+                e($goodUser->name),
                 route('サイト詳細', ['site' => $site->id]),
-                $site->name
+                e($site->name)
             );
         }
 
@@ -65,8 +65,8 @@ class ToMe extends TimelineAbstract
         if ($site->good_num > 100 && $site->good_num > $prevMaxGoodNum && $site->good_num % 100 == 0) {
             $text = sprintf('サイト「<a href="%s">%s</a>」へのいいねが%dに達しました！',
                 route('サイト詳細', ['site' => $site->id]),
-                $site->name,
-                $site->good_num
+                e($site->name),
+                number_format($site->good_num)
             );
 
             self::insert($user->id, $text);
@@ -84,9 +84,9 @@ class ToMe extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>がサイト「<a href="%s">%s</a>」をお気に入りに登録しました！',
             $favoriteUser->id,
-            $favoriteUser->name,
+            e($favoriteUser->name),
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($user->id, $text);
@@ -105,14 +105,14 @@ class ToMe extends TimelineAbstract
         if ($goodUser === null) {
             $text = sprintf('<a href="%s">%sのレビュー</a>がいいねされました。',
                 route('レビュー詳細', ['review' => $review->id]),
-                $package->name
+                e($package->name)
             );
         } else {
             $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%sのレビュー</a>にいいねしてくれました。',
                 route('プロフィール', ['showId' => $goodUser->show_id]),
-                $goodUser->name,
+                e($goodUser->name),
                 route('レビュー詳細', ['review' => $review->id]),
-                $package->name
+                e($package->name)
             );
         }
 
@@ -132,8 +132,8 @@ class ToMe extends TimelineAbstract
         if ($review->max_good_num > 1 && $prevMaxGoodNum < $review->max_good_num && $review->max_good_num % 100 == 0) {
             $text = sprintf('<a href="%s">%sのレビュー</a>へのいいねが%d件に達しました。',
                 route('レビュー詳細', ['review' => $review->id]),
-                $package->name,
-                $review->max_good_num
+                e($package->name),
+                number_format($review->max_good_num)
             );
 
             self::insert($user->id, $text);
@@ -151,7 +151,7 @@ class ToMe extends TimelineAbstract
     {
         $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">投稿したトピック</a>に返信がありました。',
             route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
-            $userCommunity->name,
+            e($userCommunity->name),
             route('ユーザーコミュニティ投稿詳細', ['uc' => $userCommunity->id, 'uct' => $topic->id])
         );
 
@@ -169,7 +169,7 @@ class ToMe extends TimelineAbstract
     {
         $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">投稿したトピック</a>に返信がありました。',
             route('ゲームコミュニティ', ['soft' => $soft->id]),
-            $soft->name,
+            e($soft->name),
             route('ゲームコミュニティ投稿詳細', ['soft' => $soft->id, 'topic' => $topic->id])
         );
 
@@ -186,7 +186,7 @@ class ToMe extends TimelineAbstract
     {
         $text = sprintf('「<a href="%s">%s</a>」の登録が完了しました。',
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($user->id, $text);
@@ -202,7 +202,7 @@ class ToMe extends TimelineAbstract
     {
         $text = sprintf('「<a href="%s">%s</a>」を更新しました。',
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($user->id, $text);
@@ -218,7 +218,7 @@ class ToMe extends TimelineAbstract
     {
         $text = sprintf('サイト承認を行ってください。<a href="%s">%s</a>',
             route('サイト判定', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($user->id, $text);
@@ -234,7 +234,7 @@ class ToMe extends TimelineAbstract
     {
         $text = sprintf('「<a href="%s">%s</a>」を登録できませんでした。詳しくは詳細画面でご確認ください。',
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($user->id, $text);
@@ -257,9 +257,7 @@ class ToMe extends TimelineAbstract
                 'time'    => microtime(true)
             ]);
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
+            Log::exceptionError($e);
             return false;
         }
 

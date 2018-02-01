@@ -9,11 +9,13 @@
 
     <div class="d-none d-sm-block">
         <div class="d-flex flex-row">
-            <div style="width: 250px;">
+            <div style="width: 250px;margin-right:10px;">
                 @include('site.common.sideMenu', ['active' => 'タイムライン'])
             </div>
             <div style="width: 100%;">
                 @foreach ($timelines as $timeline)
+                    {!! nl2br($timeline->text) !!}
+                    <hr>
                 @endforeach
             </div>
         </div>

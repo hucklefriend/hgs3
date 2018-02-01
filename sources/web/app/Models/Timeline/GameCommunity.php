@@ -20,10 +20,10 @@ class GameCommunity extends TimelineAbstract
     public static function addJoinUserText(Orm\GameSoft $soft, User $user)
     {
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">%sさん</a>が参加しました',
-            url2('community/g/' . $soft->id),
-            $soft->name,
+            route('ゲームコミュニティ',['soft' => $soft->id]),
+            e($soft->name),
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name
+            e($user->name)
         );
 
         self::insert($soft->id, $text);
@@ -38,9 +38,9 @@ class GameCommunity extends TimelineAbstract
     public static function addNewTopicText(Orm\GameSoft $soft, Orm\GameCommunityTopic $topic)
     {
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">新しいトピック</a>が作成されました',
-            url2('community/g/' . $soft->id),
-            $soft->name,
-            url2('community/g/' . $soft->id . 'topic/' . $topic->id)
+            route('ゲームコミュニティ',['soft' => $soft->id]),
+            e($soft->name),
+            route('ゲームコミュニティ投稿詳細', ['soft' => $soft->id, 'topic' => $topic->id])
         );
 
         self::insert($soft->id, $text);

@@ -20,7 +20,7 @@ class FavoriteSoft extends TimelineAbstract
     {
         $text = sprintf('「<a href="%s">%s</a>」が追加されました。',
             route('ゲーム詳細', ['soft' => $soft->id]),
-            $soft->name
+            e($soft->name)
         );
 
         self::insert($soft->id, $text);
@@ -36,9 +36,9 @@ class FavoriteSoft extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%s</a>シリーズのゲーム「<a href="%s">%s</a>」が追加されました。',
             route('シリーズ詳細', ['series' => $series->id]),
-            $series->name,
+            e($series->name),
             route('ゲーム詳細', ['soft' => $soft->id]),
-            $soft->name
+            e($soft->name)
         );
 
         self::insert($soft->id, $text);
@@ -53,7 +53,7 @@ class FavoriteSoft extends TimelineAbstract
     {
         $text = sprintf('「<a href="%s">%s</a>」の情報が更新されました。',
             route('ゲーム詳細', ['soft' => $soft->id]),
-            $soft->name
+            e($soft->name)
         );
 
         self::insert($soft->id, $text);
@@ -69,9 +69,9 @@ class FavoriteSoft extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%s</a>をお気に入りゲームに登録しました。',
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name,
+            e($user->name),
             route('ゲーム詳細', ['soft' => $soft->id]),
-            $soft->name
+            e($soft->name)
         );
 
         self::insert($soft->id, $text);
@@ -87,7 +87,7 @@ class FavoriteSoft extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%s</a>に<a href="%s">新しいレビュー</a>%sが投稿されました。',
             route('ゲーム詳細', ['soft' => $soft->id]),
-            $soft->name,
+            e($soft->name),
             route('レビュー', ['review' => $review->id]),
             $review->is_spoiler ? '(ネタバレあり)' : ''
         );
@@ -105,9 +105,9 @@ class FavoriteSoft extends TimelineAbstract
     {
         $text = sprintf('<a href="%s">%s</a>を扱うサイト「<a href="%s">%s</a>」が登録されました。',
             route('ゲーム詳細', ['soft' => $soft->id]),
-            $soft->name,
+            e($soft->name),
             route('サイト詳細', ['site' => $site->id]),
-            $site->name
+            e($site->name)
         );
 
         self::insert($soft->id, $text);

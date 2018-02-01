@@ -5,7 +5,7 @@
 
 namespace Hgs3\Models\Timeline;
 
-use Illuminate\Support\Facades\Log;
+use Hgs3\Log;
 use Hgs3\Models\User;
 use Hgs3\Models\Orm;
 
@@ -21,9 +21,9 @@ class UserCommunity extends TimelineAbstract
     {
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">%sさん</a>が参加しました',
             route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
-            $userCommunity->name,
+            e($userCommunity->name),
             route('プロフィール', ['showId' => $user->show_id]),
-            $user->name
+            e($user->name)
         );
 
         self::insert($userCommunity->id, $text);
@@ -39,7 +39,7 @@ class UserCommunity extends TimelineAbstract
     {
         $text = sprintf('参加中のコミュニティ「<a href="%s">%s</a>」に<a href="%s">新しいトピック</a>が作成されました',
             route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
-            $userCommunity->name,
+            e($userCommunity->name),
             route('ユーザーコミュニティ投稿詳細', ['uc' => $userCommunity->id, 'uct' => $topic->id])
         );
 
