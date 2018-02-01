@@ -469,31 +469,34 @@ SQL;
             // 足跡を削除
             Footprint::delete($site->id);
 
-            DB::table('user_favorite_sites')
-                ->where('site_id', $site->id)
+            // お気に入りサイト
+            Orm\UserFavoriteSite::where('site_id', $site->id)
                 ->delete();
 
-            DB::table('site_handle_softs')
-                ->where('site_id', $site->id)
+            // 取扱いゲーム
+            Orm\SiteHandleSoft::where('site_id', $site->id)
                 ->delete();
 
-            DB::table('site_search_indices')
-                ->where('site_id', $site->id)
+            // サイト検索インデックス
+            Orm\SiteSearchIndex::where('site_id', $site->id)
                 ->delete();
 
+            // 新着サイト
             NewArrival::delete($site->id);
 
-            DB::table('site_goods')
-                ->where('site_id', $site->id)
+            // サイトいいね
+            Orm\SiteGood::where('site_id', $site->id)
                 ->delete();
 
-            DB::table('site_good_histories')
-                ->where('site_id', $site->id)
+            // サイトいいね履歴
+            Orm\SiteGoodHistory::where('site_id', $site->id)
                 ->delete();
 
+            // サイト更新履歴
             Orm\SiteUpdateHistory::where('site_id', $site->id)
                 ->delete();
 
+            // サイト自体
             $site->delete();
 
             DB::commit();
@@ -501,10 +504,6 @@ SQL;
             DB::rollBack();
 
             Log::exceptionError($e);
-
-            if (env('APP_ENV') == 'local') {
-                throw $e;
-            }
 
             return false;
         }
@@ -547,10 +546,7 @@ SQL;
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
+            Log::exceptionError($e);
             return false;
         }
 
@@ -576,6 +572,7 @@ SQL;
      * @param User $user
      * @param Orm\Site $site
      * @param array $handleSoftIds
+     * @throws \Exception
      */
     public static function saveNewSiteInformation(User $user, Orm\Site $site, array $handleSoftIds)
     {
@@ -598,6 +595,8 @@ SQL;
 
             // お知らせ
             Orm\NewInformation::addNewSite($site->id);
+            // サイトタイムライン
+            Timeline\Site::addNewArrivalText($site);
         } catch (\Exception $e) {
             Log::exceptionError($e);
         }

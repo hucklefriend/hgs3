@@ -25,27 +25,23 @@
     @include('site.common.detail')
 
     @if ($isWebMaster)
-
-        <div class="card card-hgn" style="width: 300px;">
+        <div class="card card-hgn border-info">
             <div class="card-body">
                 <h5 class="card-title">管理人さま用</h5>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><a href="{{ route('サイト編集', ['site' => $site->id]) }}">サイト情報を編集</a></li>
-                <li class="list-group-item"><a href="{{ route('サイト足跡', ['site' => $site->id]) }}">足跡を見る</a></li>
-                <li class="list-group-item"></li>
-                <li class="list-group-item">
+                <li class="list-group-item"><a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}">アクセスログ</a></li>
+                <li class="list-group-item text-right">
                     <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')" style="margin: 5px 0;">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
 
-                        <button class="btn btn-danger btn-sm btn-block">削除</button>
+                        <button class="btn btn-danger btn-sm">サイトを削除</button>
                     </form>
                 </li>
             </ul>
         </div>
-
-
     @endif
 @endsection
 

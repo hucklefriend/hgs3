@@ -7,16 +7,20 @@
 @section('content')
     <h1>サイト</h1>
 
-    <div class="d-flex flex-row d-none d-sm-block">
-        <div style="width: 250px;">
-            @include('site.common.sideMenu', ['active' => ''])
-        </div>
-        <div style="width: 100%;">
+    <div class="d-none d-sm-block">
+        <div class="d-flex flex-row">
+            <div style="width: 250px;">
+                @include('site.common.sideMenu', ['active' => 'タイムライン'])
+            </div>
+            <div style="width: 100%;">
+                @foreach ($timelines as $timeline)
+                @endforeach
+            </div>
         </div>
     </div>
 
     <div class="d-sm-none">
-        @include('site.common.sideMenu', ['active' => ''])
+        @include('site.common.sideMenu', ['active' => 'タイムライン'])
     </div>
 @endsection
 

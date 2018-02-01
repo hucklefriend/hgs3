@@ -115,10 +115,16 @@ class Log extends \Illuminate\Support\Facades\Log
      * 例外エラー
      *
      * @param \Exception $e
+     * @throws \Exception
      */
     public static function exceptionError(\Exception $e)
     {
         self::error($e->getMessage());
         self::error($e->getTraceAsString());
+
+
+        if (env('APP_ENV') == 'local') {
+            throw $e;
+        }
     }
 }

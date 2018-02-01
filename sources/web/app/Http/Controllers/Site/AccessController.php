@@ -3,7 +3,6 @@
  * サイトの足跡コントローラー
  */
 
-
 namespace Hgs3\Http\Controllers\Site;
 
 use Hgs3\Http\Controllers\Controller;
@@ -14,9 +13,25 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
-class FootprintController extends Controller
+class AccessController extends Controller
 {
-    const ITEMS_PER_PAGE = 15;
+    /**
+     * アクセスログ
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Orm\Site $site)
+    {
+        // サイトの管理人しか見られない
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
+        }
+
+        return view('site.access.index', [
+            'site' => $site
+        ]);
+    }
 
     /**
      * サイトの足跡

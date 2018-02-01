@@ -121,7 +121,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/site_manage/update_history/edit/{siteHistory}', 'User\SiteManageController@editUpdateHistory')->name('サイト更新履歴編集');
     Route::patch('/user/site_manage/update_history/edit/{siteHistory}', 'User\SiteManageController@updateUpdateHistory')->name('サイト更新履歴編集処理');
     Route::delete('/user/site_manage/update_history/delete/{siteHistory}', 'User\SiteManageController@deleteUpdateHistory')->name('サイト更新履歴削除処理');
-    Route::get('/user/site_manage/footprint/{site}', 'Site\FootprintController@site')->name('サイト足跡');
+
+    Route::get('/user/site/access/{site}', 'Site\AccessController@index')->name('サイトアクセスログ');
+    Route::get('/user/site/access/{site}/footprint', 'Site\AccessController@footprint')->name('サイト足跡');
 
     // サイト
     Route::post('/site/good/{site}', 'Site\GoodController@good');

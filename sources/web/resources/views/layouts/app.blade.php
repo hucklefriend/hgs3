@@ -79,14 +79,14 @@
 
 <footer class="footer">
     <div class="container-fluid">
-        <div style="display:flex;">
-            <div style="max-height: 60px;overflow: hidden;">@yield('breadcrumb')</div>
-            <div style="margin-left: auto;white-space: nowrap;">
+        <div class="d-flex" style="height: 60px;padding-top:10px;">
+            <div style="overflow: hidden;">@yield('breadcrumb')</div>
+            <div style="white-space: nowrap;" class="ml-auto">
                 <a href="{{ route('サイトマップ') }}" class="align-self-center">サイトマップ</a>
             </div>
         </div>
-        <div style="margin-top: 10px;">
-            &copy; <a href="{{ route('プロフィール', ['showId' => 'huckle']) }}">yu-ki</a>
+        <div style="height: 40px;line-height: 40px;">
+            &copy; yu-ki
             since 2003.9.28
         </div>
     </div>

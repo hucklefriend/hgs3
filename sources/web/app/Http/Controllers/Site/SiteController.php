@@ -17,9 +17,26 @@ use Hgs3\Models\Timeline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\View;
 
 class SiteController extends Controller
 {
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        // あなたのサイトを登録
+        $yourSites = null;
+        if (Auth::check()) {
+            $yourSites = Orm\Site::where('user_id', Auth::id())
+                ->orderBy('id')
+                ->get();
+        }
+        View::share('yourSites', $yourSites);
+    }
+
+
     /**
      * トップ
      *
@@ -32,7 +49,7 @@ class SiteController extends Controller
         }
 
         return view('site.index', [
-            'timeline' => Timeline\Site::get($time, 20)
+            'timelines' => Timeline\Site::get($time, 20)
         ]);
     }
 
