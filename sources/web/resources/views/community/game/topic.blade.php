@@ -5,7 +5,7 @@
         <small><a href="{{ url2('community/g/' . $soft->id . '/topics') }}">トピック一覧へ</a></small>
         <h4>{{ $topic->title }}</h4>
         <div>
-            <i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile/' . $writer->id) }}">{{ $writer->name }}</a>
+            <i class="far fa-user"></i> <a href="{{ url2('user/profile/' . $writer->id) }}">{{ $writer->name }}</a>
             {{ $topic->wrote_at }}
             @if ($topic->user_id == $userId)
                 <form method="POST" action="{{ url('community/g/' . $soft->id  . '/topic/' . $topic->id) }}" class="d-inline">
@@ -25,7 +25,7 @@
     @foreach ($responses as $res)
         <div>
             <div>
-                <i class="fa fa-user-o" aria-hidden="true"></i> <a href="{{ url2('user/profile/' . $res->user_id) }}">{{ $users[$r->user_id] }}</a>
+                <i class="far fa-user"></i> <a href="{{ url2('user/profile/' . $res->user_id) }}">{{ $users[$r->user_id] }}</a>
                 {{ $res->wrote_at }}
             </div>
             <p class="community-topic-comment">{{ $res->comment }}</p>

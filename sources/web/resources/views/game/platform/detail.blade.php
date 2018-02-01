@@ -31,7 +31,7 @@
                     <div><h4>{{ $gamePackage->name }}</h4></div>
                     @isset($companyNameHash[$gamePackage->company_id])
                         <div>
-                            <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ url2('game/company/' . $gamePackage->company_id }}">{{ $companyNameHash[$pkg->company_id] }}</a>
+                            <i class="far fa-building"></i>&nbsp;<a href="{{ url2('game/company/' . $gamePackage->company_id }}">{{ $companyNameHash[$pkg->company_id] }}</a>
                         </div>
                     @endisset
                     <div>{{ $gamePackage->release_at }}</div>

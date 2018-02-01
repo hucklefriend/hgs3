@@ -26,12 +26,14 @@
             <div class="card card-hgn">
                 <div class="card-header">ログイン</div>
                 <div class="card-body">
-                    <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" style="color: #55acee;margin-right: 5px;text-decoration: none;">
-                        <i class="fa fa-twitter" aria-hidden="true" style="font-size: 150%;"></i>
-                    </a>
-                    <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" style="color: #315096;text-decoration: none;">
-                        <i class="fa fa-facebook-official" aria-hidden="true" style="font-size: 150%;"></i>
-                    </a>
+                    <div class="top-login">
+                        <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="color-twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="color-facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </div>
                     <hr>
                     <form method="POST" action="{{ route('ログイン') }}">
                         {{ csrf_field() }}

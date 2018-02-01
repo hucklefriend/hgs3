@@ -17,7 +17,7 @@
                     </h5>
                 </div>
                 <div>
-                    <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a>
+                    <i class="far fa-user"></i><a href="{{ url2('user/profile') }}/{{ $writer->id }}">{{ $writer->name }}</a>
                     {{ $review->post_at }}
                 </div>
             </div>

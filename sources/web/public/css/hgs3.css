@@ -164,6 +164,28 @@ a:active .no-image-text-inner {
     background-color: #4183c4;
 }
 
+.color-twitter, .color-twitter:hover, .color-twitter:visited {
+    color: #00aced;
+}
+.color-facebook, .color-facebook:hover, .color-facebook:visited {
+    color: #305097;
+}
+.color-google, .color-google:hover, .color-google:visited {
+    color: #db4a39;
+}
+.color-instagram, .color-instagram:hover, .color-instagram:visited {
+    color: #3f729b;
+}
+.color-mixi, .color-mixi:hover, .color-mixi:visited {
+    color: #d1ad59;
+}
+.color-line, .color-line:hover, .color-line:visited {
+    color: #00c300;
+}
+.color-github, .color-github:hover, .color-github:visited {
+    color: #4183c4;
+}
+
 .no-border td {
     border:none;
 }
@@ -253,18 +275,19 @@ h1 {
 }
 
 #global_back_link {
-    width: 25px;
+    padding-top: 2px;
+    width: 30px;
     height: 100%;
 }
 
 #global_back_link a {
     font-size: 1.5rem;
     text-decoration: none;
-    color: #2a2a2a;
+    color: #777;
 }
 
 #global_back_link a:hover {
-    color: #777777;
+    color: black;
 }
 
 .card-soft {
@@ -280,6 +303,27 @@ button.btn:hover {
     cursor: pointer;
 }
 
-.site-info span {
+.site-info > span {
     margin-right: 10px;
+}
+
+.top-login {
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.top-login a:hover {
+    text-decoration: none;;
+}
+
+.favorite-icon, .favorite-icon:hover, .favorite-icon:link, .favorite-icon:visited {
+    color: gold;
+}
+
+.good-icon, a.good-icon2:hover {
+    color: lightgray;
+}
+
+a.good-icon:hover, .good-icon2 {
+    color: black;
 }

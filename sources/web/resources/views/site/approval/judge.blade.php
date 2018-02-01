@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('承認待ちサイト一覧') }}">&lt;</a>
+    <a href="{{ route('承認待ちサイト一覧') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('global_back_link')
-    <a href="{{ route('お知らせ') }}">&lt;</a>
+    <a href="{{ route('お知らせ') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')

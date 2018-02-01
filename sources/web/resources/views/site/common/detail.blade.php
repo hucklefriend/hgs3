@@ -22,23 +22,53 @@
                 </p>
                 <div class="d-flex align-content-start flex-wrap site-info">
                     <span>
-                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                        <i class="far fa-user"></i>
                         <a href="{{ route('プロフィール', ['showId' => $webMaster->show_id]) }}">{{ $webMaster->name }}</a>
                     </span>
                     <span>
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        <i class="fas fa-redo-alt"></i>
                         {{ date('Y-m-d H:i', $site->updated_timestamp) }}
                     </span>
                     <span>
-                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                        {{ number_format($favoriteNum) }}
+                        @if (!Auth::check() || $isWebMaster)
+                            <span class="favorite-icon"><i class="fas fa-star"></i></span>
+                            {{ number_format($favoriteNum) }}
+                        @elseif ($isFavorite)
+                            <form action="{{ route('お気に入りサイト削除処理', ['site' => $site->id]) }}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <a class="favorite-icon" href="#" onclick="$(this).parent().submit();"><i class="fas fa-star"></i></a>
+                                {{ number_format($favoriteNum) }}
+                            </form>
+                        @else
+                            <form action="{{ route('お気に入りサイト登録処理', ['site' => $site->id]) }}" method="POST">
+                                {{ csrf_field() }}
+                                <a class="favorite-icon" href="#" onclick="$(this).parent().submit();"><i class="far fa-star"></i></a>
+                                {{ number_format($favoriteNum) }}
+                            </form>
+                        @endif
                     </span>
                     <span>
-                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                        {{ number_format($site->good_num) }}
+                        @if (!Auth::check() || $isWebMaster)
+                            <span class="good-icon"><i class="far fa-thumbs-up"></i></span>
+                            {{ number_format($site->good_num) }}
+                        @elseif ($isGood)
+                            <form method="POST" action="{{ route('サイトいいねキャンセル', ['site' => $site]) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <a class="good-icon2" href="#" onclick="$(this).parent().submit();"><i class="far fa-thumbs-up"></i></a>
+                                {{ number_format($site->good_num) }}
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('サイトいいね', ['site' => $site]) }}">
+                                {{ csrf_field() }}
+                                <a class="good-icon" href="#" onclick="$(this).parent().submit();"><i class="far fa-thumbs-up"></i></a>
+                                {{ number_format($site->good_num) }}
+                            </form>
+                        @endif
                     </span>
                     <span>
-                        <i class="fa fa-paw" aria-hidden="true"></i>
+                        <i class="fas fa-paw"></i>
                         {{ number_format($site->out_count) }}
                     </span>
                 </div>

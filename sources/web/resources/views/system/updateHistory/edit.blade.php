@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('システム更新履歴更新', ['updateHistory' => $updateHistory->id]) }}">&lt;</a>
+    <a href="{{ route('システム更新履歴更新', ['updateHistory' => $updateHistory->id]) }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')

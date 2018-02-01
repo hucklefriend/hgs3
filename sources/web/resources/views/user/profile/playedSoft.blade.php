@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'played_game']) }}">&lt;</a>
+    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'played_game']) }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')

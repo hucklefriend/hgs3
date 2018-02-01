@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('サイト管理') }}">&lt;</a>
+    <a href="{{ route('サイト管理') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')

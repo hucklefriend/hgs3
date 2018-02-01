@@ -18,18 +18,24 @@
     <div class="site-presentation"><small>{!! nl2br(e($s->presentation)) !!}</small></div>
     <div><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank">{{ $s->url }}</a></div>
 
-    <div>
-        <small>
+    <div class="d-flex align-content-start flex-wrap site-info">
+        <span>
             @if (!isset($noUser) || !$noUser)
-            <i class="fa fa-user-o" aria-hidden="true"></i>
+            <i class="far fa-user"></i>
             <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}">{{ $u->name }}</a>
+        </span>
+        <span>
             @endif
-            <i class="fa fa-refresh" aria-hidden="true"></i>
+            <i class="fas fa-redo-alt"></i>
             {{ date('Y-m-d H:i', $s->updated_timestamp) }}
-            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+        </span>
+        <span>
+            <span class="good-icon2"><i class="far fa-thumbs-up"></i></span>
             {{ number_format($s->good_num) }}
-            <i class="fa fa-paw" aria-hidden="true"></i>
+        </span>
+        <span>
+            <i class="fas fa-paw"></i>
             {{ number_format($s->out_count) }}
-        </small>
+        </span>
     </div>
 </div>

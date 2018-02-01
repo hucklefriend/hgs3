@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">&lt;</a>
+    <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')
@@ -46,9 +46,7 @@
     <form method="POST" style="margin-top: 20px;">
         {{ method_field('DELETE') }}
         {{ csrf_field() }}
-        <p>デフォルトのアイコン(<i class="fa fa-user-circle user-icn" aria-hidden="true"></i>)に戻す場合はこちら</p>
-
-        <button class="btn btn-warning">デフォルトのアイコンに戻す</button>
+        <button class="btn btn-warning">アイコンを削除して、初期状態に戻す</button>
     </form>
     @endif
     <script>

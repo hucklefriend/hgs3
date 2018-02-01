@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('ユーザー登録') }}">&lt;</a>
+    <a href="{{ route('ユーザー登録') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 

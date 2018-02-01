@@ -126,8 +126,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/site/access/{site}/footprint', 'Site\AccessController@footprint')->name('サイト足跡');
 
     // サイト
-    Route::post('/site/good/{site}', 'Site\GoodController@good');
-    Route::delete('/site/good/{site}', 'Site\GoodController@cancel');
+    Route::post('/site/good/{site}', 'Site\GoodController@good')->name('サイトいいね');
+    Route::delete('/site/good/{site}', 'Site\GoodController@cancel')->name('サイトいいねキャンセル');
     Route::get('/site/good_history/{site}', 'Site\GoodController@history');
     Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@site');
     
@@ -166,8 +166,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/played_soft/{soft}', 'User\PlayedSoftController@add');
     Route::put('/user/played_soft/{upg}', 'User\PlayedSoftController@edit');
     Route::delete('user/played_soft/{upg}', 'User\PlayedSoftController@remove');
-    Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add');
-    Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove');
+    Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add')->name('お気に入りサイト登録処理');
+    Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove')->name('お気に入りサイト削除処理');
     Route::post('/user/follow', 'User\FollowController@add')->name('フォロー登録');
     Route::delete('/user/follow', 'User\FollowController@remove')->name('フォロー解除');
 

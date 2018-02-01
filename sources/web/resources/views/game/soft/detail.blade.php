@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('ゲーム一覧') }}">&lt;</a>
+    <a href="{{ route('ゲーム一覧') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@
                 <div class="card-body">
                     @if ($packageNum > 2)
 
-                    <script type="text/javascript" src="{{ url2('js/slick.min.js') }}"></script>
+                    <script type="text/javascript" src="{{ url('js/slick.min.js') }}"></script>
                     <link rel="stylesheet" type="text/css" href="{{ url('css/slick.css') }}">
                     <link rel="stylesheet" type="text/css" href="{{ url('css/slick-theme.css') }}">
                     <style>
@@ -83,8 +83,8 @@
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
                                 <div>
-                                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
-                                    <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
+                                    <i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
+                                    <i class="fas fa-gamepad"></i>&nbsp;{{ $pkg->platform_name }}
                                 </div>
                                 <div>{{ $pkg->release_at }}</div>
                                 <div>
@@ -120,8 +120,8 @@
                             <div class="col-8">
                                 <div><h4>{{ $pkg->name }}</h4></div>
                                 <div>
-                                    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
-                                    <i class="fa fa-gamepad" aria-hidden="true"></i>&nbsp;{{ $pkg->platform_name }}
+                                    <i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
+                                    <i class="fas fa-gamepad"></i>&nbsp;{{ $pkg->platform_name }}
                                 </div>
                                 <div>{{ $pkg->release_at }}</div>
                                 <div>
