@@ -22,35 +22,27 @@
         </div>
     @endif
 
-    @if ($isWebMaster)
-        <div class="text-right">
-            <ul class="horizontal">
-                <li>
-                    <a href="{{ route('サイト編集', ['site' => $site->id]) }}" class="btn btn-outline-primary btn-sm">サイト情報を編集</a>
-                </li>
-                <li style="margin-left: 10px;">
-                    <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-
-                        <button class="btn btn-danger btn-sm">サイトを削除する</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    @endif
-
     @include('site.common.detail')
 
     @if ($isWebMaster)
 
-        <div class="card card-hgn">
+        <div class="card card-hgn" style="width: 300px;">
             <div class="card-body">
                 <h5 class="card-title">管理人さま用</h5>
-                <p class="card-text">
-                    足跡を見る
-                </p>
             </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="{{ route('サイト編集', ['site' => $site->id]) }}">サイト情報を編集</a></li>
+                <li class="list-group-item"><a href="{{ route('サイト足跡', ['site' => $site->id]) }}">足跡を見る</a></li>
+                <li class="list-group-item"></li>
+                <li class="list-group-item">
+                    <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')" style="margin: 5px 0;">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+
+                        <button class="btn btn-danger btn-sm btn-block">削除</button>
+                    </form>
+                </li>
+            </ul>
         </div>
 
 

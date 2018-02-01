@@ -19,14 +19,6 @@ class FootprintController extends Controller
     const ITEMS_PER_PAGE = 15;
 
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'site');
-    }
-
-    /**
      * サイトの足跡
      *
      * @param Orm\Site $site
@@ -34,9 +26,14 @@ class FootprintController extends Controller
      */
     public function site(Orm\Site $site)
     {
-        if ($site->user_id != Auth::id() && !is_admin()) {
-            return abort(403);
+        // サイトの管理人しか見られない
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
         }
+
+
+
+
 
         $data = ['site' => $site];
 

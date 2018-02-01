@@ -1,16 +1,3 @@
-<div class="d-flex flex-row">
-    <div><h1>{{ $site->name }}</h1></div>
-    <div style="margin-left: 1rem;">
-        <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
-        @if ($site->rate > 0)
-            <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
-        @endif
-        @if ($site->gender != \Hgs3\Constants\Site\Gender::NONE)
-            <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
-        @endif
-    </div>
-</div>
-
 <div class="d-flex flex-wrap">
     @if (!empty($site->detail_banner_url))
         <div class="detail-site-banner-outline">
@@ -20,9 +7,18 @@
     <div style="min-width: 300px;">
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">データ</h5>
+                <h5 class="card-title">{{ $site->name }}</h5>
+                <div>
+                    <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
+                    @if ($site->rate > 0)
+                        <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
+                    @endif
+                    @if ($site->gender != \Hgs3\Constants\Site\Gender::NONE)
+                        <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
+                    @endif
+                </div>
                 <p class="card-text">
-                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}">{{ $site->url }}</a>
+                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">{{ $site->url }}</a>
                 </p>
                 <div class="d-flex align-content-start flex-wrap site-info">
                     <span>
@@ -51,7 +47,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
                 <h5 class="card-title">紹介</h5>
@@ -59,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
                 @if ($isWebMaster)
