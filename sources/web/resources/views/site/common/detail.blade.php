@@ -26,10 +26,6 @@
                         <a href="{{ route('プロフィール', ['showId' => $webMaster->show_id]) }}">{{ $webMaster->name }}</a>
                     </span>
                     <span>
-                        <i class="fas fa-redo-alt"></i>
-                        {{ date('Y-m-d H:i', $site->updated_timestamp) }}
-                    </span>
-                    <span>
                         @if (!Auth::check() || $isWebMaster)
                             <span class="favorite-icon"><i class="fas fa-star"></i></span>
                             {{ number_format($favoriteNum) }}
@@ -70,6 +66,10 @@
                     <span>
                         <i class="fas fa-paw"></i>
                         {{ number_format($site->out_count) }}
+                    </span>
+                    <span>
+                        <i class="fas fa-redo-alt"></i>
+                        {{ date('Y-m-d H:i', $site->updated_timestamp) }}
                     </span>
                 </div>
             </div>

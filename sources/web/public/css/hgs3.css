@@ -262,7 +262,7 @@ a:active .no-image-text-inner {
 }
 
 .pagination {
-    margin: 0.5rem 0;
+    margin: 1rem 0;
 }
 
 h1 {
@@ -326,4 +326,9 @@ button.btn:hover {
 
 a.good-icon:hover, .good-icon2 {
     color: black;
+}
+
+.site-side-menu {
+    min-width: 200px;
+    margin-right:10px;
 }

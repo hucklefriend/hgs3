@@ -15,14 +15,6 @@ use Illuminate\Support\Facades\Auth;
 class GoodController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'site');
-    }
-
-    /**
      * サイトへのいいね
      *
      * @param Orm\Site $site
@@ -61,7 +53,7 @@ class GoodController extends Controller
         // いいね履歴は登録者本人しか確認できない
         // ただしH.G.N.管理人は除く
         if ($site->user_id != Auth::id() && !UserRole::isAdmin()) {
-            return abort(403);
+            return $this->forbidden(['site_id' => $site->id]);
         }
 
         return view('site.goodHistory', ['site' => $site]);

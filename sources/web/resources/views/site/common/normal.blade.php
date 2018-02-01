@@ -25,17 +25,17 @@
             <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}">{{ $u->name }}</a>
         </span>
         <span>
-            @endif
-            <i class="fas fa-redo-alt"></i>
-            {{ date('Y-m-d H:i', $s->updated_timestamp) }}
-        </span>
-        <span>
             <span class="good-icon2"><i class="far fa-thumbs-up"></i></span>
             {{ number_format($s->good_num) }}
         </span>
         <span>
             <i class="fas fa-paw"></i>
             {{ number_format($s->out_count) }}
+        </span>
+        <span>
+            @endif
+            <i class="fas fa-redo-alt"></i>
+            {{ date('Y-m-d H:i', $s->updated_timestamp) }}
         </span>
     </div>
 </div>

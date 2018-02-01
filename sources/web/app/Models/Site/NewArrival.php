@@ -5,28 +5,44 @@
 
 namespace Hgs3\Models\Site;
 
-use Hgs3\Models\Timeline;
+use Hgs3\Log;
 use Hgs3\Models\Orm;
-use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class NewArrival
 {
     /**
      * 新着サイトを取得
      *
-     * @param $num
-     * @return array
+     * @param int $num
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @throws \Exception
      */
     public static function get($num)
     {
-        return DB::table('site_new_arrivals')
-            ->select(['site_id'])
+        $lastMonth = new \DateTime();
+        $lastMonth->sub(new \DateInterval('P1M'));
+
+        return Orm\SiteNewArrival::where('registered_timestamp', '>', $lastMonth->format('u'))
             ->orderBy('registered_timestamp', 'DESC')
-            ->take($num)
-            ->get()
-            ->pluck('site_id');
+            ->paginate($num);
+    }
+
+    /**
+     * 更新サイトを取得
+     *
+     * @param int $num
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @throws \Exception
+     */
+    public static function getUpdated($num)
+    {
+        $lastMonth = new \DateTime();
+        $lastMonth->sub(new \DateInterval('P1M'));
+
+        return Orm\Site::where('updated_timestamp', '>', $lastMonth->format('u'))
+            ->orderBy('updated_timestamp', 'DESC')
+            ->paginate($num);
     }
 
     /**
@@ -69,8 +85,7 @@ class NewArrival
                 ->where('registered_timestamp', '<=', $deleteTimestamp)
                 ->delete();
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
+            Log::exceptionError($e);
 
             return false;
         }

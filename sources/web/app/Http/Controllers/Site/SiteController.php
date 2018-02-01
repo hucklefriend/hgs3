@@ -53,9 +53,56 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * タイムライン
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function timeline($time = null)
+    {
+        if ($time === null) {
+            $time = time();
+        }
+
+        return view('site.timeline', [
+            'timelines' => Timeline\Site::get($time, 20)
+        ]);
+    }
+
+    /**
+     * 新着サイト一覧
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
+     */
     public function newArrival()
     {
+        $newArrivals = Site\NewArrival::get(20);
+        $sites = Orm\Site::getHash(page_pluck($newArrivals, 'site_id'));
+        $users = User::getHash(array_pluck($sites, 'user_id'));
 
+        return view('site.newArrival', [
+            'newArrivals' => $newArrivals,
+            'sites'       => $sites,
+            'users'       => $users
+        ]);
+    }
+
+    /**
+     * 更新サイト一覧
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
+     */
+    public function newUpdate()
+    {
+        $sites = Site\NewArrival::getUpdated(20);
+        $users = User::getHash(page_pluck($sites, 'user_id'));
+
+        return view('site.newUpdate', [
+            'sites'       => $sites,
+            'users'       => $users
+        ]);
     }
 
     /**
