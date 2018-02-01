@@ -135,6 +135,7 @@ class SiteController extends Controller
     {
         // TODO 終了処理ミドルウェアを使って、リダイレクト後に処理させる
         if (Auth::check()) {
+            // 足跡を残す処理をしているかどうか
             if (Auth::user()->footprint == 1) {
                 Site\Footprint::add($site, Auth::user());
             } else {

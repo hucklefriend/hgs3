@@ -48,15 +48,14 @@ class FavoriteSite extends TimelineAbstract
      * アクセス数がn件を超えた
      *
      * @param Orm\Site $site
-     * @param int $outCount
      */
-    public static function addAccessNumText(Orm\Site $site, $outCount)
+    public static function addAccessNumText(Orm\Site $site)
     {
-        if ($outCount > 100 && $outCount % 100 == 1) {
+        if ($site->out_count > 100 && $site->out_count % 100 == 1) {
             $text = sprintf('お気に入りに登録しているサイト「<a href="%s">%s</a>」へのアクセス数が%dを超えました！',
                 route('サイト詳細', ['site' => $site->id]),
                 $site->name,
-                intval($outCount / 100) * 100
+                intval($site->out_count / 100) * 100
             );
 
             self::insert($site->id, $text);

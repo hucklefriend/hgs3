@@ -14,6 +14,7 @@ class Site extends TimelineAbstract
      * 新着サイト
      *
      * @param Orm\Site $site
+     * @throws \Exception
      */
     public static function addNewArrivalText(Orm\Site $site)
     {
@@ -29,7 +30,7 @@ class Site extends TimelineAbstract
      * 更新サイト
      *
      * @param Orm\Site $site
-     * @param int $prevMaxGoodNum
+     * @throws \Exception
      */
     public static function addUpdateText(Orm\Site $site)
     {
@@ -45,7 +46,8 @@ class Site extends TimelineAbstract
      * いいねがn件に達した
      *
      * @param Orm\Site $site
-     * @param int $prevMaxGoodNum
+     * @param $prevMaxGoodNum
+     * @throws \Exception
      */
     public static function addGoodNumText(Orm\Site $site, $prevMaxGoodNum)
     {
@@ -64,15 +66,15 @@ class Site extends TimelineAbstract
      * アクセス数がn件を超えた
      *
      * @param Orm\Site $site
-     * @param int $outCount
+     * @throws \Exception
      */
-    public static function addAccessNumText(Orm\Site $site, $outCount)
+    public static function addAccessNumText(Orm\Site $site)
     {
-        if ($outCount > 100 && $outCount % 100 == 1) {
+        if ($site->out_count > 100 && $site->out_count % 100 == 1) {
             $text = sprintf('「<a href="%s">%s</a>」へのアクセス数が%dを超えました！',
                 route('サイト詳細', ['site' => $site->id]),
                 $site->name,
-                intval($outCount / 100) * 100
+                intval($site->out_count / 100) * 100
             );
 
             self::insert($site->id, $text);
@@ -84,6 +86,7 @@ class Site extends TimelineAbstract
      *
      * @param int $siteId
      * @param string $text
+     * @throws \Exception
      */
     private static function insert($siteId, $text)
     {

@@ -550,6 +550,11 @@ SQL;
             return false;
         }
 
+        $site->out_count++;     // DBから取り直すべきだけど、そこまで厳密にやらなくてもいいか
+        Timeline\Site::addAccessNumText($site);
+        Timeline\FavoriteSite::addAccessNumText($site);
+
+
         return true;
     }
 
