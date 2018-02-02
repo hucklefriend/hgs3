@@ -7,6 +7,8 @@
 @section('content')
     <h1>サイト</h1>
 
+    {!! print_r($yourSites, true) !!}
+
     <div class="d-none d-sm-block">
         <div class="d-flex flex-row">
             <div class="site-side-menu">
