@@ -14,14 +14,6 @@ use Hgs3\Models\Game\Soft;
 class SoftController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * 一覧ページ
      */
     public function index()
@@ -44,7 +36,10 @@ class SoftController extends Controller
     {
         // TODO 発売日が過ぎていないとレビューを投稿するリンクは出さない
 
-        return view('game.soft.detail', Soft::getDetail($soft));
+        $data = Soft::getDetail($soft);
+        $data['useChart'] = true;
+
+        return view('game.soft.detail', $data);
     }
 
     /**

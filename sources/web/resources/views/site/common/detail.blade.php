@@ -126,7 +126,9 @@
     </div>
     <div class="d-flex flex-wrap">
         @foreach ($handleSofts as $soft)
-            <div>
+            @include('game.common.packageCard', ['soft' => $soft])
+
+            <div style="display:none;">
                 <div class="card card-soft text-center">
                     <div class="card-body">
                         <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">

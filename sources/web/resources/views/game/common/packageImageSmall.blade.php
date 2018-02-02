@@ -1,5 +1,5 @@
 @if (empty($imageUrl))
-    <div class="text-center no-image-text-outer no-image-text-outer_small">
+    <div class="text-center no-image-text-outer no-image-text-outer-small">
         <div class="no-image-text-inner">NO<br>IMAGE</div>
     </div>
 @else

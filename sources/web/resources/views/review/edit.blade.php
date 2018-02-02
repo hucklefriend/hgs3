@@ -45,8 +45,6 @@
                 <div class="align-self-center">
                     <div style="min-width: 320px;max-width: 500px;width: 100%;">
                         <canvas id="review_chart"></canvas>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
                         <script>
                             $(function (){
                                 let ctx = $("#review_chart");

@@ -117,7 +117,7 @@ a:active .no-image-text-inner {
 
 @media (min-width: 320px) {
     .no-image-text-inner {
-        font-size: 1rem !important;
+        font-size: 1rem;
     }
 }
 
@@ -333,16 +333,33 @@ a.good-icon:hover, .good-icon2 {
 }
 
 
+.package-card {
+    min-height: 70px;
+}
+
+.package-card-image {
+    width: 60px;
+    font-size: 2rem;
+    color: black;
+}
+
+.package-card-image img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.package-card-name {
+    width: 150px;
+}
+
 @media (min-width: 576px) {
 
 }
 
 @media (min-width: 768px) {
-
+    .package-card {
+    }
 }
 
 @media (min-width: 992px) {
-    .card-soft {
-        width: 120px;
-    }
 }
