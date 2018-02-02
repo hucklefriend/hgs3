@@ -3,7 +3,7 @@
 @section('content')
 
     <div>
-        <a href="{{ url2('timeline/add') }}">追加</a>
+        <a href="{{ route('タイムライン登録') }}">追加</a>
     </div>
 
     <hr>
@@ -17,7 +17,7 @@
                 <p>{!!  $tl['text'] !!}</p>
             </div>
             <div class="col-2">
-                <form method="post" action="{{ url2('timeline') }}">
+                <form method="post" action="{{ route('タイムライン削除処理') }}">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
                     <input type="hidden" name="id" value="{{ $tl['_id'] }}">

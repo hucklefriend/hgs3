@@ -34,10 +34,11 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
 
-    Route::get('/timeline', 'TimelineController@index');
-    Route::get('/timeline/add', 'TimelineController@input');
-    Route::post('/timeline/add', 'TimelineController@add');
-    Route::delete('/timeline/', 'TimelineController@remove');
+    // タイムライン管理
+    Route::get('/timeline', 'TimelineController@index')->name('タイムライン管理');
+    Route::get('/timeline/add', 'TimelineController@input')->name('タイムライン登録');
+    Route::post('/timeline/add', 'TimelineController@add')->name('タイムライン登録処理');
+    Route::delete('/timeline/', 'TimelineController@remove')->name('タイムライン削除処理');
 
 
     // 管理者によるサイト管理

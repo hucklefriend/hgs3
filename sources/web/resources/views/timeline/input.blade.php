@@ -3,12 +3,12 @@
 @section('content')
 
     <div>
-        <a href="{{ url2('timeline') }}">戻る</a>
+        <a href="{{ route('タイムライン管理') }}">戻る</a>
     </div>
 
     <hr>
 
-    <form method="POST" action="{{ url('timeline/add') }}">
+    <form method="POST" action="{{ route('タイムライン登録処理') }}">
         {{ csrf_field() }}
         <input type="hidden" name="type" value="{{ \Hgs3\Constants\TimelineType::NEW_GAME_SOFT  }}">
         <h5>ゲームソフト追加</h5>
