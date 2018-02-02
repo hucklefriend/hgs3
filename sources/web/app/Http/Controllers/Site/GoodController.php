@@ -46,7 +46,7 @@ class GoodController extends Controller
      * いいね履歴
      *
      * @param Orm\Site $site
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function history(Orm\Site $site)
     {

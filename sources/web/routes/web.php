@@ -131,6 +131,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/site/good/{site}', 'Site\GoodController@cancel')->name('サイトいいねキャンセル');
     Route::get('/site/good_history/{site}', 'Site\GoodController@history');
     Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@site');
+    Route::get('/site/update_history/{site}', 'Site\SiteController@updateHistory')->name('サイト更新履歴');
     
     // マイページ
     Route::get('/mypage', 'User\MyPageController@index')->name('マイページ');

@@ -16,6 +16,7 @@ use Hgs3\Models\User;
 use Hgs3\Models\Timeline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
@@ -118,6 +119,25 @@ class SiteController extends Controller
         $rate = intval(Input::get('r', 0));
 
         return view('site.soft', Site::search($soft, $mainContents, $targetGender, $rate, 20));
+    }
+
+    /**
+     * サイト更新履歴
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function updateHistory(Orm\Site $site)
+    {
+        $updateHistories = Orm\SiteUpdateHistory::where('site_id', $site->id)
+            ->where('site_updated_at', '<=', DB::raw('CURDATE()'))
+            ->orderBy('site_updated_at', 'DESC')
+            ->paginate(20);
+
+        return view('site.updateHistory', [
+            'site'            => $site,
+            'updateHistories' => $updateHistories
+        ]);
     }
 
     /**

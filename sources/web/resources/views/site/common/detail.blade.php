@@ -67,6 +67,8 @@
                         <i class="fas fa-paw"></i>
                         {{ number_format($site->out_count) }}
                     </span>
+                </div>
+                <div>
                     <span>
                         <i class="fas fa-redo-alt"></i>
                         {{ date('Y-m-d H:i', $site->updated_timestamp) }}
@@ -109,7 +111,7 @@
                         </p>
                     @endforeach
                     <div class="text-center">
-                        <a>全て見る</a>
+                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}">全て見る</a>
                     </div>
                 @else
                     <p class="card-text">更新履歴はありません。</p>

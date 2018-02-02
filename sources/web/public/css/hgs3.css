@@ -291,7 +291,6 @@ h1 {
 }
 
 .card-soft {
-    margin: 5px 5px;
     width: 120px;
 }
 
@@ -331,4 +330,19 @@ a.good-icon:hover, .good-icon2 {
 .site-side-menu {
     min-width: 200px;
     margin-right:10px;
+}
+
+
+@media (min-width: 576px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 992px) {
+    .card-soft {
+        width: 120px;
+    }
 }

@@ -12,14 +12,6 @@ use Hgs3\Http\Controllers\Controller;
 class FavoriteSiteController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'site');
-    }
-
-    /**
      * お気に入りサイトに登録しているユーザー
      *
      * @param Orm\Site $site
