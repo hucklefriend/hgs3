@@ -94,7 +94,7 @@ class Soft
     private static function getSameSeries($softId, $seriesId)
     {
         $sql =<<< SQL
-SELECT soft.id, soft.name, package.small_image_url AS image_url
+SELECT soft.id, soft.name, package.small_image_url
 FROM
   (
     SELECT id, `name`, original_package_id

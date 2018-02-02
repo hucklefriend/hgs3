@@ -127,17 +127,6 @@
     <div class="d-flex flex-wrap">
         @foreach ($handleSofts as $soft)
             @include('game.common.packageCard', ['soft' => $soft])
-
-            <div style="display:none;">
-                <div class="card card-soft text-center">
-                    <div class="card-body">
-                        <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">
-                            @include('game.common.packageImageSmall', ['imageUrl' => $soft->small_image_url])
-                        </a>
-                        <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}"><small>{{ $soft->name }}</small></a>
-                    </div>
-                </div>
-            </div>
         @endforeach
     </div>
 </div>

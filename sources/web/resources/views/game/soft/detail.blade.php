@@ -345,35 +345,14 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-hgn">
-                <div class="card-header">
-                    同一シリーズの別タイトル
-                </div>
-                @if($series != null)
-                    <ul class="list-group list-group-flush">
-                        @foreach ($seriesSofts as $seriesSoft)
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-4">
-                                        @include('game.common.packageImageSmall', ['imageUrl' => $seriesSoft->image_url])
-                                    </div>
-                                    <div class="col-8">
-                                        <a href="{{ route('ゲーム詳細', ['soft' => $seriesSoft->id]) }}">{{ $seriesSoft->name }}</a>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
-                @else
-                    <div class="card-body">
-                        <div class="card-text">
-                            <p>シリーズの別タイトルはありません。</p>
-                        </div>
-                    </div>
-                @endif
-            </div>
+    <div class="card card-hgn">
+        <div class="card-body">
+            <h5 class="card-title">同一シリーズの別タイトル</h5>
+        </div>
+        <div class="d-flex flex-wrap">
+            @foreach ($seriesSofts as $seriesSoft)
+                @include('game.common.packageCard', ['soft' => $seriesSoft])
+            @endforeach
         </div>
     </div>
 @endsection
