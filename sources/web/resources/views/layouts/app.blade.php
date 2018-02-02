@@ -59,14 +59,8 @@
             </ul>
             @if (Auth::check())
             <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownGame" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        アカウント
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownGame">
-                        <a class="dropdown-item" href="{{ route('マイページ') }}">マイページ</a>
-                        <a class="dropdown-item" href="{{ route('ログアウト') }}">ログアウト</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('マイページ') }}">マイページ</a>
                 </li>
             </ul>
             @else

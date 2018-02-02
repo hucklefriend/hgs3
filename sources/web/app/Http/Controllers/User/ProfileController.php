@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\ChangeIconRequest;
+use Hgs3\Http\Requests\User\Profile\ConfigRequest;
 use Hgs3\Http\Requests\User\Profile\EditRequest;
 use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm;
@@ -298,5 +299,35 @@ class ProfileController extends Controller
     public function updateMail()
     {
 
+    }
+
+    /**
+     * 設定
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function config()
+    {
+        return view('user.profile.config', [
+            'user'       => Auth::user(),
+            'isComplete' => session('complete', 0) == 1
+        ]);
+    }
+
+    /**
+     * 設定更新
+     *
+     * @param ConfigRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateConfig(ConfigRequest $request)
+    {
+        $user = Auth::user();
+
+        $user->footprint = $request->get('footprint');
+
+        $user->save();
+
+        return redirect()->back()->with('complete', 1);
     }
 }

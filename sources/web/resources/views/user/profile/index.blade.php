@@ -28,21 +28,26 @@
     </div>
 
     @if (!empty($user->profile))
-    <div style="max-height: 3rem;overflow-y: scroll;">
-        <p class="profile-text">{!! nl2br(e($user->profile)) !!}</p>
-    </div>
+    <p class="profile-text">
+        自己紹介<br>
+        {!! nl2br(e($user->profile)) !!}
+    </p>
     @endif
 
+    @if ($isMyself)
     <div class="d-none d-sm-block">
-
-        @if ($isMyself)
+        <div class="d-flex">
             <div class="btn-group" role="group" aria-label="プロフィール">
                 <a href="{{ route('アイコン変更') }}" class="btn btn-outline-dark">アイコン変更</a>
                 <a href="{{ route('プロフィール編集') }}" class="btn btn-outline-dark">プロフィール編集</a>
                 <a href="{{ route('コンフィグ') }}" class="btn btn-outline-dark">設定</a>
             </div>
-        @endif
+            <div class="ml-auto">
+                <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning">ログアウト</a>
+            </div>
+        </div>
     </div>
+    @endif
 
     <hr>
 
@@ -108,25 +113,27 @@
             </li>
         </ul>
 
-
         @if ($isMyself)
-            <hr>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a href="{{ route('アイコン変更') }}">アイコン変更</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="{{ route('プロフィール編集') }}">プロフィール編集</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="{{ route('コンフィグ') }}">設定</a>
-                </li>
-            </ul>
-        @endif
+        <hr>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="{{ route('アイコン変更') }}">アイコン変更</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ route('プロフィール編集') }}">プロフィール編集</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ route('コンフィグ') }}">設定</a>
+            </li>
+        </ul>
+        <hr>
+        <div class="text-center">
+            <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning">ログアウト</a>
+        </div>
 
+        @endif
     </div>
 @endsection
-
 
 @section('breadcrumb')
     <nav aria-label="breadcrumb">

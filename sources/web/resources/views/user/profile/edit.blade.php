@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
 @section('global_back_link')
-    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}"><i class="fas fa-angle-left"></i></a>
+    <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')
-
-    <h4>プロフィール編集</h4>
+    <h1>プロフィール編集</h1>
 
     <form method="POST" autocomplete="off">
         {{ csrf_field() }}
@@ -31,7 +30,7 @@
             </label>
             <small class="form-text text-muted">18禁ゲームへのアクセスができるようになります。</small>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 15px;">
             <button class="btn btn-info">プロフィール更新</button>
         </div>
     </form>

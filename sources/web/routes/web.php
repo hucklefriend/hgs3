@@ -145,6 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/mypage/follower', 'User\MyPageController@follower');
     Route::get('/mypage/review', 'User\MyPageController@review');
     Route::get('/user/config', 'User\ProfileController@config')->name('コンフィグ');
+    Route::patch('/user/config', 'User\ProfileController@updateConfig')->name('コンフィグ更新');
 
     // プロフィール
     Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');

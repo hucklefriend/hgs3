@@ -6,21 +6,20 @@
 @endforeach
 </div>
 @if ($hasNext)
-    <div><button type="button" id="more_btn">さらに読み込む</button></div>
+    <div class="text-center">
+        <button type="button" class="btn btn-default" id="more_btn">さらに読み込む</button>
+    </div>
 @endif
 
-
     <script>
-        {{ route('マイページ') }}
-        let url = '{{ route('タイムライン追加取得', ['showId' => $user->show_id]) }}';
         let moreTime = {{ $moreTime }};
 
         $(function (){
             $('#more_btn').click(function (){
                 $.ajax({
                     type: "GET",
-                    url: url,
-                    data: {time: moreTIme},
+                    url: '{{ route('タイムライン追加取得', ['showId' => $user->show_id]) }}',
+                    data: {time: moreTime},
                     timeout: 3000
                 }).done(function (data){
                     if (!data.hasNext) {
