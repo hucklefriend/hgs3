@@ -39,18 +39,23 @@ class CompanyController extends Controller
     {
         $packages = Orm\GamePackage::where('company_id', $company->id)
             ->orderBy('release_int')
-            ->paginate(15);
+            ->get();
 
         $shops = [];
-        $items = $packages->items();
-        if (!empty($items)) {
-            $shops = Package::getShopData(array_pluck($items, 'id'));
+        $softs = [];
+        if ($packages->isNotEmpty()) {
+            $package_ids = $packages->pluck('id')->toArray();
+
+            $shops = Package::getShopData($package_ids);
+            $softs = Orm\GamePackageLink::whereIn('package_id', $package_ids)
+                ->get()->pluck('soft_id', 'package_id');
         }
 
         return view('game.company.detail', [
             'company'  => $company,
             'packages' => $packages,
-            'shops'    => $shops
+            'shops'    => $shops,
+            'softs'    => $softs
         ]);
     }
 

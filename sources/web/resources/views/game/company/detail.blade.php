@@ -29,32 +29,30 @@
         {{ $company->name }}から発売されているパッケージ
     </p>
 
-
     <div class="d-flex flex-wrap">
 
     @foreach ($packages as $package)
             <div class="card" style="width: 250px;margin: 10px;padding-top: 10px;">
                 @include('game.common.packageImage', ['imageUrl' => $package->medium_image_url])
                 <div class="card-body text-center">
-                    <h4 class="card-title">{{ $package->name }}</h4>
+                    <h4 class="card-title">
+                        @isset($softs[$package->id])
+                            <a href="{{ route('ゲーム詳細', ['soft' => $softs[$package->id]]) }}">{{ $package->name }}</a>
+                        @else
+                            {{ $package->name }}
+                        @endif
+                    </h4>
                     <p class="card-text">
                         @isset($shops[$package->id])
                             @foreach ($shops[$package->id] as $shop)
-                                <div>
-                                    @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
-                                </div>
+                                @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
                             @endforeach
                         @endisset
-                    </p>
-                    <p>
-
                     </p>
                 </div>
             </div>
     @endforeach
     </div>
-
-    @include('common.pager', ['pager' => $packages])
 
 @endsection
 

@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class GamePackageLink extends \Eloquent
 {
-    public $primaryKey = ['soft_id', 'package_id'];
+    protected $primaryKey = ['soft_id', 'package_id'];
+    public $incrementing = false;
 }
