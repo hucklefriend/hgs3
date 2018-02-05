@@ -1,25 +1,31 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
+@endsection
+
 @section('content')
     <h4>プラットフォーム一覧</h4>
 
     @if (is_data_editor())
     <div class="text-right">
-        <a href="{{ url2('game/platform/add') }}">プラットフォームを追加</a>
+        <a href="{{ route('プラットフォーム登録') }}" class="btn btn-sm btn-outline-info">新規登録</a>
     </div>
     @endif
 
-    <table class="table table-responsive">
-        <tr>
-            <th>名称</th>
-            <th>略称</th>
-        </tr>
-
+    <ul class="list-group">
         @foreach ($platforms as $p)
-        <tr>
-            <td><a href="{{ url2('game/platform') }}/{{ $p->id }}">{{ $p->name }}</a></td>
-            <td>{{ $p->acronym }}</td>
-        </tr>
+            <li class="list-group-item"><a href="{{ route('プラットフォーム詳細', ['platform' => $p->id]) }}">{{ $p->name }}</a></li>
         @endforeach
-    </table>
+    </ul>
+
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">プラットフォーム一覧</li>
+        </ol>
+    </nav>
 @endsection

@@ -81,16 +81,16 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::patch('/game/company/edit/{company}', 'Game\CompanyController@update')->name('ゲーム会社編集処理');
 
     // プラットフォーム
-    Route::get('/game/platform/add', 'Game\PlatformController@add');
-    Route::post('/game/platform/add', 'Game\PlatformController@insert');
-    Route::get('/game/platform/edit/{platform}', 'Game\PlatformController@edit');
-    Route::patch('/game/platform/edit/{platform}', 'Game\PlatformController@update');
+    Route::get('/game/platform/add', 'Game\PlatformController@add')->name('プラットフォーム登録');
+    Route::post('/game/platform/add', 'Game\PlatformController@insert')->name('プラットフォーム登録処理');
+    Route::get('/game/platform/edit/{platform}', 'Game\PlatformController@edit')->name('プラットフォーム編集');
+    Route::patch('/game/platform/edit/{platform}', 'Game\PlatformController@update')->name('プラットフォーム編集処理');
 
     // シリーズ
-    Route::get('/game/series/add', 'Game\SeriesController@add');
-    Route::post('/game/series/add', 'Game\SeriesController@insert');
-    Route::get('/game/series/edit/{series}', 'Game\SeriesController@edit');
-    Route::patch('/game/series/edit/{series}', 'Game\SeriesController@update');
+    Route::get('/game/series/add', 'Game\SeriesController@add')->name('シリーズ登録');
+    Route::post('/game/series/add', 'Game\SeriesController@insert')->name('シリーズ登録処理');
+    Route::get('/game/series/edit/{series}', 'Game\SeriesController@edit')->name('シリーズ編集');
+    Route::patch('/game/series/edit/{series}', 'Game\SeriesController@update')->name('シリーズ編集処理');
 });
 
 

@@ -12,14 +12,6 @@ use Hgs3\Models\Orm;
 class PackageController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * 追加画面
      *
      * @param Orm\GameSoft $gameSoft

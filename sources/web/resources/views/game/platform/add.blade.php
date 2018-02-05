@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('プラットフォーム一覧') }}"><i class="fas fa-angle-left"></i></a>
+@endsection
+
 @section('content')
-    <h4>プラットフォーム追加</h4>
+    <h1>プラットフォーム登録</h1>
 
     <form method="POST" autocomplete="off">
         {{ csrf_field() }}
@@ -37,4 +41,14 @@
         </div>
         <button type="submit" class="btn btn-primary">登録</button>
     </form>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('プラットフォーム一覧') }}">プラットフォーム一覧</a></li>
+            <li class="breadcrumb-item active" aria-current="page">登録</li>
+        </ol>
+    </nav>
 @endsection

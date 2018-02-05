@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Input;
 class SeriesController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * シリーズ一覧
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -64,16 +56,16 @@ class SeriesController extends Controller
      */
     public function insert(GameSeriesRequest $request)
     {
-        $gameSeries = new Orm\GameSeries;
-        $gameSeries->name = $request->input('name', '');
-        $gameSeries->phonetic = $request->input('phonetic', '');
+        $series = new Orm\GameSeries;
+        $series->name = $request->input('name', '');
+        $series->phonetic = $request->input('phonetic', '');
 
-        $gameSeries->save();
+        $series->save();
 
         if (Input::get('from') == 'game_add') {
-            return redirect('game/soft/add');
+            return redirect()->route('ゲームソフト登録');
         } else {
-            return redirect('game/series/' . $gameSeries->id);
+            return redirect()->route('シリーズ詳細', ['series' => $series->id]);
         }
     }
 
@@ -83,10 +75,10 @@ class SeriesController extends Controller
      * @param Orm\GameSeries $gameSeries
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Orm\GameSeries $gameSeries)
+    public function edit(Orm\GameSeries $series)
     {
         return view('game.series.edit', [
-            'gameSeries' => $gameSeries
+            'series' => $series
         ]);
     }
 
@@ -97,13 +89,13 @@ class SeriesController extends Controller
      * @param Orm\GameSeries $gameSeries
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(GameSeriesRequest $request, Orm\GameSeries $gameSeries)
+    public function update(GameSeriesRequest $request, Orm\GameSeries $series)
     {
-        $gameSeries->name = $request->input('name');
-        $gameSeries->phonetic = $request->input('phonetic');
+        $series->name = $request->input('name');
+        $series->phonetic = $request->input('phonetic');
 
-        $gameSeries->save();
+        $series->save();
 
-        return redirect('game/series/detail/' . $gameSeries->id);
+        return redirect()->route('シリーズ詳細', ['series' => $series->id]);
     }
 }

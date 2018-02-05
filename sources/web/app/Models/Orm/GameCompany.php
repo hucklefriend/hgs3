@@ -5,8 +5,6 @@
 
 namespace Hgs3\Models\Orm;
 
-use Illuminate\Database\Eloquent\Model;
-
 class GameCompany extends \Eloquent
 {
     protected $guarded = ['id'];
@@ -19,14 +17,14 @@ class GameCompany extends \Eloquent
      */
     public static function getNameHash(array $companyIds = [])
     {
-        $query = self::select(['id', 'name']);
+        $query = self::select(['id', 'acronym']);
 
         if (!empty($companyIds)) {
             $query->whereIn('id', $companyIds);
         }
 
         return $query->get()
-            ->pluck('name', 'id')
+            ->pluck('acronym', 'id')
             ->toArray();
     }
 }

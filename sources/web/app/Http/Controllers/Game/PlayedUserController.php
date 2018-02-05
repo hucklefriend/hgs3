@@ -12,14 +12,6 @@ use Hgs3\Http\Controllers\Controller;
 class PlayedUserController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * 遊んだゲームに登録しているユーザー
      *
      * @param Orm\GameSoft $gameSoft

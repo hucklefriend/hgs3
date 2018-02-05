@@ -12,14 +12,6 @@ use Hgs3\Http\Controllers\Controller;
 class PlatformController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'game');
-    }
-
-    /**
      * プラットフォーム一覧
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
