@@ -34,7 +34,7 @@
                     @include('game.common.packageImage', ['imageUrl' => $package->small_image_url])
                 </div>
                 <div class="align-self-top">
-                    <div><h4>{{ $package->name }}</h4></div>
+                    <h4><a href="{{ route('ゲーム詳細', ['soft' => $softs[$package->id]]) }}">{{ $package->name }}</a></h4>
                     @isset($companies[$package->company_id])
                         <div>
                             <i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $package->company_id]) }}">{{ hv($companies, $package->company_id) }}</a>
