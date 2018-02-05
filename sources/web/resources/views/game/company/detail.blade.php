@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('ゲーム会社一覧') }}"><i class="fas fa-angle-left"></i></a>
+@endsection
+
 @section('content')
     <h4>{{ $company->name }}</h4>
 
@@ -15,7 +19,7 @@
 
     @if (is_data_editor())
     <div class="text-right">
-        <a href="{{ url('game/company/edit/') }}/{{ $company->id }}">データ編集</a>
+        <a href="{{ route('ゲーム会社編集', ['company' => $company->id]) }}" class="btn btn-sm btn-outline-info">データ編集</a>
     </div>
     @endif
 
@@ -50,6 +54,16 @@
     @endforeach
     </div>
 
+    @include('common.pager', ['pager' => $packages])
 
-    {{ $packages->links() }}
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('ゲーム会社一覧') }}">ゲーム会社一覧</a></li>
+            <li class="breadcrumb-item active" aria-current="page">詳細</li>
+        </ol>
+    </nav>
 @endsection

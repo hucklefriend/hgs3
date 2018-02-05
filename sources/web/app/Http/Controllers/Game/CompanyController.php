@@ -21,7 +21,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Orm\GameCommunity::orderBy('phonetic')
+        $companies = Orm\GameCompany::orderBy('phonetic')
             ->paginate(30);
 
         return view('game.company.index', [
@@ -44,7 +44,6 @@ class CompanyController extends Controller
         $shops = [];
         $items = $packages->items();
         if (!empty($items)) {
-            \ChromePhp::info($items);
             $shops = Package::getShopData(array_pluck($items, 'id'));
         }
 
@@ -76,12 +75,13 @@ class CompanyController extends Controller
         $company = new Orm\GameCompany;
         $company->name = $request->input('name', '');
         $company->phonetic = $request->input('phonetic', '');
+        $company->acronym = $request->input('acronym', '');
         $company->url = $request->input('url');
         $company->wikipedia = $request->input('wikipedia');
 
         $company->save();
 
-        return redirect('game/company');
+        return redirect()->route('ゲーム会社詳細', ['company' => $company->id]);
     }
 
     /**
@@ -108,11 +108,12 @@ class CompanyController extends Controller
     {
         $company->name = $request->input('name');
         $company->phonetic = $request->input('phonetic');
+        $company->acronym = $request->input('acronym', '');
         $company->url = $request->input('url');
         $company->wikipedia = $request->input('wikipedia');
 
         $company->save();
 
-        return redirect('game/company/detail/' . $company->id);
+        return redirect()->route('ゲーム会社詳細', ['company' => $company->id]);
     }
 }
