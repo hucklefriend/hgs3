@@ -1,13 +1,35 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('シリーズ一覧') }}"><i class="fas fa-angle-left"></i></a>
+@endsection
+
 @section('content')
-    <h4>{{ $gameSeries->name }}シリーズ</h4>
-    <hr>
-    <ul class="list-group">
-    @foreach ($gameSofts as $game)
-        <li class="list-group-item">
-            <a href="{{ url('game/soft') }}/{{ $game->id }}">{{ $game->name }}</a>
-        </li>
-    @endforeach
-    </ul>
+    <h1>{{ $series->name }}シリーズのゲーム</h1>
+
+    <div class="d-flex flex-wrap">
+        @foreach ($softs as $game)
+            @php
+            $package = hv($packages, $game->original_package_id, null);
+            @endphp
+            <div class="card" style="width: 250px;margin: 10px;padding-top: 10px;">
+                @include('game.common.packageImage', ['imageUrl' => $packages === null ? '' : $package->medium_image_url])
+                <div class="card-body text-center">
+                    <h4 class="card-title">
+                        <a href="{{ route('ゲーム詳細', ['soft' => $game->id]) }}">{{ $game->name }}</a>
+                    </h4>
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('シリーズ一覧') }}">シリーズ一覧</a></li>
+            <li class="breadcrumb-item active" aria-current="page">詳細</li>
+        </ol>
+    </nav>
 @endsection

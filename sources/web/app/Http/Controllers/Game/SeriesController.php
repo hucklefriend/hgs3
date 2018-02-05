@@ -32,9 +32,13 @@ class SeriesController extends Controller
      */
     public function detail(Orm\GameSeries $series)
     {
+        $softs = Orm\GameSoft::where('series_id', $series->id)->get();
+        $packages = Orm\GamePackage::getHash($softs->pluck('original_package_id')->toArray());
+
         return view('game.series.detail', [
-            'gameSeries' => $series,
-            'gameSofts'  => Orm\GameSoft::where('series_id', $series->id)->get()
+            'series'   => $series,
+            'softs'    => $softs,
+            'packages' => $packages
         ]);
     }
 

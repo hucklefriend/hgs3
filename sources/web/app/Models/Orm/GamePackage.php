@@ -18,6 +18,10 @@ class GamePackage extends \Eloquent
      */
     public static function getHash(array $packageIds)
     {
+        if (empty($packageIds)) {
+            return [];
+        }
+
         $data = self::whereIn('id', $packageIds)
             ->get();
 
