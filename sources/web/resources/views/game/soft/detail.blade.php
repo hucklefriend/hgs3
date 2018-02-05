@@ -345,7 +345,7 @@
         </div>
     </div>
 
-    @if($data['series'])
+    @if ($series)
     <div class="card card-hgn">
         <div class="card-body">
             <h5 class="card-title">同一シリーズの別タイトル</h5>
