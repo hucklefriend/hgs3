@@ -270,6 +270,10 @@ h1 {
     margin-bottom: 1rem;
 }
 
+h2 {
+    font-size: 1.1rem;
+}
+
 .btn-area {
     margin: 1rem 0;
 }
@@ -352,6 +356,20 @@ a.good-icon:hover, .good-icon2 {
     width: 150px;
 }
 
+.one-content {
+    margin-top: 50px;
+}
+
+.one-content-first {
+    margin-top: 20px;
+}
+
+.table-no-border th,
+.table-no-border td {
+    border:none !important;
+}
+
+
 @media (min-width: 576px) {
 
 }
@@ -363,3 +381,5 @@ a.good-icon:hover, .good-icon2 {
 
 @media (min-width: 992px) {
 }
+
+

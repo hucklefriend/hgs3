@@ -28,10 +28,31 @@ class AccessController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
+        $ym = Input::get('ym');
+        if ($ym == null) {
+            $date = new \DateTime();
+        } else {
+            try {
+                $date = new \DateTime($ym . '-01');
+            } catch (\Exception $e) {
+                $date = new \DateTime();
+            }
+        }
+
         return view('site.access.index', [
-            'site' => $site
+            'site' => $site,
+            'date' => $date,
+            'max'  => $date->format('t')
         ]);
     }
+
+    public function dailyFootprint(Orm\Site $site, $date)
+    {
+
+    }
+
+
+
 
     /**
      * サイトの足跡
