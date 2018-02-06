@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('ゲーム一覧') }}"><i class="fas fa-angle-left"></i></a>
+@endsection
+
 @section('content')
     <p>
-        <a href="{{ url2('game/series/add?from=game_add') }}">シリーズの追加はこちら</a>
+        <a href="{{ route('シリーズ登録') }}?from=game_add">シリーズの追加はこちら</a>
     </p>
 
     <form method="POST" action="{{ url2('game/soft/add') }}">

@@ -22,6 +22,9 @@ class Soft
      */
     public function getList()
     {
+
+
+
         $tmp = DB::table('game_softs')
             ->select('id', 'name', 'phonetic_type')
             ->orderBy('phonetic_type', 'asc')
@@ -64,7 +67,7 @@ class Soft
         $data['reviewTotal'] = Orm\ReviewTotal::find($soft->id);
 
         // お気に入り登録ユーザー
-        $data['favorite'] = self::getFavoriteUser($soft->id);
+        //$data['favorite'] = self::getFavoriteUser($soft->id);
         $data['favoriteNum'] = Orm\UserFavoriteSoft::where('soft_id', $soft->id)->count(['user_id']);
 
         // サイト

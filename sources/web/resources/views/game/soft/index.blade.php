@@ -8,9 +8,17 @@
 
     @if (is_data_editor())
     <div class="text-right">
-        <a href="{{ route('ゲームソフト登録') }}">ゲーム追加</a>
+        <a href="{{ route('ゲームソフト登録') }}" class="btn btn-sm btn-outline-dark">ゲーム追加</a>
     </div>
     @endif
+
+
+
+
+
+
+
+
     <div class="card">
         <div class="card-header">
             <div class="d-none d-sm-block">
@@ -128,5 +136,21 @@
                 $('#tab_' + target).addClass('active');
             });
         });
+
+        re = new RegExp(String.raw`\\\(\^${escapeRegExp(mouth)}\^\)/`);
+        re.text('aaaa');
+
+        function escapeRegExp(string) {
+            return ("" + string).replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&");
+        }
     </script>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ゲーム一覧</li>
+        </ol>
+    </nav>
 @endsection

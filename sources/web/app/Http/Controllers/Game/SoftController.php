@@ -15,14 +15,24 @@ class SoftController extends Controller
 {
     /**
      * 一覧ページ
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
         $soft = new Soft;
 
-        return view('game.soft.index')->with([
+        $softs = Orm\GameSoft::orderBy('phonetic_type', 'ASC')
+            ->orderBy('phonetic_order', 'ASC')
+            ->get();
+
+        $packages = Orm\GamePackage::getHash($softs->pluck('original_package_id')->toArray());
+
+        return view('game.soft.index', [
             'phoneticList' => PhoneticType::getId2CharData(),
             'list'         => $soft->getList(),
+            'softs'    => $softs,
+            'packages' => $packages
         ]);
     }
 

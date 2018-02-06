@@ -11,24 +11,21 @@
 
     @if (is_data_editor())
     <div class="text-right">
-        <a href="{{ route('ゲームソフト編集', ['soft' => $soft->id]) }}">データ修正</a>
+        <a href="{{ route('ゲームソフト編集', ['soft' => $soft->id]) }}" class="btn btn-sm btn-outline-info">データ修正</a>
     </div>
     @endif
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-8">
-                            パッケージ情報
-                        </div>
-                        <div class="col-4 text-right">
-                            @if (is_data_editor())
-                            <a href="{{ route('パッケージ登録', ['soft' => $soft->id]) }}">追加</a>
-                            @endif
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">パッケージ情報</h5>
+                        <div class="text-right">
+                            <a href="{{ route('パッケージ登録', ['soft' => $soft->id]) }}" class="btn btn-outline-dark btn-sm">追加</a>
                         </div>
                     </div>
                 </div>
+
                 <div class="card-body">
                     @if ($packageNum > 2)
 
@@ -81,7 +78,7 @@
                                 @include('game.common.packageImage', ['imageUrl' => $pkg->medium_image_url])
                             </div>
                             <div class="col-8">
-                                <div><h4>{{ $pkg->name }}</h4></div>
+                                <div><h5>{{ $pkg->name }}</h5></div>
                                 <div>
                                     <i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
                                     <i class="fas fa-gamepad"></i>&nbsp;{{ $pkg->platform_name }}
@@ -95,9 +92,9 @@
 
                                 @if (is_data_editor())
                                 <hr>
-                                <div class="row" style="margin-bottom: 20px;">
+                                <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-6">
-                                        <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}">編集</a><br>
+                                        <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}" class="btn btn-sm btn-outline-info">編集</a><br>
                                     </div>
                                     <div class="col-6 text-right">
                                         <form method="POST" action="{{ route('パッケージ削除処理', ['package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
@@ -118,7 +115,7 @@
                                 @include('game.common.packageImage', ['imageUrl' => $pkg->medium_image_url])
                             </div>
                             <div class="col-8">
-                                <div><h4>{{ $pkg->name }}</h4></div>
+                                <div><h5>{{ $pkg->name }}</h5></div>
                                 <div>
                                     <i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
                                     <i class="fas fa-gamepad"></i>&nbsp;{{ $pkg->platform_name }}
@@ -134,7 +131,7 @@
                                     <hr>
                                     <div class="row" style="margin-bottom: 20px;">
                                         <div class="col-6">
-                                            <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}">編集</a><br>
+                                            <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}" class="btn btn-sm btn-outline-info">編集</a><br>
                                         </div>
                                         <div class="col-6 text-right">
                                             <form method="POST" action="{{ route('パッケージ削除処理', ['package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
@@ -168,10 +165,11 @@
 
         <div class="col-md-6">
             <div class="card card-hgn">
-                <div class="card-header">
-                    <a name="review">レビュー</a>
-                    {{ $reviewTotal->review_num ?? 0 }}件
+                <div class="card-body">
+                    <h5 class="card-title">レビュー</h5>
+                    <p class="card-text">工事中</p>
                 </div>
+{{--
                 <div class="card-body">
                     @if ($reviewTotal != null)
                         <div class="row" style="margin-bottom: 20px;">
@@ -264,6 +262,7 @@
                             </div>
                         @endif
                 </div>
+--}}
             </div>
         </div>
     </div>
@@ -271,10 +270,9 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
-                <div class="card-header">
-                    サイト <small>全{{ $siteNum }}件</small>
-                </div>
                 <div class="card-body">
+                    <h5 class="card-title">サイト <small>全{{ $siteNum }}件</small></h5>
+
                     <div class="card-text">
                         @if (empty($site))
                             <p>{{ $soft->name }}を扱っているサイトは登録されていません。</p>
@@ -293,54 +291,40 @@
         </div>
         <div class="col-md-6">
             <div class="card card-hgn">
-                <div class="card-header">
-                    お気に入り登録ユーザー <small>{{ $favoriteNum }}人</small>
-                </div>
                 <div class="card-body">
-                    @if (!empty($favorite))
-                        @foreach ($favorite as $fu)
-                            <div class="row">
-                                <div class="col-1">
-                                    @include('user.common.icon', ['u' => $fu])
-                                </div>
-                                <div class="col-10">
-                                    @include('user.common.user_name', ['u' => $fu])
-                                </div>
-                            </div>
-                            <hr>
-                        @endforeach
-                        <div class="text-center">
-                            <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}">
-                                お気に入り登録ユーザーを全て見る
-                            </a>
-                        </div>
-                    @else
-                        <p>お気に入りに登録しているユーザーはいません。</p>
-                    @endif
-                </div>
-                @auth
-                <div class="card-footer">
+                    <h5 class="card-title">お気に入り</h5>
+
+                    <p class="card-text">
+                        @if ($favoriteNum == 0)
+                            お気に入りに登録しているユーザーはいません。
+                        @else
+                            <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}">{{ $favoriteNum }}人のユーザー</a>がお気に入りに登録しています。
+                        @endif
+                    </p>
+
+                    @auth
+                    <hr>
+
                     @if ($isFavorite)
+                        <p>あなたもその1人です。</p>
                         <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST">
                             {{ csrf_field() }}
                             <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                             {{ method_field('DELETE') }}
-                            <div class="text-center">
-                                <span style="padding-right: 10px;">登録済み</span>
-                                <button class="btn btn-sm btn-warning">取り消す</button>
-                            </div>
+                            <button class="btn btn-sm btn-warning">取り消す</button>
                         </form>
                     @else
+                        <p>お気に入りゲームに登録しますか？</p>
                         <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
                             {{ csrf_field() }}
                             <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                             <div class="text-center">
-                                <button class="btn btn-info">お気に入りに登録する</button>
+                                <button class="btn btn-info btn-sm">登録する</button>
                             </div>
                         </form>
                     @endif
+                    @endauth
                 </div>
-                @endauth
             </div>
         </div>
     </div>
@@ -349,11 +333,11 @@
     <div class="card card-hgn">
         <div class="card-body">
             <h5 class="card-title">同一シリーズの別タイトル</h5>
-        </div>
-        <div class="d-flex flex-wrap">
-            @foreach ($seriesSofts as $seriesSoft)
-                @include('game.common.packageCard', ['soft' => $seriesSoft])
-            @endforeach
+            <div class="d-flex flex-wrap">
+                @foreach ($seriesSofts as $seriesSoft)
+                    @include('game.common.packageCard', ['soft' => $seriesSoft])
+                @endforeach
+            </div>
         </div>
     </div>
     @endif
@@ -364,7 +348,7 @@
         <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ゲーム情報</li>
+            <li class="breadcrumb-item active" aria-current="page">詳細</li>
         </ol>
     </nav>
 @endsection

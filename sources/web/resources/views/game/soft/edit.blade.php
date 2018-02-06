@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>{{ $game->name }}</h4>
+    <h1>{{ $game->name }}</h1>
 
     <nav style="margin-bottom: 20px;">
         <a href="{{ url('game/soft') }}/{{ $game->id }}">データ詳細に戻る</a>
