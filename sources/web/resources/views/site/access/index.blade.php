@@ -30,7 +30,7 @@
             </div>
         @endforeach
         <div style="margin-top: 10px;">
-            <a href="{{ route('サイト足跡', ['site' => $site->id]) }}">もっと見る</a>
+            <a href="{{ route('サイト足跡', ['site' => $site->id]) }}">すべて見る</a>
         </div>
     </section>
 

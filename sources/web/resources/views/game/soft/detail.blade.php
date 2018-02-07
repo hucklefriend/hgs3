@@ -8,13 +8,13 @@
 
     @if (is_data_editor())
         <div class="d-flex justify-content-between">
-            <h1>{{ $soft->name }} <span class="favorite-icon"><i class="fas fa-star"></i></span></h1>
+            <h1>{{ $soft->name }} @if($isFavorite) <span class="favorite-icon"><i class="fas fa-star"></i></span> @endif </h1>
             <div>
                 <a href="{{ route('ゲームソフト編集', ['soft' => $soft->id]) }}" class="btn btn-sm btn-outline-dark">修正</a>
             </div>
         </div>
     @else
-        <h1>{{ $soft->name }} <span class="favorite-icon"><i class="fas fa-star"></i></span></h1>
+        <h1>{{ $soft->name }} @if($isFavorite) <span class="favorite-icon"><i class="fas fa-star"></i></span> @endif </h1>
     @endif
 
     @auth
@@ -304,14 +304,14 @@
 
                     <div class="card-text">
                         @if (empty($site))
-                            <p>{{ $soft->name }}を扱っているサイトは登録されていません。</p>
+                            <p>サイトは登録されていません。</p>
                         @else
                             @foreach ($site as $s)
                                 @include('site.common.minimal', ['s' => $s, 'u' => $siteUsers[$s->user_id]])
                                 <hr>
                             @endforeach
                             <div class="text-center">
-                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}">サイトを全て見る</a>
+                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}">すべて見る</a>
                             </div>
                         @endif
                     </div>
@@ -338,7 +338,7 @@
     @if ($series)
     <div class="card card-hgn">
         <div class="card-body">
-            <h5 class="card-title">同一シリーズの別タイトル</h5>
+            <h5 class="card-title">同じシリーズのゲーム</h5>
             <div class="d-flex flex-wrap">
                 @foreach ($seriesSofts as $seriesSoft)
                     @include('game.common.packageCard', ['soft' => $seriesSoft])

@@ -33,8 +33,7 @@
         @endforeach
         </tbody>
     </table>
-
-    {{ $notices->links() }}
+    @include('common.pager', ['pager' => $notices])
 @endsection
 
 @section('breadcrumb')

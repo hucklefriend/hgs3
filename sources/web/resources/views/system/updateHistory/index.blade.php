@@ -33,7 +33,8 @@
             @endforeach
         </table>
     </section>
-    {{ $histories->links() }}
+
+    @include('common.pager', ['pager' => $histories])
 
     <style>
         .history_date {

@@ -113,7 +113,7 @@
                         </p>
                     @endforeach
                     <div class="text-center">
-                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}">全て見る</a>
+                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}">すべて見る</a>
                     </div>
                 @else
                     <p class="card-text">更新履歴はありません。</p>

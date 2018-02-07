@@ -23,7 +23,7 @@
         </div>
     @endforeach
 
-    {{ $pager->links() }}
+    @include('common.pager', ['pager' => $pager])
 
 @endsection
 
