@@ -9,7 +9,7 @@
 
     @if (is_data_editor())
     <div class="text-right">
-        <a href="{{ route('ゲーム会社登録') }}" class="btn btn-sm btn-outline-info">ゲーム会社を追加</a>
+        <a href="{{ route('ゲーム会社登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
     </div>
     @endif
 

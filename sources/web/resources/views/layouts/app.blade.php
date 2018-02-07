@@ -41,22 +41,11 @@
 
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownGame" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        ゲーム
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownGame">
-                        <a class="dropdown-item" href="{{ route('ゲーム一覧') }}">ゲーム一覧</a>
-                        <a class="dropdown-item" href="{{ route('レビュートップ') }}">レビュー</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('ゲーム一覧') }}">ゲーム</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSite" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        サイト
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownSite">
-                        <a class="dropdown-item" href="{{ route('サイトトップ') }}">サイト一覧</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('サイトトップ') }}">サイト</a>
                 </li>
                 @if (is_admin())
                 <li class="nav-item">

@@ -5,8 +5,8 @@
     <div class="row">
         <div class="@if(!Auth::check()) col-md-7 @else col-md-12 @endif">
             <div class="card card-hgn">
-                <div class="card-header">ようこそ</div>
                 <div class="card-body">
+                    <h5 class="card-title">ようこそ</h5>
                     <p class="card-text">
                         H.G.N.-Horror Game Network-は、ホラーゲーム好きが集まるSNSとして現在開発中のものです。<br>
                         <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
@@ -24,8 +24,8 @@
         @if (!Auth::check())
         <div class="col-md-5">
             <div class="card card-hgn">
-                <div class="card-header">ログイン</div>
                 <div class="card-body">
+                    <h5 class="card-title">ログイン</h5>
                     <div class="top-login">
                         <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="color-twitter">
                             <i class="fab fa-twitter"></i>
@@ -60,8 +60,8 @@
     </div>
 
     <div class="card card-hgn">
-        <div class="card-header">新着情報</div>
         <div class="card-body">
+            <h5 class="card-title">新着情報</h5>
             @foreach ($newInfo as $nf)
                 <p class="card-text">
                 {{ $nf->open_at }}<br>
@@ -76,7 +76,7 @@
             @endforeach
             @if ($newInfo->count() > 0)
                 <div class="text-center">
-                    <a href="{{ route('新着情報') }}" >新着情報を全て見る</a>
+                    <a href="{{ route('新着情報') }}" >すべて見る</a>
                 </div>
             @else
                 <p class="card-text">新着情報はありません。</p>
@@ -85,8 +85,8 @@
     </div>
 
     <div class="card card-hgn">
-        <div class="card-header">お知らせ</div>
         <div class="card-body">
+            <h5 class="card-title">お知らせ</h5>
             @foreach ($notices as $notice)
                 <p class="card-text">
                     <span style="margin-right: 10px;">{{ $notice->open_at_str }}</span>
@@ -96,7 +96,7 @@
 
             @if ($notices->count() > 0)
                 <div class="text-center">
-                    <a href="{{ route('お知らせ') }}" >お知らせを全て見る</a>
+                    <a href="{{ route('お知らせ') }}" >すべて見る</a>
                 </div>
             @else
                 <p class="card-text">お知らせはありません。</p>
