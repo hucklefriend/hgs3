@@ -14,14 +14,16 @@ class AccessCount
      * 月間アクセス数を取得
      *
      * @param Orm\Site $site
-     * @param \DateTime $now
+     * @param \DateTime $date
      * @return array
      */
-    public static function getMonthly(Orm\Site $site, \DateTime $now)
+    public static function getMonthly(Orm\Site $site, \DateTime $date)
     {
-        $accesses = Orm\SiteDailyAccess::select(['in_count', 'out_count', DB::raw('DATE_FORMAT(`date`, "%e") AS day')])
+        $ym = $date->format('Ym');
+
+        $accesses = Orm\SiteDailyAccess::select(['in_count', 'out_count', 'date'])
             ->where('site_id', $site->id)
-            ->whereBetween('date', [$now->format('Y-m-01'), $now->format('Y-m-t')])
+            ->whereBetween('date', [$ym . '01', $ym . sprintf('%02d', $date->format('t'))])
             ->get();
 
         // 日でハッシュ化
@@ -30,7 +32,8 @@ class AccessCount
             $obj = new \stdClass;
             $obj->in = $access->in_count;
             $obj->out = $access->out_count;
-            $hash[$access->day] = $obj;
+            $obj->date = $access->date;
+            $hash[$access->date % 100] = $obj;
         }
 
         unset($accesses);

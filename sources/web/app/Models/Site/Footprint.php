@@ -75,16 +75,17 @@ class Footprint
      * 足跡を登録
      *
      * @param Orm\Site $site
-     * @param ?User $user
+     * @param User $user
+     * @param $time
      * @return bool
      */
-    public static function add(Orm\Site $site, ?User $user)
+    public static function add(Orm\Site $site, ?User $user, $time = null)
     {
         try {
             $document = [
                 'site_id' => $site->id,
                 'user_id' => $user ? $user->id : null,
-                'time'    => time()
+                'time'    => $time ?? time()
             ];
             self::getCollection()->insertOne($document);
         } catch (\Exception $e) {
@@ -119,24 +120,5 @@ class Footprint
     private static function getCollection()
     {
         return Collection::getInstance()->getDatabase()->site_footprint;
-    }
-
-    /**
-     * 日別のアクセス数を取得
-     *
-     * @param Orm\Site $site
-     * @param int $year
-     * @param int $month
-     * @return \Illuminate\Support\Collection
-     */
-    public static function getDailyAccess(Orm\Site $site, $year, $month)
-    {
-        $date = new \DateTime($year . '-' . $month . '-1');
-
-        return Orm\SiteDailyAccess::select([DB::raw('DATE_FORMAT(`date`, "%e") AS `date`'), 'out_count'])
-            ->where('site_id', $site->id)
-            ->whereBetween('date', [$date->format('Y-m-01'), $date->format('Y-m-t')])
-            ->get()
-            ->pluck('out_count', 'date');
     }
 }

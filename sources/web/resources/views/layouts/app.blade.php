@@ -19,8 +19,13 @@
     <script src="{{ url('/js/fontawesome-all.min.js') }}" defer></script>
 
     @if (isset($useChart) && $useChart)
-    <script src="{{ url('/js/Chart.bundle.min.js') }}"></script>
-    <script src="{{ url('/js/Chart.min.js') }}"></script>
+        <script src="{{ url('/js/Chart.bundle.min.js') }}"></script>
+        <script src="{{ url('/js/Chart.min.js') }}"></script>
+    @endif
+    @if (isset($useDatePicker) && $useDatePicker)
+        <link rel="stylesheet" href="{{ url('css/bootstrap-datepicker.min.css') }}">
+        <script src="{{ url('/js/bootstrap-datepicker.min.js') }}"></script>
+        <script src="{{ url('/js/bootstrap-datepicker.ja.min.js') }}"></script>
     @endif
 </head>
 <body>

@@ -103,6 +103,63 @@ function platform_select($platformId, $params = [])
 }
 
 /**
+ * 年選択SELECTを生成
+ *
+ * @param int $year
+ * @param array $params
+ * @return \Illuminate\Support\HtmlString
+ */
+function year_select($year, $params = [], $startYear = null, $endYear = null)
+{
+    if ($startYear === null) {
+        $startYear = 2018;
+    }
+    if ($endYear === null) {
+        $endYear = date('Y');
+    }
+
+    $values = [];
+    for ($y = $startYear; $y <= $endYear; $y++) {
+        $values[$y] = $y;
+    }
+
+    return Form::select(
+        $params['name'] ?? 'year',
+        $values,
+        $year,
+        [
+            'class' => 'form-control',
+            'id'    => $params['id'] ?? 'year'
+        ]
+    );
+}
+
+/**
+ * 月選択SELECTを生成
+ *
+ * @param int $month
+ * @param array $params
+ * @return \Illuminate\Support\HtmlString
+ */
+function month_select($month, $params = [])
+{
+    $values = [];
+    for ($m = 1; $m <= 12; $m++) {
+        $values[$m] = $m;
+    }
+
+    return Form::select(
+        $params['name'] ?? 'year',
+        $values,
+        $month,
+        [
+            'class' => 'form-control',
+            'id'    => $params['id'] ?? 'year'
+        ]
+    );
+}
+
+/**
  * HGS3用URL生成
  *
  * @param $path

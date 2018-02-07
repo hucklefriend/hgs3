@@ -20,8 +20,12 @@ class SiteFootprint
 
         $sites = Site::get();
 
+        $now = time();
+        $start = $now - (86400 * 30 * 2);   // 2ヶ月前
+
         foreach ($sites as $site) {
-            $num = rand(0, 10000);
+            $num = rand(0, 1000);
+            $time = $start;
 
             for ($i = 0; $i < $num; $i++) {
                 $isGuest = rand(0, 10) < 5;
@@ -31,7 +35,12 @@ class SiteFootprint
                     $user = $users[rand(0, $userMax)];
                 }
 
-                Footprint::add($site, $users[rand(0, $userMax)]);
+                $time += rand(10, 86400);
+                if ($time > $now) {
+                    break;
+                }
+
+                Footprint::add($site, $user, $time);
             }
         }
     }
