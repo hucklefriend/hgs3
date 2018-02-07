@@ -308,6 +308,7 @@ button.btn:hover {
 
 .site-info > span {
     margin-right: 10px;
+    font-size: 0.75rem;
 }
 
 .top-login {
@@ -371,13 +372,12 @@ a.good-icon:hover, .good-icon2 {
 
 
 #game_tab {
-    max-width: 800px;
+    margin-bottom: 10px;
 }
 #game_tab a {
     margin-bottom: 10px;
     margin-right: 3px;
 }
-
 
 @media (min-width: 576px) {
 

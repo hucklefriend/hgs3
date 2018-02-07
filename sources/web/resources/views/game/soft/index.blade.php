@@ -5,30 +5,35 @@
 @endsection
 
 @section('content')
-    <h1>ゲーム一覧</h1>
 
     @if (is_data_editor())
-    <div class="text-right">
-        <a href="{{ route('ゲームソフト登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
+    <div class="d-flex justify-content-between">
+        <h1>ゲーム一覧</h1>
+        <div>
+            <a href="{{ route('ゲームソフト登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
+        </div>
     </div>
+    @else
+        <h1>ゲーム一覧</h1>
     @endif
+
+
+    <div class="d-flex flex-wrap" id="game_tab">
+        <a class="btn btn-outline-secondary active game_tab" href="#" data-target="agyo" id="tab_agyo">あ</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="kagyo" id="tab_kagyo">か</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="sagyo" id="tab_sagyo">さ</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="tagyo" id="tab_tagyo">た</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="nagyo" id="tab_nagyo">な</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="hagyo" id="tab_hagyo">は</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="magyo" id="tab_magyo">ま</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="yagyo" id="tab_yagyo">や</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="ragyo" id="tab_ragyo">ら</a>
+        <a class="btn btn-outline-secondary game_tab" href="#" data-target="wagyo" id="tab_wagyo">わ</a>
+    </div>
 
     <div class="card">
         <div class="card-body">
-            <div class="d-flex flex-wrap" id="game_tab">
-                <a class="btn btn-outline-secondary active game_tab" href="#" data-target="agyo" id="tab_agyo">あ</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="kagyo" id="tab_kagyo">か</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="sagyo" id="tab_sagyo">さ</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="tagyo" id="tab_tagyo">た</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="nagyo" id="tab_nagyo">な</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="hagyo" id="tab_hagyo">は</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="magyo" id="tab_magyo">ま</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="yagyo" id="tab_yagyo">や</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="ragyo" id="tab_ragyo">ら</a>
-                <a class="btn btn-outline-secondary game_tab" href="#" data-target="wagyo" id="tab_wagyo">わ</a>
-            </div>
-        </div>
-        <div class="card-body">
+
             @php
             $phonetics = [
                 ['a', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ')],
@@ -45,15 +50,14 @@
             @endphp
 
             @foreach ($phonetics as $p)
-                <section id="{{ $p[0] }}gyo"@if (!$loop->first) style="display:none;"@endif>
+                <section id="{{ $p[0] }}gyo" @if (!$loop->first) style="display:none;" @endif>
+                    <div class="d-flex flex-wrap">
                     @if (isset($list[$p[1]]))
                         @foreach ($list[$p[1]] as $soft)
-                            <a href="{{ route('ゲーム詳細', ['soft' => $soft->id]) }}">{{ $soft->name }}</a>
-                            @if (!$loop->last)
-                                <hr>
-                            @endif
+                            @include('game.common.packageCard', ['soft' => $soft])
                         @endforeach
                     @endif
+                    </div>
                 </section>
             @endforeach
         </div>
@@ -65,27 +69,19 @@
                 $('#' + $('#game_tab .active').data('target')).hide();
                 $('#game_tab .active').removeClass('active');
 
+                console.debug($(this).data('target'));
                 $('#' + $(this).data('target')).show();
                 $(this).addClass('active');
             });
-
-            $('#gyo_select').on('change', function (){
-                let target = $(this).val();
-
-                $('#' + $('#game_tab .active').data('target')).hide();
-                $('#game_tab .active').removeClass('active');
-
-                $('#' + target).show();
-                $('#tab_' + target).addClass('active');
-            });
         });
 
+/*
         re = new RegExp(String.raw`\\\(\^${escapeRegExp(mouth)}\^\)/`);
         re.text('aaaa');
-
         function escapeRegExp(string) {
             return ("" + string).replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&");
         }
+*/
     </script>
 @endsection
 

@@ -5,15 +5,44 @@
 @endsection
 
 @section('content')
-    <div class="text-center">
-        <h1>{{ $soft->name }}</h1>
-    </div>
 
     @if (is_data_editor())
-    <div class="text-right">
-        <a href="{{ route('ゲームソフト編集', ['soft' => $soft->id]) }}" class="btn btn-sm btn-outline-info">データ修正</a>
-    </div>
+        <div class="d-flex justify-content-between">
+            <h1>{{ $soft->name }} <span class="favorite-icon"><i class="fas fa-star"></i></span></h1>
+            <div>
+                <a href="{{ route('ゲームソフト編集', ['soft' => $soft->id]) }}" class="btn btn-sm btn-outline-dark">修正</a>
+            </div>
+        </div>
+    @else
+        <h1>{{ $soft->name }} <span class="favorite-icon"><i class="fas fa-star"></i></span></h1>
     @endif
+
+    @auth
+    <div style="margin-bottom: 30px;">
+        <div class="d-flex flex-wrap">
+            <div>
+                @if ($isFavorite)
+                    <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
+                        {{ csrf_field() }}
+                        <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-outline-dark btn-sm">お気に入り解除</button>
+                    </form>
+                @else
+                    <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                        <div class="text-center">
+                            <button class="btn btn-outline-warning btn-sm">お気に入りに登録</button>
+                        </div>
+                    </form>
+                @endif
+            </div>
+        </div>
+    </div>
+    @endauth
+
+
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
@@ -79,11 +108,11 @@
                             </div>
                             <div class="col-8">
                                 <div><h5>{{ $pkg->name }}</h5></div>
-                                <div>
-                                    <i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
-                                    <i class="fas fa-gamepad"></i>&nbsp;{{ $pkg->platform_name }}
+                                <div class="d-flex flex-wrap">
+                                    <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
+                                    <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
+                                    <span><i class="fas fa-shopping-cart"></i> {{ $pkg->release_at }}</span>
                                 </div>
-                                <div>{{ $pkg->release_at }}</div>
                                 <div>
                                     @foreach ($pkg->shops as $shop)
                                     @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
@@ -301,29 +330,6 @@
                             <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}">{{ $favoriteNum }}人のユーザー</a>がお気に入りに登録しています。
                         @endif
                     </p>
-
-                    @auth
-                    <hr>
-
-                    @if ($isFavorite)
-                        <p>あなたもその1人です。</p>
-                        <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST">
-                            {{ csrf_field() }}
-                            <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                            {{ method_field('DELETE') }}
-                            <button class="btn btn-sm btn-warning">取り消す</button>
-                        </form>
-                    @else
-                        <p>お気に入りゲームに登録しますか？</p>
-                        <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
-                            {{ csrf_field() }}
-                            <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                            <div class="text-center">
-                                <button class="btn btn-info btn-sm">登録する</button>
-                            </div>
-                        </form>
-                    @endif
-                    @endauth
                 </div>
             </div>
         </div>

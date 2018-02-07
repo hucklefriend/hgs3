@@ -20,21 +20,30 @@ class Soft
      *
      * @return array
      */
-    public function getList()
+    public static function getList()
     {
+        $sql =<<< SQL
+SELECT
+  s.id
+  , s.name
+  , s.phonetic_type
+  , p.small_image_url
+FROM
+  game_softs s
+  INNER JOIN game_packages p ON s.original_package_id = p.id
+ORDER BY
+  phonetic_type
+  , phonetic_order
+SQL;
 
-
-
-        $tmp = DB::table('game_softs')
-            ->select('id', 'name', 'phonetic_type')
-            ->orderBy('phonetic_type', 'asc')
-            ->orderBy('phonetic_order', 'asc')
-            ->get();
+        $tmp = DB::select($sql);
 
         $result = array();
         foreach ($tmp as $game) {
             $result[$game->phonetic_type][] = $game;
         }
+
+        unset($tmp);
 
         return $result;
     }
