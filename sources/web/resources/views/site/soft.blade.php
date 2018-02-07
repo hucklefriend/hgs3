@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <h1><a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">{{ $soft->name }}</a>を扱っているサイト</h1>
 
     @foreach ($pager as $p)
@@ -22,8 +21,8 @@
         <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">ゲーム詳細</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ $soft->name }}を扱っているサイト</li>
+            <li class="breadcrumb-item"><a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">詳細</a></li>
+            <li class="breadcrumb-item active" aria-current="page">取扱いサイト</li>
         </ol>
     </nav>
 @endsection
