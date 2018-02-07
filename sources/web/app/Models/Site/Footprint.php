@@ -35,16 +35,51 @@ class Footprint
     }
 
     /**
+     * 特定日の履歴を取得
+     *
+     * @param int $siteId
+     * @param \DateTime $date
+     * @param int $limit
+     * @param int $skip
+     * @return array
+     */
+    public static function getDailyBySite($siteId, \DateTime $date, $limit, $skip)
+    {
+        $date->setTime(0, 0, 0);
+        $start = $date->getTimestamp();
+        $end = $start + 86399;
+
+        $filter = [
+            'site_id' => $siteId,
+            'time'    => ['$gte' => $start, '$lte' => $end]
+        ];
+        $options = [
+            'limit' => $limit,
+            'skip'  => $skip
+        ];
+
+        return self::getCollection()->find($filter, $options)->toArray();
+    }
+
+    /**
      * 履歴の件数を取得
      *
      * @param int $siteId
+     * @param \DateTime $date
      * @return int
      */
-    public static function getNumBySite($siteId)
+    public static function getNumBySite($siteId, ?\DateTime $date = null)
     {
         $filter = [
             'site_id' => $siteId
         ];
+
+        if ($date != null) {
+            $date->setTime(0, 0, 0);
+            $start = $date->getTimestamp();
+            $end = $start + 86399;
+            $filter['time'] = ['$gte' => $start, '$lte' => $end];
+        }
 
         return self::getCollection()->count($filter);
     }

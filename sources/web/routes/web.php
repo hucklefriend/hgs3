@@ -124,8 +124,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/user/site_manage/update_history/delete/{siteHistory}', 'User\SiteManageController@deleteUpdateHistory')->name('サイト更新履歴削除処理');
 
     Route::get('/user/site/access/{site}', 'User\SiteAccessController@index')->name('サイトアクセスログ');
+    Route::get('/user/site/access/{site}/daily-footprint/{date}', 'User\SiteAccessController@dailyFootprint')->name('サイト日別足跡');
     Route::get('/user/site/access/{site}/footprint', 'User\SiteAccessController@footprint')->name('サイト足跡');
-    Route::get('/user/site/access/{site}/footprint/{date}', 'User\SiteAccessController@footprint')->name('サイト日別足跡');
 
     // サイト
     Route::post('/site/good/{site}', 'Site\GoodController@good')->name('サイトいいね');

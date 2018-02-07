@@ -9,22 +9,13 @@ use Hgs3\Http\Requests\User\PlayedGame\AddRequest;
 use Hgs3\Http\Requests\User\PlayedGame\EditRequest;
 use Hgs3\Models\Orm\GameSoft;
 use Hgs3\Models\Orm\UserPlayedSoft;
-use Hgs3\User;
-use Illuminate\Http\Request;
+use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PlayedGameController extends Controller
 {
-    /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'home');
-    }
-
     /**
      * 遊んだゲームリスト
      *

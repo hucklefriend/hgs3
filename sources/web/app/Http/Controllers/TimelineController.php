@@ -17,9 +17,10 @@ class TimelineController extends Controller
     /**
      * タイムライン
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $collection = Timeline::getMongoCollection();
 
@@ -38,7 +39,7 @@ class TimelineController extends Controller
         $num = $collection->count($filter);
 
         $pager = new LengthAwarePaginator([], $num, self::PER_PAGE);
-        $pager->setPath('timeline');
+        $pager->setPath($request->url());
 
         $options = [
             'sort'  => ['time' => -1],
