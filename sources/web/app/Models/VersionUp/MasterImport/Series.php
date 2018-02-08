@@ -6,12 +6,15 @@
 namespace Hgs3\Models\VersionUp\MasterImport;
 
 use Hgs3\Models\Orm;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class Series extends MasterImportAbstract
 {
     /**
      * インポート
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function import()
     {
@@ -22,11 +25,10 @@ class Series extends MasterImportAbstract
         foreach ($files as $filePath) {
             $data = \GuzzleHttp\json_decode(File::get($filePath), true);
 
-            $series = new Orm\GameSeries($data);
-            $series->save();
+            DB::table('game_series')
+                ->insert($data);
 
             unset($data);
-            unset($series);
         }
     }
 }

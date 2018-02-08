@@ -13,7 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\VersionUpDatabase::class,
         Commands\TestData\All::class,
         Commands\TestData\User::class,
         Commands\TestData\UserPlayedGame::class,

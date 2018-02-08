@@ -85,15 +85,15 @@ class Package
         DB::table('game_packages')
             ->where('id', $packageId)
             ->update([
-                'small_image_url'     => $item['small_image']['url'],
-                'small_image_width'   => $item['small_image']['width'],
-                'small_image_height'  => $item['small_image']['height'],
-                'medium_image_url'    => $item['medium_image']['url'],
-                'medium_image_width'  => $item['medium_image']['width'],
-                'medium_image_height' => $item['medium_image']['height'],
-                'large_image_url'     => $item['large_image']['url'],
-                'large_image_width'   => $item['large_image']['width'],
-                'large_image_height'  => $item['large_image']['height'],
+                'small_image_url'     => $item['small_image']['url'] ?? null,
+                'small_image_width'   => $item['small_image']['width'] ?? null,
+                'small_image_height'  => $item['small_image']['height'] ?? null,
+                'medium_image_url'    => $item['medium_image']['url'] ?? null,
+                'medium_image_width'  => $item['medium_image']['width'] ?? null,
+                'medium_image_height' => $item['medium_image']['height'] ?? null,
+                'large_image_url'     => $item['large_image']['url'] ?? null,
+                'large_image_width'   => $item['large_image']['width'] ?? null,
+                'large_image_height'  => $item['large_image']['height'] ?? null,
                 'updated_at'          => DB::raw('CURRENT_TIMESTAMP')
             ]);
     }

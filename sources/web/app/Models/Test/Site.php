@@ -50,6 +50,7 @@ class Site
                 $orm->out_count = rand(0, 9999);
                 $orm->good_num = 0;
                 $orm->bad_num = 0;
+                $orm->list_banner_url = self::getSampleSiteBanner();
                 $orm->registered_timestamp = time();
                 $orm->updated_timestamp = time();
 
@@ -144,6 +145,23 @@ class Site
         $i = rand(0, count($texts) - 1);
 
         return $texts[$i];
+    }
+
+    private static function getSampleSiteBanner()
+    {
+        $banners = [
+            'banner (1).gif',
+            'banner (1).jpg',
+            'banner (1).png',
+            'banner.gif',
+            'banner.jpg',
+            'banner.png',
+            'bn200.gif',
+            'rindoutei7.gif',
+            'satopian_bn.jpg',
+        ];
+
+        return url('img/site_banner/test/' . $banners[rand(0, count($banners) - 1)]);
     }
 
     /**

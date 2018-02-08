@@ -18,7 +18,7 @@ class Package extends MasterImportAbstract
      */
     public function import()
     {
-        //$this->update();
+        $this->update();
 
         $path = storage_path('master/package');
 
@@ -61,9 +61,9 @@ class Package extends MasterImportAbstract
                 $softIds[] = $softs[$softName];
             }
         } else {
-            throw new \Exception('ソフトが指定されてません。');
+            echo 'ソフトが指定されてません。' . var_export($data, true);
+            return;
         }
-
 
         foreach ($softIds as $softId) {
             foreach ($data['packages'] as $pkg) {
@@ -71,12 +71,19 @@ class Package extends MasterImportAbstract
                 $package->name = $pkg['name'];
                 $package->url = $pkg['url'];
                 $package->release_int = $pkg['release_int'];
-                $package->release_at = $pkg['release_date'];
+                $package->release_at = $pkg['release_at'];
                 if (isset($pkg['company']) && isset($companies[$pkg['company']])) {
                     $package->company_id = $companies[$pkg['company']] ?? null;
                 }
+                $package->platform_id = 0;
                 if (isset($pkg['platform']) && isset($platforms[$pkg['platform']])) {
-                    $package->platform_id = $platforms[$pkg['platform']] ?? null;
+                    $package->platform_id = $platforms[$pkg['platform']] ?? 0;
+                    if ($package->platform_id == 0) {
+                        $plt = Orm\GamePlatform::where('acronym', $pkg['platform'])->get();
+                        if ($plt) {
+                            $package->platform_id = $plt->id;
+                        }
+                    }
                 }
 
                 $package->save();
@@ -130,6 +137,10 @@ class Package extends MasterImportAbstract
      */
     private function update()
     {
+        if (!File::exists(storage_path('master/package/update.php'))) {
+            return;
+        }
+
         $packages = include(storage_path('master/package/update.php'));
 
         foreach ($packages as $p) {

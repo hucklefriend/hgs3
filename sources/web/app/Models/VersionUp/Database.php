@@ -39,14 +39,17 @@ class Database
         }
 
         echo 'create admin'.PHP_EOL;
-        // 管理人を作成
-        User::register([
-            'name'     => 'huckle',
-            'email'    => 'webmaster@horrorgame.net',
-            'password' => $password,
-            'role'     => 100,
-            'show_id'  => 'huckle'
-        ]);
+
+        if (User::where('show_id', 'huckle')->count() == 0) {
+            // 管理人を作成
+            User::register([
+                'name'     => 'huckle',
+                'email'    => 'webmaster@horrorgame.net',
+                'password' => $password,
+                'role'     => 100,
+                'show_id'  => 'huckle'
+            ]);
+        }
 
         // 運営用ユーザーコミュニティを作成
         //UserCommunity::createDefault();

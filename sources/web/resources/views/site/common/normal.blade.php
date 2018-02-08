@@ -15,8 +15,8 @@
             <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img src="{{ $s->list_banner_url }}" class="img-responsive"></a>
         </div>
     @endif
-    <div class="site-presentation"><small>{!! nl2br(e($s->presentation)) !!}</small></div>
-    <div><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank">{{ $s->url }}</a></div>
+    <div class="site-presentation">{!! nl2br(e($s->presentation)) !!}</div>
+    <div><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank"><small>{{ $s->url }}</small></a></div>
 
     <div class="d-flex align-content-start flex-wrap site-info">
         <span>

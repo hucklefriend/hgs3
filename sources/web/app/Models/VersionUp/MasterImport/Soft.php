@@ -42,6 +42,7 @@ class Soft extends MasterImportAbstract
                 } else {
                     $s = new Orm\GameSeries;
                     $s->name = $data['series'];
+                    $s->phonetic = $data['series'];
                     $s->save();
 
                     $soft->series_id = $s->id;

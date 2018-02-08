@@ -3,6 +3,8 @@
 namespace Hgs3\Console\Commands;
 
 use Hgs3\Models\Community\UserCommunity;
+use Hgs3\Models\MongoDB\Collection;
+use Hgs3\Models\VersionUp\Master;
 use Illuminate\Console\Command;
 use Hgs3\Models\VersionUp\Database;
 
@@ -39,6 +41,12 @@ class Init extends Command
      */
     public function handle()
     {
-        UserCommunity::createDefaultCommunity();
+        $db = new Database;
+        $db->versionUp();
+
+        $master = new Master();
+        $master->import();
+
+        Collection::create();
     }
 }
