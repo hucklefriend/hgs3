@@ -75,7 +75,8 @@ class SoftController extends Controller
      * 追加
      *
      * @param GameSoftRequest $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function insert(GameSoftRequest $request)
     {
@@ -86,14 +87,12 @@ class SoftController extends Controller
         $soft->phonetic_type = PhoneticType::getTypeByPhonetic($soft->phonetic);
         $soft->phonetic_order = 99999;
         $soft->genre = $request->get('genre', '');
-        $soft->company_id = $request->get('company_id', null);
         $soft->series_id = $request->get('series_id', null);
         $soft->order_in_series = $request->get('order_in_series', null);
-        $soft->game_type = 0;
 
         Soft::save($soft, true);
 
-        return redirect('game/soft/' . $soft->id);
+        return redirect()->route('ゲーム詳細', ['soft' => $soft->id]);
     }
 
     /**
@@ -122,13 +121,11 @@ class SoftController extends Controller
         $soft->phonetic = $request->get('phonetic', '');
         $soft->phonetic_type = PhoneticType::getTypeByPhonetic($soft->phonetic);
         $soft->genre = $request->get('genre') ?? '';
-        $soft->company_id = $request->get('company_id');
         $soft->series_id = $request->get('series_id');
         $soft->order_in_series = $request->get('order_in_series');
-        $soft->game_type = $request->get('game_type');
 
         Soft::save($soft, true);
 
-        return redirect('game/soft/' . $soft->id);
+        return redirect()->route('ゲーム詳細', ['soft' => $soft->id]);
     }
 }

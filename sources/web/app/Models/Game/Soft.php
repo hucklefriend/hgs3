@@ -30,7 +30,7 @@ SELECT
   , p.small_image_url
 FROM
   game_softs s
-  INNER JOIN game_packages p ON s.original_package_id = p.id
+  LEFT OUTER JOIN game_packages p ON s.original_package_id = p.id
 ORDER BY
   phonetic_type
   , phonetic_order
@@ -250,7 +250,7 @@ SQL;
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
 
-            return false;
+            throw $e;
         }
 
         // タイムライン登録しない
