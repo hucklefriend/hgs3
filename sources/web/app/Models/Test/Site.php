@@ -50,7 +50,6 @@ class Site
                 $orm->out_count = rand(0, 9999);
                 $orm->good_num = 0;
                 $orm->bad_num = 0;
-                $orm->list_banner_url = self::getSampleSiteBanner();
                 $orm->registered_timestamp = time();
                 $orm->updated_timestamp = time();
 
@@ -64,6 +63,11 @@ class Site
                 $orm->handle_soft = $handleSoft;
 
                 \Hgs3\Models\Site::save($u, $orm, null, null, rand(0, 100) > 80);
+
+                $orm->list_banner_upload_flag = 1;
+                $orm->list_banner_url = self::getSampleSiteBanner();
+                $orm->save();
+
                 unset($orm);
             }
         }

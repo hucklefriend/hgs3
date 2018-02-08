@@ -13,6 +13,9 @@
                 @include('site.common.sideMenu', ['active' => 'タイムライン'])
             </div>
             <div style="width: 100%;">
+                @if (empty($timelines))
+                    タイムラインはありません。
+                @endif
                 @foreach ($timelines as $timeline)
                     {!! nl2br($timeline->text) !!}
                     <hr>

@@ -9,11 +9,13 @@
 
     @foreach ($pager as $p)
         <?php $s = $sites[$p->site_id]; ?>
-        <div>
+        <div style="margin-top: 10px;margin-bottom: 30px;">
             @include('site.common.normal', ['s' => $s, 'u' => $users[$s->user_id]])
         </div>
-        <hr>
     @endforeach
+
+    @include('common.pager', ['pager' => $pager])
+
 @endsection
 
 @section('breadcrumb')

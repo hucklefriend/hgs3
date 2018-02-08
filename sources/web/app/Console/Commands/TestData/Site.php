@@ -3,6 +3,7 @@
 namespace Hgs3\Console\Commands\TestData;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class Site extends Command
 {
@@ -37,6 +38,9 @@ class Site extends Command
      */
     public function handle()
     {
+        DB::table('sites')
+            ->delete();
+
         \Hgs3\Models\Test\Site::create();
     }
 }

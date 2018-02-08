@@ -245,10 +245,10 @@ Route::post('/review/fraud_report/report/{review}', 'Review\FraudReportControlle
 Route::get('/review/fraud_report/list/{review}', 'Review\FraudReportController@list');
 
 // サイト
-Route::get('/site', 'Site\SiteController@index')->name('サイトトップ')->middleware(['yourSite']);
-Route::get('/site/timeline', 'Site\SiteController@timeline')->name('サイトタイムライン')->middleware(['yourSite']);
-Route::get('/site/new_arrival', 'Site\SiteController@newArrival')->name('新着サイト一覧')->middleware(['yourSite']);
-Route::get('/site/update', 'Site\SiteController@newUpdate')->name('更新サイト一覧')->middleware(['yourSite']);
+Route::get('/site', 'Site\SiteController@index')->name('サイトトップ');
+Route::get('/site/timeline', 'Site\SiteController@timeline')->name('サイトタイムライン');
+Route::get('/site/new_arrival', 'Site\SiteController@newArrival')->name('新着サイト一覧');
+Route::get('/site/update', 'Site\SiteController@newUpdate')->name('更新サイト一覧');
 Route::get('/site/soft/{soft}', 'Site\SiteController@soft')->name('ソフト別サイト一覧');
 Route::get('/site/user/{showId}', 'Site\SiteController@user')->name('ユーザーサイト一覧');
 Route::get('/site/detail/{site}', 'Site\SiteController@detail')->name('サイト詳細');

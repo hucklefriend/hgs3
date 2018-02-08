@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Site;
 
+use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Log;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,7 @@ class NewArrival
         $lastMonth->sub(new \DateInterval('P1M'));
 
         return Orm\Site::where('updated_timestamp', '>', $lastMonth->format('u'))
+            ->where('approval_status', ApprovalStatus::OK)
             ->orderBy('updated_timestamp', 'DESC')
             ->paginate($num);
     }

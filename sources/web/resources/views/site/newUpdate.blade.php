@@ -14,14 +14,20 @@
             </div>
         </div>
         <div style="width: 100%;">
+            @if ($sites->isEmpty())
+                更新サイトはありません。
+            @endif
             @foreach ($sites as $s)
                 @php
                     $u = $users[$s->user_id];
                 @endphp
 
-                <div class="alert alert-success d-inline-block" role="alert" style="padding:0.5rem;">{{ date('Y/m/d H:i', $s->updated_timestamp) }}更新！</div>
-                @include('site.common.normal', ['s' => $s, 'u' => $u])
-                @if (!$loop->last) <hr> @endif
+                <div style="margin-bottom: 50px;">
+                    <div>
+                        <span class="badge badge-info">{{ date('Y/m/d H:i', $s->updated_timestamp) }}更新！</span>
+                    </div>
+                    @include('site.common.normal', ['s' => $s, 'u' => $u])
+                </div>
             @endforeach
             @include('common.pager', ['pager' => $sites])
         </div>

@@ -313,8 +313,9 @@
                             <p>サイトは登録されていません。</p>
                         @else
                             @foreach ($site as $s)
+                                <div style="margin-bottom: 20px;">
                                 @include('site.common.minimal', ['s' => $s, 'u' => $siteUsers[$s->user_id]])
-                                <hr>
+                                </div>
                             @endforeach
                             <div class="text-center">
                                 <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}">すべて見る</a>

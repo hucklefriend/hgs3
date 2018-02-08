@@ -14,15 +14,21 @@
             </div>
         </div>
         <div style="width: 100%;">
+            @if ($newArrivals->isEmpty())
+                新着サイトはありません。
+            @endif
             @foreach ($newArrivals as $newArrival)
                 @php
                     $s = $sites[$newArrival->site_id];
                     $u = $users[$s->user_id];
                 @endphp
 
-                <div class="alert alert-success d-inline-block" role="alert" style="padding:0.5rem;">{{ date('Y/m/d H:i', $newArrival->registered_timestamp) }}登録！</div>
+                <div style="margin-bottom: 50px;">
+                    <div>
+                        <span class="badge badge-info">{{ date('Y/m/d H:i', $newArrival->registered_timestamp) }}登録！</span>
+                    </div>
                 @include('site.common.normal', ['s' => $s, 'u' => $u])
-                @if (!$loop->last) <hr> @endif
+                </div>
             @endforeach
             @include('common.pager', ['pager' => $newArrivals])
         </div>

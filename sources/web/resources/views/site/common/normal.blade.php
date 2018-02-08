@@ -1,14 +1,17 @@
 <div>
-    <div>
-        <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
-        <br class="d-sm-none">
-            <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\MainContents::getText($s->main_contents_id) }}</span>
-            @if ($s->rate > 0)
-                <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Rate::getText($s->rate) }}</span>
-            @endif
-            @if ($s->gender != \Hgs3\Constants\Site\Gender::NONE)
-                <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Gender::getText($s->gender) }}</span>
-            @endif
+    <div class="d-flex flex-wrap-reverse">
+        <div style="margin-right: 20px;">
+            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
+        </div>
+        <div>
+            <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\MainContents::getText($s->main_contents_id) }}</span>
+        @if ($s->rate > 0)
+            <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\Rate::getText($s->rate) }}</span>
+        @endif
+        @if ($s->gender != \Hgs3\Constants\Site\Gender::NONE)
+            <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\Gender::getText($s->gender) }}</span>
+        @endif
+        </div>
     </div>
     @if (!empty($s->list_banner_url))
         <div class="list-site-banner-outline">
