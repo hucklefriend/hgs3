@@ -229,6 +229,7 @@ Route::post('/account/register', 'Account\SignUpController@registration')->name(
 
 // ゲーム
 Route::get('/game/soft', 'Game\SoftController@index')->name('ゲーム一覧');
+Route::get('/game/soft/package/{packageId}', 'Game\SoftController@detailByPackage')->name('パッケージからゲーム詳細');
 Route::get('/game/soft/{soft}', 'Game\SoftController@detail')->name('ゲーム詳細');
 
 // レビュー

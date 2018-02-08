@@ -43,6 +43,25 @@ class SoftController extends Controller
     }
 
     /**
+     * パッケージIDからゲーム詳細に飛ぶ
+     *
+     * @param $packageId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function detailByPackage($packageId)
+    {
+        $packageLink = Orm\GamePackageLink::where('package_id', $packageId)
+            ->orderBy('soft_id')
+            ->first();
+
+        if (!empty($packageLink)) {
+            return redirect()->route('ゲーム詳細', ['soft' => $packageLink->soft_id]);
+        } else {
+            return abort(404);
+        }
+    }
+
+    /**
      * 追加フォーム
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

@@ -1,5 +1,12 @@
+@php
+if (isset($toPackage) && $toPackage) {
+    $url = route('パッケージからゲーム詳細', ['packageId' => $soft->id]);
+} else {
+    $url = route('ゲーム詳細', ['game' => $soft->id]);
+}
+@endphp
 <div class="package-card">
-    <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}" style="width: 100%;display: table;">
+    <a href="{{ $url }}" style="width: 100%;display: table;">
         <div style="display: table-row;">
             <div class="package-card-image">
                 @if (empty($soft->small_image_url))

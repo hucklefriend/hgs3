@@ -27,7 +27,6 @@
         @endif
     </div>
 
-
     <hr>
 
     <p>
@@ -36,7 +35,7 @@
 
     <div class="package-list">
     @foreach ($packages as $package)
-        @include('game.common.packageCard', ['soft' => $package])
+        @include('game.common.packageCard', ['soft' => $package, 'toPackage' => true])
     @endforeach
     </div>
 
