@@ -31,38 +31,34 @@
         <a class="btn btn-outline-secondary game_tab" href="#" data-target="wagyo" id="tab_wagyo">わ</a>
     </div>
 
-    <div class="card">
-        <div class="card-body">
+    <div>
+    @php
+    $phonetics = [
+        ['a', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ')],
+        ['ka', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('か')],
+        ['sa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('さ')],
+        ['ta', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('た')],
+        ['na', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('な')],
+        ['ha', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('は')],
+        ['ma', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ま')],
+        ['ya', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('や')],
+        ['ra', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ら')],
+        ['wa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('わ')],
+    ];
+    @endphp
 
-            @php
-            $phonetics = [
-                ['a', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ')],
-                ['ka', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('か')],
-                ['sa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('さ')],
-                ['ta', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('た')],
-                ['na', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('な')],
-                ['ha', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('は')],
-                ['ma', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ま')],
-                ['ya', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('や')],
-                ['ra', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ら')],
-                ['wa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('わ')],
-            ];
-            @endphp
-
-            @foreach ($phonetics as $p)
-                <section id="{{ $p[0] }}gyo" @if (!$loop->first) style="display:none;" @endif>
-                    <div class="d-flex flex-wrap">
-                    @if (isset($list[$p[1]]))
-                        @foreach ($list[$p[1]] as $soft)
-                            @include('game.common.packageCard', ['soft' => $soft])
-                        @endforeach
-                    @endif
-                    </div>
-                </section>
-            @endforeach
-        </div>
+    @foreach ($phonetics as $p)
+        <section id="{{ $p[0] }}gyo" @if (!$loop->first) style="display:none;" @endif>
+            <div class="package-list">
+            @if (isset($list[$p[1]]))
+                @foreach ($list[$p[1]] as $soft)
+                    @include('game.common.packageCard', ['soft' => $soft])
+                @endforeach
+            @endif
+            </div>
+        </section>
+    @endforeach
     </div>
-
     <script>
         $(function (){
             $('.game_tab').click(function (){

@@ -35,18 +35,12 @@ class PlatformController extends Controller
     {
         $packages = Orm\GamePackage::where('platform_id', $platform->id)
             ->orderBy('release_int')
-            ->paginate(30);
-
-        $companies = Orm\GameCompany::getNameHash(page_pluck($packages, 'company_id'));
-        $softs = Orm\GamePackageLink::whereIn('package_id', page_pluck($packages, 'id'))
-            ->get()->pluck('soft_id', 'package_id');
+            ->get();
 
         return view('game.platform.detail', [
-            'platform'  => $platform,
-            'company'   => Orm\GameCompany::find($platform->company_id),
-            'packages'  => $packages,
-            'companies' => $companies,
-            'softs'     => $softs
+            'platform' => $platform,
+            'company'  => Orm\GameCompany::find($platform->company_id),
+            'packages' => $packages
         ]);
     }
 

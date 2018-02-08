@@ -38,24 +38,12 @@ class CompanyController extends Controller
     public function detail(Orm\GameCompany $company)
     {
         $packages = Orm\GamePackage::where('company_id', $company->id)
-            ->orderBy('release_int')
+            ->orderBy('release_int', 'DESC')
             ->get();
-
-        $shops = [];
-        $softs = [];
-        if ($packages->isNotEmpty()) {
-            $package_ids = $packages->pluck('id')->toArray();
-
-            $shops = Package::getShopData($package_ids);
-            $softs = Orm\GamePackageLink::whereIn('package_id', $package_ids)
-                ->get()->pluck('soft_id', 'package_id');
-        }
 
         return view('game.company.detail', [
             'company'  => $company,
-            'packages' => $packages,
-            'shops'    => $shops,
-            'softs'    => $softs
+            'packages' => $packages
         ]);
     }
 

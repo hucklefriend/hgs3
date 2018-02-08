@@ -68,8 +68,6 @@
                             <i class="fas fa-paw"></i>
                             {{ number_format($site->out_count) }}
                         </span>
-                    </div>
-                    <div>
                         <span>
                             <i class="fas fa-redo-alt"></i>
                             {{ date('Y-m-d H:i', $site->updated_timestamp) }}
@@ -126,7 +124,7 @@
     <div class="card-body">
         <h5 class="card-title">このサイトで扱っているゲーム</h5>
     </div>
-    <div class="d-flex flex-wrap">
+    <div class="package-list">
         @foreach ($handleSofts as $soft)
             @include('game.common.packageCard', ['soft' => $soft])
         @endforeach

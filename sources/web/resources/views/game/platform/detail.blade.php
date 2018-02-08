@@ -26,33 +26,11 @@
 
     <p>{{ $platform->name }}で発売されているパッケージ</p>
 
-    <ul class="list-group">
-    @foreach ($packages as $package)
-        <li class="list-group-item">
-            <div class="d-flex align-items-stretch">
-                <div class="align-self-top p-2">
-                    @include('game.common.packageImage', ['imageUrl' => $package->small_image_url])
-                </div>
-                <div class="align-self-top">
-                    <h4><a href="{{ route('ゲーム詳細', ['soft' => $softs[$package->id]]) }}">{{ $package->name }}</a></h4>
-                    @isset($companies[$package->company_id])
-                        <div>
-                            <i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $package->company_id]) }}">{{ hv($companies, $package->company_id) }}</a>
-                        </div>
-                    @endisset
-                    <div>{{ $package->release_at }}</div>
-                    <div>
-                        @isset($package->item_url)
-                            <a href="{{ $package->item_url }}" target="_blank"><img src="{{ url('img/assocbutt_or_detail._V371070159_.png') }}"></a>
-                        @endisset
-                    </div>
-                </div>
-            </div>
-        </li>
-    @endforeach
-    </ul>
-
-    @include('common.pager', ['pager' => $packages])
+    <div class="package-list">
+        @foreach ($packages as $package)
+            @include('game.common.packageCard', ['soft' => $package])
+        @endforeach
+    </div>
 @endsection
 
 @section('breadcrumb')

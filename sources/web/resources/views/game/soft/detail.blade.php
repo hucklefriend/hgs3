@@ -14,7 +14,14 @@
             </div>
         </div>
     @else
-        <h1>{{ $soft->name }} @if($isFavorite) <span class="favorite-icon"><i class="fas fa-star"></i></span> @endif </h1>
+        <h1>
+            {{ $soft->name }}
+            @auth
+            @if($isFavorite)
+                <span class="favorite-icon"><i class="fas fa-star"></i></span>
+            @endif
+            @endauth
+        </h1>
     @endif
 
     @auth
@@ -42,20 +49,19 @@
     </div>
     @endauth
 
-
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title">パッケージ情報</h5>
-                        <div class="text-right">
-                            <a href="{{ route('パッケージ登録', ['soft' => $soft->id]) }}" class="btn btn-outline-dark btn-sm">追加</a>
-                        </div>
+                        @if (is_data_editor())
+                            <div class="text-right">
+                                <a href="{{ route('パッケージ登録', ['soft' => $soft->id]) }}" class="btn btn-outline-dark btn-sm">追加</a>
+                            </div>
+                        @endif
                     </div>
-                </div>
 
-                <div class="card-body">
                     @if ($packageNum > 2)
 
                     <script type="text/javascript" src="{{ url('js/slick.min.js') }}"></script>
@@ -145,11 +151,11 @@
                             </div>
                             <div class="col-8">
                                 <div><h5>{{ $pkg->name }}</h5></div>
-                                <div>
-                                    <i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a>
-                                    <i class="fas fa-gamepad"></i>&nbsp;{{ $pkg->platform_name }}
+                                <div class="d-flex flex-wrap">
+                                    <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
+                                    <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
+                                    <span><i class="fas fa-shopping-cart"></i> {{ $pkg->release_at }}</span>
                                 </div>
-                                <div>{{ $pkg->release_at }}</div>
                                 <div>
                                     @foreach ($pkg->shops as $shop)
                                         @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
@@ -339,7 +345,7 @@
     <div class="card card-hgn">
         <div class="card-body">
             <h5 class="card-title">同じシリーズのゲーム</h5>
-            <div class="d-flex flex-wrap">
+            <div class="package-list">
                 @foreach ($seriesSofts as $seriesSoft)
                     @include('game.common.packageCard', ['soft' => $seriesSoft])
                 @endforeach

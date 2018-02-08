@@ -5,7 +5,18 @@
 @endsection
 
 @section('content')
-    <h4>{{ $company->name }}</h4>
+
+    @if (is_data_editor())
+        <div class="d-flex">
+            <h1>{{ $company->name }}</h1>
+            <div class=" justify-content-between">
+                <a href="{{ route('ゲーム会社編集', ['company' => $company->id]) }}" class="btn btn-sm btn-outline-dark">編集</a>
+            </div>
+        </div>
+    @else
+        <h1>{{ $company->name }}</h1>
+    @endif
+
 
     <div>
         @if ($company->url != null)
@@ -17,40 +28,15 @@
     </div>
 
 
-    @if (is_data_editor())
-    <div class="text-right">
-        <a href="{{ route('ゲーム会社編集', ['company' => $company->id]) }}" class="btn btn-sm btn-outline-info">データ編集</a>
-    </div>
-    @endif
-
     <hr>
 
     <p>
         {{ $company->name }}から発売されているパッケージ
     </p>
 
-    <div class="d-flex flex-wrap">
-
+    <div class="package-list">
     @foreach ($packages as $package)
-            <div class="card" style="width: 250px;margin: 10px;padding-top: 10px;">
-                @include('game.common.packageImage', ['imageUrl' => $package->medium_image_url])
-                <div class="card-body text-center">
-                    <h4 class="card-title">
-                        @isset($softs[$package->id])
-                            <a href="{{ route('ゲーム詳細', ['soft' => $softs[$package->id]]) }}">{{ $package->name }}</a>
-                        @else
-                            {{ $package->name }}
-                        @endif
-                    </h4>
-                    <p class="card-text">
-                        @isset($shops[$package->id])
-                            @foreach ($shops[$package->id] as $shop)
-                                @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
-                            @endforeach
-                        @endisset
-                    </p>
-                </div>
-            </div>
+        @include('game.common.packageCard', ['soft' => $package])
     @endforeach
     </div>
 
