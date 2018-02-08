@@ -275,4 +275,32 @@ SQL;
         }
         return true;
     }
+
+    /**
+     * オリジナルパッケージIDの更新
+     *
+     * @param $isAll
+     */
+    public static function updateOriginalPackageId($isAll)
+    {
+        if ($isAll) {
+            $softs = Orm\GameSoft::where('original_package_id', null)
+                ->get();
+        } else {
+            $softs = Orm\GameSoft::all();
+        }
+
+        foreach ($softs as $soft) {
+            $pkg = Orm\GamePackageLink::where('soft_id', $soft->id)
+                ->orderBy('package_id')
+                ->first();
+
+            if ($pkg) {
+                $soft->original_package_id = $pkg->package_id;
+                $soft->save();
+            } else {
+                echo $soft->name . ' is no original package.' . PHP_EOL;
+            }
+        }
+    }
 }

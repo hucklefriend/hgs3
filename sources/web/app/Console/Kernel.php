@@ -37,6 +37,7 @@ class Kernel extends ConsoleKernel
         Commands\TestData\SystemNotice::class,
         Commands\Mongo\Reset::class,
         Commands\Init::class,
+        Commands\Master\UpdateOriginalPackageId::class
     ];
 
     /**

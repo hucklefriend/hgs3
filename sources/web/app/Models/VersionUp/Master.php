@@ -35,5 +35,8 @@ class Master
 
         echo 'update sort order.'.PHP_EOL;
         \Hgs3\Models\Orm\GameSoft::updateSortOrder();
+
+        echo 'update original package id.' . PHP_EOL;
+        \Hgs3\Models\Game\Soft::updateOriginalPackageId(false);
     }
 }
