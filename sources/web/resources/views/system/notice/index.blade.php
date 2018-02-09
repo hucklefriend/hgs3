@@ -5,18 +5,22 @@
 @endsection
 
 @section('content')
-    <h1>お知らせ</h1>
 
-    @if(is_admin())
-        <div class="btn-area">
-            <a class="btn btn-sm btn-outline-dark" href="{{ route('お知らせ登録') }}" role="button">お知らせの新規登録</a>
+    @if (is_admin())
+        <div class="d-flex justify-content-between">
+            <h1>お知らせ</h1>
+            <div>
+                <a href="{{ route('お知らせ登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
+            </div>
         </div>
+    @else
+        <h1>お知らせ</h1>
     @endif
 
-    <table class="table table-responsive">
+    <table class="table table-responsive table-no-border">
         <tbody>
         @foreach ($notices as $notice)
-            <tr>
+            <tr class="mt-5">
                 <td>{{ $notice->open_at }}</td>
                 <td><a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}">{{ str_limit($notice->title, 30) }}</a></td>
                 @if (is_admin())

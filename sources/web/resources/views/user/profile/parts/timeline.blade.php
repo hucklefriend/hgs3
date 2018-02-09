@@ -1,13 +1,14 @@
 <div id="timeline">
 @foreach ($timelines as $tl)
-    <div>{{ date('Y-m-d H:i:s', intval($tl['time'])) }}</div>
-    <p>{!!  $tl['text'] !!}</p>
-    <hr>
+    <p class="mb-4">
+        {{ date('Y-m-d H:i:s', intval($tl['time'])) }}<br>
+        {!!  $tl['text'] !!}
+    </p>
 @endforeach
 </div>
 @if ($hasNext)
     <div class="text-center">
-        <button type="button" class="btn btn-default" id="more_btn">さらに読み込む</button>
+        <button type="button" class="btn" id="more_btn">さらに読み込む</button>
     </div>
 @endif
 

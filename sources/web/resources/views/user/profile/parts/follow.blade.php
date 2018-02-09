@@ -4,7 +4,7 @@
 @foreach ($follows as $f)
     @isset($users[$f->follow_user_id])
         @php $u = $users[$f->follow_user_id]; @endphp
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="p-2 align-self-center">
                 @include('user.common.icon', ['u' => $u])
                 @include('user.common.user_name', ['u' => $u])
@@ -20,7 +20,6 @@
             </div>
             @endif
         </div>
-        @if (!$loop->last) <hr> @endif
     @endisset
 @endforeach
 

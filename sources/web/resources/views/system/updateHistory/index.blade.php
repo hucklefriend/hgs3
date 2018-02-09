@@ -5,18 +5,22 @@
 @endsection
 
 @section('content')
-    <h1>システム更新履歴</h1>
 
-    @if(is_admin())
-    <div class="btn-area">
-        <a class="btn btn-sm btn-outline-dark" href="{{ route('システム更新履歴登録') }}" role="button">更新履歴の新規登録</a>
-    </div>
+    @if (is_admin())
+        <div class="d-flex justify-content-between">
+            <h1>システム更新履歴</h1>
+            <div>
+                <a href="{{ route('システム更新履歴登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
+            </div>
+        </div>
+    @else
+        <h1>システム更新履歴</h1>
     @endif
 
     <section>
-        <table id="update_history_table" class="table table-responsive">
+        <table id="update_history_table" class="table table-responsive table-no-border">
             @foreach ($histories as $history)
-                <tr>
+                <tr class="mb-5">
                     <td class="history_date">{{ $history->update_at }}</td>
                     <td><a href="{{ route('システム更新内容', ['updateHistory' => $history->id]) }}">{{ $history->title }}</a></td>
                     @if (is_admin())

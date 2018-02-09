@@ -7,10 +7,10 @@
 @section('content')
     <h1>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのページ</h1>
 
-    <div>
+    <div class="mb-5">
         @if (!$isMyself)
             @if ($isFollow)
-                <form action="{{ route('フォロー登録') }}" method="POST">
+                <form action="{{ route('フォロー解除') }}" method="POST">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
@@ -18,38 +18,36 @@
                     <button class="btn btn-danger btn-sm">解除</button>
                 </form>
             @else
-                <form action="{{ route('フォロー解除') }}" method="POST">
+                <form action="{{ route('フォロー登録') }}" method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
-                    <button class="btn btn-primary btn-sm">フォローする</button>
+                    <button class="btn btn-primary btn-sm">フォロー</button>
                 </form>
             @endif
         @endif
-    </div>
 
-    @if (!empty($user->profile))
-    <p class="profile-text">
-        自己紹介<br>
-        {!! nl2br(e($user->profile)) !!}
-    </p>
-    @endif
+        @if (!empty($user->profile))
+            <p class="profile-text">
+                自己紹介<br>
+                {!! nl2br(e($user->profile)) !!}
+            </p>
+        @endif
 
-    @if ($isMyself)
-    <div class="d-none d-sm-block">
-        <div class="d-flex">
-            <div class="btn-group" role="group" aria-label="プロフィール">
-                <a href="{{ route('アイコン変更') }}" class="btn btn-outline-dark">アイコン変更</a>
-                <a href="{{ route('プロフィール編集') }}" class="btn btn-outline-dark">プロフィール編集</a>
-                <a href="{{ route('コンフィグ') }}" class="btn btn-outline-dark">設定</a>
+        @if ($isMyself)
+            <div class="d-none d-sm-block">
+                <div class="d-flex">
+                    <div class="btn-group" role="group" aria-label="プロフィール">
+                        <a href="{{ route('アイコン変更') }}" class="btn btn-outline-dark">アイコン変更</a>
+                        <a href="{{ route('プロフィール編集') }}" class="btn btn-outline-dark">プロフィール編集</a>
+                        <a href="{{ route('コンフィグ') }}" class="btn btn-outline-dark">設定</a>
+                    </div>
+                    <div class="ml-auto">
+                        <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning">ログアウト</a>
+                    </div>
+                </div>
             </div>
-            <div class="ml-auto">
-                <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning">ログアウト</a>
-            </div>
-        </div>
+        @endif
     </div>
-    @endif
-
-    <hr>
 
     <!-- 最小表示以外はメニューと内容を表示 -->
     <div class="d-none d-sm-block">

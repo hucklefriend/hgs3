@@ -3,8 +3,9 @@
 @endif
 
 @foreach ($sites as $s)
+    <div class="mb-5">
     @include('site.common.normal', ['s' => $s, 'noUser' => true, 'showApprovalStatus' => $isMyself])
-    @if (!$loop->last) <hr> @endif
+    </div>
 @endforeach
 
 @if ($isMyself && count($sites) < env('MAX_SITES'))

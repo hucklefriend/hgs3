@@ -15,8 +15,10 @@
         </div>
         <div style="width: 100%;">
             @foreach ($timelines as $timeline)
-                {!! nl2br($timeline->text) !!}
-                <hr>
+                <p class="mb-4">
+                    {{ date('Y-m-d H:i', $timeline->time) }}<br>
+                    {!! nl2br($timeline->text) !!}
+                </p>
             @endforeach
         </div>
     </div>

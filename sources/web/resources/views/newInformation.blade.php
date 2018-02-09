@@ -8,7 +8,7 @@
     <h1>新着情報</h1>
 
     @foreach ($newInfo as $nf)
-        <div>
+        <div class="mb-5">
             {{ $nf->open_at }}<br>
             @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
                 <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
@@ -17,7 +17,6 @@
             @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
                 <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
             @endif
-            <hr>
         </div>
     @endforeach
 
