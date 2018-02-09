@@ -4,7 +4,6 @@
  */
 
 namespace Hgs3\Models\VersionUp;
-use Illuminate\Support\Facades\DB;
 
 class Master
 {

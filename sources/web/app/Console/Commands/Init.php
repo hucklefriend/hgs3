@@ -2,7 +2,6 @@
 
 namespace Hgs3\Console\Commands;
 
-use Hgs3\Models\Community\UserCommunity;
 use Hgs3\Models\MongoDB\Collection;
 use Hgs3\Models\VersionUp\Master;
 use Illuminate\Console\Command;

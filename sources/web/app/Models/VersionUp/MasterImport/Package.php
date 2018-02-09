@@ -105,8 +105,8 @@ class Package extends MasterImportAbstract
                                 DB::table('game_package_shops')
                                     ->insert([
                                         'package_id' => $package->id,
-                                        'shop_id' => $shopId,
-                                        'shop_url' => $shopUrl
+                                        'shop_id'    => $shopId,
+                                        'shop_url'   => $shopUrl
                                     ]);
                             }
                         }
@@ -120,8 +120,8 @@ class Package extends MasterImportAbstract
                             DB::table('game_package_shops')
                                 ->insert([
                                     'package_id' => $package->id,
-                                    'shop_id' => $shopId,
-                                    'shop_url' => $pkg['shop_url']
+                                    'shop_id'    => $shopId,
+                                    'shop_url'   => $pkg['shop_url']
                                 ]);
                         }
                     }

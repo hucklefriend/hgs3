@@ -45,4 +45,15 @@ class Shop
 
         return null;
     }
+
+    /**
+     * 名称を取得
+     *
+     * @param $id
+     * @return string
+     */
+    public static function getName($id)
+    {
+        return self::$names[$id] ?? '';
+    }
 }
