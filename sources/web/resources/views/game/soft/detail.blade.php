@@ -132,7 +132,7 @@
                                         <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}" class="btn btn-sm btn-outline-info">編集</a><br>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <form method="POST" action="{{ route('パッケージ削除処理', ['package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
+                                        <form method="POST" action="{{ route('パッケージ削除処理', ['soft' => $soft->id, 'package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <button type="submit" class="btn btn-danger btn-sm">削除</button>
@@ -169,7 +169,8 @@
                                             <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}" class="btn btn-sm btn-outline-info">編集</a><br>
                                         </div>
                                         <div class="col-6 text-right">
-                                            <form method="POST" action="{{ route('パッケージ削除処理', ['package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
+                                            <form method="POST" action="{{ route('パッケージ削除処理', ['soft' => $soft->id, 'package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
+                                                {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
                                                 <button type="submit" class="btn btn-danger btn-sm">削除</button>
                                             </form>

@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Game\GamePackageRequest;
+use Hgs3\Models\Game\Package;
 use Hgs3\Models\Orm;
 
 class PackageController extends Controller
@@ -14,13 +15,13 @@ class PackageController extends Controller
     /**
      * 追加画面
      *
-     * @param Orm\GameSoft $gameSoft
+     * @param Orm\GameSoft $soft
      * @return $this
      */
-    public function add(Orm\GameSoft $gameSoft)
+    public function add(Orm\GameSoft $soft)
     {
         return view('game.package.add')->with([
-            'gameSoft' => $gameSoft
+            'soft' => $soft
         ]);
     }
 
@@ -28,43 +29,42 @@ class PackageController extends Controller
      * 登録
      *
      * @param GamePackageRequest $request
-     * @param Orm\GameSoft $gameSoft
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function insert(GamePackageRequest $request, Orm\GameSoft $gameSoft)
+    public function insert(GamePackageRequest $request, Orm\GameSoft $soft)
     {
-        // TODO GamePackageRequestの実装
-
         $pkg = new Orm\GamePackage;
 
-        $pkg->soft_id = $gameSoft->id;
         $pkg->platform_id = $request->get('platform_id');
         $pkg->company_id = $request->get('company_id');
-        $pkg->name = $request->get('name') ?? '';
-        $pkg->url = $request->get('url') ?? '';     // TODO: ない時はnullにする
-        $pkg->release_at = $request->get('release_at') ?? '';       // TODO: ない時はnullにする
-        $pkg->release_int = $request->get('release_int') ?? 0;
-        $pkg->game_type_id = $request->get('game_type');
+        $pkg->name = $request->get('name', '');
+        $pkg->url = $request->get('url');
+        $pkg->release_at = $request->get('release_at', '');
+        $pkg->release_int = $request->get('release_int', 99999999);
 
-        // ASINを見てamazon情報を取得する
+        Package::insert($soft, $pkg, $request->get('asin'));
 
-        $pkg->save();
-
-        return redirect('game/soft/' . $game->id);
+        return redirect()->route('ゲーム詳細', ['soft' => $soft]);
     }
 
     /**
      * パッケージ編集画面
      *
-     * @param Orm\GameSoft $game
-     * @param Orm\GamePackage $pkg
+     * @param Orm\GameSoft $soft
+     * @param Orm\GamePackage $package
      * @return $this
      */
-    public function edit(Orm\GameSoft $game, Orm\GamePackage $pkg)
+    public function edit(Orm\GameSoft $soft, Orm\GamePackage $package)
     {
-        return view('game.package.edit')->with([
-            'game' => $game,
-            'pkg'  => $pkg
+        // TODO ソフトとパッケージの紐づけチェック
+
+        $package->setShop();
+
+        return view('game.package.edit', [
+            'soft'    => $soft,
+            'package' => $package
         ]);
     }
 
@@ -72,37 +72,40 @@ class PackageController extends Controller
      * パッケージ編集
      *
      * @param GamePackageRequest $request
-     * @param Orm\GameSoft $gameSoft
-     * @param Orm\GamePackage $gamePackage
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Orm\GameSoft $soft
+     * @param Orm\GamePackage $package
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function update(GamePackageRequest $request, Orm\GameSoft $gameSoft, Orm\GamePackage $gamePackage)
+    public function update(GamePackageRequest $request, Orm\GameSoft $soft, Orm\GamePackage $package)
     {
-        $gamePackage->platform_id = $request->get('platform_id');
-        $gamePackage->company_id = $request->get('company_id');
-        $gamePackage->name = $request->get('name') ?? '';
-        $gamePackage->url = $request->get('url') ?? '';     // TODO: ない時はnullにする
-        $gamePackage->release_at = $request->get('release_at') ?? '';       // TODO: ない時はnullにする
-        $gamePackage->release_int = $request->get('release_int') ?? 0;
-        $gamePackage->game_type_id = $request->get('game_type');
+        // TODO ソフトとパッケージの紐づけチェック
 
-        $gamePackage->save();
+        $package->platform_id = $request->get('platform_id');
+        $package->company_id = $request->get('company_id');
+        $package->name = $request->get('name', '');
+        $package->url = $request->get('url');
+        $package->release_at = $request->get('release_at');
+        $package->release_int = $request->get('release_int', 99999999);
 
-        return redirect('game/soft/' . $gameSoft->id);
+        Package::update($soft, $package, $request->get('asin'));
+
+        return redirect()->route('ゲーム詳細', ['soft' => $soft->id]);
     }
 
     /**
      * パッケージ削除
      *
-     * @param Orm\GamePackage $gamePackage
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Orm\GameSoft $soft
+     * @param Orm\GamePackage $package
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function remove(Orm\GamePackage $gamePackage)
+    public function delete(Orm\GameSoft $soft, Orm\GamePackage $package)
     {
-        $gameId = $gamePackage->soft_id;
+        // TODO ソフトとパッケージの紐づけチェック
 
-        $gamePackage->delete();
-
-        return redirect('game/soft/' . $gameId);
+        Package::delete($soft, $package);
+        return redirect()->route('ゲーム詳細', ['soft' => $soft->id]);
     }
 }

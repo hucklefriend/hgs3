@@ -1,58 +1,32 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('ゲーム詳細', ['soft' => $soft->id]) }}"><i class="fas fa-angle-left"></i></a>
+@endsection
+
 @section('content')
-    <h4>{{ $gameSoft->name }}のパッケージ編集</h4>
+    <h1>{{ $soft->name }}のパッケージ編集</h1>
 
-    <nav style="margin-bottom: 20px;">
-        <a href="{{ url('game/soft/' . $gameSoft->id }}">データ詳細に戻る</a>
-    </nav>
-
-    <form method="POST">
+    <form method="POST" method="{{ route('パッケージ編集処理', ['soft' => $soft->id, 'package' => $package->id]) }}" autocomplete="off">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
 
-        <div class="form-group">
-            <label for="name">名称</label>
-            <input type="text" class="form-control" id="name" value="{{ $pkg->name }}" name="name">
-        </div>
-
-        <div class="form-group">
-            <label for="phonetic">プラットフォーム</label>
-            {{ platform_select($pkg->platform_id) }}
-        </div>
-
-        <div class="form-group">
-            <label for="company_id">メーカー</label>
-            {{ company_select($pkg->company_id, true) }}
-        </div>
-
-        <div class="form-group">
-            <label for="url">公式サイト</label>
-            <input type="text" class="form-control" id="url" value="{{ $pkg->url }}" name="url">
-        </div>
-
-        <div class="form-group">
-            <label for="release_at">発売日</label>
-            <input type="text" class="form-control" id="release_at" value="{{ $pkg->release_at }}" name="release_at">
-        </div>
-
-        <div class="form-group">
-            <label for="release_int">発売日(数値)</label>
-            <input type="text" class="form-control" id="release_int" value="{{ $pkg->release_id }}" name="release_int">
-        </div>
-
-        <div class="form-group">
-            <label for="release_int">ゲーム区分</label>
-            {{ game_type_select($pkg->game_type_id) }}
-        </div>
-
-        <div class="form-group">
-            <label for="asin">ASIN</label>
-            <input type="text" class="form-control" id="asin" value="{{ $pkg->asin }}" name="asin">
-        </div>
+        @include('game.package.form', ['soft' => $soft, 'package' => $package])
 
         <div class="form-group">
             <button class="btn btn-primary">更新</button>
         </div>
     </form>
+@endsection
+
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('ゲーム詳細', ['soft' => $soft->id]) }}">詳細</a></li>
+            <li class="breadcrumb-item active" aria-current="page">パッケージ編集</li>
+        </ol>
+    </nav>
 @endsection

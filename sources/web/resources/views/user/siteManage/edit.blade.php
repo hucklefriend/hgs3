@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
+@section('global_back_link')
+    <a href="{{ route('サイト詳細', ['site' => $site->id]) }}"><i class="fas fa-angle-left"></i></a>
+@endsection
+
 @section('content')
 
     @foreach ($errors->all() as $msg)
         {{ $msg }}<br>
     @endforeach
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('サイト編集処理', ['site' => $site->id]) }}">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
 
@@ -249,4 +253,15 @@
 
 @section('outsideContent')
     @include('user.siteManage.common.handleSoftSelect')
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('サイト編集', ['site' => $site->id]) }}">編集</a></li>
+            <li class="breadcrumb-item active" aria-current="page">編集</li>
+        </ol>
+    </nav>
 @endsection

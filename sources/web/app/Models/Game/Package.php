@@ -6,11 +6,143 @@
 namespace Hgs3\Models\Game;
 
 use Hgs3\Constants\Game\Shop;
+use Hgs3\Log;
 use Hgs3\Models\Game\Shop\Amazon;
 use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Orm;
 
 class Package
 {
+    /**
+     * データ登録
+     *
+     * @param Orm\GameSoft $soft
+     * @param Orm\GamePackage $package
+     * @param string $asin
+     * @throws \Exception
+     */
+    public static function insert(Orm\GameSoft $soft, Orm\GamePackage $package, $asin)
+    {
+        $amazonData = null;
+        if (!empty($asin)) {
+            $amazonData = Amazon::getData($asin);
+            if (!empty($amazonData)) {
+                $package->setImageByAmazon($amazonData);
+            }
+        }
+
+        DB::beginTransaction();
+        try {
+            $package->save();
+            self::link($soft, $package);
+
+            if (!empty($asin)) {
+                if (!empty($amazonData)) {
+                    self::saveShop($package->id, Shop::AMAZON, $amazonData['shop_url'], $asin);
+                } else {
+                    self::saveShop($package->id, Shop::AMAZON, '', $asin);
+                }
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+        }
+    }
+
+    /**
+     * データ更新
+     *
+     * @param Orm\GameSoft $soft
+     * @param Orm\GamePackage $package
+     * @param string $asin
+     * @throws \Exception
+     */
+    public static function update(Orm\GameSoft $soft, Orm\GamePackage $package, $asin)
+    {
+        $amazonData = null;
+        if (!empty($asin)) {
+            $amazonData = Amazon::getData($asin);
+            if (!empty($amazonData)) {
+                $package->setImageByAmazon($amazonData);
+            }
+        }
+
+        DB::beginTransaction();
+        try {
+            // ショップ情報を一回削除
+            Orm\GamePackageShop::where('package_id', $package->id)
+                ->delete();
+
+            $package->save();
+            if (!empty($asin)) {
+                if (!empty($amazonData)) {
+                    self::saveShop($package->id, Shop::AMAZON, $amazonData['shop_url'], $asin);
+                } else {
+                    self::saveShop($package->id, Shop::AMAZON, '', $asin);
+                }
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+        }
+    }
+
+    /**
+     * パッケージ削除
+     *
+     * @param Orm\GameSoft $soft
+     * @param Orm\GamePackage $package
+     * @throws \Exception
+     */
+    public static function delete(Orm\GameSoft $soft, Orm\GamePackage $package)
+    {
+        DB::beginTransaction();
+        try {
+            // ショップ情報を削除
+            Orm\GamePackageShop::where('package_id', $package->id)
+                ->delete();
+
+            // ソフトとの関連付けを削除
+            Orm\GamePackageLink::where('soft_id', $soft->id)
+                ->where('package_id', $package->id)
+                ->delete();
+
+            // TODO レビューの削除
+            // TODO 遊んだゲームの削除
+
+            // パッケージを削除
+            $package->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+        }
+    }
+
+    /**
+     * パッケージとソフトの関連付け
+     *
+     * @param Orm\GameSoft $soft
+     * @param Orm\GamePackage $package
+     */
+    public static function link(Orm\GameSoft $soft, Orm\GamePackage $package)
+    {
+        $sql =<<< SQL
+INSERT IGNORE INTO game_package_links (
+  soft_id, package_id, sort_order, created_at, updated_at
+) VALUES (
+  ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+)
+SQL;
+
+        DB::insert($sql, [$soft->id, $package->id, $package->release_int]);
+    }
+
     /**
      * パッケージのショップデータを取得
      *

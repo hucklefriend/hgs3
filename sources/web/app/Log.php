@@ -121,10 +121,6 @@ class Log extends \Illuminate\Support\Facades\Log
     {
         self::error($e->getMessage());
         self::error($e->getTraceAsString());
-
-
-        if (env('APP_ENV') == 'local') {
-            throw $e;
-        }
+        throw $e;
     }
 }
