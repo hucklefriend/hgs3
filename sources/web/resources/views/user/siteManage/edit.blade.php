@@ -245,6 +245,8 @@
         </div>
     </form>
 
-    @include('site.common.handleSoftSelect')
+@endsection
 
+@section('outsideContent')
+    @include('user.siteManage.common.handleSoftSelect')
 @endsection

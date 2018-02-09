@@ -34,7 +34,14 @@ class Site
     {
         $isAdd = $site->id === null;
 
-        $handleSoftIds = explode(',', $site->handle_soft);
+        // カンマ区切りを配列にしてくれるっぽい？
+        if (is_array($site->handle_soft)) {
+            $handleSoftIds = $site->handle_soft;
+            $site->handle_soft = implode(',', $site->handle_soft);
+        } else {
+            $handleSoftIds = explode(',', $site->handle_soft);
+        }
+
 
         if (!$isAdd) {
             // タイムライン用に現在の取扱いゲームを取得
@@ -114,17 +121,19 @@ class Site
                 }
             }
         } else {
-            // サイト更新タイムライン
-            Timeline\FollowUser::addUpdateSiteText($user, $site);
-            Timeline\ToMe::addSiteUpdatedText($user, $site);
-            Timeline\FavoriteSite::addUpdateSiteText($site);
-            Timeline\Site::addUpdateText($site);
+            if ($site->approval_status == ApprovalStatus::OK) {
+                // サイト更新タイムライン
+                Timeline\FollowUser::addUpdateSiteText($user, $site);
+                Timeline\ToMe::addSiteUpdatedText($user, $site);
+                Timeline\FavoriteSite::addUpdateSiteText($site);
+                Timeline\Site::addUpdateText($site);
 
-            // 直前に取り扱ってないゲームを追加
-            $softHash = Orm\GameSoft::getHash($handleSoftIds);
-            foreach ($handleSoftIds as $softId) {
-                if (!isset($prevHandleSoftIds[$softId]) && isset($softHash[$softId])) {
-                    Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
+                // 直前に取り扱ってないゲームを追加
+                $softHash = Orm\GameSoft::getHash($handleSoftIds);
+                foreach ($handleSoftIds as $softId) {
+                    if (!isset($prevHandleSoftIds[$softId]) && isset($softHash[$softId])) {
+                        Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
+                    }
                 }
             }
         }

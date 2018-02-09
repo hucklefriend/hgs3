@@ -1,63 +1,18 @@
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="handle_soft_dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">取扱いゲーム選択</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div class="modal-body">
-                <div class="d-none d-sm-block">
-                    <ul class="nav nav-tabs text-center" id="handle_soft_tab">
-                        <li class="nav-item">
-                            <a class="nav-link active soft_tab" href="#" id="handle_softs_tab_agyo" data-target="agyo">あ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_kagyo" data-target="kagyo">か</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_sagyo" data-target="sagyo">さ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_tagyo" data-target="tagyo">た</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_nagyo" data-target="nagyo">な</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_hagyo" data-target="hagyo">は</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_magyo" data-target="magyo">ま</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_yagyo" data-target="yagyo">や</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_ragyo" data-target="ragyo">ら</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link soft_tab" href="#" id="handle_softs_tab_wagyo" data-target="wagyo">わ</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="d-sm-none">
-                    <div class="form-inline">
-                        <select class="form-control" id="gyo_select">
-                            <option value="agyo">あ</option>
-                            <option value="kagyo">か</option>
-                            <option value="sagyo">さ</option>
-                            <option value="tagyo">た</option>
-                            <option value="nagyo">な</option>
-                            <option value="hagyo">は</option>
-                            <option value="magyo">ま</option>
-                            <option value="yagyo">や</option>
-                            <option value="ragyo">ら</option>
-                            <option value="wagyo">わ</option>
-                        </select>
-                    </div>
+                <div class="d-flex flex-wrap" id="handle_soft_tab">
+                    <a class="btn btn-outline-secondary active soft_tab" href="#" data-target="agyo" id="handle_softs_tab_agyo">あ</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="kagyo" id="handle_softs_tab_kagyo">か</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="sagyo" id="handle_softs_tab_sagyo">さ</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="tagyo" id="handle_softs_tab_tagyo">た</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="nagyo" id="handle_softs_tab_nagyo">な</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="hagyo" id="handle_softs_tab_hagyo">は</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="magyo" id="handle_softs_tab_magyo">ま</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="yagyo" id="handle_softs_tab_yagyo">や</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="ragyo" id="handle_softs_tab_ragyo">ら</a>
+                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="wagyo" id="handle_softs_tab_wagyo">わ</a>
                 </div>
 
                 @php
@@ -66,7 +21,7 @@
 
                 @for ($phonicType = 1; $phonicType <= 10; $phonicType++)
                     <div id="handle_softs_{{ $phonetics[$phonicType] }}gyo" class="handle_soft_tab @if ($phonicType == 1) active @endif ">
-                        <div class="container-fluid p-3" style="overflow-y: scroll; height: 300px;">
+                        <div class="container-fluid p-3">
                             @if (isset($softs[$phonicType]))
                                 @foreach ($softs[$phonicType] as $soft)
                                     <ul class="list-inline">
@@ -100,26 +55,40 @@
         display: block;
     }
 
-    #handle_soft_tab .nav-link {
-        padding: 12px !important;
+    #handle_soft_tab a{
+        margin-right: 5px;
+        margin-bottom: 3px;
+    }
+    #handle_soft_tab a:last-child {
+        margin-right: 0;
     }
 </style>
 
 <script>
     $(function (){
+        let scrollPos = 0;
         let handleSofts = $('#handle_soft').val();
         if (handleSofts.length > 0) {
             let softs = handleSofts.split(',');
-            let txt = '';
+            let html = '';
             softs.forEach(function (currentValue, index, array){
-                txt += $('#handle_soft_check_' + currentValue).next('span').text() + '、';
+                let softName = $('#handle_soft_check_' + currentValue).next('span').text();
+                if (softName.length > 0) {
+                    html += '<span class="site-selected-game border rounded">' + softName + '</span>';
+                }
             });
-            if (txt.length > 0) {
-                txt = txt.slice(0, -1);
-            }
 
-            $('#selected_soft').text(txt);
+            $('#selected_soft').html(html);
         }
+
+        $('#handle_soft_dialog').on('hide.bs.modal', function (e) {
+            scrollPos = $(window).scrollTop();
+            $('html').removeClass('is-fixed');
+        });
+        $('#handle_soft_dialog').on('show.bs.modal', function (e) {
+            $(window).scrollTop(scrollPos);
+            $('html').addClass('is-fixed');
+        });
 
         $('#select_handle_soft').click(function (){
             // TODO 現在の選択にチェック
@@ -165,18 +134,21 @@
         $('#handle_soft_ok').click(function (){
             $('#handle_soft_dialog').modal('hide');
 
-            let txt = '';
+            let html = '';
             let val = '';
             $('.handle_soft_check:checked').each(function (){
-                txt += $(this).next('span').text()+'、';
-                val += $(this).val() + ',';
+                let softName = $(this).next('span').text();
+
+                if (softName.length > 0) {
+                    html += '<span class="site-selected-game border rounded">' + softName + '</span>';
+                    val += $(this).val() + ',';
+                }
             });
-            if (txt.length > 0) {
-                txt = txt.slice(0, -1);
+            if (val.length > 0) {
                 val = val.slice(0, -1);
             }
 
-            $('#selected_soft').text(txt);
+            $('#selected_soft').html(html);
             $('#handle_soft').val(val);
         });
     });

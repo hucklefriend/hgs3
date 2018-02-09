@@ -6,6 +6,7 @@
 
 namespace Hgs3\Http\Controllers\User;
 
+use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Constants\Site\Gender;
 use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
@@ -227,6 +228,10 @@ class SiteManageController extends Controller
 
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
+
+        if ($site->approval_status == ApprovalStatus::REJECT) {
+            $site->approval_status = ApprovalStatus::WAIT;
+        }
 
         if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner, false)) {
             session(['se' => 1]);

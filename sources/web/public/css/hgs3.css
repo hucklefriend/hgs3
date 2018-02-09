@@ -412,6 +412,15 @@ a.good-icon:hover, .good-icon2 {
     border:none !important;
 }
 
+.site-selected-game {
+    margin: 5px;
+    padding: 4px;
+    font-size: 0.8rem;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
 
 #game_tab {
     margin-bottom: 10px;
@@ -419,6 +428,12 @@ a.good-icon:hover, .good-icon2 {
 #game_tab a {
     margin-bottom: 10px;
     margin-right: 3px;
+}
+
+html.is-fixed,
+html.is-fixed body {
+    height: 100%;
+    overflow: hidden;
 }
 
 @media (min-width: 576px) {

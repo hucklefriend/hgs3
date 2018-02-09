@@ -67,7 +67,7 @@
         </div>
     </nav>
 </div>
-<div class="container-fluid" style="padding-bottom: 40px;">
+<div class="container-fluid" style="padding-bottom: 40px;" id="main_content">
     @yield('content')
 </div>
 
@@ -85,6 +85,8 @@
         </div>
     </div>
 </footer>
+
+@yield('outsideContent')
 
 </body>
 </html>

@@ -1,35 +1,35 @@
 <div class="form-group">
     <label for="name">サイト名</label>
-    <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}">
+    <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}" placeholder="サイト名">
     @include('common.error', ['formName' => 'name'])
 </div>
 <div class="form-group">
     <label for="url">URL</label>
-    <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}">
+    <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}" placeholder="サイトのURL">
     @include('common.error', ['formName' => 'url'])
 </div>
 <div class="form-group">
     <label for="open_type">公開範囲</label>
-
     @foreach (\Hgs3\Constants\Site\OpenType::getData() as $openType => $openTypeText)
-
         <div class="form-check">
             <label class="form-check-label">
                 <input type="radio" class="form-check-input" name="open_type" id="open_type{{ $loop->index }}" value="{{ $openType }}"{{ checked($openType, old('open_type', $site->open_type)) }}>
                 {{ $openTypeText }}
             </label>
         </div>
-
     @endforeach
+    <small class="form-text text-danger">
+        公開範囲は現在実装していません。設定しても、常に全体に公開されます。
+    </small>
 </div>
 <div class="form-group">
-    <label for="title">取扱いゲーム</label>
+    <label for="title">ゲーム</label>
     @if ($errors->has('handle_soft'))
-        <button type="button" class="btn btn-danger" id="select_handle_soft">ゲームを選択する</button>
+        <button type="button" class="btn btn-sm btn-outline-danger ml-3" id="select_handle_soft">選択する</button>
     @else
-        <button type="button" class="btn btn-default" id="select_handle_soft">ゲームを選択する</button>
+        <button type="button" class="btn btn-sm btn-outline-info ml-3" id="select_handle_soft">選択する</button>
     @endif
-    <p id="selected_soft"></p>
+    <div id="selected_soft" class="d-flex flex-wrap"></div>
     <input type="hidden" name="handle_soft" value="{{ old('handle_soft', $site->handle_soft) }}" id="handle_soft">
     @if ($errors->has('handle_soft'))
         <p class="text-danger">
@@ -46,17 +46,7 @@
 </div>
 <div class="form-group">
     <label for="main_contents">メインコンテンツ</label>
-
-    @foreach (\Hgs3\Constants\Site\MainContents::getData() as $mcId => $mcName)
-
-    <div class="form-check">
-        <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="main_contents" id="main_contents{{ $loop->index }}" value="{{ $mcId }}"{{ checked($mcId, old('main_contents', $site->main_contents_id)) }}>
-            {{ $mcName }}
-        </label>
-    </div>
-
-    @endforeach
+    {{ Form::select('main_contents', \Hgs3\Constants\Site\MainContents::getData(), old('main_contents', $site->main_contents_id), ['class' => 'form-control']) }}
 </div>
 <div class="form-group">
     <label for="presentation">紹介文</label>
