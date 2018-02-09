@@ -5,10 +5,7 @@
 @endsection
 
 @section('content')
-
     <h1>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのサイト</h1>
-
-    <hr>
 
     @include('user.profile.parts.site', ['sites' => $sites, 'hasHgs2Site' => $hasHgs2Site])
 @endsection

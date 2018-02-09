@@ -267,7 +267,7 @@ a:active .no-image-text-inner {
 
 h1 {
     font-size: 1.3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 h2 {
@@ -340,6 +340,14 @@ a.good-icon:hover, .good-icon2 {
 .package-list {
     display: flex;
     flex-wrap: wrap;
+}
+
+.site-badge span {
+    margin-right: 10px;
+}
+
+.site-badge span:last-child {
+    margin-right: 0px;
 }
 
 .package-card {

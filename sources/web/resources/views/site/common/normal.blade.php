@@ -1,17 +1,24 @@
 <div>
-    <div class="d-flex flex-wrap-reverse">
-        <div style="margin-right: 20px;">
-            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
-        </div>
-        <div>
-            <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\MainContents::getText($s->main_contents_id) }}</span>
-        @if ($s->rate > 0)
-            <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\Rate::getText($s->rate) }}</span>
+    <div class="d-flex flex-wrap site-badge">
+    @if (isset($showApprovalStatus) && $showApprovalStatus)
+        @if ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
+            <span class="badge badge-success">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
+        @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
+            <span class="badge badge-danger">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
+        @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
+            <span class="badge badge-secondary">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
         @endif
-        @if ($s->gender != \Hgs3\Constants\Site\Gender::NONE)
-            <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\Gender::getText($s->gender) }}</span>
-        @endif
-        </div>
+    @endif
+        <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\MainContents::getText($s->main_contents_id) }}</span>
+    @if ($s->rate > 0)
+        <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\Rate::getText($s->rate) }}</span>
+    @endif
+    @if ($s->gender != \Hgs3\Constants\Site\Gender::NONE)
+        <span class="badge badge-pill badge-secondary">{{ \Hgs3\Constants\Site\Gender::getText($s->gender) }}</span>
+    @endif
+    </div>
+    <div>
+        <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
     </div>
     @if (!empty($s->list_banner_url))
         <div class="list-site-banner-outline">

@@ -3,18 +3,7 @@
 @endif
 
 @foreach ($sites as $s)
-    @if ($isMyself)
-    <div>
-        @if ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
-        <span class="badge badge-success">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
-        @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
-        <span class="badge badge-danger">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
-        @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
-        <span class="badge badge-secondary">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
-        @endif
-    </div>
-    @endif
-    @include('site.common.normal', ['s' => $s, 'noUser' => true])
+    @include('site.common.normal', ['s' => $s, 'noUser' => true, 'showApprovalStatus' => $isMyself])
     @if (!$loop->last) <hr> @endif
 @endforeach
 
