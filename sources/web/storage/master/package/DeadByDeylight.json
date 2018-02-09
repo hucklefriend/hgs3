@@ -1,0 +1,27 @@
+{
+  "soft_name": ["Dead by Daylight"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "Starbreeze",
+      "name": "Dead by Daylight",
+      "release_at": "2016年6月",
+      "release_int": 20160601,
+      "url":"http://www.deadbydaylight.com/",
+      "game_type_id": 1,
+      "shop": "Steam",
+      "asin": "http://store.steampowered.com/app/381210/Dead_by_Daylight/"
+    },
+    {
+      "platform": "PC",
+      "company": "Starbreeze",
+      "name": "Dead by Daylight: スペシャルエディション",
+      "release_at": "2016年6月",
+      "release_int": 20160601,
+      "url":"http://www.deadbydaylight.com/",
+      "game_type_id": 1,
+      "shop": "Microsoft ストア",
+      "asin": "https://www.microsoft.com/ja-jp/store/p/Dead-by-Daylight-Special-Edition/C0N22P73QZ60?rtc=1"
+    }
+  ]
+}

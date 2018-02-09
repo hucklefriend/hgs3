@@ -2,26 +2,26 @@
   "soft_name": ["WHITEDAY～学校という名の迷宮～"],
   "packages":[
     {
-      "platform": "Vita",
-      "company": "エクスペリエンス",
-      "name": "死印",
-      "release_at": "2017年6月1日",
-      "release_int": 20170601,
-      "url":"http://shiin.jp/",
+      "platform": "PS4",
+      "company": "アークシステムワークス",
+      "name": "WHITEDAY～学校という名の迷宮～",
+      "release_at": "2017年8月24日",
+      "release_int": 20170824,
+      "url":"http://www.arcsystemworks.jp/whiteday/",
       "game_type_id": 1,
       "shop": "amazon",
-      "asin": "B06WWQY414"
+      "asin": "B071WBL7LJ"
     },
     {
-      "platform": "Vita",
-      "company": "エクスペリエンス",
-      "name": "死印",
-      "release_at": "2017年6月1日",
-      "release_int": 20170601,
-      "url":"http://shiin.jp/",
+      "platform": "PS4",
+      "company": "アークシステムワークス",
+      "name": "WHITEDAY～学校という名の迷宮～ DL版",
+      "release_at": "2017年8月24日",
+      "release_int": 20170824,
+      "url":"http://www.arcsystemworks.jp/whiteday/",
       "game_type_id": 1,
       "shop": "PlayStation Store",
-      "shop_url": "https://store.playstation.com/#!/ja-jp/%e6%ad%bb%e5%8d%b0(ps-vita)/cid=JP0091-PCSG01005_00-EXPHORROR2017HRV"
+      "asin": "https://store.playstation.com/ja-jp/product/JP0036-CUSA09022_00-WHITEDAY1JP00000?smcid=jGMpsnGameTOP_0007"
     }
   ]
 }
