@@ -131,6 +131,11 @@ class SiteManageController extends Controller
         // 引き継ぎの場合は登録日と、アクセスカウントをコピー
         $hgs2SiteId = $request->get('hgs2_site_id', 0);
         if ($hgs2SiteId > 0) {
+            // 本人しか引き継げない
+            if (!Site\TakeOver::isOwner(Auth::user(), $hgs2SiteId)) {
+                return $this->forbidden(['site_id' => $hgs2SiteId]);
+            }
+
             $hgs2Site = Site\TakeOver::getHgs2Site(Auth::user(), $hgs2SiteId);
             if ($hgs2Site != null) {
                 $site->in_count = $hgs2Site->in;
@@ -165,7 +170,7 @@ class SiteManageController extends Controller
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
 
-        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner, $isTakeOver)) {
+        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner, $isTakeOver, $hgs2SiteId)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         } else {

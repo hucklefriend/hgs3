@@ -27,10 +27,11 @@ class Site
      * @param UploadedFile|null $listBanner
      * @param UploadedFile|null $detailBanner
      * @param bool $isTakeOver
+     * @param int|null $hgs2SiteId
      * @return bool
      * @throws \Exception
      */
-    public static function save(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isTakeOver)
+    public static function save(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isTakeOver, $hgs2SiteId = 0)
     {
         $isAdd = $site->id === null;
 
@@ -41,7 +42,6 @@ class Site
         } else {
             $handleSoftIds = explode(',', $site->handle_soft);
         }
-
 
         if (!$isAdd) {
             // タイムライン用に現在の取扱いゲームを取得
@@ -78,6 +78,9 @@ class Site
 
                         // 検索インデックスへの登録
                         self::saveSearchIndex($site, $handleSoftIds);
+
+                        // 日別アクセス数のコピー
+                        self::takeOverDailyAccess($site->id, $hgs2SiteId);
                     }
 
                     // 新規登録の場合、認証が必要なので検索インデックスへは登録しない
@@ -273,6 +276,30 @@ SQL;
                 $hash[$softId] = 1;
             }
         }
+    }
+
+    /**
+     * 日別アクセス数をコピー
+     *
+     * @param $siteId
+     * @param $hgs2SiteId
+     */
+    private static function takeOverDailyAccess($siteId, $hgs2SiteId)
+    {
+        $sql =<<< SQL
+INSERT INTO site_daily_accesses
+  (site_id, `date`, in_count, out_count, created_at, updated_at)
+SELECT
+  site_id, FROM_UNIXTIME(`day`, '%Y%m%d'), `out`, `in`, FROM_UNIXTIME(registered_date), FROM_UNIXTIME(updated_date)
+FROM
+  hgs2.hgs_g_company
+ON DUPLICATE KEY UPDATE
+  `out` = VALUES(`out_count`)
+  , `in` = VALUES(`in_count`)
+  , `updated_at` = VALUES(`updated_at`)
+SQL;
+
+        DB::insert($sql, [$hgs2SiteId, $siteId]);
     }
 
     /**
