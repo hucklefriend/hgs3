@@ -13,6 +13,7 @@
             <div class="user-name-big">
                 @include('user.common.icon', ['u' => $users[$favoriteUser->user_id]])
                 @include('user.common.user_name', ['u' => $users[$favoriteUser->user_id]])
+                <span style="font-size: 1rem;">{{ follow_status_icon($followStatus, $favoriteUser->user_id) }}</span>
             </div>
             <div>
                 {{ format_date($favoriteUser->register_timestamp) }}登録

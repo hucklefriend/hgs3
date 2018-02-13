@@ -23,12 +23,20 @@ class FavoriteSoftController extends Controller
     {
         $favoriteUsers = Orm\UserFavoriteSoft::select(['user_id', DB::raw('UNIX_TIMESTAMP(created_at) AS register_timestamp')])
             ->where('soft_id', $soft->id)
+            ->orderBy('id', 'DESC')
             ->paginate(20);
+
+        $userIds = page_pluck($favoriteUsers, 'user_id');
+        $followStatus = [];
+        if (!empty($userIds) && Auth::check()) {
+            $followStatus = User\Follow::getFollowStatus(Auth::id(), $userIds);
+        }
 
         return view('game.favoriteSoft.index')->with([
             'soft'          => $soft,
             'favoriteUsers' => $favoriteUsers,
-            'users'         => User::getHash(page_pluck($favoriteUsers, 'user_id'))
+            'users'         => User::getHash($userIds),
+            'followStatus'  => $followStatus
         ]);
     }
 }

@@ -296,3 +296,9 @@ function format_date($unix_timestamp)
 {
     return date('Y年n月j日 G時', $unix_timestamp) . intval(date('i', $unix_timestamp)) . '分';
 }
+
+function follow_status_icon(array $followStatus, $targetUserId)
+{
+    return new \Illuminate\Support\HtmlString(\Hgs3\Constants\FollowStatus::getIcon($followStatus[$targetUserId] ?? \Hgs3\Constants\FollowStatus::NONE));
+}
+
