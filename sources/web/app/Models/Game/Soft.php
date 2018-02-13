@@ -76,22 +76,30 @@ SQL;
         $data['reviewTotal'] = Orm\ReviewTotal::find($soft->id);
 
         // お気に入り登録ユーザー
-        //$data['favorite'] = self::getFavoriteUser($soft->id);
+        $data['favorites'] = self::getFavoriteUser($soft->id);
         $data['favoriteNum'] = Orm\UserFavoriteSoft::where('soft_id', $soft->id)->count(['user_id']);
+        $data['followStatus'] = [];
+        if (!empty($data['favorite']) && Auth::check()) {
+            $data['followStatus'] = User\Follow::getFollowStatus(Auth::id(), array_pluck($data['favorite'], 'user_id'));
+        }
 
         // サイト
         $data['site'] = self::getSite($soft->id);
-        $data['siteUsers'] = User::getHash(array_pluck($data['site'], 'user_id'));
         $data['siteNum'] = Orm\SiteSearchIndex::where('soft_id', $soft->id)->count(['site_id']);
 
         // 遊んだゲーム
-        $data['playedUsers'] = self::getPlayedUsers($soft->id);
+        $data['playedUsers'] = [];//self::getPlayedUsers($soft->id);
 
         if (Auth::check()) {
             $fav = new FavoriteSoft();
             $data['isFavorite'] = $fav->isFavorite(Auth::id(), $soft->id);
             $data['playedGame'] = Orm\UserPlayedSoft::findByUserAndGame(Auth::id(), $soft->id);
         }
+
+
+        $data['users'] = User::getHash(array_merge(
+            array_pluck($data['favorites'], 'user_id')
+        ));
 
         return $data;
     }
@@ -174,14 +182,10 @@ SQL;
      */
     private static function getFavoriteUser($softId)
     {
-        $sql =<<< SQL
-SELECT users.id, users.name, users.icon_upload_flag, users.show_id
-FROM (
-  SELECT user_id FROM user_favorite_softs WHERE soft_id = ? ORDER BY id LIMIT 5
-) fav LEFT OUTER JOIN users ON fav.user_id = users.id
-SQL;
-
-        return DB::select($sql, [$softId]);
+        return Orm\UserFavoriteSoft::where('soft_id', $softId)
+            ->orderBy('id', 'DESC')
+            ->take(5)
+            ->get();
     }
 
     /**

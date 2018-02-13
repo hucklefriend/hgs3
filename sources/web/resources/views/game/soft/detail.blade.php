@@ -307,7 +307,7 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">サイト <small>全{{ $siteNum }}件</small></h5>
+                    <h5 class="card-title">サイト <small>{{ number_format($siteNum) }}サイト</small></h5>
 
                     <div class="card-text">
                         @if (empty($site))
@@ -315,7 +315,7 @@
                         @else
                             @foreach ($site as $s)
                                 <div style="margin-bottom: 20px;">
-                                @include('site.common.minimal', ['s' => $s, 'u' => $siteUsers[$s->user_id]])
+                                @include('site.common.minimal', ['s' => $s])
                                 </div>
                             @endforeach
                             <div class="text-center">
@@ -329,15 +329,22 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">お気に入り</h5>
-
-                    <p class="card-text">
+                    <h5 class="card-title">お気に入り <small>{{ number_format($favoriteNum) }}</small>人</h5>
+                    <div class="card-text">
                         @if ($favoriteNum == 0)
                             お気に入りに登録しているユーザーはいません。
                         @else
-                            <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}">{{ $favoriteNum }}人のユーザー</a>がお気に入りに登録しています。
+                            @foreach ($favorites as $favorite)
+                                <div class="mb-3">
+                                    @include('user.common.icon', ['u' => $users[$favorite->user_id]])
+                                    @include('user.common.user_name', ['u' => $users[$favorite->user_id], 'followStatus' => $followStatus[$favorite->user_id] ?? \Hgs3\Constants\FollowStatus::NONE])
+                                </div>
+                            @endforeach
+                            <div class="text-center">
+                                <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}">すべて見る</a>
+                            </div>
                         @endif
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>

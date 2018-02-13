@@ -6,6 +6,7 @@
 
 namespace Hgs3\Models\User;
 
+use Hgs3\Constants\FollowStatus;
 use Hgs3\Models\User;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
@@ -177,5 +178,34 @@ SQL;
         return DB::table('user_follows')
             ->where('follow_user_id', $userId)
             ->count();
+    }
+
+    /**
+     * フォロー状態を取得
+     *
+     * @param $userId
+     * @param array $userIds
+     * @return array
+     */
+    public static function getFollowStatus($userId, array $userIds)
+    {
+        $result = [];
+
+        $follow = self::getFollowHash($userId, $userIds);
+        $follower = self::getFollowerHash($userId, $userIds);
+
+        foreach ($userIds as $id) {
+            $result[$id] = 0;
+
+            if (isset($follow[$id])) {
+                $result[$id] += FollowStatus::FOLLOW;
+            }
+
+            if (isset($follower[$id])) {
+                $result[$id] += FollowStatus::FOLLOWER;
+            }
+        }
+
+        return $result;
     }
 }
