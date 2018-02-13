@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Test;
 use Hgs3\Constants\Site\ApprovalStatus;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm;
 
@@ -61,7 +62,6 @@ class Site
 
                 rtrim($handleSoft, ',');
                 $orm->handle_soft = $handleSoft;
-
                 \Hgs3\Models\Site::save($u, $orm, null, null, rand(0, 100) > 80);
 
                 $orm->list_banner_upload_flag = 1;
