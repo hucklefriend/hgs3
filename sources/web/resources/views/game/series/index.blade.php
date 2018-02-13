@@ -5,12 +5,16 @@
 @endsection
 
 @section('content')
-    <h1>シリーズ一覧</h1>
 
     @if (is_data_editor())
-    <div class="text-right">
-        <a href="{{ route('シリーズ登録') }}" class="btn btn-sm btn-outline-info">新規登録</a>
-    </div>
+        <div class="d-flex justify-content-between">
+            <h1>シリーズ一覧</h1>
+            <div>
+                <a href="{{ route('シリーズ登録') }}" class="btn btn-sm btn-outline-info">新規登録</a>
+            </div>
+        </div>
+    @else
+        <h1>シリーズ一覧</h1>
     @endif
 
     <ul class="list-group">

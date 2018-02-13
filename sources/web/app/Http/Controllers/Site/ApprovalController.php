@@ -34,11 +34,21 @@ class ApprovalController extends Controller
      */
     public function judge(Orm\Site $site)
     {
+        // 更新履歴
+        $updateHistories = Orm\SiteUpdateHistory::where('site_id', $site->id)
+            ->orderBy('site_updated_at', 'DESC')
+            ->take(3)
+            ->get();
+
         return view('site.approval.judge', [
             'site'        => $site,
             'handleSofts' => Site::getSoftWithOriginalPackage($site->id),
             'webMaster'   => User::find($site->user_id),
-            'isWebMaster' => false
+            'isWebMaster' => false,
+            'isFavorite'  => false,
+            'favoriteNum' => 0,
+            'isGood'      => false,
+            'updateHistories' => $updateHistories
         ]);
     }
 

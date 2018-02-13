@@ -14,6 +14,7 @@ class Series extends MasterImportAbstract
     /**
      * インポート
      *
+     * @throws \Exception
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function import()
@@ -30,5 +31,9 @@ class Series extends MasterImportAbstract
 
             unset($data);
         }
+
+        // 削除
+        Orm\GameSeries::whereIn('id', [49])
+            ->delete();
     }
 }

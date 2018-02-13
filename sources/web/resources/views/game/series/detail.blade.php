@@ -11,9 +11,10 @@
         @foreach ($softs as $game)
             @php
             $package = hv($packages, $game->original_package_id, null);
+            $imageUrl = large_image_url($package);
             @endphp
             <div class="card" style="width: 250px;margin: 10px;padding-top: 10px;">
-                @include('game.common.packageImage', ['imageUrl' => $package->medium_image_url ?? ''])
+                @include('game.common.packageImage', ['imageUrl' => $imageUrl])
                 <div class="card-body text-center">
                     <h4 class="card-title">
                         <a href="{{ route('ゲーム詳細', ['soft' => $game->id]) }}">{{ $game->name }}</a>

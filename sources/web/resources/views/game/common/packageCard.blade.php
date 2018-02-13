@@ -4,15 +4,18 @@ if (isset($toPackage) && $toPackage) {
 } else {
     $url = route('ゲーム詳細', ['game' => $soft->id]);
 }
+
+$imageUrl = small_image_url($soft);
+
 @endphp
 <div class="package-card">
     <a href="{{ $url }}" style="width: 100%;display: table;">
         <div style="display: table-row;">
             <div class="package-card-image">
-                @if (empty($soft->small_image_url))
+                @if (empty($imageUrl))
                     <i class="far fa-image"></i>
                 @else
-                    <img src="{{ $soft->small_image_url }}" class="img-responsive">
+                    <img src="{{ $imageUrl }}" class="img-responsive">
                 @endif
             </div>
             <div class="package-card-name">

@@ -110,7 +110,7 @@
                         @php $pkg = $packages[$i]; @endphp
                         <div class="row">
                             <div class="col-4">
-                                @include('game.common.packageImage', ['imageUrl' => $pkg->medium_image_url])
+                                @include('game.common.packageImage', ['imageUrl' => medium_image_url($pkg)])
                             </div>
                             <div class="col-8">
                                 <div><h5>{{ $pkg->name }}</h5></div>
@@ -147,7 +147,7 @@
                         <br>
                         <div class="row">
                             <div class="col-4">
-                                @include('game.common.packageImage', ['imageUrl' => $pkg->medium_image_url])
+                                @include('game.common.packageImage', ['imageUrl' => medium_image_url($pkg)])
                             </div>
                             <div class="col-8">
                                 <div><h5>{{ $pkg->name }}</h5></div>

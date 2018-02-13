@@ -9,6 +9,9 @@ class Master
 {
     /**
      * インポート
+     *
+     * @throws \Exception
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function import()
     {

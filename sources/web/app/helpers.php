@@ -302,3 +302,95 @@ function follow_status_icon(array $followStatus, $targetUserId)
     return new \Illuminate\Support\HtmlString(\Hgs3\Constants\FollowStatus::getIcon($followStatus[$targetUserId] ?? \Hgs3\Constants\FollowStatus::NONE));
 }
 
+/**
+ * 小さいパッケージ画像を優先して取得
+ *
+ * @param $package
+ * @return string
+ */
+function small_image_url($package)
+{
+    $imageUrl = '';
+
+    if ($package->is_adult) {
+        if (!\Illuminate\Support\Facades\Auth::check()) {
+            return '';
+        }
+        $user = \Illuminate\Support\Facades\Auth::user();
+        if ($user->adult != 1) {
+            return '';
+        }
+    }
+
+    if (!empty($package->small_image_url)) {
+        $imageUrl = $package->small_image_url;
+    } else if (!empty($package->medium_image_url)) {
+        $imageUrl = $package->medium_image_url;
+    } else if (!empty($package->large_image_url)) {
+        $imageUrl = $package->large_image_url;
+    }
+
+    return $imageUrl;
+}
+
+/**
+ * 中→大→小パッケージを優先して取得
+ *
+ * @param $package
+ * @return string
+ */
+function medium_image_url($package)
+{
+    $imageUrl = '';
+
+    if ($package->is_adult) {
+        if (!\Illuminate\Support\Facades\Auth::check()) {
+            return '';
+        }
+        $user = \Illuminate\Support\Facades\Auth::user();
+        if ($user->adult != 1) {
+            return '';
+        }
+    }
+
+    if (!empty($package->medium_image_url)) {
+        $imageUrl = $package->medium_image_url;
+    } else if (!empty($package->large_image_url)) {
+        $imageUrl = $package->large_image_url;
+    } else if (!empty($package->small_image_url)) {
+        $imageUrl = $package->small_image_url;
+    }
+
+    return $imageUrl;
+}
+
+/**
+ * 大きいパッケージを優先して取得
+ *
+ * @param $package
+ * @return string
+ */
+function large_image_url($package)
+{
+    $imageUrl = '';
+
+    if ($package->is_adult) {
+        if (!\Illuminate\Support\Facades\Auth::check()) {
+            return '';
+        }
+        $user = \Illuminate\Support\Facades\Auth::user();
+        if ($user->adult != 1) {
+            return '';
+        }
+    }
+
+    if (!empty($package->large_image_url)) {
+        $imageUrl = $package->large_image_url;
+    } else if (!empty($package->medium_image_url)) {
+        $imageUrl = $package->medium_image_url;
+    } else if (!empty($package->small_image_url)) {
+        $imageUrl = $package->small_image_url;
+    }
+
+    return $imageUrl;
+}

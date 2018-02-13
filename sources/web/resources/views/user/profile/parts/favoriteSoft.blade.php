@@ -11,10 +11,11 @@
                     <div class="mr-3">
                         <a href="{{ route('ゲーム詳細', ['soft' => $fg->soft_id]) }}" class="d-block">
                             <span class="package-card-image">
-                                @if (empty($soft->small_image_url))
+                                @php $imageUrl = small_image_url($soft); @endphp
+                                @if (empty($imageUrl))
                                     <i class="far fa-image"></i>
                                 @else
-                                    <img src="{{ $soft->small_image_url }}" class="img-responsive">
+                                    <img src="{{ $imageUrl }}" class="img-responsive">
                                 @endif
                             </span>
                             <div class="package-card-name">

@@ -28,6 +28,8 @@ SELECT
   , s.name
   , s.phonetic_type
   , p.small_image_url
+  , p.medium_image_url
+  , p.is_adult
 FROM
   game_softs s
   LEFT OUTER JOIN game_packages p ON s.original_package_id = p.id
@@ -114,7 +116,7 @@ SQL;
     private static function getSameSeries($softId, $seriesId)
     {
         $sql =<<< SQL
-SELECT soft.id, soft.name, package.small_image_url
+SELECT soft.id, soft.name, package.small_image_url, package.medium_image_url, package.large_image_url, package.is_adult
 FROM
   (
     SELECT id, `name`, original_package_id
@@ -150,9 +152,9 @@ SQL;
         $packageIdsComma = implode(',', $packageIds);
 
         $sql =<<< SQL
-SELECT pkg.*, plt.acronym AS platform_name, com.name AS company_name
+SELECT pkg.*, plt.acronym AS platform_name, com.acronym AS company_name
 FROM (
-  SELECT id, `name`, platform_id, release_at, company_id, medium_image_url
+  SELECT id, `name`, platform_id, release_at, company_id, medium_image_url, small_image_url, large_image_url, is_adult
   FROM game_packages
   WHERE id IN ({$packageIdsComma})
 ) pkg

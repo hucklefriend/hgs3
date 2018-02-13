@@ -15,6 +15,9 @@ class Package extends MasterImportAbstract
 {
     /**
      * インポート
+     *
+     * @throws \Exception
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function import()
     {
@@ -40,6 +43,13 @@ class Package extends MasterImportAbstract
             unset($data);
             unset($platform);
         }
+
+        // 既存データの更新
+
+        // かまいたちの夜2のメーカーIDがNULL
+        DB::table('game_packages')
+            ->whereIn('id', [101, 102, 103, 104, 105])
+            ->update(['company_id' => 103]);
     }
 
     /**
@@ -100,7 +110,8 @@ class Package extends MasterImportAbstract
                         $shopId = Shop::getIdByName($shop);
                         if ($shopId) {
                             if ($shopId == Shop::AMAZON) {
-                                \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
+                                // TODO 戻す
+                                //\Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
                             } else if ($shopUrl) {
                                 DB::table('game_package_shops')
                                     ->insert([

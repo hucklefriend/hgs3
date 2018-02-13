@@ -478,7 +478,7 @@ SQL;
         $softIdsComma = implode(',', $softIds);
 
         $sql =<<< SQL
-SELECT soft.id, soft.name, package.small_image_url 
+SELECT soft.id, soft.name, package.small_image_url, package.medium_image_url, package.large_image_url, package.is_adult
 FROM (
 SELECT * FROM game_softs WHERE id IN ({$softIdsComma})
 ) soft LEFT OUTER JOIN game_packages AS package ON soft.original_package_id = package.id
