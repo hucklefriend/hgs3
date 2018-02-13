@@ -6,7 +6,6 @@
 
 @section('content')
     <h1>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのフォロー</h1>
-    <hr>
     @include('user.profile.parts.follow', ['users' => $users, 'follows' => $follows])
 @endsection
 

@@ -49,9 +49,32 @@ class Follow
      */
     public static function getFollow($userId, $category = 0)
     {
-        return Orm\UserFollow::where('user_id', $userId)
+        return Orm\UserFollow::select([
+            'user_id', 'follow_user_id', DB::raw('UNIX_TIMESTAMP(created_at) AS follow_timestamp')
+        ])
+            ->where('user_id', $userId)
             ->orderBy('created_at', 'DESC')
             ->paginate(30);
+    }
+
+    /**
+     * フォロワーのハッシュを取得
+     *
+     * @param $userId
+     * @param $followUserIds
+     * @return array
+     */
+    public static function getFollowerHash($userId, $followUserIds)
+    {
+        if (empty($followUserIds)) {
+            return [];
+        }
+
+        return Orm\UserFollow::where('follow_user_id', $userId)
+            ->whereIn('user_id', $followUserIds)
+            ->get()
+            ->pluck('user_id', 'user_id')
+            ->toArray();
     }
 
     /**
@@ -63,9 +86,32 @@ class Follow
      */
     public static function getFollower($userId, $category = 0)
     {
-        return Orm\UserFollow::where('follow_user_id', $userId)
+        return Orm\UserFollow::select([
+            'user_id', 'follow_user_id', DB::raw('UNIX_TIMESTAMP(created_at) AS follow_timestamp')
+        ])
+            ->where('follow_user_id', $userId)
             ->orderBy('created_at', 'DESC')
             ->paginate(30);
+    }
+
+    /**
+     * フォローのハッシュを取得
+     *
+     * @param $userId
+     * @param array $followerUserIds
+     * @return array
+     */
+    public static function getFollowHash($userId, $followerUserIds)
+    {
+        if (empty($followerUserIds)) {
+            return [];
+        }
+
+        return Orm\UserFollow::where('user_id', $userId)
+            ->whereIn('follow_user_id', $followerUserIds)
+            ->get()
+            ->pluck('follow_user_id', 'follow_user_id')
+            ->toArray();
     }
 
     /**

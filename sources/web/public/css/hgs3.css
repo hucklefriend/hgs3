@@ -71,7 +71,6 @@ code {
     }
 }
 
-
 .review-point-outline {
     padding: 5px;
     max-width: 100px;
@@ -434,6 +433,14 @@ html.is-fixed,
 html.is-fixed body {
     height: 100%;
     overflow: hidden;
+}
+
+.user-name-big {
+    font-size: 1.2rem;
+}
+
+.mutual-follow-icon {
+    font-size: 0.8rem;
 }
 
 @media (min-width: 576px) {

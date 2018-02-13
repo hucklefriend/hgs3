@@ -285,3 +285,14 @@ function page_pluck(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager
 {
     return $pager->pluck($key)->toArray();
 }
+
+/**
+ * 日付変換
+ *
+ * @param $unix_timestamp
+ * @return false|string
+ */
+function format_date($unix_timestamp)
+{
+    return date('Y年n月j日 G時', $unix_timestamp) . intval(date('i', $unix_timestamp)) . '分';
+}

@@ -30,10 +30,11 @@ class FollowController extends Controller
         $follows = Follow::getFollow($user->id);
 
         return view('user.profile.follow', [
-            'user'     => $user,
-            'isMyself' => $isMyself,
-            'follows'  => $follows,
-            'users'    => User::getHash(array_pluck($follows->items(), 'follow_user_id'))
+            'user'           => $user,
+            'isMyself'       => $isMyself,
+            'follows'        => $follows,
+            'users'          => User::getHash(page_pluck($follows, 'follow_user_id')),
+            'mutualFollower' => Follow::getFollowerHash($user->id, page_pluck($follows, 'follow_user_id'))
         ]);
     }
 
@@ -51,13 +52,14 @@ class FollowController extends Controller
         }
 
         $isMyself = $user->id == Auth::id();
-        $follows = Follow::getFollower($user->id);
+        $followers = Follow::getFollower($user->id);
 
         return view('user.profile.follower', [
-            'user'       => $user,
-            'isMyself'   => $isMyself,
-            'followers'  => $follows,
-            'users'      => User::getHash(array_pluck($follows->items(), 'user_id'))
+            'user'         => $user,
+            'isMyself'     => $isMyself,
+            'followers'    => $followers,
+            'users'        => User::getHash(page_pluck($followers, 'user_id')),
+            'mutualFollow' => Follow::getFollowHash($user->id, page_pluck($followers, 'user_id'))
         ]);
     }
 
