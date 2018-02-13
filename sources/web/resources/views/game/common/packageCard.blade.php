@@ -19,7 +19,7 @@ if (isset($toPackage) && $toPackage) {
                 <small>{{ $soft->name }}</small>
                 @isset($favorites[$soft->id])
                     <span class="favorite-icon"><i class="fas fa-star"></i></span>
-                @endif
+                @endisset
             </div>
         </div>
     </a>

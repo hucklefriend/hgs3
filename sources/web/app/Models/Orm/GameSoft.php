@@ -67,9 +67,18 @@ class GameSoft extends \Eloquent
                 ->get();
         }
 
+        // オリジナルパッケージの情報を取得
+        $packages = GamePackage::getHash($data->pluck('original_package_id')->toArray());
+
         $result = [];
         foreach ($data as $row) {
             $result[$row->id] = $row;
+
+            if (isset($packages[$row->original_package_id])) {
+                $result[$row->id]->small_image_url = $packages[$row->original_package_id]->small_image_url;
+                $result[$row->id]->medium_image_url = $packages[$row->original_package_id]->medium_image_url;
+                $result[$row->id]->large_image_url = $packages[$row->original_package_id]->large_image_url;
+            }
         }
 
         unset($data);

@@ -85,7 +85,9 @@ SQL;
      */
     public static function get($userId)
     {
-        return DB::table('user_favorite_softs')
+        return Orm\UserFavoriteSoft::select([
+            'soft_id', DB::raw('UNIX_TIMESTAMP(created_at) register_timestamp')
+        ])
             ->where('user_id', $userId)
             ->orderBy('id', 'DESC')
             ->paginate(20);

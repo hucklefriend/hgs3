@@ -6,7 +6,6 @@
 
 @section('content')
     <h1>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのお気に入りゲーム</h1>
-    <hr>
     @include('user.profile.parts.favoriteSoft')
 @endsection
 
