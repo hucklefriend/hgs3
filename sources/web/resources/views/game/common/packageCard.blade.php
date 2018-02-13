@@ -17,6 +17,9 @@ if (isset($toPackage) && $toPackage) {
             </div>
             <div class="package-card-name">
                 <small>{{ $soft->name }}</small>
+                @isset($favorites[$soft->id])
+                    <span class="favorite-icon"><i class="fas fa-star"></i></span>
+                @endif
             </div>
         </div>
     </a>

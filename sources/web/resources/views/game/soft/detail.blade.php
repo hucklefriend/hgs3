@@ -349,7 +349,7 @@
             <h5 class="card-title">同じシリーズのゲーム</h5>
             <div class="package-list">
                 @foreach ($seriesSofts as $seriesSoft)
-                    @include('game.common.packageCard', ['soft' => $seriesSoft])
+                    @include('game.common.packageCard', ['soft' => $seriesSoft, 'favorites' => $favoriteHash])
                 @endforeach
             </div>
         </div>

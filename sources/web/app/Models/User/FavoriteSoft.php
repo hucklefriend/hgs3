@@ -90,4 +90,19 @@ SQL;
             ->orderBy('id', 'DESC')
             ->paginate(20);
     }
+
+    /**
+     * お気に入りソフトのハッシュを取得
+     *
+     * @param int $userId
+     * @return array
+     */
+    public static function getHash($userId)
+    {
+        return Orm\UserFavoriteSoft::select(['soft_id'])
+            ->where('user_id', $userId)
+            ->get()
+            ->pluck('soft_id', 'soft_id')
+            ->toArray();
+    }
 }

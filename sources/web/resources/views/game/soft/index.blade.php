@@ -17,7 +17,6 @@
         <h1>ゲーム一覧</h1>
     @endif
 
-
     <div class="d-flex flex-wrap" id="game_tab">
         <a class="btn btn-outline-secondary active game_tab" href="#" data-target="agyo" id="tab_agyo">あ</a>
         <a class="btn btn-outline-secondary game_tab" href="#" data-target="kagyo" id="tab_kagyo">か</a>
@@ -52,7 +51,7 @@
             <div class="package-list">
             @if (isset($list[$p[1]]))
                 @foreach ($list[$p[1]] as $soft)
-                    @include('game.common.packageCard', ['soft' => $soft])
+                    @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash])
                 @endforeach
             @endif
             </div>

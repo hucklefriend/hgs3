@@ -126,7 +126,7 @@
     </div>
     <div class="package-list">
         @foreach ($handleSofts as $soft)
-            @include('game.common.packageCard', ['soft' => $soft])
+            @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash ?? []])
         @endforeach
     </div>
 </div>

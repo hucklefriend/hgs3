@@ -188,6 +188,12 @@ class SiteController extends Controller
             $data['defaultMessage'] = '';
         }
 
+        $data['favoriteHash'] = [];
+        if (Auth::check()) {
+
+            $data['favoriteHash'] = User\FavoriteSoft::getHash(Auth::id());
+        }
+
         return view('site.detail', $data);
     }
 
