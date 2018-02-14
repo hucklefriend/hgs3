@@ -5,6 +5,7 @@
 
 namespace Hgs3\Http\Controllers\User;
 
+use Hgs3\Constants\IconRoundType;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\ChangeIconImageRequest;
 use Hgs3\Http\Requests\User\Profile\ChangeIconRoundRequest;
@@ -218,10 +219,22 @@ class ProfileController extends Controller
     /**
      * アイコン画像変更
      *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeIconImage()
+    {
+        return view('user.profile.changeIconImage', [
+            'user' => Auth::user()
+        ]);
+    }
+
+    /**
+     * アイコン画像変更
+     *
      * @param ChangeIconImageRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeIconImage(ChangeIconImageRequest $request)
+    public function updateIconImage(ChangeIconImageRequest $request)
     {
         $fileName = Auth::id() . '.' . $request->file('icon')->getClientOriginalExtension();
 
@@ -229,14 +242,15 @@ class ProfileController extends Controller
         $user->deleteIconFile();
 
         $request->file('icon')->move(
-            base_path() . '/public/img/user-icn/', $fileName
+            base_path() . '/public/img/user_icon/', $fileName
         );
 
         $user->icon_upload_flag = 1;
         $user->icon_file_name = $fileName;
+        $user->icon_round_type = $request->icon_round_type;
         $user->save();
 
-        return redirect('mypage');
+        return redirect()->route('マイページ');
     }
 
     /**
@@ -250,6 +264,7 @@ class ProfileController extends Controller
 
         $user->icon_upload_flag = 0;
         $user->icon_file_name = null;
+        $user->icon_round_type = IconRoundType::NONE;
         $user->save();
 
         $user->deleteIconFile();

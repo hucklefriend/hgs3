@@ -3,9 +3,9 @@
  * アイコン変更リクエスト
  */
 
-
 namespace Hgs3\Http\Requests\User\Profile;
 
+use Hgs3\Constants\IconRoundType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangeIconImageRequest extends FormRequest
@@ -28,8 +28,8 @@ class ChangeIconImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'icon'             => 'required|file|image',
-            'icon_border_type' => 'required',
+            'icon'            => 'required|file|image',
+            'icon_round_type' => 'required|in:' . IconRoundType::getValidationIn(),
         ];
     }
 }

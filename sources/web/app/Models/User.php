@@ -98,7 +98,7 @@ class User extends Authenticatable
     public function deleteIconFile()
     {
         if (!empty($this->icon_file_name)) {
-            $path = base_path() . '/public/img/user-icn/' . $this->icon_file_name;
+            $path = base_path() . '/public/img/user-icon/' . $this->icon_file_name;
 
             if (file_exists($path)) {
                 unlink($path);
