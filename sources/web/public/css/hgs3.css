@@ -248,11 +248,11 @@ a:active .no-image-text-inner {
 
 
 .detail-site-banner-outline {
-    max-width: 250px;
-    max-height: 400px;
-    width: 100%;
-    overflow:hidden;
-    margin-right: 15px;
+
+}
+
+.detail-site-banner-outline img {
+    max-width: 100%;
 }
 
 .table-clickable-row tr:hover {

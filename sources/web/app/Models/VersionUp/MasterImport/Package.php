@@ -126,7 +126,8 @@ class Package extends MasterImportAbstract
                     $shopId = Shop::getIdByName($pkg['shop']);
                     if ($shopId) {
                         if ($shopId == Shop::AMAZON) {
-                            \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $pkg['asin']);
+                            // TODO 戻す
+                            //\Hgs3\Models\Game\Package::saveImageByAsin($package->id, $pkg['asin']);
                         } else if (!empty($pkg['shop_url'])) {
                             DB::table('game_package_shops')
                                 ->insert([

@@ -66,7 +66,7 @@ class User extends Authenticatable
         }
 
         $data = DB::table('users')
-            ->select(['id', 'name', 'icon_upload_flag', 'show_id'])
+            ->select(['id', 'name', 'icon_upload_flag', 'show_id', 'icon_round_type', 'icon_file_name'])
             ->whereIn('id', $userIds)
             ->get();
 
@@ -120,6 +120,7 @@ class User extends Authenticatable
         $self->email = $data['email'] ?? null;
         $self->password = isset($data['password']) ? bcrypt($data['password']) : null;
         $self->role = $data['role']  ?? UserRole::USER;
+        $self->profile = $data['profile'] ?? '';
 
         $self->save();
         return $self;

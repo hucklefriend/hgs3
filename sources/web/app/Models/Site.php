@@ -114,8 +114,8 @@ class Site
                     Timeline\ToMe::addSiteApproveText($admin, $site);
 
                     // 管理人にメール送信
-                    Mail::to(env('ADMIN_MAIL'))
-                        ->send(new \Hgs3\Mail\SiteApprovalWait($site));
+                    /*Mail::to(env('ADMIN_MAIL'))
+                        ->send(new \Hgs3\Mail\SiteApprovalWait($site));*/
 
                     Log::info('管理人にメール飛ばした');
                 } catch (\Exception $e) {
@@ -290,12 +290,12 @@ SQL;
 INSERT INTO site_daily_accesses
   (site_id, `date`, in_count, out_count, created_at, updated_at)
 SELECT
-  site_id, FROM_UNIXTIME(`day`, '%Y%m%d'), `out`, `in`, FROM_UNIXTIME(registered_date), FROM_UNIXTIME(updated_date)
+  {$siteId} AS site_id, FROM_UNIXTIME(`day`, '%Y%m%d'), `out`, `in`, FROM_UNIXTIME(registered_date), FROM_UNIXTIME(updated_date)
 FROM
-  hgs2.hgs_g_company
+  hgs2.hgs_u_site_access_daily
 ON DUPLICATE KEY UPDATE
-  `out` = VALUES(`out_count`)
-  , `in` = VALUES(`in_count`)
+  `out_count` = VALUES(`out_count`)
+  , `in_count` = VALUES(`in_count`)
   , `updated_at` = VALUES(`updated_at`)
 SQL;
 

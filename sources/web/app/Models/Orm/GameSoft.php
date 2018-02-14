@@ -124,4 +124,14 @@ SQL;
 
         return parent::save();
     }
+
+    /**
+     * オリジナルパッケージを取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function originalPackage()
+    {
+        return $this->hasOne('Hgs3\Models\Orm\GamePackage', 'id', 'original_package_id');
+    }
 }

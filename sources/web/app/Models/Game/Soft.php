@@ -98,10 +98,14 @@ SQL;
             $data['playedGame'] = Orm\UserPlayedSoft::findByUserAndGame(Auth::id(), $soft->id);
         }
 
-
         $data['users'] = User::getHash(array_merge(
             array_pluck($data['favorites'], 'user_id')
         ));
+
+        // 前後のゲーム
+        $maxPhoneticOrder = self::getMaxPhoneticOrder();
+        $data['prevGame'] = self::getPrevGame($soft, $maxPhoneticOrder);
+        $data['nextGame'] = self::getNextGame($soft, $maxPhoneticOrder);
 
         return $data;
     }
@@ -307,6 +311,40 @@ SQL;
             } else {
                 echo $soft->name . ' is no original package.' . PHP_EOL;
             }
+        }
+    }
+
+    /**
+     * phonetic_orderの最大値を取得
+     *
+     * @return mixed
+     */
+    private static function getMaxPhoneticOrder()
+    {
+        return Orm\GameSoft::query()
+            ->max('phonetic_order');
+    }
+
+
+    private static function getPrevGame(Orm\GameSoft $soft, $maxPhoneticOrder)
+    {
+        if ($soft->phonetic_order == 1) {
+            return Orm\GameSoft::where('phonetic_order', $maxPhoneticOrder)
+                ->first();
+        } else {
+            return Orm\GameSoft::where('phonetic_order', $soft->phonetic_order - 1)
+                ->first();
+        }
+    }
+
+    private static function getNextGame(Orm\GameSoft $soft, $maxPhoneticOrder)
+    {
+        if ($soft->phonetic_order == $maxPhoneticOrder) {
+            return Orm\GameSoft::where('phonetic_order', 1)
+                ->first();
+        } else {
+            return Orm\GameSoft::where('phonetic_order', $soft->phonetic_order + 1)
+                ->first();
         }
     }
 }
