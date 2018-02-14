@@ -5,22 +5,15 @@
 @endsection
 
 @section('content')
-    <h1>お知らせ</h1>
+    <h1>{{ $notice->title }}</h1>
 
-    <div class="card">
-        <div class="card-header">
-            {{ $notice->title }}
-        </div>
-        <div class="card-body">
-            <p>{{ $notice->open_at }}</p>
-            <p class="card-text">
-                {!! nl2br(e($notice->message)) !!}
-            </p>
-            @if (is_admin())
-            <a class="btn btn-sm btn-outline-info" href="{{ route('お知らせ編集', ['notice' => $notice->id]) }}" role="button">編集</a>
-            @endif
-        </div>
-    </div>
+    <p>{{ $notice->open_at }}</p>
+    <p class="card-text">
+        {!! nl2br(e($notice->message)) !!}
+    </p>
+    @if (is_admin())
+        <a class="btn btn-sm btn-outline-info" href="{{ route('お知らせ編集', ['notice' => $notice->id]) }}" role="button">編集</a>
+    @endif
 
     @if (is_admin())
     <div class="btn-area">

@@ -5,15 +5,19 @@
 @endsection
 
 @section('content')
-    <h4>プラットフォーム一覧</h4>
 
     @if (is_data_editor())
-    <div class="text-right">
-        <a href="{{ route('プラットフォーム登録') }}" class="btn btn-sm btn-outline-info">新規登録</a>
-    </div>
+        <div class="d-flex justify-content-between">
+            <h1>プラットフォーム一覧</h1>
+            <div>
+                <a href="{{ route('プラットフォーム登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
+            </div>
+        </div>
+    @else
+        <h1>プラットフォーム一覧</h1>
     @endif
 
-    <ul class="list-group">
+    <ul class="list-group no-border">
         @foreach ($platforms as $p)
             <li class="list-group-item"><a href="{{ route('プラットフォーム詳細', ['platform' => $p->id]) }}">{{ $p->name }}</a></li>
         @endforeach

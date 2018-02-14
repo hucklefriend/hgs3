@@ -22,7 +22,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Orm\GameCompany::orderBy('phonetic')
-            ->paginate(30);
+            ->get();
 
         return view('game.company.index', [
             'companies' => $companies

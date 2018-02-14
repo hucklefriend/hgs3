@@ -7,7 +7,7 @@
 @section('content')
     <h1>サイトマップ</h1>
 
-    <ul class="list-group">
+    <ul class="list-group no-border">
         <li class="list-group-item"><a href="{{ route('トップ') }}">トップページ</a></li>
         <li class="list-group-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
         <li class="list-group-item"><a href="{{ route('ゲーム会社一覧') }}">ゲーム会社一覧</a></li>
@@ -24,8 +24,8 @@
         <li class="list-group-item"><a href="{{ route('マイページ') }}">マイページ</a></li>
         @else
         <li class="list-group-item"><a href="{{ route('ログイン') }}">ログイン</a></li>
-            <li class="list-group-item"><a href="{{ route('ユーザー登録') }}">ユーザー登録</a></li>
-            <li class="list-group-item"><a href="{{ route('パスワード再設定') }}">パスワードを忘れた</a></li>
+        <li class="list-group-item"><a href="{{ route('ユーザー登録') }}">ユーザー登録</a></li>
+        <li class="list-group-item"><a href="{{ route('パスワード再設定') }}">パスワードを忘れた</a></li>
         @endif
     </ul>
 @endsection

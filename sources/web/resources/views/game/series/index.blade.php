@@ -17,13 +17,11 @@
         <h1>シリーズ一覧</h1>
     @endif
 
-    <ul class="list-group">
+    <ul class="list-group no-border">
     @foreach ($series as $s)
         <li class="list-group-item"><a href="{{ route('シリーズ詳細', ['series' => $s->id]) }}">{{ $s->name }}</a></li>
     @endforeach
     </ul>
-
-    @include('common.pager', ['pager' => $series])
 
 @endsection
 

@@ -20,7 +20,7 @@ class SeriesController extends Controller
     public function index()
     {
         return view('game.series.index', [
-            'series' => Orm\GameSeries::orderBy('phonetic')->paginate(20)
+            'series' => Orm\GameSeries::orderBy('phonetic')->get()
         ]);
     }
 

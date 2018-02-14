@@ -185,7 +185,7 @@ a:active .no-image-text-inner {
     color: #4183c4;
 }
 
-.no-border td {
+.no-border td, .no-border li {
     border:none;
 }
 

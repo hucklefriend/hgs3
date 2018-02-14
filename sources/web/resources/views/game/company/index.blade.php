@@ -17,13 +17,11 @@
         <h1>ゲーム会社一覧</h1>
     @endif
 
-    <ul class="list-group">
+    <ul class="list-group no-border">
     @foreach ($companies as $c)
         <li class="list-group-item"><a href="{{ route('ゲーム会社詳細', ['company' => $c->id]) }}">{{ $c->name }}</a></li>
     @endforeach
     </ul>
-
-    @include('common.pager', ['pager' => $companies])
 @endsection
 
 @section('breadcrumb')

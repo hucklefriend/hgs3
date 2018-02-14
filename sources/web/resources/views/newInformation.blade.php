@@ -20,8 +20,7 @@
         </div>
     @endforeach
 
-    {{ $newInfo->render() }}
-
+    @include('common.pager', ['pager' => $newInfo])
 @endsection
 
 @section('breadcrumb')
