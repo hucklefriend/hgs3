@@ -19,22 +19,15 @@
 
         <div class="form-group">
             <label for="list_banner_upload_flag">一覧用バナー</label>
-            <div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="list_banner_upload_flag" id="list_banner_upload_flag_0" value="0" {{ checked(old('list_banner_upload_flag', $site->list_banner_upload_flag), 0) }}> 不要
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="list_banner_upload_flag" id="list_banner_upload_flag_1" value="1" {{ checked(old('list_banner_upload_flag', $site->list_banner_upload_flag), 1) }}> URLを指定(直リン)
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="list_banner_upload_flag" id="list_banner_upload_flag_2" value="2" {{ checked(old('list_banner_upload_flag', $site->list_banner_upload_flag), 2) }}> H.G.N.にアップロード
-                    </label>
-                </div>
+            <div class="mb-3">
+                {{ Form::select('list_banner_upload_flag', [
+                    0 => 'なし', 1 => 'URLを指定(直リン)', 2 => 'H.G.N.にアップロード'
+                ],
+                old('list_banner_upload_flag', $site->list_banner_upload_flag),
+                [
+                    'class' => 'form-control',
+                    'id'    => 'list_banner_select'
+                ]) }}
             </div>
             <div class="form-group show_list_banner_url" id="list_banner_url_form" style="{!! display_none(old('list_banner_upload_flag'), 1) !!} }">
                 <input type="text" class="form-control{{ invalid($errors, 'list_banner_url') }}" id="list_banner_url" name="list_banner_url" value="{{ old('list_banner_url', $site->list_banner_url) }}">
@@ -42,8 +35,9 @@
                 <div>
                     <p class="text-muted">
                         <small>
-                            画像サイズは最大468×60です。<br>
-                            幅に合わせて自動で縮小されますが、高さが60pxを超えている分はカットされます。
+                            画像のURLを入力してください。<br>
+                            幅は最大468pxで、レスポンシブルに拡縮します。
+                            高さは最大60pxで、60pxを超えている分はカットされます。<br>
                         </small>
                     </p>
                 </div>
@@ -52,13 +46,15 @@
                 </div>
             </div>
             <div class="form-group show_list_banner_upload" id="list_banner_upload_form" style="{!! display_none(old('list_banner_upload_flag'), 2) !!} }">
-                <input type="file" name="list_banner_upload" id="list_banner_upload" class="form-control form-control-file{{ invalid($errors, 'list_banner_upload') }}" accept="image/*">
+                <input type="file" name="list_banner_upload" id="list_banner_upload" class="form-control-file{{ invalid($errors, 'list_banner_upload') }}" accept="image/*">
                 @include('common.error', ['formName' => 'list_banner_upload'])
                 <div>
                     <p class="text-muted">
                         <small class="show_list_banner_upload">
-                            画像サイズは最大468×60、容量は3MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
-                            幅に合わせて自動で縮小されますが、高さが60pxを超えている分はカットされます。<br>
+                            アップロードする画像ファイルを選択してください。<br>
+                            容量は1MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
+                            幅は最大468pxで、レスポンシブルに拡縮します。
+                            高さは最大60pxで、60pxを超えている分はカットされます。<br>
                         </small>
                     </p>
                 </div>
@@ -70,31 +66,24 @@
 
         <div class="form-group">
             <label for="detail_banner_upload_flag">詳細用バナー</label>
-            <div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="detail_banner_upload_flag" value="0" {{ checked(old('detail_banner_upload_flag', $site->detail_banner_upload_flag), 0) }}> 不要
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="detail_banner_upload_flag" value="1" {{ checked(old('detail_banner_upload_flag', $site->detail_banner_upload_flag), 1) }}> URLを指定(直リン)
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="detail_banner_upload_flag" value="2" {{ checked(old('detail_banner_upload_flag', $site->detail_banner_upload_flag), 2) }}> H.G.N.にアップロード
-                    </label>
-                </div>
+            <div class="mb-3">
+                {{ Form::select('detail_banner_upload_flag', [
+                    0 => 'なし', 1 => 'URLを指定(直リン)', 2 => 'H.G.N.にアップロード'
+                ],
+                old('detail_banner_upload_flag', $site->detail_banner_upload_flag),
+                [
+                    'class' => 'form-control',
+                    'id'    => 'detail_banner_select'
+                ]) }}
             </div>
             <div class="form-group show_detail_banner_url" id="detail_banner_url_form" style="{!! display_none(old('list_banner_upload_flag'), 1) !!} }">
-                <input type="text" class="form-control{{ invalid($errors, 'detail_banner_url') }}" id="detail_banner_url" name="detail_banner_url" value="{{ old('detail_banner_url', $site->detail_banner_url) }}">
+                <input type="text" class="form-control-file{{ invalid($errors, 'detail_banner_url') }}" id="detail_banner_url" name="detail_banner_url" value="{{ old('detail_banner_url', $site->detail_banner_url) }}">
                 @include('common.error', ['formName' => 'detail_banner_url'])
                 <div>
                     <p class="text-muted">
                         <small>
-                            画像サイズは最大250×400です。<br>
-                            幅に合わせて自動で縮小されますが、高さが400pxを超えている分はカットされます。
+                            画像のURLを入力してください。<br>
+                            画像はレスポンシブルに拡縮します。
                         </small>
                     </p>
                     <div class="detail-site-banner-outline">
@@ -108,8 +97,9 @@
                 <div id="detail_banner_text" class="form-group show_detail_banner_upload show_detail_banner_url">
                     <p class="text-muted">
                         <small>
-                            画像サイズは最大250×400、容量は3MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
-                            幅に合わせて自動で縮小されますが、高さが400pxを超えている分はカットされます。
+                            アップロードする画像ファイルを選択してください。<br>
+                            容量は3MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
+                            画像はレスポンシブルに拡縮します。
                         </small>
                     </p>
                     <div class="detail-site-banner-outline">
@@ -122,18 +112,31 @@
         <input type="hidden" name="hgs2_site_id" value="{{ $hgs2SiteId ?? 0 }}">
 
         <div class="form-group">
-            <button class="btn btn-primary">登録</button>
+            <div class="row">
+                <div class="col-6 text-center">
+                    <button class="btn btn-outline-secondary" style="width: 90%;" name="approval_status" value="{{ \Hgs3\Constants\Site\ApprovalStatus::DRAFT }}">下書き保存</button>
+
+                    <p class="text-muted">
+                        <small>
+                            下書き保存でも、必須項目は入力が必要です。
+                        </small>
+                    </p>
+                </div>
+                <div class="col-6 text-center">
+                    <button class="btn btn-outline-primary" style="width: 90%;" name="approval_status" value="{{ \Hgs3\Constants\Site\ApprovalStatus::WAIT }}">登録</button>
+                </div>
+            </div>
         </div>
     </form>
     @include('user.siteManage.common.handleSoftSelect')
 
     <script>
         $(function (){
-            $('input[name="list_banner_upload_flag"]:radio').change(function() {
+            $('#list_banner_select').change(function() {
                 let flag = $(this).val();
                 changeUploadForm('list', flag);
             });
-            $('input[name="detail_banner_upload_flag"]:radio').change(function() {
+            $('#detail_banner_select').change(function() {
                 let flag = $(this).val();
                 changeUploadForm('detail', flag);
             });

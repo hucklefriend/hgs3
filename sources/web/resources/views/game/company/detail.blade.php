@@ -7,7 +7,7 @@
 @section('content')
 
     @if (is_data_editor())
-        <div class="d-flex">
+        <div class="d-flex justify-content-between">
             <h1>{{ $company->name }}</h1>
             <div class=" justify-content-between">
                 <a href="{{ route('ゲーム会社編集', ['company' => $company->id]) }}" class="btn btn-sm btn-outline-dark">編集</a>
@@ -17,19 +17,16 @@
         <h1>{{ $company->name }}</h1>
     @endif
 
-
     <div>
-        @if ($company->url != null)
+        @if (!empty($company->url))
         <a href="{{ $company->url }}" target="_blank">公式サイト</a>
         @endif
-        @if ($company->wikipedia != null)
+        @if (!empty($company->wikipedia))
         <a href="{{ $company->wikipedia }}" target="_blank">Wikipedia</a>
         @endif
     </div>
 
-    <hr>
-
-    <p>
+    <p class="mt-2 mb-2">
         {{ $company->name }}から発売されているパッケージ
     </p>
 

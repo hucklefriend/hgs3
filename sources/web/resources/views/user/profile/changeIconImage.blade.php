@@ -17,7 +17,7 @@
         {{ csrf_field() }}
 
         <div class="form-group">
-            <input type="file" name="icon" id="icon_uploader" class="form-control-file">
+            <input type="file" name="icon" id="icon_uploader" class="form-control-file" accept="image/*">
 
             <div class="alert alert-danger mt-2" role="alert" id="alert_msg" @if (!$errors->has('icon')) style="display:none;" @endif>
                 @if ($errors->has('icon'))

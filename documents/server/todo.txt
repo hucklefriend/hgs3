@@ -5,12 +5,7 @@
 メンテナンスモード
 イベントと参加記録
 ページャーをボタンに
-アイコン変更
-アイコンを丸くする→まるみを選べるようにする
 相互フォロー表示
-アローン・イン・ザ・ダーク3 is no original package.
-Vampire The Masquerade: Redemption is no original package.
-S.T.A.L.K.E.R.: Shadow of Chernobyl is no original package.
-S.T.A.L.K.E.R.: Clear Sky is no original package.
-サイコブレイク is no original package.
-フロムダスクティルドーン is no original package.
+dead space2と3
+サイトの下書き
+サイトバナーアップロード
