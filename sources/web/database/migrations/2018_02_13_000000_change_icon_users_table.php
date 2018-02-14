@@ -17,9 +17,12 @@ class ChangeIconUsersTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('users', 'icon_border_type')) {
+        if (!Schema::hasColumn('users', 'icon_round_type')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->unsignedTinyInteger('icon_border_type')->default(0)->comment('アイコンのボーダー種別');
+                $table->unsignedTinyInteger('icon_round_type')
+                    ->default(\Hgs3\Constants\IconRoundType::NONE)
+                    ->comment('アイコンの丸み種別')
+                    ->after('icon_file_name');
             });
         }
     }
@@ -31,9 +34,9 @@ class ChangeIconUsersTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('users', 'icon_border_type')) {
+        if (Schema::hasColumn('users', 'icon_round_type')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn('icon_border_type');
+                $table->dropColumn('icon_round_type');
             });
         }
     }

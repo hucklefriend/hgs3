@@ -43,11 +43,11 @@
     </form>
 
     @if ($user->icon_upload_flag)
-    <form method="POST" style="margin-top: 20px;">
-        {{ method_field('DELETE') }}
-        {{ csrf_field() }}
-        <button class="btn btn-warning">アイコンを削除して、初期状態に戻す</button>
-    </form>
+        <form method="POST" style="margin-top: 20px;">
+            {{ method_field('DELETE') }}
+            {{ csrf_field() }}
+            <button class="btn btn-warning">アイコンを削除して、初期状態に戻す</button>
+        </form>
     @endif
     <script>
         $(function() {

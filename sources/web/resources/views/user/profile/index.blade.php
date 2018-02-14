@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのページ</h1>
+    <h1>@include('user.common.icon', ['u' => $user])<span class="align-middle">{{ $user->name }}さんのページ</span></h1>
 
     <div class="mb-5">
         @if (!$isMyself)

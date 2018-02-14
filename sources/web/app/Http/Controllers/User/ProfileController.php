@@ -6,7 +6,8 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\User\Profile\ChangeIconRequest;
+use Hgs3\Http\Requests\User\Profile\ChangeIconImageRequest;
+use Hgs3\Http\Requests\User\Profile\ChangeIconRoundRequest;
 use Hgs3\Http\Requests\User\Profile\ConfigRequest;
 use Hgs3\Http\Requests\User\Profile\EditRequest;
 use Hgs3\Models\Community\GameCommunity;
@@ -176,24 +177,51 @@ class ProfileController extends Controller
     }
 
     /**
-     * アイコン選択
+     * アイコン変更
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function selectIcon()
+    public function changeIcon()
     {
-        return view('user.profile.selectIcon', [
+        return view('user.profile.changeIcon', [
             'user' => Auth::user()
         ]);
     }
 
     /**
-     * アイコン変更
+     * アイコン丸み変更
      *
-     * @param ChangeIconRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeIcon(ChangeIconRequest $request)
+    public function changeIconRound()
+    {
+        return view('user.profile.changeIconRound', [
+            'user' => Auth::user()
+        ]);
+    }
+
+    /**
+     * アイコン丸み変更処理
+     *
+     * @param ChangeIconRoundRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateIconRound(ChangeIconRoundRequest $request)
+    {
+        $user = Auth::user();
+        $user->icon_round_type = $request->icon_round_type;
+        $user->save();
+
+        return redirect()->route('マイページ');
+    }
+
+    /**
+     * アイコン画像変更
+     *
+     * @param ChangeIconImageRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeIconImage(ChangeIconImageRequest $request)
     {
         $fileName = Auth::id() . '.' . $request->file('icon')->getClientOriginalExtension();
 

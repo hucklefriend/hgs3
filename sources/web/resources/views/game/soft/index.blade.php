@@ -5,6 +5,20 @@
 @endsection
 
 @section('content')
+    @php
+        $phonetics = [
+            ['a', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ')],
+            ['ka', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('か')],
+            ['sa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('さ')],
+            ['ta', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('た')],
+            ['na', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('な')],
+            ['ha', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('は')],
+            ['ma', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ま')],
+            ['ya', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('や')],
+            ['ra', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ら')],
+            ['wa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('わ')],
+        ];
+    @endphp
 
     @if (is_data_editor())
     <div class="d-flex justify-content-between">
@@ -18,36 +32,22 @@
     @endif
 
     <div class="d-flex flex-wrap" id="game_tab">
-        <a class="btn btn-outline-secondary active game_tab" href="#" data-target="agyo" id="tab_agyo">あ</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="kagyo" id="tab_kagyo">か</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="sagyo" id="tab_sagyo">さ</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="tagyo" id="tab_tagyo">た</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="nagyo" id="tab_nagyo">な</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="hagyo" id="tab_hagyo">は</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="magyo" id="tab_magyo">ま</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="yagyo" id="tab_yagyo">や</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="ragyo" id="tab_ragyo">ら</a>
-        <a class="btn btn-outline-secondary game_tab" href="#" data-target="wagyo" id="tab_wagyo">わ</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[0][1]) active @endif " href="#" data-target="agyo" id="tab_agyo">あ</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[1][1]) active @endif " href="#" data-target="kagyo" id="tab_kagyo">か</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[2][1]) active @endif " href="#" data-target="sagyo" id="tab_sagyo">さ</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[3][1]) active @endif " href="#" data-target="tagyo" id="tab_tagyo">た</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[4][1]) active @endif " href="#" data-target="nagyo" id="tab_nagyo">な</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[5][1]) active @endif " href="#" data-target="hagyo" id="tab_hagyo">は</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[6][1]) active @endif " href="#" data-target="magyo" id="tab_magyo">ま</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[7][1]) active @endif " href="#" data-target="yagyo" id="tab_yagyo">や</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[8][1]) active @endif " href="#" data-target="ragyo" id="tab_ragyo">ら</a>
+        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[9][1]) active @endif " href="#" data-target="wagyo" id="tab_wagyo">わ</a>
     </div>
 
     <div>
-    @php
-    $phonetics = [
-        ['a', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ')],
-        ['ka', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('か')],
-        ['sa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('さ')],
-        ['ta', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('た')],
-        ['na', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('な')],
-        ['ha', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('は')],
-        ['ma', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ま')],
-        ['ya', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('や')],
-        ['ra', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ら')],
-        ['wa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('わ')],
-    ];
-    @endphp
 
     @foreach ($phonetics as $p)
-        <section id="{{ $p[0] }}gyo" @if (!$loop->first) style="display:none;" @endif>
+        <section id="{{ $p[0] }}gyo" @if ($defaultPhoneticType != $p[1]) style="display:none;" @endif>
             <div class="package-list">
             @if (isset($list[$p[1]]))
                 @foreach ($list[$p[1]] as $soft)

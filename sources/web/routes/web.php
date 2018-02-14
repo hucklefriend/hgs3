@@ -138,8 +138,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/mypage', 'User\MyPageController@index')->name('マイページ');
     Route::get('/user/profile/edit', 'User\ProfileController@edit')->name('プロフィール編集');
     Route::patch('/user/profile/edit', 'User\ProfileController@update')->name('プロフィール編集実行');
-    Route::get('/user/profile/change_icon', 'User\ProfileController@selectIcon')->name('アイコン変更');
-    Route::patch('/user/profile/change_icon', 'User\ProfileController@changeIcon')->name('アイコン変更処理');
+    Route::get('/user/profile/change_icon', 'User\ProfileController@changeIcon')->name('アイコン変更');
+    Route::get('/user/profile/change_icon_round', 'User\ProfileController@changeIconRound')->name('アイコン丸み変更');
+    Route::patch('/user/profile/change_icon_round', 'User\ProfileController@updateIconRound')->name('アイコン丸み変更処理');
+    Route::get('/user/profile/change_icon_image', 'User\ProfileController@changeIconImage')->name('アイコン画像変更');
+    Route::patch('/user/profile/change_icon_image', 'User\ProfileController@updateIconImage')->name('アイコン画像変更処理');
     Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon')->name('アイコン削除');
     Route::get('/mypage/favorite_soft', 'User\FavoriteSoftController@myself');
     Route::get('/mypage/favorite_site', 'User\FavoriteSiteController@myself');

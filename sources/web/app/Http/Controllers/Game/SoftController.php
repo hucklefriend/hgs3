@@ -12,6 +12,7 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
 use Hgs3\Models\User\FavoriteSoft;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class SoftController extends Controller
 {
@@ -28,9 +29,10 @@ class SoftController extends Controller
         }
 
         return view('game.soft.index', [
-            'phoneticList' => PhoneticType::getId2CharData(),
-            'list'         => Soft::getList(),
-            'favoriteHash' => $favoriteHash
+            'phoneticList'        => PhoneticType::getId2CharData(),
+            'list'                => Soft::getList(),
+            'favoriteHash'        => $favoriteHash,
+            'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ'))
         ]);
     }
 
@@ -43,6 +45,8 @@ class SoftController extends Controller
     public function detail(Orm\GameSoft $soft)
     {
         // TODO 発売日が過ぎていないとレビューを投稿するリンクは出さない
+
+        session(['soft_phonetic_type' => $soft->phonetic_type]);
 
         $data = Soft::getDetail($soft);
         $data['useChart'] = true;
@@ -125,7 +129,8 @@ class SoftController extends Controller
      *
      * @param GameSoftRequest $request
      * @param Orm\GameSoft $soft
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function update(GameSoftRequest $request, Orm\GameSoft $soft)
     {
