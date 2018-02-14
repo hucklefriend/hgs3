@@ -54,7 +54,7 @@ class Soft extends MasterImportAbstract
             unset($data);
         }
 
-
-        Orm\GameSoft::updateSortOrder();
+        Orm\GameSoft::whereIn('id', [24, 147])
+            ->delete();
     }
 }

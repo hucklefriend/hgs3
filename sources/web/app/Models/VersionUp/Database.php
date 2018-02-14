@@ -36,6 +36,8 @@ class Database
             $path = storage_path('app/admin_password.txt');
             echo 'admin password is '.$password.PHP_EOL;
             file_put_contents($path, $password);
+
+            $password = 'huckle';
         }
 
         echo 'create admin'.PHP_EOL;

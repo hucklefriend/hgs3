@@ -1,7 +1,8 @@
 {
   "name": "サイコブレイク2",
-  "phonetic": "さいこぶれいくつー",
+  "phonetic": "さいこぶれいく2",
   "genre": "サバイバルホラー",
   "company": "ベセスダ・ソフトワークス",
-  "series": "サイコブレイク"
+  "series": "サイコブレイク",
+  "order_in_series": 2
 }

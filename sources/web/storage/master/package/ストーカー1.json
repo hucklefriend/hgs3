@@ -1,0 +1,15 @@
+{
+  "soft_id": [196],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "GSC",
+      "name": "S.T.A.L.K.E.R.: Shadow of Chernobyl",
+      "release_at": "2007年3月20日",
+      "release_int": 20070320,
+      "url":"http://www.stalker-game.com/",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/4500/STALKER_Shadow_of_Chernobyl/"
+    }
+  ]
+}
