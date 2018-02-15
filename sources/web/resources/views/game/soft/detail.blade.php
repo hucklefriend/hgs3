@@ -33,14 +33,14 @@
                         {{ csrf_field() }}
                         <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                         {{ method_field('DELETE') }}
-                        <button class="btn btn-outline-dark btn-sm">お気に入り解除</button>
+                        <button class="btn btn-outline-secondary btn-sm">お気に入り解除</button>
                     </form>
                 @else
                     <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
                         {{ csrf_field() }}
                         <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                         <div class="text-center">
-                            <button class="btn btn-outline-warning btn-sm">お気に入りに登録</button>
+                            <button class="btn btn-outline-warning btn-sm"><i class="fas fa-star"></i>お気に入り登録</button>
                         </div>
                     </form>
                 @endif
@@ -186,12 +186,12 @@
                         @if ($packageNum > 2)
                     <div class="row">
                         <div class="col-2">
-                            <button class="btn btn-default btn-sm" id="package_slider_prev">&lt;</button>
+                            <button class="btn btn-outline-secondary btn-sm" id="package_slider_prev">&lt;</button>
                         </div>
                         <div class="col-8 text-center" id="package_pager">
                         </div>
                         <div class="col-2 text-right">
-                            <button class="btn btn-default btn-sm" id="package_slider_next">&gt;</button>
+                            <button class="btn btn-outline-secondary btn-sm" id="package_slider_next">&gt;</button>
                         </div>
                     </div>
                         @endif
