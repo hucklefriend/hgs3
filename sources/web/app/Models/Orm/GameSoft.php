@@ -96,7 +96,7 @@ class GameSoft extends \Eloquent
 SELECT soft.id, IF(soft.series_id IS NULL, soft.phonetic, series.phonetic) AS phonetic_order
 FROM game_softs AS soft LEFT OUTER JOIN game_series AS series ON 
   soft.series_id = series.id
-ORDER BY phonetic_order, soft.order_in_series
+ORDER BY soft.phonetic_type, phonetic_order, soft.order_in_series
 SQL;
 
         $data = DB::select($sql);

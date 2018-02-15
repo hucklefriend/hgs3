@@ -1,0 +1,35 @@
+{
+  "soft_name": ["DEAD SPACE2"],
+  "packages":[
+    {
+      "platform": "PS3",
+      "company": "EA",
+      "name": "DEAD SPACE2",
+      "release_at": "2011年1月25日",
+      "release_int": 20110125,
+      "url":"https://www.ea.com/ja-jp/games/dead-space/dead-space-2",
+      "shop": "amazon",
+      "asin": "B00LLYRSXQ"
+    },
+    {
+      "platform": "XB360",
+      "company": "EA",
+      "name": "DEAD SPACE2",
+      "release_at": "2011年1月25日",
+      "release_int": 20110125,
+      "url":"https://www.ea.com/ja-jp/games/dead-space/dead-space-2",
+      "shop": "amazon",
+      "asin": "B00309U0M6"
+    },
+    {
+      "platform": "PC",
+      "company": "EA",
+      "name": "DEAD SPACE2",
+      "release_at": "2011年1月25日",
+      "release_int": 20110125,
+      "url":"https://www.ea.com/ja-jp/games/dead-space/dead-space-2",
+      "shop": "amazon",
+      "asin": "B002I0HJ68"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "packages":[
     {
       "platform": "PS3",
-      "company": "ベセスダ・ソフトワークス",
+      "company": "ベセスダ",
       "name": "サイコブレイク",
       "release_at": "2014年10月23日",
       "release_int": 20141023,
@@ -13,7 +13,7 @@
     },
     {
       "platform": "PS4",
-      "company": "ベセスダ・ソフトワークス",
+      "company": "ベセスダ",
       "name": "サイコブレイク",
       "release_at": "2014年10月23日",
       "release_int": 20141023,
@@ -23,7 +23,7 @@
     },
     {
       "platform": "XONE",
-      "company": "ベセスダ・ソフトワークス",
+      "company": "ベセスダ",
       "name": "サイコブレイク",
       "release_at": "2014年10月23日",
       "release_int": 20141023,
@@ -32,8 +32,8 @@
       "asin": "B00LLYXUAQ"
     },
     {
-      "platform": "X360",
-      "company": "ベセスダ・ソフトワークス",
+      "platform": "XB360",
+      "company": "ベセスダ",
       "name": "サイコブレイク",
       "release_at": "2014年10月23日",
       "release_int": 20141023,

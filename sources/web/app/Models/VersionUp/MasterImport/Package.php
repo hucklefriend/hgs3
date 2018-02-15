@@ -23,6 +23,16 @@ class Package extends MasterImportAbstract
     {
         $this->update();
 
+        // 男子校であった怖い話に不要なパッケージ
+        DB::table('game_package_links')
+            ->where('soft_id', 243)
+            ->delete();
+
+        DB::table('game_package_links')
+            ->whereIn('soft_id', [242, 239, 241, 240])
+            ->where('package_id', 410)
+            ->delete();
+
         $path = storage_path('master/package');
 
         $files = File::files($path);
@@ -50,6 +60,40 @@ class Package extends MasterImportAbstract
         DB::table('game_packages')
             ->whereIn('id', [101, 102, 103, 104, 105])
             ->update(['company_id' => 103]);
+
+        // 魔女たちの眠り
+        DB::table('game_packages')
+            ->whereIn('id', [147])
+            ->update(['company_id' => self::getCompanyId('パック')]);
+
+        // 魔女たちの眠り完全版
+        DB::table('game_packages')
+            ->whereIn('id', [148])
+            ->update(['company_id' => 9]);
+
+        // 歪みの国のアリス
+        DB::table('game_packages')
+            ->whereIn('id', [127])
+            ->update(['company_id' => self::getCompanyId('SUNSOFT')]);
+
+        // お馬が穐
+        DB::table('game_packages')
+            ->whereIn('id', [86,87,88,89])
+            ->update(['company_id' => 54]);
+    }
+
+    /**
+     * 会社IDを取得
+     *
+     * @param string $name
+     * @return mixed
+     */
+    private static function getCompanyId($name)
+    {
+        $sql = 'SELECT id FROM game_companies WHERE name LIKE "%' . $name . '%"';
+
+        $company = DB::select($sql);
+        return $company[0]->id;
     }
 
     /**
@@ -105,36 +149,38 @@ class Package extends MasterImportAbstract
                         'sort_order' => $pkg['release_int']
                     ]);
 
-                if (is_array($pkg['shop'])) {
-                    foreach ($pkg['shop'] as $shop => $shopUrl) {
-                        $shopId = Shop::getIdByName($shop);
+                if (isset($pkg['shop'])) {
+                    if (is_array($pkg['shop'])) {
+                        foreach ($pkg['shop'] as $shop => $shopUrl) {
+                            $shopId = Shop::getIdByName($shop);
+                            if ($shopId) {
+                                if ($shopId == Shop::AMAZON) {
+                                    // TODO 戻す
+                                    //\Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
+                                } else if ($shopUrl) {
+                                    DB::table('game_package_shops')
+                                        ->insert([
+                                            'package_id' => $package->id,
+                                            'shop_id'    => $shopId,
+                                            'shop_url'   => $shopUrl
+                                        ]);
+                                }
+                            }
+                        }
+                    } else {
+                        $shopId = Shop::getIdByName($pkg['shop']);
                         if ($shopId) {
                             if ($shopId == Shop::AMAZON) {
                                 // TODO 戻す
-                                //\Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
-                            } else if ($shopUrl) {
+                                //\Hgs3\Models\Game\Package::saveImageByAsin($package->id, $pkg['asin']);
+                            } else if (!empty($pkg['shop_url'])) {
                                 DB::table('game_package_shops')
                                     ->insert([
                                         'package_id' => $package->id,
                                         'shop_id'    => $shopId,
-                                        'shop_url'   => $shopUrl
+                                        'shop_url'   => $pkg['shop_url']
                                     ]);
                             }
-                        }
-                    }
-                } else {
-                    $shopId = Shop::getIdByName($pkg['shop']);
-                    if ($shopId) {
-                        if ($shopId == Shop::AMAZON) {
-                            // TODO 戻す
-                            //\Hgs3\Models\Game\Package::saveImageByAsin($package->id, $pkg['asin']);
-                        } else if (!empty($pkg['shop_url'])) {
-                            DB::table('game_package_shops')
-                                ->insert([
-                                    'package_id' => $package->id,
-                                    'shop_id'    => $shopId,
-                                    'shop_url'   => $pkg['shop_url']
-                                ]);
                         }
                     }
                 }

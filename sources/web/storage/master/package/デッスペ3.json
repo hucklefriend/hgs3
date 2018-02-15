@@ -1,0 +1,35 @@
+{
+  "soft_name": ["DEAD SPACE3"],
+  "packages":[
+    {
+      "platform": "PS3",
+      "company": "EA",
+      "name": "DEAD SPACE3",
+      "release_at": "2013年2月5日",
+      "release_int": 20130205,
+      "url":"https://www.ea.com/ja-jp/games/dead-space/dead-space-3",
+      "shop": "amazon",
+      "asin": "B0050SWUTQ"
+    },
+    {
+      "platform": "XB360",
+      "company": "EA",
+      "name": "DEAD SPACE3",
+      "release_at": "2013年2月5日",
+      "release_int": 20130205,
+      "url":"https://www.ea.com/ja-jp/games/dead-space/dead-space-3",
+      "shop": "amazon",
+      "asin": "B0050SWVIQ"
+    },
+    {
+      "platform": "PC",
+      "company": "EA",
+      "name": "DEAD SPACE3",
+      "release_at": "2013年2月5日",
+      "release_int": 20130205,
+      "url":"https://www.ea.com/ja-jp/games/dead-space/dead-space-3",
+      "shop": "amazon",
+      "asin": "B00AFR3A3C"
+    }
+  ]
+}

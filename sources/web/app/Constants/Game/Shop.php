@@ -56,4 +56,42 @@ class Shop
     {
         return self::$names[$id] ?? '';
     }
+
+    /**
+     * Font awesomeのマークを取得
+     *
+     * @param $id
+     * @return string
+     */
+    public static function getMark($id)
+    {
+        $mark = '';
+
+        switch ($id) {
+            case self::AMAZON:
+                $mark = '<i class="fab fa-amazon"></i>';
+                break;
+            case self::STEAM:
+                $mark = '<i class="fab fa-steam"></i>';
+                break;
+            case self::PLAY_STATION_STORE:
+                $mark = '<i class="fab fa-playstation"></i>';
+                break;
+            case self::APP_STORE:
+                $mark = '<i class="fab fa-apple"></i>';
+                break;
+            case self::GOOGLE_PLAY:
+                $mark = '<i class="fab fa-google-play"></i>';
+                break;
+            case self::MICROSOFT_STORE:
+                $mark = '<i class="fab fa-microsoft"></i>';
+                break;
+            case self::NINTENDO_STORE:
+            case self::NINTENDO_E_STORE:
+                $mark = '<i class="fab fa-nintendo-switch"></i>';
+                break;
+        }
+
+        return $mark;
+    }
 }
