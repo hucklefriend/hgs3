@@ -369,7 +369,7 @@
             <i class="fas fa-angle-left"></i>
             前のゲーム
         </a>
-        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}" class="btn btn-outline-dark">
+        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}" class="btn btn-outline-dark">
             次のゲーム
             <i class="fas fa-angle-right"></i>
         </a>

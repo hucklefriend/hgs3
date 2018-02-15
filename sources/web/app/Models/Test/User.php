@@ -24,7 +24,7 @@ class User
 
         for ($i = 0; $i < $num; $i++) {
             $user = \Hgs3\Models\User::register([
-                'name'    => self::getSampleName() . ' ' . $maxId . '号',
+                'name'    => self::getSampleName() . ' ' . ++$maxId . '号',
                 'profile' => self::getSampleProfile()
             ]);
 

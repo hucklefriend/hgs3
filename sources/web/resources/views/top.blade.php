@@ -38,11 +38,21 @@
                     <form method="POST" action="{{ route('ログイン') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group form-group-sm">
-                            <input id="email" type="email" class="form-control form-control-sm" name="email" value="{{ old('email') }}" required placeholder="メールアドレス">
+                        <div class="form-group form-group-sm mb-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="addon-mail"><i class="far fa-envelope"></i></span>
+                                </div>
+                                <input id="email" type="email" class="form-control form-control-sm" name="email" value="{{ old('email') }}" required placeholder="メールアドレスを入力してください" aria-label="メールアドレス" aria-describedby="addon-mail">
+                            </div>
                         </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-                            <input id="password" type="password" class="form-control form-control-sm" name="password" required placeholder="パスワード">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="addon-password"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input id="password" type="password" class="form-control form-control-sm" name="password" required placeholder="パスワードを入力してください" aria-label="パスワード" aria-describedby="addon-password">
+                            </div>
                         </div>
                         <div style="display:flex;">
                             <div>

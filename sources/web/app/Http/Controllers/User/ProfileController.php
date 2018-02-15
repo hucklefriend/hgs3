@@ -39,30 +39,28 @@ class ProfileController extends Controller
             return view('user.profile.notExist');
         }
 
-        $profile = new Profile();
-
         // データ数を取得
-        $data = $profile->getDataNum($user->id);
+        $data = Profile::getDataNum($user->id);
 
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
 
         switch ($show) {
             case 'follow':{
-                $follow = new Follow;
-                $follows = $follow->getFollow($user->id);
+                $follows = Follow::getFollow($user->id);
                 $data['parts'] = [
                     'follows' => $follows,
                     'users'   => User::getHash(page_pluck($follows, 'follow_user_id')),
+                    'mutualFollower' => Follow::getFollowerHash($user->id, page_pluck($follows, 'follow_user_id'))
                 ];
             }
                 break;
             case 'follower':{
-                $follow = new Follow;
-                $follows = $follow->getFollower($user->id);
+                $followers = Follow::getFollower($user->id);
                 $data['parts'] = [
-                    'followers' => $follows,
-                    'users'     => User::getHash(page_pluck($follows, 'user_id')),
+                    'followers' => $followers,
+                    'users'     => User::getHash(page_pluck($followers, 'user_id')),
+                    'mutualFollow' => Follow::getFollowHash($user->id, page_pluck($followers, 'user_id'))
                 ];
             }
                 break;

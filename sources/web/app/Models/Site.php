@@ -151,6 +151,10 @@ class Site
             $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
         }
 
+        if (!$isNewArrival && $site->approval_status == ApprovalStatus::OK) {
+            $site->updated_timestamp = time();
+        }
+
         if (!$isNewArrival) {
             // タイムライン用に現在の取扱いゲームを取得
             $prevHandleSoftIds = DB::table('site_handle_softs')

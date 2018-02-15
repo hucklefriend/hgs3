@@ -221,6 +221,7 @@ a:active .no-image-text-inner {
 }
 
 .profile-text {
+    margin-top: 1rem;
     overflow-y: scroll;
     max-height: 7.5rem;
 }

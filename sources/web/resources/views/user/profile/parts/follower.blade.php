@@ -13,7 +13,7 @@
                             @include('user.common.icon', ['u' => $u])
                             @include('user.common.user_name', ['u' => $u])
                         </div>
-                        @if ($isMyself)
+                        @if ($isMyself && isset($mutualFollow[$follower->user_id]))
                             <div class="text-right ml-5">
                                 <form method="POST" action="{{ route('フォロー解除') }}">
                                     {{ csrf_field() }}
@@ -27,7 +27,7 @@
                     <div>
                         {{ format_date($follower->follow_timestamp) }}
                         @isset($mutualFollow[$follower->user_id])
-                            <span class="mutual-follow-icon"><i class="far fa-handshake"></i></span>
+                            <span class="mutual-follow-icon"><abbr title="相互フォロー"><i class="far fa-handshake"></i></abbr></span>
                         @endisset
                     </div>
                 </div>

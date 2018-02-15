@@ -294,7 +294,7 @@ function page_pluck(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager
  */
 function format_date($unix_timestamp)
 {
-    return date('Y年n月j日 G時', $unix_timestamp) . intval(date('i', $unix_timestamp)) . '分';
+    return date('Y-m-d H:i', $unix_timestamp);
 }
 
 function follow_status_icon(array $followStatus, $targetUserId)

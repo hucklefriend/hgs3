@@ -62,7 +62,12 @@ class Site
 
                 rtrim($handleSoft, ',');
                 $orm->handle_soft = $handleSoft;
-                \Hgs3\Models\Site::save($u, $orm, null, null, rand(0, 100) > 80);
+
+                if (rand(0, 100) > 90) {
+                    $orm->hgs2_site_id = rand(1, 100);
+                }
+
+                \Hgs3\Models\Site::insert($u, $orm, null, null, rand(0, 100) > 95);
 
                 if (rand(0, 10) > 2) {
 

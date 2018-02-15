@@ -247,7 +247,6 @@ class SiteManageController extends Controller
             $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
             $site->detail_banner_url = $request->get('detail_banner_url');
         }
-        $site->updated_timestamp = time();
 
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');

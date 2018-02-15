@@ -1,7 +1,7 @@
 <div id="timeline">
 @foreach ($timelines as $tl)
     <p class="mb-4">
-        {{ date('Y-m-d H:i:s', intval($tl['time'])) }}<br>
+        {{ format_date($tl['time']) }}<br>
         {!!  $tl['text'] !!}
     </p>
 @endforeach

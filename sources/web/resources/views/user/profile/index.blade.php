@@ -14,8 +14,7 @@
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
-                    <span class="badge badge-success">フォロー中</span>
-                    <button class="btn btn-danger btn-sm">解除</button>
+                    <button class="btn btn-danger btn-sm">フォロー解除</button>
                 </form>
             @else
                 <form action="{{ route('フォロー登録') }}" method="POST">
@@ -28,7 +27,7 @@
 
         @if (!empty($user->profile))
             <p class="profile-text">
-                自己紹介<br>
+                <span class="font-weight-bold">自己紹介</span><br>
                 {!! nl2br(e($user->profile)) !!}
             </p>
         @endif
