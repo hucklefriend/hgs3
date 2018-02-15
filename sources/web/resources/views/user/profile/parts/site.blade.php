@@ -9,7 +9,6 @@
 @endforeach
 
 @if ($isMyself && count($sites) < env('MAX_SITES'))
-    @if (count($sites) > 0) <hr> @endif
     @if ($hasHgs2Site)
         <div class="row">
             <div class="col-6">

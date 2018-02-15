@@ -4,9 +4,10 @@
 @foreach ($favoriteSites as $fs)
     @isset($sites[$fs->site_id])
         @php $s = $sites[$fs->site_id]; @endphp
+    <div class="mb-5">
     @include('site.common.normal', ['s' => $s, 'u' => $users[$s->user_id]])
+    </div>
     @endif
-    @if (!$loop->last) <hr> @endif
 @endforeach
 
-{{ $favoriteSites->links('vendor.pagination.simple-bootstrap-4') }}
+@include('common.pager', ['pager' => $favoriteSites])

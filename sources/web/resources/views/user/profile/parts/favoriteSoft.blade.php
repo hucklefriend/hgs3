@@ -29,12 +29,14 @@
                             {{ format_date($fg->register_timestamp) }} 登録
                         </div>
                     </div>
+                    @if ($isMyself)
                     <form method="POST" action="{{ route('お気に入りゲーム削除処理') }}" onsubmit="return confirm('お気に入り解除します。よろしいですか？');" class="align-self-center">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <input type="hidden" name="soft_id" value="{{ $fg->soft_id }}">
                         <button type="submit" class="btn btn-sm btn-danger">解除</button>
                     </form>
+                    @endif
                 </div>
             </div>
     @endisset

@@ -346,14 +346,6 @@ button.btn:hover {
     color: gold;
 }
 
-.good-icon, a.good-icon2:hover {
-    color: lightgray;
-}
-
-a.good-icon:hover, .good-icon2 {
-    color: black;
-}
-
 .site-side-menu {
     min-width: 200px;
     margin-right:10px;
