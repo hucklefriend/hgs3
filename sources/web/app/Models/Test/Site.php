@@ -41,11 +41,11 @@ class Site
                 $orm = new Orm\Site();
                 $orm->user_id = $u->id;
                 $orm->name = self::getSampleTitle();
-                $orm->url = 'http://fake.' . str_random(rand(3, 10)) . '.com/';
+                $orm->url = 'http://horrorgame.net';
                 $orm->presentation = self::getSampleText();
                 $orm->rate = $rates[rand(0, 2)];
                 $orm->main_contents_id = rand(1, 7);
-                $orm->gender = rand(1, 3);
+                $orm->gender = rand(0, 2);
                 $orm->open_type = 0;
                 $orm->in_count = rand(0, 9999);
                 $orm->out_count = rand(0, 9999);

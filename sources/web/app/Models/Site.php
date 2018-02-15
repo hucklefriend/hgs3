@@ -10,6 +10,7 @@ use Hgs3\Constants\Site\OpenType;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Site\Footprint;
 use Hgs3\Models\Site\NewArrival;
+use Hgs3\Models\Site\UpdateArrival;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -26,66 +27,53 @@ class Site
      * @param Orm\Site $site
      * @param UploadedFile|null $listBanner
      * @param UploadedFile|null $detailBanner
-     * @param bool $isTakeOver
-     * @param int|null $hgs2SiteId
+     * @param bool $isDraft
      * @return bool
      * @throws \Exception
      */
-    public static function save(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isTakeOver, $hgs2SiteId = 0)
+    public static function insert(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isDraft)
     {
-        $isAdd = $site->id === null;
-
-        // カンマ区切りを配列にしてくれるっぽい？
+        // Laravelの方でカンマ区切りは配列にしてくれるっぽい？
         if (is_array($site->handle_soft)) {
+            // カンマ区切りに変換
             $handleSoftIds = $site->handle_soft;
             $site->handle_soft = implode(',', $site->handle_soft);
         } else {
             $handleSoftIds = explode(',', $site->handle_soft);
         }
 
-        if (!$isAdd) {
-            // タイムライン用に現在の取扱いゲームを取得
-            $prevHandleSoftIds = DB::table('site_handle_softs')
-                ->select(['soft_id'])
-                ->where('site_id', $site->id)
-                ->get()
-                ->pluck('soft_id', 'soft_id')
-                ->toArray();
+        $isTakeOver = $site->hgs2_site_id != null;      // H.G.S.からの引き継ぎか？
+
+        // サイトの承認状況を設定
+        if ($isDraft) {
+            $site->approval_status = ApprovalStatus::DRAFT;     // 下書き
+        } else {
+            // 引き継ぎなら承認なしでOK
+            $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
         }
 
         DB::beginTransaction();
         try {
-            if (!$isAdd) {
-                // 更新の場合はサイトIDがわかるので、先にバナー保存
-                self::saveBanner($site, $listBanner, $detailBanner);
-            } else {
-                $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
-            }
-
+            // 先にINSERTしてサイトIDを確定
             $site->save();
 
-            if ($site->id) {
-                self::saveHandleSofts($site, $handleSoftIds);
+            // 取扱いゲームを保存
+            self::saveHandleSofts($site, $handleSoftIds);
 
-                if ($isAdd) {
-                    // 追加の場合はサイトIDの確定が必要なので、後でバナー保存
-                    self::saveBanner($site, $listBanner, $detailBanner);
-                    $site->save();
+            // バナー保存
+            self::saveBanner($site, $listBanner, $detailBanner);
 
-                    // 引き継ぎの場合は新着サイトに登録
-                    if ($isTakeOver) {
-                        NewArrival::add($site->id);
+            // 引き継ぎの場合
+            if ($isTakeOver) {
+                // 日別アクセス数のコピー
+                self::takeOverDailyAccess($site->id, $site->hgs2_site_id);
 
-                        // 検索インデックスへの登録
-                        self::saveSearchIndex($site, $handleSoftIds);
+                // 下書きでなければそのまま登録
+                if (!$isDraft) {
+                    // 新着サイトに登録
+                    NewArrival::add($site->id);
 
-                        // 日別アクセス数のコピー
-                        self::takeOverDailyAccess($site->id, $hgs2SiteId);
-                    }
-
-                    // 新規登録の場合、認証が必要なので検索インデックスへは登録しない
-                } else {
-                    // 更新の場合は検索インデックスの更新
+                    // 検索インデックスへの登録
                     self::saveSearchIndex($site, $handleSoftIds);
                 }
             }
@@ -102,8 +90,106 @@ class Site
             return false;
         }
 
+        // 下書きじゃなければ
+        if (!$isDraft) {
+            // 引き継ぎはこのまま登録させるのでタイムラインに登録
+            if ($isTakeOver) {
+                self::saveNewSiteInformation($user, $site, $handleSoftIds);
+            } else {
+                try {
+                    // 管理人のタイムラインに流す
+                    $admin = User::getAdmin();
+                    Timeline\ToMe::addSiteApproveText($admin, $site);
+
+                    // 管理人にメール送信
+                    /*Mail::to(env('ADMIN_MAIL'))
+                        ->send(new \Hgs3\Mail\SiteApprovalWait($site));*/
+
+                    Log::info('管理人にメール飛ばした');
+                } catch (\Exception $e) {
+                    Log::exceptionError($e);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * 更新
+     *
+     * @param User $user
+     * @param Orm\Site $site
+     * @param UploadedFile|null $listBanner
+     * @param UploadedFile|null $detailBanner
+     * @param bool $isDraft
+     * @return bool
+     * @throws \Exception
+     */
+    public static function update(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isDraft)
+    {
+        // カンマ区切りを配列にしてくれるっぽい？
+        if (is_array($site->handle_soft)) {
+            $handleSoftIds = $site->handle_soft;
+            $site->handle_soft = implode(',', $site->handle_soft);
+        } else {
+            $handleSoftIds = explode(',', $site->handle_soft);
+        }
+
+        $isNewArrival = $site->approval_status == ApprovalStatus::DRAFT && !$isDraft;   // 下書きから登録
+        $isTakeOver = $site->hgs2_site_id != null;                     // H.G.S.からの引き継ぎ
+
+        // サイトの承認状況を設定
+        if ($isDraft) {
+            $site->approval_status = ApprovalStatus::DRAFT;
+        } else if ($site->approval_status == ApprovalStatus::REJECT) {
+            // リジェクトからの場合は再度審査
+            $site->approval_status = ApprovalStatus::WAIT;
+        } else if ($site->approval_status == ApprovalStatus::DRAFT) {
+            // 下書きから正式登録の場合は審査
+            // ただしH.G.S.引き継ぎなら審査なしでOK
+            $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
+        }
+
+        if (!$isNewArrival) {
+            // タイムライン用に現在の取扱いゲームを取得
+            $prevHandleSoftIds = DB::table('site_handle_softs')
+                ->select(['soft_id'])
+                ->where('site_id', $site->id)
+                ->get()
+                ->pluck('soft_id', 'soft_id')
+                ->toArray();
+        }
+
+        DB::beginTransaction();
+        try {
+            $site->save();
+            self::saveHandleSofts($site, $handleSoftIds);
+            self::saveBanner($site, $listBanner, $detailBanner);
+
+            if ($isNewArrival && $isTakeOver) {
+                // 下書きからの更新かつ引き継ぎならそのまま登録
+                NewArrival::add($site->id);                     // 新着サイト
+                self::saveSearchIndex($site, $handleSoftIds);   // 検索インデックスに登録
+            } else if ($site->approval_status == ApprovalStatus::OK) {
+                // 承認済みサイトの更新
+                UpdateArrival::add($site->id);                  // 更新サイト
+                self::saveSearchIndex($site, $handleSoftIds);   // 検索インデックス更新
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+
+            if (env('APP_ENV') == 'local') {
+                throw $e;
+            }
+
+            return false;
+        }
+
         // サイト追加タイムライン
-        if ($isAdd) {
+        if ($isNewArrival) {
             // 引き継ぎはこのまま登録させるのでタイムラインに登録
             if ($isTakeOver) {
                 self::saveNewSiteInformation($user, $site, $handleSoftIds);
@@ -123,20 +209,18 @@ class Site
                     Log::error($e->getTraceAsString());
                 }
             }
-        } else {
-            if ($site->approval_status == ApprovalStatus::OK) {
-                // サイト更新タイムライン
-                Timeline\FollowUser::addUpdateSiteText($user, $site);
-                Timeline\ToMe::addSiteUpdatedText($user, $site);
-                Timeline\FavoriteSite::addUpdateSiteText($site);
-                Timeline\Site::addUpdateText($site);
+        } else if ($site->approval_status == ApprovalStatus::OK) {
+            // サイト更新タイムライン
+            Timeline\FollowUser::addUpdateSiteText($user, $site);
+            Timeline\ToMe::addSiteUpdatedText($user, $site);
+            Timeline\FavoriteSite::addUpdateSiteText($site);
+            Timeline\Site::addUpdateText($site);
 
-                // 直前に取り扱ってないゲームを追加
-                $softHash = Orm\GameSoft::getHash($handleSoftIds);
-                foreach ($handleSoftIds as $softId) {
-                    if (!isset($prevHandleSoftIds[$softId]) && isset($softHash[$softId])) {
-                        Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
-                    }
+            // 直前に取り扱ってないゲームを追加
+            $softHash = Orm\GameSoft::getHash($handleSoftIds);
+            foreach ($handleSoftIds as $softId) {
+                if (!isset($prevHandleSoftIds[$softId]) && isset($softHash[$softId])) {
+                    Timeline\FavoriteSoft::addNewSiteText($softHash[$softId], $site);
                 }
             }
         }
@@ -235,9 +319,9 @@ class Site
             foreach ($handleSoftIds as $softId) {
                 if (!empty($softId) && !isset($hash[$softId])) {
                     $data[] = [
-                            'site_id' => $site->id,
-                            'soft_id' => $softId
-                        ];
+                        'site_id' => $site->id,
+                        'soft_id' => $softId
+                    ];
                     $hash[$softId] = 1;
                 }
             }

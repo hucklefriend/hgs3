@@ -239,6 +239,15 @@ a:active .no-image-text-inner {
     height: 3rem;
 }
 
+.no-banner-site-name {
+    margin: 5px 0;
+    display: inline-block;
+    font-size: 1.2rem;
+}
+.no-banner-site-name a {
+    padding: 3px;
+}
+
 .list-site-banner-outline {
     max-width: 468px;
     max-height: 60px;
@@ -246,6 +255,14 @@ a:active .no-image-text-inner {
     overflow:hidden;
 }
 
+.site-badge-item {
+    font-size: 0.5rem;
+    border: solid 1px #00c300;
+}
+
+.list-site-banner-outline img {
+    max-width: 100%;
+}
 
 .detail-site-banner-outline {
 

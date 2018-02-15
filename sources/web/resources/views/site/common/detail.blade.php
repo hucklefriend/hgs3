@@ -69,10 +69,12 @@
                         <i class="fas fa-paw"></i>
                         {{ number_format($site->out_count) }}
                     </span>
+                    @if ($site->updated_timestamp > 0)
                     <span>
                         <i class="fas fa-redo-alt"></i>
                         {{ date('Y-m-d H:i', $site->updated_timestamp) }}
                     </span>
+                    @endif
                 </div>
             </div>
         </div>

@@ -37,6 +37,7 @@ class SiteRequest extends FormRequest
             'detail_banner_upload_flag' => 'required',
             'detail_banner_url'         => 'required_if:detail_banner_upload_flag,1|nullable|max:200|url',
             'detail_banner_upload'      => 'required_if:detail_banner_upload_flag,2|file|image|max:1024',
+            'draft'                     => 'nullable',
             'hgs2_site_id'              => ''
         ];
     }

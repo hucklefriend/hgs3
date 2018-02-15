@@ -8,7 +8,8 @@
 
     @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
         <div class="alert alert-warning" role="alert">
-            承認待ち状態です。登録者と管理人以外には表示されません。
+            承認待ち状態です。<br>
+            登録ユーザーさんと管理人以外には表示されません。
         </div>
     @elseif ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
         <div class="alert alert-danger" role="alert">
@@ -21,6 +22,11 @@
             <hr>
             <p>{!! nl2br(e($site->reject_reason)) !!}</p>
         </div>
+    @elseif ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::DRAFT)
+        <div class="alert alert-secondary" role="alert">
+            下書きです。<br>
+            登録ユーザーさん以外には表示されません。
+        </div>
     @endif
 
     @include('site.common.detail')
@@ -28,17 +34,17 @@
     @if ($isWebMaster)
         <div class="card card-hgn border-info">
             <div class="card-body">
-                <h5 class="card-title">管理人さま用</h5>
+                <h5 class="card-title">登録者さま用</h5>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><a href="{{ route('サイト編集', ['site' => $site->id]) }}">サイト情報を編集</a></li>
-                <li class="list-group-item"><a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}">アクセスログ</a></li>
+            <ul class="list-group list-group-flush no-border">
+                <li class="list-group-item"><i class="far fa-edit"></i><a href="{{ route('サイト編集', ['site' => $site->id]) }}">サイト情報を編集</a></li>
+                <li class="list-group-item"><i class="fas fa-paw"></i><a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}">アクセスログ</a></li>
                 <li class="list-group-item text-right">
                     <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')" style="margin: 5px 0;">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
 
-                        <button class="btn btn-danger btn-sm">サイトを削除</button>
+                        <button class="btn btn-danger btn-sm"><i class="fas fa-eraser"></i>サイトを削除</button>
                     </form>
                 </li>
             </ul>

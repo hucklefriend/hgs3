@@ -57,6 +57,12 @@ class SiteManageController extends Controller
             return view('user.siteManage.max');
         }
 
+        $bannerSelect = [
+            0  => 'なし',
+            1  => 'URLを指定(直リン)',
+            2  => 'H.G.N.にアップロード',
+        ];
+
         return view('user.siteManage.add', [
             'isTakeOver' => false,
             'softs'      => Orm\GameSoft::getPhoneticTypeHash(),
@@ -66,7 +72,8 @@ class SiteManageController extends Controller
                 'gender'                    => Gender::NONE,
                 'list_banner_upload_flag'   => 0,
                 'detail_banner_upload_flag' => 0
-            ])
+            ]),
+            'bannerSelect' => $bannerSelect
         ]);
     }
 
@@ -108,7 +115,9 @@ class SiteManageController extends Controller
         return view('user.siteManage.add', [
             'isTakeOver' => true,
             'softs'      => Orm\GameSoft::getPhoneticTypeHash(),
-            'site'       => Site\TakeOver::getHgs2Site(Auth::user(), $hgs2SiteId)
+            'site'       => Site\TakeOver::getHgs2Site(Auth::user(), $hgs2SiteId),
+            'listBannerUploadFlag'   => old('list_banner_upload_flag', 0),
+            'detailBannerUploadFlag' => old('detail_banner_upload_flag', 0)
         ]);
     }
 
@@ -147,13 +156,11 @@ class SiteManageController extends Controller
                 $site->registered_timestamp = time();
             }
 
-            $isTakeOver = true;
+            $site->hgs2_site_id = $hgs2SiteId;
         } else {
             $site->in_count = 0;
             $site->out_count = 0;
             $site->registered_timestamp = time();
-
-            $isTakeOver = false;
         }
 
         $this->setRequestData($site, $request);
@@ -161,16 +168,18 @@ class SiteManageController extends Controller
         $site->list_banner_url = $request->get('list_banner_url');
         $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
         $site->detail_banner_url = $request->get('detail_banner_url');
-        $site->open_type = $request->get('open_type');
+        $site->open_type = 0;
         $site->good_num = 0;
         $site->max_good_num = 0;
         $site->bad_num = 0;
-        $site->updated_timestamp = time();
+        $site->updated_timestamp = 0;       // 更新日時は0
 
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
 
-        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner, $isTakeOver, $hgs2SiteId)) {
+        $isDraft = $request->get('draft', 0) == 1;
+
+        if (!Site::insert(Auth::user(), $site, $listBanner, $detailBanner, $isDraft)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         } else {
@@ -195,13 +204,22 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
-        // バナーのフラグを-1（変更しない）にしとく
         $site->list_banner_upload_flag = -1;
         $site->detail_banner_upload_flag = -1;
 
+        $bannerSelect = [
+            -1 => '変更しない',
+            0  => '削除',
+            1  => 'URLを指定(直リン)',
+            2  => 'H.G.N.にアップロード',
+        ];
+
         return view('user.siteManage.edit', [
-            'softs' => Orm\GameSoft::getPhoneticTypeHash(),
-            'site'  => $site
+            'softs'        => Orm\GameSoft::getPhoneticTypeHash(),
+            'site'         => $site,
+            'bannerSelect' => $bannerSelect,
+            'listBannerUploadFlag'   => old('list_banner_upload_flag', -1),
+            'detailBannerUploadFlag' => old('detail_banner_upload_flag', -1)
         ]);
     }
 
@@ -234,11 +252,9 @@ class SiteManageController extends Controller
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
 
-        if ($site->approval_status == ApprovalStatus::REJECT) {
-            $site->approval_status = ApprovalStatus::WAIT;
-        }
+        $isDraft = $request->get('draft', 0) == 1;
 
-        if (!Site::save(Auth::user(), $site, $listBanner, $detailBanner, false)) {
+        if (!Site::update(Auth::user(), $site, $listBanner, $detailBanner, $isDraft)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         } else {
