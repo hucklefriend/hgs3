@@ -28,7 +28,7 @@ class AddHgs2SiteId extends Migration
      */
     public function down()
     {
-        Schema::table('game_softs', function (Blueprint $table) {
+        Schema::table('sites', function (Blueprint $table) {
             $table->dropColumn('hgs2_site_id');
         });
     }

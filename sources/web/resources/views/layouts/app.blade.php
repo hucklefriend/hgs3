@@ -10,7 +10,7 @@
     @if (env('APP_DEBUG'))
     <link rel="stylesheet" href="{{ url('css/hgs3.css') }}?ver={{ time() }}">
     @else
-    <link rel="stylesheet" href="{{ url('css/hgs3.css') }}">
+    <link rel="stylesheet" href="{{ url('css/hgs3.css') }}?ver={{ time() }}">
     @endif
 
     <script src="{{ url('/js/jquery-3.3.1.min.js') }}"></script>

@@ -138,11 +138,11 @@ SQL;
 
         $sql =<<< SQL
 INSERT INTO game_softs (
-  id, name, phonetic, phonetic_type, phonetic_order, genre,
+  id, name, phonetic, phonetic2, phonetic_type, phonetic_order, genre,
   series_id, order_in_series, original_package_id, created_at, updated_at
 )
 SELECT
-  sf.id, sf.name, sf.hiragana, sf.hiragana_type, 0, sf.genre_name, 
+  sf.id, sf.name, sf.hiragana, sf.hiragana, sf.hiragana_type, 0, sf.genre_name, 
   sl.series_id, sl.order, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 FROM
   hgs2.hgs_g_soft sf LEFT OUTER JOIN hgs2.hgs_g_series_list sl ON sf.id = sl.soft_id
@@ -151,6 +151,7 @@ WHERE
 ON DUPLICATE KEY UPDATE
   `name` = VALUES(`name`)
   , `phonetic` = VALUES(`phonetic`)
+  , `phonetic2` = VALUES(`phonetic2`)
   , `phonetic_type` = VALUES(`phonetic_type`)
   , `genre` = VALUES(`genre`)
   , `series_id` = VALUES(`series_id`)

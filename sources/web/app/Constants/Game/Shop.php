@@ -87,7 +87,7 @@ class Shop
                 $mark = '<i class="fab fa-microsoft"></i>';
                 break;
             case self::NINTENDO_STORE:
-            case self::NINTENDO_E_STORE:
+            case self::NINTENDO_E_SHOP:
                 $mark = '<i class="fab fa-nintendo-switch"></i>';
                 break;
         }
