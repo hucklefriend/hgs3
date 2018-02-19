@@ -257,6 +257,10 @@ a:active .no-image-text-inner {
     overflow:hidden;
 }
 
+.package-title {
+    font-size: 1.2rem;
+}
+
 .site-badge-item {
     font-size: 0.5rem;
     border: solid 1px #00c300;

@@ -113,7 +113,7 @@
                                 @include('game.common.packageImage', ['imageUrl' => medium_image_url($pkg)])
                             </div>
                             <div class="col-8">
-                                <div><h5>{{ $pkg->name }}</h5></div>
+                                <div class="package-title">{{ $pkg->name }}</div>
                                 <div class="d-flex flex-wrap">
                                     <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
                                     <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
@@ -150,7 +150,7 @@
                                 @include('game.common.packageImage', ['imageUrl' => medium_image_url($pkg)])
                             </div>
                             <div class="col-8">
-                                <div><h5>{{ $pkg->name }}</h5></div>
+                                <div class="package-title">{{ $pkg->name }}</div>
                                 <div class="d-flex flex-wrap">
                                     <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
                                     <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
