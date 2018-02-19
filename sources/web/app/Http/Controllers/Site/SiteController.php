@@ -42,15 +42,23 @@ class SiteController extends Controller
      * トップ
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
-    public function index($time = null)
+    public function index()
     {
-        if ($time === null) {
-            $time = time();
-        }
+        $newArrivals = Site\NewArrival::get(3);
+        $updateArrivals = Site\UpdateArrival::get(3);
+
+        $webmasterIds = array_merge(
+            array_pluck($newArrivals, 'user_id'),
+            array_pluck($updateArrivals, 'user_id')
+        );
 
         return view('site.index', [
-            'timelines' => Timeline\Site::get($time, 20)
+            'newArrivals'    => $newArrivals,
+            'updateArrivals' => $updateArrivals,
+            'webmasters'     => User::getHash($webmasterIds),
+            'timelines'      => Timeline\Site::get(time(), 20)
         ]);
     }
 
@@ -78,7 +86,7 @@ class SiteController extends Controller
      */
     public function newArrival()
     {
-        $newArrivals = Site\NewArrival::get(20);
+        $newArrivals = Site\NewArrival::getPage(20);
         $sites = Orm\Site::getHash(page_pluck($newArrivals, 'site_id'));
         $users = User::getHash(array_pluck($sites, 'user_id'));
 
@@ -95,14 +103,16 @@ class SiteController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function newUpdate()
+    public function updateArrival()
     {
-        $sites = Site\NewArrival::getUpdated(20);
-        $users = User::getHash(page_pluck($sites, 'user_id'));
+        $updateArrivals = Site\UpdateArrival::getPage(20);
+        $sites = Orm\Site::getHash(page_pluck($updateArrivals, 'site_id'));
+        $users = User::getHash(array_pluck($sites, 'user_id'));
 
-        return view('site.newUpdate', [
-            'sites'       => $sites,
-            'users'       => $users
+        return view('site.updateArrival', [
+            'updateArrivals' => $updateArrivals,
+            'sites'          => $sites,
+            'users'          => $users
         ]);
     }
 

@@ -57,5 +57,7 @@
         @endif
     </div>
 
+    @if (!isset($hidePresentation) || !$hidePresentation)
     <div class="site-presentation mt-2">{{ e(str_limit($s->presentation, 150)) }}</div>
+    @endif
 </div>

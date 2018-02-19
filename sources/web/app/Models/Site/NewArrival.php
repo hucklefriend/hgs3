@@ -16,7 +16,7 @@ class NewArrival
      * 新着サイトを取得
      *
      * @param int $num
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return array
      * @throws \Exception
      */
     public static function get($num)
@@ -24,27 +24,39 @@ class NewArrival
         $lastMonth = new \DateTime();
         $lastMonth->sub(new \DateInterval('P1M'));
 
-        return Orm\SiteNewArrival::where('registered_timestamp', '>', $lastMonth->format('u'))
+        $newArrivals = Orm\SiteNewArrival::select()
+            ->where('registered_timestamp', '>', $lastMonth->format('u'))
             ->orderBy('registered_timestamp', 'DESC')
-            ->paginate($num);
+            ->take($num)
+            ->get()
+            ->pluck('site_id')
+            ->toArray();
+
+        if (empty($newArrivals)) {
+            return [];
+        }
+
+        return Orm\Site::whereIn('id', $newArrivals)
+            ->orderBy('registered_timestamp', 'DESC')
+            ->get();
     }
 
     /**
-     * 更新サイトを取得
+     * 新着サイト一覧情報を取得
      *
-     * @param int $num
+     * @param $pagePerNum
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      * @throws \Exception
      */
-    public static function getUpdated($num)
+    public static function getPage($pagePerNum)
     {
         $lastMonth = new \DateTime();
         $lastMonth->sub(new \DateInterval('P1M'));
 
-        return Orm\Site::where('updated_timestamp', '>', $lastMonth->format('u'))
-            ->where('approval_status', ApprovalStatus::OK)
-            ->orderBy('updated_timestamp', 'DESC')
-            ->paginate($num);
+        return Orm\SiteNewArrival::select()
+            ->where('registered_timestamp', '>', $lastMonth->format('u'))
+            ->orderBy('registered_timestamp', 'DESC')
+            ->paginate($pagePerNum);
     }
 
     /**

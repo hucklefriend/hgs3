@@ -27,6 +27,9 @@
         <script src="{{ url('/js/bootstrap-datepicker.min.js') }}"></script>
         <script src="{{ url('/js/bootstrap-datepicker.ja.min.js') }}"></script>
     @endif
+
+    @yield('head_append')
+
 </head>
 <body>
 <div class="fixed-top">

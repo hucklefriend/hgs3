@@ -5,22 +5,22 @@
 @endsection
 
 @section('content')
-    <h1>新着サイト</h1>
+    <h1>更新サイト</h1>
 
-    @foreach ($newArrivals as $newArrival)
+    @foreach ($updateArrivals as $updateArrival)
         @php
-            $s = $sites[$newArrival->site_id];
+            $s = $sites[$updateArrival->site_id];
             $u = $users[$s->user_id];
         @endphp
 
-        <div style="margin-bottom: 50px;">
+        <div class="mb-5">
             <div>
-                <span class="badge badge-info">{{ date('Y/m/d H:i', $newArrival->registered_timestamp) }}登録！</span>
+                <span class="badge badge-info">{{ date('Y/m/d H:i', $updateArrival->registered_timestamp) }}登録！</span>
             </div>
             @include('site.common.normal', ['s' => $s, 'u' => $u])
         </div>
     @endforeach
-    @include('common.pager', ['pager' => $newArrivals])
+    @include('common.pager', ['pager' => $updateArrivals])
 @endsection
 
 @section('breadcrumb')
@@ -28,7 +28,7 @@
         <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
             <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-            <li class="breadcrumb-item active" aria-current="page">新着サイト</li>
+            <li class="breadcrumb-item active" aria-current="page">更新サイト</li>
         </ol>
     </nav>
 @endsection

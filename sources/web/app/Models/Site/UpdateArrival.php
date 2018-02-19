@@ -24,9 +24,39 @@ class UpdateArrival
         $lastMonth = new \DateTime();
         $lastMonth->sub(new \DateInterval('P1M'));
 
-        return Orm\SiteNewArrival::where('registered_timestamp', '>', $lastMonth->format('u'))
-            ->orderBy('registered_timestamp', 'DESC')
-            ->paginate($num);
+        $updateArrivals = Orm\SiteUpdateArrival::select()
+            ->where('updated_timestamp', '>', $lastMonth->format('u'))
+            ->orderBy('updated_timestamp', 'DESC')
+            ->take($num)
+            ->get()
+            ->pluck('site_id')
+            ->toArray();
+
+        if (empty($updateArrivals)) {
+            return [];
+        }
+
+        return Orm\Site::whereIn('id', $updateArrivals)
+            ->orderBy('updated_timestamp', 'DESC')
+            ->get();
+    }
+
+    /**
+     * 更新サイトページ一覧を取得
+     *
+     * @param $pagePerNum
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @throws \Exception
+     */
+    public static function getPage($pagePerNum)
+    {
+        $lastMonth = new \DateTime();
+        $lastMonth->sub(new \DateInterval('P1M'));
+
+        return Orm\SiteUpdateArrival::select()
+            ->where('updated_timestamp', '>', $lastMonth->format('u'))
+            ->orderBy('updated_timestamp', 'DESC')
+            ->paginate($pagePerNum);
     }
 
     /**
