@@ -114,12 +114,34 @@
                             </div>
                             <div class="col-8">
                                 <div class="package-title">{{ $pkg->name }}</div>
-                                <div class="d-flex flex-wrap">
+                                <div class="d-flex flex-wrap package-info">
+                                    @if(!empty($pkg->url))
+                                        <span class="mr-3">
+                                            <!-- http://icooon-mono.com/ の素材を利用しています -->
+                                            <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="width: 0.8rem; height: 0.8rem; opacity: 1;" xml:space="preserve">
+                                            <style type="text/css">
+                                                .st0{fill:#4B4B4B;}
+                                            </style>
+                                            <g>
+                                                <path class="st0" d="M0,48v416c0,26.508,21.492,48,48,48h416c26.508,0,48-21.492,48-48V48c0-26.508-21.492-48-48-48H48
+                                                    C21.492,0,0,21.492,0,48z M86.336,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
+                                                    C77.828,35,86.336,43.508,86.336,54z M156.836,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
+                                                    C148.328,35,156.836,43.508,156.836,54z M227.336,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
+                                                    C218.828,35,227.336,43.508,227.336,54z M40,104h432v360c0,4.406-3.586,8-8,8H48c-4.414,0-8-3.594-8-8V104z" style="fill: rgb(75, 75, 75);"></path>
+                                                <rect x="264" y="192" class="st0" width="152" height="32" style="fill: rgb(75, 75, 75);"></rect>
+                                                <rect x="88" y="352" class="st0" width="328" height="32" style="fill: rgb(75, 75, 75);"></rect>
+                                                <rect x="88" y="192" class="st0" width="120" height="120" style="fill: rgb(75, 75, 75);"></rect>
+                                                <polygon class="st0" points="282.958,304 264,304 264,272 416,272 416,304 298.958,304 	" style="fill: rgb(75, 75, 75);"></polygon>
+                                            </g>
+                                            </svg>
+                                            <a href="{{ $pkg->url }}" target="_blank">公式サイト</a>
+                                        </span>
+                                    @endif
                                     <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
                                     <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
                                     <span><i class="fas fa-shopping-cart"></i> {{ $pkg->release_at }}</span>
                                 </div>
-                                <div>
+                                <div class="mt-2">
                                     @foreach ($pkg->shops as $shop)
                                     @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
                                     @endforeach
@@ -151,12 +173,34 @@
                             </div>
                             <div class="col-8">
                                 <div class="package-title">{{ $pkg->name }}</div>
-                                <div class="d-flex flex-wrap">
+                                <div class="d-flex flex-wrap package-info">
+                                    @if(!empty($pkg->url))
+                                        <span class="mr-3">
+                                            <!-- http://icooon-mono.com/ の素材を利用しています -->
+                                            <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="width: 0.8rem; height: 0.8rem; opacity: 1;" xml:space="preserve">
+                                            <style type="text/css">
+                                                .st0{fill:#4B4B4B;}
+                                            </style>
+                                            <g>
+                                                <path class="st0" d="M0,48v416c0,26.508,21.492,48,48,48h416c26.508,0,48-21.492,48-48V48c0-26.508-21.492-48-48-48H48
+                                                    C21.492,0,0,21.492,0,48z M86.336,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
+                                                    C77.828,35,86.336,43.508,86.336,54z M156.836,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
+                                                    C148.328,35,156.836,43.508,156.836,54z M227.336,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
+                                                    C218.828,35,227.336,43.508,227.336,54z M40,104h432v360c0,4.406-3.586,8-8,8H48c-4.414,0-8-3.594-8-8V104z" style="fill: rgb(75, 75, 75);"></path>
+                                                <rect x="264" y="192" class="st0" width="152" height="32" style="fill: rgb(75, 75, 75);"></rect>
+                                                <rect x="88" y="352" class="st0" width="328" height="32" style="fill: rgb(75, 75, 75);"></rect>
+                                                <rect x="88" y="192" class="st0" width="120" height="120" style="fill: rgb(75, 75, 75);"></rect>
+                                                <polygon class="st0" points="282.958,304 264,304 264,272 416,272 416,304 298.958,304 	" style="fill: rgb(75, 75, 75);"></polygon>
+                                            </g>
+                                            </svg>
+                                            <a href="{{ $pkg->url }}" target="_blank">公式サイト</a>
+                                        </span>
+                                    @endif
                                     <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
                                     <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
                                     <span><i class="fas fa-shopping-cart"></i> {{ $pkg->release_at }}</span>
                                 </div>
-                                <div>
+                                <div class="mt-2">
                                     @foreach ($pkg->shops as $shop)
                                         @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
                                     @endforeach
