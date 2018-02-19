@@ -80,6 +80,12 @@ class Package extends MasterImportAbstract
         DB::table('game_packages')
             ->whereIn('id', [86,87,88,89])
             ->update(['company_id' => 54]);
+
+
+        // 超怖い話
+        DB::table('game_packages')
+            ->where('id', 400)
+            ->update(['company_id' => 96, 'url' => 'https://www.nintendo.co.jp/ds/software/bkaj/index.html']);
     }
 
     /**

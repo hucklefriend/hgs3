@@ -1,0 +1,25 @@
+{
+  "soft_name": ["DEAD ISLAND: Riptide"],
+  "packages":[
+    {
+      "platform": "PS3",
+      "company": "スパイク・チュンソフト",
+      "name": "Dead Island: Riptide",
+      "release_at": "2013年7月11日",
+      "release_int": 20130711,
+      "url":"http://www.spike-chunsoft.co.jp/deadisland-riptide",
+      "shop": "amazon",
+      "asin": "B00CHH7FYI"
+    },
+    {
+      "platform": "XB360",
+      "company": "スパイク・チュンソフト",
+      "name": "Dead Island: Riptide",
+      "release_at": "2013年7月11日",
+      "release_int": 20130711,
+      "url":"http://www.spike-chunsoft.co.jp/deadisland-riptide",
+      "shop": "amazon",
+      "asin": "B00CHH7FVQ"
+    }
+  ]
+}

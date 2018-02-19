@@ -4,11 +4,10 @@
  */
 
 namespace Hgs3\Models\Orm;
+
 use Hgs3\Constants\PhoneticType;
-use Hgs3\Models\Timeline;
-use Illuminate\Database\Eloquent\Model;
+use Hgs3\Log;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class GameSoft extends \Eloquent
 {

@@ -139,7 +139,7 @@
                                     @endif
                                     <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
                                     <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
-                                    <span><i class="fas fa-shopping-cart"></i> {{ $pkg->release_at }}</span>
+                                    <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
                                 </div>
                                 <div class="mt-2">
                                     @foreach ($pkg->shops as $shop)
@@ -198,7 +198,7 @@
                                     @endif
                                     <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
                                     <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
-                                    <span><i class="fas fa-shopping-cart"></i> {{ $pkg->release_at }}</span>
+                                    <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
                                 </div>
                                 <div class="mt-2">
                                     @foreach ($pkg->shops as $shop)

@@ -56,8 +56,36 @@ class Soft extends MasterImportAbstract
             unset($data);
         }
 
-        Orm\GameSoft::whereIn('id', [24, 147])
+        // 消す。うみねこの一部とデッドラ
+        Orm\GameSoft::whereIn('id', [24, 147, 240, 241, 139, 140, 250])
             ->delete();
+
+
+        // デッドアイランドをシリーズ化
+        DB::table('game_softs')
+            ->where('id', 256)
+            ->update([
+                'phonetic2' => 'でっどあいらんど10',
+                'series_id' => self::getSeriesId('DEAD ISLAND'),
+                'order_in_series' => 1
+            ]);
+
+        // キャサリンをシリーズ化
+        DB::table('game_softs')
+            ->where('id', 233)
+            ->update([
+                'phonetic2' => 'きゃさりん10',
+                'series_id' => self::getSeriesId('キャサリン'),
+                'order_in_series' => 1
+            ]);
+    }
+
+    private static function getSeriesId($name)
+    {
+        $sql = 'SELECT id FROM game_series WHERE `name` LIKE "%' . $name . '%"';
+
+        $series = DB::select($sql);
+        return $series[0]->id;
     }
 
     /**

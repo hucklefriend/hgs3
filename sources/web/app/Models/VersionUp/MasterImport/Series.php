@@ -32,8 +32,8 @@ class Series extends MasterImportAbstract
             unset($data);
         }
 
-        // 削除
-        Orm\GameSeries::whereIn('id', [49])
+        // 削除：デッドラ
+        Orm\GameSeries::whereIn('id', [49, 22])
             ->delete();
     }
 }
