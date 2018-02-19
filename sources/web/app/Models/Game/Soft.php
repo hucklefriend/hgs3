@@ -302,12 +302,24 @@ SQL;
 
         foreach ($softs as $soft) {
             $pkg = Orm\GamePackageLink::where('soft_id', $soft->id)
-                ->orderBy('package_id')
-                ->first();
+                ->get()
+                ->pluck('package_id')
+                ->toArray();
 
-            if ($pkg) {
-                $soft->original_package_id = $pkg->package_id;
-                $soft->save();
+            if (!empty($pkg)) {
+                $orgPkg = DB::table('game_packages')
+                    ->whereIn('id', $pkg)
+                    ->orderBy('release_int')
+                    ->orderBy('platform_id')
+                    ->orderBy('id')
+                    ->first();
+
+                if (!empty($orgPkg)) {
+                    $soft->original_package_id = $orgPkg->id;
+                    $soft->save();
+                } else {
+                    echo $soft->name . ' is no original package.' . PHP_EOL;
+                }
             } else {
                 echo $soft->name . ' is no original package.' . PHP_EOL;
             }

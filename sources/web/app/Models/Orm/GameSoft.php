@@ -91,12 +91,12 @@ class GameSoft extends \Eloquent
     public static function updateSortOrder()
     {
         // SQL文1発でできそうだけど、複雑になるのでループ回して1つずつ更新
+        // その後、複雑ではなくなったけど、このままのやりかたで
 
         $sql =<<< SQL
-SELECT soft.id, IF(soft.series_id IS NULL, soft.phonetic, series.phonetic) AS phonetic_order
-FROM game_softs AS soft LEFT OUTER JOIN game_series AS series ON 
-  soft.series_id = series.id
-ORDER BY soft.phonetic_type, phonetic_order, soft.order_in_series
+SELECT id
+FROM game_softs
+ORDER BY phonetic2
 SQL;
 
         $data = DB::select($sql);

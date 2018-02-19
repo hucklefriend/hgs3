@@ -6,6 +6,7 @@
 namespace Hgs3\Models\VersionUp\MasterImport;
 
 use Hgs3\Models\Orm;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class Soft extends MasterImportAbstract
@@ -16,7 +17,7 @@ class Soft extends MasterImportAbstract
     public function import()
     {
         // 既存データのアップデート
-        //$this->update();
+        $this->update();
 
         $path = storage_path('master/soft');
 
@@ -34,7 +35,7 @@ class Soft extends MasterImportAbstract
             $soft = new Orm\GameSoft;
             $soft->name = $data['name'];
             $soft->phonetic = $data['phonetic'];
-            $soft->phonetic2 = $data['phonetic2'];
+            $soft->phonetic2 = $data['phonetic2'] ?? $data['phonetic'];
             $soft->genre = $data['genre'];
 
             if (isset($data['series'])) {
@@ -57,5 +58,21 @@ class Soft extends MasterImportAbstract
 
         Orm\GameSoft::whereIn('id', [24, 147])
             ->delete();
+    }
+
+    /**
+     * データの更新
+     */
+    private function update()
+    {
+        $softs = include(storage_path('master/soft/update.php'));
+
+        foreach ($softs as $s) {
+            DB::table('game_softs')
+                ->where('id', $s['id'])
+                ->update($s);
+        }
+
+        unset($softs);
     }
 }
