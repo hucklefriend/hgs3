@@ -212,6 +212,22 @@ function invalid($errors, $formName)
 }
 
 /**
+ * checkboxとradioボタンのchecked判定
+ *
+ * @param $val1
+ * @param $val2
+ * @return string
+ */
+function active($val1, $val2)
+{
+    if ($val1 == $val2) {
+        return ' active';
+    }
+
+    return '';
+}
+
+/**
  * 必要以上に多い改行を取り除く
  *
  * @param $text
@@ -393,4 +409,15 @@ function large_image_url($package)
     }
 
     return $imageUrl;
+}
+
+/**
+ * 各SNSのアイコンを取得
+ *
+ * @param $socialSiteId
+ * @return \Illuminate\Support\HtmlString
+ */
+function sns_icon($socialSiteId)
+{
+    return \Hgs3\Constants\SocialSite::getIcon($socialSiteId);
 }

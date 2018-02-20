@@ -5,48 +5,22 @@
 @endsection
 
 @section('content')
-    <h1>@include('user.common.icon', ['u' => $user])<span class="align-middle">{{ $user->name }}さんのページ</span></h1>
-
-    <div class="mb-5">
-        @if (!$isMyself)
-            @if ($isFollow)
-                <form action="{{ route('フォロー解除') }}" method="POST">
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-                    <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
-                    <button class="btn btn-danger btn-sm">フォロー解除</button>
-                </form>
-            @else
-                <form action="{{ route('フォロー登録') }}" method="POST">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="follow_user_id" value="{{ $user->id }}">
-                    <button class="btn btn-primary btn-sm">フォロー</button>
-                </form>
-            @endif
-        @endif
-
-        @if (!empty($user->profile))
-            <p class="profile-text">
-                <span class="font-weight-bold">自己紹介</span><br>
-                {!! nl2br(e($user->profile)) !!}
-            </p>
-        @endif
-
-        @if ($isMyself)
-            <div class="d-none d-sm-block">
-                <div class="d-flex">
-                    <div class="btn-group" role="group" aria-label="プロフィール">
-                        <a href="{{ route('アイコン変更') }}" class="btn btn-outline-dark">アイコン変更</a>
-                        <a href="{{ route('プロフィール編集') }}" class="btn btn-outline-dark">プロフィール編集</a>
-                        <a href="{{ route('コンフィグ') }}" class="btn btn-outline-dark">設定</a>
-                    </div>
-                    <div class="ml-auto">
-                        <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning">ログアウト</a>
-                    </div>
-                </div>
+    @if ($isMyself)
+        <div class="d-flex">
+            <h1>
+                @include('user.common.icon', ['u' => $user])
+                <span class="align-middle">{{ $user->name }}さんのページ</span>
+            </h1>
+            <div class="ml-auto d-none d-sm-block">
+                <a href="{{ route('ユーザー設定') }}" class="btn btn-sm btn-outline-dark mr-3"><i class="fas fa-cog"></i> 設定</a>
+                <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
             </div>
-        @endif
-    </div>
+        </div>
+    @else
+        <h1>
+            @include('user.common.icon', ['u' => $user])<span class="align-middle">{{ $user->name }}さんのページ</span>
+        </h1>
+    @endif
 
     <!-- 最小表示以外はメニューと内容を表示 -->
     <div class="d-none d-sm-block">
@@ -101,23 +75,14 @@
         </ul>
 
         @if ($isMyself)
-        <hr>
-        <ul class="list-group">
-            <li class="list-group-item">
-                <a href="{{ route('アイコン変更') }}">アイコン変更</a>
-            </li>
-            <li class="list-group-item">
-                <a href="{{ route('プロフィール編集') }}">プロフィール編集</a>
-            </li>
-            <li class="list-group-item">
-                <a href="{{ route('コンフィグ') }}">設定</a>
-            </li>
-        </ul>
-        <hr>
-        <div class="text-center">
-            <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning">ログアウト</a>
-        </div>
-
+            <div class="row mt-5 mb-5">
+                <div class="col-6 text-center">
+                    <a href="{{ route('ユーザー設定') }}" class="btn btn-sm btn-outline-dark mr-3"><i class="fas fa-cog"></i> 設定</a>
+                </div>
+                <div class="col-6 text-center">
+                    <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning">ログアウト</a>
+                </div>
+            </div>
         @endif
     </div>
 @endsection

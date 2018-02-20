@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers\Social;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Log;
 use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
@@ -16,16 +17,6 @@ use Hgs3\Constants\SocialSite;
 
 class TwitterController extends Controller
 {
-    /**
-     * コンストラクタ
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'community');
-    }
-
     /**
      * Twitter認証画面へ遷移
      *
@@ -50,6 +41,8 @@ class TwitterController extends Controller
     {
         $user = Socialite::driver('twitter')->user();
 
+        Log::debug(print_r($user, true));
+
         $mode = session('twitter');
         switch ($mode) {
             case Mode::CREATE_ACCOUNT:
@@ -59,6 +52,7 @@ class TwitterController extends Controller
                 return $this->login($user);
                 break;
             case Mode::ADD_AUTH:
+                return $this->addAuth($user);
                 break;
             default:
                 break;
@@ -93,17 +87,52 @@ class TwitterController extends Controller
      */
     private function login(\Laravel\Socialite\One\User $socialUser)
     {
-        $sa = new Orm\SocialAccount;
-        $userId = $sa->getUserId(SocialSite::TWITTER, $socialUser->id);
+        $sa = Orm\SocialAccount::findBySocialUserId(SocialSite::TWITTER, $socialUser->id);
 
-        if ($userId != null) {
-            $user = User::find($userId);
+        if ($sa != null) {
+            $user = User::find($sa->user_id);
             if ($user != null) {
+                // アカウント情報の更新
+                $sa->nickname = $socialUser->nickname ?? null;
+                $sa->name = $socialUser->name ?? null;
+                $sa->save();
+
                 Auth::login($user, true);
-                return redirect('mypage');
+                return redirect()->route('マイページ');
             }
         }
 
         return view('social.twitter.notRegistered');
+    }
+
+    /**
+     * 連携追加
+     *
+     * @param \Laravel\Socialite\One\User $socialUser
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function addAuth(\Laravel\Socialite\One\User $socialUser)
+    {
+        $sa = Orm\SocialAccount::findBySocialUserId(SocialSite::TWITTER, $socialUser->id);
+
+        if ($sa != null) {
+            // このTwitterアカウントは連携済み
+            // TODO エラー表示
+        } else {
+            $sa = new Orm\SocialAccount();
+
+            $sa->user_id = Auth::id();
+            $sa->social_site_id = SocialSite::TWITTER;
+            $sa->social_user_id = $socialUser->id;
+            $sa->token = $socialUser->token;
+            $sa->token_secret = $socialUser->tokenSecret;
+            $sa->nickname = $socialUser->nickname ?? null;
+            $sa->name = $socialUser->name ?? null;
+            $sa->nickname = $socialUser->nickname ?? null;
+            $sa->name = $socialUser->name ?? null;
+            $sa->save();
+        }
+
+        return redirect()->route('SNS認証設定');
     }
 }

@@ -136,21 +136,24 @@ Route::group(['middleware' => ['auth']], function () {
     
     // マイページ
     Route::get('/mypage', 'User\MyPageController@index')->name('マイページ');
-    Route::get('/user/profile/edit', 'User\ProfileController@edit')->name('プロフィール編集');
-    Route::patch('/user/profile/edit', 'User\ProfileController@update')->name('プロフィール編集実行');
-    Route::get('/user/profile/change_icon', 'User\ProfileController@changeIcon')->name('アイコン変更');
-    Route::get('/user/profile/change_icon_round', 'User\ProfileController@changeIconRound')->name('アイコン丸み変更');
-    Route::patch('/user/profile/change_icon_round', 'User\ProfileController@updateIconRound')->name('アイコン丸み変更処理');
-    Route::get('/user/profile/change_icon_image', 'User\ProfileController@changeIconImage')->name('アイコン画像変更');
-    Route::patch('/user/profile/change_icon_image', 'User\ProfileController@updateIconImage')->name('アイコン画像変更処理');
-    Route::delete('/user/profile/change_icon', 'User\ProfileController@deleteIcon')->name('アイコン削除');
     Route::get('/mypage/favorite_soft', 'User\FavoriteSoftController@myself');
     Route::get('/mypage/favorite_site', 'User\FavoriteSiteController@myself');
     Route::get('/mypage/follow', 'User\MyPageController@follow');
     Route::get('/mypage/follower', 'User\MyPageController@follower');
     Route::get('/mypage/review', 'User\MyPageController@review');
-    Route::get('/user/config', 'User\ProfileController@config')->name('コンフィグ');
-    Route::patch('/user/config', 'User\ProfileController@updateConfig')->name('コンフィグ更新');
+
+    // ユーザー設定
+    Route::get('/user/setting', 'User\SettingController@index')->name('ユーザー設定');
+    Route::get('/user/setting/profile', 'User\SettingController@profile')->name('プロフィール編集');
+    Route::patch('/user/setting/profile', 'User\SettingController@updateProfile')->name('プロフィール編集実行');
+    Route::get('/user/setting/icon', 'User\SettingController@changeIcon')->name('アイコン変更');
+    Route::get('/user/setting/icon_round', 'User\SettingController@changeIconRound')->name('アイコン丸み変更');
+    Route::patch('/user/setting/icon_round', 'User\SettingController@updateIconRound')->name('アイコン丸み変更処理');
+    Route::get('/user/setting/icon_image', 'User\SettingController@changeIconImage')->name('アイコン画像変更');
+    Route::patch('/user/setting/icon_image', 'User\SettingController@updateIconImage')->name('アイコン画像変更処理');
+    Route::delete('/user/setting/icon', 'User\SettingController@deleteIcon')->name('アイコン削除');
+    Route::get('/user/setting/sns', 'User\SettingController@sns')->name('SNS認証設定');
+    Route::delete('/user/setting/sns/{socialSiteId}', 'User\SettingController@deleteSns')->name('SNS認証解除');
 
     // プロフィール
     Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');
@@ -257,13 +260,13 @@ Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@index');
 
 // SNS
 Route::get('/social/twitter/callback', 'Social\TwitterController@callback')->name('Twitterコールバック');
-Route::get('/social/twitter/{mode}', 'Social\TwitterController@redirect')->name('Twitter');
+Route::post('/social/twitter/{mode}', 'Social\TwitterController@redirect')->name('Twitter');
 Route::get('/social/facebook/callback', 'Social\FacebookController@callback')->name('facebookコールバック');
-Route::get('/social/facebook/{mode}', 'Social\FacebookController@redirect')->name('facebook');
+Route::post('/social/facebook/{mode}', 'Social\FacebookController@redirect')->name('facebook');
 Route::get('/social/github/callback', 'Social\GitHubController@callback')->name('GitHubコールバック');
-Route::get('/social/github/{mode}', 'Social\GitHubController@redirect')->name('GitHub');
+Route::post('/social/github/{mode}', 'Social\GitHubController@redirect')->name('GitHub');
 Route::get('/social/google/callback', 'Social\GoogleController@callback')->name('Googleコールバック');
-Route::get('/social/google/{mode}', 'Social\GoogleController@redirect')->name('Google');
+Route::post('/social/google/{mode}', 'Social\GoogleController@redirect')->name('Google');
 
 // その他
 Route::get('/sitemap', 'TopController@sitemap')->name('サイトマップ');

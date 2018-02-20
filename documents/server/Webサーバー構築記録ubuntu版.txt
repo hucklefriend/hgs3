@@ -197,6 +197,18 @@ systemctl stop apache2
 
 ./letsencrypt-auto certonly -a standalone -d EXAMPLE.COM
 
+ls /etc/letsencrypt/live/EXAMPLE.COM/
+
+apacheのコンフィグ修正
+#SSLCertificateFile     /etc/ssl/certs/ssl-cert-snakeoil.pem
+#SSLCertificateKeyFile  /etc/ssl/private/ssl-cert-snakeoil.key
+SSLCertificateFile      /etc/letsencrypt/live/EXAMPLE.COM/cert.pem
+SSLCertificateKeyFile   /etc/letsencrypt/live/EXAMPLE.COM/privkey.pem
+SSLCertificateChainFile /etc/letsencrypt/live/EXAMPLE.COM/chain.pem
+
+systemctl start apache2
+
+
 
 http://sig9.hatenablog.com/entry/2016/06/27/225403
 

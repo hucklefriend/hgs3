@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <h5 class="card-title">ようこそ</h5>
                     <p class="card-text">
-                        H.G.N.-Horror Game Network-は、ホラーゲーム好きが集まるSNSとして現在開発中のものです。<br>
+                        H.G.N.-Horror Game Network-は、ホラーゲーム好きが集まるサイトになるべく開発中のサイトです。<br>
                         <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
                         公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。
                     </p>
@@ -43,7 +43,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-mail"><i class="far fa-envelope"></i></span>
                                 </div>
-                                <input id="email" type="email" class="form-control form-control-sm" name="email" value="{{ old('email') }}" required placeholder="メールアドレスを入力してください" aria-label="メールアドレス" aria-describedby="addon-mail">
+                                <input id="email" type="email" class="form-control form-control-sm" name="email" value="{{ old('email') }}" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
@@ -51,7 +51,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-password"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input id="password" type="password" class="form-control form-control-sm" name="password" required placeholder="パスワードを入力してください" aria-label="パスワード" aria-describedby="addon-password">
+                                <input id="password" type="password" class="form-control form-control-sm" name="password" required placeholder="パスワード" aria-label="パスワード" aria-describedby="addon-password">
                             </div>
                         </div>
                         <div style="display:flex;">
