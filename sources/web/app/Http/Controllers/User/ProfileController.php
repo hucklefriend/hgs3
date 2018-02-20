@@ -11,7 +11,6 @@ use Hgs3\Http\Requests\User\Profile\ChangeIconImageRequest;
 use Hgs3\Http\Requests\User\Profile\ChangeIconRoundRequest;
 use Hgs3\Http\Requests\User\Profile\ConfigRequest;
 use Hgs3\Http\Requests\User\Profile\EditRequest;
-use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Review;
 use Hgs3\Models\Timeline;
@@ -98,18 +97,6 @@ class ProfileController extends Controller
                     'favoriteSites' => $favoriteSites,
                     'sites'         => $sites,
                     'users'         => User::getHash(array_pluck($sites, 'user_id'))
-                ];
-            }
-                break;
-            case 'diary': {
-                $data['parts'] = [];
-            }
-                break;
-            case 'community': {
-                $communities = GameCommunity::getJoinCommunity($user->id);
-                $data['parts'] = [
-                    'communities' => $communities,
-                    'softs'       => Orm\GameSoft::getNameHash(array_pluck($communities->items(), 'soft_id'))
                 ];
             }
                 break;
@@ -282,42 +269,6 @@ class ProfileController extends Controller
         $data['isMyself'] = true;
 
         return view('user.profile.timeline', $data);
-    }
-
-    /**
-     * 日記
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function diary(User $user)
-    {
-        $isMyself = $user->id == Auth::id();
-
-        return view('user.profile.diary', [
-            'user'     => $user,
-            'isMyself' => $isMyself,
-            'diaries'  => []
-        ]);
-    }
-
-    /**
-     * コミュニティ
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function community(User $user)
-    {
-        $isMyself = $user->id == Auth::id();
-        $communities = GameCommunity::getJoinCommunity($user->id);
-
-        return view('user.profile.community', [
-            'user'        => $user,
-            'isMyself'    => $isMyself,
-            'communities' => $communities,
-            'softs'       => Orm\GameSoft::getNameHash(array_pluck($communities->items(), 'soft_id'))
-        ]);
     }
 
     /**

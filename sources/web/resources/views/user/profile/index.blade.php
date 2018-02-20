@@ -60,8 +60,6 @@
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'diary']) }}" class="nav-link @if($show == 'diary') active @endif" aria-expanded="true">日記 {{ $diaryNum }}件</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'community']) }}" class="nav-link @if($show == 'community') active @endif" aria-expanded="true">コミュニティ {{ $communityNum }}個</a>
                 </div>
             </div>
             <div class="p-10" style="width: 100%;">
@@ -99,14 +97,6 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{{ route('ユーザーのお気に入りサイト', ['showId' => $user->show_id]) }}">お気に入りサイト</a>
                 <span class="badge badge-secondary">{{ $favoriteSiteNum }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーの日記', ['showId' => $user->show_id]) }}">日記</a>
-                <span class="badge badge-secondary">{{ $diaryNum }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーのコミュニティ', ['showId' => $user->show_id]) }}">コミュニティ</a>
-                <span class="badge badge-secondary">{{ $communityNum }}</span>
             </li>
         </ul>
 

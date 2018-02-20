@@ -25,18 +25,14 @@ class MyPage extends TimelineAbstract
         $favoriteSite = self::getFavoriteSiteTimeline($userId, $time, $num + 1);
         $toMe = self::getToMeTimeline($userId, $time, $num + 1);
         $followUser = self::getFollowUserTimeline($userId, $time, $num + 1);
-        $gameCommunity = self::getGameCommunityTimeline($userId, $time, $num + 1);
-        $userCommunity = self::getUserCommunityTimeline($userId, $time, $num + 1);
 
         // 混ぜる
-        $timeline = array_merge($favoriteSoft, $favoriteSite, $toMe, $followUser, $gameCommunity, $userCommunity);
+        $timeline = array_merge($favoriteSoft, $favoriteSite, $toMe, $followUser);
 
         unset($favoriteSoft);
         unset($favoriteSite);
         unset($toMe);
         unset($followUser);
-        unset($gameCommunity);
-        unset($userCommunity);
 
         if (empty($timeline)) {
             return [
@@ -172,61 +168,5 @@ class MyPage extends TimelineAbstract
         ];
 
         return self::getDB()->to_me_timeline->find($filter, $options)->toArray();
-    }
-
-    /**
-     * ユーザーコミュニティタイムライン
-     *
-     * @param int $userId
-     * @param float $time
-     * @param int $num
-     * @return array
-     */
-    private static function getUserCommunityTimeline($userId, $time, $num)
-    {
-        $userCommunityIds = Orm\UserCommunityMember::select(['user_community_id'])
-            ->where('user_id', $userId)
-            ->get()
-            ->pluck('user_community_id')
-            ->toArray();
-
-        $filter = [
-            'user_community_id' => ['$in' => $userCommunityIds],
-            'time' => ['$lt' => $time]
-        ];
-        $options = [
-            'sort'  => ['time' => -1],
-            'limit' => $num,
-        ];
-
-        return self::getDB()->user_community_timeline->find($filter, $options)->toArray();
-    }
-
-    /**
-     * ゲームコミュニティタイムライン
-     *
-     * @param int $userId
-     * @param float $time
-     * @param int $num
-     * @return array
-     */
-    private static function getGameCommunityTimeline($userId, $time, $num)
-    {
-        $softIds = Orm\GameCommunityMember::select(['soft_id'])
-            ->where('user_id', $userId)
-            ->get()
-            ->pluck('soft_id')
-            ->toArray();
-
-        $filter = [
-            'soft_id' => ['$in' => $softIds],
-            'time'    => ['$lt' => $time]
-        ];
-        $options = [
-            'sort'  => ['time' => -1],
-            'limit' => $num,
-        ];
-
-        return self::getDB()->game_community_timeline->find($filter, $options)->toArray();
     }
 }

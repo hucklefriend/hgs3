@@ -13,7 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\TestData\All::class,
         Commands\TestData\User::class,
         Commands\TestData\UserPlayedGame::class,
         Commands\TestData\UserFavoriteGame::class,
@@ -25,13 +24,6 @@ class Kernel extends ConsoleKernel
         Commands\TestData\SiteFootprint::class,
         Commands\TestData\UserFavoriteSite::class,
         Commands\TestData\UserFollow::class,
-        Commands\TestData\UserCommunity::class,
-        Commands\TestData\UserCommunityMember::class,
-        Commands\TestData\UserCommunityTopic::class,
-        Commands\TestData\UserCommunityTopicResponse::class,
-        Commands\TestData\GameCommunityMember::class,
-        Commands\TestData\GameCommunityTopic::class,
-        Commands\TestData\GameCommunityTopicResponse::class,
         Commands\TestData\NewInformation::class,
         Commands\TestData\SystemUpdateHistory::class,
         Commands\TestData\SystemNotice::class,

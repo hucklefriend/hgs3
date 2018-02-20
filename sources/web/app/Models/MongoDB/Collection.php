@@ -54,8 +54,6 @@ class Collection
         $db->createCollection('favorite_soft_timeline');
         $db->createCollection('favorite_site_timeline');
         $db->createCollection('follow_user_timeline');
-        $db->createCollection('game_community_timeline');
-        $db->createCollection('user_community_timeline');
         $db->createCollection('to_me_timeline');
         $db->createCollection('user_action_timeline');
         $db->createCollection('site_footprint');
@@ -73,14 +71,6 @@ class Collection
         $db->follow_user_timeline->createIndex([
             'user_id' => 1,
             'time'    => -1,
-        ]);
-        $db->game_community_timeline->createIndex([
-            'game_id' => 1,
-            'time'    => -1,
-        ]);
-        $db->user_community_timeline->createIndex([
-            'user_community_id' => 1,
-            'time'              => -1,
         ]);
         $db->to_me_timeline->createIndex([
             'user_id' => 1,

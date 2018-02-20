@@ -189,10 +189,6 @@ a:active .no-image-text-inner {
     border:none;
 }
 
-.community-topic-comment {
-    word-break: break-all;
-}
-
 .package-image {
     min-width: 70px;
     max-width: 100%;

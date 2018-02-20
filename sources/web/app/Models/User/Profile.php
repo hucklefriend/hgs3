@@ -5,7 +5,6 @@
 
 
 namespace Hgs3\Models\User;
-use Hgs3\Models\Community\GameCommunity;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -26,9 +25,7 @@ class Profile
             'reviewNum'       => Orm\Review::getNumByUser($userId),
             'siteNum'         => Orm\Site::getNumByUser($userId),
             'favoriteSoftNum' => Orm\UserFavoriteSoft::getNumByUser($userId),
-            'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId),
-            'diaryNum'        => 0,     // TODO 日記実装時に実装
-            'communityNum'    => 0,     // TODO β版で実装 //Orm\UserCommunityMember::getNumByUser($userId) + Orm\GameCommunityMember::getNumByUser($userId)
+            'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId)
         ];
     }
 
@@ -62,9 +59,6 @@ class Profile
 
         // いいねしたレビュー
         $data['goodReviews'] = self::getGoodReviews($userId);
-
-        // コミュニティ
-        $data['communities'] = GameCommunity::getNewerJoinCommunity($userId);
 
         // 遊んだゲーム
         $data['playedSofts'] = self::getPlayedSofts($userId);

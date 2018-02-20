@@ -23,7 +23,6 @@ class NewInformation
             NewInformationText::NEW_SITE,
             NewInformationText::UPDATE_SITE,
             NewInformationText::NEW_REVIEW,
-            //NewInformationText::NEW_DIARY,
         ];
         $typeIndex = count($types) - 1;
 
@@ -44,7 +43,6 @@ class NewInformation
             $type = $types[rand(0, $typeIdx)];
             //$game_ids[rand(0, $game_ids_max)]
             //$user_ids[rand(0, $user_ids_max)]
-            //$user_community_ids[rand(0, $user_community_ids_max)]
             //$site_ids[rand(0, $site_ids_max)]
             //$review_ids[rand(0, $review_ids_max)]
 

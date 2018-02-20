@@ -21,18 +21,6 @@ class UserActionTimelineType
     const DELETE_REVIEW = 32;
     const REVIEW_GOOD = 33;
 
-
-    const JOIN_GAME_COMMUNITY = 40;
-    const LEAVE_GAME_COMMUNITY = 41;
-    const WRITE_GAME_TOPIC = 42;
-
-
-    const JOIN_USER_COMMUNITY = 50;
-    const LEAVE_USER_COMMUNITY = 51;
-    const WRITE_USER_TOPIC = 52;
-    const CREATE_USER_COMMUNITY = 53;
-
-
-    const CHANGE_ICON = 60;
-    const CHANGE_PROFILE = 61;
+    const CHANGE_ICON = 40;
+    const CHANGE_PROFILE = 41;
 }

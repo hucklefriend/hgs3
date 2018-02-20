@@ -15,8 +15,6 @@
         <li class="list-group-item"><a href="{{ route('シリーズ一覧') }}">シリーズ一覧</a></li>
         <li class="list-group-item"><a href="{{ route('レビュートップ') }}">レビュー</a></li>
         <li class="list-group-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-        <li class="list-group-item"><a href="{{ route('日記トップ') }}">日記</a></li>
-        <li class="list-group-item"><a href="{{ route('コミュニティトップ') }}">コミュニティ</a></li>
         <li class="list-group-item"><a href="{{ route('お知らせ') }}">お知らせ</a></li>
         <li class="list-group-item"><a href="{{ route('システム更新履歴') }}">システム更新記録</a></li>
 

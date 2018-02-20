@@ -157,8 +157,6 @@ mongo hgs3
 db.createCollection('game_timeline');
 db.createCollection('site_timeline');
 db.createCollection('follow_user_timeline');
-db.createCollection('game_community_timeline');
-db.createCollection('user_community_timeline');
 db.createCollection('myself_timeline');
 db.createCollection('user_action_timeline');
 db.createCollection('site_footprint');

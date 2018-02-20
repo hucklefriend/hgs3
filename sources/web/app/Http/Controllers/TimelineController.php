@@ -89,12 +89,6 @@ class TimelineController extends Controller
             case TimelineType::REVIEW_GOOD:
                 Timeline::addReviewGoodText($request->get('review_id'), $request->get('user_id'), null, null);
                 break;
-            case TimelineType::NEW_USER_COMMUNITY_MEMBER:
-                Timeline::addNewUserCommunityMemberText($request->get('community_id'), null, $request->get('user_id'), null);
-                break;
-            case TimelineType::NEW_GAME_COMMUNITY_MEMBER:
-                Timeline::addNewUserCommunityMemberText($request->get('community_id'), null, $request->get('user_id'), null);
-                break;
             case TimelineType::NEW_SITE:
                 Timeline::addNewSite($request->get('user_id'), null, $request->get('site_id'), null);
                 break;

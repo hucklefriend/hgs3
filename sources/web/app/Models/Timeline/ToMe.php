@@ -141,42 +141,6 @@ class ToMe extends TimelineAbstract
     }
 
     /**
-     * ユーザーコミュニティに投稿したトピックに返信があった
-     *
-     * @param User $user
-     * @param Orm\UserCommunity $userCommunity
-     * @param Orm\UserCommunityTopic $topic
-     */
-    public static function addUserCommunityTopicResponseText(User $user, Orm\UserCommunity $userCommunity, Orm\UserCommunityTopic $topic)
-    {
-        $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">投稿したトピック</a>に返信がありました。',
-            route('ユーザーコミュニティ', ['uc' => $userCommunity->id]),
-            e($userCommunity->name),
-            route('ユーザーコミュニティ投稿詳細', ['uc' => $userCommunity->id, 'uct' => $topic->id])
-        );
-
-        self::insert($user->id, $text);
-    }
-
-    /**
-     * ゲームコミュニティに投稿したトピックに返信があった
-     *
-     * @param User $user
-     * @param Orm\GameSoft $soft
-     * @param Orm\GameCommunityTopic $topic
-     */
-    public static function addGameCommunityTopicResponseText(User $user, Orm\GameSoft $soft, Orm\GameCommunityTopic $topic)
-    {
-        $text = sprintf('コミュニティ「<a href="%s">%s</a>」に<a href="%s">投稿したトピック</a>に返信がありました。',
-            route('ゲームコミュニティ', ['soft' => $soft->id]),
-            e($soft->name),
-            route('ゲームコミュニティ投稿詳細', ['soft' => $soft->id, 'topic' => $topic->id])
-        );
-
-        self::insert($user->id, $text);
-    }
-
-    /**
      * サイト登録が完了した
      *
      * @param User $user

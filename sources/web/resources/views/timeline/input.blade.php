@@ -86,37 +86,6 @@
     </form>
     <form method="POST" action="{{ url('timeline/add') }}">
         {{ csrf_field() }}
-        <input type="hidden" name="type" value="{{ \Hgs3\Constants\TimelineType::NEW_USER_COMMUNITY_MEMBER  }}">
-        <h5>ユーザーコミュニティに参加</h5>
-        <div class="form-group row">
-            <div class="col-3">コミュニティID</div>
-            <div class="col-9"><input type="number" name="community_id" min="0" class="form-control"></div>
-        </div>
-        <div class="form-group row">
-            <div class="col-3">ユーザーID</div>
-            <div class="col-9"><input type="number" name="user_id" min="0" class="form-control"></div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-sm btn-default">登録</button>
-        </div>
-    </form>
-    <form method="POST" action="{{ url('timeline/add') }}">
-        {{ csrf_field() }}
-        <input type="hidden" name="type" value="{{ \Hgs3\Constants\TimelineType::NEW_GAME_COMMUNITY_MEMBER  }}">
-        <h5>ゲームコミュニティに参加</h5>
-        <div class="form-group row">            <div class="col-3">コミュニティID</div>
-            <div class="col-9"><input type="number" name="community_id" min="0" class="form-control"></div>
-        </div>
-        <div class="form-group row">
-            <div class="col-3">ユーザーID</div>
-            <div class="col-9"><input type="number" name="user_id" min="0" class="form-control"></div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-sm btn-default">登録</button>
-        </div>
-    </form>
-    <form method="POST" action="{{ url('timeline/add') }}">
-        {{ csrf_field() }}
         <input type="hidden" name="type" value="{{ \Hgs3\Constants\TimelineType::NEW_SITE }}">
         <h5>サイト登録</h5>
         <div class="form-group row">
