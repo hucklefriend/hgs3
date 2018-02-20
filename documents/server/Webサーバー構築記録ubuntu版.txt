@@ -195,7 +195,7 @@ git clone https://github.com/letsencrypt/letsencrypt
 
 systemctl stop apache2
 
-./letsencrypt-auto certonly -a standalone -d EXAMPLE.COM
+./letsencrypt-auto certonly -a standalone -d horrorgame.net -d beta.horrorgame.net
 
 ls /etc/letsencrypt/live/EXAMPLE.COM/
 
