@@ -23,22 +23,6 @@ use Illuminate\Support\Facades\View;
 class SiteController extends Controller
 {
     /**
-     * コンストラクタ
-     */
-    public function __construct()
-    {
-        // あなたのサイトを登録
-        $yourSites = null;
-        if (Auth::check()) {
-            $yourSites = Orm\Site::where('user_id', Auth::id())
-                ->orderBy('id')
-                ->get();
-        }
-        View::share('yourSites', $yourSites);
-    }
-
-
-    /**
      * トップ
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

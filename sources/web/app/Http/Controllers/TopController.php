@@ -17,14 +17,18 @@ class TopController extends Controller
      */
     public function index()
     {
-        $newInfo = Orm\NewInformation::orderBy('open_at', 'DESC')
+        $newInfo = Orm\NewInformation::select([
+            'soft_id', 'site_id', 'text_type',
+            DB::raw('DATE_FORMAT(open_at, "%Y-%m-%d %H:%i") AS open_at')
+        ])
+            ->orderBy('open_at', 'DESC')
             ->take(5)
             ->get();
 
-        $gameHash = Orm\GameSoft::getNameHash(array_pluck($newInfo, 'game_id'));
-        $siteHash = Orm\Site::getNameHash(array_pluck($newInfo, 'site_id'));
+        $gameHash = Orm\GameSoft::getNameHash($newInfo->pluck('soft_id')->toArray());
+        $siteHash = Orm\Site::getNameHash($newInfo->pluck('site_id')->toArray());
 
-        $notices = Orm\SystemNotice::select(array('id', 'title', DB::raw('DATE_FORMAT(open_at, "%Y/%m/%d %H:%i") AS open_at_str')))
+        $notices = Orm\SystemNotice::select(array('id', 'title', DB::raw('DATE_FORMAT(open_at, "%Y-%m-%d %H:%i") AS open_at_str')))
             ->where('open_at', '<=', DB::raw('NOW()'))
             ->where('close_at', '>=', DB::raw('NOW()'))
             ->orderBy('open_at', 'DESC')

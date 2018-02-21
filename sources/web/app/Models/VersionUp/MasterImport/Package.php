@@ -58,8 +58,18 @@ class Package extends MasterImportAbstract
 
         // かまいたちの夜2のメーカーIDがNULL
         DB::table('game_packages')
-            ->whereIn('id', [101, 102, 103, 104, 105])
+            ->whereIn('id', [101, 102, 103, 104, 105, 90, 97, 98, 99, 100])
             ->update(['company_id' => 103]);
+
+        // Dの食卓
+        DB::table('game_packages')
+            ->whereIn('id', [461, 462, 463, 464, 465, 466])
+            ->update(['company_id' => 45]);
+
+        // 月陽炎
+        DB::table('game_packages')
+            ->whereIn('id', [385, 386])
+            ->update(['company_id' => self::getCompanyId('すたじおみりす')]);
 
         // 魔女たちの眠り
         DB::table('game_packages')

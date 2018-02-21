@@ -15,7 +15,7 @@
 
         <div class="mb-5">
             <div>
-                <span class="badge badge-info">{{ date('Y/m/d H:i', $updateArrival->registered_timestamp) }}登録！</span>
+                <span class="badge badge-info">{{ format_date($updateArrival->updated_timestamp) }}更新！</span>
             </div>
             @include('site.common.normal', ['s' => $s, 'u' => $u])
         </div>

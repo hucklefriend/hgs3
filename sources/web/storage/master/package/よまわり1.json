@@ -1,0 +1,17 @@
+{
+  "soft_name": ["夜廻り"],
+  "packages":[
+    {
+      "platform": "Vita",
+      "company": "日本一ソフトウェア",
+      "name": "夜廻り",
+      "phonetic": "よまわり",
+      "url": "https://nippon1.jp/consumer/yomawari/",
+      "shop": "amazon",
+      "asin": "B010CO3E6K",
+      "is_adult" : 0,
+      "release_int": 20151029,
+      "release_at": "2015年10月29日"
+    }
+  ]
+}
