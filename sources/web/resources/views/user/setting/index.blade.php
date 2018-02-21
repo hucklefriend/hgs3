@@ -10,21 +10,6 @@
     <div class="row">
         <div class="col-sm-6 mb-5">
             <div class="border border-dark rounded p-2">
-                <h5>アイコン</h5>
-                <a href="{{ route('アイコン変更') }}" class="btn btn-sm btn-outline-dark border-0 d-block pt-2 pb-2">
-                    <div class="d-flex justify-content-between">
-                        <div class="pr-3">
-                            @include('user.common.icon', ['isLarge' => true, 'u' => $user])
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-angle-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-sm-6 mb-5">
-            <div class="border border-dark rounded p-2">
                 <h5>プロフィール</h5>
 
                 <a href="{{ route('プロフィール編集') }}" class="btn btn-sm btn-outline-dark border-0 d-block pt-2 pb-2">
@@ -50,8 +35,22 @@
                 </a>
             </div>
         </div>
+        <div class="col-sm-6 mb-5">
+            <div class="border border-dark rounded p-2">
+                <h5>アイコン</h5>
+                <a href="{{ route('アイコン変更') }}" class="btn btn-sm btn-outline-dark border-0 d-block pt-2 pb-2">
+                    <div class="d-flex justify-content-between">
+                        <div class="pr-3">
+                            @include('user.common.icon', ['isLarge' => true, 'u' => $user])
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
-
 
     <div class="row">
         <div class="col-sm-6 mb-5">
@@ -64,7 +63,7 @@
                                 @if ($snsAccounts->isEmpty())
                                     未設定
                                 @else
-                                    連携済み:
+                                    連携中&nbsp;
                                     @foreach ($snsAccounts as $sns)
                                         {{ \Hgs3\Constants\SocialSite::getIcon($sns->social_site_id) }}
                                     @endforeach

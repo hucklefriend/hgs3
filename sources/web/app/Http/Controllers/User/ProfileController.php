@@ -11,6 +11,7 @@ use Hgs3\Http\Requests\User\Profile\ChangeIconImageRequest;
 use Hgs3\Http\Requests\User\Profile\ChangeIconRoundRequest;
 use Hgs3\Http\Requests\User\Profile\ConfigRequest;
 use Hgs3\Http\Requests\User\Profile\EditRequest;
+use Hgs3\Models\Account\SocialSite;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Review;
 use Hgs3\Models\Timeline;
@@ -43,6 +44,7 @@ class ProfileController extends Controller
 
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
+        $data['snsAccounts'] = SocialSite::getAccounts($user);
 
         switch ($show) {
             case 'follow':{
