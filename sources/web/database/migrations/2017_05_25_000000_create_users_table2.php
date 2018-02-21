@@ -28,7 +28,7 @@ class CreateUsersTable2 extends Migration
             $table->dateTime('last_login_at')->nullable()->comment('最終ログイン日時');
             $table->dateTime('sign_up_at')->nullable()->comment('登録日時');
             $table->tinyInteger('hgs12_user')->default(0)->comment('旧HGSユーザーフラグ');
-            $table->string('email', 200)->nullable()->comment('メールアドレス');
+            $table->string('email', 200)->nullable()->index()->comment('メールアドレス');
             $table->string('password', 200)->nullable()->comment('パスワード');
             $table->string('remember_token', 200)->nullable()->comment('再アクセストークン');
             $table->unsignedTinyInteger('icon_upload_flag')->default(0)->comment('アイコンアップロード済みフラグ');

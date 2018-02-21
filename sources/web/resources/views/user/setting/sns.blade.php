@@ -63,7 +63,7 @@
                         </div>
                         @else
                             <p>連携していません。</p>
-                            <form method="POST" action="{{ route('twitter', ['mode' => \Hgs3\Constants\Social\Mode::ADD_AUTH]) }}">
+                            <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::ADD_AUTH]) }}">
                                 {{ csrf_field() }}
                                 <button class="btn btn-outline-info btn-sm">連携する</button>
                             </form>

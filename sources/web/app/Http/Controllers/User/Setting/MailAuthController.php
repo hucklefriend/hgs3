@@ -12,6 +12,7 @@ use Hgs3\Http\Requests\User\Setting\ChangeMailRequest;
 use Hgs3\Http\Requests\User\Setting\ChangePasswordRequest;
 use Hgs3\Log;
 use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;

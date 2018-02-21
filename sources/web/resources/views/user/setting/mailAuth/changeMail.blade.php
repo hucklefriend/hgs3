@@ -18,8 +18,8 @@
         {{ csrf_field() }}
         <div class="form-group">
             <label for="mail">メールアドレス</label>
-            <input type="email" class="form-control{{ invalid($errors, 'mail') }}" value="{{ old('mail') }}" name="email" id="mail" required>
-            @include('common.error', ['formName' => 'name'])
+            <input type="email" class="form-control{{ invalid($errors, 'email') }}" value="{{ old('email') }}" name="email" id="mail" required>
+            @include('common.error', ['formName' => 'email'])
         </div>
         <button type="submit" class="btn btn-primary">確認メール送信</button>
     </form>

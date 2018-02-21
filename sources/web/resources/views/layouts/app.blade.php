@@ -32,7 +32,7 @@
 
 </head>
 <body>
-<div class="fixed-top">
+<div class="fixed-top" id="header_menu">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <span id="global_back_link">
             @yield('global_back_link')

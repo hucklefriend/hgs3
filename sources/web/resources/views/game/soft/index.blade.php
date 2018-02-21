@@ -7,16 +7,16 @@
 @section('content')
     @php
         $phonetics = [
-            ['a', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ')],
-            ['ka', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('か')],
-            ['sa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('さ')],
-            ['ta', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('た')],
-            ['na', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('な')],
-            ['ha', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('は')],
-            ['ma', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ま')],
-            ['ya', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('や')],
-            ['ra', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ら')],
-            ['wa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('わ')],
+            ['a', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('あ'), 'あ'],
+            ['ka', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('か'), 'か'],
+            ['sa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('さ'), 'さ'],
+            ['ta', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('た'), 'た'],
+            ['na', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('な'), 'な'],
+            ['ha', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('は'), 'は'],
+            ['ma', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ま'), 'ま'],
+            ['ya', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('や'), 'や'],
+            ['ra', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('ら'), 'ら'],
+            ['wa', \Hgs3\Constants\PhoneticType::getTypeByPhonetic('わ'), 'わ'],
         ];
     @endphp
 
@@ -46,7 +46,7 @@
 
     <div>
 
-    @foreach ($phonetics as $p)
+    @foreach ($phonetics as $no => $p)
         <section id="{{ $p[0] }}gyo" @if ($defaultPhoneticType != $p[1]) style="display:none;" @endif>
             <div class="package-list">
             @if (isset($list[$p[1]]))
@@ -55,6 +55,23 @@
                 @endforeach
             @endif
             </div>
+            <div class="d-flex justify-content-between mt-3">
+                <div>
+                    @if ($no > 0)
+                        <button type="button" class="btn btn-sm btn-outline-dark" onclick="changeTab('{{ $phonetics[$no - 1][0] }}')">
+                            <i class="fas fa-angle-left"></i>&nbsp;{{ $phonetics[$no - 1][2] }}行
+                        </button>
+                    @endif
+                </div>
+                <div>
+                    @if (!$loop->last)
+                    <button type="button" class="btn btn-sm btn-outline-dark" onclick="changeTab('{{ $phonetics[$no + 1][0] }}')">
+                        {{ $phonetics[$no + 1][2] }}行&nbsp;<i class="fas fa-angle-right"></i>
+                    </button>
+                    @endif
+                </div>
+            </div>
+
         </section>
     @endforeach
     </div>
@@ -64,12 +81,16 @@
                 $('#' + $('#game_tab .active').data('target')).hide();
                 $('#game_tab .active').removeClass('active');
 
-                console.debug($(this).data('target'));
                 $('#' + $(this).data('target')).show();
                 $(this).addClass('active');
             });
         });
 
+        function changeTab(phoneticType)
+        {
+            $('#tab_' + phoneticType + 'gyo').click();
+            $("html,body").animate({scrollTop:$('#game_tab').offset().top - $('#header_menu').height()});
+        }
 /*
         re = new RegExp(String.raw`\\\(\^${escapeRegExp(mouth)}\^\)/`);
         re.text('aaaa');

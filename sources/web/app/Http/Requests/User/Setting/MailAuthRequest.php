@@ -27,7 +27,7 @@ class MailAuthRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'                 => 'required|string|email|max:255',
+            'email'                 => 'required|string|email|max:255|unique:users,email',
             'password'              => 'required|string|alpha_dash|min:4|max:16',
             'password_confirmation' => 'required|string|same:password',
         ];

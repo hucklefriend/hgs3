@@ -6,17 +6,26 @@
 
 @section('content')
     <section>
-        <h4>SNSのアカウントで登録</h4>
+        <h2>SNSのアカウントで登録</h2>
         <p>
             他のSNSサービスのアカウントで登録できます。<br>
-            登録後にログインに使うSNSを追加することもできます。
+            登録後にログインに使うSNSを追加することもできます。<br>
+            今のところ、Twitterにのみ対応しています。
         </p>
-        <div class="row">
+
+        <div>
+            <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT]) }}">
+                {{ csrf_field() }}
+                <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}&nbsp;Twitter</button>
+            </form>
+        </div>
+
+        <div class="row d-none">
             <div class="col-sm-3 text-center sns-link-outline text-warning">
-                <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT]) }}" class="block-link sns-link sns-link-twitter">Twitter</a>
+
             </div>
-            <div class="col-sm-3 text-center sns-link-outline text-warning">
-                <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT]) }}" class="block-link sns-link sns-link-facebook">facebook</a>
+            <div class="col-sm-3 text-center sns-link-outline" style="display:none;">
+                facebook
             </div>
             <div class="col-sm-3 text-center sns-link-outline" style="display:none;">
                 GitHub
