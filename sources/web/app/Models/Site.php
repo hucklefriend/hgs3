@@ -593,6 +593,10 @@ SQL;
             // 足跡を削除
             Footprint::delete($site->id);
 
+            // 新着情報
+            Orm\NewInformation::where('site_id', $site->id)
+                ->delete();
+
             // お気に入りサイト
             Orm\UserFavoriteSite::where('site_id', $site->id)
                 ->delete();
@@ -607,6 +611,10 @@ SQL;
 
             // 新着サイト
             NewArrival::delete($site->id);
+
+            // 更新サイト
+            Orm\SiteUpdateArrival::where('site_id', $site->id)
+                ->delete();
 
             // サイトいいね
             Orm\SiteGood::where('site_id', $site->id)
