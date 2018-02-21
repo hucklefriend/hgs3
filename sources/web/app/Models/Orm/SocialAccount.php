@@ -58,6 +58,20 @@ class SocialAccount extends \Eloquent
     }
 
     /**
+     * HGNのユーザーIDからデータを取得
+     *
+     * @param $socialSiteId
+     * @param $userId
+     * @return \Illuminate\Database\Eloquent\Model|null|object|static
+     */
+    public static function findByUserId($socialSiteId, $userId)
+    {
+        return self::where('user_id', $userId)
+            ->where('social_site_id', $socialSiteId)
+            ->first();
+    }
+
+    /**
      * URLを取得
      *
      * @return string

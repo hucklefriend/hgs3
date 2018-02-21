@@ -117,7 +117,7 @@ class TwitterController extends Controller
 
         if ($sa != null) {
             // このTwitterアカウントは連携済み
-            // TODO エラー表示
+            return view('user.setting.snsAlwaysRegistered', ['sns' => 'Twitter']);
         } else {
             $sa = new Orm\SocialAccount();
 

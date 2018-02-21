@@ -153,7 +153,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/user/setting/icon_image', 'User\SettingController@updateIconImage')->name('アイコン画像変更処理');
     Route::delete('/user/setting/icon', 'User\SettingController@deleteIcon')->name('アイコン削除');
     Route::get('/user/setting/sns', 'User\SettingController@sns')->name('SNS認証設定');
-    Route::delete('/user/setting/sns/{socialSiteId}', 'User\SettingController@deleteSns')->name('SNS認証解除');
+    Route::patch('/user/setting/sns/{sa}/open', 'User\SettingController@updateSnsOpen')->name('SNS公開設定処理');
+    Route::delete('/user/setting/sns/{sa}', 'User\SettingController@deleteSns')->name('SNS認証解除');
 
     // ユーザー設定：メール認証
     Route::get('/user/setting/mail_auth', 'User\Setting\MailAuthController@register')->name('メール認証設定');

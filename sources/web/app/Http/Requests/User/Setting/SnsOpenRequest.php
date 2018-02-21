@@ -1,13 +1,13 @@
 <?php
 /**
- * 本登録リクエスト
+ * SNS公開リクエスト
  */
 
 namespace Hgs3\Http\Requests\User\Setting;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MailAuthRequest extends FormRequest
+class SnsOpenRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,7 @@ class MailAuthRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'                 => 'required|string|email|max:255|unique:users,email',
-            'password'              => 'required|string|alpha_dash|min:4|max:16',
-            'password_confirmation' => 'required|string|same:password',
+            'open_flag' => 'required|in:0,1',
         ];
     }
 }

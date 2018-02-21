@@ -35,19 +35,20 @@
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::TWITTER])
                             @php $sns = $snsAccountHash[\Hgs3\Constants\SocialSite::TWITTER]; @endphp
                         <div>
-                            <form>
+                            <p>
+                                アカウント <a href="{{ $sns->getUrl() }}" target="_blank">{{ $sns->nickname }}</a>
+                            </p>
+                            <form method="POST" action="{{ route('SNS公開設定処理', ['sa' => $sns->id]) }}" class="sns-open-form">
+                                {{ csrf_field() }}
+                                {{ method_field('PATCH') }}
                                 <div class="form-row align-items-center">
                                     <div class="col-auto my-1">
                                         公開
                                     </div>
                                     <div class="col-auto my-1">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-sm btn-outline-dark{{ active($sns->open_flag, 1) }}">
-                                                <input type="radio" name="twitter_options" id="twitter_options_user" autocomplete="off" {{ checked($sns->open_flag, 1) }}> する
-                                            </label>
-                                            <label class="btn btn-sm btn-outline-dark{{ active($sns->open_flag, 0) }}">
-                                                <input type="radio" name="twitter_options" id="twitter_options_close" autocomplete="off" {{ checked($sns->open_flag, 0) }}> しない
-                                            </label>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="submit" name="open_flag" value="1" class="btn btn-sm btn-outline-secondary{{ active($sns->open_flag, 1) }}">する</button>
+                                            <button type="submit" name="open_flag" value="0" class="btn btn-sm btn-outline-secondary{{ active($sns->open_flag, 0) }}">しない</button>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +56,7 @@
                         </div>
 
                         <div class="text-right mt-4">
-                            <form method="POST" action="{{ route('SNS認証解除', ['socialSiteId' => \Hgs3\Constants\SocialSite::TWITTER]) }}" onsubmit="return confirm('Twitterとの連携を解除します。')">
+                            <form method="POST" action="{{ route('SNS認証解除', ['sa' => $sns->id]) }}" onsubmit="return confirm('Twitterとの連携を解除します。')">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                                 <button class="btn btn-outline-danger btn-sm">連携解除</button>
@@ -65,13 +66,14 @@
                             <p>連携していません。</p>
                             <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::ADD_AUTH]) }}">
                                 {{ csrf_field() }}
-                                <button class="btn btn-outline-info btn-sm">連携する</button>
+                                <button class="btn btn-outline-info btn-sm btn-cooperation">連携する</button>
                             </form>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
+        {{--
         <div class="col-sm-6">
             <div class="card card-hgn">
                 <div class="card-body">
@@ -103,11 +105,26 @@
                     </div>
                 </div>
             </div>
+
         </div>
+        --}}
     </div>
 
 
+    <script>
+        let isSubmitting = false;
 
+        $('.sns-open-form').on('submit', function (e){
+            if (isSubmitting) {
+                e.preventDefault();
+                return false;
+            }
+
+            isSubmitting = true;
+
+            return true;
+        });
+    </script>
 
 @endsection
 
