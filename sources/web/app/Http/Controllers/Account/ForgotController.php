@@ -7,7 +7,7 @@ namespace Hgs3\Http\Controllers\Account;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Account\PasswordResetRequest;
-use Hgs3\Http\Requests\Account\PasswordResetMailRequest;
+use Hgs3\Http\Requests\Account\MailAuthRequest;
 use Hgs3\Models\Account\PasswordReset;
 use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm;
@@ -30,11 +30,11 @@ class ForgotController extends Controller
     /**
      * メール送信
      *
-     * @param PasswordResetMailRequest $request
+     * @param MailAuthRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function sendPasswordResetMail(PasswordResetMailRequest $request)
+    public function sendPasswordResetMail(MailAuthRequest $request)
     {
         $email = $request->get('email');
 

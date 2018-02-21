@@ -70,27 +70,50 @@
             </a>
         </div>
         <div class="col-sm-6 mb-5">
-            <a href="{{ route('プロフィール編集') }}" class="btn btn-outline-dark d-block">
-                <div class="d-flex justify-content-between">
-                    <div class="align-self-start text-left pr-3">
-                        <h5>メール認証</h5>
-                        <div style="word-break: break-all;white-space: normal;"><small>{{ str_limit($user->profile, 100) }}</small></div>
-                        <div>
-                            <small>
-                                @if ($user->adult == 1)
-                                    <i class="far fa-square"></i>
-                                @else
-                                    <i class="far fa-check-square"></i>
-                                @endif
-                                18歳以上
-                            </small>
+            <div class="border border-dark rounded p-2">
+                <h5>メール認証</h5>
+                @if ($user->isRegisteredMailAuth())
+                <div>
+                    <a href="{{ route('メールアドレス変更') }}" class="btn btn-sm btn-outline-dark border-0 d-block mb-2 pt-2 pb-2">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <i class="far fa-envelope"></i>&nbsp;{{ $user->email }}
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-angle-right"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-angle-right"></i>
-                    </div>
+                    </a>
+
+                    <a href="{{ route('パスワード変更') }}" class="btn btn-sm btn-outline-dark border-0 d-block pt-2 pb-2">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <i class="fas fa-key"></i>&nbsp;(パスワードは表示できません)
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-angle-right"></i>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+                <div class="mt-3">
+                    <form method="POST" action="{{ route('メール認証設定削除') }}" onsubmit="return confirm('メール認証設定を削除します。')">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-sm btn-danger">削除</button>
+                    </form>
+                </div>
+                @else
+                    <a href="{{ route('メール認証設定') }}" class="btn btn-sm btn-outline-dark border-0 d-block pt-2 pb-2">
+                        <div class="d-flex justify-content-between">
+                            <div>未設定</div>
+                            <div class="align-self-center">
+                                <i class="fas fa-angle-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                @endif
+            </div>
         </div>
     </div>
 

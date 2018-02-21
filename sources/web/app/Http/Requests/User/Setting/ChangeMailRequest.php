@@ -1,13 +1,13 @@
 <?php
 /**
- * 本登録リクエスト
+ * メールアドレス変更リクエスト
  */
 
-namespace Hgs3\Http\Requests\Account;
+namespace Hgs3\Http\Requests\User\Setting;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PasswordResetMailRequest extends FormRequest
+class ChangeMailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class PasswordResetMailRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255'
         ];
     }
 }

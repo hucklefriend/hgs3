@@ -155,6 +155,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/setting/sns', 'User\SettingController@sns')->name('SNS認証設定');
     Route::delete('/user/setting/sns/{socialSiteId}', 'User\SettingController@deleteSns')->name('SNS認証解除');
 
+    // ユーザー設定：メール認証
+    Route::get('/user/setting/mail_auth', 'User\Setting\MailAuthController@register')->name('メール認証設定');
+    Route::post('/user/setting/mail_auth', 'User\Setting\MailAuthController@sendAuthMail')->name('メール認証仮登録メール送信');
+    Route::get('/user/setting/mail_auth/confirm', 'User\Setting\MailAuthController@register')->name('メール認証設定本登録');
+    Route::delete('/user/setting/mail_auth', 'User\Setting\MailAuthController@delete')->name('メール認証設定削除');
+    Route::get('/user/setting/change_mail', 'User\Setting\MailAuthController@changeMail')->name('メールアドレス変更');
+    Route::post('/user/setting/change_mail', 'User\Setting\MailAuthController@sendChangeMail')->name('メールアドレス変更メール送信');
+    Route::get('/user/setting/change_mail/confirm', 'User\Setting\MailAuthController@confirmMail')->name('メールアドレス変更確定');
+    Route::get('/user/setting/change_password', 'User\Setting\MailAuthController@changePassword')->name('パスワード変更');
+    Route::patch('/user/setting/change_password', 'User\Setting\MailAuthController@updatePassword')->name('パスワード変更処理');
+
     // プロフィール
     Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');
     Route::get('/user/profile/{showId}/{show}', 'User\ProfileController@index')->name('プロフィール2');

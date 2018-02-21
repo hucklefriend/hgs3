@@ -18,7 +18,9 @@ class CreateUserChangeEmailsTable extends Migration
     {
         Schema::create('user_change_emails', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->primary()->comment('ユーザーID');
-            $table->string('email', 200)->unique()->comment('メールアドレス');
+            $table->unsignedTinyInteger('type')->comment('変更区分');
+            $table->string('email', 300)->unique()->comment('メールアドレス');
+            $table->string('password', 300)->nullable()->comment('パスワード');
             $table->string('token', 50)->nullable()->comment('メールアドレス変更時のトークン');
             $table->timestamps();
         });

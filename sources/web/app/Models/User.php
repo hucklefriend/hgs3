@@ -203,4 +203,14 @@ class User extends Authenticatable
         return self::where('show_id', $showId)
             ->first();
     }
+
+    /**
+     * メール認証登録済みか
+     *
+     * @return bool
+     */
+    public function isRegisteredMailAuth()
+    {
+        return $this->email != null && $this->password != null;
+    }
 }

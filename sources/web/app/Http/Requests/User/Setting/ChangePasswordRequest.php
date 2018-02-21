@@ -1,13 +1,13 @@
 <?php
 /**
- * メールアドレス変更リクエスト
+ * パスワード変更リクエスト
  */
 
-namespace Hgs3\Http\Requests\Account;
+namespace Hgs3\Http\Requests\User\Setting;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangeMailRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,8 @@ class ChangeMailRequest extends FormRequest
     public function rules()
     {
         return [
-
+            'password'              => 'required|string|alpha_dash|min:4|max:16',
+            'password_confirmation' => 'required|string|same:password',
         ];
     }
 }
