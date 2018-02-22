@@ -9,12 +9,16 @@
     @include('common.error', ['formName' => 'url'])
 </div>
 <div class="form-group">
-    <label for="title">ゲーム</label><span class="badge badge-info ml-2">必須</span>
-    <div>
+    <div class="d-flex mb-2">
+        <div class="align-self-center">
+            <label for="title">ゲーム</label><span class="badge badge-info ml-2">必須</span>
+        </div>
+        <div class="ml-3">
     @if ($errors->has('handle_soft'))
-        <button type="button" class="btn btn-sm btn-outline-danger" id="select_handle_soft">選択する</button>
+            <button type="button" class="btn btn-sm btn-outline-danger" id="select_handle_soft">選択する</button>
     @else
-        <button type="button" class="btn btn-sm btn-outline-info" id="select_handle_soft">選択する</button>
+            <button type="button" class="btn btn-sm btn-outline-info" id="select_handle_soft">選択する</button>
+        </div>
     @endif
     </div>
     <div id="selected_soft" class="d-flex flex-wrap"></div>

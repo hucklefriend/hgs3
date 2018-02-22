@@ -52,8 +52,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイト編集', ['site' => $site->id]) }}">編集</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('マイページ') }}">ユーザー</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('サイト管理') }}">サイト</a></li>
             <li class="breadcrumb-item active" aria-current="page">編集</li>
         </ol>
     </nav>

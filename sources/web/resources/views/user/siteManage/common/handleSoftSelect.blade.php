@@ -1,5 +1,5 @@
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="handle_soft_dialog">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="HandleGameSelect" aria-hidden="true" id="handle_soft_dialog">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="d-flex flex-wrap" id="handle_soft_tab">
@@ -19,24 +19,22 @@
                     $phonetics = [ '', 'a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa'];
                 @endphp
 
-                @for ($phonicType = 1; $phonicType <= 10; $phonicType++)
-                    <div id="handle_softs_{{ $phonetics[$phonicType] }}gyo" class="handle_soft_tab @if ($phonicType == 1) active @endif ">
-                        <div class="container-fluid p-3">
+                <div class="py-3 handle-game-select-area">
+                    @for ($phonicType = 1; $phonicType <= 10; $phonicType++)
+                        <div id="handle_softs_{{ $phonetics[$phonicType] }}gyo" class="handle_soft_tab @if ($phonicType == 1) active @endif ">
                             @if (isset($softs[$phonicType]))
                                 @foreach ($softs[$phonicType] as $soft)
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <label>
-                                                <input type="checkbox" class="handle_soft_check" name="handle_soft[]" value="{{ $soft->id }}" id="handle_soft_check_{{ $soft->id }}">
-                                                <span>{{ $soft->name }}</span>
-                                            </label>
-                                        </li>
-                                    </ul>
+                                    <div class="btn-group-toggle my-1" data-toggle="buttons">
+                                        <label class="btn btn-outline-info text-left handle_soft_check_btn border-0">
+                                            <input type="checkbox" class="handle_soft_check hide-check" name="handle_soft[]" value="{{ $soft->id }}" id="handle_soft_check_{{ $soft->id }}" autocomplete="off">
+                                            <span>{{ $soft->name }}</span>
+                                        </label>
+                                    </div>
                                 @endforeach
                             @endif
                         </div>
-                    </div>
-                @endfor
+                    @endfor
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="handle_soft_cancel" data-dismiss="modal">キャンセル</button>
@@ -81,23 +79,17 @@
             $('#selected_soft').html(html);
         }
 
-        $('#handle_soft_dialog').on('hide.bs.modal', function (e) {
-            scrollPos = $(window).scrollTop();
-            $('html').removeClass('is-fixed');
-        });
-        $('#handle_soft_dialog').on('show.bs.modal', function (e) {
-            $(window).scrollTop(scrollPos);
-            $('html').addClass('is-fixed');
-        });
-
         $('#select_handle_soft').click(function (){
-            // TODO 現在の選択にチェック
+            // 現在の選択にチェック
             $('.handle_soft_check').prop('checked', false);
+            $('.handle_soft_check_btn').removeClass('active');
             let handleSofts = $('#handle_soft').val();
             if (handleSofts.length > 0) {
                 let softs = handleSofts.split(',');
                 softs.forEach(function (currentValue, index, array){
-                    $('#handle_soft_check_' + currentValue).prop('checked', true);
+                    let item = $('#handle_soft_check_' + currentValue);
+                    item.prop('checked', true);
+                    item.parent().addClass('active');
                 });
             }
 
@@ -151,5 +143,14 @@
             $('#selected_soft').html(html);
             $('#handle_soft').val(val);
         });
+
+
+        $('.handle_soft_check').on('change', function (){
+            let item = $(this);
+            if (item.prop('checked')) {
+                item.parent().removeClass('focus');
+            }
+        });
     });
+
 </script>

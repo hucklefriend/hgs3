@@ -469,6 +469,32 @@ html.is-fixed body {
     font-size: 0.8rem;
 }
 
+.handle-game-select-area {
+    margin-top: 10px;
+}
+
+.modal {
+    -webkit-overflow-scrolling: touch;
+}
+
+.hide-check {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}
+
+.handle_soft_tab .btn, .force-break {
+    word-break: break-all;
+    white-space: normal;
+}
+
+.handle_soft_check_btn:focus,
+.handle_soft_check_btn:active:focus,
+.handle_soft_check_btn:hover {
+    background-color: transparent;
+    color: #17a2b8;
+}
+
 @media (min-width: 576px) {
 
 }

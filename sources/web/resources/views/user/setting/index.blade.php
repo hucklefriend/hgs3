@@ -16,7 +16,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="align-self-start text-left pr-3">
                             <div>{{ $user->name }}さん</div>
-                            <div style="word-break: break-all;white-space: normal;"><small>{{ str_limit($user->profile, 100) }}</small></div>
+                            <div class="force-break"><small>{{ str_limit($user->profile, 100) }}</small></div>
                             <div>
                                 <small>
                                     @if ($user->adult == 1)
