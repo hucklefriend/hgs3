@@ -323,7 +323,7 @@ SQL;
                     // が、パッケージ画像がなかったら、最初に見つあったものをオリジナルとする
                     foreach ($orgPkg as $p) {
                         if (!empty($p->medium_image_url)) {
-                            $soft->original_package_id = $orgPkg->id;
+                            $soft->original_package_id = $p->id;
                             break;
                         }
                     }
