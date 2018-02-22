@@ -9,6 +9,9 @@
 @if ($hasNext)
     <div class="text-center">
         <button type="button" class="btn" id="more_btn">さらに読み込む</button>
+        <p class="text-muted">
+            <small class="text-danger">現在、さらに読み込むボタンにはバグがあり、正しく読み込まれません</small>
+        </p>
     </div>
 @endif
 

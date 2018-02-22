@@ -71,4 +71,18 @@ class TopController extends Controller
             'siteHash' => $siteHash
         ]);
     }
+
+    public function bugs()
+    {
+        $bugs = [
+            [
+                'date'    => '2018-02-22',
+                'title'   => 'タイムラインの追加読み込みができない？',
+                'message' => 'タイムラインの[追加読み込み]ボタンを押しても、追加で読み込まれない。',
+                'status'  => 'そのうち対応'
+            ]
+        ];
+
+        return view('bugs', ['bugs' => $bugs]);
+    }
 }

@@ -67,48 +67,63 @@
         @endif
     </div>
 
-    <div class="card card-hgn">
-        <div class="card-body">
-            <h5 class="card-title">新着情報</h5>
-            @foreach ($newInfo as $nf)
-                <p class="card-text">
-                {{ $nf->open_at }}<br>
-                @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
-                    <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
-                @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
-                    新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ hv($siteHash, $nf->site_id) }}」</a>
-                @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
-                    <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
-                @endif
-                </p>
-            @endforeach
-            @if ($newInfo->count() > 0)
-                <div class="text-center">
-                    <a href="{{ route('新着情報') }}" >すべて見る</a>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-hgn">
+                <div class="card-body">
+                    <h5 class="card-title">新着情報</h5>
+                    @foreach ($newInfo as $nf)
+                        <p class="card-text">
+                            {{ $nf->open_at }}<br>
+                            @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
+                                <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
+                            @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
+                                新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ hv($siteHash, $nf->site_id) }}」</a>
+                            @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
+                                <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
+                            @endif
+                        </p>
+                    @endforeach
+                    @if ($newInfo->count() > 0)
+                        <div class="text-center">
+                            <a href="{{ route('新着情報') }}" >すべて見る</a>
+                        </div>
+                    @else
+                        <p class="card-text">新着情報はありません。</p>
+                    @endif
                 </div>
-            @else
-                <p class="card-text">新着情報はありません。</p>
-            @endif
+            </div>
         </div>
-    </div>
 
-    <div class="card card-hgn">
-        <div class="card-body">
-            <h5 class="card-title">お知らせ</h5>
-            @foreach ($notices as $notice)
-                <p class="card-text">
-                    <span style="margin-right: 10px;">{{ $notice->open_at_str }}</span>
-                    <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}">{{ $notice->title }}</a>
-                </p>
-            @endforeach
+        <div class="col-md-6">
+            <div class="card card-hgn">
+                <div class="card-body">
+                    <h5 class="card-title">お知らせ</h5>
+                    @foreach ($notices as $notice)
+                        <div class="my-2">
+                            <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-secondary border-0 d-block">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        {{ $notice->open_at_str }}<br>
+                                        {{ $notice->title }}
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-angle-right"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
 
-            @if ($notices->count() > 0)
-                <div class="text-center">
-                    <a href="{{ route('お知らせ') }}" >すべて見る</a>
+                    @if ($notices->count() > 0)
+                        <div class="text-center">
+                            <a href="{{ route('お知らせ') }}" >すべて見る</a>
+                        </div>
+                    @else
+                        <p class="card-text">お知らせはありません。</p>
+                    @endif
                 </div>
-            @else
-                <p class="card-text">お知らせはありません。</p>
-            @endif
+            </div>
         </div>
     </div>
 

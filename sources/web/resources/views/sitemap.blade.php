@@ -17,6 +17,7 @@
         <li class="list-group-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
         <li class="list-group-item"><a href="{{ route('お知らせ') }}">お知らせ</a></li>
         <li class="list-group-item"><a href="{{ route('システム更新履歴') }}">システム更新記録</a></li>
+        <li class="list-group-item"><a href="{{ route('バグ') }}">バグ</a></li>
 
         @if (\Illuminate\Support\Facades\Auth::check())
         <li class="list-group-item"><a href="{{ route('マイページ') }}">マイページ</a></li>

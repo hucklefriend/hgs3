@@ -1,0 +1,15 @@
+{
+  "soft_name": ["ゲゲゲの鬼太郎"],
+  "packages":[
+    {
+      "platform": "PS",
+      "company": "バンダイ",
+      "name": "ゲゲゲの鬼太郎",
+      "release_at": "1997年1月24日",
+      "release_int": 19970124,
+      "url":"",
+      "shop": "amazon",
+      "asin": "B000069S0D"
+    }
+  ]
+}

@@ -314,10 +314,20 @@ SQL;
                     ->orderBy('release_int')
                     ->orderBy('platform_id')
                     ->orderBy('id')
-                    ->first();
+                    ->get();
 
                 if (!empty($orgPkg)) {
-                    $soft->original_package_id = $orgPkg->id;
+                    // 最初のものをオリジナルとする
+                    $soft->original_package_id = $orgPkg[0]->id;
+
+                    // が、パッケージ画像がなかったら、最初に見つあったものをオリジナルとする
+                    foreach ($orgPkg as $p) {
+                        if (!empty($p->medium_image_url)) {
+                            $soft->original_package_id = $orgPkg->id;
+                            break;
+                        }
+                    }
+
                     $soft->save();
                 } else {
                     echo $soft->name . ' is no original package.' . PHP_EOL;

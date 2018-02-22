@@ -101,6 +101,14 @@
 
 <div class="form-group">
     <label for="list_banner_upload_flag">一覧用バナー</label>
+
+    @if ($site->list_banner_url)
+        <div>
+            <div class="list-site-banner-outline">
+                <img src="{{ $site->list_banner_url }}" class="img-responsive" id="list_banner_url_thumbnail">
+            </div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-6">
             <div class="mb-3">
