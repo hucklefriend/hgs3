@@ -11,7 +11,7 @@
                         H.G.N.-Horror Game Network-は、ホラーゲーム好きが集まるサイトになるべく開発中のサイトです。<br>
                         <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
                         公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。<br>
-                        正式公開は2018年9月28日です。
+                        <a href="{{ route('バグ') }}">現在把握しているバグはこちらでご確認いただけます。</a>
                     </p>
                     @if (!Auth::check())
                     <div class="text-center">

@@ -41,7 +41,7 @@
         <div class="d-flex flex-row">
             <div class="p-2" style="width: 300px;">
                 <div class="nav flex-column nav-pills">
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">プロフィール</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
@@ -60,7 +60,7 @@
     <div class="d-sm-none">
         <ul class="list-group">
             <li class="list-group-item">
-                <a href="{{ route('ユーザーのタイムライン', ['showId' => $user->show_id]) }}">タイムライン</a>
+                <a href="{{ route('ユーザーのタイムライン', ['showId' => $user->show_id]) }}">プロフィール</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{{ route('ユーザーのフォロー', ['showId' => $user->show_id]) }}">フォロー</a>

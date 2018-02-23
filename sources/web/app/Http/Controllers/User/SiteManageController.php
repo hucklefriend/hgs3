@@ -28,11 +28,15 @@ class SiteManageController extends Controller
      * @param string $showId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($showId)
+    public function index($showId = null)
     {
-        $user = User::findByShowId($showId);
-        if ($user == null) {
-            return view('user.profile.notExist');
+        if ($showId == null) {
+            $user = Auth::user();
+        } else {
+            $user = User::findByShowId($showId);
+            if ($user == null) {
+                return view('user.profile.notExist');
+            }
         }
 
         $isMyself = Auth::id() == $user->id;
@@ -73,7 +77,9 @@ class SiteManageController extends Controller
                 'list_banner_upload_flag'   => 0,
                 'detail_banner_upload_flag' => 0
             ]),
-            'bannerSelect' => $bannerSelect
+            'bannerSelect'           => $bannerSelect,
+            'listBannerUploadFlag'   => old('list_banner_upload_flag', 0),
+            'detailBannerUploadFlag' => old('detail_banner_upload_flag', 0)
         ]);
     }
 

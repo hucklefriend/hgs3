@@ -28,7 +28,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">サイトマップ</li>
+            <li class="breadcrumb-item active" aria-current="page">バグ</li>
         </ol>
     </nav>
 @endsection

@@ -83,8 +83,9 @@
             </div>
         </div>
         <div style="height: 40px;line-height: 40px;">
-            &copy; yu-ki
-            since 2003.9.28
+            &copy; yu-ki <a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</a> /
+            since 2003.9.28 /
+            last update 2018.2.25 <a href="https://github.com/hucklefriend/hgs3" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</a>
         </div>
     </div>
 </footer>
