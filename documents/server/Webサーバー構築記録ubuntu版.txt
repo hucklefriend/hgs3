@@ -236,3 +236,29 @@ SSL強制(httpd.confにSSLRequireSSL)
 
 apt-get install imagemagick
 apt-get install libimage-magick-perl
+
+
+
+●DBバックアップ
+・MariaDB
+mysqldump -u root --single-transaction --master-data=2 --flush-logs hgs2 > hgs2_20180223.sql
+mysqldump -u root --single-transaction --master-data=2 --flush-logs hgs3 > hgs3_20180223.sql
+
+tar -zcvf hgs3_20180223.tar.gz hgs3_20180223.sql
+
+戻し方
+tar -zxvf hgs3_20180223.tar.gz
+mysql -u root -p hgs3 < hgs3_20180223.sql
+
+
+・MongoDB
+systemctl stop mongod
+
+mkdir mongo_backup_20180223
+sudo mongodump -o -d hgs3 "./mongo_backup_20180223"
+
+systemctl start mongod
+
+戻し方
+sudo mongorestore -d hgs3 "./mongo_backup_20180223"
+
