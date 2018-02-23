@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/hgn'),
+    'url' => env('APP_URL', 'https://horrorgame.net/'),
 
     /*
     |--------------------------------------------------------------------------
