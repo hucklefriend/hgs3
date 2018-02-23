@@ -36,8 +36,6 @@ class Database
             $path = storage_path('app/admin_password.txt');
             echo 'admin password is '.$password.PHP_EOL;
             file_put_contents($path, $password);
-
-            $password = 'huckle';
         }
 
         echo 'create admin'.PHP_EOL;
@@ -52,9 +50,6 @@ class Database
                 'show_id'  => 'huckle'
             ]);
         }
-
-        // 運営用ユーザーコミュニティを作成
-        //UserCommunity::createDefault();
     }
 
     /**
