@@ -262,3 +262,7 @@ systemctl start mongod
 戻し方
 sudo mongorestore -d hgs3 "./mongo_backup_20180223"
 
+
+・メンテモード
+php artisan down
+php artisan up
