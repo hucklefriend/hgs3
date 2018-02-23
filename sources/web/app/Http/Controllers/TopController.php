@@ -72,6 +72,11 @@ class TopController extends Controller
         ]);
     }
 
+    /**
+     * 既知のバグ
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function bugs()
     {
         $bugs = [

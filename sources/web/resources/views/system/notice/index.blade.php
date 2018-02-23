@@ -17,26 +17,23 @@
         <h1>お知らせ</h1>
     @endif
 
-    <table class="table table-responsive table-no-border">
-        <tbody>
-        @foreach ($notices as $notice)
-            <tr class="mt-5">
-                <td>{{ $notice->open_at }}</td>
-                <td><a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}">{{ str_limit($notice->title, 30) }}</a></td>
-                @if (is_admin())
-                <td><a class="btn btn-sm btn-outline-info" href="{{ route('お知らせ編集', ['notice' => $notice->id]) }}" role="button">更新</a></td>
-                <td>
-                    <form action="{{ route('お知らせ削除', ['notice' => $notice->id]) }}" onsubmit="return confirm('削除してよろしいですか？');" method="POST">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                        <button class="btn btn-sm btn-danger" type="submit">削除</button>
-                    </form>
-                </td>
-                @endif
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+    @foreach ($notices as $notice)
+        <div class="my-3">
+            <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-secondary border-0 d-block">
+                <div class="d-flex justify-content-between">
+                    <div class="force-break mr-2 text-left">
+                        <div><small>{{ $notice->open_at }}</small></div>
+                        <div class="font-weight-bold">{{ $notice->title }}</div>
+                        <div>{{ str_limit($notice->message, 100) }}</div>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-angle-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    @endforeach
+
     @include('common.pager', ['pager' => $notices])
 @endsection
 

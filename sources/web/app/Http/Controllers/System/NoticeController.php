@@ -12,6 +12,7 @@ use Hgs3\Models\Game\Collection;
 use Hgs3\Models\Game\Package;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NoticeController extends Controller
 {
@@ -22,7 +23,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $notices = Orm\SystemNotice::orderBy('open_at', 'DESC')
+        $notices = Orm\SystemNotice::select(['id', 'title', 'message', DB::raw('DATE_FORMAT(open_at, "%Y-%m-%d %H:%i") AS open_at')])
+            ->orderBy('open_at', 'DESC')
             ->paginate(30);
 
         return view('system.notice.index', [

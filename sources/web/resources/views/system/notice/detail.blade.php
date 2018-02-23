@@ -7,8 +7,8 @@
 @section('content')
     <h1>{{ $notice->title }}</h1>
 
-    <p>{{ $notice->open_at }}</p>
-    <p class="card-text">
+    <p class="ml-3">{{ format_date(strtotime($notice->open_at)) }}</p>
+    <p class="ml-3">
         {!! nl2br(e($notice->message)) !!}
     </p>
     @if (is_admin())
