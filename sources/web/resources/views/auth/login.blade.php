@@ -5,53 +5,49 @@
 @endsection
 
 @section('content')
+    <h1>ログイン</h1>
+    <section class="mt-5">
+        <h1>SNSのアカウントでログイン</h1>
+        <p class="pl-3">
+            <small>
+                他のSNSサービスのアカウントで登録できます。<br>
+                登録後にログインに使うSNSを追加することもできます。<br>
+                今のところ、Twitterにのみ対応しています。
+            </small>
+        </p>
 
-    <h4>SNSのアカウントでログイン</h4>
-    <div class="row">
-        <div class="col-sm-3 text-center sns-link-outline text-warning">
-            <a href="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="block-link sns-link sns-link-twitter">Twitter</a>
+        <div class="pl-3">
+            <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::LOGIN]) }}">
+                {{ csrf_field() }}
+                <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}&nbsp;Twitter</button>
+            </form>
         </div>
-        <div class="col-sm-3 text-center sns-link-outline text-warning">
-            <a href="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}" class="block-link sns-link sns-link-facebook">facebook</a>
+    </section>
+
+    <section class="mt-5">
+        <h2>メールアドレスでログイン</h2>
+        <div  class="pl-3">
+            <form class="form-horizontal" method="POST" action="{{ route('ログイン処理') }}">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label for="mail">メールアドレス</label>
+                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mail">パスワード</label>
+                    <input id="password" type="password" class="form-control" name="password" required>
+                </div>
+                @if ($errors->has('password'))
+                    <span class="help-block">
+                <strong>{{ $errors->first('password') }}</strong>
+            </span>
+                @endif
+
+                <button type="submit" class="btn btn-primary">ログイン</button>
+            </form>
         </div>
-        <div class="col-sm-3 text-center sns-link-outline">
-            GitHub
-        </div>
-        <div class="col-sm-3 text-center sns-link-outline">
-            Instagarm
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3 text-center sns-link-outline">Google+</div>
-        <div class="col-sm-3 text-center sns-link-outline">Yahoo!</div>
-        <div class="col-sm-3 text-center sns-link-outline">mixi</div>
-        <div class="col-sm-3 text-center sns-link-outline">LINE</div>
-    </div>
-
-    <br><br>
-
-    <h4>メールアドレスでログイン</h4>
-    <form class="form-horizontal" method="POST" action="{{ route('ログイン処理') }}">
-        {{ csrf_field() }}
-
-        <div class="form-group">
-            <label for="mail">メールアドレス</label>
-            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="mail">パスワード</label>
-            <input id="password" type="password" class="form-control" name="password" required>
-        </div>
-        @if ($errors->has('password'))
-        <span class="help-block">
-            <strong>{{ $errors->first('password') }}</strong>
-        </span>
-        @endif
-
-        <button type="submit" class="btn btn-primary">ログイン</button>
-    </form>
-
+    </section>
 @endsection
 
 @section('breadcrumb')

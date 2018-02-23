@@ -47,27 +47,6 @@
                 <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}&nbsp;Twitter</button>
             </form>
         </div>
-
-        <div class="row d-none">
-            <div class="col-sm-3 text-center sns-link-outline text-warning">
-
-            </div>
-            <div class="col-sm-3 text-center sns-link-outline" style="display:none;">
-                facebook
-            </div>
-            <div class="col-sm-3 text-center sns-link-outline" style="display:none;">
-                GitHub
-            </div>
-            <div class="col-sm-3 text-center sns-link-outline" style="display:none;">
-                Instagarm
-            </div>
-        </div>
-        <div class="row" style="display:none;">
-            <div class="col-sm-3 text-center sns-link-outline">Google+</div>
-            <div class="col-sm-3 text-center sns-link-outline">Yahoo!</div>
-            <div class="col-sm-3 text-center sns-link-outline">mixi</div>
-            <div class="col-sm-3 text-center sns-link-outline">LINE</div>
-        </div>
     </section>
 
     <section class="mt-5">
