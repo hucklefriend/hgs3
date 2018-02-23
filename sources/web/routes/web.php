@@ -146,12 +146,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/setting', 'User\SettingController@index')->name('ユーザー設定');
     Route::get('/user/setting/profile', 'User\SettingController@profile')->name('プロフィール編集');
     Route::patch('/user/setting/profile', 'User\SettingController@updateProfile')->name('プロフィール編集実行');
-    Route::get('/user/setting/icon', 'User\SettingController@changeIcon')->name('アイコン変更');
-    Route::get('/user/setting/icon_round', 'User\SettingController@changeIconRound')->name('アイコン丸み変更');
-    Route::patch('/user/setting/icon_round', 'User\SettingController@updateIconRound')->name('アイコン丸み変更処理');
-    Route::get('/user/setting/icon_image', 'User\SettingController@changeIconImage')->name('アイコン画像変更');
-    Route::patch('/user/setting/icon_image', 'User\SettingController@updateIconImage')->name('アイコン画像変更処理');
-    Route::delete('/user/setting/icon', 'User\SettingController@deleteIcon')->name('アイコン削除');
     Route::get('/user/setting/sns', 'User\SettingController@sns')->name('SNS認証設定');
     Route::patch('/user/setting/sns/{sa}/open', 'User\SettingController@updateSnsOpen')->name('SNS公開設定処理');
     Route::delete('/user/setting/sns/{sa}', 'User\SettingController@deleteSns')->name('SNS認証解除');
@@ -166,6 +160,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/setting/change_mail/confirm', 'User\Setting\MailAuthController@confirmMail')->name('メールアドレス変更確定');
     Route::get('/user/setting/change_password', 'User\Setting\MailAuthController@changePassword')->name('パスワード変更');
     Route::patch('/user/setting/change_password', 'User\Setting\MailAuthController@updatePassword')->name('パスワード変更処理');
+
+    // ユーザー設定：アイコン
+    Route::get('/user/setting/icon', 'User\Setting\IconController@changeIcon')->name('アイコン変更');
+    Route::get('/user/setting/icon_round', 'User\Setting\IconController@changeIconRound')->name('アイコン丸み変更');
+    Route::patch('/user/setting/icon_round', 'User\Setting\IconController@updateIconRound')->name('アイコン丸み変更処理');
+    Route::get('/user/setting/icon_image', 'User\Setting\IconController@changeIconImage')->name('アイコン画像変更');
+    Route::patch('/user/setting/icon_image', 'User\Setting\IconController@updateIconImage')->name('アイコン画像変更処理');
+    Route::delete('/user/setting/icon', 'User\Setting\IconController@deleteIcon')->name('アイコン削除');
 
     // プロフィール
     Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');

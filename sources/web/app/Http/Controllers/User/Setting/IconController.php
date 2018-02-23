@@ -25,7 +25,6 @@ use Illuminate\Support\Facades\Response;
 
 class IconController extends Controller
 {
-
     /**
      * アイコン変更
      *
@@ -33,9 +32,16 @@ class IconController extends Controller
      */
     public function changeIcon()
     {
-        return view('user.setting.changeIcon', [
-            'user' => Auth::user()
-        ]);
+        $user = Auth::user();
+        if ($user->icon_upload_flag == 1) {
+            return view('user.setting.icon.changeIcon', [
+                'user' => Auth::user()
+            ]);
+        } else {
+            return view('user.setting.icon.changeIconImage', [
+                'user' => Auth::user()
+            ]);
+        }
     }
 
     /**
@@ -45,7 +51,9 @@ class IconController extends Controller
      */
     public function changeIconRound()
     {
-        return view('user.setting.changeIconRound', [
+        // todo アップロードしてないとダメ
+
+        return view('user.setting.icon.changeIconRound', [
             'user' => Auth::user()
         ]);
     }
@@ -59,10 +67,12 @@ class IconController extends Controller
     public function updateIconRound(ChangeIconRoundRequest $request)
     {
         $user = Auth::user();
-        $user->icon_round_type = $request->icon_round_type;
-        $user->save();
+        if ($user->icon_upload_flag == 1) {
+            $user->icon_round_type = $request->icon_round_type;
+            $user->save();
+        }
 
-        return redirect()->route('マイページ');
+        return redirect()->route('ユーザー設定');
     }
 
     /**
@@ -72,7 +82,7 @@ class IconController extends Controller
      */
     public function changeIconImage()
     {
-        return view('user.config.changeIconImage', [
+        return view('user.setting.icon.changeIconImage', [
             'user' => Auth::user()
         ]);
     }
@@ -99,7 +109,7 @@ class IconController extends Controller
         $user->icon_round_type = $request->icon_round_type;
         $user->save();
 
-        return redirect()->route('マイページ');
+        return redirect()->route('ユーザー設定');
     }
 
     /**
@@ -118,6 +128,6 @@ class IconController extends Controller
 
         $user->deleteIconFile();
 
-        return redirect('mypage');
+        return redirect()->route('ユーザー設定');
     }
 }
