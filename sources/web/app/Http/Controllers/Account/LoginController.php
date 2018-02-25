@@ -36,7 +36,7 @@ class LoginController extends Controller
             // 認証に成功した
             return redirect()->intended('mypage');
         } else {
-            return back()->withInput();
+            return back()->withInput()->withErrors(['login_error' => 'ログインに失敗しました。メールアドレスかパスワードが間違っている可能性があります。']);
         }
     }
 

@@ -10,8 +10,7 @@
                     <p class="card-text">
                         H.G.N.-Horror Game Network-は、ホラーゲーム好きが集まるサイトになるべく開発中のサイトです。<br>
                         <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
-                        公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。<br>
-                        <a href="{{ route('バグ') }}">現在把握しているバグはこちらでご確認いただけます。</a>
+                        公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。
                     </p>
                     @if (!Auth::check())
                     <div class="text-center">
@@ -34,7 +33,17 @@
                         </form>
                     </div>
                     <hr>
-                    <form method="POST" action="{{ route('ログイン') }}">
+                    @if ($errors->has('login_error'))
+                        <div class="alert alert-danger" role="alert">
+                            @foreach ($errors->get('login_error') as $msg)
+                                {{ nl2br(e($msg)) }}
+                                @if (!$loop->last)
+                                    <br>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                    <form method="POST" action="{{ route('ログイン処理') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group form-group-sm mb-2">
@@ -42,15 +51,15 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-mail"><i class="far fa-envelope"></i></span>
                                 </div>
-                                <input id="email" type="email" class="form-control form-control-sm" name="email" value="{{ old('email') }}" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
+                                <input id="email" type="email" class="form-control form-control-sm{{ $errors->has('login_error') ? ' has-danger' : '' }}" name="email" value="{{ old('email') }}" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                        <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-password"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input id="password" type="password" class="form-control form-control-sm" name="password" required placeholder="パスワード" aria-label="パスワード" aria-describedby="addon-password">
+                                <input id="password" type="password" class="form-control form-control-sm{{ $errors->has('login_error') ? ' has-danger' : '' }}" name="password" required placeholder="パスワード" aria-label="パスワード" aria-describedby="addon-password">
                             </div>
                         </div>
                         <div style="display:flex;">
@@ -123,6 +132,26 @@
                     @else
                         <p class="card-text">お知らせはありません。</p>
                     @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-hgn">
+                <div class="card-body">
+                    <h5 class="card-title">不具合について</h5>
+                    不具合は<a href="https://github.com/hucklefriend/hgs3/issues/" target="_blank">GitHubのIssue</a>で管理しています。<br>
+                    不具合を見つけられましたら、<a href="https://twitter.com/huckle_friend" target="_blank">Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>にてご連絡いただければ、対応します。
+                    GitHubのことをわかっている方は、Issueを作成しての報告でもOKです。
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 d-none">
+            <div class="card card-hgn">
+                <div class="card-body">
                 </div>
             </div>
         </div>
