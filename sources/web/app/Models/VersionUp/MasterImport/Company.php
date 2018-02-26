@@ -12,37 +12,58 @@ class Company extends MasterImportAbstract
 {
     /**
      * 会社マスターのインポート
+     *
+     * @param $date
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function import()
+    public static function import($date)
     {
         // 既存データのアップデート
-        $this->update();
+        self::update($date);
 
         // 新規データの追加
-        $path = storage_path('master/company');
+        $path = storage_path('master/company/' . $date);
+        if (!File::isDirectory($path)) {
+            echo 'nothing company new data.' . PHP_EOL;
+        } else {
+            $files = File::files($path);
+            foreach ($files as $filePath) {
+                if (ends_with($filePath, 'update.php')) {
+                    continue;
+                }
 
-        $files = File::files($path);
-        foreach ($files as $filePath) {
-            if (ends_with($filePath, 'update.php')) {
-                continue;
+                $data = \GuzzleHttp\json_decode(File::get($filePath), true);
+
+                $com = new Orm\GameCompany($data);
+                $com->save();
+
+                unset($data);
+                unset($com);
             }
+        }
 
-            $data = \GuzzleHttp\json_decode(File::get($filePath), true);
-
-            $com = new Orm\GameCompany($data);
-            $com->save();
-
-            unset($data);
-            unset($com);
+        $manualMethod = 'manual' . $date;
+        if (method_exists(new self(), $manualMethod)) {
+            self::$manualMethod();
+        } else {
+            echo 'nothing company manual update.' . PHP_EOL;
         }
     }
 
     /**
      * データの更新
+     *
+     * @param int $date
      */
-    private function update()
+    private static function update($date)
     {
-        $companies = include(storage_path('master/company/update.php'));
+        $path = storage_path('master/company/' . $date . '/update.php');
+        if (!File::isFile($path)) {
+            echo 'nothing company update data.' . PHP_EOL;
+            return;
+        }
+
+        $companies = include($path);
 
         foreach ($companies as $c) {
             $company = Orm\GameCompany::find($c['id']);

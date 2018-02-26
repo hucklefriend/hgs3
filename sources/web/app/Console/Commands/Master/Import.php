@@ -1,27 +1,27 @@
 <?php
 
-namespace Hgs3\Console\Commands;
+namespace Hgs3\Console\Commands\Master;
 
 use Hgs3\Models\MongoDB\Collection;
 use Hgs3\Models\VersionUp\Master;
 use Illuminate\Console\Command;
 use Hgs3\Models\VersionUp\Database;
 
-class Init extends Command
+class Import extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'init';
+    protected $signature = 'master:import {date}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'initialize';
+    protected $description = 'master import';
 
     /**
      * Create a new command instance.
@@ -36,20 +36,12 @@ class Init extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @throws \Exception
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
-        if (env('APP_ENV') == 'production') {
-            echo 'productionでは実行できません';
-            $this->error('productionでは実行できません');
-            return;
-        }
-        $db = new Database;
-        $db->versionUp();
-
-        Master::import(20180225);
-
-        Collection::create();
+        $date = intval($this->argument('date'));
+        Master::import($date);
     }
 }

@@ -19,97 +19,41 @@ class Package extends MasterImportAbstract
      * @throws \Exception
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function import()
+    public static function import($date)
     {
-        $this->update();
+        self::update($date);
 
-        // 男子校であった怖い話に不要なパッケージ
-        DB::table('game_package_links')
-            ->where('soft_id', 243)
-            ->delete();
+        $path = storage_path('master/package/' . $date);
+        if (!File::isDirectory($path)) {
+            echo 'nothing package new data.' . PHP_EOL;
+            return;
+        } else {
+            $files = File::files($path);
 
-        DB::table('game_package_links')
-            ->whereIn('soft_id', [242, 239, 241, 240])
-            ->where('package_id', 410)
-            ->delete();
+            $softs = self::getSoftHash();
+            $companies = self::getCompanyHash();
+            $platforms = self::getPlatformHash();
 
-        $path = storage_path('master/package');
+            foreach ($files as $filePath) {
+                if (ends_with($filePath, 'update.php')) {
+                    continue;
+                }
 
-        $files = File::files($path);
+                $data = json_decode(File::get($filePath), true);
 
-        $softs = $this->getSoftHash();
-        $companies = $this->getCompanyHash();
-        $platforms = $this->getPlatformHash();
+                self::insert($data, $softs, $companies, $platforms);
 
-        foreach ($files as $filePath) {
-            if (ends_with($filePath, 'update.php')) {
-                continue;
+                unset($data);
+                unset($platform);
             }
-
-            $data = json_decode(File::get($filePath), true);
-
-            self::insert($data, $softs, $companies, $platforms);
-
-            unset($data);
-            unset($platform);
         }
 
-        // 既存データの更新
-
-        // かまいたちの夜2のメーカーIDがNULL
-        DB::table('game_packages')
-            ->whereIn('id', [101, 102, 103, 104, 105, 90, 97, 98, 99, 100])
-            ->update(['company_id' => 103]);
-
-        // Dの食卓
-        DB::table('game_packages')
-            ->whereIn('id', [461, 462, 463, 464, 465, 466])
-            ->update(['company_id' => 45]);
-
-        // 月陽炎
-        DB::table('game_packages')
-            ->whereIn('id', [385, 386])
-            ->update(['company_id' => self::getCompanyId('すたじおみりす')]);
-
-        // 魔女たちの眠り
-        DB::table('game_packages')
-            ->whereIn('id', [147])
-            ->update(['company_id' => self::getCompanyId('パック')]);
-
-        // 魔女たちの眠り完全版
-        DB::table('game_packages')
-            ->whereIn('id', [148])
-            ->update(['company_id' => 9]);
-
-        // 歪みの国のアリス
-        DB::table('game_packages')
-            ->whereIn('id', [127])
-            ->update(['company_id' => self::getCompanyId('SUNSOFT')]);
-
-        // お馬が穐
-        DB::table('game_packages')
-            ->whereIn('id', [86,87,88,89])
-            ->update(['company_id' => 54]);
-
-
-        // 超怖い話
-        DB::table('game_packages')
-            ->where('id', 400)
-            ->update(['company_id' => 96, 'url' => 'https://www.nintendo.co.jp/ds/software/bkaj/index.html']);
-    }
-
-    /**
-     * 会社IDを取得
-     *
-     * @param string $name
-     * @return mixed
-     */
-    private static function getCompanyId($name)
-    {
-        $sql = 'SELECT id FROM game_companies WHERE name LIKE "%' . $name . '%"';
-
-        $company = DB::select($sql);
-        return $company[0]->id;
+        $manualMethod = 'manual' . $date;
+        if (method_exists(new self(), $manualMethod)) {
+            self::$manualMethod();
+        } else {
+            echo 'nothing package manual update.' . PHP_EOL;
+        }
     }
 
     /**
@@ -206,15 +150,18 @@ class Package extends MasterImportAbstract
 
     /**
      * データの更新
+     *
+     * @param $date
      */
-    private function update()
+    private static function update($date)
     {
-        if (!File::exists(storage_path('master/package/update.php'))) {
+        $path = storage_path('master/package/' . $date . '/update.php');
+        if (!File::isFile($path)) {
+            echo 'nothing package update data.' . PHP_EOL;
             return;
         }
 
-        $packages = include(storage_path('master/package/update.php'));
-
+        $packages = include($path);
         foreach ($packages as $p) {
             $pkg = Orm\GamePackage::find($p['id']);
 
@@ -227,5 +174,64 @@ class Package extends MasterImportAbstract
         }
 
         unset($packages);
+    }
+
+    /**
+     * 手動設定
+     */
+    private static function manual20180225()
+    {
+        // 既存データの更新
+
+        // 男子校であった怖い話に不要なパッケージ
+        DB::table('game_package_links')
+            ->where('soft_id', 243)
+            ->delete();
+
+        DB::table('game_package_links')
+            ->whereIn('soft_id', [242, 239, 241, 240])
+            ->where('package_id', 410)
+            ->delete();
+
+        // かまいたちの夜2のメーカーIDがNULL
+        DB::table('game_packages')
+            ->whereIn('id', [101, 102, 103, 104, 105, 90, 97, 98, 99, 100])
+            ->update(['company_id' => 103]);
+
+        // Dの食卓
+        DB::table('game_packages')
+            ->whereIn('id', [461, 462, 463, 464, 465, 466])
+            ->update(['company_id' => 45]);
+
+        // 月陽炎
+        DB::table('game_packages')
+            ->whereIn('id', [385, 386])
+            ->update(['company_id' => self::getCompanyId('すたじおみりす')]);
+
+        // 魔女たちの眠り
+        DB::table('game_packages')
+            ->whereIn('id', [147])
+            ->update(['company_id' => self::getCompanyId('パック')]);
+
+        // 魔女たちの眠り完全版
+        DB::table('game_packages')
+            ->whereIn('id', [148])
+            ->update(['company_id' => 9]);
+
+        // 歪みの国のアリス
+        DB::table('game_packages')
+            ->whereIn('id', [127])
+            ->update(['company_id' => self::getCompanyId('SUNSOFT')]);
+
+        // お馬が穐
+        DB::table('game_packages')
+            ->whereIn('id', [86,87,88,89])
+            ->update(['company_id' => 54]);
+
+
+        // 超怖い話
+        DB::table('game_packages')
+            ->where('id', 400)
+            ->update(['company_id' => 96, 'url' => 'https://www.nintendo.co.jp/ds/software/bkaj/index.html']);
     }
 }

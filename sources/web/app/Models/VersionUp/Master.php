@@ -10,30 +10,26 @@ class Master
     /**
      * インポート
      *
+     * @param int $date
      * @throws \Exception
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function import()
+    public static function import($date)
     {
         echo 'import company.'.PHP_EOL;
-        $company = new MasterImport\Company();
-        $company->import();
+        MasterImport\Company::import($date);
 
         echo 'import platform.'.PHP_EOL;
-        $platform = new MasterImport\Platform();
-        $platform->import();
+        MasterImport\Platform::import($date);
 
         echo 'import series.'.PHP_EOL;
-        $series = new MasterImport\Series();
-        $series->import();
+        MasterImport\Series::import($date);
 
         echo 'import soft.'.PHP_EOL;
-        $soft = new MasterImport\Soft();
-        $soft->import();
+        MasterImport\Soft::import($date);
 
         echo 'import package.'.PHP_EOL;
-        $package = new MasterImport\Package();
-        $package->import();
+        MasterImport\Package::import($date);
 
         echo 'update sort order.'.PHP_EOL;
         \Hgs3\Models\Orm\GameSoft::updateSortOrder();

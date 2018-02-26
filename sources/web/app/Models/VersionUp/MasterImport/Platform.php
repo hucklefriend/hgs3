@@ -12,42 +12,61 @@ class Platform extends MasterImportAbstract
 {
     /**
      * インポート
+     *
+     * @param $date
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function import()
+    public static function import($date)
     {
-        $this->update();
+        self::update($date);
 
-        $path = storage_path('master/platform');
+        $path = storage_path('master/platform/' . $date);
+        if (!File::isDirectory($path)) {
+            echo 'nothing platform new data.' . PHP_EOL;
+        } else {
+            $files = File::files($path);
 
-        $files = File::files($path);
+            $companies = self::getCompanyHash();
 
-        $companies = $this->getCompanyHash();
+            foreach ($files as $filePath) {
+                if (ends_with($filePath, 'update.php')) {
+                    continue;
+                }
 
-        foreach ($files as $filePath) {
-            if (ends_with($filePath, 'update.php')) {
-                continue;
+                $data = \GuzzleHttp\json_decode(File::get($filePath), true);
+
+                $data['company_id'] = $companies[$data['company']] ?? null;
+                unset($data['company']);
+
+
+                $platform = new Orm\GamePlatform($data);
+                $platform->save();
+
+                unset($data);
+                unset($platform);
             }
+        }
 
-            $data = \GuzzleHttp\json_decode(File::get($filePath), true);
-
-            $data['company_id'] = $companies[$data['company']] ?? null;
-            unset($data['company']);
-
-
-            $platform = new Orm\GamePlatform($data);
-            $platform->save();
-
-            unset($data);
-            unset($platform);
+        $manualMethod = 'manual' . $date;
+        if (method_exists(new self(), $manualMethod)) {
+            self::$manualMethod();
+        } else {
+            echo 'nothing platform manual update.' . PHP_EOL;
         }
     }
 
     /**
      * データの更新
      */
-    private function update()
+    private static function update($date)
     {
-        $platforms = include(storage_path('master/platform/update.php'));
+        $path = storage_path('master/platform/' . $date . '/update.php');
+        if (!File::isFile($path)) {
+            echo 'nothing platform update data.' . PHP_EOL;
+            return;
+        }
+
+        $platforms = include($path);
 
         foreach ($platforms as $p) {
             $platform = Orm\GamePlatform::find($p['id']);

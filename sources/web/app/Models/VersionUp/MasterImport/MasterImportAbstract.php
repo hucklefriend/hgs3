@@ -14,7 +14,7 @@ abstract class MasterImportAbstract
      *
      * @return array
      */
-    protected function getSoftHash()
+    protected static function getSoftHash()
     {
         return Orm\GameSoft::select(['id', 'name'])
             ->get()
@@ -27,7 +27,7 @@ abstract class MasterImportAbstract
      *
      * @return array
      */
-    protected function getCompanyHash()
+    protected static function getCompanyHash()
     {
         return Orm\GameCompany::select(['id', 'acronym'])
             ->get()
@@ -40,7 +40,7 @@ abstract class MasterImportAbstract
      *
      * @return array
      */
-    protected function getPlatformHash()
+    protected static function getPlatformHash()
     {
         return Orm\GamePlatform::select(['id', 'acronym'])
             ->get()
@@ -53,11 +53,39 @@ abstract class MasterImportAbstract
      *
      * @return array
      */
-    protected function getSeriesHash()
+    protected static function getSeriesHash()
     {
         return Orm\GameSeries::select(['id', 'name'])
             ->get()
             ->pluck('id', 'name')
             ->toArray();
+    }
+
+    /**
+     * 名称からシリーズIDを取得
+     *
+     * @param $name
+     * @return mixed
+     */
+    protected static function getSeriesId($name)
+    {
+        $sql = 'SELECT id FROM game_series WHERE `name` LIKE "%' . $name . '%"';
+
+        $series = DB::select($sql);
+        return $series[0]->id;
+    }
+
+    /**
+     * 会社IDを取得
+     *
+     * @param string $name
+     * @return mixed
+     */
+    protected static function getCompanyId($name)
+    {
+        $sql = 'SELECT id FROM game_companies WHERE name LIKE "%' . $name . '%"';
+
+        $company = DB::select($sql);
+        return $company[0]->id;
     }
 }
