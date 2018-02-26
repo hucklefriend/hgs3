@@ -20,7 +20,7 @@ class Platform extends MasterImportAbstract
     {
         self::update($date);
 
-        $path = storage_path('master/platform/' . $date);
+        $path = storage_path('master/' . $date . '/platform');
         if (!File::isDirectory($path)) {
             echo 'nothing platform new data.' . PHP_EOL;
         } else {
@@ -60,7 +60,7 @@ class Platform extends MasterImportAbstract
      */
     private static function update($date)
     {
-        $path = storage_path('master/platform/' . $date . '/update.php');
+        $path = storage_path('master/' . $date . '/platform/update.php');
         if (!File::isFile($path)) {
             echo 'nothing platform update data.' . PHP_EOL;
             return;

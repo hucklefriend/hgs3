@@ -1,0 +1,27 @@
+{
+  "soft_name": ["SAW II: Flesh & Blood"],
+  "packages":[
+    {
+      "platform": "PS3",
+      "company": "コナミ",
+      "name": "SAW II: Flesh & Blood",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B002I0K6KY",
+      "is_adult": 1,
+      "release_int": 20101019,
+      "release_at": "2010年10月19日(海外)"
+    },
+    {
+      "platform": "X360",
+      "company": "コナミ",
+      "name": "SAW II: Flesh & Blood",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B004DTWD5Y",
+      "is_adult": 1,
+      "release_int": 20101019,
+      "release_at": "2010年10月19日(海外)"
+    }
+  ]
+}

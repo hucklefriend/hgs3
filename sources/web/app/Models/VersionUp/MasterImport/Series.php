@@ -20,7 +20,7 @@ class Series extends MasterImportAbstract
     public static function import($date)
     {
         // 新規データの追加
-        $path = storage_path('master/series/' . $date);
+        $path = storage_path('master/' . $date . '/series');
         if (!File::isDirectory($path)) {
             echo 'nothing series new data.' . PHP_EOL;
         } else {

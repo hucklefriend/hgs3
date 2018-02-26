@@ -1,0 +1,16 @@
+{
+  "soft_name": ["One's Own [or very]"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "TOBE",
+      "name": "One's Own [or very]",
+      "is_adult": 1,
+      "url": "",
+      "shop": "amazon",
+      "asin": "B00008HWSQ",
+      "release_int": 20000915,
+      "release_at": "2000年9月15日"
+    }
+  ]
+}

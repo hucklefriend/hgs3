@@ -6,6 +6,7 @@
 namespace Hgs3\Models\VersionUp\MasterImport;
 
 use Hgs3\Models\Orm;
+use Illuminate\Support\Facades\DB;
 
 abstract class MasterImportAbstract
 {

@@ -19,7 +19,7 @@ class Soft extends MasterImportAbstract
         // 既存データのアップデート
         self::update($date);
 
-        $path = storage_path('master/soft/' . $date);
+        $path = storage_path('master/' . $date . '/soft');
         if (!File::isDirectory($path)) {
             echo 'nothing soft new data.' . PHP_EOL;
         } else {
@@ -73,7 +73,7 @@ class Soft extends MasterImportAbstract
      */
     private static function update($date)
     {
-        $path = storage_path('master/soft/' . $date . '/update.php');
+        $path = storage_path('master/' . $date . '/soft/update.php');
         if (!File::isFile($path)) {
             echo 'nothing soft update data.' . PHP_EOL;
             return;

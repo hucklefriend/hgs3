@@ -1,0 +1,25 @@
+{
+  "soft_name": ["LITTLE NIGHTMARES -リトルナイトメア-"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "バンナム",
+      "name": "LITTLE NIGHTMARES-リトルナイトメア-",
+      "url": "http://ln.bn-ent.net/",
+      "release_int": 20170428,
+      "release_at": "2017年4月28日",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/424840/Little_Nightmares/"
+    },
+    {
+      "platform": "PS4",
+      "company": "バンナム",
+      "name": "LITTLE NIGHTMARES-リトルナイトメア-",
+      "url": "http://ln.bn-ent.net/",
+      "release_int": 20170428,
+      "release_at": "2017年4月28日",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/ja-jp/product/JP0700-CUSA07663_00-LITTLENIGHTMARES"
+    }
+  ]
+}

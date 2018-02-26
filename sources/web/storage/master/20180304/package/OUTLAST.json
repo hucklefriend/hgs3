@@ -1,0 +1,38 @@
+{
+  "soft_name": ["OUTLAST"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "Red Barrels",
+      "name": "OUTLAST",
+      "url": "https://redbarrelsgames.com/games/outlast/",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/238320/Outlast/",
+      "is_adult": 1,
+      "release_int": 20130904,
+      "release_at": "2013年9月4日"
+    },
+    {
+      "platform": "PS4",
+      "company": "Red Barrels",
+      "name": "OUTLAST",
+      "url": "https://redbarrelsgames.com/games/outlast/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/en-ca/product/UP2113-CUSA00325_00-OUTLAST000000000",
+      "is_adult": 1,
+      "release_int": 20140204,
+      "release_at": "2014年2月4日(海外)"
+    },
+    {
+      "platform": "XONE",
+      "company": "Red Barrels",
+      "name": "OUTLAST",
+      "url": "https://redbarrelsgames.com/games/outlast/",
+      "shop": "Microsoft ストア",
+      "shop_url": "https://www.microsoft.com/ja-jp/store/p/outlast/bp3gh4d3hp2h",
+      "is_adult": 1,
+      "release_int": 20140619,
+      "release_at": "2014年6月19日(海外)"
+    }
+  ]
+}

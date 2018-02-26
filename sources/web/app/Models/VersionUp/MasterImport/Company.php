@@ -22,7 +22,7 @@ class Company extends MasterImportAbstract
         self::update($date);
 
         // 新規データの追加
-        $path = storage_path('master/company/' . $date);
+        $path = storage_path('master/' . $date . '/company');
         if (!File::isDirectory($path)) {
             echo 'nothing company new data.' . PHP_EOL;
         } else {
@@ -57,7 +57,7 @@ class Company extends MasterImportAbstract
      */
     private static function update($date)
     {
-        $path = storage_path('master/company/' . $date . '/update.php');
+        $path = storage_path('master/' . $date . '/company/update.php');
         if (!File::isFile($path)) {
             echo 'nothing company update data.' . PHP_EOL;
             return;
