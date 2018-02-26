@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info p-2" role="alert">
         <small>
             現在、テスト用のユーザーとサイトが多数登録されています。<br>
             本運営開始時に削除しますが、それまでは動作確認などで利用します。<br>
@@ -120,7 +120,7 @@
                     <h5 class="card-title">お知らせ</h5>
                     @foreach ($notices as $notice)
                         <div class="my-2">
-                            <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-secondary border-0 d-block">
+                            <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-dark border-0 d-block">
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         {{ format_date($notice->open_at_ts) }}<br>
@@ -150,10 +150,10 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">不具合について</h5>
-                    不具合は<a href="https://github.com/hucklefriend/hgs3/issues/" target="_blank">GitHubのIssue</a>で管理しています。<br>
-                    不具合を見つけられましたら、<a href="https://twitter.com/huckle_friend" target="_blank">Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>にてご連絡いただければ、対応します。
-                    GitHubのことをわかっている方は、Issueを作成しての報告でもOKです。
+                    <h5 class="card-title">バグと今後の実装予定</h5>
+                    バグや実装予定の機能は<a href="https://github.com/hucklefriend/hgs3/issues/" target="_blank">GitHubのIssue</a>で管理しています。<br>
+                    バグの報告やご要望などありましたら、こちらをご確認の上、同じようなものがなければ、<a href="https://twitter.com/huckle_friend" target="_blank">Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>でご連絡をお願い致します。<br>
+                    GitHubのことをわかっている方は、Issueの作成やコメントをしていただいてもOKです。
                 </div>
             </div>
         </div>

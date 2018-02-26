@@ -19,7 +19,7 @@
 
     @foreach ($notices as $notice)
         <div class="my-3">
-            <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-secondary border-0 d-block">
+            <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-dark border-0 d-block">
                 <div class="d-flex justify-content-between">
                     <div class="force-break mr-2 text-left">
                         <div><small>{{ $notice->open_at_str }}</small></div>
