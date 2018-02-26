@@ -34,13 +34,15 @@
                     </div>
                     <hr>
                     @if ($errors->has('login_error'))
-                        <div class="alert alert-danger" role="alert">
+                        <div class="text-danger" role="alert">
+                            <small>
                             @foreach ($errors->get('login_error') as $msg)
                                 {{ nl2br(e($msg)) }}
                                 @if (!$loop->last)
                                     <br>
                                 @endif
                             @endforeach
+                            </small>
                         </div>
                     @endif
                     <form method="POST" action="{{ route('ログイン処理') }}">
