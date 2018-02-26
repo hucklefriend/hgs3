@@ -42,7 +42,7 @@
                     @if ($site->updated_timestamp > 0)
                     <span>
                         <i class="fas fa-redo-alt"></i>
-                        {{ date('Y-m-d H:i', $site->updated_timestamp) }}
+                        {{ format_date($site->updated_timestamp) }}
                     </span>
                     @endif
                 </div>

@@ -308,9 +308,15 @@ function page_pluck(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager
  * @param $unix_timestamp
  * @return false|string
  */
-function format_date($unix_timestamp)
+function format_date($timestamp)
 {
-    return date('Y-m-d H:i', $unix_timestamp);
+    if ($GLOBALS['today_start_timestamp'] <= $timestamp && $timestamp <= $GLOBALS['today_end_timestamp']) {
+        return date('今日 H:i', $timestamp);
+    } else if ($GLOBALS['yesterday_start_timestamp'] <= $timestamp && $timestamp <= $GLOBALS['yesterday_end_timestamp']) {
+        return date('昨日 H:i', $timestamp);
+    }
+
+    return date('Y.n.j H:i', $timestamp);
 }
 
 function follow_status_icon(array $followStatus, $targetUserId)

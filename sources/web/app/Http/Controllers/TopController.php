@@ -19,7 +19,7 @@ class TopController extends Controller
     {
         $newInfo = Orm\NewInformation::select([
             'soft_id', 'site_id', 'text_type',
-            DB::raw('DATE_FORMAT(open_at, "%Y-%m-%d %H:%i") AS open_at')
+            DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')
         ])
             ->orderBy('open_at', 'DESC')
             ->take(5)
@@ -28,7 +28,7 @@ class TopController extends Controller
         $gameHash = Orm\GameSoft::getNameHash($newInfo->pluck('soft_id')->toArray());
         $siteHash = Orm\Site::getNameHash($newInfo->pluck('site_id')->toArray());
 
-        $notices = Orm\SystemNotice::select(array('id', 'title', DB::raw('DATE_FORMAT(open_at, "%Y-%m-%d %H:%i") AS open_at_str')))
+        $notices = Orm\SystemNotice::select(['id', 'title', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
             ->where('open_at', '<=', DB::raw('NOW()'))
             ->where('close_at', '>=', DB::raw('NOW()'))
             ->orderBy('open_at', 'DESC')
@@ -60,7 +60,8 @@ class TopController extends Controller
      */
     public function newInformation()
     {
-        $newInfo = Orm\NewInformation::orderBy('open_at', 'DESC')
+        $newInfo = Orm\NewInformation::select(['*', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
+            ->orderBy('open_at', 'DESC')
             ->paginate(30);
         $gameHash = Orm\GameSoft::getNameHash(array_pluck($newInfo->items(), 'game_id'));
         $siteHash = Orm\Site::getNameHash(array_pluck($newInfo->items(), 'site_id'));
@@ -70,31 +71,5 @@ class TopController extends Controller
             'gameHash' => $gameHash,
             'siteHash' => $siteHash
         ]);
-    }
-
-    /**
-     * 既知のバグ
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function bugs()
-    {
-        $bugs = [
-            [
-                'date'    => '2018-02-25',
-                'title'   => 'ログインに失敗してもエラーメッセージが出ない',
-                'message' => 'パスワード間違いなどでログインに失敗しても、エラーメッセージが表示されてないです。',
-                'status'  => '次回更新時に対応'
-            ],
-            [
-                'date'    => '2018-02-25',
-                'title'   => '一部のエラーメッセージが英語',
-                'message' => '一部の入力項目で入力チェックに引っかかった時、エラーメッセージが英語で表示されるものがあります。' . PHP_EOL
-                           . 'いずれ対応しますが、翻訳サービスを利用するなりしての対応をお願いします。',
-                'status'  => 'いずれ対応'
-            ]
-        ];
-
-        return view('bugs', ['bugs' => $bugs]);
     }
 }

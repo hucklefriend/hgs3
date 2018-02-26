@@ -13,16 +13,6 @@
                             @include('user.common.icon', ['u' => $u])
                             @include('user.common.user_name', ['u' => $u])
                         </div>
-                        @if ($isMyself && isset($mutualFollow[$follower->user_id]))
-                            <div class="text-right ml-5">
-                                <form method="POST" action="{{ route('フォロー解除') }}">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                    <input type="hidden" name="follow_user_id" value="{{ $u->show_id }}">
-                                    <button class="btn btn-danger btn-sm"><small>解除</small></button>
-                                </form>
-                            </div>
-                        @endif
                     </div>
                     <div>
                         {{ format_date($follower->follow_timestamp) }}

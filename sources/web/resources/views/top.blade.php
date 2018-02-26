@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="alert alert-info" role="alert">
+        <small>
+            現在、テスト用のユーザーとサイトが多数登録されています。<br>
+            本運営開始時に削除しますが、それまでは動作確認などで利用します。<br>
+            邪魔かと思いますが、ご理解とご了承をお願いしますm(_ _)m
+        </small>
+    </div>
 
     <div class="row">
         <div class="@if(!Auth::check()) col-md-7 @else col-md-12 @endif">
@@ -86,7 +93,7 @@
                     <h5 class="card-title">新着情報</h5>
                     @foreach ($newInfo as $nf)
                         <p class="card-text">
-                            {{ $nf->open_at }}<br>
+                            {{ format_date($nf->open_at_ts) }}<br>
                             @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
                                 <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
                             @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
@@ -116,7 +123,7 @@
                             <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-secondary border-0 d-block">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        {{ $notice->open_at_str }}<br>
+                                        {{ format_date($notice->open_at_ts) }}<br>
                                         {{ $notice->title }}
                                     </div>
                                     <div class="align-self-center">

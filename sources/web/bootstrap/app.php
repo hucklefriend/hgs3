@@ -44,6 +44,12 @@ $app->singleton(
 Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4");
 Illuminate\Pagination\AbstractPaginator::defaultSimpleView("pagination::simple-bootstrap-4");
 
+
+$GLOBALS['today_start_timestamp'] = strtotime(date('Y-m-d'));
+$GLOBALS['today_end_timestamp'] = $GLOBALS['today_start_timestamp'] + 86399;
+$GLOBALS['yesterday_start_timestamp'] = $GLOBALS['today_start_timestamp'] - 86400;
+$GLOBALS['yesterday_end_timestamp'] = $GLOBALS['today_start_timestamp'] - 1;
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

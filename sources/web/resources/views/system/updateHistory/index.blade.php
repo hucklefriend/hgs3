@@ -21,7 +21,7 @@
         <table id="update_history_table" class="table table-responsive table-no-border">
             @foreach ($histories as $history)
                 <tr class="mb-5">
-                    <td class="history_date">{{ $history->update_at }}</td>
+                    <td class="history_date">{{ format_date($history->update_at_ts) }}</td>
                     <td><a href="{{ route('システム更新内容', ['updateHistory' => $history->id]) }}">{{ $history->title }}</a></td>
                     @if (is_admin())
                         <td><a class="btn btn-sm btn-outline-info" href="{{ route('システム更新履歴更新', ['updateHistory' => $history->id]) }}" role="button">編集</a></td>

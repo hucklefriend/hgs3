@@ -9,7 +9,7 @@
 
     @foreach ($newInfo as $nf)
         <div class="mb-5">
-            {{ format_date(strtotime($nf->open_at)) }}<br>
+            {{ format_date($nf->open_at_ts) }}<br>
             @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
                 <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
             @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)

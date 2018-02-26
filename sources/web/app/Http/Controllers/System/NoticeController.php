@@ -23,7 +23,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $notices = Orm\SystemNotice::select(['id', 'title', 'message', DB::raw('DATE_FORMAT(open_at, "%Y-%m-%d %H:%i") AS open_at')])
+        $notices = Orm\SystemNotice::select(['id', 'title', 'message', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
             ->orderBy('open_at', 'DESC')
             ->paginate(30);
 

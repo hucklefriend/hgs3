@@ -37,7 +37,7 @@ class UpdateHistoryController extends Controller
 
         $updateHistory->save();
 
-        return redirect('system/update_history');
+        return redirect()->route('システム更新履歴');
     }
 
     /**
@@ -68,7 +68,7 @@ class UpdateHistoryController extends Controller
 
         $updateHistory->save();
 
-        return redirect('system/update_history/admin');
+        return redirect()->route('システム更新内容', ['updateHistory' => $updateHistory->id]);
     }
 
     /**
@@ -92,7 +92,7 @@ class UpdateHistoryController extends Controller
      */
     public function index()
     {
-        $histories = Orm\SystemUpdateHistory::select(array('id', 'title', DB::raw('DATE_FORMAT(update_at, "%Y/%m/%d %H:%i") AS update_at')))
+        $histories = Orm\SystemUpdateHistory::select(array('id', 'title', DB::raw('UNIX_TIMESTAMP(update_at) AS update_at_ts')))
             ->where('update_at', '<=', DB::raw('NOW()'))
             ->orderBy('update_at', 'DESC')
             ->paginate(30);
