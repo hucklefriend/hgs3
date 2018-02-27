@@ -1,0 +1,25 @@
+{
+  "soft_name": ["Crystal Rift"],
+  "packages":[
+    {
+      "platform": "PS4",
+      "company": "Psytec Games",
+      "name": "Crystal Rift",
+      "url": "http://www.crystalrift.com/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/ja-jp/product/EP1499-CUSA06140_00-JPPS400000000001",
+      "release_int": 20170630,
+      "release_at": "2017年6月30日"
+    },
+    {
+      "platform": "PC",
+      "company": "Psytec Games",
+      "name": "Crystal Rift",
+      "url": "http://www.crystalrift.com/",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/345140/Crystal_Rift/",
+      "release_int": 20160330,
+      "release_at": "2016年3月30日"
+    }
+  ]
+}
