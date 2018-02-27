@@ -30,6 +30,17 @@
 
     @yield('head_append')
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    @if (env('APP_ENV') == 'production')
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114831632-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-114831632-1');
+    </script>
+    @endif
 </head>
 <body>
 <div class="fixed-top" id="header_menu">
