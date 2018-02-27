@@ -1,0 +1,35 @@
+{
+  "soft_name": ["真 流行り神2"],
+  "packages":[
+    {
+      "platform": "PS4",
+      "company": "日本一ソフトウェア",
+      "name": "真 流行り神2",
+      "url": "http://hayarigami.com/shin_hayarigami2/",
+      "shop": "amazon",
+      "asin": "B01DNC439U",
+      "release_int": 20160707,
+      "release_at": "2016年7月7日"
+    },
+    {
+      "platform": "PS3",
+      "company": "日本一ソフトウェア",
+      "name": "真 流行り神2",
+      "url": "http://hayarigami.com/shin_hayarigami2/",
+      "shop": "amazon",
+      "asin": "B01DNC42MS",
+      "release_int": 20160707,
+      "release_at": "2016年7月7日"
+    },
+    {
+      "platform": "PSV",
+      "company": "日本一ソフトウェア",
+      "name": "真 流行り神2",
+      "url": "http://hayarigami.com/shin_hayarigami2/",
+      "shop": "amazon",
+      "asin": "B01DNC42RS",
+      "release_int": 20160707,
+      "release_at": "2016年7月7日"
+    }
+  ]
+}
