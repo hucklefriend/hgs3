@@ -32,7 +32,7 @@ class ProfileController extends Controller
      * @param string $show
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($showId, $show = 'timeline')
+    public function index($showId, $show = 'profile')
     {
         $user = User::findByShowId($showId);
         if ($user == null) {
@@ -44,7 +44,6 @@ class ProfileController extends Controller
 
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
-        $data['snsAccounts'] = SocialSite::getAccounts($user);
 
         switch ($show) {
             case 'follow':{
@@ -103,9 +102,13 @@ class ProfileController extends Controller
             }
                 break;
             case 'timeline':
+                // TODO タイムライン実装時にここに追加
+            case 'profile':
             default: {
-                $show = 'timeline';
-                $data['parts'] = Timeline\MyPage::getTimeline($user->id, time(), 20);
+                $show = 'profile';
+                $data['parts'] = [
+                    'snsAccounts' => SocialSite::getAccounts($user, true)
+                ];
             }
                 break;
         }

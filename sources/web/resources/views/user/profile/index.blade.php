@@ -12,11 +12,6 @@
                     @include('user.common.icon', ['u' => $user])
                     <span class="align-middle">{{ $user->name }}さんのページ</span>
                 </h1>
-                <div>
-                    @foreach ($snsAccounts as $sns)
-                        <a href="{{ $sns->getUrl() }}" target="_blank">{{ sns_icon($sns->social_site_id) }}</a>
-                    @endforeach
-                </div>
             </div>
             <div class="ml-auto d-none d-sm-block">
                 <a href="{{ route('ユーザー設定') }}" class="btn btn-sm btn-outline-dark mr-3"><i class="fas fa-cog"></i> 設定</a>
@@ -28,11 +23,6 @@
             <h1>
                 @include('user.common.icon', ['u' => $user])<span class="align-middle">{{ $user->name }}さんのページ</span>
             </h1>
-            <div>
-                @foreach ($snsAccounts as $sns)
-                    <a href="{{ $sns->getUrl() }}" target="_blank">{{ sns_icon($sns->social_site_id) }}</a>
-                @endforeach
-            </div>
         </div>
     @endif
 

@@ -23,25 +23,18 @@ class SocialSite
      * ソーシャルアカウント情報を取得
      *
      * @param User $user
+     * @param bool $openOnly
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getAccounts(User $user)
+    public static function getAccounts(User $user, $openOnly = false)
     {
-        return Orm\SocialAccount::where('user_id', $user->id)
-            ->orderBy('social_site_id')
-            ->get();
-    }
+        $sa = Orm\SocialAccount::where('user_id', $user->id);
 
-    public static function getGroupedAccounts(User $user)
-    {
-        $data = self::getAccounts($user);
-
-        $result = [];
-
-        foreach ($data as $account) {
-            $result[$account->social_site_id][] = $account;
+        if ($openOnly) {
+            $sa->where('open_flag', 1);
         }
 
-        return $result;
+        return $sa->orderBy('social_site_id')
+            ->get();
     }
 }
