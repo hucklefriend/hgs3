@@ -108,8 +108,16 @@ class SettingController extends Controller
      */
     public function deleteSns(Orm\SocialAccount $sa)
     {
-        if ($sa->user_id != Auth::id()) {
+        $user = Auth::user();
+
+        if ($sa->user_id != $user->id) {
             return redirect()->back();
+        }
+
+        $accounts = SocialSite::getAccounts($user);
+        if ($accounts->count() <= 1 && !$user->isRegisteredMailAuth()) {
+            // 削除できない
+            return view('user.setting.snsCannotDelete');
         }
 
         $sa->delete();

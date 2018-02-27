@@ -266,3 +266,8 @@ sudo mongorestore -d hgs3 "./mongo_backup_20180223"
 ・メンテモード
 php artisan down
 php artisan up
+
+
+・GitHubとつながらなくなった
+TLSの最新版じゃないとダメになったよう
+GitForWindowsを最新版に更新して、PhpStormのGitの設定でSSH executableをNativeにするとつながった
