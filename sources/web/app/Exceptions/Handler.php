@@ -3,8 +3,10 @@
 namespace Hgs3\Exceptions;
 
 use Exception;
+use Hgs3\Mail\ErrorReport;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Mail;
 
 class Handler extends ExceptionHandler
 {
@@ -32,6 +34,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if (!($exception instanceof \HttpException) && env('APP_ENV') == 'production') {
+            // メールを投げる(本番環境のみ)
+            Mail::send(new ErrorReport($exception));
+        }
+
         parent::report($exception);
     }
 
