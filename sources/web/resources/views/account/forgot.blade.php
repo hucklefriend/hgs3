@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title')パスワード再発行 @endsection
+
 @section('global_back_link')
     <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
 @endsection

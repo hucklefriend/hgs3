@@ -204,6 +204,24 @@ class ToMe extends TimelineAbstract
         self::insert($user->id, $text);
     }
 
+    /**
+     * データ削除
+     *
+     * @param $userId
+     * @return bool
+     * @throws \Exception
+     */
+    public static function delete($userId)
+    {
+        try {
+            self::getDB()->to_me_timeline->deleteMany([
+                'user_id' => $userId
+            ]);
+        } catch (\Exception $e) {
+            Log::exceptionError($e);
+            return false;
+        }
+    }
 
     /**
      * データ登録

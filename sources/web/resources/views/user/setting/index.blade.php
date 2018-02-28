@@ -55,7 +55,7 @@
     <div class="row">
         <div class="col-sm-6 mb-5">
             <div class="border border-dark rounded p-2">
-                <h5>SNS認証</h5>
+                <h5>外部サイト連携</h5>
                 <a href="{{ route('SNS認証設定') }}" class="btn btn-sm btn-outline-dark border-0 d-block mb-2 pt-2 pb-2">
                     <div class="d-flex justify-content-between">
                         <div class="pr-3">
@@ -127,6 +127,23 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-6 mb-5">
+            <div class="border border-dark rounded p-2">
+                <h5>退会</h5>
+                <a href="{{ route('退会') }}" class="btn btn-sm btn-outline-danger border-0 d-block mb-2 pt-2 pb-2">
+                    <div class="d-flex justify-content-between">
+                        <div class="pr-3">
+                            こちらへ
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 
 
 @endsection

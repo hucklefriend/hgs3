@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3>パスワード再設定</h3>
+    <h1>パスワード再設定</h1>
 
     <form method="POST" action="{{ route('パスワード再設定処理') }}" autocomplete="off">
         {{ csrf_field() }}

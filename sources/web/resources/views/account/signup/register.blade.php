@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title')ユーザー登録 @endsection
+
 @section('content')
-    <h3>ユーザー登録</h3>
+    <h1>ユーザー登録</h1>
 
     <form method="POST" action="{{ route('本登録処理') }}" autocomplete="off">
         {{ csrf_field() }}

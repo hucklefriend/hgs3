@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title')ユーザー登録 @endsection
+
 @section('global_back_link')
     <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
@@ -8,12 +10,6 @@
     <h1>ユーザー登録</h1>
 
     <h2>はじめにお読みください</h2>
-    <p class="pl-3">
-        <small>
-            退会をまだ実装していないため、退会を行うことができません。<br>
-            いずれ実装予定です。
-        </small>
-    </p>
     <p class="pl-3">
         <small>
             テストの登録ユーザーがいっぱいいます。<br>

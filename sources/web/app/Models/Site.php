@@ -590,46 +590,7 @@ SQL;
 
         DB::beginTransaction();
         try {
-            // 足跡を削除
-            Footprint::delete($site->id);
-
-            // 新着情報
-            Orm\NewInformation::where('site_id', $site->id)
-                ->delete();
-
-            // お気に入りサイト
-            Orm\UserFavoriteSite::where('site_id', $site->id)
-                ->delete();
-
-            // 取扱いゲーム
-            Orm\SiteHandleSoft::where('site_id', $site->id)
-                ->delete();
-
-            // サイト検索インデックス
-            Orm\SiteSearchIndex::where('site_id', $site->id)
-                ->delete();
-
-            // 新着サイト
-            NewArrival::delete($site->id);
-
-            // 更新サイト
-            Orm\SiteUpdateArrival::where('site_id', $site->id)
-                ->delete();
-
-            // サイトいいね
-            Orm\SiteGood::where('site_id', $site->id)
-                ->delete();
-
-            // サイトいいね履歴
-            Orm\SiteGoodHistory::where('site_id', $site->id)
-                ->delete();
-
-            // サイト更新履歴
-            Orm\SiteUpdateHistory::where('site_id', $site->id)
-                ->delete();
-
-            // サイト自体
-            $site->delete();
+            self::deleteNoTransaction($site);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -641,6 +602,56 @@ SQL;
         }
 
         return true;
+    }
+
+    /**
+     * トランザクションなしで削除
+     *
+     * @param Orm\Site $site
+     * @throws \Exception
+     */
+    public static function deleteNoTransaction(Orm\Site $site)
+    {
+        // 足跡を削除
+        Footprint::delete($site->id);
+
+        // 新着情報
+        Orm\NewInformation::where('site_id', $site->id)
+            ->delete();
+
+        // お気に入りサイト
+        Orm\UserFavoriteSite::where('site_id', $site->id)
+            ->delete();
+
+        // 取扱いゲーム
+        Orm\SiteHandleSoft::where('site_id', $site->id)
+            ->delete();
+
+        // サイト検索インデックス
+        Orm\SiteSearchIndex::where('site_id', $site->id)
+            ->delete();
+
+        // 新着サイト
+        NewArrival::delete($site->id);
+
+        // 更新サイト
+        Orm\SiteUpdateArrival::where('site_id', $site->id)
+            ->delete();
+
+        // サイトいいね
+        Orm\SiteGood::where('site_id', $site->id)
+            ->delete();
+
+        // サイトいいね履歴
+        Orm\SiteGoodHistory::where('site_id', $site->id)
+            ->delete();
+
+        // サイト更新履歴
+        Orm\SiteUpdateHistory::where('site_id', $site->id)
+            ->delete();
+
+        // サイト自体
+        $site->delete();
     }
 
     /**

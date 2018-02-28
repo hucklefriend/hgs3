@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title')ゲーム詳細 @endsection
+
 @section('global_back_link')
     <a href="{{ route('ゲーム一覧') }}"><i class="fas fa-angle-left"></i></a>
 @endsection

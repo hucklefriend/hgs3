@@ -4,7 +4,6 @@
     <a href="{{ route('ユーザー登録') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
-
 @section('content')
 
     <h1>期限切れ</h1>

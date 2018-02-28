@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
+@section('title')仮登録メール送信 @endsection
+
 @section('global_back_link')
     <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')
-
-    <h1>仮登録メールを送信</h1>
+    <h1>仮登録メールを送信しました</h1>
     <p>24時間以内にメールからアクセスし、本登録を行ってください。</p>
 
 @endsection

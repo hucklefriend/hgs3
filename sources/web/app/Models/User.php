@@ -5,6 +5,7 @@ namespace Hgs3\Models;
 use Hgs3\Constants\SocialSite;
 use Hgs3\Constants\UserRole;
 use Hgs3\Models\Account\SignUp;
+use Hgs3\Models\Timeline\ToMe;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
@@ -212,5 +213,82 @@ class User extends Authenticatable
     public function isRegisteredMailAuth()
     {
         return $this->email != null && $this->password != null;
+    }
+
+    /**
+     * 退会
+     *
+     * @throws \Exception
+     */
+    public function leave()
+    {
+        if ($this->id == 1) {
+            return;
+        }
+
+        $userId = $this->id;
+
+        DB::beginTransaction();
+        try {
+            // サイト
+            $sites = Orm\Site::where('user_id', $this->id);
+            foreach ($sites as $site) {
+                Site::delete($site);
+            }
+
+            // フォロー
+            Orm\UserFollow::where('user_id', $this->id)
+                ->delete();
+
+            // フォロワー
+            Orm\UserFollow::where('follow_user_id', $this->id)
+                ->delete();
+
+            // 新着情報
+            Orm\NewInformation::where('user_id', $this->id)
+                ->delete();
+
+            // パスワードリセット
+            Orm\PasswordReset::where('user_id', $this->id)
+                ->delete();
+
+            // レビュー
+            Orm\SocialAccount::where('user_id', $this->id)
+                ->delete();
+
+            // 表示用ID
+            DB::table('used_show_ids')
+                ->where('show_id', $this->show_id)
+                ->delete();
+
+            // メアド変更
+            Orm\UserChangeEmail::where('user_id', $this->id)
+                ->delete();
+
+            // お気に入りサイト
+            Orm\UserFavoriteSite::where('user_id', $this->id)
+                ->delete();
+
+            // お気に入りソフト
+            Orm\UserFavoriteSoft::where('user_id', $this->id)
+                ->delete();
+
+            // 遊んだゲーム
+            Orm\UserPlayedSoft::where('user_id', $this->id)
+                ->delete();
+
+            // ユーザー
+            $this->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Hgs3\Log::exceptionError($e);
+        }
+
+        // タイムライン
+        ToMe::delete($userId);
+
+        return;
     }
 }

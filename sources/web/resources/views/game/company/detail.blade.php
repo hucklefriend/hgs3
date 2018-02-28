@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title')ゲーム会社詳細 @endsection
+
 @section('global_back_link')
     <a href="{{ route('ゲーム会社一覧') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
@@ -26,7 +28,7 @@
         @endif
     </div>
 
-    <p class="mt-2 mb-2">
+    <p class="my-2">
         {{ $company->name }}から発売されているパッケージ
     </p>
 
