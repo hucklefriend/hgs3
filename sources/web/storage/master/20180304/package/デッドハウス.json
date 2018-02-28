@@ -1,0 +1,35 @@
+{
+  "soft_name": ["デッドハウス 再生"],
+  "packages":[
+    {
+      "platform": "PS4",
+      "company": "レイニーフロッグ",
+      "name": "デッドハウス 再生",
+      "url": "http://www.dead.house/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/ja-jp/product/JP1309-CUSA08431_00-DEADHOUSE0000000",
+      "release_int": 20170531,
+      "release_at": "2017年5月31日"
+    },
+    {
+      "platform": "WiiU",
+      "company": "レイニーフロッグ",
+      "name": "デッドハウス 再生",
+      "url": "http://www.dead.house/",
+      "shop": "ニンテンドーeショップ",
+      "shop_url": "https://www.nintendo.co.jp/titles/20010000026487",
+      "release_int": 20170531,
+      "release_at": "2017年5月31日"
+    },
+    {
+      "platform": "Switch",
+      "company": "レイニーフロッグ",
+      "name": "デッドハウス 再生",
+      "url": "http://www.dead.house/",
+      "shop": "My Nintendo Store",
+      "shop_url": "https://ec.nintendo.com/JP/ja/titles/70010000000833",
+      "release_int": 20170629,
+      "release_at": "2017年6月29日"
+    }
+  ]
+}

@@ -32,6 +32,7 @@ class Company extends MasterImportAbstract
                     continue;
                 }
 
+                echo 'loading ' . $filePath . PHP_EOL;
                 $data = \GuzzleHttp\json_decode(File::get($filePath), true);
 
                 $com = new Orm\GameCompany($data);

@@ -1,0 +1,35 @@
+{
+  "soft_name": ["ネバーエンディングナイトメア"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "Infinitap",
+      "name": "ネバーエンディングナイトメア",
+      "url": "http://www.neverendingnightmares.com/",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/253330/Neverending_Nightmares/",
+      "release_int": 20140927,
+      "release_at": "2014年9月27日"
+    },
+    {
+      "platform": "PS4",
+      "company": "Infinitap",
+      "name": "ネバーエンディングナイトメア",
+      "url": "http://www.neverendingnightmares.com/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/ja-jp/product/JP0122-CUSA04813_00-NEVERENDINGNIGHT",
+      "release_int": 20160519,
+      "release_at": "2016年5月19日"
+    },
+    {
+      "platform": "Vita",
+      "company": "Infinitap",
+      "name": "ネバーエンディングナイトメア",
+      "url": "http://www.neverendingnightmares.com/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/ja-jp/product/JP0122-PCSG00874_00-NEVERENDINGNIGHT",
+      "release_int": 20160519,
+      "release_at": "2016年5月19日"
+    }
+  ]
+}

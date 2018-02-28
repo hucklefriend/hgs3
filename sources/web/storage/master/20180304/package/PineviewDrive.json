@@ -1,0 +1,15 @@
+{
+  "soft_name": ["Pineview Drive - House of Horror"],
+  "packages":[
+    {
+      "platform": "PS4",
+      "company": "UIG",
+      "name": "Pineview Drive - House of Horror",
+      "url": "http://www.uieg.de/index.php/details/pineview-drive-95.html",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/ja-jp/product/EP8935-CUSA03777_00-JPPS400000000001",
+      "release_int": 20170828,
+      "release_at": "2017年8月28日"
+    }
+  ]
+}

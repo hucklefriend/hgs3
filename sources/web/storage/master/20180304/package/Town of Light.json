@@ -1,0 +1,35 @@
+{
+  "soft_name": ["The Town of Light"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "LKA",
+      "name": "The Town of Light",
+      "url": "http://www.thetownoflight.com/press/sheet.php?p=the_town_of_light_JAP",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/433100/The_Town_of_Light/",
+      "release_int": 20160227,
+      "release_at": "2016年2月27日"
+    },
+    {
+      "platform": "PS4",
+      "company": "クロスファンクション",
+      "name": "The Town of Light",
+      "url": "http://www.crossfunction.co.jp/thetownoflight_p4/",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/ja-jp/product/JP0186-CUSA08588_00-0000000000000000",
+      "release_int": 20171027,
+      "release_at": "2017年10月27日"
+    },
+    {
+      "platform": "XONE",
+      "company": "クロスファンクション",
+      "name": "The Town of Light",
+      "url": "http://www.crossfunction.co.jp/thetownoflight_x1/",
+      "shop": "Microsoft ストア",
+      "shop_url": "https://www.microsoft.com/ja-jp/store/p/the-town-of-light/br6kjs3qsrk0",
+      "release_int": 20171117,
+      "release_at": "2017年11月17日"
+    }
+  ]
+}
