@@ -14,8 +14,8 @@
         "revolution/laravel-amazon-product-api" : "*",
         "exeu/apai-io": "~2.0",
         "illuminate/support": "5.*",
-        "guzzlehttp/guzzle": "6.*"
-
+        "guzzlehttp/guzzle": "6.*",
+        "jenssegers/agent": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "@dev",

@@ -9,7 +9,6 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Account\PasswordResetRequest;
 use Hgs3\Http\Requests\Account\MailAuthRequest;
 use Hgs3\Models\Account\PasswordReset;
-use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
 use Illuminate\Support\Facades\Log;
