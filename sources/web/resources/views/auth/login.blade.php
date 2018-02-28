@@ -7,15 +7,10 @@
 @section('content')
     <h1>ログイン</h1>
     <section class="mt-5">
-        <h1>SNSのアカウントでログイン</h1>
+        <h2>外部サイトのアカウントでログイン</h2>
         <p class="pl-3">
-            <small>
-                他のSNSサービスのアカウントで登録できます。<br>
-                登録後にログインに使うSNSを追加することもできます。<br>
-                今のところ、Twitterにのみ対応しています。
-            </small>
+            いまのところTwitterにのみ対応しています。
         </p>
-
         <div class="pl-3">
             <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::LOGIN]) }}">
                 {{ csrf_field() }}
@@ -26,28 +21,45 @@
 
     <section class="mt-5">
         <h2>メールアドレスでログイン</h2>
-        <div  class="pl-3">
+        <div class="pl-3">
             <form class="form-horizontal" method="POST" action="{{ route('ログイン処理') }}">
                 {{ csrf_field() }}
+
+                <div class="form-group form-group-sm mb-2">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="addon-mail"><i class="far fa-envelope"></i></span>
+                        </div>
+                        <input id="email" type="email" class="form-control {{ $errors->has('login_error') ? ' has-danger' : '' }}" name="email" value="{{ old('email') }}" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label for="mail">メールアドレス</label>
-                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="addon-password"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input id="password" type="password" class="form-control{{ $errors->has('login_error') ? ' has-danger' : '' }}" name="password" required placeholder="パスワード" aria-label="パスワード" aria-describedby="addon-password">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="mail">パスワード</label>
-                    <input id="password" type="password" class="form-control" name="password" required>
-                </div>
                 @if ($errors->has('password'))
-                    <span class="help-block">
-                <strong>{{ $errors->first('password') }}</strong>
-            </span>
+                <span class="help-block">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
                 @endif
 
                 <button type="submit" class="btn btn-primary">ログイン</button>
             </form>
         </div>
     </section>
+
+    <p class="mt-5">
+        <a href="{{ route('パスワード再設定') }}">パスワードを忘れた場合はこちら</a>
+    </p>
+    <p>
+        <a href="{{ route('ユーザー登録') }}">ユーザー登録はこちら</a>
+    </p>
+
 @endsection
 
 @section('breadcrumb')
