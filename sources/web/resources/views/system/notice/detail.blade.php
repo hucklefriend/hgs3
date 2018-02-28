@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title')お知らせ詳細 | @endsection
+
 @section('global_back_link')
     <a href="{{ route('お知らせ') }}"><i class="fas fa-angle-left"></i></a>
 @endsection

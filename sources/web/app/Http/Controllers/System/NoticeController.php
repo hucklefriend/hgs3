@@ -24,6 +24,8 @@ class NoticeController extends Controller
     public function index()
     {
         $notices = Orm\SystemNotice::select(['id', 'title', 'message', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
+            ->whereRaw('open_at <= NOW()')
+            ->whereRaw('close_at >= NOW()')
             ->orderBy('open_at', 'DESC')
             ->paginate(30);
 

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title')お知らせ登録 | @endsection
+
 @section('global_back_link')
     <a href="{{ route('お知らせ') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
@@ -14,7 +16,7 @@
         </div>
         <div class="form-group">
             <label for="message">内容</label>
-            <textarea name="message" id="message" class="form-control{{ invalid($errors, 'message') }}" required>{{ old('message') }}</textarea>
+            <textarea name="message" id="message" class="form-control{{ invalid($errors, 'message') }}" required rows="10">{{ old('message') }}</textarea>
             @include('common.error', ['formName' => 'message'])
         </div>
         <div class="form-group">
