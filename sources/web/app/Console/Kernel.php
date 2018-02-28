@@ -25,7 +25,6 @@ class Kernel extends ConsoleKernel
         Commands\TestData\UserFavoriteSite::class,
         Commands\TestData\UserFollow::class,
         Commands\TestData\NewInformation::class,
-        Commands\TestData\SystemUpdateHistory::class,
         Commands\TestData\SystemNotice::class,
         Commands\Mongo\Reset::class,
         Commands\Init::class,

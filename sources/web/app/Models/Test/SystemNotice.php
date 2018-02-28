@@ -1,6 +1,6 @@
 <?php
 /**
- * システム更新履歴
+ * お知らせ
  */
 
 namespace Hgs3\Models\Test;

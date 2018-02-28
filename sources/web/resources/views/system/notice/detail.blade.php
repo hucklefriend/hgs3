@@ -9,7 +9,7 @@
 
     <p class="ml-3">{{ format_date(strtotime($notice->open_at)) }}</p>
     <p class="ml-3">
-        {!! nl2br(e($notice->message)) !!}
+        {!! nl2br($notice->message) !!}
     </p>
     @if (is_admin())
         <a class="btn btn-sm btn-outline-info" href="{{ route('お知らせ編集', ['notice' => $notice->id]) }}" role="button">編集</a>

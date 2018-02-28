@@ -24,13 +24,6 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::patch('/system/notice/edit/{notice}', 'System\NoticeController@update')->name('お知らせ編集処理');
     Route::delete('/system/notice/{notice}', 'System\NoticeController@delete')->name('お知らせ削除');
 
-    // システム更新履歴
-    Route::get('/system/update_history/add', 'System\UpdateHistoryController@add')->name('システム更新履歴登録');
-    Route::post('/system/update_history/add', 'System\UpdateHistoryController@insert')->name('システム更新履歴登録処理');
-    Route::get('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@edit')->name('システム更新履歴更新');
-    Route::patch('/system/update_history/edit/{updateHistory}', 'System\UpdateHistoryController@update')->name('システム更新履歴更新処理');
-    Route::delete('/system/update_history/{updateHistory}', 'System\UpdateHistoryController@delete')->name('システム更新履歴削除');
-
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');
 
@@ -210,10 +203,6 @@ Route::get('/auth/password_reset_complete', 'Account\ForgotController@complete')
 // お知らせ
 Route::get('/notice', 'System\NoticeController@index')->name('お知らせ');
 Route::get('/notice/{notice}', 'System\NoticeController@detail')->name('お知らせ内容');
-
-// システム更新履歴
-Route::get('/system_update', 'System\UpdateHistoryController@index')->name('システム更新履歴');
-Route::get('/system_update/{updateHistory}', 'System\UpdateHistoryController@detail')->name('システム更新内容');
 
 // アカウント作成
 Route::get('/account/signup', 'Account\SignUpController@index')->name('ユーザー登録');
