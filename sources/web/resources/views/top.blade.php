@@ -152,7 +152,7 @@
                 <div class="card-body">
                     <h5 class="card-title">バグと今後の実装予定</h5>
                     バグや実装予定の機能は<a href="https://github.com/hucklefriend/hgs3/issues/" target="_blank">GitHubのIssue</a>で管理しています。<br>
-                    バグの報告やご要望などありましたら、こちらをご確認の上、同じようなものがなければ、<a href="https://twitter.com/huckle_friend" target="_blank">Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>でご連絡をお願い致します。<br>
+                    バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>でご連絡をお願い致します。<br>
                     GitHubのことをわかっている方は、Issueの作成やコメントをしていただいてもOKです。
                 </div>
             </div>

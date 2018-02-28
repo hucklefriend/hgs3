@@ -18,6 +18,7 @@
         <li class="list-group-item"><a href="{{ route('レビュートップ') }}">レビュー</a></li>
         <li class="list-group-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
         <li class="list-group-item"><a href="{{ route('お知らせ') }}">お知らせ</a></li>
+        <li class="list-group-item"><a href="{{ route('当サイトについて') }}">H.G.N.について</a></li>
 
         @if (\Illuminate\Support\Facades\Auth::check())
         <li class="list-group-item"><a href="{{ route('マイページ') }}">マイページ</a></li>

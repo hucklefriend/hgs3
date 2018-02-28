@@ -72,4 +72,14 @@ class TopController extends Controller
             'siteHash' => $siteHash
         ]);
     }
+
+    /**
+     * 当サイトについて
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function about()
+    {
+        return view('about');
+    }
 }
