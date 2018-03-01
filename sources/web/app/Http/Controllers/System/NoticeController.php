@@ -27,9 +27,43 @@ class NoticeController extends Controller
             ->whereRaw('open_at <= NOW()')
             ->whereRaw('close_at >= NOW()')
             ->orderBy('open_at', 'DESC')
-            ->paginate(30);
+            ->paginate(20);
 
         return view('system.notice.index', [
+            'notices' => $notices
+        ]);
+    }
+
+    /**
+     * 未来
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function future()
+    {
+        $notices = Orm\SystemNotice::select(['id', 'title', 'message', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
+            ->whereRaw('open_at > NOW()')
+            ->orderBy('open_at', 'DESC')
+            ->paginate(20);
+
+        return view('system.notice.future', [
+            'notices' => $notices
+        ]);
+    }
+
+    /**
+     * 過去(公開終了)
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function past()
+    {
+        $notices = Orm\SystemNotice::select(['id', 'title', 'message', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
+            ->whereRaw('close_at < NOW()')
+            ->orderBy('open_at', 'DESC')
+            ->paginate(20);
+
+        return view('system.notice.future', [
             'notices' => $notices
         ]);
     }

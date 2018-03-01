@@ -23,6 +23,8 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/system/notice/edit/{notice}', 'System\NoticeController@edit')->name('お知らせ編集');
     Route::patch('/system/notice/edit/{notice}', 'System\NoticeController@update')->name('お知らせ編集処理');
     Route::delete('/system/notice/{notice}', 'System\NoticeController@delete')->name('お知らせ削除');
+    Route::get('/system/notice/future', 'System\NoticeController@future')->name('未来のお知らせ');
+    Route::get('/system/notice/past', 'System\NoticeController@past')->name('過去のお知らせ');
 
     // 不正レビュー
     Route::get('/admin/injustice_review', 'Admin\InjusticeReviewController@index');

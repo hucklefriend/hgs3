@@ -1,27 +1,14 @@
 @extends('layouts.app')
 
-@section('title')お知らせ一覧 | @endsection
+@section('title')終了したお知らせ一覧 | @endsection
 
 @section('global_back_link')
-    <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
+    <a href="{{ route('お知らせ') }}"><i class="fas fa-angle-left"></i></a>
 @endsection
 
 @section('content')
 
-    @if (is_admin())
-        <div class="d-flex justify-content-between">
-            <h1>お知らせ</h1>
-            <div>
-                <a href="{{ route('お知らせ登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
-            </div>
-        </div>
-        <div>
-            <a href="{{ route('未来のお知らせ') }}">未来のお知らせ</a> |
-            <a href="{{ route('過去のお知らせ') }}">過去のお知らせ</a>
-        </div>
-    @else
-        <h1>お知らせ</h1>
-    @endif
+    <h1>終了したお知らせ</h1>
 
     @foreach ($notices as $notice)
         <div class="my-3">
@@ -47,7 +34,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">お知らせ</li>
+            <li class="breadcrumb-item"><a href="{{ route('お知らせ') }}">お知らせ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">終了</li>
         </ol>
     </nav>
 @endsection
