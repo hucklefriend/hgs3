@@ -122,7 +122,7 @@
                         <div class="my-2">
                             <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-dark border-0 d-block">
                                 <div class="d-flex justify-content-between">
-                                    <div>
+                                    <div class="text-left">
                                         {{ format_date($notice->open_at_ts) }}<br>
                                         {{ $notice->title }}
                                     </div>
