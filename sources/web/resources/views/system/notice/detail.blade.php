@@ -10,7 +10,7 @@
     <h1>{{ $notice->title }}</h1>
 
     <p class="ml-3">{{ format_date(strtotime($notice->open_at)) }}</p>
-    <p class="ml-3">
+    <p class="ml-3 force-break">
         {!! nl2br($notice->message) !!}
     </p>
     @if (is_admin())

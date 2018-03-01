@@ -110,7 +110,7 @@ class NoticeController extends Controller
 
         $notice->save();
 
-        return $this->edit($notice);
+        return redirect()->route('お知らせ内容', ['notice' => $notice->id]);
     }
 
     /**
