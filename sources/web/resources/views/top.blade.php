@@ -151,16 +151,28 @@
             <div class="card card-hgn">
                 <div class="card-body">
                     <h5 class="card-title">バグと今後の実装予定</h5>
-                    バグや実装予定の機能は<a href="https://github.com/hucklefriend/hgs3/issues/" target="_blank">GitHubのIssue</a>で管理しています。<br>
-                    バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>でご連絡をお願い致します。<br>
+                    バグや実装予定の機能は<a href="https://github.com/hucklefriend/hgs3/issues/" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのIssue</a>で管理しています。<br>
+                    バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>でご連絡をお願い致します。<br>
                     GitHubのことをわかっている方は、Issueの作成やコメントをしていただいてもOKです。
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 d-none">
+        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
+                    <h5>SPECIAL THANKS</h5>
+                    <div class="d-flex flex-wrap">
+                        <div class="m-3">
+                            <a href="http://www.gameha.com/s/r.cgi?mode=r_link&id=18424" target="_blank"><img src="http://www.gameha.com/gameha_sd.gif" border="0" alt="【創作・同人検索エンジン】GAMEHA.COM - ガメハコム - "></a>
+                        </div>
+                        <div class="m-3">
+                            <a href="http://gameofserch.com/" target="_blank"><img src="http://gameofserch.com/b/2/14.gif"></a>
+                        </div>
+                        <div class="m-3">
+                            <a href="http://hemisphere.gonna.jp/sirensearch/" target="_blank"><img src="http://hemisphere.gonna.jp/sirensearch/simg/ssbanner01.png" border="0" title="SIREN SEARCH様"width="200" height="40"></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
