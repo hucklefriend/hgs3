@@ -23,7 +23,7 @@ class IgnoreProvisionalRegistrations extends \Eloquent
     public static function ignoreInsert($mail)
     {
         $sql =<<< SQL
-INSERT IGNORE INTO ignore_provisional_registrations (email_hash, create_at, update_at)
+INSERT IGNORE INTO ignore_provisional_registrations (email_hash, created_at, updated_at)
 VALUES (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
 

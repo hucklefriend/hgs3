@@ -32,7 +32,7 @@ class SiteApprovalWait extends Mailable
     public function build()
     {
         return $this
-            ->from('webmaster@horrorgame.net', 'システム')
+            ->from('webmaster@horrorgame.net', 'H.G.N.-Horror Game Network-')
             ->subject('サイト仮登録通知')
             ->text('mail.siteApprovalWait', ['site' => $this->site]);
     }

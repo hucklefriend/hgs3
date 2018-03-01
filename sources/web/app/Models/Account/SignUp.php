@@ -6,12 +6,10 @@
 namespace Hgs3\Models\Account;
 
 use Hgs3\Constants\UserRole;
-use Hgs3\Mail\ProvisionalRegistration;
+use Hgs3\Log;
 use Hgs3\Models\User;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class SignUp
 {
@@ -58,7 +56,6 @@ class SignUp
      * @param $token
      * @param $name
      * @param $password
-     * @return bool
      * @throws \Exception
      */
     public static function register($token, $name, $password)
@@ -70,10 +67,10 @@ class SignUp
         try {
             // ユーザーテーブルに登録
             User::register([
-                'name'     => $name,
-                'email'    => $orm->email,
-                'password' => bcrypt($password),
-                'role'     => UserRole::USER
+                'name'       => $name,
+                'email'      => $orm->email,
+                'password'   => $password,
+                'role'       => UserRole::USER
             ]);
 
             // 無視メールリストに登録
@@ -83,13 +80,8 @@ class SignUp
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
+            Log::exceptionError($e);
         }
-
-        return true;
     }
 
     /**
@@ -138,7 +130,6 @@ class SignUp
      *
      * @param \Laravel\Socialite\Two\User $socialUser
      * @param $socialSiteId
-     * @return bool
      * @throws \Exception
      */
     public static function registerBySocialite2(\Laravel\Socialite\Two\User $socialUser, $socialSiteId)
@@ -163,12 +154,7 @@ class SignUp
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
+            Log::exceptionError($e);
         }
-
-        return true;
     }
 }

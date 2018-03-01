@@ -34,7 +34,7 @@ class PasswordReset extends Mailable
     public function build()
     {
         return $this
-            ->from('webmaster@horrorgame.net', 'H.G.N.管理人')
+            ->from('webmaster@horrorgame.net', 'H.G.N.-Horror Game Network-')
             ->subject('パスワード再設定のお知らせ')
             ->text('mail.passwordReset', ['token' => $this->token]);
     }

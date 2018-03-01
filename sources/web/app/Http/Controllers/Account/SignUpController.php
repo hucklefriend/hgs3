@@ -86,10 +86,10 @@ class SignUpController extends Controller
     {
         if (!SignUp::validateToken($token)) {
             SignUp::deleteToken($token);
-            return view('account.singup.tokenError');
+            return view('account.signup.tokenError');
         } else {
             $orm = Orm\UserProvisionalRegistration::where('token', $token)->first();
-            return view('account.singup.register', [
+            return view('account.signup.register', [
                 'pr' => $orm
             ]);
         }

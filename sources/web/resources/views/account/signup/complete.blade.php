@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title')サイトマップ @endsection
+@section('title')ユーザー登録 @endsection
 
 @section('global_back_link')
     <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>

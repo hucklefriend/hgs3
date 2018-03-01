@@ -5,8 +5,6 @@
 
 namespace Hgs3\Models\Orm;
 
-use Illuminate\Support\Facades\DB;
-
 class UserProvisionalRegistration extends \Eloquent
 {
     protected $primaryKey = 'email';
@@ -21,7 +19,7 @@ class UserProvisionalRegistration extends \Eloquent
      * @param array $options
      * @return bool
      */
-    public function save($options = [])
+    public function save(array $options = [])
     {
         // 最大10回まで繰り返す
         for ($i = 0; $i < 10; $i++) {

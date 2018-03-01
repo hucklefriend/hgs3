@@ -122,6 +122,7 @@ class User extends Authenticatable
         $self->password = isset($data['password']) ? bcrypt($data['password']) : null;
         $self->role = $data['role']  ?? UserRole::USER;
         $self->profile = $data['profile'] ?? '';
+        $self->sign_up_at = date('Y-m-d H:i:s');
 
         $self->save();
         return $self;
