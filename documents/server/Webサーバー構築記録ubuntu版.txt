@@ -256,7 +256,7 @@ systemctl stop mongod
 
 mkdir mongo_backup_20180223
 sudo mongodump -o -d hgs3 "./mongo_backup_20180223"
-
+Failed: error connecting to db server: no reachable servers
 systemctl start mongod
 
 戻し方

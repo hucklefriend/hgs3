@@ -7,18 +7,14 @@
 php artisan down
 
 ○DBをバックアップする
-mysqldump -u root --single-transaction --master-data=2 --flush-logs hgs2 > hgs2_20180302.sql
-mysqldump -u root --single-transaction --master-data=2 --flush-logs hgs3 > hgs3_20180302.sql
+mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs2 > hgs2_20180302.sql
+mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs3 > hgs3_20180302.sql
 
 tar -zcvf hgs2_20180302.tar.gz hgs2_20180302.sql
 tar -zcvf hgs3_20180302.tar.gz hgs3_20180302.sql
 
-systemctl stop mongod
+sudo mongodump -d hgs3 -o ./
 
-mkdir mongo_backup_20180302
-sudo mongodump -o -d hgs3 "./mongo_backup_20180302"
-
-systemctl start mongod
 
 
 
