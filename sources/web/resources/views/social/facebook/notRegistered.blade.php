@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <h4>このアカウントは登録されていません。</h4>
+    <h1>このアカウントは登録されていません。</h1>
 
-    <p><a href="{{ url2('account/signup') }}">新規登録</a></p>
+    <p><a href="{{ route('ユーザー登録') }}">新規登録</a></p>
 
 @endsection

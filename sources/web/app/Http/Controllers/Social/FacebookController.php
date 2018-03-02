@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers\Social;
 
 use Hgs3\Constants\Social\Mode;
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Log;
 use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
@@ -35,7 +36,8 @@ class FacebookController extends Controller
     /**
      * Facebook
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @throws \Exception
      */
     public function callback()
     {
@@ -50,6 +52,7 @@ class FacebookController extends Controller
                 return $this->login($user);
                 break;
             case Mode::ADD_AUTH:
+                return $this->addAuth($user);
                 break;
             default:
                 break;
@@ -59,10 +62,11 @@ class FacebookController extends Controller
     }
 
     /**
-     * Facebook
+     * ユーザー登録
      *
      * @param \Laravel\Socialite\Two\User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     private function createAccount(\Laravel\Socialite\Two\User $user)
     {
@@ -97,5 +101,34 @@ class FacebookController extends Controller
         }
 
         return view('social.facebook.notRegistered');
+    }
+
+    /**
+     * 連携追加
+     *
+     * @param \Laravel\Socialite\Two\User $socialUser
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function addAuth(\Laravel\Socialite\Two\User $socialUser)
+    {
+        $sa = Orm\SocialAccount::findBySocialUserId(SocialSite::FACEBOOK, $socialUser->id);
+
+        if ($sa != null) {
+            // このTwitterアカウントは連携済み
+            return view('user.setting.snsAlwaysRegistered', ['sns' => 'facebook']);
+        } else {
+            $sa = new Orm\SocialAccount();
+
+            $sa->user_id = Auth::id();
+            $sa->social_site_id = SocialSite::FACEBOOK;
+            $sa->social_user_id = $socialUser->id;
+            $sa->token = $socialUser->token;
+            $sa->token_secret = '';
+            $sa->url = $socialUser->profileUrl ?? null;
+            $sa->name = $socialUser->getName();
+            $sa->save();
+        }
+
+        return redirect()->route('SNS認証設定');
     }
 }

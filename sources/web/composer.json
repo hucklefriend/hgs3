@@ -15,7 +15,8 @@
         "exeu/apai-io": "~2.0",
         "illuminate/support": "5.*",
         "guzzlehttp/guzzle": "6.*",
-        "jenssegers/agent": "*"
+        "jenssegers/agent": "*",
+        "doctrine/dbal": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "@dev",

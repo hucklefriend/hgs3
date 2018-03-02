@@ -14,9 +14,13 @@
             いまのところTwitterにのみ対応しています。
         </p>
         <div class="pl-3">
-            <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::LOGIN]) }}">
+            <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
                 {{ csrf_field() }}
                 <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}&nbsp;Twitter</button>
+            </form>
+            <form method="POST" action="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
+                {{ csrf_field() }}
+                <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}&nbsp;facebook</button>
             </form>
         </div>
     </section>

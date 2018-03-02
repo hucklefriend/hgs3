@@ -37,15 +37,23 @@
             <small>
                 他のSNSサービスのアカウントで登録できます。<br>
                 登録後にログインに使うSNSを追加することもできます。<br>
-                今のところ、Twitterにのみ対応しています。
+                今のところ、Twitterとfacebookに対応しています。
             </small>
         </p>
 
-        <div class="pl-3">
-            <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Twitter\Mode::CREATE_ACCOUNT]) }}">
-                {{ csrf_field() }}
-                <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}&nbsp;Twitter</button>
-            </form>
+        <div class="pl-3 d-flex">
+            <div class="mr-3">
+                <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::CREATE_ACCOUNT]) }}">
+                    {{ csrf_field() }}
+                    <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}&nbsp;Twitter</button>
+                </form>
+            </div>
+            <div>
+                <form method="POST" action="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::CREATE_ACCOUNT]) }}">
+                    {{ csrf_field() }}
+                    <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}&nbsp;facebook</button>
+                </form>
+            </div>
         </div>
     </section>
 

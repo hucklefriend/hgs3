@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.36 on 2018-03-02 01:27:55.
+ * Generated for Laravel 5.5.36 on 2018-03-02 16:50:23.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -7349,7 +7349,7 @@ namespace Illuminate\Support\Facades {
          * @param array $cookies The COOKIE parameters
          * @param array $files The FILES parameters
          * @param array $server The SERVER parameters
-         * @param string|resource $content The raw body data
+         * @param string|resource|null $content The raw body data
          * @static 
          */ 
         public static function initialize($query = array(), $request = array(), $attributes = array(), $cookies = array(), $files = array(), $server = array(), $content = null)
@@ -7382,7 +7382,7 @@ namespace Illuminate\Support\Facades {
          * @param array $cookies The request cookies ($_COOKIE)
          * @param array $files The request files ($_FILES)
          * @param array $server The server parameters ($_SERVER)
-         * @param string|resource $content The raw body data
+         * @param string|resource|null $content The raw body data
          * @return static 
          * @static 
          */ 
@@ -14195,6 +14195,190 @@ namespace Jenssegers\Agent\Facades {
  
 }
 
+namespace Revolution\Amazon\ProductAdvertising\Facades { 
+
+    /**
+     * 
+     *
+     */ 
+    class AmazonProduct {
+        
+        /**
+         * 
+         *
+         * @param \Revolution\Amazon\ProductAdvertising\ApaiIO $api
+         * @return void 
+         * @static 
+         */ 
+        public static function config($api)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::config($api);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Revolution\Amazon\ProductAdvertising\OperationInterface $operation
+         * @return mixed 
+         * @static 
+         */ 
+        public static function run($operation)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::run($operation);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $category
+         * @param string $keyword
+         * @param int $page
+         * @return mixed 
+         * @static 
+         */ 
+        public static function search($category, $keyword = null, $page = 1)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::search($category, $keyword, $page);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $node
+         * @param string $response
+         * @return mixed 
+         * @static 
+         */ 
+        public static function browse($node, $response = 'TopSellers')
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::browse($node, $response);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $asin
+         * @return mixed 
+         * @static 
+         */ 
+        public static function item($asin)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::item($asin);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $asin
+         * @return mixed 
+         * @static 
+         */ 
+        public static function items($asin)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::items($asin);
+        }
+        
+        /**
+         * 
+         *
+         * @inheritDoc 
+         * @static 
+         */ 
+        public static function setIdType($idType)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::setIdType($idType);
+        }
+        
+        /**
+         * 
+         *
+         * @inheritDoc 
+         * @static 
+         */ 
+        public static function getIdType()
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::getIdType();
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @return void 
+         * @static 
+         */ 
+        public static function macro($name, $macro)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::macro($name, $macro);
+        }
+        
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @return void 
+         * @static 
+         */ 
+        public static function mixin($mixin)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::mixin($mixin);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasMacro($name)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::hasMacro($name);
+        }
+        
+        /**
+         * Add hook
+         *
+         * @param string $name
+         * @param callable $hook
+         * @return void 
+         * @static 
+         */ 
+        public static function hook($name, $hook)
+        {
+            \Revolution\Amazon\ProductAdvertising\AmazonClient::hook($name, $hook);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasHook($name)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::hasHook($name);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $name
+         * @param \Revolution\Amazon\ProductAdvertising\OperationInterface $operation
+         * @return mixed 
+         * @static 
+         */ 
+        public static function callHook($name, $operation)
+        {
+            return \Revolution\Amazon\ProductAdvertising\AmazonClient::callHook($name, $operation);
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -16341,6 +16525,8 @@ namespace  {
     class Socialite extends \Laravel\Socialite\Facades\Socialite {}
 
     class Agent extends \Jenssegers\Agent\Facades\Agent {}
+
+    class AmazonProduct extends \Revolution\Amazon\ProductAdvertising\Facades\AmazonProduct {}
  
 }
 

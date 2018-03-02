@@ -138,7 +138,7 @@ class SignUp
 
         try {
             $user = User::register([
-                'name'   => $socialUser->getName(),
+                'name' => $socialUser->getName(),
             ]);
 
             $sa = new Orm\SocialAccount;
@@ -148,6 +148,8 @@ class SignUp
             $sa->social_user_id = $socialUser->id;
             $sa->token = $socialUser->token;
             $sa->token_secret = '';
+            $sa->name = $socialUser->getName();
+            $sa->url = $socialUser->profileUrl ?? null;
             $sa->save();
 
             DB::commit();

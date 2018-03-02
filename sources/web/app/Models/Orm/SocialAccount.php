@@ -84,6 +84,9 @@ class SocialAccount extends \Eloquent
             case SocialSite::TWITTER:
                 $url = 'https://twitter.com/' . $this->nickname . '/';
                 break;
+            case SocialSite::FACEBOOK:
+                $url = $this->url;
+                break;
         }
 
         return $url;
