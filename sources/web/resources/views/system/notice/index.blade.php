@@ -30,7 +30,7 @@
                     <div class="force-break mr-2 text-left">
                         <div><small>{{ $notice->open_at_str }}</small></div>
                         <div class="font-weight-bold">{{ $notice->title }}</div>
-                        <div>{{ str_limit($notice->message, 100) }}</div>
+                        <div>{!! str_limit(strip_tags($notice->message), 100)  !!}</div>
                     </div>
                     <div class="align-self-center">
                         <i class="fas fa-angle-right"></i>
