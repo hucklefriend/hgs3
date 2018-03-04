@@ -1,0 +1,15 @@
+{
+  "soft_name": ["紅い夜、星の囁きを聴け"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "Moon Parrot",
+      "name": "紅い夜、星の囁きを聴け",
+      "url": "http://www.moonparrot.com/html/game/red/index.html",
+      "shop": "amazon",
+      "asin": "B00011KNXC",
+      "release_int": 20031201,
+      "release_at": "2003年12月1日"
+    }
+  ]
+}

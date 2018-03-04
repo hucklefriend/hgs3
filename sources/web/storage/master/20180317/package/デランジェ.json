@@ -1,0 +1,25 @@
+{
+  "soft_name": ["D'ERLANGER ～誘惑の淫魔病棟～"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "DISTORTION",
+      "name": "D'ERLANGER ～誘惑の淫魔病棟～",
+      "url": "",
+      "shop": "getchu",
+      "shop_id": "98961",
+      "release_int": 20050121,
+      "release_at": "2005年1月21日"
+    },
+    {
+      "platform": "DVDPG",
+      "company": "DISTORTION",
+      "name": "D'ERLANGER ～誘惑の淫魔病棟～",
+      "url": "",
+      "shop": "getchu",
+      "shop_id": "154381",
+      "release_int": 20050519,
+      "release_at": "2005年5月19日"
+    }
+  ]
+}

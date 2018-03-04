@@ -1,0 +1,15 @@
+{
+  "soft_name": ["フェアリーテイル・レクイエム", "フェアリーテイル・アンコール"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "Liar-Soft",
+      "name": "フェアリーテイル・シンフォニー",
+      "url": "https://www.liar.co.jp/fairy_symphony/",
+      "shop": "amazon",
+      "asin": "B015X98IWO",
+      "release_int": 20161222,
+      "release_at": "2016年12月22日"
+    }
+  ]
+}

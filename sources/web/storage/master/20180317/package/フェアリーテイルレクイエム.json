@@ -1,0 +1,15 @@
+{
+  "soft_name": ["フェアリーテイル・レクイエム"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "Liar-Soft",
+      "name": "フェアリーテイル・レクイエム",
+      "url": "https://www.liar.co.jp/fairy/",
+      "shop": "amazon",
+      "asin": "B00UY7G02Q",
+      "release_int": 20150724,
+      "release_at": "2015年7月24日"
+    }
+  ]
+}

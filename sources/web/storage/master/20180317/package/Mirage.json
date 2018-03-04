@@ -1,0 +1,25 @@
+{
+  "soft_name": ["Mirage～淫宴の触手病棟～ Another Story Of D'ERLANGER"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "DISTORTION",
+      "name": "Mirage～淫宴の触手病棟～ Another Story Of D'ERLANGER",
+      "url": "",
+      "shop": "getchu",
+      "shop_id": "244705",
+      "release_int": 20060526,
+      "release_at": "2006年5月26日"
+    },
+    {
+      "platform": "DVD-PG",
+      "company": "DISTORTION",
+      "name": "Mirage～淫宴の触手病棟～ Another Story Of D'ERLANGER",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B000KJTM3C",
+      "release_int": 20061228,
+      "release_at": "2006年12月28日"
+    }
+  ]
+}

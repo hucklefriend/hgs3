@@ -1,0 +1,15 @@
+{
+  "soft_name": ["シンクロ"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "Sheep",
+      "name": "シンクロ",
+      "url": "http://www.teck.jp/sheep/syn.html",
+      "shop": "amazon",
+      "asin": "B00008I5A0",
+      "release_int": 20000324,
+      "release_at": "2000年3月24日"
+    }
+  ]
+}

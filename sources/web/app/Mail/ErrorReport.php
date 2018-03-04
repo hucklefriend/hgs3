@@ -9,6 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Input;
 
 class ErrorReport extends Mailable
 {
@@ -34,10 +35,15 @@ class ErrorReport extends Mailable
      */
     public function build()
     {
+
+
         return $this
             ->to('bug@horrorgame.net')
             ->from('webmaster@horrorgame.net', 'H.G.N. -Horror Game Network-')
             ->subject('エラー発生')
-            ->text('mail.errorReport', ['e' => $this->e]);
+            ->text('mail.errorReport', [
+                'e'    => $this->e,
+                'req' => app('request')
+            ]);
     }
 }

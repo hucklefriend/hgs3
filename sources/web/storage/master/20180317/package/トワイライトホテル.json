@@ -1,0 +1,25 @@
+{
+  "soft_name": ["トワイライトホテル"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "ZyX",
+      "name": "トワイライトホテル",
+      "url": "http://www.zyx-game.co.jp/newsoft/twilighthotel/index.html",
+      "shop": "amazon",
+      "asin": "B00IHD3U9K",
+      "release_int": 19961231,
+      "release_at": "1996年"
+    },
+    {
+      "platform": "PC",
+      "company": "ZyX",
+      "name": "トワイライトホテル ～夜鳴の詩～",
+      "url": "http://www.zyx-game.co.jp/newsoft/twilight_yonaki/index.html",
+      "shop": "amazon",
+      "asin": "B00008I7FS",
+      "release_int": 20000526,
+      "release_at": "2000年5月26日"
+    }
+  ]
+}

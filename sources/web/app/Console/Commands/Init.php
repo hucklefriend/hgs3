@@ -49,6 +49,7 @@ class Init extends Command
         $db->versionUp();
 
         Master::import(20180225);
+        Master::import(20180304);
 
         Collection::create();
     }
