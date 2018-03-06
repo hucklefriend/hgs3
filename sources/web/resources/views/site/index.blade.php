@@ -32,7 +32,7 @@
                         @else
                             @foreach ($newArrivals as $s)
                                 <div class="mb-5">
-                                    @include('site.common.normal', ['s' => $s, 'u' => $webmasters[$s->user_id], 'hidePresentation' => true])
+                                    @include('site.common.normal', ['s' => $s, 'u' => $webmasters[$s->user_id] ?? null, 'hidePresentation' => true, 'noUser' => !isset($webmasters[$s->user_id])])
                                 </div>
                             @endforeach
                             <div class="text-center">
