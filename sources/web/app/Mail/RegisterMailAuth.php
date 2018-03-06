@@ -35,7 +35,7 @@ class RegisterMailAuth extends Mailable
     public function build()
     {
         return $this
-            ->from('webmaster@horrorgame.net', 'H.G.N.-Horror Game Network-')
+            ->from(env('ADMIN_MAIL'), env('APP_NAME'))
             ->subject('メール認証登録の確認')
             ->text('mail.registerMailAuth', ['token' => $this->token]);
     }

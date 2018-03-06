@@ -125,6 +125,11 @@ class User extends Authenticatable
         $self->sign_up_at = date('Y-m-d H:i:s');
 
         $self->save();
+
+        Timeline\ToMe::addRegisterText($self);
+
+
+
         return $self;
     }
 

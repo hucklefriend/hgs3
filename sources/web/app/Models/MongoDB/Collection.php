@@ -92,7 +92,6 @@ class Collection
             'time' => -1
         ]);
     }
-
     /**
      * データベースを取得
      *

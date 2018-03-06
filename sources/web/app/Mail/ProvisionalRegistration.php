@@ -35,7 +35,7 @@ class ProvisionalRegistration extends Mailable
     public function build()
     {
         return $this
-            ->from('webmaster@horrorgame.net', 'H.G.N.-Horror Game Network-')
+            ->from(env('ADMIN_MAIL'), env('APP_NAME'))
             ->subject('仮登録のお知らせ')
             ->text('mail.provisionalRegistration', ['token' => $this->token]);
     }

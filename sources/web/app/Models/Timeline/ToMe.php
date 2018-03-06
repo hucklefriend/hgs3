@@ -205,6 +205,18 @@ class ToMe extends TimelineAbstract
     }
 
     /**
+     * ユーザー登録
+     *
+     * @param User $user
+     */
+    public static function addRegisterText(User $user)
+    {
+        $text = sprintf('%sに参加しました！', env('APP_NAME'));
+
+        self::insert($user->id, $text);
+    }
+
+    /**
      * データ削除
      *
      * @param $userId

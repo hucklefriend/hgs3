@@ -9,6 +9,7 @@ use Illuminate\Support\HtmlString;
 
 class SocialSite
 {
+    const MAIL = 0;     // サイトじゃないけど…
     const TWITTER = 1;
     const FACEBOOK = 2;
     const GOOGLE_PLUS = 3;
@@ -25,6 +26,9 @@ class SocialSite
         $tag = '';
 
         switch ($socialSiteId) {
+            case self::MAIL:
+                $tag = '<span class="color-mail"><i class="far fa-envelope"></i></span>';
+                break;
             case self::TWITTER:
                 $tag = '<span class="color-twitter"><i class="fab fa-twitter"></i></span>';
                 break;

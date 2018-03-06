@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@yield('title') H.G.N. -Horror Game Network- (β)</title>
+    <title>@yield('title') {{ env('APP_NAME') }} β</title>
 
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     @if (env('APP_DEBUG'))
@@ -95,6 +95,7 @@
         </div>
         <div style="height: 40px;line-height: 40px;">
             &copy; yu-ki
+            <a href="mailto:{{ env('ADMIN_MAIL') }}" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::MAIL) }}</a>
             <a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</a>
             <a href="https://github.com/hucklefriend/hgs3" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</a>
             / since 2003.9.28

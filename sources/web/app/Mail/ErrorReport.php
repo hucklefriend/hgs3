@@ -39,7 +39,7 @@ class ErrorReport extends Mailable
 
         return $this
             ->to('bug@horrorgame.net')
-            ->from('webmaster@horrorgame.net', 'H.G.N. -Horror Game Network-')
+            ->from(env('ADMIN_MAIL'), env('APP_NAME'))
             ->subject('エラー発生')
             ->text('mail.errorReport', [
                 'e'    => $this->e,

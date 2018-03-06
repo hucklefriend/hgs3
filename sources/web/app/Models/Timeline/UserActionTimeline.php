@@ -69,7 +69,7 @@ class UserActionTimeline
      */
     public function addSignUpText()
     {
-        $text = sprintf('H.G.N.に参加しました！');
+        $text = sprintf('%sに参加しました！', env('APP_NAME'));
 
         $this->insert(UserActionTimelineType::SIGN_UP, $text);
     }
@@ -106,14 +106,16 @@ class UserActionTimeline
      *
      * @param int $type
      * @param string $text
+     * @param int $userOnly
      * @param array $option
      */
-    private function insert($type, $text, $option = [])
+    private function insert($type, $text, $userOnly = 0, $option = [])
     {
         $data = [
             'type' => $type,
             'text' => $text,
-            'user_id' => $this->user->id,
+            'user_id'   => $this->user->id,
+            'user_only' => $userOnly,
             'time' => time()
         ];
 

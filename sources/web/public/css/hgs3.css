@@ -163,6 +163,10 @@ a:active .no-image-text-inner {
     background-color: #4183c4;
 }
 
+.color-mail, .color-mail:hover, .color-mail:visited {
+    color: black;
+}
+
 .color-twitter, .color-twitter:hover, .color-twitter:visited {
     color: #00aced;
 }

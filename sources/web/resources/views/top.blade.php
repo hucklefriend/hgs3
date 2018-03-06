@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <h5 class="card-title">ようこそ</h5>
                     <p class="card-text">
-                        H.G.N.-Horror Game Network-は、ホラーゲーム好きが集まるサイトになるべく開発中のサイトです。<br>
+                        {{ env('APP_NAME') }}は、ホラーゲーム好きが繋がるポータルサイトになるべく開発中のサイトです。<br>
                         <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
                         公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。
                     </p>
@@ -152,8 +152,8 @@
                 <div class="card-body">
                     <h5 class="card-title">バグと今後の実装予定</h5>
                     バグや実装予定の機能は<a href="https://github.com/hucklefriend/hgs3/issues/" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのIssue</a>で管理しています。<br>
-                    バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter</a>か<a href="mailto:webmaster@horrorgame.net"><i class="far fa-envelope"></i>メール</a>でご連絡をお願い致します。<br>
-                    GitHubのことをわかっている方は、Issueの作成やコメントをしていただいてもOKです。
+                    バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter</a>か<a href="mailto:{{ env('ADMIN_MAIL') }}">{{ sns_icon(\Hgs3\Constants\SocialSite::MAIL) }}メール</a>でご連絡をお願い致します。<br>
+                    {{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのことをわかっている方は、Issueの作成やコメントをしていただいてもOKです。
                 </div>
             </div>
         </div>

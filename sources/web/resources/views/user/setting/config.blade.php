@@ -41,7 +41,7 @@
             @include('common.error', ['formName' => 'name'])
             <small class="form-text text-muted">
                 サイトへアクセスした時に、足跡を残しません。（カウントは上がります。）<br>
-                足跡を残すと、あなたがいつH.G.N.からサイトにアクセスしたかをサイト管理者さんに知らせることができます。
+                足跡を残すと、あなたがいつ{{ env('APP_NAME') }}からサイトにアクセスしたかをサイト管理者さんに知らせることができます。
             </small>
         </div>
         <div class="form-group">

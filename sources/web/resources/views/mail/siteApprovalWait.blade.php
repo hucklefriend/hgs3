@@ -5,6 +5,6 @@
 {{ $site->url }}
 
 ----------
-H.G.N. -Horror Game Network-
+{{ env('APP_NAME') }}
 {{ env('APP_URL') }}
 ----------

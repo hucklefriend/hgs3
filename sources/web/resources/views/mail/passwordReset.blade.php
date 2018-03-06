@@ -12,6 +12,6 @@
 ※手作業での対応となりますので、対応まで少し時間かかります。
 
 ----------
-H.G.N. -Horror Game Network-
+{{ env('APP_NAME') }}
 {{ env('APP_URL') }}
 ----------

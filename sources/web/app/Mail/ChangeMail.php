@@ -35,7 +35,7 @@ class ChangeMail extends Mailable
     public function build()
     {
         return $this
-            ->from('webmaster@horrorgame.net', 'H.G.N. -Horror Game Network-')
+            ->from(env('ADMIN_MAIL'), env('APP_NAME'))
             ->subject('メールアドレス変更確認のお知らせ')
             ->text('mail.changeMail', ['token' => $this->token]);
     }
