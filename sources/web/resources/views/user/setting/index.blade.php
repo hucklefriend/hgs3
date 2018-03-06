@@ -19,12 +19,12 @@
                             <div class="force-break"><small>{{ str_limit($user->profile, 100) }}</small></div>
                             <div>
                                 <small>
-                                    @if ($user->adult == 1)
-                                        <i class="far fa-square"></i>
+                                    @if ($user->adult == 0)
+                                        18歳未満
                                     @else
-                                        <i class="far fa-check-square"></i>
+                                        18歳以上
                                     @endif
-                                    18歳以上
+
                                 </small>
                             </div>
                         </div>

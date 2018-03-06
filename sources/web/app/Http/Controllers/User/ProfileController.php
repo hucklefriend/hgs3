@@ -134,6 +134,24 @@ class ProfileController extends Controller
     }
 
     /**
+     * プロフィール
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($showId)
+    {
+        $user = User::findByShowId($showId);
+        if ($user == null) {
+            return view('user.profile.notExist');
+        }
+
+        return view('user.profile.show', [
+            'user'        => $user,
+            'snsAccounts' => SocialSite::getAccounts($user, true)
+        ]);
+    }
+
+    /**
      * タイムライン
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

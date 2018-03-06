@@ -50,7 +50,7 @@
     <div class="d-sm-none">
         <ul class="list-group">
             <li class="list-group-item">
-                <a href="{{ route('ユーザーのタイムライン', ['showId' => $user->show_id]) }}">プロフィール</a>
+                <a href="{{ route('ユーザーのプロフィール', ['showId' => $user->show_id]) }}">プロフィール</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{{ route('ユーザーのフォロー', ['showId' => $user->show_id]) }}">フォロー</a>
