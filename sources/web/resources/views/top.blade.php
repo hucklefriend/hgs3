@@ -38,6 +38,18 @@
                             {{ csrf_field() }}
                             <button class="btn btn-lg btn-outline-light p-1">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</button>
                         </form>
+                        <form method="POST" action="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
+                            {{ csrf_field() }}
+                            <button class="btn btn-lg btn-outline-light p-1">{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}</button>
+                        </form>
+                        <form method="POST" action="{{ route('GitHub', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
+                            {{ csrf_field() }}
+                            <button class="btn btn-lg btn-outline-light p-1">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</button>
+                        </form>
+                        <form method="POST" action="{{ route('Google', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
+                            {{ csrf_field() }}
+                            <button class="btn btn-lg btn-outline-light p-1">{{ sns_icon(\Hgs3\Constants\SocialSite::GOOGLE_PLUS) }}</button>
+                        </form>
                     </div>
                     <hr>
                     @if ($errors->has('login_error'))

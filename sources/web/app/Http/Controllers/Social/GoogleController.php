@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers\Social;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Log;
 use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
@@ -25,21 +26,26 @@ class GoogleController extends Controller
     public function redirect($mode)
     {
         $mode = intval($mode);
-        session(['github' => $mode]);
+        session(['google' => $mode]);
 
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     /**
-     * Twitterからのコールバック
+     * GitHubからのコールバック
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @throws \Exception
      */
     public function callback()
     {
         $user = Socialite::driver('github')->user();
 
-        $mode = session('github');
+        Log::debug(print_r($user, true));
+
+        return redirect()->route('ログイン');
+
+        $mode = session('google');
         switch ($mode) {
             case Mode::CREATE_ACCOUNT:
                 return $this->createAccount($user);
@@ -48,52 +54,83 @@ class GoogleController extends Controller
                 return $this->login($user);
                 break;
             case Mode::ADD_AUTH:
+                return $this->addAuth($user);
                 break;
             default:
                 break;
         }
 
-        return view('social.github', ['user' => $user, 'mode' => $mode]);
+        return redirect()->route('ログイン');
     }
 
     /**
-     * Twitterでアカウント作成
+     * ユーザー登録
      *
-     * @param \Laravel\Socialite\One\User $user
+     * @param \Laravel\Socialite\Two\User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
-    private function createAccount(\Laravel\Socialite\One\User $user)
+    private function createAccount(\Laravel\Socialite\Two\User $user)
     {
         $signUp = new SignUp();
 
         $sa = new Orm\SocialAccount;
-        if ($sa->isRegistered(SocialSite::GITHUB, $user->id)) {
-            return view('social.github.alreadyRegistered');
+        if ($sa->isRegistered(SocialSite::GOOGLE_PLUS, $user->id)) {
+            return view('social.google.alreadyRegistered');
         } else {
-            $signUp->registerBySocialite($user, SocialSite::GITHUB);
-            return view('social.github.createAccount');
+            $signUp->registerBySocialite2($user, SocialSite::GOOGLE_PLUS);
+            return view('social.google.createAccount', ['user' => $user]);
         }
     }
 
     /**
      * ログイン
      *
-     * @param \Laravel\Socialite\One\User $socialUser
+     * @param \Laravel\Socialite\Two\User $socialUser
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    private function login(\Laravel\Socialite\One\User $socialUser)
+    private function login(\Laravel\Socialite\Two\User $socialUser)
     {
         $sa = new Orm\SocialAccount;
-        $userId = $sa->getUserId(SocialSite::GITHUB, $socialUser->id);
+        $userId = $sa->getUserId(SocialSite::GOOGLE_PLUS, $socialUser->id);
 
         if ($userId != null) {
             $user = User::find($userId);
             if ($user != null) {
                 Auth::login($user, true);
-                return redirect('mypage');
+                return redirect()->route('マイページ');
             }
         }
 
-        return view('social.github.notRegistered');
+        return view('social.google.notRegistered');
+    }
+
+    /**
+     * 連携追加
+     *
+     * @param \Laravel\Socialite\Two\User $socialUser
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function addAuth(\Laravel\Socialite\Two\User $socialUser)
+    {
+        $sa = Orm\SocialAccount::findBySocialUserId(SocialSite::GOOGLE_PLUS, $socialUser->id);
+
+        if ($sa != null) {
+            // このアカウントは連携済み
+            return view('user.setting.snsAlwaysRegistered', ['sns' => 'Google+']);
+        } else {
+            $sa = new Orm\SocialAccount();
+
+            $sa->user_id = Auth::id();
+            $sa->social_site_id = SocialSite::GOOGLE_PLUS;
+            $sa->social_user_id = $socialUser->id;
+            $sa->token = $socialUser->token;
+            $sa->token_secret = '';
+            $sa->url = $socialUser->profileUrl ?? null;
+            $sa->name = $socialUser->getName();
+            $sa->save();
+        }
+
+        return redirect()->route('SNS認証設定');
     }
 }

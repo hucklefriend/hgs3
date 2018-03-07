@@ -32,12 +32,11 @@
     </p>
 
     <section class="mt-5">
-        <h2>SNSのアカウントで登録</h2>
+        <h2>外部サイトのアカウントで登録</h2>
         <p class="pl-3">
             <small>
-                他のSNSサービスのアカウントで登録できます。<br>
-                登録後にログインに使うSNSを追加することもできます。<br>
-                今のところ、Twitterとfacebookに対応しています。
+                外部サイトのアカウントで登録できます。<br>
+                登録後にログインに使う外部サイトを追加することもできます。
             </small>
         </p>
 
@@ -52,6 +51,18 @@
                 <form method="POST" action="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::CREATE_ACCOUNT]) }}">
                     {{ csrf_field() }}
                     <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}&nbsp;facebook</button>
+                </form>
+            </div>
+            <div>
+                <form method="POST" action="{{ route('GitHub', ['mode' => \Hgs3\Constants\Social\Mode::CREATE_ACCOUNT]) }}">
+                    {{ csrf_field() }}
+                    <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}&nbsp;GitHub</button>
+                </form>
+            </div>
+            <div>
+                <form method="POST" action="{{ route('Google', ['mode' => \Hgs3\Constants\Social\Mode::CREATE_ACCOUNT]) }}">
+                    {{ csrf_field() }}
+                    <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::GOOGLE_PLUS) }}&nbsp;Google+</button>
                 </form>
             </div>
         </div>

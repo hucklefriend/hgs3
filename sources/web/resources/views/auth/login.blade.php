@@ -10,9 +10,7 @@
     <h1>ログイン</h1>
     <section class="mt-5">
         <h2>外部サイトのアカウントでログイン</h2>
-        <p class="pl-3">
-            いまのところTwitterにのみ対応しています。
-        </p>
+
         <div class="pl-3">
             <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
                 {{ csrf_field() }}
@@ -21,6 +19,14 @@
             <form method="POST" action="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
                 {{ csrf_field() }}
                 <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}&nbsp;facebook</button>
+            </form>
+            <form method="POST" action="{{ route('GitHub', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
+                {{ csrf_field() }}
+                <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}&nbsp;GitHub</button>
+            </form>
+            <form method="POST" action="{{ route('Google', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
+                {{ csrf_field() }}
+                <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::GOOGLE_PLUS) }}&nbsp;Google+</button>
             </form>
         </div>
     </section>

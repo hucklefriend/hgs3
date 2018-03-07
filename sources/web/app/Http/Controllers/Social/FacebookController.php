@@ -96,7 +96,7 @@ class FacebookController extends Controller
             $user = User::find($userId);
             if ($user != null) {
                 Auth::login($user, true);
-                return redirect('mypage');
+                return redirect()->route('マイページ');
             }
         }
 
@@ -114,7 +114,7 @@ class FacebookController extends Controller
         $sa = Orm\SocialAccount::findBySocialUserId(SocialSite::FACEBOOK, $socialUser->id);
 
         if ($sa != null) {
-            // このTwitterアカウントは連携済み
+            // このアカウントは連携済み
             return view('user.setting.snsAlwaysRegistered', ['sns' => 'facebook']);
         } else {
             $sa = new Orm\SocialAccount();
