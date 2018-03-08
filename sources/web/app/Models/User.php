@@ -122,13 +122,11 @@ class User extends Authenticatable
         $self->password = isset($data['password']) ? bcrypt($data['password']) : null;
         $self->role = $data['role']  ?? UserRole::USER;
         $self->profile = $data['profile'] ?? '';
-        $self->sign_up_at = date('Y-m-d H:i:s');
+        $self->sign_up_at = $data['sign_up_at'] ?? date('Y-m-d H:i:s');
 
         $self->save();
 
         Timeline\ToMe::addRegisterText($self);
-
-
 
         return $self;
     }
@@ -159,28 +157,52 @@ class User extends Authenticatable
      */
     public function getHgs2UserId()
     {
-        if ($this->email !== null) {
-            // メールアドレスからIDを抽出
-            $id = DB::table('hgs2.hgs_u_user')
-                ->where('mail', $this->email)
-                ->value('id');
-
-            if (!empty($id)) {
-                return $id;
-            }
+        $hgsUser = self::getHgs2UserByEmail($this->email);
+        if ($hgsUser != null) {
+            return $hgsUser->id;
         }
 
-        $twitter_id = Orm\SocialAccount::where('user_id', $this->id)
+        $twitterId = Orm\SocialAccount::where('user_id', $this->id)
             ->where('social_site_id', SocialSite::TWITTER)
             ->value('social_user_id');
-        if ($twitter_id !== null) {
-            $id = DB::table('hgs2.hgs_u_user')
-                ->where('twitter_id', $twitter_id)
-                ->value('id');
+        $hgsUser = self::getHgs2UserByTwitterId($twitterId);
+        if ($hgsUser != null) {
+            return $hgsUser->id;
+        }
 
-            if (!empty($id)) {
-                return $id;
-            }
+        return null;
+    }
+
+    /**
+     * メールアドレスからHGS2のユーザーIDを取得
+     *
+     * @param $email
+     * @return mixed|null
+     */
+    public static function getHgs2UserByEmail($email)
+    {
+        if ($email !== null) {
+            // メールアドレスからIDを抽出
+            return DB::table('hgs2.hgs_u_user')
+                ->where('mail', $email)
+                ->first();
+        }
+
+        return null;
+    }
+
+    /**
+     * ツイッターIDからHGS2のユーザーIDを取得
+     *
+     * @param $twitterId
+     * @return mixed|null
+     */
+    public static function getHgs2UserByTwitterId($twitterId)
+    {
+        if ($twitterId !== null) {
+            return DB::table('hgs2.hgs_u_user')
+                ->where('twitter_id', $twitterId)
+                ->first();
         }
 
         return null;

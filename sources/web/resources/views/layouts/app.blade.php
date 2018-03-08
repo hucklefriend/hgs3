@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@yield('title') {{ env('APP_NAME') }} β</title>
+    <title>@yield('title') {{ env('APP_NAME') }} (β)</title>
 
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     @if (env('APP_DEBUG'))
     <link rel="stylesheet" href="{{ url('css/hgs3.css') }}?ver={{ time() }}">
     @else
-    <link rel="stylesheet" href="{{ url('css/hgs3.css') }}?ver={{ time() }}">
+    <link rel="stylesheet" href="{{ url('css/hgs3.css') }}">
     @endif
 
     <script src="{{ url('/js/jquery-3.3.1.min.js') }}"></script>
@@ -30,8 +30,8 @@
 
     @yield('head_append')
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     @if (env('APP_ENV') == 'production')
+    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114831632-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

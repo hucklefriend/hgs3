@@ -65,12 +65,19 @@ class SignUp
 
         DB::beginTransaction();
         try {
+            $signUpAt = null;
+            $hgs2User = User::getHgs2UserByEmail($orm->email);
+            if ($hgs2User !== null) {
+                $signUpAt = date('Y-m-d H:i:s', $hgs2User->registered_date);
+            }
+
             // ユーザーテーブルに登録
             User::register([
                 'name'       => $name,
                 'email'      => $orm->email,
                 'password'   => $password,
-                'role'       => UserRole::USER
+                'role'       => UserRole::USER,
+                'sign_up_at' => $signUpAt
             ]);
 
             // 無視メールリストに登録
@@ -97,9 +104,18 @@ class SignUp
         DB::beginTransaction();
 
         try {
-            $user = User::register([
-                'name' => $socialUser->getName(),
-            ]);
+            $userData = [
+                'name' => $socialUser->getName()
+            ];
+
+            if ($socialSiteId == \Hgs3\Constants\SocialSite::TWITTER) {
+                $hgs2User = User::getHgs2UserByTwitterId($socialUser->id);
+                if ($hgs2User !== null) {
+                    $userData['sign_up_at'] = date('Y-m-d H:i:s', $hgs2User->registered_date);
+                }
+            }
+
+            $user = User::register($userData);
 
             $sa = new Orm\SocialAccount;
 

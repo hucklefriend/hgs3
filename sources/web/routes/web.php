@@ -41,9 +41,6 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/admin/site/approval/judge/{site}', 'Site\ApprovalController@judge')->name('サイト判定');
     Route::patch('/admin/site/approval/judge/{site}/approve', 'Site\ApprovalController@approve')->name('サイト承認');
     Route::patch('/admin/site/approval/judge/{site}/reject', 'Site\ApprovalController@reject')->name('サイト拒否');
-
-    // デバッグ用
-    Route::get('/test', 'TopController@test');
 });
 
 // エディターのみ

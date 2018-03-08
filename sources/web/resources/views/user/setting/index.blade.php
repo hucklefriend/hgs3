@@ -24,7 +24,6 @@
                                     @else
                                         18歳以上
                                     @endif
-
                                 </small>
                             </div>
                         </div>
