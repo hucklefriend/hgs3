@@ -35,6 +35,8 @@ class TopController extends Controller
             ->take(5)
             ->get();
 
+
+
         return view('top', [
             'newInfo'  => $newInfo,
             'gameHash' => $gameHash,

@@ -35,15 +35,13 @@ class ErrorReport extends Mailable
      */
     public function build()
     {
-
-
         return $this
             ->to('bug@horrorgame.net')
             ->from(env('ADMIN_MAIL'), env('APP_NAME'))
             ->subject('エラー発生')
             ->text('mail.errorReport', [
                 'e'    => $this->e,
-                'req' => app('request')
+                'req' => app('request'),
             ]);
     }
 }
