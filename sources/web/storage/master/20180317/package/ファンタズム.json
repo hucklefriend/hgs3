@@ -1,0 +1,23 @@
+{
+  "soft_name": ["ファンタズム"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "シエラオンライン",
+      "name": "ファンタズム",
+      "url": "",
+      "release_int": 19890929,
+      "release_at": "1989年9月29日"
+    },
+    {
+      "platform": "SS",
+      "company": "アウトリガー工房",
+      "name": "ファンタズム",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B000069TW5",
+      "release_int": 19970808,
+      "release_at": "1997年8月8日"
+    }
+  ]
+}

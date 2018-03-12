@@ -1,0 +1,25 @@
+{
+  "soft_name": ["彼岸花の咲く夜に"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "07th Expansion",
+      "name": "彼岸花の咲く夜に",
+      "url": "http://07th-expansion.net/hgn/Main.htm",
+      "shop": "amazon",
+      "asin": "B00ENWOL2E",
+      "release_int": 20110831,
+      "release_at": "2011年8月"
+    },
+    {
+      "platform": "3DS",
+      "company": "フリュー",
+      "name": "彼岸花の咲く夜に",
+      "url": "http://www.cs.furyu.jp/kataruhito/hgn/",
+      "shop": "amazon",
+      "shop_url": "https://www.nintendo.co.jp/titles/50010000040903",
+      "release_int": 20160727,
+      "release_at": "2016年7月27日"
+    }
+  ]
+}

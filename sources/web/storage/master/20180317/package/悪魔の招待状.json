@@ -1,0 +1,15 @@
+{
+  "soft_name": ["悪魔の招待状"],
+  "packages":[
+    {
+      "platform": "FC",
+      "company": "Mindscape",
+      "name": "悪魔の招待状",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B000068H0A",
+      "release_int": 19890929,
+      "release_at": "1989年9月29日"
+    }
+  ]
+}

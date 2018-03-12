@@ -1,0 +1,25 @@
+{
+  "soft_name": ["シンギュラリティ"],
+  "packages":[
+    {
+      "platform": "PS3",
+      "company": "スクウェア・エニックス",
+      "name": "シンギュラリティ",
+      "url": "http://www.jp.square-enix.com/archive/singularity_ps3/",
+      "shop": "amazon",
+      "asin": "B003UTTNB0",
+      "release_int": 20100922,
+      "release_at": "2010年9月22日"
+    },
+    {
+      "platform": "XB360",
+      "company": "スクウェア・エニックス",
+      "name": "シンギュラリティ",
+      "url": "http://www.jp.square-enix.com/archive/singularity_ps3/",
+      "shop": "amazon",
+      "asin": "B003UTTNCE",
+      "release_int": 20100922,
+      "release_at": "2010年9月22日"
+    }
+  ]
+}

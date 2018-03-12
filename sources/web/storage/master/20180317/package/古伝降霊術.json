@@ -1,0 +1,25 @@
+{
+  "soft_name": ["古伝降霊術 百物語〜ほんとにあった怖い話〜"],
+  "packages":[
+    {
+      "platform": "SS",
+      "company": "ハドソン",
+      "name": "古伝降霊術 百物語〜ほんとにあった怖い話〜",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B000069U4Y",
+      "release_int": 19970808,
+      "release_at": "1997年8月8日"
+    },
+    {
+      "platform": "SS",
+      "company": "ハドソン",
+      "name": "古伝降霊術 百物語〜ほんとにあった怖い話〜 サタコレ",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B000092PJY",
+      "release_int": 19980820,
+      "release_at": "1998年8月20日"
+    }
+  ]
+}
