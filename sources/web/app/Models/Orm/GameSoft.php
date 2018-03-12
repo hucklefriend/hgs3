@@ -133,4 +133,21 @@ SQL;
     {
         return $this->hasOne('Hgs3\Models\Orm\GamePackage', 'id', 'original_package_id');
     }
+
+    /**
+     * パッケージを取得
+     *
+     * @return array|\Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getPackages()
+    {
+        $packageLinks = GamePackageLink::where('soft_id', $this->id)
+            ->get();
+        if ($packageLinks->isEmpty()) {
+            return [];
+        }
+
+        return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
+            ->get();
+    }
 }
