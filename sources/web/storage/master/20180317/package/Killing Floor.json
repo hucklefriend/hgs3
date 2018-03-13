@@ -1,0 +1,26 @@
+{
+  "soft_name": ["Killing Floor"],
+  "packages":[
+    {
+      "platform": "PC",
+      "company": "Tripwire",
+      "name": "Killing Floor",
+      "url": "http://www.killingfloorthegame.com",
+      "shop": "Steam",
+      "shop_url": "http://store.steampowered.com/app/1250/Killing_Floor/",
+      "release_int": 20090514,
+      "release_at": "2009年5月14日"
+    },
+
+    {
+      "platform": "PC",
+      "company": "Tripwire",
+      "name": "Killing Floor",
+      "url": "http://www.killingfloorthegame.com",
+      "shop": "amazon",
+      "asin": "B002F9N4PC",
+      "release_int": 20090514,
+      "release_at": "2009年5月14日"
+    }
+  ]
+}

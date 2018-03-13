@@ -1,0 +1,15 @@
+{
+  "soft_name": ["公開されなかった手記"],
+  "packages":[
+    {
+      "platform": "PS",
+      "company": "サンソフト",
+      "name": "公開されなかった手記",
+      "url": "http://www.jp.playstation.com/software/title/slps00684.html",
+      "shop": "amazon",
+      "asin": "B000069RRA",
+      "release_int": 19970117,
+      "release_at": "1997年1月17日"
+    }
+  ]
+}

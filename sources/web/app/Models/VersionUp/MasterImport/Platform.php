@@ -81,4 +81,15 @@ class Platform extends MasterImportAbstract
 
         unset($platforms);
     }
+
+    /**
+     * 手動設定
+     */
+    private static function manual20180317()
+    {
+        // testを削除
+        DB::table('game_platforms')
+            ->where('id', 27)
+            ->delete();
+    }
 }
