@@ -1,0 +1,26 @@
+{
+  "soft_name": ["稲川淳二 真夜中のタクシー"],
+  "packages":[
+    {
+      "platform": "PS",
+      "company": "ヴィジット",
+      "name": "稲川淳二 真夜中のタクシー",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B000069SIO",
+      "release_int": 20000713,
+      "release_at": "2000年7月13日"
+    },
+
+    {
+      "platform": "PS",
+      "company": "ヴィジット",
+      "name": "稲川淳二 真夜中のタクシー 廉価版",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B00005OV0T",
+      "release_int": 20010719,
+      "release_at": "2001年7月19日"
+    }
+  ]
+}
