@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers;
 
 use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class TopController extends Controller
