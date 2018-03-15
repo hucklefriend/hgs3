@@ -2,14 +2,14 @@
   "soft_name": ["一夜怪談"],
   "packages":[
     {
-      "platform": "携帯",
+      "platform": "携帯電話",
       "company": "サンソフト",
       "name": "一夜怪談",
       "url": "http://www.sun-denshi.co.jp/gsec/nmp/game/kaidan/",
       "shop": "",
       "shop_url": "",
       "release_int": 20060921,
-      "release_at": "2006年9月21非"
+      "release_at": "2006年9月21日"
     },
     {
       "platform": "iOS",
@@ -19,7 +19,7 @@
       "shop": "App Store",
       "shop_url": "https://itunes.apple.com/jp/app/onenighthorror/id411598955?mt=8&ign-mpt=uo%3D4",
       "release_int": 20060921,
-      "release_at": "2006年9月21非"
+      "release_at": "2006年9月21日"
     },
     {
       "platform": "Android",
@@ -29,7 +29,7 @@
       "shop": "Google Play",
       "shop_url": "https://play.google.com/store/apps/details?id=sundenshi.kaidan",
       "release_int": 20060921,
-      "release_at": "2006年9月21非"
-    },
+      "release_at": "2006年9月21日"
+    }
   ]
 }

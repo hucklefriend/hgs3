@@ -6,6 +6,7 @@
 namespace Hgs3\Models\VersionUp\MasterImport;
 
 use Hgs3\Models\Orm;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class Platform extends MasterImportAbstract

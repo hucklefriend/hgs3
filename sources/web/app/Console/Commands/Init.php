@@ -50,6 +50,7 @@ class Init extends Command
 
         Master::import(20180225);
         Master::import(20180304);
+        //Master::import(20180317);
 
         Collection::create();
     }

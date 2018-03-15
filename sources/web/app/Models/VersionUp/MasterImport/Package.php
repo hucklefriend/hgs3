@@ -80,6 +80,7 @@ class Package extends MasterImportAbstract
         }
 
         foreach ($data['packages'] as $pkg) {
+            echo $pkg['name'] . PHP_EOL;
             $package = new Orm\GamePackage;
             $package->name = $pkg['name'];
             $package->url = $pkg['url'];
@@ -116,9 +117,9 @@ class Package extends MasterImportAbstract
                         $shopId = Shop::getIdByName($shop);
                         if ($shopId) {
                             if ($shopId == Shop::AMAZON) {
-                                if (env('APP_ENV') == 'production') {
+                                //if (env('APP_ENV') == 'production') {
                                     \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
-                                }
+                                //}
                             } else if ($shopUrl) {
                                 DB::table('game_package_shops')
                                     ->insert([
@@ -133,9 +134,9 @@ class Package extends MasterImportAbstract
                     $shopId = Shop::getIdByName($pkg['shop']);
                     if ($shopId) {
                         if ($shopId == Shop::AMAZON) {
-                            if (env('APP_ENV') == 'production') {
+                            //if (env('APP_ENV') == 'production') {
                                 \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $pkg['asin']);
-                            }
+                            //}
                         } else if (!empty($pkg['shop_url'])) {
                             DB::table('game_package_shops')
                                 ->insert([

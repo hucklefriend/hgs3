@@ -37,7 +37,7 @@ class Soft extends MasterImportAbstract
                 $soft->name = $data['name'];
                 $soft->phonetic = $data['phonetic'];
                 $soft->phonetic2 = $data['phonetic2'] ?? $data['phonetic'];
-                $soft->genre = $data['genre'];
+                $soft->genre = '';//$data['genre'];
 
                 if (isset($data['series'])) {
                     if (isset($series[$data['series']])) {
