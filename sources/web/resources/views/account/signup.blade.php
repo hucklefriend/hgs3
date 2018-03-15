@@ -47,13 +47,13 @@
                     <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}&nbsp;Twitter</button>
                 </form>
             </div>
-            <div>
+            <div class="mr-3">
                 <form method="POST" action="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::CREATE_ACCOUNT]) }}">
                     {{ csrf_field() }}
                     <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}&nbsp;facebook</button>
                 </form>
             </div>
-            <div>
+            <div class="mr-3">
                 <form method="POST" action="{{ route('GitHub', ['mode' => \Hgs3\Constants\Social\Mode::CREATE_ACCOUNT]) }}">
                     {{ csrf_field() }}
                     <button class="btn btn-outline-info">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}&nbsp;GitHub</button>
