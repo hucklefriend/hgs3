@@ -32,14 +32,14 @@ class GoogleController extends Controller
     }
 
     /**
-     * GitHubからのコールバック
+     * Google+からのコールバック
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      * @throws \Exception
      */
     public function callback()
     {
-        $user = Socialite::driver('github')->user();
+        $user = Socialite::driver('google')->user();
 
         Log::debug(print_r($user, true));
 

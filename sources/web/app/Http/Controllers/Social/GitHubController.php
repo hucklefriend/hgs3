@@ -41,10 +41,6 @@ class GitHubController extends Controller
     {
         $user = Socialite::driver('github')->user();
 
-        Log::debug(print_r($user, true));
-
-        return redirect()->route('ログイン');
-
         $mode = session('github');
         switch ($mode) {
             case Mode::CREATE_ACCOUNT:
@@ -126,7 +122,7 @@ class GitHubController extends Controller
             $sa->social_user_id = $socialUser->id;
             $sa->token = $socialUser->token;
             $sa->token_secret = '';
-            $sa->url = $socialUser->profileUrl ?? null;
+            $sa->url = $socialUser->user['html_url'] ?? null;
             $sa->name = $socialUser->getName();
             $sa->save();
         }

@@ -85,6 +85,8 @@ class SocialAccount extends \Eloquent
                 $url = 'https://twitter.com/' . $this->nickname . '/';
                 break;
             case SocialSite::FACEBOOK:
+            case SocialSite::GITHUB:
+            case SocialSite::GOOGLE_PLUS:
                 $url = $this->url;
                 break;
         }

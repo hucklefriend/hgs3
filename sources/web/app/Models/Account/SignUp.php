@@ -164,8 +164,16 @@ class SignUp
             $sa->social_user_id = $socialUser->id;
             $sa->token = $socialUser->token;
             $sa->token_secret = '';
-            $sa->name = $socialUser->getName();
-            $sa->url = $socialUser->profileUrl ?? null;
+            $sa->name = $socialUser->name;
+            switch ($socialSiteId) {
+                case \Hgs3\Constants\SocialSite::FACEBOOK:
+                    $sa->url = $socialUser->profileUrl ?? null;
+                    break;
+                case \Hgs3\Constants\SocialSite::GITHUB:
+                    $sa->url = $socialUser->user['html_url'] ?? null;
+                    break;
+            }
+
             $sa->save();
 
             DB::commit();

@@ -22,7 +22,7 @@ class Profile
         return [
             'followNum'       => Follow::getFollowNum($userId),
             'followerNum'     => Follow::getFollowerNum($userId),
-            'reviewNum'       => Orm\Review::getNumByUser($userId),
+            'reviewNum'       => 0,//Orm\Review::getNumByUser($userId),
             'siteNum'         => Orm\Site::getNumByUser($userId),
             'favoriteSoftNum' => Orm\UserFavoriteSoft::getNumByUser($userId),
             'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId)
