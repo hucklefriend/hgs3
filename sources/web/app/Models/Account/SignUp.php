@@ -172,6 +172,9 @@ class SignUp
                 case \Hgs3\Constants\SocialSite::GITHUB:
                     $sa->url = $socialUser->user['html_url'] ?? null;
                     break;
+                case \Hgs3\Constants\SocialSite::GOOGLE_PLUS:
+                    $sa->url = $socialUser->user['url'] ?? null;
+                    break;
             }
 
             $sa->save();

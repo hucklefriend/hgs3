@@ -41,10 +41,6 @@ class GoogleController extends Controller
     {
         $user = Socialite::driver('google')->user();
 
-        Log::debug(print_r($user, true));
-
-        return redirect()->route('ログイン');
-
         $mode = session('google');
         switch ($mode) {
             case Mode::CREATE_ACCOUNT:
@@ -126,7 +122,7 @@ class GoogleController extends Controller
             $sa->social_user_id = $socialUser->id;
             $sa->token = $socialUser->token;
             $sa->token_secret = '';
-            $sa->url = $socialUser->profileUrl ?? null;
+            $sa->url = $socialUser->user['url'] ?? null;
             $sa->name = $socialUser->getName();
             $sa->save();
         }

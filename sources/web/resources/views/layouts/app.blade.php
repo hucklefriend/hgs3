@@ -48,7 +48,11 @@
         <span id="global_back_link">
             @yield('global_back_link')
         </span>
+        @if (env('APP_ENV') == 'staging')
+        <a class="navbar-brand" href="{{ route('トップ') }}">STG</a>
+        @else
         <a class="navbar-brand" href="{{ route('トップ') }}">β版</a>
+        @endif
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
