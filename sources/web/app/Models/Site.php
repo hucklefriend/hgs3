@@ -82,11 +82,6 @@ class Site
         } catch (\Exception $e) {
             DB::rollBack();
             Log::exceptionError($e);
-
-            if (env('APP_ENV') == 'local') {
-                throw $e;
-            }
-
             return false;
         }
 

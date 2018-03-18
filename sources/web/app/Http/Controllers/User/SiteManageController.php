@@ -61,23 +61,14 @@ class SiteManageController extends Controller
             return view('user.siteManage.max');
         }
 
-        $bannerSelect = [
-            0  => 'なし',
-            1  => 'URLを指定(直リン)',
-            2  => 'H.G.N.にアップロード',
-        ];
-
         return view('user.siteManage.add', [
             'isTakeOver' => false,
             'softs'      => Orm\GameSoft::getPhoneticTypeHash(),
             'site'       => new Orm\Site([
-                'main_contents_id'          => MainContents::WALKTHROUGH,
-                'rate'                      => Rate::ALL,
-                'gender'                    => Gender::NONE,
-                'list_banner_upload_flag'   => 0,
-                'detail_banner_upload_flag' => 0
+                'main_contents_id' => MainContents::WALKTHROUGH,
+                'rate'               => Rate::ALL,
+                'gender'             => Gender::NONE,
             ]),
-            'bannerSelect'           => $bannerSelect,
             'listBannerUploadFlag'   => old('list_banner_upload_flag', 0),
             'detailBannerUploadFlag' => old('detail_banner_upload_flag', 0)
         ]);
@@ -170,10 +161,10 @@ class SiteManageController extends Controller
         }
 
         $this->setRequestData($site, $request);
-        $site->list_banner_upload_flag = $request->get('list_banner_upload_flag');
-        $site->list_banner_url = $request->get('list_banner_url');
-        $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
-        $site->detail_banner_url = $request->get('detail_banner_url');
+        $site->list_banner_upload_flag = $request->hasFile('list_banner_upload') ? 1 : 0;
+        //$site->list_banner_url = $request->get('list_banner_url');
+        $site->detail_banner_upload_flag = $request->hasFile('detail_banner_upload') ? 1 : 0;
+        //$site->detail_banner_url = $request->get('detail_banner_url');
         $site->open_type = 0;
         $site->good_num = 0;
         $site->max_good_num = 0;
@@ -210,20 +201,9 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
-        $site->list_banner_upload_flag = -1;
-        $site->detail_banner_upload_flag = -1;
-
-        $bannerSelect = [
-            -1 => '変更しない',
-            0  => '削除',
-            1  => 'URLを指定(直リン)',
-            2  => 'H.G.N.にアップロード',
-        ];
-
         return view('user.siteManage.edit', [
             'softs'        => Orm\GameSoft::getPhoneticTypeHash(),
             'site'         => $site,
-            'bannerSelect' => $bannerSelect,
             'listBannerUploadFlag'   => old('list_banner_upload_flag', -1),
             'detailBannerUploadFlag' => old('detail_banner_upload_flag', -1)
         ]);
@@ -245,14 +225,8 @@ class SiteManageController extends Controller
         }
 
         $this->setRequestData($site, $request);
-        if ($request->get('list_banner_upload_flag') != -1) {
-            $site->list_banner_upload_flag = $request->get('list_banner_upload_flag');
-            $site->list_banner_url = $request->get('list_banner_url');
-        }
-        if ($request->get('detail_banner_upload_flag') != -1) {
-            $site->detail_banner_upload_flag = $request->get('detail_banner_upload_flag');
-            $site->detail_banner_url = $request->get('detail_banner_url');
-        }
+        $site->list_banner_upload_flag = $request->hasFile('list_banner_upload') ? 1 : 0;
+        $site->detail_banner_upload_flag = $request->hasFile('detail_banner_upload') ? 1 : 0;
 
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
