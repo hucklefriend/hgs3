@@ -176,13 +176,13 @@
                     <h5>SPECIAL THANKS</h5>
                     <div class="d-flex flex-wrap">
                         <div class="m-3">
-                            <a href="http://www.gameha.com/s/r.cgi?mode=r_link&id=18424" target="_blank"><img src="http://www.gameha.com/gameha_sd.gif" border="0" alt="【創作・同人検索エンジン】GAMEHA.COM - ガメハコム - "></a>
+                            <a href="http://www.gameha.com/s/r.cgi?mode=r_link&id=18424" target="_blank"><img src="{{ url('img/special_thanks/gameha_sd.gif') }}" border="0" alt="【創作・同人検索エンジン】GAMEHA.COM - ガメハコム - "></a>
                         </div>
                         <div class="m-3">
-                            <a href="http://gameofserch.com/" target="_blank"><img src="http://gameofserch.com/b/2/14.gif"></a>
+                            <a href="http://gameofserch.com/" target="_blank"><img src="{{ url('img/special_thanks/gameofserch.gif') }}"></a>
                         </div>
                         <div class="m-3">
-                            <a href="http://hemisphere.gonna.jp/sirensearch/" target="_blank"><img src="http://hemisphere.gonna.jp/sirensearch/simg/ssbanner01.png" border="0" title="SIREN SEARCH様"width="200" height="40"></a>
+                            <a href="http://hemisphere.gonna.jp/sirensearch/" target="_blank"><img src="{{ url('img/special_thanks/sirensearch.png') }}"></a>
                         </div>
                     </div>
                 </div>
