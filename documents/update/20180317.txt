@@ -1,4 +1,4 @@
-2018.3.7 更新手順
+2018.3.17 更新手順
 
 ○GitHubのタグ付けする
 
@@ -17,6 +17,10 @@ sudo mongodump -d hgs3 -o ./
 
 
 ○let's encryptの延長スクリプトを実行する
+
+sudo systemctl stop apache2
+sudo /opt/letsencrypt/certbot-auto renew
+sudo systemctl start apache2
 
 ○Ubuntuアップデート
 

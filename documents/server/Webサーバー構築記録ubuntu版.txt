@@ -214,7 +214,7 @@ http://sig9.hatenablog.com/entry/2016/06/27/225403
 
 lets encrypt の自動更新
 https://qiita.com/takahiko/items/a08895550727b95b6c36
-
+sudo /opt/letsencrypt/certbot-auto renew --post-hook "sudo service httpd restart"
 
 http://blog.net-hut.com/vps/544/
 
