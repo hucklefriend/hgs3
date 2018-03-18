@@ -17,7 +17,8 @@
                     <p class="card-text">
                         {{ env('APP_NAME') }}は、ホラーゲーム好きが繋がるポータルサイトになるべく開発中のサイトです。<br>
                         <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
-                        公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。
+                        公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。<br>
+                        <a href="{{ route('当サイトについて') }}">当サイトについて詳しくはこちらをご覧ください。</a><br>
                     </p>
                     @if (!Auth::check())
                     <div class="text-center">
