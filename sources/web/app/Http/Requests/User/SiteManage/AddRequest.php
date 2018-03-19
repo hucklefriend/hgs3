@@ -1,13 +1,10 @@
 <?php
-/**
- * サイトリクエスト
- */
 
-namespace Hgs3\Http\Requests\Site;
+namespace Hgs3\Http\Requests\User\SiteManage;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SiteRequest extends FormRequest
+class AddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,14 +24,14 @@ class SiteRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                   => 'required|max:100',
-            'url'                    => 'required|max:300|url',
-            'handle_soft'           => 'required',
-            'presentation'          => 'required|max:1000',
+            'name'                 => 'required|max:100',
+            'url'                  => 'required|max:300|url',
+            'handle_soft'          => 'required',
+            'presentation'         => 'required|max:1000',
             'list_banner_upload'   => 'file|image|max:1024',
             'detail_banner_upload' => 'file|image|max:3072',
-            'draft'                   => 'nullable',
-            'hgs2_site_id'           => ''
+            'draft'                => 'nullable',
+            'hgs2_site_id'         => ''
         ];
     }
 }

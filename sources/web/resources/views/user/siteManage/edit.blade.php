@@ -22,14 +22,30 @@
         <div class="form-group">
             <label for="list_banner_upload_flag">一覧用バナー</label>
 
-            @if ($site->list_banner_url)
+            @if (!empty($site->list_banner_url))
                 <div>
                     <div class="list-site-banner-outline">
                         <img src="{{ $site->list_banner_url }}" class="img-responsive" id="list_banner_url_thumbnail">
                     </div>
                 </div>
             @endif
-            <div class="row">
+            <div class="my-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="list_banner_edit" id="list_banner_edit1" value="1" {{ checked(old('list_banner_edit', 1), 1) }}>
+                    <label class="form-check-label" for="list_banner_edit1">変更しない</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="list_banner_edit" id="list_banner_edit2" value="2" {{ checked(old('list_banner_edit', 1), 2) }}>
+                    <label class="form-check-label" for="list_banner_edit2">変更する</label>
+                </div>
+                @if (!empty($site->list_banner_url))
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="list_banner_edit" id="list_banner_edit3" value="3" {{ checked(old('list_banner_edit', 1), 3) }}>
+                    <label class="form-check-label" for="list_banner_edit3">削除する</label>
+                </div>
+                @endif
+            </div>
+            <div class="row" id="list-banner-uploader">
                 <div class="col-md-6">
                     <div class="form-group" id="list_banner_upload_form">
                         <input type="file" name="list_banner_upload" id="list_banner_upload" class="form-control-file{{ invalid($errors, 'list_banner_upload') }}" accept="image/*">
@@ -48,7 +64,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group show_list_banner_upload" id="list_banner_upload_form" style="{!! display_none($listBannerUploadFlag, 2) !!} }">
-                        @if ($listBannerUploadFlag == 2)
+                        @if ($listBannerUploadFlag)
                             <p class="text-danger" id="list_banner_upload_text">
                                 <small>
                                     もう一度画像ファイルを選択してください。
@@ -70,7 +86,32 @@
         </div>
         <div class="form-group">
             <label for="detail_banner_upload_flag">詳細用バナー</label>
-            <div class="row">
+
+            @if (!empty($site->detail_banner_url))
+                <div>
+                    <div class="list-site-banner-outline">
+                        <img src="{{ $site->detail_banner_url }}" class="img-responsive">
+                    </div>
+                </div>
+            @endif
+            <div class="my-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="detail_banner_edit" id="detail_banner_edit1" value="1" {{ checked(old('detail_banner_edit', 1), 1) }}>
+                    <label class="form-check-label" for="detail_banner_edit1">変更しない</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="detail_banner_edit" id="detail_banner_edit2" value="2" {{ checked(old('detail_banner_edit', 1), 2) }}>
+                    <label class="form-check-label" for="detail_banner_edit2">変更する</label>
+                </div>
+                @if (!empty($site->detail_banner_url))
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="detail_banner_edit" id="detail_banner_edit3" value="3" {{ checked(old('detail_banner_edit', 1), 3) }}>
+                        <label class="form-check-label" for="detail_banner_edit3">削除する</label>
+                    </div>
+                @endif
+            </div>
+
+            <div class="row" id="detail-banner-uploader">
                 <div class="col-md-6">
                     <div class="form-group show_detail_banner_upload" id="detail_banner_upload_form">
                         <input type="file" name="detail_banner_upload" id="detail_banner_upload" class="form-control-file{{ invalid($errors, 'detail_banner_upload') }}" accept="image/*">
@@ -87,8 +128,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group show_detail_banner_upload" id="detail_banner_upload_form" style="{!! display_none($detailBannerUploadFlag, 2) !!} }">
-                        @if ($detailBannerUploadFlag == 2)
+                    <div class="form-group show_detail_banner_upload" id="detail_banner_upload_form">
+                        @if ($detailBannerUploadFlag)
                             <p class="text-danger" id="detail_banner_upload_text">
                                 <small>
                                     もう一度画像ファイルを選択してください。
@@ -102,14 +143,23 @@
                             </p>
                         @endif
                         <div class="detail-site-banner-outline rounded">
-                            <img src="" class="img-responsive" id="detail_banner_upload_thumbnail">
+                            @if ($site->detail_banner_upload_flag == 1)
+                                <img src="{{ $site->detail_banner_url }}" class="img-responsive" id="detail_banner_upload_thumbnail">
+                            @else
+                                <img src="" class="img-responsive" id="detail_banner_upload_thumbnail">
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <script>
+            let listBannerUploader = null;
+            let detailBannerUploader = null;
             $(function (){
+                listBannerUploader = $('#list-banner-uploader');
+                detailBannerUploader = $('#detail-banner-uploader');
+
                 // アップロードするファイルを選択
                 $('#list_banner_upload').change(function() {
                     let file = $(this).prop('files')[0];
@@ -123,7 +173,28 @@
                         $(this).val('');
                     }
                 });
+
+                $('input[name="list_banner_edit"]:radio').change(function (){
+                    showBannerUploader(parseInt($(this).val()), listBannerUploader);
+                });
+                showBannerUploader(parseInt($('input[name="detail_banner_edit"]:radio').val()), listBannerUploader);
+
+                $('input[name="detail_banner_edit"]:radio').change(function (){
+                    showBannerUploader(parseInt($(this).val()), detailBannerUploader);
+                });
+                showBannerUploader(parseInt($('input[name="detail_banner_edit"]:radio').val()), detailBannerUploader);
             });
+
+            function showBannerUploader(val, uploader)
+            {
+                if (val == 1) {
+                    uploader.hide();
+                } else if (val == 2) {
+                    uploader.show();
+                } else if (val == 3) {
+                    uploader.hide();
+                }
+            }
 
             function changeUploadImage(target, file)
             {

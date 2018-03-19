@@ -61,7 +61,9 @@ class Site
             self::saveHandleSofts($site, $handleSoftIds);
 
             // バナー保存
-            self::saveBanner($site, $listBanner, $detailBanner);
+            if (self::saveBanner($site, $listBanner, $detailBanner, false, false)) {
+                $site->save();      // URLが変わっているのでさらにUPDATE
+            }
 
             // 引き継ぎの場合
             if ($isTakeOver) {
@@ -97,8 +99,8 @@ class Site
                     Timeline\ToMe::addSiteApproveText($admin, $site);
 
                     // 管理人にメール送信
-                    /*Mail::to(env('ADMIN_MAIL'))
-                        ->send(new \Hgs3\Mail\SiteApprovalWait($site));*/
+                    Mail::to(env('ADMIN_MAIL'))
+                        ->send(new \Hgs3\Mail\SiteApprovalWait($site));
 
                     Log::info('管理人にメール飛ばした');
                 } catch (\Exception $e) {
@@ -118,10 +120,12 @@ class Site
      * @param UploadedFile|null $listBanner
      * @param UploadedFile|null $detailBanner
      * @param bool $isDraft
+     * @param bool $isDeleteListBanner
+     * @param bool $isDeleteDetailBanner
      * @return bool
      * @throws \Exception
      */
-    public static function update(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isDraft)
+    public static function update(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isDraft, $isDeleteListBanner, $isDeleteDetailBanner)
     {
         // カンマ区切りを配列にしてくれるっぽい？
         if (is_array($site->handle_soft)) {
@@ -162,9 +166,9 @@ class Site
 
         DB::beginTransaction();
         try {
-            $site->save();
             self::saveHandleSofts($site, $handleSoftIds);
-            self::saveBanner($site, $listBanner, $detailBanner);
+            self::saveBanner($site, $listBanner, $detailBanner, $isDeleteListBanner, $isDeleteDetailBanner);
+            $site->save();
 
             if ($isNewArrival && $isTakeOver) {
                 // 下書きからの更新かつ引き継ぎならそのまま登録
@@ -179,10 +183,6 @@ class Site
         } catch (\Exception $e) {
             DB::rollBack();
             Log::exceptionError($e);
-
-            if (env('APP_ENV') == 'local') {
-                throw $e;
-            }
 
             return false;
         }
@@ -233,9 +233,13 @@ class Site
      * @param Orm\Site $site
      * @param UploadedFile|null $listBanner
      * @param UploadedFile|null $detailBanner
+     * @param bool $isDeleteListBanner
+     * @param bool $isDeleteDetailBanner
+     * @return bool
      */
-    private static function saveBanner(Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner)
+    private static function saveBanner(Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isDeleteListBanner, $isDeleteDetailBanner)
     {
+        $isChange = false;
         $bannerDirectoryPath = base_path() . '/public/img/site_banner/' . $site->id;
 
         // バナー用ディレクトリ作成
@@ -243,56 +247,55 @@ class Site
             File::makeDirectory($bannerDirectoryPath);
         }
 
-        // 一覧用バナーに何かしら変更が発生する
-        if ($site->list_banner_upload_flag != -1) {
-            // 今何かファイルが上がっていたら削除
-            if (!empty($site->list_banner_url)) {
-                $listBannerFileName = 'list.' . substr($site->list_banner_url, strrpos($site->list_banner_url, '.'));
-
-                if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
-                    File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
-                }
+        // 一覧用バナー削除
+        if ($isDeleteListBanner && !empty($site->list_banner_url)) {
+            $listBannerFileName = 'list.' . substr($site->list_banner_url, strrpos($site->list_banner_url, '.'));
+            if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
+                File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
             }
 
-            if ($site->list_banner_upload_flag == 2 && $listBanner !== null) {
-                // アップロード
-                $listBannerFileName = 'list.' . $listBanner->getClientOriginalExtension();
-
-                if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
-                    File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
-                }
-
-                $listBanner->move($bannerDirectoryPath, $listBannerFileName);
-                $site->list_banner_url = url('img/site_banner/' . $site->id . '/' . $listBannerFileName);
-            } else if ($site->list_banner_upload_flag == 0) {
-                // 削除(またはアップしない)
-                $site->list_banner_url = null;
-            }
+            $site->list_banner_url = '';
+            $isChange = true;
         }
 
-        // 詳細用バナーに何かしら変更が発生する
-        if ($site->detail_banner_upload_flag != -1) {
-            // 今何かファイルが上がっていたら削除
-            if (!empty($site->detail_banner_url)) {
-                $detailBannerFileName = 'detail.' . substr($site->detail_banner_url, strrpos($site->detail_banner_url, '.'));
-                if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
-                    File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
-                }
+        // 一覧用バナーをアップロード
+        if ($listBanner !== null) {
+            // アップロード
+            $listBannerFileName = 'list.' . $listBanner->getClientOriginalExtension();
+            if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
+                File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
             }
 
-            if ($site->detail_banner_upload_flag == 2 && $detailBanner !== null) {
-                // アップロード
-                $detailBannerFileName = 'detail.' . $detailBanner->getClientOriginalExtension();
-                if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
-                    File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
-                }
-                $detailBanner->move($bannerDirectoryPath, $detailBannerFileName);
-                $site->detail_banner_url = url('img/site_banner/' . $site->id . '/' . $detailBannerFileName);
-            } else if ($site->detail_banner_upload_flag == 0) {
-                // 削除(またはアップしない)
-                $site->detail_banner_url = null;
-            }
+            $listBanner->move($bannerDirectoryPath, $listBannerFileName);
+            $site->list_banner_url = url('img/site_banner/' . $site->id . '/' . $listBannerFileName);
+            $isChange = true;
         }
+
+        // 詳細用バナー削除
+        if ($isDeleteDetailBanner && !empty($site->detail_banner_url)) {
+            $detailBannerFileName = 'detail.' . substr($site->detail_banner_url, strrpos($site->detail_banner_url, '.'));
+            if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
+                File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
+            }
+
+            $site->detail_banner_url = '';
+            $isChange = true;
+        }
+
+        // 詳細用バナーをアップロード
+        if ($detailBanner != null) {
+            // アップロード
+            $detailBannerFileName = 'detail.' . $detailBanner->getClientOriginalExtension();
+            if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
+                File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
+            }
+
+            $detailBanner->move($bannerDirectoryPath, $detailBannerFileName);
+            $site->detail_banner_url = url('img/site_banner/' . $site->id . '/' . $detailBannerFileName);
+            $isChange = true;
+        }
+
+        return $isChange;
     }
 
     /**

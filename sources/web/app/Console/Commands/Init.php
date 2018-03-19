@@ -36,12 +36,12 @@ class Init extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @throws \Exception
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
         if (env('APP_ENV') == 'production') {
-            echo 'productionでは実行できません';
             $this->error('productionでは実行できません');
             return;
         }
@@ -50,7 +50,7 @@ class Init extends Command
 
         Master::import(20180225);
         Master::import(20180304);
-        //Master::import(20180317);
+        Master::import(20180317);
 
         Collection::create();
     }

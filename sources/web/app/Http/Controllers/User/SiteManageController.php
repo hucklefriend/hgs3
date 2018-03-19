@@ -6,19 +6,17 @@
 
 namespace Hgs3\Http\Controllers\User;
 
-use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Constants\Site\Gender;
 use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Site\SiteRequest;
 use Hgs3\Http\Requests\Site\UpdateHistoryRequest;
+use Hgs3\Http\Requests\User\SiteManage;
 use Hgs3\Log;
 use Hgs3\Models\Site;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Hgs3\Models\Timeline;
 
 class SiteManageController extends Controller
 {
@@ -121,11 +119,11 @@ class SiteManageController extends Controller
     /**
      * サイト追加
      *
-     * @param SiteRequest $request
+     * @param SiteManage\AddRequest $request
      * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Exception
      */
-    public function insert(SiteRequest $request)
+    public function insert(SiteManage\AddRequest $request)
     {
         // サイト登録可能数チェック
         if (Site::isMax(Auth::id())) {
@@ -161,10 +159,6 @@ class SiteManageController extends Controller
         }
 
         $this->setRequestData($site, $request);
-        $site->list_banner_upload_flag = $request->hasFile('list_banner_upload') ? 1 : 0;
-        //$site->list_banner_url = $request->get('list_banner_url');
-        $site->detail_banner_upload_flag = $request->hasFile('detail_banner_upload') ? 1 : 0;
-        //$site->detail_banner_url = $request->get('detail_banner_url');
         $site->open_type = 0;
         $site->good_num = 0;
         $site->max_good_num = 0;
@@ -212,12 +206,12 @@ class SiteManageController extends Controller
     /**
      * データ更新
      *
-     * @param SiteRequest $request
+     * @param SiteManage\UpdateRequest $request
      * @param Orm\Site $site
      * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Exception
      */
-    public function update(SiteRequest $request, Orm\Site $site)
+    public function update(SiteManage\UpdateRequest $request, Orm\Site $site)
     {
         // 本人しか更新できない
         if ($site->user_id != Auth::id()) {
@@ -225,15 +219,17 @@ class SiteManageController extends Controller
         }
 
         $this->setRequestData($site, $request);
-        $site->list_banner_upload_flag = $request->hasFile('list_banner_upload') ? 1 : 0;
-        $site->detail_banner_upload_flag = $request->hasFile('detail_banner_upload') ? 1 : 0;
+
+        // 再投稿か削除の場合は、既存バナー削除するのでフラグを用意
+        $isDeleteListBanner = $request->get('list_banner_edit') >= 2;
+        $isDeleteDetailBanner = $request->get('detail_banner_edit') >= 2;
 
         $listBanner = $request->file('list_banner_upload');
         $detailBanner = $request->file('detail_banner_upload');
 
         $isDraft = $request->get('draft', 0) == 1;
 
-        if (!Site::update(Auth::user(), $site, $listBanner, $detailBanner, $isDraft)) {
+        if (!Site::update(Auth::user(), $site, $listBanner, $detailBanner, $isDraft, $isDeleteListBanner, $isDeleteDetailBanner)) {
             session(['se' => 1]);
             return redirect()->back()->withInput();
         } else {
@@ -249,9 +245,9 @@ class SiteManageController extends Controller
      * リクエストの値をO/Rマッパーにセット
      *
      * @param Orm\Site $site
-     * @param SiteRequest $request
+     * @param $request
      */
-    private function setRequestData(Orm\Site $site, SiteRequest $request)
+    private function setRequestData(Orm\Site $site, $request)
     {
         $site->user_id = Auth::id();
         $site->name = $request->get('name', '');
