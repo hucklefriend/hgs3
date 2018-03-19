@@ -1,0 +1,25 @@
+{
+  "soft_name": ["ひぐらしのなく頃に粋"],
+  "packages":[
+    {
+      "platform": "PS3",
+      "company": "加賀クリエイト",
+      "name": "ひぐらしのなく頃に粋",
+      "url": "http://www.entergram.co.jp/higurashisui/",
+      "shop": "amazon",
+      "asin": "B00P8SWH6Y",
+      "release_int": 20150312,
+      "release_at": "2015年3月12日"
+    },
+    {
+      "platform": "Vita",
+      "company": "加賀クリエイト",
+      "name": "ひぐらしのなく頃に粋",
+      "url": "http://www.entergram.co.jp/higurashisui/",
+      "shop": "amazon",
+      "asin": "B00P8SWH6O",
+      "release_int": 20150312,
+      "release_at": "2015年3月12日"
+    }
+  ]
+}

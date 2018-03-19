@@ -1,0 +1,25 @@
+{
+  "soft_name": ["ひぐらしのなく頃に祭"],
+  "packages":[
+    {
+      "platform": "PS2",
+      "company": "加賀クリエイト",
+      "name": "ひぐらしのなく頃に祭",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B000I2FEK6",
+      "release_int": 20070222,
+      "release_at": "2007年2月22日"
+    },
+    {
+      "platform": "PS2",
+      "company": "加賀クリエイト",
+      "name": "ひぐらしのなく頃に祭 カケラ遊び",
+      "url": "",
+      "shop": "amazon",
+      "asin": "B000VZ5VDU",
+      "release_int": 20071220,
+      "release_at": "2007年12月20日"
+    }
+  ]
+}
