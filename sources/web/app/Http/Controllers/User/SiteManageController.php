@@ -196,10 +196,10 @@ class SiteManageController extends Controller
         }
 
         return view('user.siteManage.edit', [
-            'softs'        => Orm\GameSoft::getPhoneticTypeHash(),
-            'site'         => $site,
-            'listBannerUploadFlag'   => old('list_banner_upload_flag', -1),
-            'detailBannerUploadFlag' => old('detail_banner_upload_flag', -1)
+            'softs' => Orm\GameSoft::getPhoneticTypeHash(),
+            'site'  => $site,
+            'listBannerUploadFlag'   => old('list_banner_edit', 0),
+            'detailBannerUploadFlag' => old('detail_banner_edit', 0)
         ]);
     }
 

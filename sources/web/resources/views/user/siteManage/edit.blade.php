@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group show_list_banner_upload" id="list_banner_upload_form" style="{!! display_none($listBannerUploadFlag, 2) !!} }">
+                    <div class="form-group show_list_banner_upload" id="list_banner_upload_form" style="{!! display_none($listBannerUploadFlag, false) !!}">
                         @if ($listBannerUploadFlag)
                             <p class="text-danger" id="list_banner_upload_text">
                                 <small>
@@ -88,9 +88,11 @@
             <label for="detail_banner_upload_flag">詳細用バナー</label>
 
             @if (!empty($site->detail_banner_url))
-                <div>
-                    <div class="list-site-banner-outline">
-                        <img src="{{ $site->detail_banner_url }}" class="img-responsive">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="detail-site-banner-outline">
+                            <img src="{{ $site->detail_banner_url }}" class="img-responsive rounded">
+                        </div>
                     </div>
                 </div>
             @endif
@@ -143,11 +145,7 @@
                             </p>
                         @endif
                         <div class="detail-site-banner-outline rounded">
-                            @if ($site->detail_banner_upload_flag == 1)
-                                <img src="{{ $site->detail_banner_url }}" class="img-responsive" id="detail_banner_upload_thumbnail">
-                            @else
-                                <img src="" class="img-responsive" id="detail_banner_upload_thumbnail">
-                            @endif
+                            <img src="" class="img-responsive rounded" id="detail_banner_upload_thumbnail">
                         </div>
                     </div>
                 </div>
@@ -203,6 +201,7 @@
                     // クリア
                     $(this).val('');
                     $('#' + target + '_banner_upload_thumbnail').attr('src', '');
+                    $('#' + target + '_banner_upload').hide();
 
                     alert('選択したファイルは対応していない形式のファイルです。\n別のファイルを選択してください。');
 
@@ -211,14 +210,21 @@
 
                 // 容量チェック
                 if (target == 'list') {
-
+                    if (file.size > 1048576) {
+                        alert('1MBを超えています');
+                        return false;
+                    }
                 } else {
-
+                    if (file.size > 3145728) {
+                        alert('3MBを超えています');
+                        return false;
+                    }
                 }
 
                 // 画像表示
                 let fd = new FileReader();
                 fd.onload = function() {
+                    $('#' + target + '_banner_upload').show();
                     $('#' + target + '_banner_upload_thumbnail').attr('src', fd.result);
                     $('#' + target + '_banner_upload_text').hide();
                 };
