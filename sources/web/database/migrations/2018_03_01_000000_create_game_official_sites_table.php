@@ -17,9 +17,12 @@ class CreateGameOfficialSitesTable extends Migration
     public function up()
     {
         Schema::create('game_official_sites', function (Blueprint $table) {
-            $table->unsignedInteger('soft_id')->index()->comment('ソフトID');
+            $table->unsignedInteger('soft_id')->comment('ソフトID');
             $table->string('title', 100)->comment('タイトル');
             $table->string('url', 256)->comment('URL');
+            $table->unsignedTinyInteger('priority')->comment('優先度');
+            $table->primary(['soft_id', 'url']);
+            $table->index(['soft_id', 'priority']);
             $table->timestamps();
         });
     }

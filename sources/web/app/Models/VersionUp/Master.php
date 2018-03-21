@@ -31,6 +31,9 @@ class Master
         echo 'import package.'.PHP_EOL;
         MasterImport\Package::import($date);
 
+        echo 'import official site.' . PHP_EOL;
+        MasterImport\OfficialSite::import($date);
+
         echo 'update sort order.'.PHP_EOL;
         \Hgs3\Models\Orm\GameSoft::updateSortOrder();
 

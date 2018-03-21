@@ -29,9 +29,9 @@ class SoftController extends Controller
         }
 
         return view('game.soft.index', [
-            'phoneticList'        => PhoneticType::getId2CharData(),
-            'list'                => Soft::getList(),
-            'favoriteHash'        => $favoriteHash,
+            'phoneticList'         => PhoneticType::getId2CharData(),
+            'list'                  => Soft::getList(),
+            'favoriteHash'         => $favoriteHash,
             'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ'))
         ]);
     }
@@ -54,6 +54,9 @@ class SoftController extends Controller
         if (Auth::check()) {
             $data['favoriteHash'] = FavoriteSoft::getHash(Auth::id());
         }
+
+        $data['pltHash'] = Orm\GamePlatform::all('id', 'acronym')
+            ->pluck('acronym', 'id');
 
         return view('game.soft.detail', $data);
     }

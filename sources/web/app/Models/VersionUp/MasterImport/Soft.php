@@ -91,7 +91,7 @@ class Soft extends MasterImportAbstract
     }
 
     /**
-     * 手動設定2017.2.25
+     * 手動設定2018.2.25
      *
      * @throws \Exception
      */
@@ -121,7 +121,7 @@ class Soft extends MasterImportAbstract
     }
 
     /**
-     * 手動設定2017.3.4
+     * 手動設定2018.3.4
      */
     private static function manual20180304()
     {
@@ -129,5 +129,20 @@ class Soft extends MasterImportAbstract
         DB::table('game_softs')
             ->where('id', 277)
             ->update(['series_id' => 52]);
+    }
+
+    /**
+     * 手動設定2018.4.1
+     */
+    private static function manual20180401()
+    {
+        // ひぐらしの礼と解を削除
+        DB::table('game_softs')
+            ->whereIn('id', [237, 238])
+            ->delete();
+
+        DB::table('game_package_links')
+            ->whereIn('soft_id', [237, 238])
+            ->delete();
     }
 }

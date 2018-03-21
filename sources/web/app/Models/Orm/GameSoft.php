@@ -131,7 +131,8 @@ SQL;
      */
     public function originalPackage()
     {
-        return $this->hasOne('Hgs3\Models\Orm\GamePackage', 'id', 'original_package_id');
+        return $this->hasOne('Hgs3\Models\Orm\GamePackage', 'id', 'original_package_id')
+            ->first();
     }
 
     /**

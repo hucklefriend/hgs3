@@ -73,9 +73,23 @@ SQL;
         // パッケージ情報
         $data['packages'] = self::getPackages($soft->id);
         $data['packageNum'] = count($data['packages']);
+        $data['originalPackage'] = $soft->originalPackage();
+        $data['hasOriginalPackageImage'] = !empty(medium_image_url($data['originalPackage']));
+
+        // プラットフォームリスト
+        $platforms = [];
+        foreach ($data['packages'] as $pkg) {
+            $platforms[$pkg->platform_id] = $pkg->platform_id;
+        }
+        $data['platforms'] = $platforms;
+
+        // 公式サイト
+        $data['officialSites'] = Orm\GameOfficialSite::where('soft_id', $soft->id)
+            ->orderBy('priority')
+            ->get();
 
         // レビュー
-        $data['reviewTotal'] = Orm\ReviewTotal::find($soft->id);
+        $data['reviewTotal'] = 0;//Orm\ReviewTotal::find($soft->id);
 
         // お気に入り登録ユーザー
         $data['favorites'] = self::getFavoriteUser($soft->id);

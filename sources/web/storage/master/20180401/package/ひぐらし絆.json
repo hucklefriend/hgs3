@@ -2,7 +2,7 @@
   "soft_name": ["ひぐらしのなく頃に絆"],
   "packages":[
     {
-      "platform": "DS",
+      "platform": "NDS",
       "company": "アルケミスト",
       "name": "ひぐらしのなく頃に絆 第一巻・祟",
       "url": "",
@@ -12,7 +12,7 @@
       "release_at": "2008年6月26日"
     },
     {
-      "platform": "DS",
+      "platform": "NDS",
       "company": "アルケミスト",
       "name": "ひぐらしのなく頃に絆 第二巻・想",
       "url": "",
@@ -22,7 +22,7 @@
       "release_at": "2008年11月27日"
     },
     {
-      "platform": "DS",
+      "platform": "NDS",
       "company": "アルケミスト",
       "name": "ひぐらしのなく頃に絆 第三巻・螺",
       "url": "",
@@ -32,7 +32,7 @@
       "release_at": "2009年5月28日"
     },
     {
-      "platform": "DS",
+      "platform": "NDS",
       "company": "アルケミスト",
       "name": "ひぐらしのなく頃に絆 第四巻・絆",
       "url": "",
@@ -42,7 +42,7 @@
       "release_at": "2010年2月25日"
     },
     {
-      "platform": "DS",
+      "platform": "NDS",
       "company": "アルケミスト",
       "name": "ひぐらしのなく頃に絆 一・二巻パック",
       "url": "",

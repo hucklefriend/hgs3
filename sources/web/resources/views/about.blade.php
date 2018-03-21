@@ -42,6 +42,14 @@
     </section>
 
     <section class="my-5">
+        <h2>移植とリメイクについて</h2>
+        <p class="ml-3">
+            リメイクは別ゲームとして扱い、移植は同じゲームとして扱っています。<br>
+            例：PS2の「零～紅い蝶～」とそのXBOXへの移植版「FATAL FRAME2 CRIMSON BUTTERFLY」は同じゲームですが、 WiiUのリメイク版「零～真紅の蝶～」は別ゲームです。
+        </p>
+    </section>
+
+    <section class="my-5">
         <h2>オープンソース</h2>
         <p class="ml-3">
             {{ env('APP_NAME') }}のソースコードをGitHubで公開しています。<br>

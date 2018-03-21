@@ -7,243 +7,197 @@
 @endsection
 
 @section('content')
-
-    @if (is_data_editor())
-        <div class="d-flex justify-content-between">
-            <h1>{{ $soft->name }} @if($isFavorite) <span class="favorite-icon"><i class="fas fa-star"></i></span> @endif </h1>
-            <div>
-                <a href="{{ route('ゲームソフト編集', ['soft' => $soft->id]) }}" class="btn btn-sm btn-outline-dark">修正</a>
-            </div>
-        </div>
-    @else
-        <h1>
-            {{ $soft->name }}
-            @auth
-            @if($isFavorite)
-                <span class="favorite-icon"><i class="fas fa-star"></i></span>
-            @endif
-            @endauth
-        </h1>
-    @endif
-
-    @auth
-    <div style="margin-bottom: 30px;">
-        <div class="d-flex flex-wrap">
-            <div>
-                @if ($isFavorite)
-                    <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
-                        {{ csrf_field() }}
-                        <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                        {{ method_field('DELETE') }}
-                        <button class="btn btn-outline-secondary btn-sm">お気に入り解除</button>
-                    </form>
-                @else
-                    <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
-                        {{ csrf_field() }}
-                        <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                        <div class="text-center">
-                            <button class="btn btn-outline-warning btn-sm"><i class="fas fa-star"></i>お気に入り登録</button>
-                        </div>
-                    </form>
-                @endif
-            </div>
-        </div>
-    </div>
-    @endauth
-
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <h5 class="card-title">パッケージ情報</h5>
-                        @if (is_data_editor())
-                            <div class="text-right">
-                                <a href="{{ route('パッケージ登録', ['soft' => $soft->id]) }}" class="btn btn-outline-dark btn-sm">追加</a>
+                        <h5 class="card-title">{{ $soft->name }}</h5>
+                        @auth
+                            <div>
+                                <div class="d-flex flex-wrap">
+                                    <div>
+                                        @if ($isFavorite)
+                                            <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                                                {{ method_field('DELETE') }}
+                                                <button class="btn btn-outline-secondary btn-sm">お気に入り解除</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                                                <div class="text-center">
+                                                    <button class="btn btn-outline-warning btn-sm"><i class="fas fa-star"></i>お気に入り登録</button>
+                                                </div>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endauth
+                    </div>
+
+                    <div class="d-flex">
+                        @if ($hasOriginalPackageImage)
+                            <div style="min-width: 120px;max-width: 220px;">
+                                @include('game.common.packageImage', ['imageUrl' => medium_image_url($originalPackage)])
                             </div>
                         @endif
+                            <div class="ml-2">
+                                @if (!empty($soft))
+                                <div>
+                                    <blockquote class="blockquote soft-blockquote">
+                                        <p class="mb-0">『バイオハザード』（BIO HAZARD, 日本国外ではResident Evil）は1996年にカプコンより発売されたPlayStation用ホラーアクションアドベンチャーゲーム。</p>
+                                        <div class="text-right">
+                                            <footer class="blockquote-footer"><cite title="Wikipedia 2018年3月14日 (水) 05:55"><a href="https://ja.wikipedia.org/wiki/%E3%83%90%E3%82%A4%E3%82%AA%E3%83%8F%E3%82%B6%E3%83%BC%E3%83%89_(%E3%82%B2%E3%83%BC%E3%83%A0)" class="mr-1">Wikipedia <small><i class="fas fa-share-square"></i></small></a></cite>より</footer>
+                                        </div>
+                                    </blockquote>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <div style="width: 20px;">
+                                        <i class="fas fa-gamepad"></i>
+                                    </div>
+                                    <div class="d-flex flex-wrap">
+                                    @foreach ($platforms as $plt)
+                                        <a href="#" class="ml-2 badge badge-light">{{ $pltHash[$plt] }}</a>
+                                    @endforeach
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div style="width: 20px;">
+                                        <span class="lsf">web</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap">
+                                    @foreach ($officialSites as $officialSite)
+                                        <a href="{{ $officialSite->url }}" target="_blank" class="ml-2"><small>{{ $officialSite->title }}</small></a>
+                                    @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card card-hgn">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">パッケージ情報</h5>
                     </div>
 
                     @if ($packageNum > 2)
 
-                    <script type="text/javascript" src="{{ url('js/slick.min.js') }}"></script>
-                    <link rel="stylesheet" type="text/css" href="{{ url('css/slick.css') }}">
-                    <link rel="stylesheet" type="text/css" href="{{ url('css/slick-theme.css') }}">
-                    <style>
-                        .slick-dots {
-                            bottom: 0 !important;
-                            width: auto !important;
-                            position: inherit !important;
-                        }
+                        <script type="text/javascript" src="{{ url('js/slick.min.js') }}"></script>
+                        <link rel="stylesheet" type="text/css" href="{{ url('css/slick.css') }}">
+                        <link rel="stylesheet" type="text/css" href="{{ url('css/slick-theme.css') }}">
+                        <style>
+                            .slick-dots {
+                                bottom: 0 !important;
+                                width: auto !important;
+                                position: inherit !important;
+                            }
 
-                        .package_slide {
-                            visibility: hidden;
-                        }
+                            .package_slide {
+                                visibility: hidden;
+                            }
 
-                        .package_slide div {
-                            outline: none;
-                        }
+                            .package_slide div {
+                                outline: none;
+                            }
 
-                    </style>
-                    <script>
-                        $(function (){
-                            let slick = $('.package_slide');
-                            slick.slick({
-                                arrows: false,
-                                dots: true,
-                                appendDots: $('#package_pager'),
-                                prevArrow: $('.slick-prev')
+                        </style>
+                        <script>
+                            $(function (){
+                                let slick = $('.package_slide');
+                                slick.slick({
+                                    arrows: false,
+                                    dots: true,
+                                    appendDots: $('#package_pager'),
+                                    prevArrow: $('.slick-prev')
+                                });
+
+                                $('.package_slide').css('visibility', 'visible');
+                                $('#package_slider_prev').click(function () {
+                                    slick.slick('slickPrev');
+                                });
+                                $('#package_slider_next').click(function () {
+                                    slick.slick('slickNext');
+                                });
                             });
-
-                            $('.package_slide').css('visibility', 'visible');
-                            $('#package_slider_prev').click(function () {
-                                slick.slick('slickPrev');
-                            });
-                            $('#package_slider_next').click(function () {
-                                slick.slick('slickNext');
-                            });
-                        });
-                    </script>
+                        </script>
 
                     @endif
                     <div class="package_slide">
-                    @for ($i = 0; $i < $packageNum; $i += 2)
-                        <div>
-                        @php $pkg = $packages[$i]; @endphp
-                        <div class="row">
-                            <div class="col-4">
-                                @include('game.common.packageImage', ['imageUrl' => medium_image_url($pkg)])
-                            </div>
-                            <div class="col-8">
-                                <div class="package-title">{{ $pkg->name }}</div>
-                                <div class="d-flex flex-wrap package-info">
-                                    @if(!empty($pkg->url))
-                                        <span class="mr-3">
-                                            <!-- http://icooon-mono.com/ の素材を利用しています -->
-                                            <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="width: 0.8rem; height: 0.8rem; opacity: 1;" xml:space="preserve">
-                                            <style type="text/css">
-                                                .st0{fill:#4B4B4B;}
-                                            </style>
-                                            <g>
-                                                <path class="st0" d="M0,48v416c0,26.508,21.492,48,48,48h416c26.508,0,48-21.492,48-48V48c0-26.508-21.492-48-48-48H48
-                                                    C21.492,0,0,21.492,0,48z M86.336,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
-                                                    C77.828,35,86.336,43.508,86.336,54z M156.836,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
-                                                    C148.328,35,156.836,43.508,156.836,54z M227.336,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
-                                                    C218.828,35,227.336,43.508,227.336,54z M40,104h432v360c0,4.406-3.586,8-8,8H48c-4.414,0-8-3.594-8-8V104z" style="fill: rgb(75, 75, 75);"></path>
-                                                <rect x="264" y="192" class="st0" width="152" height="32" style="fill: rgb(75, 75, 75);"></rect>
-                                                <rect x="88" y="352" class="st0" width="328" height="32" style="fill: rgb(75, 75, 75);"></rect>
-                                                <rect x="88" y="192" class="st0" width="120" height="120" style="fill: rgb(75, 75, 75);"></rect>
-                                                <polygon class="st0" points="282.958,304 264,304 264,272 416,272 416,304 298.958,304 	" style="fill: rgb(75, 75, 75);"></polygon>
-                                            </g>
-                                            </svg>
-                                            <a href="{{ $pkg->url }}" target="_blank">公式サイト</a>
-                                        </span>
-                                    @endif
-                                    <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
-                                    <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
-                                    <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
-                                </div>
-                                <div class="mt-2">
-                                    @foreach ($pkg->shops as $shop)
-                                    @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
-                                    @endforeach
-                                </div>
-
-                                @if (is_data_editor())
-                                <hr>
-                                <div class="row" style="margin-bottom: 10px;">
-                                    <div class="col-6">
-                                        <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}" class="btn btn-sm btn-outline-info">編集</a><br>
+                        @for ($i = 0; $i < $packageNum; $i += 2)
+                            <div>
+                                @php $pkg = $packages[$i]; @endphp
+                                <div class="d-flex">
+                                    <div class="package-image-small">
+                                        @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
                                     </div>
-                                    <div class="col-6 text-right">
-                                        <form method="POST" action="{{ route('パッケージ削除処理', ['soft' => $soft->id, 'package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                            <button type="submit" class="btn btn-danger btn-sm">削除</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                        @if (isset($packages[$i + 1]))
-                        @php $pkg = $packages[$i + 1]; @endphp
-                        <br>
-                        <div class="row">
-                            <div class="col-4">
-                                @include('game.common.packageImage', ['imageUrl' => medium_image_url($pkg)])
-                            </div>
-                            <div class="col-8">
-                                <div class="package-title">{{ $pkg->name }}</div>
-                                <div class="d-flex flex-wrap package-info">
-                                    @if(!empty($pkg->url))
-                                        <span class="mr-3">
-                                            <!-- http://icooon-mono.com/ の素材を利用しています -->
-                                            <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="width: 0.8rem; height: 0.8rem; opacity: 1;" xml:space="preserve">
-                                            <style type="text/css">
-                                                .st0{fill:#4B4B4B;}
-                                            </style>
-                                            <g>
-                                                <path class="st0" d="M0,48v416c0,26.508,21.492,48,48,48h416c26.508,0,48-21.492,48-48V48c0-26.508-21.492-48-48-48H48
-                                                    C21.492,0,0,21.492,0,48z M86.336,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
-                                                    C77.828,35,86.336,43.508,86.336,54z M156.836,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
-                                                    C148.328,35,156.836,43.508,156.836,54z M227.336,54c0,10.492-8.508,19-19,19c-10.492,0-19-8.508-19-19s8.508-19,19-19
-                                                    C218.828,35,227.336,43.508,227.336,54z M40,104h432v360c0,4.406-3.586,8-8,8H48c-4.414,0-8-3.594-8-8V104z" style="fill: rgb(75, 75, 75);"></path>
-                                                <rect x="264" y="192" class="st0" width="152" height="32" style="fill: rgb(75, 75, 75);"></rect>
-                                                <rect x="88" y="352" class="st0" width="328" height="32" style="fill: rgb(75, 75, 75);"></rect>
-                                                <rect x="88" y="192" class="st0" width="120" height="120" style="fill: rgb(75, 75, 75);"></rect>
-                                                <polygon class="st0" points="282.958,304 264,304 264,272 416,272 416,304 298.958,304 	" style="fill: rgb(75, 75, 75);"></polygon>
-                                            </g>
-                                            </svg>
-                                            <a href="{{ $pkg->url }}" target="_blank">公式サイト</a>
-                                        </span>
-                                    @endif
-                                    <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
-                                    <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
-                                    <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
-                                </div>
-                                <div class="mt-2">
-                                    @foreach ($pkg->shops as $shop)
-                                        @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
-                                    @endforeach
-                                </div>
-
-                                @if (is_data_editor())
-                                    <hr>
-                                    <div class="row" style="margin-bottom: 20px;">
-                                        <div class="col-6">
-                                            <a href="{{ route('パッケージ編集', ['soft' => $soft->id, 'package' => $pkg->id]) }}" class="btn btn-sm btn-outline-info">編集</a><br>
+                                    <div class="ml-3">
+                                        <div class="package-title">{{ $pkg->name }}</div>
+                                        <div class="d-flex flex-wrap package-info">
+                                            <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
+                                            <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
+                                            <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
                                         </div>
-                                        <div class="col-6 text-right">
-                                            <form method="POST" action="{{ route('パッケージ削除処理', ['soft' => $soft->id, 'package' => $pkg->id]) }}" onsubmit="return confirm('削除します');">
-                                                {{ csrf_field() }}
-                                                {{ method_field('DELETE') }}
-                                                <button type="submit" class="btn btn-danger btn-sm">削除</button>
-                                            </form>
+                                        <div class="mt-2">
+                                            @foreach ($pkg->shops as $shop)
+                                                @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (isset($packages[$i + 1]))
+                                    @php $pkg = $packages[$i + 1]; @endphp
+                                    <br>
+                                    <div class="d-flex">
+                                        <div class="package-image-small">
+                                            @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
+                                        </div>
+                                        <div class="ml-3">
+                                            <div class="package-title">{{ $pkg->name }}</div>
+                                            <div class="d-flex flex-wrap package-info">
+                                                <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
+                                                <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
+                                                <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
+                                            </div>
+                                            <div class="mt-2">
+                                                @foreach ($pkg->shops as $shop)
+                                                    @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
                             </div>
-                        </div>
-                        @endif
-                        </div>
-                    @endfor
+                        @endfor
                     </div>
-                        @if ($packageNum > 2)
-                    <div class="row">
-                        <div class="col-2">
-                            <button class="btn btn-outline-secondary btn-sm" id="package_slider_prev">&lt;</button>
+                    @if ($packageNum > 2)
+                        <div class="row">
+                            <div class="col-2">
+                                <button class="btn btn-outline-secondary btn-sm" id="package_slider_prev">&lt;</button>
+                            </div>
+                            <div class="col-8 text-center" id="package_pager">
+                            </div>
+                            <div class="col-2 text-right">
+                                <button class="btn btn-outline-secondary btn-sm" id="package_slider_next">&gt;</button>
+                            </div>
                         </div>
-                        <div class="col-8 text-center" id="package_pager">
-                        </div>
-                        <div class="col-2 text-right">
-                            <button class="btn btn-outline-secondary btn-sm" id="package_slider_next">&gt;</button>
-                        </div>
-                    </div>
-                        @endif
+                    @endif
                 </div>
             </div>
         </div>
+    </div>
+
+
+
+
+    <div class="row">
 
         <div class="col-md-6">
             <div class="card card-hgn">
@@ -345,6 +299,13 @@
                         @endif
                 </div>
 --}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-hgn">
+                <div class="card-body">
+                    <h5 class="card-title">準備中</h5>
+                </div>
             </div>
         </div>
     </div>
