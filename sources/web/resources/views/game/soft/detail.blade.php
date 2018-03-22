@@ -46,7 +46,6 @@
                             </div>
                         @endif
                             <div class="ml-2">
-                                @if (!empty($soft))
                                 <div>
                                     <blockquote class="blockquote soft-blockquote">
                                         <p class="mb-0">『バイオハザード』（BIO HAZARD, 日本国外ではResident Evil）は1996年にカプコンより発売されたPlayStation用ホラーアクションアドベンチャーゲーム。</p>

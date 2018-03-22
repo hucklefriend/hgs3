@@ -17,8 +17,9 @@ class OfficialSite extends MasterImportAbstract
     public static function import($date)
     {
         if ($date == '20180401') {
-            //Orm\GameOfficialSite::truncate();
             // ローカル環境でのみ実行
+            //Orm\GameOfficialSite::truncate();
+            //self::insertFromPackage();
         }
 
         // 既存データのアップデート
@@ -26,10 +27,9 @@ class OfficialSite extends MasterImportAbstract
 
         $path = storage_path('master/' . $date . '/official_site');
         if (!File::isDirectory($path)) {
-            echo 'nothing soft new data.' . PHP_EOL;
+            echo 'nothing official site new data.' . PHP_EOL;
         } else {
             $files = File::files($path);
-            $series = self::getSeriesHash();
 
             foreach ($files as $filePath) {
                 if (ends_with($filePath, 'update.php')) {
@@ -44,7 +44,11 @@ class OfficialSite extends MasterImportAbstract
 
                 foreach ($data as $row) {
                     $officialSite = new Orm\GameOfficialSite($row);
-                    $officialSite->save();
+                    $officialSite->soft_id = $row['soft_id'];
+                    $officialSite->url = $row['url'];
+                    $officialSite->title = $row['title'];
+                    $officialSite->priority = $row['priority'];
+                    $officialSite->save2();
                 }
             }
         }
@@ -53,7 +57,7 @@ class OfficialSite extends MasterImportAbstract
         if (method_exists(new self(), $manualMethod)) {
             self::$manualMethod();
         } else {
-            echo 'nothing soft manual update.' . PHP_EOL;
+            echo 'nothing official site manual update.' . PHP_EOL;
         }
     }
 
@@ -66,7 +70,7 @@ class OfficialSite extends MasterImportAbstract
     {
         $path = storage_path('master/' . $date . '/official_site/update.php');
         if (!File::isFile($path)) {
-            echo 'nothing soft update data.' . PHP_EOL;
+            echo 'nothing official site update data.' . PHP_EOL;
             return;
         }
 
@@ -82,11 +86,11 @@ class OfficialSite extends MasterImportAbstract
     }
 
     /**
-     * 手動設定2017.4.1
+     * 2018.4.1
      *
      * @throws \Exception
      */
-    private static function manual20180401()
+    private static function insertFromPackage()
     {
         // 既存テーブルからデータ移行
         $softs = self::getSoftHash();
