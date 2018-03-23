@@ -695,7 +695,6 @@ SQL;
         Timeline\Site::addAccessNumText($site);
         Timeline\FavoriteSite::addAccessNumText($site);
 
-
         return true;
     }
 

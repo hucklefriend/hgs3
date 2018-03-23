@@ -70,11 +70,11 @@ class Site extends TimelineAbstract
      */
     public static function addAccessNumText(Orm\Site $site)
     {
-        if ($site->out_count > 100 && $site->out_count % 100 == 1) {
-            $text = sprintf('「<a href="%s">%s</a>」へのアクセス数が%dを超えました！',
+        if ($site->out_count > 100 && $site->out_count % 100 == 0) {
+            $text = sprintf('「<a href="%s">%s</a>」へのアクセス数が%dに達しました！',
                 route('サイト詳細', ['site' => $site->id]),
                 e($site->name),
-                number_format(intval($site->out_count / 100) * 100)
+                number_format($site->out_count - ($site->out_count % 100))
             );
 
             self::insert($site->id, $text);

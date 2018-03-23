@@ -21,7 +21,11 @@ class Collection
     {
         $client = new \MongoDB\Client("mongodb://localhost:27017");
 
-        self::$db = $client->hgs3;
+        if (env('APP_ENV') == 'staging') {
+            self::$db = $client->hgs3_stg;
+        } else {
+            self::$db = $client->hgs3;
+        }
     }
 
     /**
@@ -45,10 +49,12 @@ class Collection
     {
         $client = new \MongoDB\Client("mongodb://localhost:27017");
 
+        $dbName = env('APP_ENV') == 'staging' ? 'hgs3_stg' : 'hgs3';
+
         echo 'drop hgs3'.PHP_EOL;
-        $client->dropDatabase('hgs3');
+        $client->dropDatabase($dbName);
         echo 'create hgs3'.PHP_EOL;
-        $db = $client->selectDatabase('hgs3');
+        $db = $client->selectDatabase($dbName);
 
         echo 'create collections'.PHP_EOL;
         $db->createCollection('favorite_soft_timeline');
