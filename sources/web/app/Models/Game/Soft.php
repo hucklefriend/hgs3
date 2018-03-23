@@ -74,7 +74,12 @@ SQL;
         $data['packages'] = self::getPackages($soft->id);
         $data['packageNum'] = count($data['packages']);
         $data['originalPackage'] = $soft->originalPackage();
-        $data['hasOriginalPackageImage'] = !empty(medium_image_url($data['originalPackage']));
+        if ($data['originalPackage'] != null) {
+            $data['hasOriginalPackageImage'] = !empty(medium_image_url($data['originalPackage']));
+        } else {
+            $data['hasOriginalPackageImage'] = false;
+        }
+
 
         // プラットフォームリスト
         $platforms = [];

@@ -46,14 +46,19 @@
                             </div>
                         @endif
                             <div class="ml-2">
+                                @if (!empty($soft->introduction))
                                 <div>
                                     <blockquote class="blockquote soft-blockquote">
-                                        <p class="mb-0">『バイオハザード』（BIO HAZARD, 日本国外ではResident Evil）は1996年にカプコンより発売されたPlayStation用ホラーアクションアドベンチャーゲーム。</p>
+                                        <p class="mb-0">{{ $soft->introduction }}</p>
+                                        @if (!empty($soft->introduction_url))
                                         <div class="text-right">
-                                            <footer class="blockquote-footer"><cite title="Wikipedia 2018年3月14日 (水) 05:55"><a href="https://ja.wikipedia.org/wiki/%E3%83%90%E3%82%A4%E3%82%AA%E3%83%8F%E3%82%B6%E3%83%BC%E3%83%89_(%E3%82%B2%E3%83%BC%E3%83%A0)" class="mr-1">Wikipedia <small><i class="fas fa-share-square"></i></small></a></cite>より</footer>
+                                            <footer class="blockquote-footer"><cite title="{{ $soft->introduction_csite_title }}"><a href="{{ $soft->introduction_url }}" class="mr-1">{{ $soft->introduction_site_name }}</a></cite>より</footer>
                                         </div>
+                                        @endif
                                     </blockquote>
                                 </div>
+                                @endif
+                                @if (!empty($platforms))
                                 <div class="d-flex mb-2">
                                     <div style="width: 20px;">
                                         <i class="fas fa-gamepad"></i>
@@ -64,6 +69,8 @@
                                     @endforeach
                                     </div>
                                 </div>
+                                @endif
+                                @if ($officialSites->isNotEmpty())
                                 <div class="d-flex">
                                     <div style="width: 20px;">
                                         <span class="lsf">web</span>
@@ -74,6 +81,7 @@
                                     @endforeach
                                     </div>
                                 </div>
+                                @endif
                             </div>
                     </div>
                 </div>
