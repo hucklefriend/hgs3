@@ -18,9 +18,6 @@ class Company extends MasterImportAbstract
      */
     public static function import($date)
     {
-        // 既存データのアップデート
-        self::update($date);
-
         // 新規データの追加
         $path = storage_path('master/' . $date . '/company');
         if (!File::isDirectory($path)) {
@@ -42,6 +39,10 @@ class Company extends MasterImportAbstract
                 unset($com);
             }
         }
+
+        // 既存データのアップデート
+        self::update($date);
+
 
         $manualMethod = 'manual' . $date;
         if (method_exists(new self(), $manualMethod)) {

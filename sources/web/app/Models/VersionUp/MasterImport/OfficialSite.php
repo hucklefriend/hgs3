@@ -18,12 +18,9 @@ class OfficialSite extends MasterImportAbstract
     {
         if ($date == '20180401') {
             // ローカル環境でのみ実行
-            //Orm\GameOfficialSite::truncate();
+            Orm\GameOfficialSite::truncate();
             //self::insertFromPackage();
         }
-
-        // 既存データのアップデート
-        self::update($date);
 
         $path = storage_path('master/' . $date . '/official_site');
         if (!File::isDirectory($path)) {
@@ -52,6 +49,9 @@ class OfficialSite extends MasterImportAbstract
                 }
             }
         }
+
+        // 既存データのアップデート
+        self::update($date);
 
         $manualMethod = 'manual' . $date;
         if (method_exists(new self(), $manualMethod)) {

@@ -19,8 +19,6 @@ class Platform extends MasterImportAbstract
      */
     public static function import($date)
     {
-        self::update($date);
-
         $path = storage_path('master/' . $date . '/platform');
         if (!File::isDirectory($path)) {
             echo 'nothing platform new data.' . PHP_EOL;
@@ -47,6 +45,8 @@ class Platform extends MasterImportAbstract
                 unset($platform);
             }
         }
+
+        self::update($date);
 
         $manualMethod = 'manual' . $date;
         if (method_exists(new self(), $manualMethod)) {

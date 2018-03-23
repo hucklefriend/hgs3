@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card card-hgn">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
@@ -39,9 +39,9 @@
                         @endauth
                     </div>
 
-                    <div class="d-flex">
+                    <div class="d-flex flex-column flex-sm-row">
                         @if ($hasOriginalPackageImage)
-                            <div style="min-width: 120px;max-width: 220px;">
+                            <div class="text-center">
                                 @include('game.common.packageImage', ['imageUrl' => medium_image_url($originalPackage)])
                             </div>
                         @endif
@@ -49,10 +49,14 @@
                                 @if (!empty($soft->introduction))
                                 <div>
                                     <blockquote class="blockquote soft-blockquote">
-                                        <p class="mb-0">{{ $soft->introduction }}</p>
+                                        <p class="mb-0">{!! nl2br(e($soft->introduction)) !!}</p>
                                         @if (!empty($soft->introduction_url))
-                                        <div class="text-right">
-                                            <footer class="blockquote-footer"><cite title="{{ $soft->introduction_csite_title }}"><a href="{{ $soft->introduction_url }}" class="mr-1">{{ $soft->introduction_site_name }}</a></cite>より</footer>
+                                        <div class="text-right mt-2">
+                                            <footer class="blockquote-footer"><cite title="{{ $soft->introduction_csite_title }}"><a href="{{ $soft->introduction_url }}" class="mr-1" target="_blank">{{ $soft->introduction_site_name }}</a></cite>より</footer>
+                                        </div>
+                                        @elseif (!empty($soft->introduction_site_name))
+                                        <div class="text-right mt-2">
+                                            <footer class="blockquote-footer">{{ $soft->introduction_site_name }}より</footer>
                                         </div>
                                         @endif
                                     </blockquote>
@@ -65,7 +69,7 @@
                                     </div>
                                     <div class="d-flex flex-wrap">
                                     @foreach ($platforms as $plt)
-                                        <a href="#" class="ml-2 badge badge-light">{{ $pltHash[$plt] }}</a>
+                                        <a href="#" class="ml-2 badge badge-light">{{ $pltHash[$plt] ?? '？' }}</a>
                                     @endforeach
                                     </div>
                                 </div>
@@ -87,7 +91,12 @@
                 </div>
             </div>
         </div>
+    </div>
 
+
+
+
+    <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
@@ -199,12 +208,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
-    <div class="row">
 
         <div class="col-md-6">
             <div class="card card-hgn">
@@ -306,13 +309,6 @@
                         @endif
                 </div>
 --}}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card card-hgn">
-                <div class="card-body">
-                    <h5 class="card-title">準備中</h5>
-                </div>
             </div>
         </div>
     </div>

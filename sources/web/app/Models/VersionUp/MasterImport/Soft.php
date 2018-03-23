@@ -16,9 +16,6 @@ class Soft extends MasterImportAbstract
      */
     public static function import($date)
     {
-        // 既存データのアップデート
-        self::update($date);
-
         $path = storage_path('master/' . $date . '/soft');
         if (!File::isDirectory($path)) {
             echo 'nothing soft new data.' . PHP_EOL;
@@ -58,6 +55,9 @@ class Soft extends MasterImportAbstract
             }
         }
 
+        // 既存データのアップデート
+        self::update($date);
+
         $manualMethod = 'manual' . $date;
         if (method_exists(new self(), $manualMethod)) {
             self::$manualMethod();
@@ -82,6 +82,9 @@ class Soft extends MasterImportAbstract
         $softs = include($path);
 
         foreach ($softs as $s) {
+            unset($s['created_at']);
+            $s['updated_at'] = DB::raw('NOW()');
+
             DB::table('game_softs')
                 ->where('id', $s['id'])
                 ->update($s);
