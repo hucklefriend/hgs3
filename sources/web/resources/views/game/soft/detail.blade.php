@@ -50,13 +50,9 @@
                                 <div>
                                     <blockquote class="blockquote soft-blockquote">
                                         <p class="mb-0">{!! nl2br(e($soft->introduction)) !!}</p>
-                                        @if (!empty($soft->introduction_url))
+                                        @if (!empty($soft->introduction_from))
                                         <div class="text-right mt-2">
-                                            <footer class="blockquote-footer"><cite title="{{ $soft->introduction_csite_title }}"><a href="{{ $soft->introduction_url }}" class="mr-1" target="_blank">{{ $soft->introduction_site_name }}</a></cite>より</footer>
-                                        </div>
-                                        @elseif (!empty($soft->introduction_site_name))
-                                        <div class="text-right mt-2">
-                                            <footer class="blockquote-footer">{{ $soft->introduction_site_name }}より</footer>
+                                            <footer class="blockquote-footer">{!! $soft->introduction_from !!}</footer>
                                         </div>
                                         @endif
                                     </blockquote>

@@ -271,3 +271,9 @@ php artisan up
 ・GitHubとつながらなくなった
 TLSの最新版じゃないとダメになったよう
 GitForWindowsを最新版に更新して、PhpStormのGitの設定でSSH executableをNativeにするとつながった
+
+
+
+・マスターデータ
+mysql -u root
+

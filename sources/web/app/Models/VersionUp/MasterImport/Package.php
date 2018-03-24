@@ -118,9 +118,9 @@ class Package extends MasterImportAbstract
                         $shopId = Shop::getIdByName($shop);
                         if ($shopId) {
                             if ($shopId == Shop::AMAZON) {
-                                if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
+                                //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
                                     \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
-                                }
+                                //}
                             } else if ($shopUrl) {
                                 DB::table('game_package_shops')
                                     ->insert([
@@ -135,9 +135,9 @@ class Package extends MasterImportAbstract
                     $shopId = Shop::getIdByName($pkg['shop']);
                     if ($shopId) {
                         if ($shopId == Shop::AMAZON) {
-                            if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
+                            //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
                                 \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $pkg['asin']);
-                            }
+                            //}
                         } else if (!empty($pkg['shop_url'])) {
                             DB::table('game_package_shops')
                                 ->insert([

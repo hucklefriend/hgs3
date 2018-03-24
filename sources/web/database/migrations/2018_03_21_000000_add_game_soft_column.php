@@ -18,10 +18,11 @@ class AddGameSoftColumn extends Migration
     {
         Schema::table('game_softs', function (Blueprint $table) {
             $table->text('introduction')->default('')->comment('説明文')->after('original_package_id');
-            $table->text('introduction_url')->default('')->comment('説明文引用元URL')->after('introduction');
-            $table->text('introduction_csite_title')->default('')->comment('説明文引用元のcsite表示のタイトル')->after('introduction_url');
-            $table->text('introduction_site_name')->default('')->comment('説明文引用元のサイト名')->after('introduction_csite_title');
+            $table->text('introduction_from')->default('')->comment('説明文引用元')->after('introduction');
         });
+
+        //$sql = "ALTER TABLE `game_softs` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL COMMENT 'ゲームソフトID'";
+        //\Illuminate\Support\Facades\DB::statement($sql);
     }
 
     /**

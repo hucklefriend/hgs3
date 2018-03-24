@@ -5,6 +5,9 @@
 
 namespace Hgs3\Models\VersionUp;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+
 class Master
 {
     /**
@@ -39,5 +42,13 @@ class Master
 
         echo 'update original package id.' . PHP_EOL;
         \Hgs3\Models\Game\Soft::updateOriginalPackageId(false);
+    }
+
+    public static function importSql($date)
+    {
+        $path = storage_path('master/all/' . $date . '.sql');
+        if (File::isFile($path)) {
+            DB::statement(File::get($path));
+        }
     }
 }

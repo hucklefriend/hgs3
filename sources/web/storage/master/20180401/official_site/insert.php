@@ -1,6 +1,6 @@
 <?php
 return array(
-    array('soft_id' => '1','title' => 'PS2版公式','url' => 'http://www.tecmo.co.jp/product/ff/index.htm','priority' => '1','created_at' => '2018-03-20 22:21:35','updated_at' => '2018-03-20 22:21:35'),
+   array('soft_id' => '1','title' => 'PS2版公式','url' => 'http://www.tecmo.co.jp/product/ff/index.htm','priority' => '1','created_at' => '2018-03-20 22:21:35','updated_at' => '2018-03-20 22:21:35'),
     array('soft_id' => '1','title' => 'XBOX版公式','url' => 'http://www.tecmo.co.jp/product/zero/index2.htm','priority' => '2','created_at' => '2018-03-20 22:21:35','updated_at' => '2018-03-20 22:21:35'),
     array('soft_id' => '3','title' => 'PS2版公式','url' => 'http://www.tecmo.co.jp/product/ff2/index.htm','priority' => '1','created_at' => '2018-03-20 22:21:35','updated_at' => '2018-03-20 22:21:35'),
     array('soft_id' => '3','title' => 'XBOX版公式','url' => 'http://www.tecmo.co.jp/product/zero2/index.htm','priority' => '2','created_at' => '2018-03-20 22:21:35','updated_at' => '2018-03-20 22:21:35'),
