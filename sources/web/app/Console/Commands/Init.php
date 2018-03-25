@@ -45,12 +45,12 @@ class Init extends Command
             $this->error('productionでは実行できません');
             return;
         }
-        $db = new Database;
-        $db->versionUp();
+        //$db = new Database;
+        //$db->versionUp();
 
         // マスターデータが更新されたら、新しいSQLを生成して日付を変える
         Master::importSql(20180401);
 
-        Collection::create();
+        //Collection::create();
     }
 }
