@@ -18,7 +18,7 @@ class OfficialSite extends MasterImportAbstract
     {
         if ($date == '20180401') {
             // ローカル環境でのみ実行
-            Orm\GameOfficialSite::truncate();
+            //Orm\GameOfficialSite::truncate();
             //self::insertFromPackage();
         }
 
