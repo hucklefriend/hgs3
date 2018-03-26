@@ -7,6 +7,7 @@ namespace Hgs3\Models\Orm;
 
 use Hgs3\Constants\PhoneticType;
 use Hgs3\Log;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class GameSoft extends \Eloquent
@@ -138,14 +139,14 @@ SQL;
     /**
      * パッケージを取得
      *
-     * @return array|\Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getPackages()
     {
         $packageLinks = GamePackageLink::where('soft_id', $this->id)
             ->get();
         if ($packageLinks->isEmpty()) {
-            return [];
+            return new Collection();
         }
 
         return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))

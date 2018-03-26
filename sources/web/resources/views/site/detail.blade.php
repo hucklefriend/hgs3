@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title'){{ $site->name }} | @endsection
+
 @section('global_back_link')
     <a href="{{ route('サイトトップ') }}"><i class="fas fa-angle-left"></i></a>
 @endsection

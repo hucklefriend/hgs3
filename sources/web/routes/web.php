@@ -83,12 +83,19 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::post('/game/series/add', 'Game\SeriesController@insert')->name('シリーズ登録処理');
     Route::get('/game/series/edit/{series}', 'Game\SeriesController@edit')->name('シリーズ編集');
     Route::patch('/game/series/edit/{series}', 'Game\SeriesController@update')->name('シリーズ編集処理');
+
+
 });
 
 
 // ユーザーのみ
 Route::group(['middleware' => ['auth']], function () {
     // レビュー
+    Route::post('/review/save', 'User\ReviewController@confirm')->name('レビュー保存');
+    Route::post('/review/confirm', 'User\ReviewController@confirm')->name('レビュー投稿確認');
+    Route::get('/review/write/{soft}', 'User\ReviewController@input')->name('レビュー入力');
+    Route::delete('/review/delete/{soft}', 'User\ReviewController@delete')->name('レビュー削除');
+    /*
     Route::get('/review/package_select/{soft}', 'Review\ReviewController@packageSelect')->name('レビューパッケージ選択');
     Route::get('/review/write/{soft}/{package}', 'Review\ReviewController@input')->name('レビュー投稿');
     Route::post('/review/confirm/{soft}/{package}', 'Review\ReviewController@confirm')->name('レビュー投稿確認');
@@ -99,6 +106,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/review/edit/{review}', 'Review\ReviewController@edit')->name('レビュー編集');
     Route::patch('/review/edit/{review}', 'Review\ReviewController@update')->name('レビュー編集処理');
     Route::delete('/review/edit/{review}', 'Review\ReviewController@delete')->name('レビュー削除');
+    */
 
     // サイト管理
     Route::get('/user/site_manage', 'User\SiteManageController@index')->name('サイト管理');

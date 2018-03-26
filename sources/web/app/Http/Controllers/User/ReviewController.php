@@ -1,9 +1,9 @@
 <?php
 /**
- * レビューコントローラ
+ * ユーザーレビューコントローラ
  */
 
-namespace Hgs3\Http\Controllers\Review;
+namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Review\WriteRequest;
@@ -18,59 +18,11 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     /**
-     * レビュートップページ
+     *
      */
     public function index()
     {
         return view('review.index', Review::getTopPageData(5));
-    }
-
-    /**
-     * 特定ゲームソフトのレビュー一覧
-     *
-     * @param Orm\GameSoft $soft
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function soft(Orm\GameSoft $soft)
-    {
-        $data = [
-            'soft'  => $soft,
-            'total' => null
-        ];
-
-        $total = Orm\ReviewTotal::find($soft->id);
-        if ($total !== null) {
-            $data['total'] = $total;
-            $data['reviews'] = Review::getNewArrivalsBySoft($soft->id, 10);
-
-            $pager = new LengthAwarePaginator([], $total->review_num, 10);
-            $pager->setPath('');
-
-            $data['pager'] = $pager;
-        }
-
-        return view('review.soft', $data);
-    }
-
-    /**
-     * パッケージ選択
-     *
-     * @param Orm\GameSoft $soft
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function packageSelect(Orm\GameSoft $soft)
-    {
-        $review = new Review();
-        $packages = $review->getPackageList($soft->id);
-
-        return view('review.packageSelect', [
-            'soft'     => $soft,
-            'packages' => $packages,
-            'shops'    => Package::getShopData(array_pluck($packages, 'id')),
-            'drafts'   => Orm\ReviewDraft::getHashBySoft(Auth::id(), $soft->id),
-            'written'  => Orm\Review::getHashBySoft(Auth::id(), $soft->id),
-            'dateInt'  => $this->getDateInt()
-        ]);
     }
 
     /**
@@ -90,24 +42,25 @@ class ReviewController extends Controller
      * @param Orm\GameSoft $soft
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function input(Orm\gameSoft $soft)
+    public function input(Orm\GameSoft $soft)
     {
         $isDraft = false;
         if (!empty(old())) {
             $draft = new Orm\ReviewDraft(old());
         } else {
-            $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id, $package->id);
+            $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
             if ($draft == null) {
-                $draft = Orm\ReviewDraft::getDefault(Auth::id(), $soft->id, $package->id);
+                $draft = Orm\ReviewDraft::getDefault(Auth::id(), $soft->id);
             } else {
                 $isDraft = true;
             }
         }
 
-        return view('review.input', [
-            'soft'    => $soft,
-            'draft'   => $draft,
-            'isDraft' => $isDraft
+        return view('user.review.input', [
+            'soft'     => $soft,
+            'packages' => $soft->getPackages(),
+            'draft'    => $draft,
+            'isDraft'  => $isDraft
         ]);
     }
 

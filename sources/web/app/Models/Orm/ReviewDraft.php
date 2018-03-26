@@ -9,23 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewDraft extends \Eloquent
 {
-    protected $primaryKey = ['user_id', 'soft_id', 'package_id'];
+    protected $primaryKey = ['user_id', 'soft_id'];
     public $incrementing = false;
-    protected $guarded = ['user_id', 'soft_id', 'package_id'];
+    protected $guarded = ['user_id', 'soft_id'];
 
     /**
      * デフォルト値が設定されているインスタンスを取得
      *
      * @param int $userId
      * @param int $softId
-     * @param int $packageId
      * @return ReviewDraft
      */
-    public static function getDefault($userId, $softId, $packageId)
+    public static function getDefault($userId, $softId)
     {
         $draft = new self([
-            'title'           => '',
-            'fear'            => 3,
+            'fear'            => 5,
             'story'           => 3,
             'volume'          => 3,
             'difficulty'      => 3,
@@ -41,7 +39,6 @@ class ReviewDraft extends \Eloquent
 
         $draft->user_id = $userId;
         $draft->soft_id = $softId;
-        $draft->package_id = $packageId;
 
         return $draft;
     }
@@ -51,9 +48,7 @@ class ReviewDraft extends \Eloquent
      */
     public function calcPoint()
     {
-        $this->point =
-            $this->fear * 4 + ($this->story + $this->volume + $this->difficulty +
-                $this->graphic + $this->sound + $this->crowded + $this->controllability + $this->recommend) * 2;
+        $this->point = 0;
     }
 
     /**
@@ -76,14 +71,12 @@ class ReviewDraft extends \Eloquent
      *
      * @param int $userId
      * @param int $softId
-     * @param int $packageId
      * @return Model|null|static
      */
-    public static function getData($userId, $softId, $packageId)
+    public static function getData($userId, $softId)
     {
-        return ReviewDraft::where('user_id', $userId)
-            ->where('soft_id', $softId)
-            ->where('package_id', $packageId)
+        return ReviewDraft::where('soft_id', $softId)
+            ->where('user_id', $userId)
             ->first();
     }
 }

@@ -89,9 +89,6 @@
         </div>
     </div>
 
-
-
-
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
@@ -335,7 +332,7 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">お気に入り <small>{{ number_format($favoriteNum) }}</small>人</h5>
+                    <h5 class="card-title">お気に入り <small>{{ number_format($favoriteNum) }}人</small></h5>
                     <div class="card-text">
                         @if ($favoriteNum == 0)
                             お気に入りに登録しているユーザーはいません。

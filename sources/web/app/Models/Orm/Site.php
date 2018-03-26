@@ -101,4 +101,19 @@ class Site extends \Eloquent
         return UserFavoriteSite::where('site_id', $this->id)
             ->count('site_id');
     }
+
+    /**
+     * テストデータ削除
+     *
+     * @throws \Exception
+     */
+    public static function deleteTestData()
+    {
+        $sites = self::where('approval_status', '<>', ApprovalStatus::OK)
+            ->get();
+
+        foreach ($sites as $s) {
+            \Hgs3\Models\Site::delete($s);
+        }
+    }
 }

@@ -13,6 +13,7 @@ class Database
      */
     public function versionUp()
     {
+/*
         echo 'copy company'.PHP_EOL;
         $this->copyCompany();
         echo 'copy platform'.PHP_EOL;
@@ -26,7 +27,7 @@ class Database
 
         echo 'copy original package id'.PHP_EOL;
         $this->setOriginalPackageId();
-
+*/
         echo 'generate password'.PHP_EOL;
         if (env('APP_ENV') == 'local') {
             $password = 'huckle';

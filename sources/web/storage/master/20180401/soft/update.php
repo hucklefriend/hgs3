@@ -94,4 +94,21 @@ return array(
 その時を境に梢子の運命の歯車は大きく回り出す事になる……。',
         'introduction_from' => '<a href="https://ja.wikipedia.org/wiki/%E3%82%A2%E3%82%AA%E3%82%A4%E3%82%B7%E3%83%AD" target="_blank"><cite title="Wikipedia 2018年3月17日 (土) 05:2更新版">Wikipedia</cite></a>'),
 
+    array('id' => '181','introduction' => '新任教師であるあなたは、「紅葉坂」という名を頼りに、森の奥の女子高に向かっていた———
+坂の下であなたを出迎える紅葉たちが、まっすぐに坂を上ってゆく。
+長い紅葉坂を登ると、ふいに視界に現れた巨大な門。
+鐘のない鐘楼と、大きな池を擁する、「鐘園学園（しょうえんがくえん）」。
+そこには、幾つもの謎の事件があなたを待っていた・・・。
+
+歴史に埋もれた不可解な事件、学園に忍び寄る黒い影。
+あなたは、いくつの謎に迫ることができるのか！？',
+        'introduction_from' => '<a href="http://www.marv.jp/special/game/ds/tsukinohikari/" target="_blank"><cite title="3DS版公式サイト">3DS版公式サイト</cite></a>'),
+
+    array('id' => '157','introduction' => '仕組まれた偶然に潜むのは、恍惚か？恐怖か？
+
+ドラマの進行を決めるのはプレーヤー自身。
+数々の選択肢から、予期せぬドラマが展開するマルチエンディングストーリー。
+君はすべての教学のラストを体感することができるか!?',
+        'introduction_from' => 'パッケージ'),
+
 );
