@@ -84,7 +84,7 @@ class Package extends MasterImportAbstract
             echo $pkg['name'] . PHP_EOL;
             $package = new Orm\GamePackage;
             $package->name = $pkg['name'];
-            $package->url = $pkg['url'];
+            //$package->url = $pkg['url'];
             $package->release_int = $pkg['release_int'];
             $package->release_at = $pkg['release_at'];
             if (isset($pkg['company']) && isset($companies[$pkg['company']])) {

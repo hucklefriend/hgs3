@@ -1,0 +1,14 @@
+{
+  "soft_id": [89],
+  "packages":[
+    {
+      "platform": "PSP",
+      "company": "SCE",
+      "name": "やるドラ ポータブル ダブルキャスト",
+      "shop": "PlayStation Store",
+      "shop_url": "https://store.playstation.com/ja-jp/product/JP9000-NPJG00052_00-0000000000000000",
+      "release_int": 20090924,
+      "release_at": "2009年9月24日"
+    }
+  ]
+}

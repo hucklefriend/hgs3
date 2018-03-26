@@ -61,7 +61,7 @@ INSERT INTO `game_companies` (`id`, `name`, `acronym`, `phonetic`, `url`, `wikip
 (39, 'ディンプル', 'ディンプル', 'でぃんぷる', 'http://www.dmpl.co.jp/', '', '2012-03-25 12:40:49', '2018-03-20 13:20:55'),
 (40, 'アウトブレイク', 'アウトブレイク', 'あうとぶれいく', '', '', '2012-03-25 12:40:49', '2018-03-20 13:20:55'),
 (41, 'ヒューマン', 'ヒューマン', 'ひゅーまん', '', '', '2012-03-25 12:40:49', '2018-03-20 13:20:55'),
-(42, 'ビー・ファクトリー', 'ビー・ファク', 'びーふぁくとりー', '', '', '2012-03-25 12:40:49', '2018-03-20 13:20:56'),
+(42, 'ビー・ファクトリー', 'ビーファク', 'びーふぁくとりー', '', '', '2012-03-25 12:40:49', '2018-03-20 13:20:56'),
 (43, 'ギャガ・コミュニケーションズ', 'ギャガ', 'ぎゃがこみゅにけーしょんず', '', '', '2012-03-25 12:40:49', '2018-03-20 13:20:56'),
 (44, 'アクレイムジャパン', 'アクレイム', 'あくれいむじゃぱん', '', '', '2012-03-25 12:40:49', '2018-03-20 13:20:56'),
 (45, 'ワープ', 'ワープ', 'わーぷ', '', '', '2012-03-25 12:40:49', '2018-03-20 13:20:56'),
@@ -176,7 +176,7 @@ INSERT INTO `game_companies` (`id`, `name`, `acronym`, `phonetic`, `url`, `wikip
 (157, '電脳CLUB', '電脳CLUB', 'でんのうくらぶ', '', '', '2018-03-20 13:21:13', '2018-03-20 13:21:13'),
 (158, 'TETRATECH', 'TETRATECH', 'てとらてっく', '', '', '2018-03-20 13:21:35', '2018-03-20 13:21:35'),
 (159, 'ビック東海', 'ビック東海', 'びっくとうかい', 'http://www.tokai-com.co.jp/', 'https://ja.wikipedia.org/wiki/TOKAI%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%BA', '2018-03-20 13:21:35', '2018-03-20 13:21:35'),
-(160, '加賀クリエイト', '加賀クリエイト', 'かがくりえいと', '', '', '2018-03-20 13:21:35', '2018-03-20 13:21:35');
+(160, '加賀クリエイト', '加賀', 'かがくりえいと', '', '', '2018-03-20 13:21:35', '2018-03-20 13:21:35');
 
 --
 -- テーブルのデータのダンプ `game_official_sites`
@@ -239,7 +239,7 @@ INSERT INTO `game_official_sites` (`soft_id`, `title`, `url`, `priority`, `creat
 (87, '公式', 'http://www.success-corp.co.jp/software/ps2/akaiito/', 1, '2018-03-24 01:22:21', '2018-03-24 01:22:21'),
 (88, 'PC版公式', 'http://www.success-corp.co.jp/software/pc/aoishiro/index.html', 2, '2018-03-24 01:22:21', '2018-03-24 01:22:21'),
 (88, 'PS2版公式', 'http://www.success-corp.co.jp/software/ps2/aoishiro/', 1, '2018-03-24 01:22:21', '2018-03-24 01:22:21'),
-(89, '公式', 'http://www.jp.playstation.com/software/title/jp9000npjg00052_000000000000000000.html', 1, '2018-03-24 01:22:21', '2018-03-24 01:22:21'),
+(89, 'PSP版公式', 'http://www.jp.playstation.com/software/title/ucjs10012.html', 3, '2018-03-24 01:22:21', '2018-03-24 01:22:21'),
 (93, '公式', 'http://www.square-enix.co.jp/774_2008/', 1, '2018-03-24 01:22:21', '2018-03-24 01:22:21'),
 (94, '公式', 'http://www.square-enix.co.jp/774/', 1, '2018-03-24 01:22:21', '2018-03-24 01:22:21'),
 (97, '公式', 'http://www.d3p.co.jp/haioku/', 1, '2018-03-24 01:22:21', '2018-03-24 01:22:21'),
@@ -256,7 +256,6 @@ INSERT INTO `game_official_sites` (`soft_id`, `title`, `url`, `priority`, `creat
 (112, '公式', 'http://www.konami.jp/gs/game/sh4/index.html', 1, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
 (113, '公式', 'http://www.konami.jp/gs/game/sh0/', 1, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
 (114, '公式', 'http://www.konami.jp/products/e3_2008_silenthill/', 1, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
-(117, '公式', 'http://www.capcom.co.jp/newproducts/consumer/dino/', 2, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
 (117, 'DL版公式', 'http://www.capcom.co.jp/product/detail.php?id=19', 1, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
 (120, 'PSカタログ', 'http://www.jp.playstation.com/software/title/slps02477.html', 1, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
 (120, '廉価版PSカタログ', 'http://www.jp.playstation.com/software/title/slps03198.html', 2, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
@@ -643,7 +642,7 @@ INSERT INTO `game_packages` (`id`, `platform_id`, `company_id`, `name`, `url`, `
 (220, 7, 56, '大幽霊屋敷～浜村淳の実話怪談～ (廉価版)', '', 19990805, '1999年8月5日', 0, 'http://ecx.images-amazon.com/images/I/6140ZYCVNJL._SL75_.jpg', 75, 74, 'http://ecx.images-amazon.com/images/I/6140ZYCVNJL._SL160_.jpg', 160, 159, 'http://ecx.images-amazon.com/images/I/6140ZYCVNJL.jpg', 500, 496, '2018-03-24 01:17:51', '2018-03-24 01:17:51'),
 (221, 7, 4, 'ダブルキャスト', '', 19980625, '1998年6月25日', 0, 'http://ecx.images-amazon.com/images/I/415R8YCCA2L._SL75_.jpg', 74, 75, 'http://ecx.images-amazon.com/images/I/415R8YCCA2L._SL160_.jpg', 157, 160, 'http://ecx.images-amazon.com/images/I/415R8YCCA2L.jpg', 251, 256, '2018-03-24 01:17:51', '2018-03-24 01:17:51'),
 (222, 7, 4, 'ダブルキャスト PlayStation the Best', '', 20010816, '2001年8月16日', 0, 'http://ecx.images-amazon.com/images/I/51MB9E1G0NL._SL75_.jpg', 75, 75, 'http://ecx.images-amazon.com/images/I/51MB9E1G0NL._SL160_.jpg', 160, 159, 'http://ecx.images-amazon.com/images/I/51MB9E1G0NL.jpg', 500, 498, '2018-03-24 01:17:51', '2018-03-24 01:17:51'),
-(223, 14, 4, 'ダブルキャスト', 'http://www.jp.playstation.com/scej/title/yarudora_p/wc.html', 20050728, '2005年7月28日', 0, 'http://ecx.images-amazon.com/images/I/51JCHY9EXHL._SL75_.jpg', 44, 75, 'http://ecx.images-amazon.com/images/I/51JCHY9EXHL._SL160_.jpg', 93, 160, 'http://ecx.images-amazon.com/images/I/51JCHY9EXHL.jpg', 291, 500, '2018-03-24 01:17:51', '2018-03-24 01:17:51'),
+(223, 14, 4, 'やるドラ ポータブル ダブルキャスト', 'http://www.jp.playstation.com/scej/title/yarudora_p/wc.html', 20050728, '2005年7月28日', 0, 'http://ecx.images-amazon.com/images/I/51JCHY9EXHL._SL75_.jpg', 44, 75, 'http://ecx.images-amazon.com/images/I/51JCHY9EXHL._SL160_.jpg', 93, 160, 'http://ecx.images-amazon.com/images/I/51JCHY9EXHL.jpg', 291, 500, '2018-03-24 01:17:51', '2018-03-24 01:17:51'),
 (224, 5, 32, '晦-つきこもり-', '', 19960301, '1996年3月1日', 0, 'http://ecx.images-amazon.com/images/I/21gwCBn5RfL._SL75_.jpg', 43, 75, 'http://ecx.images-amazon.com/images/I/21gwCBn5RfL._SL160_.jpg', 92, 160, 'http://ecx.images-amazon.com/images/I/21gwCBn5RfL.jpg', 115, 200, '2018-03-24 01:17:51', '2018-03-24 01:17:51'),
 (225, 9, 1, 'DEMENTO', 'http://www.capcom.co.jp/demento/', 20050421, '2005年4月21日', 0, 'http://ecx.images-amazon.com/images/I/51KW92HKVQL._SL75_.jpg', 53, 75, 'http://ecx.images-amazon.com/images/I/51KW92HKVQL._SL160_.jpg', 113, 160, 'http://ecx.images-amazon.com/images/I/51KW92HKVQL.jpg', 352, 500, '2018-03-24 01:17:51', '2018-03-24 01:17:51'),
 (226, 9, 1, 'DEMENTO カプコレ', 'http://www.capcom.co.jp/demento/', 20061214, '2006年12月14日', 0, 'http://ecx.images-amazon.com/images/I/51jHZQK6wgL._SL75_.jpg', 53, 75, 'http://ecx.images-amazon.com/images/I/51jHZQK6wgL._SL160_.jpg', 113, 160, 'http://ecx.images-amazon.com/images/I/51jHZQK6wgL.jpg', 353, 500, '2018-03-24 01:17:51', '2018-03-24 01:17:51'),
@@ -901,7 +900,7 @@ INSERT INTO `game_packages` (`id`, `platform_id`, `company_id`, `name`, `url`, `
 (492, 3, 114, 'Emily Wants to Play', 'http://www.emilywantstoplay.com/', 20151210, '2015年12月10日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:18:38', '2018-03-24 01:18:38'),
 (493, 31, 114, 'Emily Wants to Play', 'http://www.emilywantstoplay.com/', 20160130, '2016年1月30日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:18:38', '2018-03-24 01:18:38'),
 (494, 33, 13, 'Emily Wants to Play', 'http://nippon1.jp/consumer/indie_spirits/emily_wants_to_play/', 20170209, '2017年2月9日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:18:38', '2018-03-24 01:18:38'),
-(495, 3, 121, '死印', 'http://www.night-cry.com/', 20160329, '2016年3月29日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:18:38', '2018-03-24 01:18:38'),
+(495, 3, 125, 'Night Cry', 'http://www.night-cry.com/', 20160329, '2016年3月29日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:18:38', '2018-03-24 01:18:38'),
 (496, 26, 27, '@SIMPLE DLシリーズ Vol.5　THE 呪いの廃病院　～閉じ込められた顔のない少女～', 'http://www.d3p.co.jp/simpleseries/page11/', 20120912, '2012年9月12日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:18:38', '2018-03-24 01:18:38'),
 (497, 33, 113, 'Until Dawn - 惨劇の山荘 -', 'http://www.jp.playstation.com/scej/title/untildawn/', 20150827, '2015年8月27日', 0, 'https://images-fe.ssl-images-amazon.com/images/I/51LKP0pu9uL._SL75_.jpg', 60, 75, 'https://images-fe.ssl-images-amazon.com/images/I/51LKP0pu9uL._SL160_.jpg', 128, 160, 'https://images-fe.ssl-images-amazon.com/images/I/51LKP0pu9uL.jpg', 399, 500, '2018-03-24 01:18:38', '2018-03-24 01:18:38'),
 (498, 33, 113, 'Until Dawn - 惨劇の山荘 -', 'http://www.jp.playstation.com/scej/title/untildawn/', 20150827, '2015年8月27日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:18:38', '2018-03-24 01:18:38'),
@@ -976,7 +975,7 @@ INSERT INTO `game_packages` (`id`, `platform_id`, `company_id`, `name`, `url`, `
 (567, 29, 3, '零 ～濡鴉ノ巫女～ ダウンロード版', 'https://www.nintendo.co.jp/wiiu/al5j/', 20140927, '2014年9月27日', 0, 'https://images-fe.ssl-images-amazon.com/images/I/51sGq4IugrL._SL75_.jpg', 75, 75, 'https://images-fe.ssl-images-amazon.com/images/I/51sGq4IugrL._SL160_.jpg', 160, 160, 'https://images-fe.ssl-images-amazon.com/images/I/51sGq4IugrL.jpg', 500, 500, '2018-03-24 01:20:00', '2018-03-24 01:20:01'),
 (568, 33, 129, 'Crystal Rift', 'http://www.crystalrift.com/', 20170630, '2017年6月30日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:20:05', '2018-03-24 01:20:05'),
 (569, 3, 129, 'Crystal Rift', 'http://www.crystalrift.com/', 20160330, '2016年3月30日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:20:06', '2018-03-24 01:20:06'),
-(570, 33, NULL, 'アークシステムワークス', 'http://www.arcsystemworks.jp/daylight/', 20140828, '2014年8月28日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:20:06', '2018-03-24 01:20:06'),
+(570, 33, 119, 'DAYLIGHT', 'http://www.arcsystemworks.jp/daylight/', 20140828, '2014年8月28日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:20:06', '2018-03-24 01:20:06'),
 (571, 3, 134, 'Night Walker', '', 20010525, '2001年5月25日', 0, 'https://images-fe.ssl-images-amazon.com/images/I/41M9BV0QCFL._SL75_.jpg', 55, 75, 'https://images-fe.ssl-images-amazon.com/images/I/41M9BV0QCFL._SL160_.jpg', 116, 160, 'https://images-fe.ssl-images-amazon.com/images/I/41M9BV0QCFL.jpg', 233, 320, '2018-03-24 01:20:06', '2018-03-24 01:20:06'),
 (572, 3, 132, 'One\'s Own [or very]', '', 20000915, '2000年9月15日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:20:06', '2018-03-24 01:20:06'),
 (573, 3, 131, 'OUTLAST', 'https://redbarrelsgames.com/games/outlast/', 20130904, '2013年9月4日', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-03-24 01:20:06', '2018-03-24 01:20:06'),
@@ -2414,7 +2413,7 @@ INSERT INTO `game_platforms` (`id`, `company_id`, `name`, `acronym`, `sort_order
 (12, 4, 'PlayStation3', 'PS3', 20061111, NULL, NULL, '2012-03-25 12:40:53', '2012-03-25 12:40:53'),
 (13, 3, 'Wii', 'Wii', 20061202, NULL, NULL, '2012-03-25 12:40:53', '2012-03-25 12:40:53'),
 (14, 4, 'PlayStation Portable', 'PSP', 20041212, NULL, NULL, '2012-03-25 12:40:53', '2012-03-25 12:40:53'),
-(15, 3, 'ニンテンドーDS', 'NDS', 20041202, NULL, NULL, '2012-03-25 12:40:53', '2012-03-25 12:40:53'),
+(15, 3, 'ニンテンドーDS', 'DS', 20041202, NULL, NULL, '2012-03-25 12:40:53', '2012-03-25 12:40:53'),
 (16, 55, '3DO', '3DO', 19940399, NULL, NULL, '2012-03-25 12:40:53', '2012-03-25 12:40:53'),
 (17, 12, 'ドリームキャスト', 'DC', 19981127, NULL, NULL, '2012-03-25 12:40:53', '2012-03-25 12:40:53'),
 (18, 3, 'Game Cube', 'GC', 20010914, NULL, NULL, '2012-03-25 12:40:53', '2012-03-25 12:40:53'),
@@ -2433,7 +2432,7 @@ INSERT INTO `game_platforms` (`id`, `company_id`, `name`, `acronym`, `sort_order
 (32, 3, 'new ニンテンドー3DS', 'new3DS', 20141011, 'https://www.nintendo.co.jp/hardware/3dsseries/index.html', 'https://ja.wikipedia.org/wiki/New%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89%E3%83%BC3DS', '2018-03-24 01:18:11', '2018-03-24 01:18:11'),
 (33, 113, 'PlayStation4', 'PS4', 20140222, 'http://www.jp.playstation.com/', 'https://ja.wikipedia.org/wiki/PlayStation_4', '2018-03-24 01:18:11', '2018-03-24 01:18:11'),
 (34, 3, 'Nintendo Switch', 'Switch', 20170303, 'https://www.nintendo.co.jp/hardware/switch/index.html', 'https://ja.wikipedia.org/wiki/Nintendo_Switch', '2018-03-24 01:18:11', '2018-03-24 01:18:11'),
-(35, 11, 'XBOX One', 'XONE', 20140904, 'https://www.xbox.com/ja-JP/games/xbox-one', 'https://ja.wikipedia.org/wiki/Xbox_One', '2018-03-24 01:18:11', '2018-03-24 01:18:11'),
+(35, 11, 'XBOX One', 'XB1', 20140904, 'https://www.xbox.com/ja-JP/games/xbox-one', 'https://ja.wikipedia.org/wiki/Xbox_One', '2018-03-24 01:18:11', '2018-03-24 01:18:11'),
 (36, NULL, 'DVD-PG', 'DVD-PG', 99999998, '', 'https://ja.wikipedia.org/wiki/DVD%E3%83%97%E3%83%AC%E3%82%A4%E3%83%A4%E3%83%BC%E3%82%BA%E3%82%B2%E3%83%BC%E3%83%A0', '2018-03-24 01:20:05', '2018-03-24 01:20:05'),
 (37, NULL, 'PCエンジン', 'PCE', 19871030, '', 'https://ja.wikipedia.org/wiki/PC%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3', '2018-03-24 01:22:05', '2018-03-24 01:22:05');
 
