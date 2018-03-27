@@ -91,8 +91,8 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
 // ユーザーのみ
 Route::group(['middleware' => ['auth']], function () {
     // レビュー
-    Route::post('/review/save', 'User\ReviewController@confirm')->name('レビュー保存');
-    Route::post('/review/confirm', 'User\ReviewController@confirm')->name('レビュー投稿確認');
+    Route::post('/review/save', 'User\ReviewController@save')->name('レビュー保存');
+    Route::get('/review/confirm/{soft}', 'User\ReviewController@confirm')->name('レビュー投稿確認');
     Route::get('/review/write/{soft}', 'User\ReviewController@input')->name('レビュー入力');
     Route::delete('/review/delete/{soft}', 'User\ReviewController@delete')->name('レビュー削除');
     /*

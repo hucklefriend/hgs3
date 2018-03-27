@@ -9,26 +9,32 @@
 @section('content')
     <h1>レビュー投稿</h1>
 
-    @if ($isDraft)
+    @if (!$draft->isDefault)
     <div class="alert alert-warning" role="alert">
         下書きを読み込みました。
     </div>
     @endif
-
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $key => $error)
+                    <li>{{ $key }}: {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <p>入力される前に、注意事項をお読みください。</p>
 
 
-    <form method="POST" action="{{ route('レビュー投稿確認') }}" autocomplete="off">
+    <form method="POST" action="{{ route('レビュー保存') }}" autocomplete="off">
         <input type="hidden" name="soft_id" value="{{ $soft->id }}">
         {{ csrf_field() }}
 
-        <div>
-            <p>
-                プレイしたパッケージを選択してください。<br>
-                「遊んだことがあるゲーム」に登録済みであれば、デフォルトで選択されます。
-            </p>
+        <div class="form-group">
+            <label for="package_id">プレイしたパッケージ</label>
 
+            <div class="d-flex flex-wrap">
             @foreach ($packages as $pkg)
                 <div class="btn-group-toggle my-1" data-toggle="buttons">
                     <label class="btn btn-outline-info text-left handle_soft_check_btn border-0">
@@ -37,12 +43,20 @@
                     </label>
                 </div>
             @endforeach
+            </div>
+
+            <p class="text-muted mb-0">
+                <small>
+                    プレイしたパッケージを選択してください。<br>
+                    「遊んだことがあるゲーム」に登録済みであれば、デフォルトで選択されます。
+                </small>
+            </p>
         </div>
 
         <div class="form-group">
-            <label for="title">進捗状態</label>
-            <textarea name="title" id="title" class="form-control{{ invalid($errors, 'title') }}" required>{{ $draft->progress }}</textarea>
-            @include('common.error', ['formName' => 'title'])
+            <label for="progress">進捗状態</label>
+            <textarea name="progress" id="progress" class="form-control{{ invalid($errors, 'progress') }}">{{ $draft->progress }}</textarea>
+            @include('common.error', ['formName' => 'progress'])
             <p class="text-muted">
                 <small>
                     このゲームをどの程度遊んだか、簡単に書いてください。<br>
@@ -52,7 +66,7 @@
         </div>
 
         <div class="form-group">
-            <label for="title">怖さ</label>
+            <label for="fear">怖さ</label>
             <input type="range" id="fear" name="fear" min="0" max="8">
             <span id="fear_text"></span>
             @include('common.error', ['formName' => 'fear'])
@@ -65,7 +79,6 @@
 
         <div class="form-group">
             <label for="title">良かったところ</label>
-            <p>このゲームの良かったところがあれば選択してください。</p>
             <div class="d-flex flex-wrap">
             @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
                 <div class="btn-group-toggle my-1 mr-2" data-toggle="buttons">
@@ -76,22 +89,28 @@
                 </div>
             @endforeach
             </div>
+            <p class="text-muted">
+                <small>
+                    このゲームの良かったところがあれば選択してください。
+                </small>
+            </p>
         </div>
 
         <div class="form-group">
             <label for="title">すごく良かったところ</label>
-            <p>良かったところの中で、他のゲームと比べても特に優れているところがあれば選択してください。</p>
-            <p id="very_good_nothing">良かったところを選択してください</p>
-            <div class="d-flex flex-wrap" id="very_good_select">
+            <div class="d-flex flex-wrap">
                 @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
-                    <div class="btn-group-toggle my-1 mr-2" data-toggle="buttons" id="very_good_btn_{{ $tagId }}" style="display:none;">
-                        <label class="btn btn-outline-info text-left handle_soft_check_btn border-1">
+                    <div class="btn-group-toggle my-1 mr-2" data-toggle="buttons" id="very_good_btn_{{ $tagId }}">
+                        <label class="btn btn-outline-secondary text-left handle_soft_check_btn border-1 disabled">
                             <input type="checkbox" id="very_good_tag_{{ $tagId }}" class="handle_soft_check hide-check very_good_tag" name="very_good_tags[]" value="{{ $tagId }}" autocomplete="off">
                             <span>{{ $tagName }}</span>
                         </label>
                     </div>
                 @endforeach
             </div>
+            <p class="text-muted">
+                <small>良かったところの中で、他のゲームと比べても特に優れているところがあれば選択してください。</small>
+            </p>
         </div>
 
         <div class="form-group">
@@ -111,109 +130,160 @@
 
         <div class="form-group">
             <label for="title">すごく悪かったところ</label>
-            <p>悪かったところの中で、他のゲームと比べても特に劣っているところがあれば選択してください。</p>
-            <p id="very_bad_nothing">悪かったところを選択してください</p>
             <div class="d-flex flex-wrap" id="very_bad_select">
                 @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
-                    <div class="btn-group-toggle my-1 mr-2" data-toggle="buttons" id="very_bad_btn_{{ $tagId }}" style="display:none;">
-                        <label class="btn btn-outline-info text-left handle_soft_check_btn border-1">
-                            <input type="checkbox" id="very_bad_tag_{{ $tagId }}" class="handle_soft_check hide-check" name="very_bad_tags[]" value="{{ $tagId }}" autocomplete="off">
+                    <div class="btn-group-toggle my-1 mr-2" data-toggle="buttons" id="very_bad_btn_{{ $tagId }}">
+                        <label class="btn btn-outline-info text-left handle_soft_check_btn border-1 disabled">
+                            <input type="checkbox" id="very_bad_tag_{{ $tagId }}" class="handle_soft_check hide-check very_bad_tag" name="very_bad_tags[]" value="{{ $tagId }}" autocomplete="off">
                             <span>{{ $tagName }}</span>
                         </label>
                     </div>
                 @endforeach
             </div>
+
+            <p class="text-muted">
+                <small>悪かったところの中で、他のゲームと比べても特に劣っているところがあれば選択してください。</small>
+            </p>
         </div>
 
         <div class="form-group">
-            <label for="title">外部レビュー</label>
-            <textarea name="good_comment" id="url" class="form-control{{ invalid($errors, 'url') }}" required>{{ $draft->url }}</textarea>
-            @include('common.error', ['formName' => 'title'])
+            <label for="url">外部レビュー</label>
+            <input type="text" name="url" id="url" class="form-control{{ invalid($errors, 'url') }}" value="{{ old('url', $draft->url) }}">
+            @include('common.error', ['formName' => 'url'])
             <p class="text-muted">
                 <small>
-                    レビューを投稿しているブログなどがあれば、そちらのURLを記載してください。
+                    レビューを投稿しているブログなどがあれば、そちらのURLを記載してください。<br>
+                    URLは管理人がチェックしてからでないと、一般公開されません。
                 </small>
             </p>
         </div>
 
         <div class="form-group">
-            <label for="title">良い点</label>
+            <label for="good_comment">良い点</label>
             <p>このゲームの良い所について記入してください。</p>
-            <textarea name="good_comment" id="good_comment" class="form-control{{ invalid($errors, 'good_comment') }}" required>{{ $draft->good_comment }}</textarea>
-            @include('common.error', ['formName' => 'title'])
+            <textarea name="good_comment" id="good_comment" class="form-control{{ invalid($errors, 'good_comment') }}">{{ old('good_comment', $draft->good_comment) }}</textarea>
+            @include('common.error', ['formName' => 'good_comment'])
             <p class="text-muted">
-                <small>このゲームをどの程度遊んだか、簡単に書いてください。</small>
+                <small>このゲームの良い点について、言いたいことがあれば記入してください。</small>
             </p>
         </div>
 
         <div class="form-group">
-            <label for="title">悪い点</label>
-            <p>このゲームの悪い点について、言いたいことがあれば記入してください。</p>
-            <textarea name="bad_comment" id="bad_comment" class="form-control{{ invalid($errors, 'bad_comment') }}" required>{{ $draft->bad_comment }}</textarea>
+            <label for="bad_comment">悪い点</label>
+            <textarea name="bad_comment" id="bad_comment" class="form-control{{ invalid($errors, 'bad_comment') }}">{{ old('bad_comment', $draft->bad_comment) }}</textarea>
             @include('common.error', ['formName' => 'bad_comment'])
+
+            <p class="text-muted">
+                <small>このゲームの悪い点について、言いたいことがあれば記入してください。</small>
+            </p>
         </div>
 
         <div class="form-group">
-            <label for="title">総合評価</label>
-            <p>総合評価を記入してください。</p>
-            <textarea name="general_comment" id="general_comment" class="form-control{{ invalid($errors, 'general_comment') }}" required>{{ $draft->general_comment }}</textarea>
+            <label for="general_comment">総合評価</label>
+            <textarea name="general_comment" id="general_comment" class="form-control{{ invalid($errors, 'general_comment') }}">{{ old('general_comment', $draft->general_comment) }}</textarea>
             @include('common.error', ['formName' => 'general_comment'])
+            <p class="text-muted">
+                <small>総合評価を記入してください。</small>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary">保存</button>
+            <p class="text-muted">
+                <small>
+                    保存してもまだ公開はされません。<br>
+                    次の記入内容確認画面で、公開することによって初めて公開されます。
+                </small>
+            </p>
         </div>
     </form>
 
     <script>
         let fearText = {!! json_encode(\Hgs3\Constants\Review\Fear::$data)  !!};
-        let goodTags = {};
-        let veryGoodTags = {};
-        let badTags = {};
-        let veryBadTags = {};
+        let goodTags = {!! json_encode($draft->getGoodTags()) !!};
+        let veryGoodTags = {!! json_encode($draft->getVeryGoodTags()) !!};
+        let badTags = {!! json_encode($draft->getBadTags()) !!};
+        let veryBadTags = {!! json_encode($draft->getVeryBadTags()) !!};
+
+        let goodTagBtn = {};
+        let veryGoodTagBtn = {};
+        let badTagBtn = {};
+        let veryBadTagBtn = {};
 
         $(function (){
+            $('.good_tag').each(function (){
+                goodTagBtn[$(this).val()] = $(this);
+            });
+            $('.very_good_tag').each(function (){
+                veryGoodTagBtn[$(this).val()] = $(this);
+            });
+            $('.bad_tag').each(function (){
+                badTagBtn[$(this).val()] = $(this);
+            });
+            $('.bad_tag').each(function (){
+                veryBadTagBtn[$(this).val()] = $(this);
+            });
+
+
             $('#fear').on('input change', function (){
                 let val = parseInt($(this).val());
                 setFearText(val);
             });
 
             $('.good_tag').on('change', function (){
-                let tagId = $(this).val();
-                goodTags[tagId] = $(this).prop('checked');
-
-                if (goodTags[tagId]) {
-                    $('#very_good_btn_' + tagId).show();
-                } else {
-                    $('#very_good_tag_' + tagId).prop('checked', false);
-                    $('#very_good_btn_' + tagId).hide();
-                    $('#very_good_btn_' + tagId + ' label').removeClass('active');
-                }
-
-                if ($('.good_tag:checked').length == 0) {
-                    $('#very_good_nothing').show();
-                    $('#very_good_select').hide();
-                } else {
-                    $('#very_good_nothing').hide();
-                    $('#very_good_select').show();
-                }
+                changeVeryBtn('good', $(this).val(), $(this).prop('checked'));
             });
 
-
             $('.bad_tag').on('change', function (){
-                let tagId = $(this).val();
-                if ($(this).prop('checked')) {
-                    $('#very_bad_btn_' + tagId).show();
-                } else {
-                    $('#very_bad_tag_' + tagId).prop('checked', false);
-                    $('#very_bad_btn_' + tagId).hide();
-                    $('#very_bad_btn_' + tagId + ' label').removeClass('active');
-                }
+                changeVeryBtn('bad', $(this).val(), $(this).prop('checked'));
             });
 
             let fear = parseInt($('#fear').val());
             setFearText(fear);
+
+            if (goodTags.length == 0) {
+            } else {
+                goodTags.forEach(function (val){
+                    toggleButton(goodTagBtn[parseInt(val)], true);
+                });
+            }
+
+
+
         });
+
+        function changeVeryBtn(target, tagId, checked)
+        {
+            let check = $('#very_' + target + '_tag_' + tagId);
+            let label = $(check.parent().get(0));
+
+            if (checked) {
+                label.addClass('btn-outline-success');
+                label.removeClass('btn-outline-secondary');
+                label.removeClass('disabled');
+                toggleButton(check, false);
+            } else {
+                label.addClass('btn-outline-secondary');
+                label.removeClass('btn-outline-success');
+                toggleButton(check, false);
+                label.addClass('disabled');
+            }
+        }
 
         function setFearText(val)
         {
             $('#fear_text').text(fearText[val]);
+        }
+
+        function toggleButton(check, on)
+        {
+            check.prop('checked', on);
+
+            if (on) {
+                $(check.parent().get(0)).addClass('active');
+            } else {
+                $(check.parent().get(0)).removeClass('active');
+            }
         }
     </script>
 

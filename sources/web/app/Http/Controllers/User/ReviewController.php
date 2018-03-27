@@ -26,17 +26,6 @@ class ReviewController extends Controller
     }
 
     /**
-     * 今日の日付のintを取得(yyyymmdd)
-     *
-     * @return int
-     */
-    private function getDateInt()
-    {
-        $dt = new \DateTime();
-        return intval($dt->format('Ymd'));
-    }
-
-    /**
      * 入力画面
      *
      * @param Orm\GameSoft $soft
@@ -44,40 +33,28 @@ class ReviewController extends Controller
      */
     public function input(Orm\GameSoft $soft)
     {
-        $isDraft = false;
-        if (!empty(old())) {
-            $draft = new Orm\ReviewDraft(old());
-        } else {
-            $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
-            if ($draft == null) {
-                $draft = Orm\ReviewDraft::getDefault(Auth::id(), $soft->id);
-            } else {
-                $isDraft = true;
-            }
-        }
+        // 下書きを取得
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
 
         return view('user.review.input', [
             'soft'     => $soft,
             'packages' => $soft->getPackages(),
             'draft'    => $draft,
-            'isDraft'  => $isDraft
         ]);
     }
 
     /**
      * 確認
      *
-     * @param WriteRequest $request
-     * @param Orm\GamePackage $package
      * @param Orm\gameSoft $soft
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function confirm(WriteRequest $request, Orm\gameSoft $soft, Orm\GamePackage $package)
+    public function confirm(Orm\gameSoft $soft)
     {
         $draft = new Orm\ReviewDraft;
         $this->setDraftData($request, $draft);
 
-        return view('review.confirm', [
+        return view('user.review.confirm', [
             'soft'    => $soft,
             'package' => $package,
             'user'    => Auth::user(),
@@ -89,53 +66,17 @@ class ReviewController extends Controller
      * 保存
      *
      * @param WriteRequest $request
-     * @param Orm\GameSoft $soft
-     * @param Orm\GamePackage $package
      * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function save(WriteRequest $request, Orm\GameSoft $soft, Orm\GamePackage $package)
+    public function save(WriteRequest $request)
     {
-        // TODO: 発売日が過ぎているか
+        $draft = new Orm\ReviewDraft;
+        $this->setDraftData($request, $draft);
 
+        Review::saveDraft($draft, $request->get('good_tags', []), $request->get('very_good_tags', []),
+            $request->get('bad_tags', []), $request->get('very_bad_tags', []));
 
-        $draftType = $request->get('draft');
-
-        if ($draftType == -1) {
-            // 入力画面に戻る
-            return redirect('review/write/' . $soft->id . '/' . $package->id)->withInput();
-        } if ($draftType == 1) {
-            // 下書き保存
-            $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id, $package->id);
-            if ($draft === null) {
-                $draft = new Orm\ReviewDraft;
-            }
-
-            $this->setDraftData($request, $draft);
-            $draft->soft_id = $soft->id;
-            $draft->package_id = $package->id;
-            $draft->save();
-
-            return view('review.saveDraft', [
-                'package' => $package,
-                'soft'    => $soft
-            ]);
-        } else {
-            // 下書きに保存
-            $draft = new Orm\ReviewDraft;
-            $this->setDraftData($request, $draft);
-            $draft->soft_id = $package->soft_id;
-            $draft->package_id = $package->id;
-
-            // レビュー投稿
-            $review = new Orm\Review($draft->toArray());
-            $review->save();
-
-            return view('review.complete', [
-                'reviewId' => $review->id,
-                'package'  => $package,
-                'soft'     => $soft
-            ]);
-        }
+        redirect()->route('レビュー投稿確認', ['soft' => $draft->soft_id]);
     }
 
     /**
@@ -148,21 +89,14 @@ class ReviewController extends Controller
     {
         $draft->user_id = \Auth::id();
         $draft->soft_id = $request->get('soft_id');
-        $draft->package_id = $request->get('package_id');
-        $draft->title = $request->get('title') ?? '';
-        $draft->fear = intval($request->get('fear') ?? 3);
-        $draft->story = intval($request->get('story') ?? 3);
-        $draft->volume = intval($request->get('volume') ?? 3);
-        $draft->difficulty = intval($request->get('difficulty') ?? 3);
-        $draft->graphic = intval($request->get('graphic') ?? 3);
-        $draft->sound = intval($request->get('sound') ?? 3);
-        $draft->crowded = intval($request->get('crowded') ?? 3);
-        $draft->controllability = intval($request->get('controllability') ?? 3);
-        $draft->recommend = intval($request->get('recommend') ?? 3);
-        $draft->progress = $request->get('progress') ?? '';
-        $draft->text = $request->get('text') ?? '';
-        $draft->is_spoiler = $request->get('is_spoiler') ?? 0;
-        $draft->calcPoint();
+        $draft->package_id = json_encode($request->get('package_id'));
+        $draft->fear = intval($request->get('fear'));
+        $draft->url = $request->get('url', '');
+        $draft->progress = $request->get('progress', '');
+        $draft->good_comment = $request->get('good_comment', '');
+        $draft->bad_comment = $request->get('bad_comment', '');
+        $draft->general_comment = $request->get('general_comment', '');
+        $draft->is_spoiler = $request->get('is_spoiler', 0);
     }
 
     /**

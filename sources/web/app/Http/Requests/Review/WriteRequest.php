@@ -27,9 +27,17 @@ class WriteRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'    => 'required|max:100',
-            'progress' => 'required|max:300',
-            'text'     => 'required|max:10000'
+            'soft_id'         => 'required|exists:game_softs,id',
+            'progress'        => 'nullable|string|max:300',
+            'fear'            => 'required|integer|between:0,8',
+            'good_tags'       => 'nullable|array',
+            'very_good_tags'  => 'nullable|array',
+            'bad_tags'        => 'nullable|array',
+            'ver_bad_tags'    => 'nullable|array',
+            'good_comment'    => 'nullable|string|max:10000',
+            'bad_comment'     => 'nullable|string|max:10000',
+            'general_comment' => 'nullable|string|max:10000',
+            'is_spoiler'      => 'nullable|integer|between:0,1'
         ];
     }
 }

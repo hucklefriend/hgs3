@@ -23,10 +23,10 @@ class CreateReviewDraftsTable2 extends Migration
             $table->unsignedInteger('soft_id')->comment('ゲームソフトID');
             $table->text('package_id')->comment('パッケージID');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
+            $table->text('url')->nullable()->comment('URL');
             $table->text('progress')->comment('ゲームの進行状態');
             $table->text('good_comment')->comment('良い点');
             $table->text('bad_comment')->comment('悪い点');
-            $table->unsignedInteger('point')->comment('ポイント');
             $table->text('general_comment')->comment('総合評価');
             $table->unsignedTinyInteger('is_spoiler')->default(0)->comment('ネタバレ有無');
             $table->timestamps();
@@ -41,6 +41,6 @@ class CreateReviewDraftsTable2 extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('review_drafts');
     }
 }

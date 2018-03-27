@@ -438,4 +438,70 @@ SQL;
 
         return DB::select($sql, [$gameId]);
     }
+
+    /**
+     * 下書き保存
+     *
+     * @param Orm\ReviewDraft $draft
+     * @param array $goodTags
+     * @param array $veryGoodTags
+     * @param array $badTags
+     * @param array $veryBadTags
+     * @throws \Exception
+     */
+    public static function saveDraft(Orm\ReviewDraft $draft, array $goodTags, array $veryGoodTags, array $badTags, array $veryBadTags)
+    {
+        DB::beginTransaction();
+
+        $tagData = [];
+
+        // 良いところ
+        foreach ($goodTags as $goodTag) {
+            $tagData[$goodTag] = [
+                'soft_id' => $draft->soft_id,
+                'user_id' => $draft->user_id,
+                'tag'     => $goodTag,
+                'point'   => 1
+            ];
+        }
+
+        // 特に優れているところ
+        foreach ($veryGoodTags as $veryGoodTag) {
+            if (isset($tagData[$veryGoodTag])) {
+                $tagData[$veryGoodTag]['point'] = 2;
+            }
+        }
+
+        // 悪いところ
+        foreach ($badTags as $badTag) {
+            $tagData[$badTag] = [
+                'soft_id' => $draft->soft_id,
+                'user_id' => $draft->user_id,
+                'tag'     => $badTag,
+                'point'   => -1
+            ];
+        }
+
+        // 特にわるいところ
+        foreach ($veryBadTags as $veryBadTag) {
+            if (isset($tagData[$veryBadTag])) {
+                $tagData[$veryBadTag]['point'] = -2;
+            }
+        }
+
+        try {
+            Orm\ReviewDraftTag::where('user_id', $draft->user_id)
+                ->where('soft_id', $draft->soft_id)
+                ->delete();
+
+            Orm\ReviewDraftTag::insert($tagData);
+
+            $draft->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Hgs3\Log::exceptionError($e);
+        }
+    }
 }

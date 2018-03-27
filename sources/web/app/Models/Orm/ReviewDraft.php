@@ -13,6 +13,12 @@ class ReviewDraft extends \Eloquent
     public $incrementing = false;
     protected $guarded = ['user_id', 'soft_id'];
 
+    public $isDefault = false;
+    private $goodTags = null;
+    private $veryGoodTags = null;
+    private $badTags = null;
+    private $veryBadTags = null;
+
     /**
      * デフォルト値が設定されているインスタンスを取得
      *
@@ -23,32 +29,20 @@ class ReviewDraft extends \Eloquent
     public static function getDefault($userId, $softId)
     {
         $draft = new self([
-            'fear'            => 5,
-            'story'           => 3,
-            'volume'          => 3,
-            'difficulty'      => 3,
-            'graphic'         => 3,
-            'sound'           => 3,
-            'crowded'         => 3,
-            'controllability' => 3,
-            'recommend'       => 3,
+            'fear'            => 4,
+            'url'             => '',
             'progress'        => '',
-            'text'            => '',
+            'good_comment'    => '',
+            'bad_comment'     => '',
+            'general_comment' => '',
             'is_spoiler'      => 0
         ]);
 
         $draft->user_id = $userId;
         $draft->soft_id = $softId;
+        $draft->isDefault = true;
 
         return $draft;
-    }
-
-    /**
-     * ポイントの計算
-     */
-    public function calcPoint()
-    {
-        $this->point = 0;
     }
 
     /**
@@ -71,12 +65,88 @@ class ReviewDraft extends \Eloquent
      *
      * @param int $userId
      * @param int $softId
-     * @return Model|null|static
+     * @return Model|static
      */
     public static function getData($userId, $softId)
     {
-        return ReviewDraft::where('soft_id', $softId)
+        $draft = self::where('soft_id', $softId)
             ->where('user_id', $userId)
             ->first();
+
+        return $draft ?? self::getDefault($userId, $softId);
+    }
+
+    public function getGoodTags()
+    {
+        if ($this->isDefault) {
+            return [1,2];
+        }
+        $this->setTags();
+
+        return $this->goodTags;
+    }
+
+    public function getVeryGoodTags()
+    {
+        if ($this->isDefault) {
+            return [];
+        }
+        $this->setTags();
+
+        return $this->veryGoodTags;
+    }
+
+    public function getBadTags()
+    {
+        if ($this->isDefault) {
+            return [];
+        }
+        $this->setTags();
+
+        return $this->badTags;
+    }
+
+    public function getVeryBadTags()
+    {
+        if ($this->isDefault) {
+            return [];
+        }
+
+        $this->setTags();
+
+        return $this->veryBadTags;
+    }
+
+    private function setTags()
+    {
+        if ($this->goodTags !== null) {
+            return;
+        }
+
+        $this->goodTags = [];
+        $this->veryGoodTags = [];
+        $this->badTags = [];
+        $this->veryBadTags = [];
+
+        $tags = ReviewDraftTag::where('soft_id', $this->soft_id)
+            ->where('user_id', $this->user_id)
+            ->get();
+
+        foreach ($tags as $tag) {
+            switch ($tag->point) {
+                case 1:
+                    $this->goodTags[] = $tag->tag;
+                    break;
+                case 2:
+                    $this->veryGoodTags[] = $tag->tag;
+                    break;
+                case -1:
+                    $this->baTags[] = $tag->tag;
+                    break;
+                case -2:
+                    $this->veryBadTags[] = $tag->tag;
+                    break;
+            }
+        }
     }
 }
