@@ -4,10 +4,9 @@
  */
 
 namespace Hgs3\Models\Orm;
-use Hgs3\Models\Timeline;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Hgs3\Log;
 
 class Review extends \Eloquent
 {
@@ -46,49 +45,12 @@ class Review extends \Eloquent
     public function calcPoint()
     {
         $this->point =
-            $this->fear * 4 + ($this->story + $this->volume + $this->difficulty +
-                $this->graphic + $this->sound + $this->crowded + $this->controllability + $this->recommend) * 2;
+            $this->fear * 5 + ($this->good_tag_num + $this->very_good_tag_num * 2) -
+            ($this->bad_tag_num + $this->very_bad_tag_num * 2);
     }
 
     /**
-     * 同じゲームの下書きを取得
      *
-     * @param int $userId
-     * @param int $softId
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public static function getHashBySoft($userId, $softId)
-    {
-        $data = self::where('user_id', $userId)
-            ->select(['id', 'package_id'])
-            ->where('soft_id', $softId)
-            ->get();
-
-        $result = [];
-        foreach ($data as $row) {
-            $result[$row->package_id] = $row->id;
-        }
-
-        unset($data);
-
-        return $result;
-    }
-
-    /**
-     * いいね履歴を取得する
-     *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function getGoodHistory()
-    {
-        return DB::table('review_good_histories')
-            ->where('review_id', $this->id)
-            ->orderBy('good_at', 'DESC')
-            ->paginate(20);
-    }
-
-    /**
-     * 削除
      */
     public function delete()
     {

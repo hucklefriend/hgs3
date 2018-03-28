@@ -4,6 +4,8 @@
  */
 
 namespace Hgs3\Models\Orm;
+use Hgs3\Log;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -46,21 +48,6 @@ class ReviewDraft extends \Eloquent
     }
 
     /**
-     * 同じゲームで下書きがあるパッケージIDのハッシュを取得
-     *
-     * @param int $userId
-     * @param int $softId
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public static function getHashBySoft($userId, $softId)
-    {
-        return self::where('user_id', $userId)
-            ->where('soft_id', $softId)
-            ->get()
-            ->pluck('package_id', 'package_id');
-    }
-
-    /**
      * データを取得
      *
      * @param int $userId
@@ -76,6 +63,11 @@ class ReviewDraft extends \Eloquent
         return $draft ?? self::getDefault($userId, $softId);
     }
 
+    /**
+     * 良いタグ
+     *
+     * @return array|null
+     */
     public function getGoodTags()
     {
         if ($this->isDefault) {
@@ -86,6 +78,11 @@ class ReviewDraft extends \Eloquent
         return $this->goodTags;
     }
 
+    /**
+     * とても良いタグ
+     *
+     * @return array|null
+     */
     public function getVeryGoodTags()
     {
         if ($this->isDefault) {
@@ -96,6 +93,11 @@ class ReviewDraft extends \Eloquent
         return $this->veryGoodTags;
     }
 
+    /**
+     * 悪いタグ
+     *
+     * @return array|null
+     */
     public function getBadTags()
     {
         if ($this->isDefault) {
@@ -106,6 +108,11 @@ class ReviewDraft extends \Eloquent
         return $this->badTags;
     }
 
+    /**
+     * 特に悪いタグ
+     *
+     * @return array|null
+     */
     public function getVeryBadTags()
     {
         if ($this->isDefault) {
@@ -117,6 +124,9 @@ class ReviewDraft extends \Eloquent
         return $this->veryBadTags;
     }
 
+    /**
+     * タグをセット
+     */
     private function setTags()
     {
         if ($this->goodTags !== null) {
@@ -148,5 +158,52 @@ class ReviewDraft extends \Eloquent
                     break;
             }
         }
+    }
+
+    /**
+     * パッケージの配列を取得
+     *
+     * @return Collection|static[]
+     */
+    public function getPackages()
+    {
+        $arr = json_decode($this->package_id, true);
+
+        if (empty($arr)) {
+            return new Collection();
+        }
+
+        return GamePackage::whereIn('id', $arr)
+            ->get();
+    }
+
+
+    /**
+     * 下書き削除
+     *
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function delete()
+    {
+        $result = true;
+
+        DB::beginTransaction();
+        try {
+            // タグを削除
+            ReviewDraftTag::where('user_id', $this->user_id)
+                ->where('soft_id', $this->soft_id)
+                ->delete();
+
+            // 下書きを削除
+            $result = parent::delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+        }
+
+        return $result;
     }
 }

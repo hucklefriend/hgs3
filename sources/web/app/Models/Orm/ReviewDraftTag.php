@@ -1,6 +1,6 @@
 <?php
 /**
- * ORM: review_drafts
+ * ORM: review_draft_tags
  */
 
 namespace Hgs3\Models\Orm;
