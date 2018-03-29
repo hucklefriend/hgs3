@@ -37,7 +37,8 @@ class ReviewDraft extends \Eloquent
             'good_comment'    => '',
             'bad_comment'     => '',
             'general_comment' => '',
-            'is_spoiler'      => 0
+            'is_spoiler'      => 0,
+            'package_id'      => json_encode([]),
         ]);
 
         $draft->user_id = $userId;
@@ -151,7 +152,7 @@ class ReviewDraft extends \Eloquent
                     $this->veryGoodTags[] = $tag->tag;
                     break;
                 case -1:
-                    $this->baTags[] = $tag->tag;
+                    $this->badTags[] = $tag->tag;
                     break;
                 case -2:
                     $this->veryBadTags[] = $tag->tag;
@@ -205,5 +206,38 @@ class ReviewDraft extends \Eloquent
         }
 
         return $result;
+    }
+
+    /**
+     * updateができないので、オーバーロードして実装
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = [])
+    {
+        if ($this->exists) {
+            $data = $this->toArray();
+            unset($data['user_id']);
+            unset($data['soft_id']);
+            unset($data['updated_at']);
+            unset($data['created_at']);
+
+            DB::table('review_drafts')
+                ->where('user_id', $this->user_id)
+                ->where('soft_id', $this->soft_id)
+                ->update($data);
+            return true;
+        } else {
+            return parent::save($options);
+        }
+    }
+
+    public function calcPoint()
+    {
+        $this->setTags();
+
+        return $this->fear * 5 + (count($this->goodTags) + (count($this->veryGoodTags) * 2))
+            - (count($this->badTags) + (count($this->veryBadTags) * 2));
     }
 }

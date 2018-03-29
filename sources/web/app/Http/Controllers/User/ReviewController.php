@@ -22,7 +22,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return view('review.index', Review::getTopPageData(5));
+        return view('user.review.index');
     }
 
     /**
@@ -33,6 +33,8 @@ class ReviewController extends Controller
      */
     public function input(Orm\GameSoft $soft)
     {
+        // TODO 公開済みのレビューかチェック
+
         // 下書きを取得
         $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
 
@@ -51,13 +53,15 @@ class ReviewController extends Controller
      */
     public function save(WriteRequest $request)
     {
+        // TODO 公開済みのレビューかチェック
+
         $draft = Orm\ReviewDraft::getData(Auth::id(), $request->get('soft_id'));
         $this->setDraftData($request, $draft);
 
         Review::saveDraft($draft, $request->get('good_tags', []), $request->get('very_good_tags', []),
             $request->get('bad_tags', []), $request->get('very_bad_tags', []));
 
-        redirect()->route('レビュー投稿確認', ['soft' => $draft->soft_id]);
+        return redirect()->route('レビュー投稿確認', ['soft' => $draft->soft_id]);
     }
 
     /**
@@ -72,13 +76,14 @@ class ReviewController extends Controller
 
         if ($draft->isDefault) {
             session(['nothing_draft_message' => 1]);
-            redirect()->route('ユーザーのレビュー');
+            return redirect()->route('ユーザーのレビュー');
         } else {
             return view('user.review.confirm', [
-                'soft'     => $soft,
-                'user'     => Auth::user(),
-                'draft'    => $draft,
-                'packages' => $draft->getPackages()
+                'soft'      => $soft,
+                'orgPkgImg' => small_image_url($soft->originalPackage()),
+                'user'      => Auth::user(),
+                'draft'     => $draft,
+                'packages'  => $draft->getPackages()
             ]);
         }
     }
@@ -87,6 +92,8 @@ class ReviewController extends Controller
      * 下書きを公開
      *
      * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function open(Orm\GameSoft $soft)
     {
@@ -94,14 +101,13 @@ class ReviewController extends Controller
 
         if ($draft->isDefault) {
             session(['nothing_draft_message' => 1]);
-            redirect()->route('ユーザーのレビュー');
+            return redirect()->route('ユーザーのレビュー');
         } else {
             Review::open($draft);
 
-            redirect()->back()->with('success', 1);
+            return redirect()->back()->with('success', 1);
         }
     }
-
 
     /**
      * 下書きモデルに値をセット
@@ -111,7 +117,7 @@ class ReviewController extends Controller
      */
     private function setDraftData(WriteRequest $request, Orm\ReviewDraft $draft)
     {
-        $draft->package_id = json_encode($request->get('package_id'));
+        $draft->package_id = json_encode($request->get('package_id', []));
         $draft->fear = intval($request->get('fear'));
         $draft->url = $request->get('url', '');
         $draft->progress = $request->get('progress', '');

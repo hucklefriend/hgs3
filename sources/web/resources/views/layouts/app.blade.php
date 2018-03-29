@@ -28,6 +28,8 @@
         <script src="{{ url('/js/bootstrap-datepicker.ja.min.js') }}"></script>
     @endif
 
+    <script src="{{ url('/js/common.js') }}"></script>
+
     @yield('head_append')
 
     @if (env('APP_ENV') == 'production')

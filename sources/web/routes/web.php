@@ -94,6 +94,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/review/save', 'User\ReviewController@save')->name('レビュー保存');
     Route::get('/review/confirm/{soft}', 'User\ReviewController@confirm')->name('レビュー投稿確認');
     Route::get('/review/write/{soft}', 'User\ReviewController@input')->name('レビュー入力');
+    Route::post('/review/open', 'User\ReviewController@open')->name('レビュー公開');
     Route::delete('/review/delete/{soft}', 'User\ReviewController@delete')->name('レビュー削除');
     /*
     Route::get('/review/package_select/{soft}', 'Review\ReviewController@packageSelect')->name('レビューパッケージ選択');

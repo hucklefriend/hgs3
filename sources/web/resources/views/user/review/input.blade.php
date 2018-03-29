@@ -38,7 +38,7 @@
             @foreach ($packages as $pkg)
                 <div class="btn-group-toggle my-1" data-toggle="buttons">
                     <label class="btn btn-outline-info text-left handle_soft_check_btn border-0">
-                        <input type="checkbox" class="handle_soft_check hide-check" name="package_id[]" value="{{ $pkg->id }}" autocomplete="off">
+                        <input type="checkbox" id="pkg_{{ $pkg->id }}" class="handle_soft_check hide-check" name="package_id[]" value="{{ $pkg->id }}" autocomplete="off">
                         <span>{{ $pkg->name }}</span>
                     </label>
                 </div>
@@ -188,6 +188,18 @@
         </div>
 
         <div class="form-group">
+            <label for="general_comment">ネタバレ</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="is_spoiler" id="is_spoiler1" value="0"{{ checked(old('is_spoiler', $draft->is_spoiler), 0) }}>
+                <label class="form-check-label" for="inlineRadio1">なし</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="is_spoiler" id="is_spoiler2" value="1"{{ checked(old('is_spoiler', $draft->is_spoiler), 1) }}>
+                <label class="form-check-label" for="is_spoiler2">あり</label>
+            </div>
+        </div>
+
+        <div class="form-group">
             <button class="btn btn-primary">保存</button>
             <p class="text-muted">
                 <small>
@@ -199,6 +211,7 @@
     </form>
 
     <script>
+        let packageId = {!! old('package_id', null) == null ? $draft->package_id : json_encode(old('package_id')) !!}
         let fearText = {!! json_encode(\Hgs3\Constants\Review\Fear::$data)  !!};
         let goodTags = {!! json_encode($draft->getGoodTags()) !!};
         let veryGoodTags = {!! json_encode($draft->getVeryGoodTags()) !!};
@@ -248,8 +261,9 @@
                 });
             }
 
-
-
+            packageId.forEach(function (pkgId){
+                toggleButton($('#pkg_' + pkgId), true);
+            });
         });
 
         function changeVeryBtn(target, tagId, checked)
@@ -273,17 +287,6 @@
         function setFearText(val)
         {
             $('#fear_text').text(fearText[val]);
-        }
-
-        function toggleButton(check, on)
-        {
-            check.prop('checked', on);
-
-            if (on) {
-                $(check.parent().get(0)).addClass('active');
-            } else {
-                $(check.parent().get(0)).removeClass('active');
-            }
         }
     </script>
 

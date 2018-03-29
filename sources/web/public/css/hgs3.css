@@ -252,7 +252,6 @@ a:active .no-image-text-inner {
 }
 
 .package-image {
-    min-width: 70px;
     max-width: 100%;
 }
 
