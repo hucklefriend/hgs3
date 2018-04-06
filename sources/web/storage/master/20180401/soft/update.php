@@ -396,5 +396,36 @@ return array(
 今晩も、噂に招き寄せられた者がチャットに集っていた。',
         'introduction_from' => '<a href="https://www.nintendo.co.jp/wii/software/scaj/" target="_blank"><cite title="任天堂">Wiiソフトウェア</cite></a>'),
 
+    array('id' => '183','introduction' => '目を合わせてはいけない。
+そのドラッグを口にした者は、”何か”が見え、そして焼け死ぬ……。',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4974365835088" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a>'),
 
+    array('id' => '184','introduction' => '若者たちの間に流行するドラッグ「ビジョン」。
+遊び感覚でそれを手に入れたものは、次々と謎の焼死を遂げてしまう。
+その事件につながる「」の悲しい運命、忌まわしき呪いとは…？',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4974365142209" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a>'),
+
+    array('id' => '41','introduction' => '消えた友人を探すために「名も無き森」の館に入った三人。
+館の怨念の真実を解き無事友人を助けて脱出できるのか!?',
+        'introduction_from' => '<a href="http://www.gae.co.jp/arc/1493" target="_blank"><cite title="公式サイト">公式サイト</cite></a>'),
+
+    array('id' => '167','introduction' => '遅くまでの残業のため、仕事の帰りにいつも乗っている最終電車。
+しかし、その日は何か様子が違っていた。
+最終電車は各駅停車のはずなのだが、自分の降りる駅で電車が止まらなかった。
+何故電車は止まらないのか、主人公はその謎を解こうと最後尾から先頭車両へと移動する。
+そこで主人公が見たものは・・・。',
+        'introduction_from' => '<a href="https://ja.wikipedia.org/wiki/%E6%9C%80%E7%B5%82%E9%9B%BB%E8%BB%8A_(%E3%82%B2%E3%83%BC%E3%83%A0)" target="_blank"><cite title="Wikipedia 2016年8月18日 (木) 07:57更新版">Wikipedia</cite></a>'),
+
+    array('id' => '251','introduction' => 'ソビエト時代の古びた列車が暗いルーマニアの森を走り抜ける。
+その列車のコンパートメントに座る旅行中の夫婦。
+2人の些細な諍いからこの物語は始まる。
+乗り合わせた様々な乗客たちと共に運命の悲劇に巻き込まれていくとも知らずに……',
+        'introduction_from' => '<a href="https://game.watch.impress.co.jp/docs/review/478793.html" target="_blank"><cite title="GAME Watch">GAME Watch</cite></a>'),
+
+    array('id' => '78','introduction' => '生の終焉を迎えた者たちが、残す最後の囁き。
+その悲しみの声に導かれ、男は自分の心にある楔を引き抜くため、女刑事は本当の自分を探して、呪われた運命に立ち向かう。
+失踪した殺人犯の少女「リサ」は何処へ?死者の織り成す矛盾の迷宮。
+繰り返される超自然犯罪。
+点在する謎が呪いによって一つに結ばれたとき、死者達が恐怖の真実を語りだす。',
+        'introduction_from' => '<a href="https://game.watch.impress.co.jp/docs/review/478793.html" target="_blank"><cite title="Amazon">Amazon</cite></a>'),
 );
