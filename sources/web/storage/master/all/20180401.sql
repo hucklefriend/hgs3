@@ -320,7 +320,7 @@ INSERT INTO `game_official_sites` (`soft_id`, `title`, `url`, `priority`, `creat
 (230, 'Wii版公式', 'http://www.konami.jp/products/silenthill_sm_wii/', 3, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
 (231, 'DSソフトウェア', 'https://www.nintendo.co.jp/ds/software/bkaj/index.html', 1, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
 (232, '公式', 'http://cryostasis.zoo.co.jp/', 1, '2018-03-24 01:22:22', '2018-03-24 01:22:22'),
-(233, '公式', 'http://cathy.atlus.co.jp/', 1, '2018-03-24 01:22:23', '2018-03-24 01:22:23'),
+(233, '公式', 'https://www.atlus.co.jp/title-archive/cathy/', 1, '2018-03-24 01:22:23', '2018-03-24 01:22:23'),
 (234, '公式', 'https://www.marv.jp/special/game/wii/ikenie/', 1, '2018-03-24 01:22:23', '2018-03-24 01:22:23'),
 (235, '公式', 'http://wwws.warnerbros.co.jp/fear3/', 1, '2018-03-24 01:22:23', '2018-03-24 01:22:23'),
 (236, '公式', 'http://07th-expansion.net/', 1, '2018-03-24 01:22:23', '2018-03-24 01:22:23'),
