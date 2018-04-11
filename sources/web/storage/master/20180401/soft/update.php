@@ -920,8 +920,225 @@ FBI捜査官イーサン・トーマスは自分が担当している連続殺�
 これから表現しきれないほどの地獄が待っている事も知らずに…',
         'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4542084001024" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a>'),
 
+    array('id' => '113','introduction' => 'トラック運転手であるトラビス。夜中トラックを運転していると、突然少女の姿が…
+彼はその少女の導くままに"SILENT HILL"へと足を踏み入れてしまう…
+霧に包まれた街"SILENT HILL"で彼は次々に奇妙な出来事に見舞われる。
+度々訪れる自身の記憶に悩まされながら、次々に現れるクリーチャーを打ち倒し、この町の謎を解いていくトラビス。
+彼は表の世界に戻って来られるのだろうか…',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4988602138610" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a>'),
+
+    array('id' => '114','introduction' => '突如姿を消した弟の消息を探りに、故郷のシェパードグレンに戻って来たアレックス・シェパードの呪われた物語。
+シェパードグレンからサイレントヒルへと伸びる霧に包まれた道・・・
+アレックスは弟の姿を追って漆黒の恐怖へと直面して行く。
+理性に必死にしがみ付きながらも、アレックスは彼の見る悪夢の謎、弟の失踪、父親の蒸発、
+そして彼自身の血と肉に染み付いた呪いを暴かなければならないのだ。 ',
+        'introduction_from' => '<a href="http://www.konami.jp/products/e3_2008_silenthill/" target="_blank">公式サイト</a>'),
+
+    array('id' => '264','introduction' => '凶悪犯罪者用の刑務所へ移送されることｔになった、囚人のマーフィー・ペンドルトン。
+その途中、移送バスが横転。
+大破したバスから投げ出され自由の身となったマーフィーは、引き込まれるようにサイレントヒルへと入っていく。
+それが、終わりのない悲劇のはじまりとも知らずに。
+陰鬱で不可解な物語に潜む、多くの謎。
+進むほどに狂気は加速し、DOWNPOUR(土砂降りの雨)がすべてを奪っていく―――。',
+        'introduction_from' => '<a href="http://www.konami.jp/gs/game/shdp/" target="_blank">公式サイト</a>'),
+
+    array('id' => '230','introduction' => 'ハリー・メイソンは、娘のシェリルと車を走らせている途中、過って事故を起こしてしまう。
+気を失ってしまったハリーが目を覚ますと、いつの間にかシェリルの姿がなくなっていた。
+
+行方不明になったシェリルの手掛かりを探し、雪の降るサイレントヒルを彷徨い歩くうち、ハリーは、みるみると変貌していく恐ろしい"氷の世界"に対面し、驚愕する。
+
+娘を探しながら、異形の者が徘徊する街「SILENT HILL」の真実に直面したとき、ハリーに、そして「SILENT HILL」に待っている結末とは。',
+        'introduction_from' => '<a href="http://www.konami.jp/products/silenthill_sm_ps2/" target="_blank">PS2版公式サイト</a>'),
 
 
+    array('id' => '129','introduction' => 'あなたは新興都市サンライトシティに住む医大生の青年。
+ある日友人のスージーと地下室で資料を探していると、突然の大地震が二人を襲った。
+民衆は瞬く間に死に絶え、街は壊滅的なダメージを受けたのだった…。
+だが、被害はそれだけではなかった。
+死に絶えたと思われた者達は、数時間後によみがえった。人の形をした異形の輩…そう生ける屍として…
+街に残されている生存者を見殺しには出来ない…。
+あなたは救急車に乗り込み、生存者を病院に収容すべく街の探索に出るのであった…。',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4527823993723" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a> ※短縮のため一部削減'),
 
+    array('id' => '144','introduction' => '「おまえが闇を解き放つのだ」
+マフィアにヒットマンとして育てられたジャッキー・エスタカードは、21歳の誕生日を迎えた時に思いもよらぬプレゼントを授かる。
+先祖代々受け継がれるダークネスの力は絶大で、彼の存在を消そうとするマフィアを一掃する。
+しかし、その圧倒的パワーにも代償がつく。
+それは街の平和か！愛する者の命か！自らの命か！
+闇はやがては闇に還るもの…',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4940261509293" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a> ※短縮のため一部削減'),
+
+    array('id' => '141','introduction' => '生理的に「怖い」「気持ち悪い」生物が画面を大量に覆い尽くし無力な少女を追い回す…
+マジ恐怖のシチュエーション満載の地獄ゲーム。
+登場する敵はすべて気持ち悪く、恐い。
+とにかく逃げろ、生理的に嫌だ！',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4527823994263" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a> ※誤字修正'),
+
+    array('id' => '180','introduction' => '1人のプログラマーが生み出したゲーム。
+それは、プレイした人間を絶望へと導く、呪いのゲームだった…。
+主人公であるあなたは、友達の智佳から借りた「THE 呪いのゲーム」をプレイしてしまう。
+その後、智佳との連絡が途切れ、あなたの周りでは次々と怪奇な現象が起こっていく。
+このゲームに秘められた"呪い"とは？
+はたして、解く術はあるのだろうか？
+邪念と怨念に満ちた、このゲーム。
+あなたはこの呪いから逃れられない…。',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4527823993464" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a> ※誤字修正'),
+
+    array('id' => '269','introduction' => '「この建物に出口はない。」
+廃病院で出会った詩穂という少女は言った。
+信じられないことだが彼女は顔がなかった。
+霊能者が残したメモには「魂の写真を集めてほしい。あの子を救えるかもしれない。」と記されていた。
+さらに「あの看護師には気をつけろ。」とも書いてあった。
+呪われた廃病院で今、恐怖の幕が上がる。 ',
+        'introduction_from' => '<a href="https://www.nintendo.co.jp/titles/50010000011886" target="_blank">任天堂紹介ページ</a>'),
+
+    array('id' => '97','introduction' => '廃墟と化した連続殺人事件の舞台、『廃屋病棟』に足を踏み入れる。
+そこで体験する謎と恐怖。
+20年前に起きた連続殺人事件・・・
+4人の若者の不可解な死・・・
+2つの事件の接点を求めてジャーナリスト柏木玲は事件現場でもあるすでに廃墟と化した『坂の上総合病院』に足を踏み入れる。',
+        'introduction_from' => '<a href="https://www.d3p.co.jp/haioku/" target="_blank">公式サイト</a>'),
+
+    array('id' => '55','introduction' => '関東地方T県G郡の山奥にある洋館。
+この洋館は日露戦争前にロシアの公館として建てられたといわれていて、そこで過去に殺人事件が起こったという噂がある。
+この洋館に主人公達が心霊番組の撮影のため訪れるところから物語が始まる。',
+        'introduction_from' => '<a href="https://ja.wikipedia.org/wiki/The_FEAR" target="_blank"><cite title="Wikipedia 2014年7月5日 (土) 03:39更新版">Wikipedia</cite></a>'),
+
+
+    array('id' => '57','introduction' => 'ホラー雑誌の代名詞ともいえる「ホラーＭ」に執筆中の御茶漬海苔氏が監修！
+御茶漬海苔氏の代表作でもある短編集の「惨劇館」の中でも根強い人気シリーズである「ケビン伯爵の惨劇」をベースにオリジナルストーリーが展開される。
+物語は全１３章で構成され、各章に数種類のエンディングが用意されている。
+ストーリーの展開次第では、読めない章やエピローグもあり、様々な物語が楽しめる。
+
+今宵の惨劇は君に訪れる・・・！',
+        'introduction_from' => '<a href="http://tsutaya.tsite.jp/item/game/PTA0000FD6ZE" target="_blank">TSUTAYA</a>'),
+
+    array('id' => '58','introduction' => '地底に沈んだ廃校で少年と5人の少女達の生存を賭けたアドベンチャーが始まる。
+闇と静寂・・・そして悪しきモノが彼らに牙をむいて立ちはだかる。
+
+廃校に秘められた謎、そして忌まわしき過去。
+5人の少女から探索パートナーを選び、脱出のための謎を解き明かせ。
+『あの娘』と無事に元の生活に帰ることができるのだろうか！？
+
+空腹によって追い詰められていく・・・
+限られた食料の分配が生存のカギを握る。
+彼らは残された食料の重みを知ることとなる・・・',
+        'introduction_from' => '<a href="https://www.d3p.co.jp/s_20/s20_034.html" target="_blank">公式サイト</a>'),
+
+    array('id' => '292','introduction' => '記憶と引き換えに刻まれた、
+“死”へのカウントダウンを意味する謎の痣“シルシ”。
+
+同じ宿命を背負った者たちが、微かな希望にすがり、生き残る術を見つけ出す為、人知を超えた恐怖の存在“怪異”が潜む「戦慄の心霊スポット」を探索するホラーアドベンチャー。',
+        'introduction_from' => '<a href="http://shiin.jp/" target="_blank">公式サイト</a>'),
+
+    array('id' => '169','introduction' => '恐怖と悪夢が織り成す迷宮で生き残るのは誰だ!?
+昼なお暗き森に迷い込んだ7人の男女と、彼らを迎える1人の老人…。
+謎を秘めた洋館が舞台の本格ホラーアドベンチャーゲーム！',
+        'introduction_from' => 'パッケージ'),
+
+    array('id' => '92','introduction' => '北は北海道から南は沖縄まで、日本全国250箇所以上で、実際にスタッフが取材と撮影を観光！
+集められた民間伝承や都市伝説の、怖い話・悲しい話・不思議な話などを、DVD-ROM容量の眼界まで収録！
+しかも、登場人物はすべて実写で、究極のリアリティを追求した！
+「学校であった怖い話」の飯島多紀哉がおくる、新たな本格Jホラー・ミステリー大作！',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4983164735734" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a>'),
+
+    array('id' => '179','introduction' => '怪談ファンの圧倒的な支持を誇る、ジャパニーズホラーの源流「新耳袋」がPSP（R)に登場。
+原作者の一人である木原浩勝氏を監修に迎え「怪談体感ソフト」として全50話の"怪異"を体感できます。
+全編フルボイスのナレーションや、PSP（R)初となる3Dサウンドが盛り上げる、本物の恐怖。
+特典映像には、数々のホラー映画で人気の三輪ひとみさん、南まいさん主演の新作ドラマを収録しています。',
+        'introduction_from' => '<a href="http://www.jp.playstation.com/software/title/uljm05028.html" target="_blank"><cite title="プレイステーションオフィシャルサイト">PSソフトウェアカタログ</cite></a>'),
+
+    array('id' => '56','introduction' => '「魔（エビル）」に肉体と精神を乗っ取られた恋人を救うため、主人公は彼女の心と一体化し、彼女の精神世界の中にサイコダイブした。
+彼は、不思議な島の砂浜で覚醒した。
+さ迷ううちに彼の前には不思議な館が現れる。
+何とか館の中に入った彼の前に現れるいくつかの扉。
+彼は第一の扉を開けた……。
+
+扉を開けた……
+　あなたを待つものは……',
+        'introduction_from' => 'パッケージ'),
+
+    array('id' => '245','introduction' => '“デーモンハンター”を生業とする主人公、ガルシア・ホットスパーは地獄の帝王を仕留める。
+が、それがきっかけとなり、最愛の女性ポーラが地獄へと連れ去られることに。
+恋人ポーラを救出するため、すべての邪悪が集う地獄へと向かうガルシア。
+彼と歴戦を共にしてきた奇妙な相棒、髑髏（ドクロ）のジョンソンと「闇」を切り裂く「光」を手に、予測のつかない旅が始まる・・・。',
+        'introduction_from' => '<a href="http://www.jp.playstation.com/software/title/bljm60358.html" target="_blank"><cite title="プレイステーションオフィシャルサイト">PSソフトウェアカタログ</cite></a>'),
+
+    array('id' => '178','introduction' => '19時03分上野発、札幌行き寝台列車「北斗星5号」。
+主人公は札幌に行くために飛び乗った。
+北斗星5号は仙台を過ぎ次の停車駅の函館に向かっている。
+主人公はなにげにトイレに行き列車内に人がいないのに気づく。
+何かが起こっている、事件か。
+残された乗客はいるのか。
+主人公は列車内を探し始めた。
+はたしてそこには何が待ち受けているのか…',
+        'introduction_from' => 'パッケージ ※句読点を変えました'),
+
+    array('id' => '254','introduction' => '岩手県・遠野市。
+作家志望の主人公、坂巻快人（さかまきかいと）は、小説の題材を探しに、遠野のペンションを訪れる。
+宿泊予定者は10人だったはずなのに、宿泊客は、なぜか11人……。
+そのうちの１人が露天風呂で殺される。
+快人は、偶然再会したかつての友人・立花京香とともに、事件の真相を探りはじめる。
+しかし、ひとつ、またひとつと死体が増えていき……。',
+        'introduction_from' => '<a href="http://www.spike-chunsoft.co.jp/shinkama/" target="_blank">公式サイト</a>'),
+
+    array('id' => '323','introduction' => '60年前の謎の大惨事によって廃墟と化した島。
+そこは特異点と呼ばれる、時空の歪みが生じる場所だった。
+時を操るデバイスを駆使し、この島で起こった不条理で残酷な真実を追うサバイバルホラー・FPS。',
+        'introduction_from' => '<a href="http://www.jp.square-enix.com/archive/singularity_ps3/" target="_blank">公式サイト</a>'),
+
+    array('id' => '313','introduction' => 'コノ女、嘘ニ憑カレ、真ヲ突ク。
+
+都市伝説――
+それは、口承される噂話のうち、現代発祥のもので、根拠が曖昧・不明であるもの。
+ここに、またひとつ。
+恐怖に彩られた蟲惑敵な都市伝説が生まれようとしていた。',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=49955060021763" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a>'),
+    array('id' => '314','introduction' => '「真 流行り神」の物語から2年。
+舞台をＧ県に移し新たな展開を見せる。
+そこでは、都市伝説にまつわる事件が次々と発生する。',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4995506002411" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a>'),
+
+    array('id' => '257','introduction' => 'ノートを覗くと開かれる異界への扉。
+
+ニンテンドー3DSで、ARノートを写しながらプレイするホラーゲーム。
+AR(拡張現実)によって、ノートの中で様々な怪奇現象が起こります。',
+        'introduction_from' => '<a href="http://www.comshop.co.jp/g-haku/index.php?jan=4902370519174" target="_blank"><cite title="ゲーム博物館">パッケージ</cite></a>'),
+
+
+    array('id' => '291','introduction' => '雑誌の心霊特集の取材で訪れた古びた旅館。
+そこで出会った儚げな少女「真澄」
+そんな彼女には、人には言えない秘密があった……',
+        'introduction_from' => '<a href="https://play.google.com/store/apps/details?id=tokyo.seec.ShinreiRyokan&hl=ja" target="_blank">Google Play</a>'),
+
+    array('id' => '59','introduction' => '何人生きて脱出できるのだろう……。。
+呪われた屋敷・間宮邸。
+今はもう誰も住まないこの屋敷を訪れた5人のTV局のスタッフに襲いかかる数々の恐怖。
+ドアが閉じ、天井が崩れ、現れる間宮家の霊。
+出口を求めて、5人の戦いが始まった。
+果たして彼らは出口を見つけることができるだろうか。
+何人がこの屋敷から生きて出られるのだろうか。',
+        'introduction_from' => 'パッケージ'),
+
+    array('id' => '130','introduction' => '魔物世界のバランスが崩れ、人間世界の存続も危機を迎える。
+運命の糸が選んだ最後の希望が現代っ子ジェン。
+彼女を導くガーゴイルのスクリーと共に平和を取り戻す長い旅が始まる。
+２人の能力を使い分けて困難を乗り越えるにつれ、彼らの宿命と葛藤、過去や決意などのドラマが展開されていく。',
+        'introduction_from' => '<a href="http://www.jp.playstation.com/software/title/scps15052.html" target="_blank"><cite title="プレイステーションオフィシャルサイト">PSソフトウェアカタログ</cite></a>'),
+
+    array('id' => '263','introduction' => '2012年、ロンドン。
+あなたは荒廃した街の通りで目を覚ます。
+辺りには死体が散乱し、ゾンビと化した人間が肉を求めてさまよっている。
+
+果たしてあなたは、この未曾有の厄災に見舞われたロンドンから無事脱出することができるのだろうか……。',
+        'introduction_from' => '<a href="http://www.ubisoft.co.jp/zombiu/" target="_blank">公式サイト</a> ※短縮のため一部削減'),
+
+    array('id' => '150','introduction' => 'A dark prophecy unfolds in the land of Gothos.
+Hordes of vile monsters terrorize innocent villagers.
+You are Anna, the Dark Angel of retribution.
+You have one year to defeat the armies of the Shadow Lord.
+Collect an arsenal of powerful weapons to banish evil from the land forever.
+Do you have what it takes ?',
+        'introduction_from' => 'パッケージ(海外版)'),
 
 );
