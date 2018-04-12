@@ -1397,6 +1397,6 @@ TV版やネットシネマ、劇場公開と展開されている人気シリー
 
 森魚、樹木等と融合した島民、ゴキブリの身体を持つ少女をはじめ、敵は奇想天外。
 さらには、突然噴出す間欠泉、瞬時に栄枯を繰り返す樹海等、自然さえもが襲いかかる。',
-        'introduction_from' => '<a href="https://www.amazon.co.jp/%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%81%E3%83%A3%E3%83%8D%E3%83%AB-%E4%BA%BA%E9%AD%9A%E3%81%AE%E7%83%99%E5%8D%B0/dp/B00005OVH6" target="_blank"><cite title="Amazon">パッケージ</cite></a>'),
+        'introduction_from' => 'パッケージ'),
 
 );
