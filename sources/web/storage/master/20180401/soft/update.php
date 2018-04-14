@@ -1723,7 +1723,7 @@ U.B.C.S.隊員らとの奮戦の最中、謎の敵がジルの背後に迫る。
 「"アレ"は彼女の記憶なのか、自分の記憶なのか分からない、しかし自分は奴らを覚えている。奴らは死ぬべきなんだ、全員、死ぬべきなんだ。」
 …そう言い残し、シグナルもろとも行方をくらませるフェッテル。
 間もなくある港の倉庫付近で多数のレプリカ部隊が目撃され、主人公たちもそこへ向かうが…。',
-        'introduction_from' => '<a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%83%BC%E3%83%AC%E3%83%B3%E3%83%8F%E3%82%A4%E3%83%88_(2006%E5%B9%B4%E3%81%AE%E3%83%93%E3%83%87%E3%82%AA%E3%82%B2%E3%83%BC%E3%83%A0)" target="_blank"><cite title="Wikipedia 2018年3月7日 (水) 01:12更新版">Wikipedia</cite></a> ※短縮のため大幅に削減'),
+        'introduction_from' => '<a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%83%BC%E3%83%AC%E3%83%B3%E3%83%8F%E3%82%A4%E3%83%88_(2006%E5%B9%B4%E3%81%AE%E3%83%93%E3%83%87%E3%82%AA%E3%82%B2%E3%83%BC%E3%83%A0)" target="_blank"><cite title="Wikipedia 2018年3月7日 (水) 01:12更新版">Wikipedia</cite></a>'),
 
 
     array('id' => '132','introduction' => '目が覚めると病院施設。
