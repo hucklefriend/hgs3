@@ -32,11 +32,15 @@ class Company extends MasterImportAbstract
                 echo 'loading ' . $filePath . PHP_EOL;
                 $data = \GuzzleHttp\json_decode(File::get($filePath), true);
 
-                $com = new Orm\GameCompany($data);
-                $com->save();
+                $c = Orm\GameCompany::find($data['id']);
+                if ($c == null) {
+                    $com = new Orm\GameCompany($data);
+                    $com->save();
+                    unset($com);
+                }
+
 
                 unset($data);
-                unset($com);
             }
         }
 

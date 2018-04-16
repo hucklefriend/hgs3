@@ -240,4 +240,29 @@ class Package extends MasterImportAbstract
             ->where('id', 400)
             ->update(['company_id' => 96, 'url' => 'https://www.nintendo.co.jp/ds/software/bkaj/index.html']);
     }
+
+    /**
+     * 手動設定
+     */
+    private static function manual20180519()
+    {
+        // うみねこを同人と、CSで分ける
+        // CSはさらにEP1～4と、EP5～8で分ける(PS3版に合わせる)
+
+        DB::table('game_package_links')
+            ->where('soft_id', 239)
+            ->update(['soft_id' => 247]);
+
+        DB::table('game_package_links')
+            ->where('soft_id', 89)
+            ->where('package_id', '>=', 685)
+            ->delete();
+
+        DB::table('game_package_shops')
+            ->whereBetween('package_id', [685, 763])
+            ->delete();
+        DB::table('game_packages')
+            ->whereBetween('id', [685, 763])
+            ->delete();
+    }
 }

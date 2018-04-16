@@ -16,12 +16,6 @@ class OfficialSite extends MasterImportAbstract
      */
     public static function import($date)
     {
-        if ($date == '20180401') {
-            // ローカル環境でのみ実行
-            //Orm\GameOfficialSite::truncate();
-            //self::insertFromPackage();
-        }
-
         $path = storage_path('master/' . $date . '/official_site');
         if (!File::isDirectory($path)) {
             echo 'nothing official site new data.' . PHP_EOL;
@@ -77,8 +71,9 @@ class OfficialSite extends MasterImportAbstract
         $officialSites = include($path);
 
         foreach ($officialSites as $s) {
-            DB::table('game_official_site')
-                ->where('id', $s['id'])
+            DB::table('game_official_sites')
+                ->where('soft_id', $s['soft_id'])
+                ->where('url', $s['url'])
                 ->update($s);
         }
 
