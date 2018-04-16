@@ -274,6 +274,7 @@ GitForWindowsを最新版に更新して、PhpStormのGitの設定でSSH executa
 
 
 
-・マスターデータ
-mysql -u root
+○サーバー移転などでLet's encryptを移す場合
+
+https://blog.fileshelfplus.com/vps/280
 

@@ -22,6 +22,15 @@ sudo systemctl stop apache2
 sudo /opt/letsencrypt/certbot-auto renew
 sudo systemctl start apache2
 
+
+○Ubuntu 18.04アップデートに向けて、バックアップをローカルにコピー
+・DBのバックアップ
+・Let's encrypt関連
+　https://blog.fileshelfplus.com/vps/280
+・Apacheの設定ファイル
+
+
+
 ○Ubuntuアップデート
 
 ○ソースをアップする
