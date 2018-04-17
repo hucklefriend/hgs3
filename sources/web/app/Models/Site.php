@@ -800,4 +800,19 @@ SQL;
 
         return true;
     }
+
+
+    public static function deleteTestData($isAll)
+    {
+        $q = Orm\Site::where('id', '<=', 766);
+        if (!$isAll) {
+            $q->where('approval_status', '<>', ApprovalStatus::OK);
+        }
+
+        $sites = $q->get();
+
+        foreach ($sites as $site) {
+            self::delete($site);
+        }
+    }
 }

@@ -319,4 +319,16 @@ class User extends Authenticatable
 
         return;
     }
+
+
+    public static function deleteTestData()
+    {
+        for ($id = 2; $id <= 100; $id++) {
+            $u = User::find($id);
+            if ($u != null) {
+                $u->leave();
+                unset($u);
+            }
+        }
+    }
 }

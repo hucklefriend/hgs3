@@ -13,6 +13,8 @@ use Hgs3\Models\Orm\GamePackageShop;
 use Hgs3\Models\Orm\GamePlatform;
 use Hgs3\Models\Orm\GameSeries;
 use Hgs3\Models\Orm\GameSoft;
+use Hgs3\Models\Site;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -50,6 +52,15 @@ class Master
 
         echo 'update original package id.' . PHP_EOL;
         \Hgs3\Models\Game\Soft::updateOriginalPackageId(false);
+
+        if ($date == '20180519') {
+            Site::deleteTestData(false);
+        }
+
+        if ($date == '20180927') {
+            Site::deleteTestData(true);
+            User::deleteTestData();
+        }
     }
 
     public static function importSql($date)
