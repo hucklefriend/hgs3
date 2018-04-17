@@ -7,7 +7,7 @@ namespace Hgs3\Models\Orm;
 
 class GameCompany extends \Eloquent
 {
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     /**
      * id => nameのハッシュを取得

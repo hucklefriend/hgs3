@@ -1,0 +1,12 @@
+{
+  "id": 696,
+  "platform": "PC",
+  "company": "カプコン",
+  "name": "BIOHAZARD7 -Resident Evil-",
+  "shop": {
+    "Steam": "http://store.steampowered.com/app/418370/RESIDENT_EVIL_7_biohazard__BIOHAZARD_7_resident_evil/"
+  },
+  "release_int": 20170126,
+  "release_at": "2017年1月26日",
+  "soft_id": [265]
+}

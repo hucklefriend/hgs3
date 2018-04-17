@@ -16,6 +16,13 @@ class Soft extends MasterImportAbstract
      */
     public static function import($date)
     {
+        $manualMethod = 'manual' . $date;
+        if (method_exists(new self(), $manualMethod)) {
+            self::$manualMethod();
+        } else {
+            echo 'nothing soft manual update.' . PHP_EOL;
+        }
+
         $path = storage_path('master/' . $date . '/soft');
         if (!File::isDirectory($path)) {
             echo 'nothing soft new data.' . PHP_EOL;
@@ -57,13 +64,6 @@ class Soft extends MasterImportAbstract
 
         // 既存データのアップデート
         self::update($date);
-
-        $manualMethod = 'manual' . $date;
-        if (method_exists(new self(), $manualMethod)) {
-            self::$manualMethod();
-        } else {
-            echo 'nothing soft manual update.' . PHP_EOL;
-        }
     }
 
     /**
@@ -94,62 +94,6 @@ class Soft extends MasterImportAbstract
     }
 
     /**
-     * 手動設定2018.2.25
-     *
-     * @throws \Exception
-     */
-    private static function manual20180225()
-    {
-        // 消す。うみねこの一部とデッドラ
-        Orm\GameSoft::whereIn('id', [24, 147, 240, 241, 139, 140, 250])
-            ->delete();
-
-        // デッドアイランドをシリーズ化
-        DB::table('game_softs')
-            ->where('id', 256)
-            ->update([
-                'phonetic2' => 'でっどあいらんど10',
-                'series_id' => self::getSeriesId('DEAD ISLAND'),
-                'order_in_series' => 1
-            ]);
-
-        // キャサリンをシリーズ化
-        DB::table('game_softs')
-            ->where('id', 233)
-            ->update([
-                'phonetic2' => 'きゃさりん10',
-                'series_id' => self::getSeriesId('キャサリン'),
-                'order_in_series' => 1
-            ]);
-    }
-
-    /**
-     * 手動設定2018.3.4
-     */
-    private static function manual20180304()
-    {
-        // デッドアイランドのシリーズがおかしい
-        DB::table('game_softs')
-            ->where('id', 277)
-            ->update(['series_id' => 52]);
-    }
-
-    /**
-     * 手動設定2018.4.1
-     */
-    private static function manual20180401()
-    {
-        // ひぐらしの礼と解を削除
-        DB::table('game_softs')
-            ->whereIn('id', [237, 238])
-            ->delete();
-
-        DB::table('game_package_links')
-            ->whereIn('soft_id', [237, 238])
-            ->delete();
-    }
-
-    /**
      * 手動設定
      */
     private static function manual20180519()
@@ -160,9 +104,9 @@ class Soft extends MasterImportAbstract
             ->where('id', 239)
             ->update(['original_package_id' => null]);
 
-        // 鬼太郎が2つある
+        // 鬼太郎が2つある、マーセ3Dは削除、物体Xも1つに統合
         DB::table('game_softs')
-            ->where('id', 307)
+            ->whereIn('id', [307, 244, 122])
             ->delete();
     }
 }

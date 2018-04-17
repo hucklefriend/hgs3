@@ -1,0 +1,12 @@
+{
+  "id": 698,
+  "platform": "PC",
+  "company": "Valve",
+  "name": "レフト4デッド2",
+  "shop": {
+    "Steam": "http://store.steampowered.com/app/550/Left_4_Dead_2/"
+  },
+  "release_int": 20091119,
+  "release_at": "2009年11月19日",
+  "soft_id": [146]
+}

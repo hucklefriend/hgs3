@@ -16,6 +16,13 @@ class OfficialSite extends MasterImportAbstract
      */
     public static function import($date)
     {
+        $manualMethod = 'manual' . $date;
+        if (method_exists(new self(), $manualMethod)) {
+            self::$manualMethod();
+        } else {
+            echo 'nothing official site manual update.' . PHP_EOL;
+        }
+
         $path = storage_path('master/' . $date . '/official_site');
         if (!File::isDirectory($path)) {
             echo 'nothing official site new data.' . PHP_EOL;
@@ -46,13 +53,6 @@ class OfficialSite extends MasterImportAbstract
 
         // 既存データのアップデート
         self::update($date);
-
-        $manualMethod = 'manual' . $date;
-        if (method_exists(new self(), $manualMethod)) {
-            self::$manualMethod();
-        } else {
-            echo 'nothing official site manual update.' . PHP_EOL;
-        }
     }
 
     /**
@@ -81,39 +81,17 @@ class OfficialSite extends MasterImportAbstract
     }
 
     /**
-     * 2018.4.1
-     *
-     * @throws \Exception
+     * 手動設定
      */
-    private static function insertFromPackage()
+    private static function manual20180519()
     {
-        // 既存テーブルからデータ移行
-        $softs = self::getSoftHash();
-        foreach ($softs as $name => $softId) {
-            // パッケージを取得
-            $packages = Orm\GamePackageLink::where('soft_id', $softId)
-                ->get()->pluck('package_id');
+        DB::table('game_official_sites')
+            ->where('soft_id', 282)
+            ->where('url', 'http://www.capcom.co.jp/bhrev_ue/')
+            ->delete();
 
-            if ($packages->isNotEmpty()) {
-                $urls = Orm\GamePackage::select('url')
-                    ->whereIn('id', $packages->toArray())
-                    ->groupBy('url')
-                    ->get()
-                    ->pluck('url');
-
-                $p = 1;
-                foreach ($urls as $url) {
-                    if (empty($url)) {
-                        continue;
-                    }
-                    $officialSite = new Orm\GameOfficialSite();
-                    $officialSite->soft_id = $softId;
-                    $officialSite->title = '公式';
-                    $officialSite->url = $url;
-                    $officialSite->priority = $p++;
-                    $officialSite->save();
-                }
-            }
-        }
+        DB::table('game_official_sites')
+            ->where('soft_id', 331)
+            ->delete();
     }
 }

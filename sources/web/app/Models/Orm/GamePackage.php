@@ -10,7 +10,8 @@ use Hgs3\Log;
 
 class GamePackage extends \Eloquent
 {
-    protected $guarded = ['id'];
+    protected $guarded = [];
+    public $incrementing = false;
 
     /**
      * データのハッシュを取得

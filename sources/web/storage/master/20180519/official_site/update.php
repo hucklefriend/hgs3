@@ -180,7 +180,7 @@ return [
     array('soft_id' => '277','title' => '公式','url' => 'http://www.spike-chunsoft.co.jp/didc/','priority' => '3','created_at' => '2018-03-24 10:22:23','updated_at' => '2018-03-24 10:22:23'),
     array('soft_id' => '278','title' => '公式','url' => 'https://www.ea.com/ja-jp/games/dead-space/dead-space-2','priority' => '1','created_at' => '2018-03-24 10:22:23','updated_at' => '2018-03-24 10:22:23'),
     array('soft_id' => '279','title' => '公式','url' => 'https://www.ea.com/ja-jp/games/dead-space/dead-space-3','priority' => '1','created_at' => '2018-03-24 10:22:23','updated_at' => '2018-03-24 10:22:23'),
-    array('soft_id' => '282','title' => '公式','url' => 'http://www.capcom.co.jp/bhrev_ue/','priority' => '1','created_at' => '2018-03-24 10:22:23','updated_at' => '2018-03-24 10:22:23'),
+    array('soft_id' => '282','title' => '公式','url' => 'http://www.capcom.co.jp/rev2/','priority' => '1','created_at' => '2018-03-24 10:22:23','updated_at' => '2018-03-24 10:22:23'),
     array('soft_id' => '282','title' => '公式ポータル','url' => 'http://www.capcom.co.jp/game/biohazard/','priority' => '2','created_at' => '2018-03-24 10:22:23','updated_at' => '2018-03-24 10:22:23'),
     array('soft_id' => '284','title' => '公式','url' => 'http://kholat.com/jp/','priority' => '1','created_at' => '2018-03-24 10:22:23','updated_at' => '2018-03-24 10:22:23'),
     array('soft_id' => '285','title' => '公式','url' => 'http://www.jp.playstation.com/scej/title/thelastofus/','priority' => '1','created_at' => '2018-03-24 10:22:23','updated_at' => '2018-03-24 10:22:23'),
