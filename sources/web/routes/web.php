@@ -83,8 +83,6 @@ Route::group(['middleware' => ['auth', 'can:editor']], function () {
     Route::post('/game/series/add', 'Game\SeriesController@insert')->name('シリーズ登録処理');
     Route::get('/game/series/edit/{series}', 'Game\SeriesController@edit')->name('シリーズ編集');
     Route::patch('/game/series/edit/{series}', 'Game\SeriesController@update')->name('シリーズ編集処理');
-
-
 });
 
 
