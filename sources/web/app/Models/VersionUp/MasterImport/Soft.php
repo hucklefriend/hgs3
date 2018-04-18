@@ -106,7 +106,7 @@ class Soft extends MasterImportAbstract
 
         // 鬼太郎が2つある、マーセ3Dは削除、物体Xも1つに統合
         DB::table('game_softs')
-            ->whereIn('id', [307, 244, 122])
+            ->whereIn('id', [307, 244, 122, 150])
             ->delete();
     }
 }

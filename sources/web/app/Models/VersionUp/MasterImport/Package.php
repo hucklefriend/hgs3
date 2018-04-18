@@ -212,14 +212,14 @@ class Package extends MasterImportAbstract
             ->delete();
 
         DB::table('game_package_links')
-            ->where('package_id', 421)
+            ->whereIn('package_id', [421, 210])
             ->delete();
 
         DB::table('game_package_shops')
             ->whereBetween('package_id', [685, 763, 421])
             ->delete();
         DB::table('game_packages')
-            ->whereBetween('id', [685, 763, 421])
+            ->whereBetween('id', [685, 763, 421, 210])
             ->delete();
 
 
