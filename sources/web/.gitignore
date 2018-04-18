@@ -9,3 +9,8 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
+/public/css/super_admin.css
+/public/img/bg
+/public/js/super_admin.min.js
+/public/js/inc
+/public/vendors

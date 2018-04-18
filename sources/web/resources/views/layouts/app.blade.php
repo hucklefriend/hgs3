@@ -6,15 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title') {{ env('APP_NAME') }} (β)</title>
 
-    <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
+
     @if (env('APP_DEBUG'))
+    <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/hgs3.css') }}?ver={{ time() }}">
     @else
+    <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/hgs3.css') }}">
     @endif
 
     <script src="{{ url('/js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ url('/js/bootstrap.min.js') }}"></script>
+
+    @if (env('APP_DEBUG'))
+        <script src="{{ url('/js/super_admin.min.js') }}"></script>
+        <script src="{{ url('/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
+        <script src="{{ url('/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js') }}"></script>
+    @else
+        <script src="{{ url('/js/bootstrap.min.js') }}"></script>
+    @endif
+
+
     <script src="{{ url('/js/popper.min.js') }}"></script>
     <script src="{{ url('/js/fontawesome-all.min.js') }}" defer></script>
 
@@ -44,7 +55,8 @@
     </script>
     @endif
 </head>
-<body>
+<body data-sa-theme="5">
+<main class="main">
 <div class="fixed-top" id="header_menu">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <span id="global_back_link">
@@ -110,6 +122,6 @@
 </footer>
 
 @yield('outsideContent')
-
+</main>
 </body>
 </html>
