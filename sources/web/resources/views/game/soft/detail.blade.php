@@ -4,82 +4,75 @@
 @section('global_back_link'){{ route('ゲーム一覧') }}@endsection
 
 @section('content')
+    <h1>{{ $soft->name }}</h1>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h4 class="card-title">{{ $soft->name }}</h4>
-                        @auth
-                            <div>
-                                <div class="d-flex flex-wrap">
-                                    <div>
-                                        @if ($isFavorite)
-                                            <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
-                                                {{ csrf_field() }}
-                                                <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                                                {{ method_field('DELETE') }}
-                                                <button class="btn btn-outline-secondary btn-sm">お気に入り解除</button>
-                                            </form>
-                                        @else
-                                            <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
-                                                {{ csrf_field() }}
-                                                <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                                                <div class="text-center">
-                                                    <button class="btn btn-outline-warning btn-sm"><i class="fas fa-star"></i>お気に入り登録</button>
-                                                </div>
-                                            </form>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endauth
-                    </div>
-
                     <div class="d-flex flex-column flex-sm-row">
                         @if ($hasOriginalPackageImage)
-                            <div class="text-center">
+                            <div class="text-center mb-3">
                                 @include('game.common.packageImage', ['imageUrl' => medium_image_url($originalPackage)])
                             </div>
                         @endif
-                            <div class="ml-2">
-                                @if (!empty($soft->introduction))
-                                <div>
-                                    <blockquote class="blockquote soft-blockquote">
-                                        <p class="mb-0">{!! nl2br(e($soft->introduction)) !!}</p>
-                                        @if (!empty($soft->introduction_from))
-                                        <div class="text-right mt-2">
-                                            <footer class="blockquote-footer">{!! $soft->introduction_from !!}</footer>
-                                        </div>
-                                        @endif
-                                    </blockquote>
+                        <div class="ml-2">
+                            @if (!empty($soft->introduction))
+                            <div>
+                                <blockquote class="blockquote soft-blockquote">
+                                    <p class="mb-0">{!! nl2br(e($soft->introduction)) !!}</p>
+                                    @if (!empty($soft->introduction_from))
+                                    <div class="text-right mt-2">
+                                        <footer class="blockquote-footer">{!! $soft->introduction_from !!}</footer>
+                                    </div>
+                                    @endif
+                                </blockquote>
+                            </div>
+                            @endif
+                            @if (!empty($platforms))
+                            <div class="d-flex mb-2">
+                                <div style="width: 30px;" class="text-center">
+                                    <i class="fas fa-gamepad"></i>
                                 </div>
-                                @endif
-                                @if (!empty($platforms))
-                                <div class="d-flex mb-2">
-                                    <div style="width: 20px;">
-                                        <i class="fas fa-gamepad"></i>
-                                    </div>
-                                    <div class="d-flex flex-wrap">
-                                    @foreach ($platforms as $plt)
-                                        <a href="#" class="ml-2 badge badge-light">{{ $pltHash[$plt] ?? '？' }}</a>
-                                    @endforeach
-                                    </div>
+                                <div class="d-flex flex-wrap">
+                                @foreach ($platforms as $plt)
+                                    <a href="#" class="mr-2 badge badge-light">{{ $pltHash[$plt] ?? '？' }}</a>
+                                @endforeach
                                 </div>
-                                @endif
-                                @if ($officialSites->isNotEmpty())
-                                <div class="d-flex">
-                                    <div style="width: 20px;">
-                                        <span class="lsf">web</span>
-                                    </div>
-                                    <div class="d-flex flex-wrap">
-                                    @foreach ($officialSites as $officialSite)
-                                        <a href="{{ $officialSite->url }}" target="_blank" class="ml-2"><small>{{ $officialSite->title }}</small></a>
-                                    @endforeach
-                                    </div>
+                            </div>
+                            @endif
+                            @if ($officialSites->isNotEmpty())
+                            <div class="d-flex">
+                                <div style="width: 30px;" class="text-center">
+                                    <i class="fas fa-info-circle"></i>
                                 </div>
+                                <div class="d-flex flex-wrap">
+                                @foreach ($officialSites as $officialSite)
+                                    <a href="{{ $officialSite->url }}" target="_blank" class="ml-2"><small>{{ $officialSite->title }}</small></a>
+                                @endforeach
+                                </div>
+                            </div>
+                            @endif
+
+                            @if (Auth::check())
+                            <div class="mt-2 text-right">
+                                @if ($isFavorite)
+                                    <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                                        {{ method_field('DELETE') }}
+                                        <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-star"></i>解除</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                                        <button class="btn btn-outline-warning btn-sm"><i class="fas fa-star"></i>登録</button>
+                                    </form>
                                 @endif
                             </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -90,9 +83,7 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="card-title">パッケージ情報</h5>
-                    </div>
+                    <h4 class="card-title">パッケージ情報</h4>
 
                     @if ($packageNum > 2)
 
@@ -307,7 +298,7 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">サイト <small>{{ number_format($siteNum) }}サイト</small></h5>
+                    <h4 class="card-title">サイト <small>{{ number_format($siteNum) }}サイト</small></h4>
 
                     <div class="card-text">
                         @if (empty($site))
@@ -329,7 +320,7 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">お気に入り <small>{{ number_format($favoriteNum) }}人</small></h5>
+                    <h4 class="card-title">お気に入り <small>{{ number_format($favoriteNum) }}人</small></h4>
                     <div class="card-text">
                         @if ($favoriteNum == 0)
                             お気に入りに登録しているユーザーはいません。
@@ -365,11 +356,11 @@
 
 
     <div class="d-flex justify-content-between">
-        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}" class="btn btn-outline-dark">
+        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}">
             <i class="fas fa-angle-left"></i>
             前のゲーム
         </a>
-        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}" class="btn btn-outline-dark">
+        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}">
             次のゲーム
             <i class="fas fa-angle-right"></i>
         </a>

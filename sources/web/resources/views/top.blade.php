@@ -3,22 +3,13 @@
 @section('content')
     <div class="card card-hgn">
         <div class="card-body">
-            <p class="card-text">
+            <p class="card-text" style="color: #e7c3c3;">
                 現在、テスト用のユーザーとサイトが多数登録されています。<br>
                 本運営開始時に削除しますが、それまでは動作確認などで利用します。<br>
                 邪魔かと思いますが、ご理解とご了承をお願いしますm(_ _)m
             </p>
         </div>
     </div>
-
-    <div>
-@php
-    $date = new \DateTime();
-    $date = $date->sub(new \DateInterval('P7D'));
-    echo $date->format('Y-m-d');
-@endphp
-    </div>
-
 
     <div class="row">
         <div class="@if(!Auth::check()) col-md-7 @else col-md-12 @endif">
@@ -48,19 +39,19 @@
                     <div class="top-login d-flex">
                         <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
                             {{ csrf_field() }}
-                            <button class="btn btn-lg btn-outline-light p-1">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</button>
+                            <button class="btn btn-lg btn-light btn--icon mr-2">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</button>
                         </form>
                         <form method="POST" action="{{ route('facebook', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
                             {{ csrf_field() }}
-                            <button class="btn btn-lg btn-outline-light p-1">{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}</button>
+                            <button class="btn btn-lg btn-light btn--icon mr-2">{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}</button>
                         </form>
                         <form method="POST" action="{{ route('GitHub', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
                             {{ csrf_field() }}
-                            <button class="btn btn-lg btn-outline-light p-1">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</button>
+                            <button class="btn btn-lg btn-light btn--icon mr-2">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</button>
                         </form>
                         <form method="POST" action="{{ route('Google', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
                             {{ csrf_field() }}
-                            <button class="btn btn-lg btn-outline-light p-1">{{ sns_icon(\Hgs3\Constants\SocialSite::GOOGLE_PLUS) }}</button>
+                            <button class="btn btn-lg btn-light btn--icon mr-2">{{ sns_icon(\Hgs3\Constants\SocialSite::GOOGLE_PLUS) }}</button>
                         </form>
                     </div>
                     <hr>

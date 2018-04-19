@@ -38,30 +38,33 @@
 
     @foreach ($phonetics as $no => $p)
         <section id="{{ $p[0] }}gyo" @if ($defaultPhoneticType != $p[1]) style="display:none;" @endif>
-            <div class="package-list">
-            @if (isset($list[$p[1]]))
-                @foreach ($list[$p[1]] as $soft)
-                    @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash])
-                @endforeach
-            @endif
+            <div class="card">
+                <div class="card-body">
+                    <div class="package-list">
+                    @if (isset($list[$p[1]]))
+                        @foreach ($list[$p[1]] as $soft)
+                            @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash])
+                        @endforeach
+                    @endif
+                    </div>
+                </div>
             </div>
             <div class="d-flex justify-content-between mt-3">
                 <div>
                     @if ($no > 0)
-                        <button type="button" class="btn btn-sm btn-outline-dark" onclick="changeTab('{{ $phonetics[$no - 1][0] }}')">
+                        <a href="javascript:void(0);" onclick="changeTab('{{ $phonetics[$no - 1][0] }}')" class="btn btn-light">
                             <i class="fas fa-angle-left"></i>&nbsp;{{ $phonetics[$no - 1][2] }}行
-                        </button>
+                        </a>
                     @endif
                 </div>
                 <div>
                     @if (!$loop->last)
-                    <button type="button" class="btn btn-sm btn-outline-dark" onclick="changeTab('{{ $phonetics[$no + 1][0] }}')">
+                    <a href="javascript:void(0);" onclick="changeTab('{{ $phonetics[$no + 1][0] }}')" class="btn btn-light">
                         {{ $phonetics[$no + 1][2] }}行&nbsp;<i class="fas fa-angle-right"></i>
-                    </button>
+                    </a>
                     @endif
                 </div>
             </div>
-
         </section>
     @endforeach
     </div>
@@ -79,7 +82,7 @@
         function changeTab(phoneticType)
         {
             $('#tab_' + phoneticType + 'gyo').click();
-            $("html,body").animate({scrollTop:$('#game_tab').offset().top - $('#header_menu').height()});
+            $("html,body").animate({scrollTop:0});
         }
 /*
         re = new RegExp(String.raw`\\\(\^${escapeRegExp(mouth)}\^\)/`);

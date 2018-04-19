@@ -7,6 +7,7 @@
         <title>@yield('title') {{ env('APP_NAME') }} (β)</title>
 
         <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
+        <link rel="stylesheet" href="{{ url('vendors/bower_components/animate.css/animate.min.css') }}">
         @if (env('APP_DEBUG'))
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver={{ time() }}">
         @else
@@ -14,13 +15,12 @@
         @endif
 
         <script src="{{ url('/js/jquery-3.3.1.min.js') }}"></script>
-
-
-        <script src="{{ url('/js/super_admin.min.js') }}"></script>
-        <script src="{{ url('/js/popper.min.js') }}"></script>
         <script src="{{ url('/js/fontawesome-all.min.js') }}" defer></script>
+        <script src="{{ url('vendors/bower_components/popper.js/dist/umd/popper.min.js') }}"></script>
+        <script src="{{ url('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ url('/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
         <script src="{{ url('/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js') }}"></script>
+        <script src="{{ url('/js/super_admin.min.js') }}"></script>
         <script src="{{ url('/js/common.js') }}"></script>
 
         @yield('head_append')
@@ -39,14 +39,6 @@
     </head>
     <body data-sa-theme="4">
         <main class="main">
-            <div class="page-loader">
-                <div class="page-loader__spinner">
-                    <svg viewBox="25 25 50 50">
-                        <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
-                    </svg>
-                </div>
-            </div>
-
             <header class="header">
                 <div class="global-link">
                     @if (View::hasSection('global_back_link'))
@@ -65,29 +57,48 @@
                 </div>
 
                 <ul class="top-nav">
-                    <li class="hidden-xl-up">
+
+                    <li class="hidden-xs-down">
                         <a href="{{ route('ゲーム一覧') }}">ゲーム</a>
                     </li>
 
-                    <li class="hidden-xl-up">
+                    <li class="hidden-xs-down">
                         <a href="{{ route('サイトトップ') }}">サイト</a>
                     </li>
 
                     @if (is_admin())
-                        <li class="hidden-xl-up">
+                        <li class="hidden-xs-down">
                             <a href="{{ route('管理メニュー') }}">管理メニュー</a>
                         </li>
                     @endif
 
                     @if (Auth::check())
-                        <li class="hidden-xl-up">
+                        <li class="hidden-xs-down">
                             <a href="{{ route('マイページ') }}">マイページ</a>
                         </li>
                     @else
-                        <li class="hidden-xl-up">
+                        <li class="hidden-xs-down">
                             <a href="{{ route('ログイン') }}">ログイン</a>
                         </li>
                     @endif
+
+                    <li class="dropdown hidden-sm-up">
+                        <a href="#" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i></a>
+
+                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-112px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a href="{{ route('ゲーム一覧') }}" class="dropdown-item">ゲーム</a>
+                            <a href="{{ route('サイトトップ') }}" class="dropdown-item">サイト</a>
+                            @if (Auth::check())
+                                @if (is_admin())
+                                    <a href="{{ route('管理メニュー') }}" class="dropdown-item">管理メニュー</a>
+                                @endif
+                            <a href="{{ route('マイページ') }}" class="dropdown-item">マイページ</a>
+                            @else
+                            <a href="{{ route('ログイン') }}" class="dropdown-item">ログイン</a>
+                            @endif
+                        </div>
+                    </li>
+
                 </ul>
             </header>
 
@@ -143,22 +154,18 @@
             </div>
 
             <footer class="footer">
-        <div class="container-fluid">
-            <div class="d-flex" style="height: 60px;padding-top:10px;">
                 <div style="overflow: hidden;">@yield('breadcrumb')</div>
-                <div style="white-space: nowrap;" class="ml-auto">
+                <div style="white-space: nowrap;" class="text-right">
                     <a href="{{ route('サイトマップ') }}" class="align-self-center">サイトマップ</a>
                 </div>
-            </div>
-            <div style="height: 40px;line-height: 40px;">
-                &copy; yu-ki
-                <a href="mailto:{{ env('ADMIN_MAIL') }}" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::MAIL) }}</a>
-                <a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</a>
-                <a href="https://github.com/hucklefriend/hgs3" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</a>
-                / since 2003.9.28
-            </div>
-        </div>
-    </footer>
+                <div style="height: 40px;line-height: 40px;" class="text-left;">
+                    &copy; yu-ki
+                    <a href="mailto:{{ env('ADMIN_MAIL') }}" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::MAIL) }}</a>
+                    <a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</a>
+                    <a href="https://github.com/hucklefriend/hgs3" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</a>
+                    / since 2003.9.28
+                </div>
+            </footer>
 
             @yield('outsideContent')
         </main>
