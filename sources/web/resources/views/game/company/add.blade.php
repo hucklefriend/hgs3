@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('ゲーム会社一覧') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')ゲーム会社@endsection
+@section('global_back_link'){{ route('ゲーム会社一覧') }}@endsection
 
 @section('content')
     <h1>ゲーム会社新規登録</h1>

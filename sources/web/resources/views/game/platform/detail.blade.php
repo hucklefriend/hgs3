@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('プラットフォーム一覧') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')プラットフォーム@endsection
+@section('global_back_link'){{ route('プラットフォーム一覧') }}@endsection
 
 @section('content')
     <h1>{{ $platform->name }}</h1>

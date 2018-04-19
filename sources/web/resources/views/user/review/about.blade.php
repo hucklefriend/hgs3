@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
-@section('title')レビュー投稿について | @endsection
-
-@section('global_back_link')
-    <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')レビュー投稿@endsection
+@section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
     <h1>レビュー投稿について</h1>

@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')ユーザー@endsection
+@section('global_back_link'){{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}@endsection
 
 @section('content')
     <h1>@include('user.common.icon', ['u' => $user]){{ $user->name }}さんのお気に入りゲーム</h1>

@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
-@section('title')ゲーム一覧 @endsection
-
-@section('global_back_link')
-    <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')ゲーム@endsection
+@section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
     @php
@@ -22,28 +19,19 @@
         ];
     @endphp
 
-    @if (is_data_editor())
-    <div class="d-flex justify-content-between">
-        <h1>ゲーム一覧</h1>
-        <div>
-            <a href="{{ route('ゲームソフト登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
-        </div>
-    </div>
-    @else
-        <h1>ゲーム一覧</h1>
-    @endif
+    <h1>ゲーム一覧</h1>
 
     <div class="d-flex flex-wrap" id="game_tab">
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[0][1]) active @endif " href="#" data-target="agyo" id="tab_agyo">あ</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[1][1]) active @endif " href="#" data-target="kagyo" id="tab_kagyo">か</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[2][1]) active @endif " href="#" data-target="sagyo" id="tab_sagyo">さ</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[3][1]) active @endif " href="#" data-target="tagyo" id="tab_tagyo">た</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[4][1]) active @endif " href="#" data-target="nagyo" id="tab_nagyo">な</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[5][1]) active @endif " href="#" data-target="hagyo" id="tab_hagyo">は</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[6][1]) active @endif " href="#" data-target="magyo" id="tab_magyo">ま</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[7][1]) active @endif " href="#" data-target="yagyo" id="tab_yagyo">や</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[8][1]) active @endif " href="#" data-target="ragyo" id="tab_ragyo">ら</a>
-        <a class="btn btn-outline-secondary game_tab @if($defaultPhoneticType == $phonetics[9][1]) active @endif " href="#" data-target="wagyo" id="tab_wagyo">わ</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[0][1]) active @endif " href="#" data-target="agyo" id="tab_agyo">あ</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[1][1]) active @endif " href="#" data-target="kagyo" id="tab_kagyo">か</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[2][1]) active @endif " href="#" data-target="sagyo" id="tab_sagyo">さ</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[3][1]) active @endif " href="#" data-target="tagyo" id="tab_tagyo">た</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[4][1]) active @endif " href="#" data-target="nagyo" id="tab_nagyo">な</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[5][1]) active @endif " href="#" data-target="hagyo" id="tab_hagyo">は</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[6][1]) active @endif " href="#" data-target="magyo" id="tab_magyo">ま</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[7][1]) active @endif " href="#" data-target="yagyo" id="tab_yagyo">や</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[8][1]) active @endif " href="#" data-target="ragyo" id="tab_ragyo">ら</a>
+        <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[9][1]) active @endif " href="#" data-target="wagyo" id="tab_wagyo">わ</a>
     </div>
 
     <div>

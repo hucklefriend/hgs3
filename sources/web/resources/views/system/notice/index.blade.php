@@ -1,16 +1,13 @@
 @extends('layouts.app')
 
-@section('title')お知らせ一覧 | @endsection
-
-@section('global_back_link')
-    <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')お知らせ一覧@endsection
+@section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
 
     @if (is_admin())
         <div class="d-flex justify-content-between">
-            <h1>お知らせ</h1>
+            <h1>お知らせ一覧</h1>
             <div>
                 <a href="{{ route('お知らせ登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
             </div>

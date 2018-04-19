@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
-@section('title')シリーズ詳細 @endsection
-
-@section('global_back_link')
-    <a href="{{ route('シリーズ一覧') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')シリーズ@endsection
+@section('global_back_link'){{ route('シリーズ一覧') }}@endsection
 
 @section('content')
     <h1>{{ $series->name }}シリーズのゲーム</h1>

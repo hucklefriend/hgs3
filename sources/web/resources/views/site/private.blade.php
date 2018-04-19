@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('サイトトップ') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')サイト@endsection
+@section('global_back_link'){{ route('サイトトップ') }}@endsection
 
 @section('content')
     <h1>アクセスできません。</h1>

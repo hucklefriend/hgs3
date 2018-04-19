@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
-@section('title')ゲーム詳細 @endsection
-
-@section('global_back_link')
-    <a href="{{ route('ゲーム一覧') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')ゲーム@endsection
+@section('global_back_link'){{ route('ゲーム一覧') }}@endsection
 
 @section('content')
     <div class="row">
@@ -12,7 +9,7 @@
             <div class="card card-hgn">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <h5 class="card-title">{{ $soft->name }}</h5>
+                        <h4 class="card-title">{{ $soft->name }}</h4>
                         @auth
                             <div>
                                 <div class="d-flex flex-wrap">

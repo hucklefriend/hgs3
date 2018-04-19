@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
-@section('title')レビュー投稿 | @endsection
-
-@section('global_back_link')
-    <a href="{{ route('ユーザーのレビュー', ['user' => Auth::id()]) }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')レビュー投稿@endsection
+@section('global_back_link'){{ route('ユーザーのレビュー', ['user' => Auth::id()]) }}@endsection
 
 @section('content')
     <h1>レビュー投稿</h1>

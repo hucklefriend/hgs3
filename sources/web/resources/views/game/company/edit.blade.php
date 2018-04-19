@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('ゲーム会社詳細', ['company' => $company->id]) }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')ゲーム会社@endsection
+@section('global_back_link'){{ route('ゲーム会社詳細', ['company' => $company->id]) }}@endsection
 
 @section('content')
     <form method="POST" action="{{ route('ゲーム会社編集処理', ['company' => $company->id]) }}" autocomplete="off">

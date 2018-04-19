@@ -1,19 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="alert alert-info p-2" role="alert">
-        <small>
-            現在、テスト用のユーザーとサイトが多数登録されています。<br>
-            本運営開始時に削除しますが、それまでは動作確認などで利用します。<br>
-            邪魔かと思いますが、ご理解とご了承をお願いしますm(_ _)m
-        </small>
+    <div class="card card-hgn">
+        <div class="card-body">
+            <p class="card-text">
+                現在、テスト用のユーザーとサイトが多数登録されています。<br>
+                本運営開始時に削除しますが、それまでは動作確認などで利用します。<br>
+                邪魔かと思いますが、ご理解とご了承をお願いしますm(_ _)m
+            </p>
+        </div>
     </div>
+
+    <div>
+@php
+    $date = new \DateTime();
+    $date = $date->sub(new \DateInterval('P7D'));
+    echo $date->format('Y-m-d');
+@endphp
+    </div>
+
 
     <div class="row">
         <div class="@if(!Auth::check()) col-md-7 @else col-md-12 @endif">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">ようこそ</h5>
+                    <h4 class="card-title">ようこそ</h4>
                     <p class="card-text">
                         {{ env('APP_NAME') }}は、ホラーゲーム好きが繋がるポータルサイトになるべく開発中のサイトです。<br>
                         <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>

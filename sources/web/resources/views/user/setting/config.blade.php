@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')設定@endsection
+@section('global_back_link'){{ route('プロフィール', ['showId' => $user->show_id]) }}@endsection
 
 @section('content')
 

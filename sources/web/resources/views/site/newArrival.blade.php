@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('サイトトップ') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')新着サイト@endsection
+@section('global_back_link'){{ route('サイトトップ') }}@endsection
 
 @section('content')
     <h1>新着サイト</h1>

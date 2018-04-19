@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
-@section('title')仮登録メール送信 @endsection
-
-@section('global_back_link')
-    <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')ユーザー登録@endsection
+@section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
     <h1>仮登録メールを送信しました</h1>

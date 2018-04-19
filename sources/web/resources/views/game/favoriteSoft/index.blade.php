@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('ゲーム詳細', ['soft' => $soft->id]) }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')お気に入りゲーム@endsection
+@section('global_back_link'){{ route('ゲーム詳細', ['soft' => $soft->id]) }}@endsection
 
 @section('content')
 

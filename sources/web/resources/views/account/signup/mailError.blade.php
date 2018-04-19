@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
-@section('title')メール送信エラー @endsection
-
-@section('global_back_link')
-    <a href="{{ route('ユーザー登録') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')ユーザー登録@endsection
+@section('global_back_link'){{ route('ユーザー登録') }}@endsection
 
 @section('content')
     <h1>メール送信に失敗しました。</h1>

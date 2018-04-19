@@ -1,24 +1,11 @@
 @extends('layouts.app')
 
-@section('title')ゲーム会社一覧 @endsection
-
-@section('global_back_link')
-    <a href="{{ route('トップ') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')ゲーム会社@endsection
+@section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
 
-    @if (is_data_editor())
-        <div class="d-flex justify-content-between">
-            <h1>ゲーム会社一覧</h1>
-            <div>
-                <a href="{{ route('ゲーム会社登録') }}" class="btn btn-sm btn-outline-dark">新規登録</a>
-            </div>
-        </div>
-    @else
-        <h1>ゲーム会社一覧</h1>
-    @endif
-
+    <h1>ゲーム会社一覧</h1>
     <ul class="list-group no-border">
     @foreach ($companies as $c)
         <li class="list-group-item"><a href="{{ route('ゲーム会社詳細', ['company' => $c->id]) }}">{{ $c->name }}</a></li>

@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
+@section('title')足跡@endsection
 @section('global_back_link')
     @isset($ym)
-    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $ym }}"><i class="fas fa-angle-left"></i></a>
+    {{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $ym }}
     @else
-    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}"><i class="fas fa-angle-left"></i></a>
+    {{ route('サイトアクセスログ', ['site' => $site->id]) }}
     @endif
 @endsection
 
