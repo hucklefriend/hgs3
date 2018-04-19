@@ -4,12 +4,12 @@
 @section('global_back_link'){{ route('ゲーム一覧') }}@endsection
 
 @section('content')
-    <h1>{{ $soft->name }}</h1>
 
     <div class="row">
         <div class="col-md-12">
             <div class="card card-hgn">
                 <div class="card-body">
+                    <h1 class="card-title">{{ $soft->name }}</h1>
                     <div class="d-flex flex-column flex-sm-row">
                         @if ($hasOriginalPackageImage)
                             <div class="text-center mb-3">
@@ -356,11 +356,11 @@
 
 
     <div class="d-flex justify-content-between">
-        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}">
+        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}" class="btn btn-light">
             <i class="fas fa-angle-left"></i>
             前のゲーム
         </a>
-        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}">
+        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}" class="btn btn-light">
             次のゲーム
             <i class="fas fa-angle-right"></i>
         </a>

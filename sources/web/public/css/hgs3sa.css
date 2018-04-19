@@ -319,15 +319,6 @@ a:active .no-image-text-inner {
     margin: 1rem 0;
 }
 
-h1 {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-}
-
-h2 {
-    font-size: 1.1rem;
-}
-
 .btn-area {
     margin: 1rem 0;
 }
@@ -426,7 +417,7 @@ button.btn:hover {
 .package-card-image {
     width: 60px;
     font-size: 2rem;
-    color: black;
+    color: white;
     display: table-cell;
     padding: 0;
     text-align: center;
@@ -520,7 +511,8 @@ html.is-fixed body {
 }
 
 .soft-blockquote {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.4rem;
 }
 
 .package-image-small {
@@ -548,35 +540,9 @@ html.is-fixed body {
 
 
 
-
-@font-face {
-    font-family: "Yu Gothic";
-    src: local("Yu Gothic Medium");
-    font-weight: 100;
-}
-@font-face {
-    font-family: "Yu Gothic";
-    src: local("Yu Gothic Medium");
-    font-weight: 200;
-}
-@font-face {
-    font-family: "Yu Gothic";
-    src: local("Yu Gothic Medium");
-    font-weight: 300;
-}
-@font-face {
-    font-family: "Yu Gothic";
-    src: local("Yu Gothic Medium");
-    font-weight: 400;
-}
-@font-face {
-    font-family: "Yu Gothic";
-    src: local("Yu Gothic Bold");
-    font-weight: bold;
-}
-
 body {
-    font-family: "Yu Gothic", YuGothic;
+    font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "MS Pゴシック", "MS PGothic", sans-serif;
+    font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif;
 }
 
 .logo {

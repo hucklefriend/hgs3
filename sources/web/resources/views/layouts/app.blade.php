@@ -8,7 +8,7 @@
 
         <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/animate.css/animate.min.css') }}">
-        @if (env('APP_DEBUG'))
+        @if (env('APP_ENV') != 'production')
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver={{ time() }}">
         @else
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver=20180519">
@@ -37,7 +37,7 @@
         </script>
         @endif
     </head>
-    <body data-sa-theme="4">
+    <body data-sa-theme="5">
         <main class="main">
             <header class="header">
                 <div class="global-link">
