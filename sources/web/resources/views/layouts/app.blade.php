@@ -37,7 +37,7 @@
         </script>
         @endif
     </head>
-    <body data-sa-theme="5">
+    <body data-sa-theme="4">
         <main class="main">
             <header class="header">
                 <div class="global-link">
@@ -102,56 +102,9 @@
                 </ul>
             </header>
 
-            <div class="fixed-top" id="header_menu" style="display:none;">
-                <nav class="navbar navbar-expand-sm navbar-light bg-light">
-                    <span id="global_back_link">
-                        @yield('global_back_link')
-                    </span>
-                    @if (env('APP_ENV') == 'staging')
-                    <a class="navbar-brand" href="{{ route('トップ') }}">STG</a>
-                    @else
-                    <a class="navbar-brand" href="{{ route('トップ') }}">β版</a>
-                    @endif
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarText">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('ゲーム一覧') }}">ゲーム</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('サイトトップ') }}">サイト</a>
-                            </li>
-                            @if (is_admin())
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('管理メニュー') }}">管理メニュー</a>
-                            </li>
-                            @endif
-                        </ul>
-                        @if (Auth::check())
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('マイページ') }}">マイページ</a>
-                            </li>
-                        </ul>
-                        @else
-                            <span class="navbar-text">
-                                <a class="nav-link" href="{{ route('ログイン') }}">ログイン</a>
-                            </span>
-                        @endif
-                    </div>
-                </nav>
-            </div>
-
             <section class="content content--full">
                 @yield('content')
             </section>
-
-            <div class="container-fluid" style="padding-bottom: 40px;display:none;" id="main_content">
-                @yield('content')
-            </div>
 
             <footer class="footer">
                 <div style="overflow: hidden;">@yield('breadcrumb')</div>

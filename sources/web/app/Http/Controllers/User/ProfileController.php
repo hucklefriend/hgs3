@@ -44,9 +44,11 @@ class ProfileController extends Controller
 
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
+        $title = '';
 
         switch ($show) {
             case 'follow':{
+                $title = 'フォロー';
                 $follows = Follow::getFollow($user->id);
                 $data['parts'] = [
                     'follows' => $follows,
@@ -56,6 +58,7 @@ class ProfileController extends Controller
             }
                 break;
             case 'follower':{
+                $title = 'フォロワー';
                 $followers = Follow::getFollower($user->id);
                 $data['parts'] = [
                     'followers' => $followers,
@@ -65,7 +68,7 @@ class ProfileController extends Controller
             }
                 break;
             case 'favorite_soft':{
-
+                $title = 'お気に入りゲーム';
                 $favoriteSofts = User\FavoriteSoft::get($user->id);
 
                 $data['parts'] = [
@@ -75,15 +78,15 @@ class ProfileController extends Controller
             }
                 break;
             case 'review': {
-                $r = new Review();
-                $reviews = $r->getMypage($user->id);
+                $title = 'レビュー';
                 $data['parts'] = [
-                    'reviews'      => $reviews,
-                    'gamePackages' => Orm\GamePackage::getHash(page_pluck($reviews, 'package_id')),
+                    'reviews'      => [],
+                    'gamePackages' => [],
                 ];
             }
                 break;
             case 'site': {
+                $title = 'サイト';
                 $data['parts'] = [
                     'sites'       => Site::getUserSites($user->id, $data['isMyself']),
                     'hasHgs2Site' => Site\TakeOver::hasHgs2Site($user)
@@ -91,6 +94,7 @@ class ProfileController extends Controller
             }
                 break;
             case 'favorite_site': {
+                $title = 'お気に入りサイト';
                 $favoriteSites = User\FavoriteSite::get($user->id);
                 $sites = Orm\Site::getHash(page_pluck($favoriteSites, 'site_id'));
 
@@ -106,6 +110,7 @@ class ProfileController extends Controller
             case 'profile':
             default: {
                 $show = 'profile';
+                $title = 'プロフィール';
                 $data['parts'] = [
                     'snsAccounts' => SocialSite::getAccounts($user, true)
                 ];
@@ -114,6 +119,7 @@ class ProfileController extends Controller
         }
 
         $data['show'] = $show;
+        $data['title'] = $title;
 
         if (!$data['isMyself']) {
             $follow = new Follow();

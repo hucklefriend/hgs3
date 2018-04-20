@@ -1,5 +1,9 @@
+
+<div class="card">
+    <div class="card-body">
+
 @if ($followers->count() == 0)
-    <p>フォロワーはいません。</p>
+    <div>フォロワーはいません。</div>
 @endif
 
 @foreach ($followers as $follower)
@@ -26,6 +30,6 @@
     @endisset
 @endforeach
 
-
-
 @include('common.pager', ['pager' => $followers])
+    </div>
+</div>

@@ -1,8 +1,9 @@
+
+<div class="card">
+    <div class="card-body">
 @if ($follows->count() == 0)
-    <p>フォローはいません。</p>
+        <div>フォローはいません。</div>
 @endif
-
-
 @foreach ($follows as $f)
     @isset($users[$f->follow_user_id])
         @php $u = $users[$f->follow_user_id]; @endphp
@@ -37,6 +38,6 @@
     @endisset
 @endforeach
 
-
-
 @include('common.pager', ['pager' => $follows])
+    </div>
+</div>

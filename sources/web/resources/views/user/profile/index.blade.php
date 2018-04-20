@@ -25,68 +25,38 @@
         </div>
     @endif
 
-    <!-- 最小表示以外はメニューと内容を表示 -->
-    <div class="d-none d-sm-block">
-        <div class="d-flex flex-row">
-            <div class="p-2" style="width: 300px;">
-                <div class="nav flex-column nav-pills">
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">プロフィール</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
-                </div>
-            </div>
-            <div class="p-10" style="width: 100%;">
-                @include('user.profile.parts.' . camel_case($show), $parts)
+    <div class="d-flex flex-row">
+        <div class="p-2 hidden-xs-down" style="width: 300px;">
+            <div class="nav flex-column nav-pills ">
+                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="nav-link @if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
+                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
+                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
+                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
+                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
+                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
+                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
             </div>
         </div>
-    </div>
-
-    <!-- 最小表示時はメニューのみ -->
-    <div class="d-sm-none">
-        <ul class="list-group">
-            <li class="list-group-item">
-                <a href="{{ route('ユーザーのプロフィール', ['showId' => $user->show_id]) }}">プロフィール</a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーのフォロー', ['showId' => $user->show_id]) }}">フォロー</a>
-                <span class="badge badge-secondary">{{ $followNum }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーのフォロワー', ['showId' => $user->show_id]) }}">フォロワー</a>
-                <span class="badge badge-secondary">{{ $followerNum }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーのお気に入りゲーム', ['showId' => $user->show_id]) }}">お気に入りゲーム</a>
-                <span class="badge badge-secondary">{{ $favoriteSoftNum }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーのレビュー', ['showId' => $user->show_id]) }}">レビュー</a>
-                <span class="badge badge-secondary">{{ $reviewNum }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーのサイト', ['showId' => $user->show_id]) }}">サイト</a>
-                <span class="badge badge-secondary">{{ $siteNum }}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{ route('ユーザーのお気に入りサイト', ['showId' => $user->show_id]) }}">お気に入りサイト</a>
-                <span class="badge badge-secondary">{{ $favoriteSiteNum }}</span>
-            </li>
-        </ul>
-
-        @if ($isMyself)
-            <div class="row mt-5 mb-5">
-                <div class="col-6 text-center">
-                    <a href="{{ route('ユーザー設定') }}" class="btn btn-sm btn-outline-dark mr-3"><i class="fas fa-cog"></i> 設定</a>
+        <div class="p-10" style="width: 100%;">
+            <div class="hidden-sm-up my-3">
+                <div data-toggle="dropdown" class="cursor-pointer" style="line-height: 2rem;">
+                    <span style="font-size: 1.5rem;">{{ $title }}</span>
+                    <span style="margin-left: 1rem;font-size: 1rem;">▼</span>
                 </div>
-                <div class="col-6 text-center">
-                    <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning">ログアウト</a>
+
+                <div class="dropdown-menu">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="dropdown-item @if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="dropdown-item @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="dropdown-item @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="dropdown-item @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="dropdown-item @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="dropdown-item @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="dropdown-item @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
                 </div>
             </div>
-        @endif
+
+            @include('user.profile.parts.' . camel_case($show), $parts)
+        </div>
     </div>
 @endsection
 
