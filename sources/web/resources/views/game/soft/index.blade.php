@@ -19,7 +19,9 @@
         ];
     @endphp
 
-    <h1>ゲーム一覧</h1>
+    <header class="content__title">
+        <h1>ゲーム一覧</h1>
+    </header>
 
     <div class="d-flex flex-wrap" id="game_tab">
         <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[0][1]) active @endif " href="#" data-target="agyo" id="tab_agyo">あ</a>

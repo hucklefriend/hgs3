@@ -10,10 +10,11 @@
         <link rel="stylesheet" href="{{ url('vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/animate.css/animate.min.css') }}">
         @if (env('APP_ENV') != 'production')
-            <link rel="stylesheet" href="{{ url('css/hgs3sa2.css') }}?ver={{ time() }}">
+            <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver={{ time() }}">
         @else
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver=20180519">
         @endif
+        <link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet" />
 
         <script src="{{ url('/js/jquery-3.3.1.min.js') }}"></script>
         <script src="{{ url('/js/fontawesome-all.min.js') }}" defer></script>

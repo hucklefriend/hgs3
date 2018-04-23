@@ -56,37 +56,34 @@
                     </div>
                     <hr>
                     @if ($errors->has('login_error'))
-                        <div class="text-danger" role="alert">
-                            <small>
+                        <div class="alert alert-danger" role="alert">
                             @foreach ($errors->get('login_error') as $msg)
                                 {{ nl2br(e($msg)) }}
                                 @if (!$loop->last)
                                     <br>
                                 @endif
                             @endforeach
-                            </small>
                         </div>
                     @endif
                     <form method="POST" action="{{ route('ログイン処理') }}">
                         {{ csrf_field() }}
+                        <div class="input-group mb-2">
+                            <span class="input-group-addon" id="addon-mail"><i class="far fa-envelope"></i></span>
+                            <div class="form-group">
+                                <input id="email" type="email" class="form-control{{ $errors->has('login_error') ? ' has-danger' : '' }}" name="email" value="{{ old('email') }}" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
+                                <i class="form-group__bar"></i>
+                            </div>
+                        </div>
 
-                        <div class="form-group form-group-sm mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="addon-mail"><i class="far fa-envelope"></i></span>
-                                </div>
-                                <input id="email" type="email" class="form-control form-control-sm{{ $errors->has('login_error') ? ' has-danger' : '' }}" name="email" value="{{ old('email') }}" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="addon-password"><i class="fas fa-key"></i></span>
+                            <div class="form-group">
+                                <input id="password" type="password" class="form-control{{ $errors->has('login_error') ? ' has-danger' : '' }}" name="password" required placeholder="パスワード" aria-label="パスワード" aria-describedby="addon-password">
+                                <i class="form-group__bar"></i>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="addon-password"><i class="fas fa-key"></i></span>
-                                </div>
-                                <input id="password" type="password" class="form-control form-control-sm{{ $errors->has('login_error') ? ' has-danger' : '' }}" name="password" required placeholder="パスワード" aria-label="パスワード" aria-describedby="addon-password">
-                            </div>
-                        </div>
-                        <div style="display:flex;">
+
+                        <div class="mt-3 d-flex">
                             <div>
                                 <button type="submit" class="btn btn-primary btn-sm">ログイン</button>
                             </div>
