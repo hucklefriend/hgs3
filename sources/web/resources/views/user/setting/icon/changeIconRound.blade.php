@@ -4,67 +4,79 @@
 @section('global_back_link'){{ route('ユーザー設定') }}@endsection
 
 @section('content')
-    <h1>アイコン丸み変更</h1>
-
-    <form method="POST" action="{{ route('アイコン丸み変更処理') }}" autocomplete="off">
-        <div class="d-flex mb-3">
-            <div class="align-self-center p-3">
-                @include('user.common.icon', ['u' => $user, 'isLarge' => true])
-            </div>
-            <div class="align-self-center">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="icon_round_type" id="icon_round_type0" value="{{ \Hgs3\Constants\IconRoundType::NONE }}"  {{ checked(old('icon_round_type', $user->icon_round_type), \Hgs3\Constants\IconRoundType::NONE) }}>
-                    <label class="form-check-label" for="icon_round_type0">
-                        丸みなし
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="icon_round_type" id="icon_round_type1" value="{{ \Hgs3\Constants\IconRoundType::ROUNDED }}" {{ checked(old('icon_round_type', $user->icon_round_type), \Hgs3\Constants\IconRoundType::ROUNDED) }}>
-                    <label class="form-check-label" for="icon_round_type1">
-                        丸みあり
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="icon_round_type" id="icon_round_type2" value="{{ \Hgs3\Constants\IconRoundType::CIRCLE }}" {{ checked(old('icon_round_type', $user->icon_round_type), \Hgs3\Constants\IconRoundType::CIRCLE) }}>
-                    <label class="form-check-label" for="icon_round_type2">
-                        円
-                    </label>
-                </div>
-            </div>
-        </div>
-
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>アイコン丸み変更</h1>
+        </header>
         <div>
-            <button class="btn btn-outline-info">変更</button>
-        </div>
+            <form method="POST" action="{{ route('アイコン丸み変更処理') }}" autocomplete="off">
+                <div class="d-flex mb-3">
+                    <div class="align-self-center p-3">
+                        @include('user.common.icon', ['u' => $user, 'isLarge' => true])
+                    </div>
+                    <div class="align-self-center">
+                        <label class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" name="icon_round_type" id="icon_round_type0" value="{{ \Hgs3\Constants\IconRoundType::NONE }}"  {{ checked(old('icon_round_type'), \Hgs3\Constants\IconRoundType::NONE) }}>
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">丸みなし</span>
+                        </label>
 
-        {{ method_field('PATCH') }}
-        {{ csrf_field() }}
-    </form>
+                        <div class="clearfix mb-2"></div>
 
-    <script>
-        let userIcon = null;
+                        <label class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" name="icon_round_type" id="icon_round_type1" value="{{ \Hgs3\Constants\IconRoundType::ROUNDED }}"  {{ checked(old('icon_round_type'), \Hgs3\Constants\IconRoundType::ROUNDED) }}>
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">丸みあり</span>
+                        </label>
 
-        $(function() {
-            userIcon = $('.user-icon');
+                        <div class="clearfix mb-2"></div>
 
-            $('input[name="icon_round_type"]').change(function (){
-                resetClass();
+                        <label class="custom-control custom-radio">
+                            <input class="custom-control-input" type="radio" name="icon_round_type" id="icon_round_type1" value="{{ \Hgs3\Constants\IconRoundType::CIRCLE }}"  {{ checked(old('icon_round_type'), \Hgs3\Constants\IconRoundType::CIRCLE) }}>
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">円</span>
+                        </label>
+                    </div>
+                </div>
 
-                let val = $(this).val();
-                if (val == {{ \Hgs3\Constants\IconRoundType::ROUNDED }}) {
-                    userIcon.addClass('{{ \Hgs3\Constants\IconRoundType::getClass(\Hgs3\Constants\IconRoundType::ROUNDED) }}');
-                } else if (val == {{ \Hgs3\Constants\IconRoundType::CIRCLE }}) {
-                    userIcon.addClass('{{ \Hgs3\Constants\IconRoundType::getClass(\Hgs3\Constants\IconRoundType::CIRCLE) }}');
+                <div>
+                    <button class="btn btn-primary">変更</button>
+                </div>
+
+                {{ method_field('PATCH') }}
+                {{ csrf_field() }}
+            </form>
+            <script>
+                let userIcon = null;
+
+                $(function() {
+                    userIcon = $('.user-icon');
+
+                    $('input[name="icon_round_type"]').change(function (){
+                        resetClass();
+
+                        let val = $(this).val();
+                        if (val == {{ \Hgs3\Constants\IconRoundType::ROUNDED }}) {
+                            userIcon.addClass('{{ \Hgs3\Constants\IconRoundType::getClass(\Hgs3\Constants\IconRoundType::ROUNDED) }}');
+                        } else if (val == {{ \Hgs3\Constants\IconRoundType::CIRCLE }}) {
+                            userIcon.addClass('{{ \Hgs3\Constants\IconRoundType::getClass(\Hgs3\Constants\IconRoundType::CIRCLE) }}');
+                        }
+                    });
+                });
+
+                function resetClass()
+                {
+                    userIcon.removeClass('{{ \Hgs3\Constants\IconRoundType::getClass(\Hgs3\Constants\IconRoundType::ROUNDED) }}');
+                    userIcon.removeClass('{{ \Hgs3\Constants\IconRoundType::getClass(\Hgs3\Constants\IconRoundType::CIRCLE) }}');
                 }
-            });
-        });
+            </script>
+        </div>
+    </div>
 
-        function resetClass()
-        {
-            userIcon.removeClass('{{ \Hgs3\Constants\IconRoundType::getClass(\Hgs3\Constants\IconRoundType::ROUNDED) }}');
-            userIcon.removeClass('{{ \Hgs3\Constants\IconRoundType::getClass(\Hgs3\Constants\IconRoundType::CIRCLE) }}');
-        }
-    </script>
+
+
+    <h1></h1>
+
 
 
 @endsection

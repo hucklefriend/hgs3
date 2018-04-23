@@ -4,24 +4,29 @@
 @section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
-    <h1>パスワード再発行</h1>
-    <p>
-        登録しているメールアドレスを入力してください。<br>
-        パスワード再設定のURLをお送りしますので、URLにアクセスしてパスワードを再設定してください。
-    </p>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>パスワード再発行</h1>
+        </header>
+        <p>
+            登録しているメールアドレスを入力してください。<br>
+            パスワード再設定のURLをお送りしますので、URLにアクセスしてパスワードを再設定してください。
+        </p>
 
-    <form method="POST" action="{{ route('パスワード再設定メール送信') }}" autocomplete="off" class="mt-5">
-        {{ csrf_field() }}
-        <div class="form-group form-group-sm mb-3">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="addon-mail"><i class="far fa-envelope"></i></span>
+
+        <form method="POST" action="{{ route('パスワード再設定メール送信') }}" autocomplete="off" class="mt-5">
+            {{ csrf_field() }}
+            <div class="form-group form-group-sm mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="addon-mail"><i class="far fa-envelope"></i></span>
+                    </div>
+                    <input id="email" type="email" class="form-control {{ $errors->has('login_error') ? ' has-danger' : '' }}" name="email" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
                 </div>
-                <input id="email" type="email" class="form-control {{ $errors->has('login_error') ? ' has-danger' : '' }}" name="email" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">パスワード再設定メール送信</button>
-    </form>
+            <button type="submit" class="btn btn-primary">パスワード再設定メール送信</button>
+        </form>
+    </div>
 @endsection
 
 @section('breadcrumb')

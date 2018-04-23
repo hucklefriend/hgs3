@@ -1,13 +1,21 @@
 <div class="form-group">
     <label for="name">サイト名</label><span class="badge badge-info ml-2">必須</span>
     <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}" placeholder="サイト名">
+    <i class="form-group__bar"></i>
+</div>
+<div class="form-help">
     @include('common.error', ['formName' => 'name'])
 </div>
+
 <div class="form-group">
     <label for="url">URL</label><span class="badge badge-info ml-2">必須</span>
     <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}" placeholder="サイトのURL">
+    <i class="form-group__bar"></i>
+</div>
+<div class="form-help">
     @include('common.error', ['formName' => 'url'])
 </div>
+
 <div class="form-group">
     <div class="d-flex mb-2">
         <div class="align-self-center">
@@ -23,28 +31,40 @@
     </div>
     <div id="selected_soft" class="d-flex flex-wrap"></div>
     <input type="hidden" name="handle_soft" value="{{ old('handle_soft', $site->handle_soft) }}" id="handle_soft">
+
+</div>
+<div class="form-help">
     @if ($errors->has('handle_soft'))
-        <p class="text-danger">
+        <p class="invalid-feedback">
             <small>
-            @foreach ($errors->get('handle_soft') as $msg)
-                {{ $msg }}
-                @if (!$loop->last)
-                    <br>
-                @endif
-            @endforeach
+                @foreach ($errors->get('handle_soft') as $msg)
+                    {{ $msg }}
+                    @if (!$loop->last)
+                        <br>
+                    @endif
+                @endforeach
             </small>
         </p>
     @endif
 </div>
+
 <div class="form-group">
     <label for="main_contents">メインコンテンツ</label>
     {{ Form::select('main_contents', \Hgs3\Constants\Site\MainContents::getData(), old('main_contents', $site->main_contents_id), ['class' => 'form-control']) }}
 </div>
+<div class="form-help">
+
+</div>
+
 <div class="form-group">
     <label for="presentation">紹介文</label>
     <textarea class="form-control{{ invalid($errors, 'presentation') }}" id="presentation" name="presentation" rows="5">{{ old('presentation', $site->presentation) }}</textarea>
+
+</div>
+<div class="form-help">
     @include('common.error', ['formName' => 'presentation'])
 </div>
+
 <div class="form-group">
     <label for="list_banner_upload_flag">対象年齢</label>
     <div>
@@ -71,6 +91,10 @@
         </div>
     </div>
 </div>
+<div class="form-help">
+
+</div>
+
 
 <div class="form-group">
     <label for="list_banner_upload_flag">性別傾向</label>
@@ -98,3 +122,7 @@
         </div>
     </div>
 </div>
+<div class="form-help">
+
+</div>
+

@@ -4,9 +4,15 @@
 @section('global_back_link'){{ route('ユーザー設定') }}@endsection
 
 @section('content')
-    <h1>パスワード変更完了</h1>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>パスワード変更完了</h1>
+        </header>
 
-    <p>パスワード変更が完了しました。</p>
+        <p>
+            パスワード変更が完了しました。
+        </p>
+    </div>
 @endsection
 
 @section('breadcrumb')

@@ -1,19 +1,23 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('サイト管理') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')サイト登録@endsection
+@section('global_back_link'){{ route('サイト管理') }}@endsection
 
 @section('content')
-    @if ($isTakeOver)
-        <p>
-            「{{ $site->name }}」から引き継ぎます。<br>
-            変更がある場合は入力内容を修正して、登録してください。<br>
-            入力項目のほかに、登録日時、INカウント、OUTカウント、日別アクセス数で引き継ぎます。
-        </p>
-    @endif
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>サイト登録</h1>
+        </header>
 
-    <form method="POST" action="{{ route('サイト登録処理') }}" enctype="multipart/form-data" autocomplete="off">
+        @if ($isTakeOver)
+            <p>
+                「{{ $site->name }}」から引き継ぎます。<br>
+                変更がある場合は入力内容を修正して、登録してください。<br>
+                入力項目のほかに、登録日時、INカウント、OUTカウント、日別アクセス数で引き継ぎます。
+            </p>
+        @endif
+
+        <form method="POST" action="{{ route('サイト登録処理') }}" enctype="multipart/form-data" autocomplete="off">
         {{ csrf_field() }}
         @include('user.siteManage.common.form')
 
@@ -175,8 +179,9 @@
         </div>
     </form>
 
-    @include('user.siteManage.common.handleSoftSelect')
+        @include('user.siteManage.common.handleSoftSelect')
 
+    </div>
 @endsection
 
 @section('breadcrumb')

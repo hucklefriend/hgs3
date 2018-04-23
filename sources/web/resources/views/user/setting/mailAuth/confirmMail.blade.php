@@ -4,8 +4,13 @@
 @section('global_back_link'){{ route('ユーザー設定') }}@endsection
 
 @section('content')
-    <h1>メールアドレス変更完了</h1>
-    <p>メールアドレスの変更が完了しました。</p>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>メールアドレス変更完了</h1>
+        </header>
+
+        <p>メールアドレスの変更が完了しました。</p>
+    </div>
 @endsection
 
 @section('breadcrumb')

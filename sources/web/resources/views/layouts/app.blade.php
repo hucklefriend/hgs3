@@ -7,9 +7,10 @@
         <title>@yield('title') {{ env('APP_NAME') }} (β)</title>
 
         <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
+        <link rel="stylesheet" href="{{ url('vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/animate.css/animate.min.css') }}">
         @if (env('APP_ENV') != 'production')
-            <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver={{ time() }}">
+            <link rel="stylesheet" href="{{ url('css/hgs3sa2.css') }}?ver={{ time() }}">
         @else
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver=20180519">
         @endif
@@ -20,6 +21,7 @@
         <script src="{{ url('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ url('/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
         <script src="{{ url('/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js') }}"></script>
+        <script src="{{ url('vendors/bower_components/autosize/dist/autosize.min.js') }}"></script>
         <script src="{{ url('/js/super_admin.min.js') }}"></script>
         <script src="{{ url('/js/common.js') }}"></script>
 
@@ -107,7 +109,7 @@
             </section>
 
             <footer class="footer">
-                <div style="overflow: hidden;">@yield('breadcrumb')</div>
+                <div style="overflow: hidden" class="mb-2">@yield('breadcrumb')</div>
                 <div style="white-space: nowrap;" class="text-right">
                     <a href="{{ route('サイトマップ') }}" class="align-self-center">サイトマップ</a>
                 </div>

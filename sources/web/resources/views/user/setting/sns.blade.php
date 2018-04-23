@@ -4,32 +4,32 @@
 @section('global_back_link'){{ route('ユーザー設定') }}@endsection
 
 @section('content')
-    <h1>外部サイト連携</h1>
-
-    <p class="text-muted">
-        <small>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>外部サイト連携</h1>
+        </header>
+        <p class="text-muted">
             外部サイトのアカウントでログインできるように設定します。<br>
             現状はログインのみ利用しています。<br>
             将来的には各外部サイトの特徴に合わせた機能連携を行えたらいいなと考えています。
-        </small>
-    </p>
-
-    <p class="text-muted">
-        <small>
+        </p>
+        <p class="text-muted">
             アカウントを公開すると、他ユーザーがあなたのプロフィールを見た時に外部サイトへのリンクが表示されます。
-        </small>
-    </p>
+        </p>
+    </div>
+
+
 
     <div class="row">
         <div class="col-sm-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title color-twitter">
+                    <h4 class="card-title color-twitter">
                         {{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }} Twitter
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::TWITTER])
                             <small class="ml-3"><span class="badge badge-success">連携中</span></small>
                         @endisset
-                    </h5>
+                    </h4>
                     <div class="card-text">
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::TWITTER])
                             @php $sns = $snsAccountHash[\Hgs3\Constants\SocialSite::TWITTER]; @endphp
@@ -75,12 +75,12 @@
         <div class="col-sm-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title color-facebook">
+                    <h4 class="card-title color-facebook">
                         {{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }} facebook
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::FACEBOOK])
                             <small class="ml-3"><span class="badge badge-success">連携中</span></small>
                         @endisset
-                    </h5>
+                    </h4>
                     <div class="card-text">
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::FACEBOOK])
                             @php $sns = $snsAccountHash[\Hgs3\Constants\SocialSite::FACEBOOK]; @endphp
@@ -129,12 +129,12 @@
         <div class="col-sm-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title color-github">
+                    <h4 class="card-title color-github">
                         {{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }} GitHub
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::GITHUB])
                             <small class="ml-3"><span class="badge badge-success">連携中</span></small>
                         @endisset
-                    </h5>
+                    </h4>
                     <div class="card-text">
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::GITHUB])
                             @php $sns = $snsAccountHash[\Hgs3\Constants\SocialSite::GITHUB]; @endphp
@@ -180,12 +180,12 @@
         <div class="col-sm-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title color-google">
+                    <h4 class="card-title color-google">
                         {{ sns_icon(\Hgs3\Constants\SocialSite::GOOGLE_PLUS) }} Google+
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::GOOGLE_PLUS])
                             <small class="ml-3"><span class="badge badge-success">連携中</span></small>
                         @endisset
-                    </h5>
+                    </h4>
                     <div class="card-text">
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::GOOGLE_PLUS])
                             @php $sns = $snsAccountHash[\Hgs3\Constants\SocialSite::GOOGLE_PLUS]; @endphp
