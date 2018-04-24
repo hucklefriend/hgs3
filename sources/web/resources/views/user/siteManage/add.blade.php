@@ -35,18 +35,18 @@
                 <div class="col-md-6">
                     <div class="form-group" id="list_banner_upload_form">
                         <input type="file" name="list_banner_upload" id="list_banner_upload" class="form-control-file{{ invalid($errors, 'list_banner_upload') }}" accept="image/*">
-                        @include('common.error', ['formName' => 'list_banner_upload'])
-                        <div>
-                            <p class="text-muted">
-                                <small class="show_list_banner_upload">
-                                    アップロードする画像ファイルを選択してください。<br>
-                                    容量は1MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
-                                    幅は最大468pxで、レスポンシブルに拡縮します。<br>
-                                    高さは最大60pxで、60pxを超えている分はカットされます。
-                                </small>
-                            </p>
-                        </div>
+                        <i class="form-group__bar"></i>
                     </div>
+                    <div class="form-help mt-2">
+                        @include('common.error', ['formName' => 'list_banner_upload'])
+                        <p class="text-muted">
+                            アップロードする画像ファイルを選択してください。<br>
+                            容量は1MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
+                            幅は最大468pxで、レスポンシブルに拡縮します。<br>
+                            高さは最大60pxで、60pxを超えている分はカットされます。
+                        </p>
+                    </div>
+
                 </div>
                 <div class="col-md-6">
                     <div class="form-group show_list_banner_upload" id="list_banner_upload_form" style="{!! display_none($listBannerUploadFlag, 2) !!} }">
@@ -76,16 +76,14 @@
                 <div class="col-md-6">
                     <div class="form-group show_detail_banner_upload" id="detail_banner_upload_form">
                         <input type="file" name="detail_banner_upload" id="detail_banner_upload" class="form-control-file{{ invalid($errors, 'detail_banner_upload') }}" accept="image/*">
+                    </div>
+                    <div class="form-help mt-2">
                         @include('common.error', ['formName' => 'detail_banner_upload'])
-                        <div>
-                            <p class="text-muted">
-                                <small class="show_detail_banner_upload">
-                                    アップロードする画像ファイルを選択してください。<br>
-                                    容量は3MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
-                                    画像はレスポンシブルに拡縮します。
-                                </small>
-                            </p>
-                        </div>
+                        <p class="text-muted">
+                            アップロードする画像ファイルを選択してください。<br>
+                            容量は3MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
+                            画像はレスポンシブルに拡縮します。
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -164,16 +162,14 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-6 text-center">
-                    <button class="btn btn-outline-secondary" style="width: 90%;" name="draft" value="1">下書き保存</button>
+                    <button class="btn btn-light" style="width: 90%;" name="draft" value="1">下書き保存</button>
 
-                    <p class="text-muted">
-                        <small>
-                            下書き保存でも、必須項目は入力が必要です。
-                        </small>
+                    <p class="text-muted mt-2">
+                        下書き保存でも、必須項目は入力が必要です。
                     </p>
                 </div>
                 <div class="col-6 text-center">
-                    <button class="btn btn-outline-primary" style="width: 90%;" name="draft" value="0">登録</button>
+                    <button class="btn btn-primary" style="width: 90%;" name="draft" value="0">登録</button>
                 </div>
             </div>
         </div>

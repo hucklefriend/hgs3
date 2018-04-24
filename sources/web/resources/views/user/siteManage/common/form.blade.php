@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="name">サイト名</label><span class="badge badge-info ml-2">必須</span>
+    <label for="name">サイト名</label><span class="badge badge-secondary ml-2">必須</span>
     <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}" placeholder="サイト名">
     <i class="form-group__bar"></i>
 </div>
@@ -8,7 +8,7 @@
 </div>
 
 <div class="form-group">
-    <label for="url">URL</label><span class="badge badge-info ml-2">必須</span>
+    <label for="url">URL</label><span class="badge badge-secondary ml-2">必須</span>
     <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}" placeholder="サイトのURL">
     <i class="form-group__bar"></i>
 </div>
@@ -19,19 +19,18 @@
 <div class="form-group">
     <div class="d-flex mb-2">
         <div class="align-self-center">
-            <label for="title">ゲーム</label><span class="badge badge-info ml-2">必須</span>
+            <label for="title">ゲーム</label><span class="badge badge-secondary ml-2">必須</span>
         </div>
         <div class="ml-3">
     @if ($errors->has('handle_soft'))
             <button type="button" class="btn btn-sm btn-outline-danger" id="select_handle_soft">選択する</button>
     @else
-            <button type="button" class="btn btn-sm btn-outline-info" id="select_handle_soft">選択する</button>
+            <button type="button" class="btn btn-sm btn-light" id="select_handle_soft">選択する</button>
         </div>
     @endif
     </div>
     <div id="selected_soft" class="d-flex flex-wrap"></div>
     <input type="hidden" name="handle_soft" value="{{ old('handle_soft', $site->handle_soft) }}" id="handle_soft">
-
 </div>
 <div class="form-help">
     @if ($errors->has('handle_soft'))
@@ -58,11 +57,11 @@
 
 <div class="form-group">
     <label for="presentation">紹介文</label>
-    <textarea class="form-control{{ invalid($errors, 'presentation') }}" id="presentation" name="presentation" rows="5">{{ old('presentation', $site->presentation) }}</textarea>
-
+    <textarea class="form-control textarea-autosize{{ invalid($errors, 'presentation') }}" id="presentation" name="presentation">{{ old('presentation', $site->presentation) }}</textarea>
 </div>
 <div class="form-help">
     @include('common.error', ['formName' => 'presentation'])
+
 </div>
 
 <div class="form-group">

@@ -6,15 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>@yield('title') {{ env('APP_NAME') }} (β)</title>
 
-        <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/animate.css/animate.min.css') }}">
+        <link rel="stylesheet" href="{{ url('vendors/bower_components/select2/dist/css/select2.min.css') }}">
+        <link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
         @if (env('APP_ENV') != 'production')
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver={{ time() }}">
         @else
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver=20180519">
         @endif
-        <link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet" />
 
         <script src="{{ url('/js/jquery-3.3.1.min.js') }}"></script>
         <script src="{{ url('/js/fontawesome-all.min.js') }}" defer></script>
@@ -23,6 +24,7 @@
         <script src="{{ url('/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
         <script src="{{ url('/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js') }}"></script>
         <script src="{{ url('vendors/bower_components/autosize/dist/autosize.min.js') }}"></script>
+        <script src="{{ url('vendors/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
         <script src="{{ url('/js/super_admin.min.js') }}"></script>
         <script src="{{ url('/js/common.js') }}"></script>
 

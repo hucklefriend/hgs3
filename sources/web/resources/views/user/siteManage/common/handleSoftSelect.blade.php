@@ -1,18 +1,18 @@
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="HandleGameSelect" aria-hidden="true" id="handle_soft_dialog">
-    <div class="modal-dialog" role="document">
+<div class="modal fade modal-up" tabindex="-1" role="dialog" aria-labelledby="HandleGameSelect" aria-hidden="true" id="handle_soft_dialog">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="d-flex flex-wrap" id="handle_soft_tab">
-                    <a class="btn btn-outline-secondary active soft_tab" href="#" data-target="agyo" id="handle_softs_tab_agyo">あ</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="kagyo" id="handle_softs_tab_kagyo">か</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="sagyo" id="handle_softs_tab_sagyo">さ</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="tagyo" id="handle_softs_tab_tagyo">た</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="nagyo" id="handle_softs_tab_nagyo">な</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="hagyo" id="handle_softs_tab_hagyo">は</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="magyo" id="handle_softs_tab_magyo">ま</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="yagyo" id="handle_softs_tab_yagyo">や</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="ragyo" id="handle_softs_tab_ragyo">ら</a>
-                    <a class="btn btn-outline-secondary soft_tab" href="#" data-target="wagyo" id="handle_softs_tab_wagyo">わ</a>
+                    <a class="btn btn-light active soft_tab" href="#" data-target="agyo" id="handle_softs_tab_agyo">あ</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="kagyo" id="handle_softs_tab_kagyo">か</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="sagyo" id="handle_softs_tab_sagyo">さ</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="tagyo" id="handle_softs_tab_tagyo">た</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="nagyo" id="handle_softs_tab_nagyo">な</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="hagyo" id="handle_softs_tab_hagyo">は</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="magyo" id="handle_softs_tab_magyo">ま</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="yagyo" id="handle_softs_tab_yagyo">や</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="ragyo" id="handle_softs_tab_ragyo">ら</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="wagyo" id="handle_softs_tab_wagyo">わ</a>
                 </div>
 
                 @php
@@ -25,7 +25,7 @@
                             @if (isset($softs[$phonicType]))
                                 @foreach ($softs[$phonicType] as $soft)
                                     <div class="btn-group-toggle my-1" data-toggle="buttons">
-                                        <label class="btn btn-outline-info text-left handle_soft_check_btn border-0">
+                                        <label class="btn btn-outline-info text-left">
                                             <input type="checkbox" class="handle_soft_check hide-check" name="handle_soft[]" value="{{ $soft->id }}" id="handle_soft_check_{{ $soft->id }}" autocomplete="off">
                                             <span>{{ $soft->name }}</span>
                                         </label>

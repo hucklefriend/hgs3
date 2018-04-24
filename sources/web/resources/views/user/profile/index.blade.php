@@ -4,60 +4,72 @@
 @section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
-    @if ($isMyself)
-        <div class="d-flex mb-4">
-            <div>
-                <h1 class="mb-0">
-                    @include('user.common.icon', ['u' => $user])
-                    <span class="align-middle">{{ $user->name }}さんのページ</span>
+    <div class="content__inner">
+
+        <header class="content__title">
+        @if ($isMyself)
+            <div class="d-flex mb-4">
+                <div>
+                    <h1 class="mb-0" style="font-size: 2rem;">
+                        @include('user.common.icon', ['u' => $user])
+                        <span class="align-middle">{{ $user->name }}さんのページ</span>
+                    </h1>
+                </div>
+                <div class="ml-auto d-none d-sm-block">
+                    <a href="{{ route('ユーザー設定') }}" class="btn btn-sm btn-outline-dark mr-3"><i class="fas fa-cog"></i> 設定</a>
+                    <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
+                </div>
+            </div>
+        @else
+            <div class="mb-4">
+                <h1>
+                    @include('user.common.icon', ['u' => $user])<span class="align-middle">{{ $user->name }}さんのページ</span>
                 </h1>
             </div>
-            <div class="ml-auto d-none d-sm-block">
-                <a href="{{ route('ユーザー設定') }}" class="btn btn-sm btn-outline-dark mr-3"><i class="fas fa-cog"></i> 設定</a>
-                <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
-            </div>
-        </div>
-    @else
-        <div class="mb-4">
-            <h1>
-                @include('user.common.icon', ['u' => $user])<span class="align-middle">{{ $user->name }}さんのページ</span>
-            </h1>
-        </div>
-    @endif
+        @endif
+        </header>
 
-    <div class="d-flex flex-row">
-        <div class="p-2 hidden-xs-down" style="width: 300px;">
-            <div class="nav flex-column nav-pills ">
-                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="nav-link @if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
-                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
-                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
-                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
-                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
-                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
-                <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
-            </div>
-        </div>
-        <div class="p-10" style="width: 100%;">
-            <div class="hidden-sm-up my-3">
-                <div data-toggle="dropdown" class="cursor-pointer" style="line-height: 2rem;">
-                    <span style="font-size: 1.5rem;">{{ $title }}</span>
-                    <span style="margin-left: 1rem;font-size: 1rem;">▼</span>
-                </div>
-
-                <div class="dropdown-menu">
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="dropdown-item @if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="dropdown-item @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="dropdown-item @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="dropdown-item @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="dropdown-item @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="dropdown-item @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="dropdown-item @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
+        <div class="d-flex flex-row">
+            <div class="p-2 hidden-xs-down" style="width: 300px;">
+                <div class="nav flex-column nav-pills">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="nav-link @if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
                 </div>
             </div>
+            <div class="p-10" style="width: 100%;">
+                <div class="hidden-sm-up my-3">
+                    <div class="form-group">
+                        <select class="select2" data-minimum-results-for-search="Infinity" id="small_menu">
+                            <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}"{{ selected($show, 'profile') }}>プロフィール</option>
+                            <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}"{{ selected($show, 'follow') }}>フォロー</option>
+                            <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}"{{ selected($show, 'follower') }}>フォロワー</option>
+                            <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}"{{ selected($show, 'favorite_soft') }}>お気に入りゲーム</option>
+                            <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}"{{ selected($show, 'review') }}>レビュー</option>
+                            <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}"{{ selected($show, 'site') }}>サイト</option>
+                            <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}"{{ selected($show, 'favorite_site') }}>お気に入りサイト</option>
+                        </select>
+                    </div>
+                </div>
 
-            @include('user.profile.parts.' . camel_case($show), $parts)
+                @include('user.profile.parts.' . camel_case($show), $parts)
+            </div>
         </div>
     </div>
+
+    <script>
+        $(function (){
+            $('#small_menu').on('change', function (){
+                let selected = $('#small_menu option:selected');
+                location.href = selected.data('url');
+            });
+        });
+    </script>
+
 @endsection
 
 @section('breadcrumb')

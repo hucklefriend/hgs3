@@ -1,3 +1,6 @@
+<div class="card">
+    <div class="card-body">
+
 @if ($favoriteSites->count() == 0)
     お気に入りサイトはありません。
 @endif
@@ -11,3 +14,5 @@
 @endforeach
 
 @include('common.pager', ['pager' => $favoriteSites])
+    </div>
+</div>

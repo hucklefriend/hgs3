@@ -611,3 +611,49 @@ header.content__title {
     background-color: rgba(250,100,120,.4);
     border-color: #dc3545;
 }
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-help {
+    margin-bottom: 3rem;
+}
+
+.invalid-feedback {
+    display: initial;
+}
+button, input, optgroup, select, textarea {
+    font-family : inherit !important;
+    font-weight: 500 !important;
+}
+
+.custom-checkbox .custom-control-indicator:before {
+    content: '\f26b';
+    background-color: #fff;
+    font-family: Material-Design-Iconic-Font;
+    color: #131313;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: background-color .2s,opacity .2s;
+    line-height: 1.2rem;
+    text-align: center;
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+@media (min-width: 576px) {
+    .modal-up .modal-dialog, .modal-up:before {
+        display: block;
+        vertical-align: top;
+    }
+
+    .modal-up:before {
+        display:none;
+    }
+}

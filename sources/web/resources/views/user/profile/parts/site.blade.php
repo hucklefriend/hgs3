@@ -1,15 +1,18 @@
-
+<div class="card">
+    <div class="card-body">
 
 @if ($sites->count() <= 0)
-<p>サイトはありません。</p>
+        <p>サイトはありません。</p>
 @endif
 
 @foreach ($sites as $s)
-    <div class="mb-5">
-    @include('site.common.normal', ['s' => $s, 'noUser' => true, 'showApprovalStatus' => $isMyself])
-    </div>
+        <div class="mb-5">
+        @include('site.common.normal', ['s' => $s, 'noUser' => true, 'showApprovalStatus' => $isMyself])
+        </div>
 @endforeach
 
+    </div>
+</div>
 @if ($isMyself && count($sites) < env('MAX_SITES'))
     @if ($hasHgs2Site)
         <div class="row">

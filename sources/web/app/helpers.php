@@ -210,6 +210,14 @@ function invalid($errors, $formName)
 
     return '';
 }
+function selected($val1, $val2)
+{
+    if ($val1 == $val2) {
+        return ' selected';
+    }
+
+    return '';
+}
 
 /**
  * checkboxとradioボタンのchecked判定
