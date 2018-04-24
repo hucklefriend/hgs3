@@ -8,14 +8,14 @@
 
         <header class="content__title">
         @if ($isMyself)
-            <div class="d-flex mb-4">
+            <div class="mb-4 d-sm-flex">
                 <div>
                     <h1 class="mb-0" style="font-size: 1.5rem;">
                         @include('user.common.icon', ['u' => $user])
                         <span class="align-middle">{{ $user->name }}さん</span>
                     </h1>
                 </div>
-                <div class="ml-auto d-none d-sm-block">
+                <div class="ml-auto text-right hidden-xs-down">
                     <a href="{{ route('ユーザー設定') }}" class="btn btn-sm btn-outline-dark mr-3"><i class="fas fa-cog"></i> 設定</a>
                     <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
                 </div>
@@ -59,6 +59,22 @@
                 @include('user.profile.parts.' . camel_case($show), $parts)
             </div>
         </div>
+
+        @if ($isMyself)
+            <hr class="hidden-sm-up">
+            <div class="hidden-sm-up">
+                <div class="d-flex align-content-around">
+                    <div>
+                        <a href="{{ route('ユーザー設定') }}" class="btn"><i class="fas fa-cog"></i> 設定</a>
+                    </div>
+                    <div class="ml-auto text-right">
+                        <a href="{{ route('ログアウト') }}" class="btn btn-outline-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
+                    </div>
+
+                </div>
+            </div>
+        @endif
+
     </div>
 
     <script>

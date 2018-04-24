@@ -4,27 +4,37 @@
 @section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
-    <h1>サイト</h1>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>サイト</h1>
+        </header>
 
-    @if (!empty($timelines))
-    <div><small class="font-weight-bold">新着情報！</small></div>
-    <div id="newsticker" class="ticker mb-3">
-        <ul>
-            @foreach ($timelines as $tl)
-            <li class="mt-1 mb-1">
-                {{ format_date($tl['time']) }}<br>
-                {!! $tl['text'] !!}
-            </li>
-            @endforeach
-        </ul>
+
+        @if (!empty($timelines))
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">新着情報！</h6>
+                </div>
+                <div id="newsticker" class="ticker mb-3">
+                    <ul>
+                        @foreach ($timelines as $tl)
+                            <li class="mt-1 mb-1">
+                                {{ format_date($tl['time']) }}<br>
+                                {!! $tl['text'] !!}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
     </div>
-    @endif
+
 
     <div class="row">
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">新着</h5>
+                    <h4 class="card-title">新着</h4>
                     <div class="card-text">
                         @if (empty($newArrivals))
                             <p>新着サイトはありません。</p>
@@ -45,7 +55,7 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">更新</h5>
+                    <h4 class="card-title">更新</h4>
                     <div class="card-text">
                         @if (empty($updateArrivals))
                             <p>更新サイトはありません。</p>
