@@ -10,9 +10,9 @@
         @if ($isMyself)
             <div class="d-flex mb-4">
                 <div>
-                    <h1 class="mb-0" style="font-size: 2rem;">
+                    <h1 class="mb-0" style="font-size: 1.5rem;">
                         @include('user.common.icon', ['u' => $user])
-                        <span class="align-middle">{{ $user->name }}さんのページ</span>
+                        <span class="align-middle">{{ $user->name }}さん</span>
                     </h1>
                 </div>
                 <div class="ml-auto d-none d-sm-block">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="p-10" style="width: 100%;">
-                <div class="hidden-sm-up my-3">
+                <div class="hidden-sm-up my-5">
                     <div class="form-group">
                         <select class="select2" data-minimum-results-for-search="Infinity" id="small_menu">
                             <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}"{{ selected($show, 'profile') }}>プロフィール</option>

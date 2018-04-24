@@ -14,3 +14,4 @@ function toggleButton(check, on)
         $(check.parent().get(0)).removeClass('active');
     }
 }
+

@@ -177,12 +177,12 @@
                     @if ($packageNum > 2)
                         <div class="row">
                             <div class="col-2">
-                                <button class="btn btn-outline-secondary btn-sm" id="package_slider_prev">&lt;</button>
+                                <button class="btn btn-light btn-sm" id="package_slider_prev"><i class="fas fa-angle-left"></i></button>
                             </div>
                             <div class="col-8 text-center" id="package_pager">
                             </div>
                             <div class="col-2 text-right">
-                                <button class="btn btn-outline-secondary btn-sm" id="package_slider_next">&gt;</button>
+                                <button class="btn btn-light btn-sm" id="package_slider_next"><i class="fas fa-angle-right"></i></button>
                             </div>
                         </div>
                     @endif
