@@ -17,7 +17,8 @@
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver=20180519">
         @endif
 
-        <script src="{{ url('/js/jquery-3.3.1.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/layzr.js/2.2.2/layzr.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="{{ url('/js/fontawesome-all.min.js') }}" defer></script>
         <script src="{{ url('vendors/bower_components/popper.js/dist/umd/popper.min.js') }}"></script>
         <script src="{{ url('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -136,10 +137,21 @@
             @yield('outsideContent')
         </main>
     <script>
+        const lazyLoader = Layzr({
+            normal: 'data-normal'
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            lazyLoader
+                .update()           // track initial elements
+                .check()            // check initial elements
+                .handlers(true)     // bind scroll and resize handlers
+        });
+
         $(window).on('beforeunload', function(e) {
             $('.page-loader__spinner').hide();
             $('.page-loader').fadeIn();
         });
+
     </script>
     </body>
 </html>

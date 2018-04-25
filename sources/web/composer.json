@@ -19,7 +19,7 @@
         "doctrine/dbal": "*"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "@dev",
+        "barryvdh/laravel-ide-helper": "2.4.1",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~6.0",

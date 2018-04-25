@@ -71,6 +71,8 @@
     @endforeach
     </div>
     <script>
+        let loaded = {};
+
         $(function (){
             $('.game_tab').click(function (){
                 $('#' + $('#game_tab .active').data('target')).hide();
@@ -78,21 +80,33 @@
 
                 $('#' + $(this).data('target')).show();
                 $(this).addClass('active');
+
+                showPackageImage();
             });
+
+            showPackageImage();
         });
 
         function changeTab(phoneticType)
         {
-            $('#tab_' + phoneticType + 'gyo').click();
             $("html,body").animate({scrollTop:0});
+            $('#tab_' + phoneticType + 'gyo').click();
         }
-/*
-        re = new RegExp(String.raw`\\\(\^${escapeRegExp(mouth)}\^\)/`);
-        re.text('aaaa');
-        function escapeRegExp(string) {
-            return ("" + string).replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&");
+
+        function showPackageImage()
+        {
+            let target = $('#game_tab .active').data('target');
+
+            if (loaded[target] == undefined) {
+                $('#' + target + ' img.lazy-img-load').each(function (){
+                    let e = $(this);
+                    e.attr('src', e.data('url'));
+                });
+
+                loaded[target] = true;
+            }
         }
-*/
+
     </script>
 @endsection
 
