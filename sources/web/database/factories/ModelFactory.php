@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(Hgs3\User::class, function (Faker\Generator $faker) {
+$factory->define(Hgs3\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [

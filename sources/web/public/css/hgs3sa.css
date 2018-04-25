@@ -647,6 +647,14 @@ button, input, optgroup, select, textarea {
     font-weight: 700;
 }
 
+.rounded-circle{
+    border-radius:50% !important;
+}
+
+.rounded-0{
+    border-radius:0 !important;
+}
+
 @media (min-width: 576px) {
     .modal-up .modal-dialog, .modal-up:before {
         display: block;
