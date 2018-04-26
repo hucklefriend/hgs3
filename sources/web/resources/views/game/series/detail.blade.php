@@ -4,23 +4,34 @@
 @section('global_back_link'){{ route('シリーズ一覧') }}@endsection
 
 @section('content')
-    <h1>{{ $series->name }}シリーズのゲーム</h1>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>{{ $series->name }}シリーズのゲーム</h1>
+        </header>
 
-    <div class="d-flex flex-wrap">
-        @foreach ($softs as $game)
-            @php
-            $package = hv($packages, $game->original_package_id, null);
-            $imageUrl = large_image_url($package);
-            @endphp
-            <div class="card" style="width: 250px;margin: 10px;padding-top: 10px;">
-                @include('game.common.packageImage', ['imageUrl' => $imageUrl])
-                <div class="card-body text-center">
-                    <h4 class="card-title">
+        <div class="contacts row">
+            @foreach ($softs as $game)
+                @php
+                    $package = hv($packages, $game->original_package_id, null);
+                    $imageUrl = $package ? medium_image_url($package) : '';
+                @endphp
+            <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
+                <div class="contacts__item">
+                    <a href="{{ route('ゲーム詳細', ['soft' => $game->id]) }}" class="contacts__img">
+                        @empty($imageUrl)
+                            <img data-normal="{{ url('img/pkg_no_img_m.png') }}" class="rounded">
+                        @else
+                            <img data-normal="{{ $imageUrl }}" class="rounded-0" style="max-height: initial !important;">
+                        @endif
+                    </a>
+
+                    <div>
                         <a href="{{ route('ゲーム詳細', ['soft' => $game->id]) }}">{{ $game->name }}</a>
-                    </h4>
+                    </div>
                 </div>
             </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
 @endsection
 

@@ -140,11 +140,13 @@
         const lazyLoader = Layzr({
             normal: 'data-normal'
         });
+
         document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function(){$(".page-loader").fadeOut()},500);
             lazyLoader
                 .update()           // track initial elements
                 .check()            // check initial elements
-                .handlers(true)     // bind scroll and resize handlers
+                .handlers(true);    // bind scroll and resize handlers
         });
 
         $(window).on('beforeunload', function(e) {

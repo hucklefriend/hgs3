@@ -388,30 +388,10 @@ button.btn:hover {
 
 .package-card {
     min-height: 60px;
-    flex-grow: 1;
-    flex-shrink: 0;
-    flex-basis: 33.3333%;
-    flex-basis: 200px;
     display: flex;
     align-items: stretch;
     justify-content: left;
     margin-bottom: 10px;
-}
-
-.package-card-big {
-    margin: 10px;
-    padding-top: 10px;
-    flex-grow: 1;
-    flex-shrink: 0;
-    flex-basis: 33.3333%;
-    flex-basis: 200px;
-    display: flex;
-    align-items: stretch;
-    justify-content: left;
-}
-
-.package-card-big.card {
-    border: none;
 }
 
 .package-card-image {

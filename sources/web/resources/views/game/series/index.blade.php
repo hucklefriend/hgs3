@@ -4,23 +4,16 @@
 @section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
-
-    @if (is_data_editor())
-        <div class="d-flex justify-content-between">
+    <div class="content__inner">
+        <header class="content__title">
             <h1>シリーズ一覧</h1>
-            <div>
-                <a href="{{ route('シリーズ登録') }}" class="btn btn-sm btn-outline-info">新規登録</a>
-            </div>
-        </div>
-    @else
-        <h1>シリーズ一覧</h1>
-    @endif
-
-    <ul class="list-group no-border">
-    @foreach ($series as $s)
-        <li class="list-group-item"><a href="{{ route('シリーズ詳細', ['series' => $s->id]) }}">{{ $s->name }}</a></li>
-    @endforeach
-    </ul>
+        </header>
+        <ul class="list-group no-border">
+            @foreach ($series as $s)
+                <li class="list-group-item"><a href="{{ route('シリーズ詳細', ['series' => $s->id]) }}">{{ $s->name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
 
 @endsection
 
