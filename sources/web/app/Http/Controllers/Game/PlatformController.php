@@ -20,7 +20,7 @@ class PlatformController extends Controller
     {
         $platforms = Orm\GamePlatform::orderBy('sort_order')->get();
 
-        return view('game.platform.list', [
+        return view('game.platform.index', [
             'platforms' => $platforms
         ]);
     }

@@ -14,7 +14,6 @@
             @endforeach
         </ul>
     </div>
-
 @endsection
 
 @section('breadcrumb')

@@ -4,31 +4,37 @@
 @section('global_back_link'){{ route('プラットフォーム一覧') }}@endsection
 
 @section('content')
-    <h1>{{ $platform->name }}</h1>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>{{ $platform->name }}</h1>
+        </header>
 
-    <div>
-        @if ($platform->url != null)
-        <a href="{{ $platform->url }}" target="_blank">公式サイト</a>
-        @endif
-        @if ($platform->wikipedia != null)
-        <a href="{{ $platform->wikipedia }}" target="_blank">Wikipedia</a>
-        @endif
-    </div>
+        <div>
+            @if ($platform->url != null)
+                <a href="{{ $platform->url }}" target="_blank">公式サイト</a>
+            @endif
+            @if ($platform->wikipedia != null)
+                <a href="{{ $platform->wikipedia }}" target="_blank">Wikipedia</a>
+            @endif
+        </div>
+        <hr>
 
-    @if (is_data_editor())
-    <div class="text-right">
-        <a href="{{ route('プラットフォーム編集', ['platform' => $platform->id]) }}" class="btn btn-sm btn-outline-info">編集</a>
-    </div>
-    @endif
+        <p>{{ $platform->name }}で発売されているパッケージ</p>
 
-    <hr>
+        <div class="package-list">
+            @foreach ($packages as $package)
+                @include('game.common.packageCard', ['soft' => $package, 'toPackage' => true])
+            @endforeach
+        </div>
+        <div class="row">
+            @foreach ($packages as $package)
+                @include('game.common.packageCard', ['soft' => $package, 'toPackage' => true])
+            @endforeach
+        </div>
 
-    <p>{{ $platform->name }}で発売されているパッケージ</p>
 
-    <div class="package-list">
-        @foreach ($packages as $package)
-            @include('game.common.packageCard', ['soft' => $package, 'toPackage' => true])
-        @endforeach
+
+
     </div>
 @endsection
 
