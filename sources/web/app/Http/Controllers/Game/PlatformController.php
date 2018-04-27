@@ -33,14 +33,13 @@ class PlatformController extends Controller
      */
     public function detail(Orm\GamePlatform $platform)
     {
-        $packages = Orm\GamePackage::where('platform_id', $platform->id)
-            ->orderBy('release_int')
-            ->get();
+        $data = $platform->getSoft();
 
         return view('game.platform.detail', [
             'platform' => $platform,
             'company'  => Orm\GameCompany::find($platform->company_id),
-            'packages' => $packages
+            'soft'     => $data['soft'],
+            'packages' => $data['packages']
         ]);
     }
 

@@ -19,17 +19,29 @@
         </div>
         <hr>
 
-        <p>{{ $platform->name }}で発売されているパッケージ</p>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">対応ゲーム</h4>
+                <div class="package-list mt-5">
+                    @foreach ($soft as $s)
+                        <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
+                            <div class="contacts__item">
+                                <a href="{{ route('ゲーム詳細', ['soft' => $s->id]) }}" class="contacts__img">
+                                    @empty($packages[$s->id]->package_image_url)
+                                        <img data-normal="{{ url('img/pkg_no_img_m.png') }}" class="rounded big-package-card">
+                                    @else
+                                        <img data-normal="{{ $packages[$s->id]->package_image_url }}" class="rounded-0 big-package-card">
+                                    @endif
+                                </a>
 
-        <div class="package-list">
-            @foreach ($packages as $package)
-                @include('game.common.packageCard', ['soft' => $package, 'toPackage' => true])
-            @endforeach
-        </div>
-        <div class="row">
-            @foreach ($packages as $package)
-                @include('game.common.packageCard', ['soft' => $package, 'toPackage' => true])
-            @endforeach
+                                <div>
+                                    <a href="{{ route('ゲーム詳細', ['soft' => $s->id]) }}">{{ $s->name }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
 
 

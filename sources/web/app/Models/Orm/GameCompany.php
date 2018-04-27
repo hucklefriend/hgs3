@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Orm;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class GameCompany extends \Eloquent
@@ -66,12 +67,17 @@ SQL;
         // ソフト単位で集約
         $data = [];
 
+        $isAdultUser = false;
+        if (Auth::check()) {
+            $isAdultUser = Auth::user()->is_adult == 1;
+        }
+
         foreach ($packages as $pkg) {
             if (isset($data[$pkg->soft_id])) {
                 // 既にデータあり
 
-                //パッケージがある方を優先
-                if (empty($data[$pkg->soft_id]->package_image_url)) {
+                // パッケージがある方を優先
+                if (empty($data[$pkg->soft_id]->package_image_url) && $pkg->is_adult && !$isAdultUser) {
                     $data[$pkg->soft_id]->package_image_url = $pkg->medium_image_url;
                     $data[$pkg->soft_id]->is_adult = $pkg->is_adult;
                 }
@@ -80,8 +86,13 @@ SQL;
             } else {
                 $data[$pkg->soft_id] = new \stdClass();
 
-                $data[$pkg->soft_id]->package_image_url = $pkg->medium_image_url;
-                $data[$pkg->soft_id]->is_adult = $pkg->is_adult;
+                if ($pkg->is_adult && !$isAdultUser) {
+                    $data[$pkg->soft_id]->package_image_url = '';
+                    $data[$pkg->soft_id]->is_adult = 0;
+                } else {
+                    $data[$pkg->soft_id]->package_image_url = $pkg->medium_image_url;
+                    $data[$pkg->soft_id]->is_adult = $pkg->is_adult;
+                }
 
                 $data[$pkg->soft_id]->platforms = [
                     $pkg->platform_id => $pkg->platform_id,
