@@ -4,35 +4,51 @@
 @section('global_back_link'){{ route('ゲーム会社一覧') }}@endsection
 
 @section('content')
-
-    @if (is_data_editor())
-        <div class="d-flex justify-content-between">
+    <div class="content__inner">
+        <header class="content__title">
             <h1>{{ $company->name }}</h1>
-            <div class=" justify-content-between">
-                <a href="{{ route('ゲーム会社編集', ['company' => $company->id]) }}" class="btn btn-sm btn-outline-dark">編集</a>
+        </header>
+
+        @if (!empty($company->url) && !empty($company->wikipedia))
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    @if (!empty($company->url))
+                        <a href="{{ $company->url }}" target="_blank" class="mr-3">公式サイト</a>
+                    @endif
+                    @if (!empty($company->wikipedia))
+                        <a href="{{ $company->wikipedia }}" target="_blank">Wikipedia</a>
+                    @endif
+                </div>
             </div>
         </div>
-    @else
-        <h1>{{ $company->name }}</h1>
-    @endif
-
-    <div>
-        @if (!empty($company->url))
-        <a href="{{ $company->url }}" target="_blank">公式サイト</a>
         @endif
-        @if (!empty($company->wikipedia))
-        <a href="{{ $company->wikipedia }}" target="_blank">Wikipedia</a>
-        @endif
-    </div>
 
-    <p class="my-2">
-        {{ $company->name }}から発売されているパッケージ
-    </p>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">販売ゲーム</h4>
+                <div class="package-list mt-5">
+                    @foreach ($soft as $s)
+                        <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
+                            <div class="contacts__item">
+                                <a href="{{ route('ゲーム詳細', ['soft' => $s->id]) }}" class="contacts__img">
+                                    @empty($packages[$s->id]->package_image_url)
+                                        <img data-normal="{{ url('img/pkg_no_img_m.png') }}" class="rounded big-package-card">
+                                    @else
+                                        <img data-normal="{{ $packages[$s->id]->package_image_url }}" class="rounded-0 big-package-card">
+                                    @endif
+                                </a>
 
-    <div class="package-list">
-    @foreach ($packages as $package)
-        @include('game.common.packageCard', ['soft' => $package, 'toPackage' => true])
-    @endforeach
+                                <div>
+                                    <a href="{{ route('ゲーム詳細', ['soft' => $s->id]) }}">{{ $s->name }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
     </div>
 
 @endsection

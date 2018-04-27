@@ -635,6 +635,10 @@ button, input, optgroup, select, textarea {
     border-radius:0 !important;
 }
 
+.big-package-card {
+    max-height: initial !important;
+}
+
 @media (min-width: 576px) {
     .modal-up .modal-dialog, .modal-up:before {
         display: block;

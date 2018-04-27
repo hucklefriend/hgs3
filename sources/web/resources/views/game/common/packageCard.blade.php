@@ -15,7 +15,7 @@ $imageUrl = small_image_url($soft);
                 @if (empty($imageUrl))
                     <i class="far fa-image"></i>
                 @else
-                    <img data-normal="{{ $imageUrl }}" class="img-responsive lazy-img-load">
+                    <img data-normal="{{ $imageUrl }}" class="img-responsive">
                 @endif
             </div>
             <div class="package-card-name">
