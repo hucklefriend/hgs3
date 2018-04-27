@@ -12,20 +12,16 @@
 
         <div class="card">
             <div class="card-body">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            @foreach ($series as $s)
-                                <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
-                                    <div class="contacts__item">
-                                        <div>
-                                            <a href="{{ route('シリーズ詳細', ['series' => $s->id]) }}">{{ $s->name }}</a>
-                                        </div>
-                                    </div>
+                <div class="contacts row">
+                    @foreach ($series as $s)
+                        <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
+                            <div class="contacts__item">
+                                <div>
+                                    <a href="{{ route('シリーズ詳細', ['series' => $s->id]) }}">{{ $s->name }}</a>
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

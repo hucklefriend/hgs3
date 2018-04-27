@@ -11,7 +11,7 @@
 
         <div class="card">
             <div class="card-body">
-                <div class="row">
+                <div class="contacts row">
                     @foreach ($companies as $c)
                         <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
                             <div class="contacts__item">

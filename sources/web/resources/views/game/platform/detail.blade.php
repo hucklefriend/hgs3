@@ -22,7 +22,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">対応ゲーム</h4>
-                <div class="package-list mt-5">
+                <div class="contacts row mt-5">
                     @foreach ($soft as $s)
                         <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
                             <div class="contacts__item">

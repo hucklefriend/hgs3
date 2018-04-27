@@ -17,17 +17,13 @@
 </div>
 
 <div class="form-group">
-    <div class="d-flex mb-2">
-        <div class="align-self-center">
-            <label for="title">ゲーム</label><span class="badge badge-secondary ml-2">必須</span>
-        </div>
-        <div class="ml-3">
-    @if ($errors->has('handle_soft'))
-            <button type="button" class="btn btn-sm btn-outline-danger" id="select_handle_soft">選択する</button>
-    @else
-            <button type="button" class="btn btn-sm btn-light" id="select_handle_soft">選択する</button>
-        </div>
-    @endif
+    <label for="title">ゲーム</label><span class="badge badge-secondary ml-2">必須</span>
+    <div class="mt-2">
+        @if ($errors->has('handle_soft'))
+            <button type="button" class="btn btn-outline-danger" id="select_handle_soft">選択する</button>
+        @else
+            <button type="button" class="btn btn-light" id="select_handle_soft">選択する</button>
+        @endif
     </div>
     <div id="selected_soft" class="d-flex flex-wrap"></div>
     <input type="hidden" name="handle_soft" value="{{ old('handle_soft', $site->handle_soft) }}" id="handle_soft">
@@ -48,8 +44,18 @@
 </div>
 
 <div class="form-group">
-    <label for="main_contents">メインコンテンツ</label>
-    {{ Form::select('main_contents', \Hgs3\Constants\Site\MainContents::getData(), old('main_contents', $site->main_contents_id), ['class' => 'form-control']) }}
+    <div>
+        <label for="main_contents">メインコンテンツ</label><span class="badge badge-secondary ml-2">必須</span>
+    </div>
+    <div class="mt-3">
+    @foreach (\Hgs3\Constants\Site\MainContents::getData() as $val => $name)
+        <label class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" name="main_contents" id="main_contents{{ $val }}" value="{{ $val }}"{{ checked(old('main_contents', $site->main_contents_id), $val) }}>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ $name }}</span>
+        </label>
+    @endforeach
+    </div>
 </div>
 <div class="form-help">
 
@@ -58,36 +64,38 @@
 <div class="form-group">
     <label for="presentation">紹介文</label>
     <textarea class="form-control textarea-autosize{{ invalid($errors, 'presentation') }}" id="presentation" name="presentation">{{ old('presentation', $site->presentation) }}</textarea>
+    <i class="form-group__bar"></i>
 </div>
 <div class="form-help">
     @include('common.error', ['formName' => 'presentation'])
-
 </div>
 
 <div class="form-group">
-    <label for="list_banner_upload_flag">対象年齢</label>
     <div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                @php $val = \Hgs3\Constants\Site\Rate::ALL; @endphp
-                <input type="radio" class="form-check-input" name="rate" id="rate{{ $val }}" value="{{ $val }}"{{ checked(old('rate', $site->rate), $val) }}>
-                {{ \Hgs3\Constants\Site\Rate::getText($val) }}
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                @php $val = \Hgs3\Constants\Site\Rate::R15; @endphp
-                <input type="radio" class="form-check-input" name="rate" id="rate{{ $val }}" value="{{ $val }}"{{ checked(old('rate', $site->rate), $val) }}>
-                {{ \Hgs3\Constants\Site\Rate::getText($val) }}
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                @php $val = \Hgs3\Constants\Site\Rate::R18; @endphp
-                <input type="radio" class="form-check-input" name="rate" id="rate{{ $val }}" value="{{ $val }}"{{ checked(old('rate', $site->rate), $val) }}>
-                {{ \Hgs3\Constants\Site\Rate::getText($val) }}
-            </label>
-        </div>
+        <label for="list_banner_upload_flag">対象年齢</label><span class="badge badge-secondary ml-2">必須</span>
+    </div>
+    <div class="mt-3">
+        <label class="custom-control custom-radio">
+            @php $val = \Hgs3\Constants\Site\Rate::ALL; @endphp
+            <input type="radio" class="custom-control-input" name="rate" id="rate{{ $val }}" value="{{ $val }}"{{ checked(old('rate', $site->rate), $val) }}>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ \Hgs3\Constants\Site\Rate::getText($val) }}</span>
+        </label>
+
+        <label class="custom-control custom-radio">
+            @php $val = \Hgs3\Constants\Site\Rate::R15; @endphp
+            <input type="radio" class="custom-control-input" name="rate" id="rate{{ $val }}" value="{{ $val }}"{{ checked(old('rate', $site->rate), $val) }}>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ \Hgs3\Constants\Site\Rate::getText($val) }}</span>
+        </label>
+
+        <label class="custom-control custom-radio">
+            @php $val = \Hgs3\Constants\Site\Rate::R18; @endphp
+            <input type="radio" class="custom-control-input" name="rate" id="rate{{ $val }}" value="{{ $val }}"{{ checked(old('rate', $site->rate), $val) }}>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ \Hgs3\Constants\Site\Rate::getText($val) }}</span>
+        </label>
+        <div class="clearfix"></div>
     </div>
 </div>
 <div class="form-help">
@@ -96,29 +104,31 @@
 
 
 <div class="form-group">
-    <label for="list_banner_upload_flag">性別傾向</label>
     <div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                @php $val = \Hgs3\Constants\Site\Gender::NONE; @endphp
-                <input type="radio" class="form-check-input" name="gender" id="gender{{ $val }}" value="{{ $val }}"{{ checked(old('gender', $site->gender), $val) }}>
-                {{ \Hgs3\Constants\Site\Gender::getText($val) }}
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                @php $val = \Hgs3\Constants\Site\Gender::MALE; @endphp
-                <input type="radio" class="form-check-input" name="gender" id="gender{{ $val }}" value="{{ $val }}"{{ checked(old('gender', $site->gender), $val) }}>
-                {{ \Hgs3\Constants\Site\Gender::getText($val) }}
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                @php $val = \Hgs3\Constants\Site\Gender::FEMALE; @endphp
-                <input type="radio" class="form-check-input" name="gender" id="gender{{ $val }}" value="{{ $val }}"{{ checked(old('gender', $site->gender), $val) }}>
-                {{ \Hgs3\Constants\Site\Gender::getText($val) }}
-            </label>
-        </div>
+        <label for="list_banner_upload_flag">性別傾向</label><span class="badge badge-secondary ml-2">必須</span>
+    </div>
+    <div class="mt-3">
+        <label class="custom-control custom-radio">
+            @php $val = \Hgs3\Constants\Site\Gender::NONE; @endphp
+            <input type="radio" class="custom-control-input" name="gender" id="gender{{ $val }}" value="{{ $val }}"{{ checked(old('gender', $site->gender), $val) }}>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ \Hgs3\Constants\Site\Gender::getText($val) }}</span>
+        </label>
+
+        <label class="custom-control custom-radio">
+            @php $val = \Hgs3\Constants\Site\Gender::MALE; @endphp
+            <input type="radio" class="custom-control-input" name="gender" id="gender{{ $val }}" value="{{ $val }}"{{ checked(old('gender', $site->gender), $val) }}>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ \Hgs3\Constants\Site\Gender::getText($val) }}</span>
+        </label>
+
+        <label class="custom-control custom-radio">
+            @php $val = \Hgs3\Constants\Site\Gender::FEMALE; @endphp
+            <input type="radio" class="custom-control-input" name="gender" id="gender{{ $val }}" value="{{ $val }}"{{ checked(old('gender', $site->gender), $val) }}>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{ \Hgs3\Constants\Site\Gender::getText($val) }}</span>
+        </label>
+        <div class="clearfix"></div>
     </div>
 </div>
 <div class="form-help">

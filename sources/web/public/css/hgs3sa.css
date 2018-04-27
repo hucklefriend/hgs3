@@ -649,3 +649,7 @@ button, input, optgroup, select, textarea {
         display:none;
     }
 }
+
+.btn-group-toggle .btn:hover {
+    cursor: pointer;
+}

@@ -16,22 +16,26 @@
                 </div>
 
                 @php
-                    $phonetics = [ '', 'a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa'];
+                    $phonetics = ['', 'a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa'];
                 @endphp
 
                 <div class="py-3 handle-game-select-area">
                     @for ($phonicType = 1; $phonicType <= 10; $phonicType++)
                         <div id="handle_softs_{{ $phonetics[$phonicType] }}gyo" class="handle_soft_tab @if ($phonicType == 1) active @endif ">
-                            @if (isset($softs[$phonicType]))
-                                @foreach ($softs[$phonicType] as $soft)
+                            <div class="contacts row">
+                                @if (isset($softs[$phonicType]))
+                                    @foreach ($softs[$phonicType] as $soft)
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
                                     <div class="btn-group-toggle my-1" data-toggle="buttons">
-                                        <label class="btn btn-outline-info text-left">
+                                        <label class="btn btn-light text-center w-100">
                                             <input type="checkbox" class="handle_soft_check hide-check" name="handle_soft[]" value="{{ $soft->id }}" id="handle_soft_check_{{ $soft->id }}" autocomplete="off">
                                             <span>{{ $soft->name }}</span>
                                         </label>
                                     </div>
-                                @endforeach
-                            @endif
+                                </div>
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
                     @endfor
                 </div>

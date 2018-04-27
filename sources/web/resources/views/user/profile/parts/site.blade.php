@@ -2,7 +2,7 @@
     <div class="card-body">
 
 @if ($sites->count() <= 0)
-        <p>サイトはありません。</p>
+        <div>サイトはありません。</div>
 @endif
 
 @foreach ($sites as $s)
@@ -17,16 +17,16 @@
     @if ($hasHgs2Site)
         <div class="row">
             <div class="col-6">
-                <a href="{{ route('サイト登録') }}" class="btn btn-outline-info btn-block">サイトを追加する</a>
+                <a href="{{ route('サイト登録') }}" class="btn btn-info btn-block">サイトを追加する</a>
             </div>
             <div class="col-6">
-                <a href="{{ route('サイト引継選択') }}" class="btn btn-outline-info btn-block">H.G.S.から引き継ぎ</a>
+                <a href="{{ route('サイト引継選択') }}" class="btn btn-info btn-block">H.G.S.から引き継ぎ</a>
             </div>
         </div>
     @else
     <div>
         <button class="btn btn-link btn-block">
-            <a href="{{ route('サイト登録') }}" class="btn btn-outline-info btn-block">サイトを追加する</a>
+            <a href="{{ route('サイト登録') }}" class="btn btn-info btn-block">サイトを追加する</a>
         </button>
     </div>
     @endif
