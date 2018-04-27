@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
         <title>@yield('title') {{ env('APP_NAME') }} (β)</title>
 
         <link rel="stylesheet" href="{{ url('vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}">
@@ -82,7 +82,7 @@
 
                     @if (is_admin())
                         <li class="hidden-xs-down">
-                            <a href="{{ route('管理メニュー') }}">管理メニュー</a>
+                            <a href="{{ route('管理メニュー') }}">管理</a>
                         </li>
                     @endif
 

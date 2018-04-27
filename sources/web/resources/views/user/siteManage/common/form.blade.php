@@ -1,5 +1,6 @@
 <div class="form-group">
-    <label for="name">サイト名</label><span class="badge badge-secondary ml-2">必須</span>
+    <label for="name" class="hgn-label"><i class="fas fa-edit"></i> サイト名</label>
+    <span class="badge badge-secondary ml-2">必須</span>
     <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}" placeholder="サイト名">
     <i class="form-group__bar"></i>
 </div>
@@ -8,7 +9,8 @@
 </div>
 
 <div class="form-group">
-    <label for="url">URL</label><span class="badge badge-secondary ml-2">必須</span>
+    <label for="url" class="hgn-label"><i class="fas fa-edit"></i> URL</label>
+    <span class="badge badge-secondary ml-2">必須</span>
     <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}" placeholder="サイトのURL">
     <i class="form-group__bar"></i>
 </div>
@@ -17,7 +19,8 @@
 </div>
 
 <div class="form-group">
-    <label for="title">ゲーム</label><span class="badge badge-secondary ml-2">必須</span>
+    <label for="title" class="hgn-label"><i class="fas fa-edit"></i> ゲーム</label>
+    <span class="badge badge-secondary ml-2">必須</span>
     <div class="mt-2">
         @if ($errors->has('handle_soft'))
             <button type="button" class="btn btn-outline-danger" id="select_handle_soft">選択する</button>
@@ -45,7 +48,8 @@
 
 <div class="form-group">
     <div>
-        <label for="main_contents">メインコンテンツ</label><span class="badge badge-secondary ml-2">必須</span>
+        <label for="main_contents" class="hgn-label"><i class="fas fa-check"></i> メインコンテンツ</label>
+        <span class="badge badge-secondary ml-2">必須</span>
     </div>
     <div class="mt-3">
     @foreach (\Hgs3\Constants\Site\MainContents::getData() as $val => $name)
@@ -62,7 +66,7 @@
 </div>
 
 <div class="form-group">
-    <label for="presentation">紹介文</label>
+    <label for="presentation" class="hgn-label"><i class="fas fa-edit"></i> 紹介文</label>
     <textarea class="form-control textarea-autosize{{ invalid($errors, 'presentation') }}" id="presentation" name="presentation">{{ old('presentation', $site->presentation) }}</textarea>
     <i class="form-group__bar"></i>
 </div>
@@ -72,7 +76,7 @@
 
 <div class="form-group">
     <div>
-        <label for="list_banner_upload_flag">対象年齢</label><span class="badge badge-secondary ml-2">必須</span>
+        <label for="list_banner_upload_flag" class="hgn-label"><i class="fas fa-check"></i> 対象年齢</label><span class="badge badge-secondary ml-2">必須</span>
     </div>
     <div class="mt-3">
         <label class="custom-control custom-radio">
@@ -105,7 +109,7 @@
 
 <div class="form-group">
     <div>
-        <label for="list_banner_upload_flag">性別傾向</label><span class="badge badge-secondary ml-2">必須</span>
+        <label for="list_banner_upload_flag" class="hgn-label"><i class="fas fa-check"></i> 性別傾向</label><span class="badge badge-secondary ml-2">必須</span>
     </div>
     <div class="mt-3">
         <label class="custom-control custom-radio">

@@ -61,20 +61,21 @@
         </div>
 
         @if ($isMyself)
-            <hr class="hidden-sm-up">
-            <div class="hidden-sm-up">
-                <div class="d-flex align-content-around">
-                    <div>
-                        <a href="{{ route('ユーザー設定') }}" class="btn"><i class="fas fa-cog"></i> 設定</a>
-                    </div>
-                    <div class="ml-auto text-right">
-                        <a href="{{ route('ログアウト') }}" class="btn btn-outline-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
-                    </div>
+            <div class="hidden-sm-up" style="margin-top: 5rem;">
+                <hr>
+                <div>
+                    <div class="d-flex align-content-around">
+                        <div>
+                            <a href="{{ route('ユーザー設定') }}" class="btn"><i class="fas fa-cog"></i> 設定</a>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <a href="{{ route('ログアウト') }}" class="btn btn-outline-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         @endif
-
     </div>
 
     <script>

@@ -22,7 +22,7 @@
         @include('user.siteManage.common.form')
 
         <div class="form-group">
-            <label for="list_banner_upload_flag">一覧用バナー</label>
+            <label for="list_banner_upload_flag" class="hgn-label"><i class="fas fa-upload"></i> 一覧用バナー</label>
 
             @if ($site->list_banner_url)
                 <div>
@@ -40,10 +40,12 @@
                     <div class="form-help mt-2">
                         @include('common.error', ['formName' => 'list_banner_upload'])
                         <p class="text-muted">
-                            アップロードする画像ファイルを選択してください。<br>
-                            容量は1MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
-                            幅は最大468pxで、レスポンシブルに拡縮します。<br>
-                            高さは最大60pxで、60pxを超えている分はカットされます。
+                            <small>
+                                アップロードする画像ファイルを選択してください。<br>
+                                容量は1MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
+                                幅は最大468pxで、レスポンシブルに拡縮します。<br>
+                                高さは最大60pxで、60pxを超えている分はカットされます。
+                            </small>
                         </p>
                     </div>
 
@@ -71,7 +73,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="detail_banner_upload_flag">詳細用バナー</label>
+            <label for="detail_banner_upload_flag" class="hgn-label"><i class="fas fa-upload"></i> 詳細用バナー</label>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group show_detail_banner_upload" id="detail_banner_upload_form">
@@ -80,9 +82,11 @@
                     <div class="form-help mt-2">
                         @include('common.error', ['formName' => 'detail_banner_upload'])
                         <p class="text-muted">
-                            アップロードする画像ファイルを選択してください。<br>
-                            容量は3MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
-                            画像はレスポンシブルに拡縮します。
+                            <small>
+                                アップロードする画像ファイルを選択してください。<br>
+                                容量は3MBまで、形式はjpg/png/gif/bmp/svgに対応しています。<br>
+                                画像はレスポンシブルに拡縮します。
+                            </small>
                         </p>
                     </div>
                 </div>
