@@ -60,10 +60,13 @@ class SignUpController extends Controller
 
         if ($pr->save()) {
             try {
+                Log::debug($email);
+
                 // メール送信
                 Mail::to($email)
                     ->send(new ProvisionalRegistration($pr->token));
             } catch (\Exception $e) {
+
                 Log::error($e->getMessage());
                 Log::error($e->getTraceAsString());
 

@@ -2,7 +2,7 @@
     <div class="card-body">
         @if ($favoriteSofts->count() <= 0)
             <div>お気に入りゲームはありません。</div>
-        @endif
+        @else
 
         <div class="d-inline-block">
         @foreach ($favoriteSofts as $fg)
@@ -46,6 +46,6 @@
         </div>
 
         @include('common.pager', ['pager' => $favoriteSofts])
-
+        @endif
     </div>
 </div>

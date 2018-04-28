@@ -22,6 +22,8 @@ class Package extends MasterImportAbstract
      */
     public static function import($date)
     {
+        if ($date == 20180401) return;
+
         $manualMethod = 'manual' . $date;
         if (method_exists(new self(), $manualMethod)) {
             self::$manualMethod();
