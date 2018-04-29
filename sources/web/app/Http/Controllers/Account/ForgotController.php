@@ -7,10 +7,11 @@ namespace Hgs3\Http\Controllers\Account;
 
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Account\PasswordResetRequest;
-use Hgs3\Http\Requests\Account\MailAuthRequest;
+use Hgs3\Http\Requests\Account\ForgotMailRequest;
 use Hgs3\Models\Account\PasswordReset;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -29,16 +30,18 @@ class ForgotController extends Controller
     /**
      * メール送信
      *
-     * @param MailAuthRequest $request
+     * @param ForgotMailRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function sendPasswordResetMail(MailAuthRequest $request)
+    public function sendPasswordResetMail(ForgotMailRequest $request)
     {
         $email = $request->get('email');
+        Log::debug($email);
 
         // 登録されているメールアドレスか？
         $user = User::where('email', $email)->first();
+
 
         // メールアドレスが存在しない
         if (empty($user)) {
@@ -90,8 +93,10 @@ class ForgotController extends Controller
      * @param string $token
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function reset($token)
+    public function reset()
     {
+        $token = Input::get('token');
+
         if (!PasswordReset::validateToken($token)) {
             PasswordReset::deleteToken($token);
             return view('account.forgot.tokenError');
@@ -103,10 +108,11 @@ class ForgotController extends Controller
     }
 
     /**
-     * 本登録
+     * パスワード再設定
      *
      * @param PasswordResetRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function update(PasswordResetRequest $request)
     {

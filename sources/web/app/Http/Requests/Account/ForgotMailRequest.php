@@ -1,13 +1,13 @@
 <?php
 /**
- * パスワードリセットリクエスト
+ * パスワード再発行メールリクエスト
  */
 
 namespace Hgs3\Http\Requests\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PasswordResetRequest extends FormRequest
+class ForgotMailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,7 @@ class PasswordResetRequest extends FormRequest
     public function rules()
     {
         return [
-            'token'                    => 'required',
-            'password'                => 'required|string|alpha_dash|min:4|max:16',
-            'password_confirmation' => 'required|string|same:password',
+            'email' => 'required|string|email|max:255'
         ];
     }
 }

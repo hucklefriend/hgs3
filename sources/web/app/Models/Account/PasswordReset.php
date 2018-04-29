@@ -60,7 +60,7 @@ class PasswordReset
     public static function reset($token, $password)
     {
         $passwordReset = Orm\PasswordReset::where('token', $token)->first();
-        $user = User::find($passwordReset->userId);
+        $user = User::find($passwordReset->user_id);
 
         DB::beginTransaction();
         try {

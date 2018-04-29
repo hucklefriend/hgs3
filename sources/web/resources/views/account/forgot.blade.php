@@ -13,17 +13,20 @@
             パスワード再設定のURLをお送りしますので、URLにアクセスしてパスワードを再設定してください。
         </p>
 
-
         <form method="POST" action="{{ route('パスワード再設定メール送信') }}" autocomplete="off" class="mt-5">
             {{ csrf_field() }}
-            <div class="form-group form-group-sm mb-3">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="addon-mail"><i class="far fa-envelope"></i></span>
-                    </div>
-                    <input id="email" type="email" class="form-control {{ $errors->has('login_error') ? ' has-danger' : '' }}" name="email" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
+
+            <div class="input-group mb-2">
+                <span class="input-group-addon" id="addon-mail"><i class="far fa-envelope"></i></span>
+                <div class="form-group">
+                    <input id="email" type="email" class="form-control{{ $errors->has('emal') ? ' has-danger' : '' }}" name="email" required placeholder="メールアドレス" aria-label="メールアドレス" aria-describedby="addon-mail">
+                    <i class="form-group__bar"></i>
                 </div>
             </div>
+            <div class="form-help">
+                @include('common.error', ['formName' => 'email'])
+            </div>
+
             <button type="submit" class="btn btn-primary">パスワード再設定メール送信</button>
         </form>
     </div>

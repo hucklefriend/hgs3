@@ -1,13 +1,22 @@
 @extends('layouts.app')
 
 @section('title')パスワード再設定@endsection
-@section('global_back_link'){{ route('トップ') }}@endsection
+@section('global_back_link'){{ route('パスワード再設定') }}@endsection
 
 @section('content')
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>パスワード再設定</h1>
+        </header>
 
-    <h1>パスワード再設定メール送信完了</h1>
-    <p>1時間以内にメールからアクセスし、パスワードの再設定を行ってください。</p>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">パスワード再設定メール送信完了</h4>
 
+                <p>1時間以内にメールからアクセスし、パスワードの再設定を行ってください。</p>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('breadcrumb')

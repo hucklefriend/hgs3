@@ -11,7 +11,7 @@
 
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">トークンエラー。</h4>
+                <h4 class="card-title">トークンエラー</h4>
 
                 <p>
                     有効期限が切れているか、URLが間違っています。<br>

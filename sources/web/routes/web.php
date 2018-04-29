@@ -208,8 +208,8 @@ Route::post('/auth/login', 'Account\LoginController@authenticate')->name('ログ
 Route::get('/auth/logout', 'Account\LoginController@logout')->name('ログアウト');
 Route::get('/auth/forget', 'Account\ForgotController@index')->name('パスワード再設定');
 Route::post('/auth/send_forget', 'Account\ForgotController@sendPasswordResetMail')->name('パスワード再設定メール送信');
-Route::get('/auth/password_reset', 'Account\ForgotController@input')->name('パスワード再設定入力');
-Route::post('/auth/password_reset', 'Account\ForgotController@reset')->name('パスワード再設定処理');
+Route::get('/auth/password_reset', 'Account\ForgotController@reset')->name('パスワード再設定入力');
+Route::post('/auth/password_reset', 'Account\ForgotController@update')->name('パスワード再設定処理');
 Route::get('/auth/password_reset_complete', 'Account\ForgotController@complete')->name('パスワード再設定完了');
 
 // お知らせ
