@@ -13,9 +13,9 @@
         @if (!empty($timelines))
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">新着情報！</h6>
+                    <h6 class="card-title">最新情報！</h6>
                 </div>
-                <div id="newsticker" class="ticker mb-3">
+                <div id="newsticker3" class="ticker3 mb-3">
                     <ul>
                         @foreach ($timelines as $tl)
                             <li class="mt-1 mb-1">

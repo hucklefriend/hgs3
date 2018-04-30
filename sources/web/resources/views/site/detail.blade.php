@@ -6,7 +6,7 @@
 @section('content')
 
     @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-warning-hgn" role="alert">
             承認待ち状態です。<br>
             登録ユーザーさんと管理人以外には表示されません。
         </div>
@@ -22,7 +22,7 @@
             <p>{!! nl2br(e($site->reject_reason)) !!}</p>
         </div>
     @elseif ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::DRAFT)
-        <div class="alert alert-secondary" role="alert">
+        <div class="alert alert-secondary alert-seconadary-hgn" role="alert">
             下書きです。<br>
             登録ユーザーさん以外には表示されません。
         </div>
@@ -33,7 +33,7 @@
     @if ($isWebMaster)
         <div class="card card-hgn border-info">
             <div class="card-body">
-                <h5 class="card-title">登録者さま用</h5>
+                <h4 class="card-title">登録者さま用</h4>
             </div>
             <ul class="list-group list-group-flush no-border">
                 <li class="list-group-item"><i class="far fa-edit"></i><a href="{{ route('サイト編集', ['site' => $site->id]) }}">サイト情報を編集</a></li>

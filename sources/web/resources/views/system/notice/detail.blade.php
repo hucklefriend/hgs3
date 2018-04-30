@@ -4,25 +4,29 @@
 @section('global_back_link'){{ route('お知らせ') }}@endsection
 
 @section('content')
-    <h1>{{ $notice->title }}</h1>
+    <div class="content__inner">
 
-    <p class="ml-3">{{ format_date(strtotime($notice->open_at)) }}</p>
-    <p class="ml-3 force-break">
-        {!! nl2br($notice->message) !!}
-    </p>
-    @if (is_admin())
-        <a class="btn btn-sm btn-outline-info" href="{{ route('お知らせ編集', ['notice' => $notice->id]) }}" role="button">編集</a>
-    @endif
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ $notice->title }}</h4>
+                <h6 class="card-subtitle">{{ format_date(strtotime($notice->open_at)) }}</h6>
 
-    @if (is_admin())
-    <div class="btn-area">
-        <form action="{{ route('お知らせ削除', ['notice' => $notice->id]) }}" onsubmit="return confirm('削除してよろしいですか？');" method="POST">
-            {{ csrf_field() }}
-            {{ method_field('DELETE') }}
-            <button class="btn btn-sm btn-danger" type="submit">削除</button>
-        </form>
+                <p class="force-break">{!! nl2br($notice->message) !!}</p>
+            </div>
+
+            @if (is_admin())
+                <div class="card-footer d-flex">
+                    <a class="btn btn-sm btn-outline-secondary mr-5" href="{{ route('お知らせ編集', ['notice' => $notice->id]) }}" role="button">編集</a>
+
+                    <form action="{{ route('お知らせ削除', ['notice' => $notice->id]) }}" onsubmit="return confirm('削除してよろしいですか？');" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-sm btn-danger" type="submit">削除</button>
+                    </form>
+                </div>
+            @endif
+        </div>
     </div>
-    @endif
 @endsection
 
 @section('breadcrumb')

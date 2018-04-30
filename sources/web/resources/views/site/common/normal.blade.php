@@ -1,5 +1,21 @@
-<div>
-    <div class="d-flex flex-wrap site-badge">
+<div class="site-normal">
+    <div>
+    @if (empty($s->list_banner_url))
+        <div class="no-banner-site-name">
+            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
+        </div>
+    @else
+        <div>
+            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
+        </div>
+        <div class="list-site-banner-outline">
+            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img src="{{ $s->list_banner_url }}" class="img-responsive"></a>
+        </div>
+    @endif
+    </div>
+    <div class="mt-2 mb-2"><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank"><small>{{ $s->url }}</small></a></div>
+
+    <div class="d-flex flex-wrap site-badge my-3">
         @if (isset($showApprovalStatus) && $showApprovalStatus)
             @if ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
                 <span class="badge badge-success">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
@@ -19,21 +35,7 @@
             <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Gender::getText($s->gender) }}</span>
         @endif
     </div>
-    <div>
-    @if (empty($s->list_banner_url))
-        <div class="no-banner-site-name">
-            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
-        </div>
-    @else
-        <div>
-            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
-        </div>
-        <div class="list-site-banner-outline">
-            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img src="{{ $s->list_banner_url }}" class="img-responsive"></a>
-        </div>
-    @endif
-    </div>
-    <div class="mt-2 mb-2"><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank"><small>{{ $s->url }}</small></a></div>
+
     <div class="d-flex align-content-start flex-wrap site-info">
         @if (!isset($noUser) || !$noUser)
         <span>

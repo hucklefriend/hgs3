@@ -5,10 +5,19 @@
 @endsection
 
 @section('content')
-    <h1>登録できません。</h1>
-    <p>
-        登録できるサイトは10個までです。
-    </p>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>サイト登録</h1>
+        </header>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">登録できません。</h4>
+
+                <p>登録できるサイトは10個までです。</p>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('breadcrumb')

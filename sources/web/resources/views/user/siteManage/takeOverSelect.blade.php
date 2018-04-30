@@ -1,24 +1,32 @@
 @extends('layouts.app')
 
-@section('global_back_link')
-    <a href="{{ route('サイト管理') }}"><i class="fas fa-angle-left"></i></a>
-@endsection
+@section('title')サイト登録@endsection
+@section('global_back_link'){{ route('サイト管理') }}@endsection
 
 @section('content')
-    <h1>H.G.S.から引き継ぎ</h1>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>サイト登録</h1>
+        </header>
 
-    <p>
-        引き継ぐサイトを選択してください。<br>
-        何回でも引き継いで登録できますが、同じサイトを複数登録しないようお願いします。
-    </p>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">H.G.S.から引き継ぎ。</h4>
 
-    <ul class="list-group">
-    @foreach ($hgs2Sites as $hgs2Site)
-        <li class="list-group-item">
-            <a href="{{ route('サイト引継登録', ['hgs2SiteId' => $hgs2Site->id]) }}">{{ $hgs2Site->site_name }}</a>
-        </li>
-    @endforeach
-    </ul>
+                <p>
+                    引き継ぐサイトを選択してください。<br>
+                    何回でも引き継いで登録できるようになっているのですが、同じサイトを複数登録しないようお願いします。
+                </p>
+                <ul class="list-group">
+                    @foreach ($hgs2Sites as $hgs2Site)
+                        <li class="list-group-item">
+                            <a href="{{ route('サイト引継登録', ['hgs2SiteId' => $hgs2Site->id]) }}">{{ $hgs2Site->site_name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('breadcrumb')

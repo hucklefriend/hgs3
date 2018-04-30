@@ -9,7 +9,7 @@
     <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">{{ $site->name }}</h5>
+                <h4 class="card-title">{{ $site->name }}</h4>
                 <div>
                     <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
                     @if ($site->rate > 0)
@@ -105,7 +105,7 @@
                             <h5 class="card-title">更新履歴</h5>
                         </div>
                         <div style="margin-left: auto;">
-                            <a href="{{ route('サイト更新履歴登録', ['site' => $site->id]) }}" class="btn btn-sm btn-outline-info">登録</a>
+                            <a href="{{ route('サイト更新履歴登録', ['site' => $site->id]) }}" class="btn btn-sm btn-outline-secondary">登録</a>
                         </div>
                     </div>
                 @else
@@ -133,7 +133,7 @@
     <div class="card-body">
         <h5 class="card-title">このサイトで扱っているゲーム</h5>
     </div>
-    <div class="package-list">
+    <div class="row">
         @foreach ($handleSofts as $soft)
             @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash ?? []])
         @endforeach

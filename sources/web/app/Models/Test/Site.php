@@ -35,7 +35,7 @@ class Site
 
         for ($i = 0; $i < $maxUser; $i++) {
             $u = $users[$i];
-            $n = rand(5, 10);
+            $n = rand(1, 3);
 
             for ($j = 0; $j < $n; $j++) {
                 $orm = new Orm\Site();
@@ -70,7 +70,6 @@ class Site
                 \Hgs3\Models\Site::insert($u, $orm, null, null, rand(0, 100) > 95);
 
                 if (rand(0, 10) > 2) {
-
                     $orm->list_banner_upload_flag = 1;
                     $orm->list_banner_url = self::getSampleSiteBanner();
                 }
@@ -201,7 +200,7 @@ FOOTER;
             'Yuu171226IMGL0058_TP_V.jpg'
         ];
 
-        return url('img/test/site/list_banner/' . $banners[rand(0, count($banners) - 1)]);
+        return 'http://hgs3/hgn/img/test/site/list_banner/' . $banners[rand(0, count($banners) - 1)];
     }
 
     private static function getSampleSiteDetailBanner()
@@ -220,7 +219,7 @@ FOOTER;
             'Yuu171226IMGL0058_TP_V.jpg'
         ];
 
-        return url('img/test/site/detail_banner/' . $banners[rand(0, count($banners) - 1)]);
+        return 'http://hgs3/hgn/img/test/site/detail_banner/' . $banners[rand(0, count($banners) - 1)];
     }
 
     /**
