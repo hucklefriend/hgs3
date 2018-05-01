@@ -22,7 +22,7 @@
             <p>{!! nl2br(e($site->reject_reason)) !!}</p>
         </div>
     @elseif ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::DRAFT)
-        <div class="alert alert-secondary alert-seconadary-hgn" role="alert">
+        <div class="alert alert-secondary alert-secondary-hgn" role="alert">
             下書きです。<br>
             登録ユーザーさん以外には表示されません。
         </div>

@@ -668,11 +668,13 @@ input[type=text], textarea {
 
 .alert-warning.alert-warning-hgn {
     color: white;
-    background-color: #808000;
+    background-color: rgba(255, 200, 50, 0.2);
+    border: solid 1px yellow;
 }
-.alert-secondary.alert-seconadary-hgn {
-    color: black;
-    background-color: lightgray;
+.alert-secondary.alert-secondary-hgn {
+    color: white;
+    background-color: rgba(50, 50, 50, 0.5);
+    border: solid 1px lightgray;
 }
 .btn-outline-secondary:hover {
     color: #000;

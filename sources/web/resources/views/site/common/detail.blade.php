@@ -132,10 +132,10 @@
 <div class="card card-hgn">
     <div class="card-body">
         <h5 class="card-title">このサイトで扱っているゲーム</h5>
-    </div>
-    <div class="row">
-        @foreach ($handleSofts as $soft)
-            @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash ?? []])
-        @endforeach
+        <div class="row">
+            @foreach ($handleSofts as $soft)
+                @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash ?? []])
+            @endforeach
+        </div>
     </div>
 </div>

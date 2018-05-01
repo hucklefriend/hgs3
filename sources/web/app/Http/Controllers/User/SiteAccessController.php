@@ -32,12 +32,12 @@ class SiteAccessController extends Controller
 
         $ym = Input::get('ym');
         if ($ym == null) {
-            $date = new \DateTime();
+            $date = new \DateTime(date('Y-m-01'));
         } else {
             try {
                 $date = new \DateTime($ym . '-01');
             } catch (\Exception $e) {
-                $date = new \DateTime();
+                $date = new \DateTime(date('Y-m-01'));
             }
         }
 
@@ -49,12 +49,12 @@ class SiteAccessController extends Controller
         $nearlyFootprints = Site\Footprint::getBySite($site->id, 5, 0);
 
         return view('site.access.index', [
-            'site'     => $site,
-            'date'     => $date,
-            'maxDay'   => $date->format('t'),
-            'prev'     => $prev,
-            'next'     => $next,
-            'accesses' => Site\AccessCount::getMonthly($site, $date),
+            'site'             => $site,
+            'date'             => $date,
+            'maxDay'           => $date->format('t'),
+            'prev'             => $prev,
+            'next'             => $next,
+            'accesses'         => Site\AccessCount::getMonthly($site, $date),
             'nearlyFootprints' => $nearlyFootprints,
             'footprintUsers'   => User::getHash(array_pluck($nearlyFootprints, 'user_id')),
             'useDatePicker'    => true

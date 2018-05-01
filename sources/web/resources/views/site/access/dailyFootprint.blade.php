@@ -11,21 +11,35 @@
 @endsection
 
 @section('content')
-    <h1>{{ $date->format('Y年n月j日') }}の足跡</h1>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>{{ $date->format('Y年n月j日') }}の足跡</h1>
+        </header>
 
-    @foreach ($footprints as $footprint)
-        <div style="margin-top: 15px;">
-            {{ date('Y-m-d H:i:s', $footprint->time) }}<br>
-            @include('user.common.icon', ['u' => $users[$footprint->user_id] ?? null])
-            @if (isset($users[$footprint->user_id]))
-                @include('user.common.user_name', ['u' => $users[$footprint->user_id]])
-            @else
-                ゲストさん
-            @endif
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-no-border" style="width: auto !important;">
+                    @foreach ($footprints as $footprint)
+                        <tr>
+                            <td style="white-space: nowrap;">{{ format_date($footprint->time) }}</td>
+                            <td>
+                                @isset($users[$footprint->user_id])
+                                    @include('user.common.icon', ['u' => $users[$footprint->user_id]])
+                                    @include('user.common.user_name', ['u' => $users[$footprint->user_id]])
+                                @else
+                                    ゲストさん
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+
+                <div>
+                    @include('common.pager', ['pager' => $pager])
+                </div>
+            </div>
         </div>
-    @endforeach
-
-    @include('common.pager', ['pager' => $pager])
+    </div>
 
 @endsection
 
