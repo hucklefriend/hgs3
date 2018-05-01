@@ -13,7 +13,6 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">メール送信に失敗しました。</h4>
-
                 <p>
                     パスワード再設定メールの送信に失敗しました。<br>
                     メールアドレスの入力間違いがないかご確認ください。<br>

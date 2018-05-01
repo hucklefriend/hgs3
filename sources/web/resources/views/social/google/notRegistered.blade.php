@@ -1,8 +1,14 @@
 @extends('layouts.app')
 
+@section('title')Google+でログイン@endsection
+@section('global_back_link'){{ route('ログイン') }}@endsection
+
 @section('content')
-    <h1>このアカウントは登録されていません。</h1>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>Google+でログイン</h1>
+        </header>
 
-    <p><a href="{{ route('ユーザー登録') }}">新規登録</a></p>
-
+        <p>このアカウントは登録されていません。</p>
+    </div>
 @endsection
