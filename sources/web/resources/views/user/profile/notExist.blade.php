@@ -4,13 +4,16 @@
 @section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>ユーザーが見つかりませんでした。</h1>
+        </header>
 
-    <h1>ユーザーが見つかりませんでした。</h1>
-
-    <p>
-        指定されたユーザーが見つかりませんでした。<br>
-        退会されたのかもしれません。
-    </p>
+        <p>
+            指定されたユーザーが見つかりませんでした。<br>
+            退会されたのかもしれません。
+        </p>
+    </div>
 
 @endsection
 

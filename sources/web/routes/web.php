@@ -171,15 +171,6 @@ Route::group(['middleware' => ['auth']], function () {
     // プロフィール
     Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');
     Route::get('/user/profile/{showId}/timeline/mypage', 'User\ProfileController@moreTimelineMyPage')->name('タイムライン追加取得');
-    Route::get('/user/timeline', 'User\ProfileController@timeline')->name('ユーザーのタイムライン');
-    Route::get('/user/profile/{showId}/show', 'User\ProfileController@show')->name('ユーザーのプロフィール');
-    Route::get('/user/user_action_timeline/{showId}', 'User\ProfileController@userActionTimeline')->name('ユーザーの行動タイムライン');
-    Route::get('/user/favorite_site/{showId}', 'User\FavoriteSiteController@index')->name('ユーザーのお気に入りサイト');
-    Route::get('/user/follow/{showId}', 'User\FollowController@index')->name('ユーザーのフォロー');
-    Route::get('/user/follower/{showId}', 'User\FollowController@follower')->name('ユーザーのフォロワー');
-    Route::get('/user/review/{showId}', 'User\ReviewController@index')->name('ユーザーのレビュー');
-    Route::get('/user/site/{showId}', 'User\SiteManageController@index')->name('ユーザーのサイト');
-    Route::get('/user/favorite_soft/{showId}', 'User\FavoriteSoftController@index')->name('ユーザーのお気に入りゲーム');
     Route::get('/user/profile/{showId}/{show}', 'User\ProfileController@index')->name('プロフィール2');
 
     Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->name('お気に入りゲーム登録処理');

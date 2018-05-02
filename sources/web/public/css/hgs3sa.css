@@ -666,6 +666,13 @@ input[type=text], textarea {
     margin-bottom: 30px;
 }
 
+.site-swipe {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 2px;
+    box-shadow: 0 1px 5px rgba(0,0,0,.1);
+    padding: 1.8rem 1.5rem 1.15rem;
+}
+
 .alert-warning.alert-warning-hgn {
     color: white;
     background-color: rgba(255, 200, 50, 0.2);
@@ -678,4 +685,8 @@ input[type=text], textarea {
 }
 .btn-outline-secondary:hover {
     color: #000;
+}
+
+.avatar-char, .card-link, .contacts__btn, .content__title:not(.content__title--alt)>h1, .fc th, .listview__header, .modal-footer>.btn-link, .price-table__action, .price-table__title, .q-a__stat>span>small, .view-more {
+    text-transform: initial !important;
 }

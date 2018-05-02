@@ -91,7 +91,7 @@
     <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">紹介</h5>
+                <h4 class="card-title">紹介</h4>
                 <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
             </div>
         </div>
@@ -99,18 +99,7 @@
     <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
-                @if ($isWebMaster)
-                    <div style="display:flex;">
-                        <div>
-                            <h5 class="card-title">更新履歴</h5>
-                        </div>
-                        <div style="margin-left: auto;">
-                            <a href="{{ route('サイト更新履歴登録', ['site' => $site->id]) }}" class="btn btn-sm btn-outline-secondary">登録</a>
-                        </div>
-                    </div>
-                @else
-                <h5 class="card-title">更新履歴</h5>
-                @endif
+                <h4 class="card-title">更新履歴</h4>
 
                 @if ($updateHistories->count() > 0)
                     @foreach ($updateHistories as $uh)
