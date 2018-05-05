@@ -347,7 +347,7 @@ button.btn:hover {
 
 .site-info > span {
     margin-right: 10px;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
 }
 
 .top-login {
@@ -689,4 +689,41 @@ input[type=text], textarea {
 
 .avatar-char, .card-link, .contacts__btn, .content__title:not(.content__title--alt)>h1, .fc th, .listview__header, .modal-footer>.btn-link, .price-table__action, .price-table__title, .q-a__stat>span>small, .view-more {
     text-transform: initial !important;
+}
+
+
+.btn-favorite {
+    background-color: rgba(255, 255, 255, 0.125);
+    color: grey;
+}
+.btn-favorite:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: yellow;
+}
+
+.btn-favorite2 {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: yellow;
+}
+.btn-favorite2:hover {
+    background-color: rgba(255, 255, 255, 0.125);
+    color: grey;
+}
+
+.btn-good {
+    background-color: rgba(255, 255, 255, 0.125);
+    color: grey;
+}
+.btn-good:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.btn-good2 {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+.btn-good2:hover {
+    background-color: rgba(255, 255, 255, 0.125);
+    color: grey;
 }

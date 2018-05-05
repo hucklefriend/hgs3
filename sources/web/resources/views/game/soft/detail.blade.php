@@ -55,19 +55,19 @@
                             @endif
 
                             @if (Auth::check())
-                            <div class="mt-2 text-right">
+                            <div class="mt-4">
                                 @if ($isFavorite)
                                     <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
                                         {{ csrf_field() }}
                                         <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                                         {{ method_field('DELETE') }}
-                                        <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-star"></i>解除</button>
+                                        <button class="btn btn-favorite2 btn--icon"><i class="fas fa-star"></i></button>
                                     </form>
                                 @else
                                     <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
                                         {{ csrf_field() }}
                                         <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                                        <button class="btn btn-outline-warning btn-sm"><i class="fas fa-star"></i>登録</button>
+                                        <button class="btn btn-favorite btn--icon"><i class="far fa-star"></i></button>
                                     </form>
                                 @endif
                             </div>

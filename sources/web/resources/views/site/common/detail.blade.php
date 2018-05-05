@@ -1,13 +1,9 @@
 <div class="row">
-    @if (!empty($site->detail_banner_url))
-    <div class="col-md-6">
-        <div class="detail-site-banner-outline mb-3 text-center">
-            <img src="{{ $site->detail_banner_url }}" class="img-responsive rounded">
-        </div>
-    </div>
-    @endif
     <div class="col-md-6">
         <div class="card card-hgn">
+            @if (!empty($site->detail_banner_url))
+            <img class="card-img-top" src="{{ $site->detail_banner_url }}">
+            @endif
             <div class="card-body">
                 <h4 class="card-title">{{ $site->name }}</h4>
                 <div>
@@ -32,7 +28,7 @@
                         {{ number_format($favoriteNum) }}
                     </span>
                     <span>
-                        <span class="good-icon"><i class="far fa-thumbs-up"></i></span>
+                        <span class="good-icon"><i class="fas fa-thumbs-up"></i></span>
                         {{ number_format($site->good_num) }}
                     </span>
                     <span>
@@ -50,35 +46,33 @@
 
                 @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
                     @if (!$isWebMaster && Auth::check())
-                        <div class="row mt-4">
-                            <div class="col-6 text-center">
-                                @if ($isFavorite)
-                                    <form action="{{ route('お気に入りサイト削除処理', ['site' => $site->id]) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <button class="btn btn-outline-secondary btn-sm"><small>お気に入り解除</small></button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('お気に入りサイト登録処理', ['site' => $site->id]) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        <button class="btn btn-outline-success"><i class="fas fa-star"></i>お気に入り</button>
-                                    </form>
-                                @endif
-                            </div>
-                            <div class="col-6 text-center">
-                                @if ($isGood)
-                                    <form method="POST" action="{{ route('サイトいいねキャンセル', ['site' => $site]) }}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <button class="btn btn-outline-secondary btn-sm"><small>いいね取消し</small></button>
-                                    </form>
-                                @else
-                                    <form method="POST" action="{{ route('サイトいいね', ['site' => $site]) }}">
-                                        {{ csrf_field() }}
-                                        <button class="btn btn-outline-success"><i class="far fa-thumbs-up"></i>いいね</button>
-                                    </form>
-                                @endif
-                            </div>
+                        <div class="d-flex mt-4">
+
+                            @if ($isFavorite)
+                                <form action="{{ route('お気に入りサイト削除処理', ['site' => $site->id]) }}" method="POST" class="mr-4">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <button class="btn btn-favorite2 btn--icon"><i class="fas fa-star"></i></button>
+                                </form>
+                            @else
+                                <form action="{{ route('お気に入りサイト登録処理', ['site' => $site->id]) }}" method="POST" class="mr-4">
+                                    {{ csrf_field() }}
+                                    <button class="btn btn-favorite btn--icon"><i class="far fa-star"></i></button>
+                                </form>
+                            @endif
+
+                            @if ($isGood)
+                                <form method="POST" action="{{ route('サイトいいねキャンセル', ['site' => $site]) }}">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <button class="btn btn-good2 btn--icon"><i class="fas fa-thumbs-up"></i></button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('サイトいいね', ['site' => $site]) }}">
+                                    {{ csrf_field() }}
+                                    <button class="btn btn-good btn--icon"><i class="far fa-thumbs-up"></i></button>
+                                </form>
+                            @endif
                         </div>
                     @endif
                 @endif
@@ -86,8 +80,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
     <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
@@ -96,6 +88,8 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row">
     <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
