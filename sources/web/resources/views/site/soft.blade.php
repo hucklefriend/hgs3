@@ -4,16 +4,26 @@
 @section('global_back_link'){{ route('ゲーム詳細', ['game' => $soft->id]) }}@endsection
 
 @section('content')
-    <h1><a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">{{ $soft->name }}</a>を扱っているサイト</h1>
 
-    @foreach ($pager as $p)
-        <?php $s = $sites[$p->site_id]; ?>
-        <div style="margin-top: 10px;margin-bottom: 30px;">
-            @include('site.common.normal', ['s' => $s, 'u' => $users[$s->user_id]])
-        </div>
-    @endforeach
 
-    @include('common.pager', ['pager' => $pager])
+    <div class="content__inner">
+        <header class="content__title">
+            <h1><a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">{{ $soft->name }}</a>を扱っているサイト</h1>
+        </header>
+
+
+        @foreach ($pager as $p)
+            <?php $s = $sites[$p->site_id]; ?>
+            <div style="margin-top: 10px;margin-bottom: 30px;">
+                @include('site.common.normal', ['s' => $s, 'u' => $users[$s->user_id]])
+            </div>
+        @endforeach
+
+        @include('common.pager', ['pager' => $pager])
+
+    </div>
+
+
 
 @endsection
 

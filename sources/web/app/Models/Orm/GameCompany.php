@@ -53,7 +53,7 @@ SQL;
 
         $packages = DB::select($sql, [$this->id]);
         if (empty($packages)) {
-            return [];
+            return ['soft' => [], 'packages' => []];
         }
 
         $soft_ids = array_pluck($packages, 'soft_id');

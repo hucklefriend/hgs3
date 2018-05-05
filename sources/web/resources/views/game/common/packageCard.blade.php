@@ -8,7 +8,7 @@ if (isset($toPackage) && $toPackage) {
 $imageUrl = small_image_url($soft);
 
 @endphp
-<div class="package-card col-xl-3 col-lg-4 col-sm-6 col-12">
+<div class="package-card col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
     <a href="{{ $url }}" style="width: 100%;display: table;">
         <div style="display: table-row;">
             <div class="package-card-image">

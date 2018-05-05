@@ -46,8 +46,8 @@
 
                 @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
                     @if (!$isWebMaster && Auth::check())
-                        <div class="d-flex mt-4">
-
+                        <div class="d-flex justify-content-between mt-4">
+                            <div class="d-flex">
                             @if ($isFavorite)
                                 <form action="{{ route('お気に入りサイト削除処理', ['site' => $site->id]) }}" method="POST" class="mr-4">
                                     {{ csrf_field() }}
@@ -73,6 +73,11 @@
                                     <button class="btn btn-good btn--icon"><i class="far fa-thumbs-up"></i></button>
                                 </form>
                             @endif
+                            </div>
+
+                            <div>
+                                <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
+                            </div>
                         </div>
                     @endif
                 @endif
@@ -119,6 +124,38 @@
             @foreach ($handleSofts as $soft)
                 @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash ?? []])
             @endforeach
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="help" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="help"><span style="color:yellow;"><i class="fas fa-star"></i></span> お気に入り</h5>
+            </div>
+            <div class="modal-body">
+                <p>
+                    サイトが気に入って、今後も更新があったらすぐ見に行きたい場合はお気に入りに登録しましょう。
+                </p>
+                <ul>
+                    <li>サイトの更新があった時、あなたのタイムラインに通知します</li>
+                    <li>サイトのお気に入り登録者一覧にあなたの名前が載ります</li>
+                </ul>
+            </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="help"><i class="fas fa-thumbs-up"></i> いいね</h5>
+            </div>
+            <div class="modal-body">
+                <p>
+                    サイトを見て、いいなと思ったら軽い気持ちでいいねを押してあげてください。<br>
+                    いいねは完全に匿名です。<br>
+                    サイトの登録ユーザーさんは、だれがいいねをしたのか知ることはありません。
+                </p>
+                <div class="text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
