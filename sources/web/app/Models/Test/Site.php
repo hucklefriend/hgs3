@@ -177,7 +177,6 @@ FOOTER;
             'ban02.gif',
             'ban03.jpg',
             'ban05.gif',
-            'bn200.gif',
             'ban07.gif',
             'bnr016_02.gif',
             'bnr016_08.gif',
@@ -200,7 +199,7 @@ FOOTER;
             'Yuu171226IMGL0058_TP_V.jpg'
         ];
 
-        return 'http://hgs3/hgn/img/test/site/list_banner/' . $banners[rand(0, count($banners) - 1)];
+        return 'https://horrorgame.net/img/test/site/list_banner/' . $banners[rand(0, count($banners) - 1)];
     }
 
     private static function getSampleSiteDetailBanner()
@@ -219,7 +218,7 @@ FOOTER;
             'Yuu171226IMGL0058_TP_V.jpg'
         ];
 
-        return 'http://hgs3/hgn/img/test/site/detail_banner/' . $banners[rand(0, count($banners) - 1)];
+        return 'https://horrorgame.net/img/test/site/detail_banner/' . $banners[rand(0, count($banners) - 1)];
     }
 
     /**
