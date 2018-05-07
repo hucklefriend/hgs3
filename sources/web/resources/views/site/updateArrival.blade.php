@@ -4,22 +4,26 @@
 @section('global_back_link'){{ route('サイトトップ') }}@endsection
 
 @section('content')
-    <h1>更新サイト</h1>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>更新サイト</h1>
+        </header>
 
-    @foreach ($updateArrivals as $updateArrival)
-        @php
-            $s = $sites[$updateArrival->site_id];
-            $u = $users[$s->user_id];
-        @endphp
+        @foreach ($updateArrivals as $updateArrival)
+            @php
+                $s = $sites[$updateArrival->site_id];
+                $u = $users[$s->user_id];
+            @endphp
 
-        <div class="mb-5">
-            <div>
-                <span class="badge badge-info">{{ format_date($updateArrival->updated_timestamp) }}更新！</span>
+            <div class="mb-5">
+                <div>
+                    <span class="badge badge-info">{{ format_date($updateArrival->updated_timestamp) }}更新！</span>
+                </div>
+                @include('site.common.normal', ['s' => $s, 'u' => $u])
             </div>
-            @include('site.common.normal', ['s' => $s, 'u' => $u])
-        </div>
-    @endforeach
-    @include('common.pager', ['pager' => $updateArrivals])
+        @endforeach
+        @include('common.pager', ['pager' => $updateArrivals])
+    </div>
 @endsection
 
 @section('breadcrumb')
