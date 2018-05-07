@@ -10,12 +10,17 @@
         </header>
 @if (!empty($timelines))
 
+        <div class="ticker-title hidden-sm-up">
+            <span>新着情報！</span>
+        </div>
         <div class="ticker">
             <ul>
     @foreach ($timelines as $tl)
                 <li>{!! $tl['text'] !!}</li>
     @endforeach
             </ul>
+
+            <div class="ticker-title-inline hidden-xs-down">新着情報！</div>
         </div>
 
         @endif
@@ -122,13 +127,22 @@
     <style>
 
         .ticker {
-            margin: 20px 0;
             position: relative;
-            padding: 0 0 0 80px;
+            padding: 0 0 0 0;
             background-color: rgba(0,0,0,.2);
             border-radius: 3px;
+            margin-bottom: 20px;
         }
-        .ticker:before {
+
+
+        .ticker-title {
+            background-color: rgba(0,0,0,.4);
+            padding: 10px;
+            color: #FFF;
+            display: inline-block;
+        }
+
+        .ticker-title-inline {
             content: "新着情報！";
             display: inline-block;
             background-color: rgba(0,0,0,.2);
@@ -143,7 +157,7 @@
             display: block;
             top: 0;
             left: 80px;
-            height: 40px;
+            height: 80px;
         }
         .ticker ul {
             padding-left: 20px !important;
@@ -153,9 +167,19 @@
             padding: 10px 0;
             overflow: hidden;
             white-space: nowrap;
-            text-overflow: ellipsis;
         }
 
+        @media (min-width:576px) {
+            .ticker {
+                padding: 0 0 0 80px;
+            }
+        }
+        @media (max-width:575px) {
+            .ticker ul li {
+                white-space: normal;
+                height: 70px;
+            }
+        }
 
 
     </style>

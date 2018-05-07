@@ -3,18 +3,26 @@
         <ul class="pagination justify-content-center" style="width: 100%;">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
-                <li class="page-item disabled text-center" style="width: 30%;"><span class="page-link">前</span></li>
+                <li class="page-item disabled text-center" style="width: 30%;">
+                    <button class="btn btn-dark btn--icon" type="button"><i class="fas fa-angle-left"></i></button>
+                </li>
             @else
-                <li class="page-item text-center" style="width: 30%;"><a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev">前</a></li>
+                <li class="page-item text-center" style="width: 30%;">
+                    <a class="btn btn-light btn--icon" href="{{ $paginator->previousPageUrl() }}" rel="prev"><i class="fas fa-angle-left"></i></a>
+                </li>
             @endif
 
             <li style="width: 10%;"></li>
 
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
-                <li class="page-item text-center" style="width: 30%;"><a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next">次</a></li>
+                <li class="page-item text-center" style="width: 30%;">
+                    <a class="btn btn-light btn--icon" href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="fas fa-angle-right"></i></a>
+                </li>
             @else
-                <li class="page-item disabled text-center" style="width: 30%;"><span class="page-link">次</span></li>
+                <li class="page-item disabled text-center" style="width: 30%;">
+                    <button class="btn btn-dark btn--icon" type="button"><i class="fas fa-angle-right"></i></button>
+                </li>
             @endif
         </ul>
     </nav>
