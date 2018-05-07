@@ -29,7 +29,8 @@ class Kernel extends ConsoleKernel
         Commands\Mongo\Reset::class,
         Commands\Init::class,
         Commands\Master\UpdateOriginalPackageId::class,
-        Commands\Master\Import::class
+        Commands\Master\Import::class,
+        Commands\Sitemap::class
     ];
 
     /**
