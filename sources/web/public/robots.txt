@@ -1,3 +1,8 @@
+User-agent: *
+Disallow: /user/
+Disallow: /auth/
+Disallow: /account/
+Sitemap: https://horrorgame.net/sitemap.xml
 User-agent: MJ12bot
 Disallow: /
 User-agent: AhrefsBot
