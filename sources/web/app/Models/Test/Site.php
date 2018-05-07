@@ -81,6 +81,10 @@ class Site
 
                 $orm->save();
 
+                if (mt_rand(0, 10) == 0) {
+                    \Hgs3\Models\Site::update($u, $orm, null, null, 0, false, false);
+                }
+
                 unset($orm);
             }
         }

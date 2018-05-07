@@ -30,8 +30,8 @@ class SiteController extends Controller
      */
     public function index()
     {
-        $newArrivals = Site\NewArrival::get(3);
-        $updateArrivals = Site\UpdateArrival::get(3);
+        $newArrivals = Site\NewArrival::get(5);
+        $updateArrivals = Site\UpdateArrival::get(5);
 
         $webmasterIds = array_merge(
             array_pluck($newArrivals, 'user_id'),

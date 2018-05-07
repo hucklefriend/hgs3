@@ -8,6 +8,7 @@ namespace Hgs3\Models\Site;
 use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Log;
 use Hgs3\Models\Orm;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class UpdateArrival
@@ -15,8 +16,8 @@ class UpdateArrival
     /**
      * 更新サイトを取得
      *
-     * @param int $num
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @param $num
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      * @throws \Exception
      */
     public static function get($num)
@@ -33,7 +34,7 @@ class UpdateArrival
             ->toArray();
 
         if (empty($updateArrivals)) {
-            return [];
+            return new Collection();
         }
 
         return Orm\Site::whereIn('id', $updateArrivals)

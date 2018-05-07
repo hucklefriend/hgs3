@@ -77,6 +77,12 @@
                                         </div>
                                 @endforeach
                                     </div>
+
+                                    <div class="text-center mt-3">
+                                        <button class="btn btn-light btn--icon" id="updates_prev"><i class="fas fa-caret-left"></i></button>
+                                        <span id="updates_pagination" class="mx-5"></span>
+                                        <button class="btn btn-light btn--icon" id="updates_next"><i class="fas fa-caret-right"></i></button>
+                                    </div>
                                 </div>
 
                                 <div class="text-center mt-5">
@@ -174,19 +180,13 @@
                 padding: 0 0 0 80px;
             }
         }
-        @media (max-width:575px) {
-            .ticker ul li {
-                white-space: normal;
-                height: 70px;
-            }
-        }
-
 
     </style>
 
     <script src="{{ url('js/jquery.easy-ticker.min.js') }}"></script>
     <script>
         let swiper = null;
+        let swiper2 = null;
 
         $(function(){
             $('.ticker').easyTicker({
@@ -202,6 +202,16 @@
                 navigation: {
                     nextEl: '#new_arrivals_next',
                     prevEl: '#new_arrivals_prev',
+                },
+            });
+            swiper2 = new Swiper('#updates_list', {
+                pagination: {
+                    el: '#updates_pagination',
+                    type: 'fraction',
+                },
+                navigation: {
+                    nextEl: '#updates_next',
+                    prevEl: '#updates_prev',
                 },
             });
 

@@ -201,10 +201,12 @@ class Site
                     Timeline\ToMe::addSiteApproveText($admin, $site);
 
                     // 管理人にメール送信
-                    /*Mail::to(env('ADMIN_MAIL'))
-                        ->send(new \Hgs3\Mail\SiteApprovalWait($site));*/
+                    if (env('APP_ENV') == 'production') {
+                        Mail::to(env('ADMIN_MAIL'))
+                            ->send(new \Hgs3\Mail\SiteApprovalWait($site));
 
-                    Log::info('管理人にメール飛ばした');
+                        Log::info('管理人にメール飛ばした');
+                    }
                 } catch (\Exception $e) {
                     Log::error($e->getMessage());
                     Log::error($e->getTraceAsString());
