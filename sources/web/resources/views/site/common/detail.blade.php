@@ -107,8 +107,8 @@
                             {!! nl2br(e($uh->detail)) !!}
                         </p>
                     @endforeach
-                    <div class="text-center">
-                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}">すべて見る</a>
+                    <div class="text-right">
+                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                     </div>
                 @else
                     <p class="card-text">更新履歴はありません。</p>

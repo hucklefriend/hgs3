@@ -67,8 +67,8 @@
                     </tr>
                 @endforeach
                 </table>
-                <div class="mt-3 text-center">
-                    <a href="{{ route('サイト足跡', ['site' => $site->id]) }}">すべて見る</a>
+                <div class="mt-3 text-right">
+                    <a href="{{ route('サイト足跡', ['site' => $site->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                 </div>
             </div>
         </div>

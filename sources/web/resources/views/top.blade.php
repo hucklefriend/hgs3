@@ -117,8 +117,8 @@
                             </p>
                         @endforeach
                         @if ($newInfo->count() > 0)
-                            <div class="text-center">
-                                <a href="{{ route('新着情報') }}" >すべて見る</a>
+                            <div class="text-right">
+                                <a href="{{ route('新着情報') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @else
                             <p class="card-text">新着情報はありません。</p>
@@ -148,8 +148,8 @@
                         @endforeach
 
                         @if ($notices->count() > 0)
-                            <div class="text-center">
-                                <a href="{{ route('お知らせ') }}" >すべて見る</a>
+                            <div class="text-right">
+                                <a href="{{ route('お知らせ') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @else
                             <p class="card-text">お知らせはありません。</p>

@@ -727,3 +727,8 @@ input[type=text], textarea {
     background-color: rgba(255, 255, 255, 0.125);
     color: grey;
 }
+
+.badge.and-more {
+    background-color: rgba(255, 255, 255, 0.125);
+}
+

@@ -309,8 +309,8 @@
                                 @include('site.common.minimal', ['s' => $s])
                                 </div>
                             @endforeach
-                            <div class="text-center">
-                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}">すべて見る</a>
+                            <div class="text-right">
+                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @endif
                     </div>
@@ -331,8 +331,8 @@
                                     @include('user.common.user_name', ['u' => $users[$favorite->user_id], 'followStatus' => $followStatus[$favorite->user_id] ?? \Hgs3\Constants\FollowStatus::NONE])
                                 </div>
                             @endforeach
-                            <div class="text-center">
-                                <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}">すべて見る</a>
+                            <div class="text-right">
+                                <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @endif
                     </div>
