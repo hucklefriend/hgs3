@@ -144,8 +144,20 @@ XML;
     <url>
         <loc>https://horrorgame.net/game/soft/{$game->id}</loc>
         <lastmod>$lastmod</lastmod>
-        <changefreq>always</changefreq>
+        <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://horrorgame.net/site/soft/{$game->id}</loc>
+        <lastmod>$lastmod</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://horrorgame.net/game/favorite/{$game->id}</loc>
+        <lastmod>$lastmod</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>
 
 XML;
