@@ -77,19 +77,17 @@
         <div class="card">
             <div class="card-body">
                 <div class="text-center">
-
-                    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $prev->format('Y-m') }}" class="btn btn-sm btn-outline-secondary mr-5"><i class="fas fa-chevron-left"></i></a>
-
+                    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $prev->format('Y-m') }}" class="btn btn-sm btn-outline-secondary mr-3"><i class="fas fa-chevron-left"></i></a>
                     <label for="ym" style="font-size: 1.5rem;">{{ $date->format('Y年n月') }}</label>
                     <span class="date">
                         <input type="hidden" name="ym_tmp" id="ym_tmp" readonly class="form-control-plaintext" value="{{ $date->format('Y-m') }}" style="width: 5px;visibility: hidden;">
                         <button class="btn btn-light btn--icon" type="button" id="month_picker"><i class="far fa-calendar-alt"></i></button>
                     </span>
-                    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $next->format('Y-m') }}" class="btn btn-sm btn-outline-secondary ml-5"><i class="fas fa-chevron-right"></i></a>
+                    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $next->format('Y-m') }}" class="btn btn-sm btn-outline-secondary ml-3"><i class="fas fa-chevron-right"></i></a>
                 </div>
 
-                <div>
-                    <table class="table table-bordered table-responsive mt-3 calendar-hgn">
+                <div class="mt-3">
+                    <table class="table table-bordered calendar-hgn hidden-xs-down">
                         <thead>
                         <tr>
                             <th class="text-center">日</th>
@@ -140,6 +138,38 @@
 
                             @endforeach
                         </tr>
+                        </tbody>
+                    </table>
+
+
+                    <table class="table table-bordered calendar-hgn hidden-sm-up">
+                        <tbody>
+                        @foreach ($accesses as $access)
+                            @if ($access->disable)
+                                @if (!$access->otherMonth)
+                                    <tr>
+                                        <td>{{ $access->day }}日</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                @endif
+                            @else
+                                <tr>
+                                    <td class="text-center">{{ $access->day }}日</td>
+                                    <td class="text-center"><i class="fas fa-sign-out-alt"></i> {{ number_format($access->out) }}</td>
+                                    <td class="text-center"><i class="fas fa-sign-in-alt"></i> {{ number_format($access->in) }}</td>
+                                    <td class="text-center">
+                                        @isset($access->date)
+                                        <a href="{{ route('サイト日別足跡', ['site' => $site->id, 'date' => $access->date]) }}"><i class="fas fa-paw"></i></a>
+                                        @else
+                                        &nbsp;
+                                        @endisset
+                                    </td>
+                                </tr>
+                            @endif
+
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
