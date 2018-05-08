@@ -764,8 +764,6 @@ SQL;
     {
         DB::beginTransaction();
         try {
-            $siteUpdateHistory->save();
-
             $sql =<<< SQL
 INSERT INTO site_update_histories (site_id, site_updated_at, detail, created_at, updated_at)
 VALUES (:site_id, :site_updated_at, :detail, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)

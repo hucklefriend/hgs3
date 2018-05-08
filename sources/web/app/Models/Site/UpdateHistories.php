@@ -50,8 +50,8 @@ class UpdateHistories
         // MongoDBに登録
         try {
             $document = [
-                'site_id'          => $site->id,
-                'comment'          => $comment,
+                'site_id' => $site->id,
+                'comment' => $comment,
                 'update_timestamp' => time()
             ];
             $result = $collection->insertOne($document);
@@ -81,9 +81,11 @@ class UpdateHistories
             return false;
         }
 
-        // タイムラインに登録
-        Timeline\FavoriteSite::addUpdateSiteText($site);
-        Timeline\Site::addUpdateText($site);
+        if ($site->approval_status == ApprovalStatus::OK) {
+            // タイムラインに登録
+            Timeline\FavoriteSite::addUpdateSiteText($site);
+            Timeline\Site::addUpdateText($site);
+        }
 
         return true;
     }

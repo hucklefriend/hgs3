@@ -6,6 +6,7 @@
 
 namespace Hgs3\Http\Controllers\User;
 
+use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Constants\Site\Gender;
 use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
@@ -323,7 +324,7 @@ class SiteManageController extends Controller
         $siteUpdateHistory->site_updated_at = $request->get('site_updated_at');
         $siteUpdateHistory->detail = $request->get('detail');
 
-        Site::saveUpdateHistory($site, $siteUpdateHistory, true);
+        Site::saveUpdateHistory($site, $siteUpdateHistory, $site->approval_status == ApprovalStatus::OK);
 
         return redirect()->route('サイト詳細', ['site' => $site->id]);
     }
