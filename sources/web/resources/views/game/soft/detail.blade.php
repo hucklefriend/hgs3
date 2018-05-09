@@ -86,53 +86,31 @@
                     <h4 class="card-title">パッケージ情報</h4>
 
                     @if ($packageNum > 2)
-
-                        <script type="text/javascript" src="{{ url('js/slick.min.js') }}"></script>
-                        <link rel="stylesheet" type="text/css" href="{{ url('css/slick.css') }}">
-                        <link rel="stylesheet" type="text/css" href="{{ url('css/slick-theme.css') }}">
-                        <style>
-                            .slick-dots {
-                                bottom: 0 !important;
-                                width: auto !important;
-                                position: inherit !important;
-                            }
-
-                            .package_slide {
-                                visibility: hidden;
-                            }
-
-                            .package_slide div {
-                                outline: none;
-                            }
-
-                        </style>
                         <script>
-                            $(function (){
-                                let slick = $('.package_slide');
-                                slick.slick({
-                                    arrows: false,
-                                    dots: true,
-                                    appendDots: $('#package_pager'),
-                                    prevArrow: $('.slick-prev')
-                                });
-
-                                $('.package_slide').css('visibility', 'visible');
-                                $('#package_slider_prev').click(function () {
-                                    slick.slick('slickPrev');
-                                });
-                                $('#package_slider_next').click(function () {
-                                    slick.slick('slickNext');
+                            let swiper = null;
+                            $(function(){
+                                swiper = new Swiper('#packages_list', {
+                                    pagination: {
+                                        el: '#packages_pagination',
+                                        type: 'fraction',
+                                    },
+                                    navigation: {
+                                        nextEl: '#packages_next',
+                                        prevEl: '#packages_prev',
+                                    },
+                                    loop: true,
                                 });
                             });
                         </script>
-
                     @endif
-                    <div class="package_slide">
+
+                    <div class="package_slide swiper-container" id="packages_list">
+                        <div class="swiper-wrapper">
                         @for ($i = 0; $i < $packageNum; $i += 2)
-                            <div>
+                            <div class="swiper-slide">
                                 @php $pkg = $packages[$i]; @endphp
                                 <div class="d-flex">
-                                    <div class="package-image-small">
+                                    <div class="package-image-small text-center">
                                         @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
                                     </div>
                                     <div class="ml-3">
@@ -142,10 +120,13 @@
                                             <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
                                             <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
                                         </div>
-                                        <div class="mt-2">
+                                        <div class="mt-4">
+                                            <div class="d-inline shopping">
+                                            <i class="fas fa-shopping-cart mr-2"></i>
                                             @foreach ($pkg->shops as $shop)
                                                 @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
                                             @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -163,27 +144,26 @@
                                                 <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
                                                 <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
                                             </div>
-                                            <div class="mt-2">
+                                            <div class="mt-4">
+                                                <div class="d-inline shopping">
+                                                <i class="fas fa-shopping-cart mr-2"></i>
                                                 @foreach ($pkg->shops as $shop)
                                                     @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
                                                 @endforeach
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 @endif
                             </div>
                         @endfor
+                        </div>
                     </div>
                     @if ($packageNum > 2)
-                        <div class="row">
-                            <div class="col-2">
-                                <button class="btn btn-light btn-sm" id="package_slider_prev"><i class="fas fa-angle-left"></i></button>
-                            </div>
-                            <div class="col-8 text-center" id="package_pager">
-                            </div>
-                            <div class="col-2 text-right">
-                                <button class="btn btn-light btn-sm" id="package_slider_next"><i class="fas fa-angle-right"></i></button>
-                            </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-light btn--icon" id="packages_prev"><i class="fas fa-caret-left"></i></button>
+                            <span id="packages_pagination" class="mx-5"></span>
+                            <button class="btn btn-light btn--icon" id="packages_next"><i class="fas fa-caret-right"></i></button>
                         </div>
                     @endif
                 </div>
