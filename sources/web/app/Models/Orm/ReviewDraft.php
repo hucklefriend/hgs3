@@ -72,7 +72,7 @@ class ReviewDraft extends \Eloquent
     public function getGoodTags()
     {
         if ($this->isDefault) {
-            return [1,2];
+            return [];
         }
         $this->setTags();
 
@@ -149,12 +149,14 @@ class ReviewDraft extends \Eloquent
                     $this->goodTags[] = $tag->tag;
                     break;
                 case 2:
+                    $this->goodTags[] = $tag->tag;
                     $this->veryGoodTags[] = $tag->tag;
                     break;
                 case -1:
                     $this->badTags[] = $tag->tag;
                     break;
                 case -2:
+                    $this->badTags[] = $tag->tag;
                     $this->veryBadTags[] = $tag->tag;
                     break;
             }

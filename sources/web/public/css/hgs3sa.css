@@ -485,6 +485,7 @@ html.is-fixed body {
     color: #17a2b8;
 }
 
+
 .soft-blockquote {
     font-size: 0.9rem;
     line-height: 1.4rem;
@@ -688,6 +689,19 @@ input[type=text], textarea {
 
 .avatar-char, .card-link, .contacts__btn, .content__title:not(.content__title--alt)>h1, .fc th, .listview__header, .modal-footer>.btn-link, .price-table__action, .price-table__title, .q-a__stat>span>small, .view-more {
     text-transform: initial !important;
+}
+
+
+
+
+.hgn-check-btn {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: grey;
+}
+
+.hgn-check-btn:hover, .hgn-check-btn.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
 

@@ -6,7 +6,7 @@
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>サイト登録</h1>
+            <h1>サイト編集</h1>
         </header>
 
 

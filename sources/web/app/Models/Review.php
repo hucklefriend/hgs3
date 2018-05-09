@@ -26,11 +26,12 @@ class Review
      */
     public static function saveDraft(Orm\ReviewDraft $draft, array $goodTags, array $veryGoodTags, array $badTags, array $veryBadTags)
     {
-        $tagData = [];
+        $good = [];
+        $bad = [];
 
         // 良いところ
         foreach ($goodTags as $goodTag) {
-            $tagData[$goodTag] = [
+            $good[$goodTag] = [
                 'soft_id' => $draft->soft_id,
                 'user_id' => $draft->user_id,
                 'tag'     => $goodTag,
@@ -40,14 +41,14 @@ class Review
 
         // 特に優れているところ
         foreach ($veryGoodTags as $veryGoodTag) {
-            if (isset($tagData[$veryGoodTag])) {
-                $tagData[$veryGoodTag]['point'] = 2;
+            if (isset($good[$veryGoodTag])) {
+                $good[$veryGoodTag]['point'] = 2;
             }
         }
 
         // 悪いところ
         foreach ($badTags as $badTag) {
-            $tagData[$badTag] = [
+            $bad[$badTag] = [
                 'soft_id' => $draft->soft_id,
                 'user_id' => $draft->user_id,
                 'tag'     => $badTag,
@@ -57,8 +58,8 @@ class Review
 
         // 特にわるいところ
         foreach ($veryBadTags as $veryBadTag) {
-            if (isset($tagData[$veryBadTag])) {
-                $tagData[$veryBadTag]['point'] = -2;
+            if (isset($bad[$veryBadTag])) {
+                $bad[$veryBadTag]['point'] = -2;
             }
         }
 
@@ -68,7 +69,8 @@ class Review
                 ->where('soft_id', $draft->soft_id)
                 ->delete();
 
-            Orm\ReviewDraftTag::insert($tagData);
+            Orm\ReviewDraftTag::insert($good);
+            Orm\ReviewDraftTag::insert($bad);
 
             $draft->save();
 

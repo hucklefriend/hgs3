@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')レビュー投稿@endsection
-@section('global_back_link'){{ route('ユーザーのレビュー', ['user' => Auth::id()]) }}@endsection
+@section('global_back_link'){{ route('レビュー入力', ['soft' => $soft->id]) }}@endsection
 
 @section('content')
     <h1>レビュー投稿確認</h1>
@@ -149,7 +149,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-footer">
             <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ユーザーのレビュー', ['user' => Auth::id()]) }}">レビュー</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('プロフィール2', ['showId' => Auth::user()->show_id, 'show' => 'review']) }}">レビュー</a></li>
             <li class="breadcrumb-item active" aria-current="page">レビュー投稿</li>
         </ol>
     </nav>
