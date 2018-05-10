@@ -29,7 +29,7 @@ class WriteRequest extends FormRequest
         return [
             'soft_id'         => 'required|exists:game_softs,id',
             'progress'        => 'nullable|string|max:300',
-            'fear'            => 'required|integer|between:0,8',
+            'fear'            => 'required|integer|between:-30,30',
             'good_tags'       => 'nullable|array',
             'very_good_tags'  => 'nullable|array',
             'bad_tags'        => 'nullable|array',

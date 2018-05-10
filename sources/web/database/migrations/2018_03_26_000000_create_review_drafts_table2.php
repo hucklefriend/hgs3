@@ -24,10 +24,10 @@ class CreateReviewDraftsTable2 extends Migration
             $table->text('package_id')->comment('パッケージID');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
             $table->text('url')->nullable()->comment('URL');
-            $table->text('progress')->comment('ゲームの進行状態');
-            $table->text('good_comment')->comment('良い点');
-            $table->text('bad_comment')->comment('悪い点');
-            $table->text('general_comment')->comment('総合評価');
+            $table->text('progress')->nullable()->comment('ゲームの進行状態');
+            $table->text('good_comment')->nullable()->comment('良い点');
+            $table->text('bad_comment')->nullable()->comment('悪い点');
+            $table->text('general_comment')->nullable()->comment('総合評価');
             $table->unsignedTinyInteger('is_spoiler')->default(0)->comment('ネタバレ有無');
             $table->timestamps();
             $table->primary(['soft_id', 'user_id']);

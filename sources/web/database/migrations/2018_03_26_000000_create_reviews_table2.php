@@ -25,14 +25,14 @@ class CreateReviewsTable2 extends Migration
             $table->text('package_id')->comment('パッケージID');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
             $table->text('url')->nullable()->comment('URL');
-            $table->text('progress')->comment('ゲームの進行状態');
+            $table->text('progress')->nullable()->comment('ゲームの進行状態');
             $table->unsignedTinyInteger('good_tag_num')->comment('良いタグ数');
             $table->unsignedTinyInteger('very_good_tag_num')->comment('特に良いタグ数');
-            $table->text('good_comment')->comment('良い点');
+            $table->text('good_comment')->nullable()->comment('良い点');
             $table->unsignedTinyInteger('bad_tag_num')->comment('悪いタグ数');
             $table->unsignedTinyInteger('very_bad_tag_num')->comment('特に悪いタグ数');
-            $table->text('bad_comment')->comment('悪い点');
-            $table->text('general_comment')->comment('総合評価');
+            $table->text('bad_comment')->nullable()->comment('悪い点');
+            $table->text('general_comment')->nullable()->comment('総合評価');
             $table->unsignedTinyInteger('is_spoiler')->default(0)->comment('ネタバレ有無');
             $table->unsignedInteger('point')->comment('ポイント');
             $table->integer('sort_order')->default(0)->comment('ソート順');

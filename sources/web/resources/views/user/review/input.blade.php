@@ -69,7 +69,7 @@
             </div>
 
             <div class="form-group">
-                <label for="fear" class="hgn-label"><i class="fas fa-arrows-alt-h"></i> 怖さ</label>
+                <label for="fear" class="hgn-label">😱 怖さ</label>
                 <span class="badge badge-secondary ml-2">必須</span>
                 <p class="text-muted">
                     どの程度怖かったかを-30～30で設定してください。
@@ -176,7 +176,7 @@
                 <p class="text-muted">
                     このゲームの良い点について、言いたいことがあれば記入してください。
                 </p>
-                <textarea name="good_comment" id="good_comment" class="form-control{{ invalid($errors, 'good_comment') }}">{{ old('good_comment', $draft->good_comment) }}</textarea>
+                <textarea name="good_comment" id="good_comment" class="form-control textarea-autosize{{ invalid($errors, 'good_comment') }}">{{ old('good_comment', $draft->good_comment) }}</textarea>
                 <i class="form-group__bar"></i>
             </div>
             <div class="form-help">
@@ -188,7 +188,7 @@
                 <p class="text-muted">
                     このゲームの悪い点について、言いたいことがあれば記入してください。
                 </p>
-                <textarea name="bad_comment" id="bad_comment" class="form-control{{ invalid($errors, 'bad_comment') }}">{{ old('bad_comment', $draft->bad_comment) }}</textarea>
+                <textarea name="bad_comment" id="bad_comment" class="form-control textarea-autosize{{ invalid($errors, 'bad_comment') }}">{{ old('bad_comment', $draft->bad_comment) }}</textarea>
                 <i class="form-group__bar"></i>
             </div>
             <div class="form-help">
@@ -197,9 +197,9 @@
 
 
             <div class="form-group">
-                <label for="general_comment" class="hgn-label"><i class="fas fa-edit"></i> 総合評価</label>
+                <label for="general_comment" class="hgn-label"><i class="fas fa-edit"></i> 総評</label>
                 <p class="text-muted">
-                    総合評価を記入してください。
+                    総評を記入してください。
                 </p>
                 <textarea name="general_comment" id="general_comment" class="form-control textarea-autosize{{ invalid($errors, 'general_comment') }}">{{ old('general_comment', $draft->general_comment) }}</textarea>
                 <i class="form-group__bar"></i>
