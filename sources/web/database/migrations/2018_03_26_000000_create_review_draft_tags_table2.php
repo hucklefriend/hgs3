@@ -23,7 +23,7 @@ class CreateReviewDraftTagsTable2 extends Migration
             $table->tinyInteger('point')->comment('ポイント');
             $table->timestamps();
 
-            $table->primary(['soft_id', 'user_id', 'tag']);
+            $table->primary(['soft_id', 'user_id', 'tag', 'point']);
         });
     }
 

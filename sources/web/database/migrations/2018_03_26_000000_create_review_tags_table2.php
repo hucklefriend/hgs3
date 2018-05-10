@@ -22,7 +22,7 @@ class CreateReviewTagsTable2 extends Migration
             $table->tinyInteger('point')->comment('ポイント');
             $table->timestamps();
 
-            $table->primary(['review_id', 'tag']);
+            $table->primary(['review_id', 'tag', 'point']);
         });
     }
 
