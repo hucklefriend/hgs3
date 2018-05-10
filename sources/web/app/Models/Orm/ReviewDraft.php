@@ -61,6 +61,8 @@ class ReviewDraft extends \Eloquent
             ->where('user_id', $userId)
             ->first();
 
+        $draft->setTags();
+
         return $draft ?? self::getDefault($userId, $softId);
     }
 
@@ -95,6 +97,17 @@ class ReviewDraft extends \Eloquent
     }
 
     /**
+     * とても良いタグに指定されているか？
+     *
+     * @param $tagId
+     * @return bool
+     */
+    public function isVeryGood($tagId)
+    {
+        return in_array($tagId, $this->veryGoodTags);
+    }
+
+    /**
      * 悪いタグ
      *
      * @return array|null
@@ -110,7 +123,7 @@ class ReviewDraft extends \Eloquent
     }
 
     /**
-     * 特に悪いタグ
+     * とても悪いタグ
      *
      * @return array|null
      */
@@ -123,6 +136,17 @@ class ReviewDraft extends \Eloquent
         $this->setTags();
 
         return $this->veryBadTags;
+    }
+
+    /**
+     * とても悪いタグに指定されているか？
+     *
+     * @param $tagId
+     * @return bool
+     */
+    public function isVeryBad($tagId)
+    {
+        return in_array($tagId, $this->veryBadTags);
     }
 
     /**
@@ -239,7 +263,12 @@ class ReviewDraft extends \Eloquent
     {
         $this->setTags();
 
-        return $this->fear * 5 + (count($this->goodTags) + (count($this->veryGoodTags) * 2))
-            - (count($this->badTags) + (count($this->veryBadTags) * 2));
+        return 50 + $this->fear + (count($this->goodTags) + (count($this->veryGoodTags)))
+            - (count($this->badTags) + (count($this->veryBadTags)));
+    }
+
+    public function getOpenDate()
+    {
+        return 'まだ公開していません。';
     }
 }

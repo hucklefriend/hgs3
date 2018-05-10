@@ -320,6 +320,13 @@ class User extends Authenticatable
         return;
     }
 
+    public function getReviewNum()
+    {
+        return DB::table('reviews')
+            ->where('user_id', $this->id)
+            ->count('id');
+    }
+
 
     public static function deleteTestData()
     {
