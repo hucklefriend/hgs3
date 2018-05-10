@@ -75,19 +75,55 @@ code {
     word-break: break-all;
 }
 
+.review-game-title {
+    font-size: 1.2rem;
+}
+
 .review-point {
-    font-size: 7vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 2.7rem;
+    display: inline-block;
     margin: 0 !important;
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.2);
+    position: relative;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 5px;
+}
+
+.review-point-mother {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 0.9rem;
+    padding: 5px;
+    line-height: 0.9rem;
+}
+
+.review-tag {
+    padding: 2px 3px;
 }
 
 @media (min-width: 500px) {
     .review-point {
-        font-size: 2.5rem !important;
     }
 }
+
+.review-point-table {
+    margin-left: 10px;
+}
+
+
+.review-point-table tr {
+    border-bottom: solid 1px grey;
+}
+
+.review-point-table td {
+    padding-left: 10px;
+}
+
+
 
 .review-point-outline {
     padding: 5px;

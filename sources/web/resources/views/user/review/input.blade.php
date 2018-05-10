@@ -58,7 +58,8 @@
                 <label for="progress" class="hgn-label"><i class="fas fa-edit"></i> 進捗状態</label>
                 <p class="text-muted">
                     このゲームをどの程度遊んだか、簡単に書いてください。<br>
-                    例：プレイ時間、何周クリアした、エンディング全種類見た、PS2版は全クリアしたけどPC版は半分まで、etc...
+                    例：プレイ時間、何周クリアした、エンディング全種類見た、PS2版は全クリアしたけどPC版は半分まで、etc...<br>
+                    <span style="color: indianred;">※ネタバレとなるような内容をここに書かないでください。</span>
                 </p>
                 <textarea name="progress" id="progress" class="form-control textarea-autosize{{ invalid($errors, 'progress') }}">{{ $draft->progress }}</textarea>
                 <i class="form-group__bar"></i>
@@ -71,15 +72,13 @@
                 <label for="fear" class="hgn-label"><i class="fas fa-arrows-alt-h"></i> 怖さ</label>
                 <span class="badge badge-secondary ml-2">必須</span>
                 <p class="text-muted">
-                    どの程度怖かったかを0～8で設定してください。
+                    どの程度怖かったかを-30～30で設定してください。
                 </p>
 
                 <div>
                     <p id="fear_text"></p>
-                    <input type="range" id="fear" name="fear" min="0" max="8">
+                    <input type="range" id="fear" name="fear" min="-30" max="30" class="form-control-range{{ invalid($errors, 'fear') }}" value="{{ $draft->fear }}" step="10">
                 </div>
-
-                @include('common.error', ['formName' => 'fear'])
             </div>
             <div class="form-help">
                 @include('common.error', ['formName' => 'fear'])

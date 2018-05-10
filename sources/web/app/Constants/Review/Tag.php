@@ -19,5 +19,15 @@ class Tag
         9  => 'ボリューム',
         10 => 'システム',
         11 => 'ゲーム性',
+        12 => 'エロ',
+        13 => 'グロ',
+        14 => '',
+        15 => ''
     ];
+
+
+    public static function getName($tagId)
+    {
+        return self::$tags[$tagId] ?? ' ';
+    }
 }

@@ -80,7 +80,7 @@ class ReviewController extends Controller
         } else {
             return view('user.review.confirm', [
                 'soft'      => $soft,
-                'orgPkgImg' => small_image_url($soft->originalPackage()),
+                'package'   => $soft->originalPackage(),
                 'user'      => Auth::user(),
                 'draft'     => $draft,
                 'packages'  => $draft->getPackages()
