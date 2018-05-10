@@ -460,6 +460,12 @@ html.is-fixed body {
     font-size: 0.9rem;
 }
 
+.package-info-icon {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+}
+
 .handle-game-select-area {
     margin-top: 10px;
 }
@@ -484,6 +490,11 @@ html.is-fixed body {
 .handle_soft_check_btn:hover {
     background-color: transparent;
     color: #17a2b8;
+}
+
+.hgn-check-btn .custom-control-indicator {
+    left: 3px;
+    top: 6px;
 }
 
 

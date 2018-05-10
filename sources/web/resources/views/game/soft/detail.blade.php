@@ -116,9 +116,9 @@
                                     <div class="ml-3">
                                         <div class="package-title">{{ $pkg->name }}</div>
                                         <div class="package-info mt-1">
-                                            <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span><br>
-                                            <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span><br>
-                                            <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
+                                            <div><span class="package-info-icon"><i class="far fa-building"></i></span>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></div>
+                                            <div><span class="package-info-icon"><i class="fas fa-gamepad"></i></span>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></div>
+                                            <div><span class="package-info-icon"><i class="far fa-calendar-alt"></i></span> {{ $pkg->release_at }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -146,9 +146,9 @@
                                         <div class="ml-3">
                                             <div class="package-title">{{ $pkg->name }}</div>
                                             <div class="package-info mt-1">
-                                                <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span><br>
-                                                <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span><br>
-                                                <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
+                                                <div><span class="package-info-icon"><i class="far fa-building"></i></span>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></div>
+                                                <div><span class="package-info-icon"><i class="fas fa-gamepad"></i></span>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></div>
+                                                <div><span class="package-info-icon"><i class="far fa-calendar-alt"></i></span> {{ $pkg->release_at }}</div>
                                             </div>
                                         </div>
                                     </div>

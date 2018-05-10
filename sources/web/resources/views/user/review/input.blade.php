@@ -38,9 +38,7 @@
                 <label for="pkg" class="hgn-label"><i class="fas fa-check"></i> プレイしたパッケージ</label>
                 <span class="badge badge-secondary ml-2">必須</span>
                 <p class="text-muted mb-2">
-                    <small>
-                        プレイしたパッケージを選択してください。
-                    </small>
+                    プレイしたパッケージを選択してください。
                 </p>
 
                 <div class="d-flex flex-wrap">
@@ -59,10 +57,8 @@
             <div class="form-group">
                 <label for="progress" class="hgn-label"><i class="fas fa-edit"></i> 進捗状態</label>
                 <p class="text-muted">
-                    <small>
-                        このゲームをどの程度遊んだか、簡単に書いてください。<br>
-                        例：プレイ時間、何周クリアした、エンディング全種類見た、PS2版は全クリアしたけどPC版は半分まで、etc...
-                    </small>
+                    このゲームをどの程度遊んだか、簡単に書いてください。<br>
+                    例：プレイ時間、何周クリアした、エンディング全種類見た、PS2版は全クリアしたけどPC版は半分まで、etc...
                 </p>
                 <textarea name="progress" id="progress" class="form-control textarea-autosize{{ invalid($errors, 'progress') }}">{{ $draft->progress }}</textarea>
                 <i class="form-group__bar"></i>
@@ -75,9 +71,7 @@
                 <label for="fear" class="hgn-label"><i class="fas fa-arrows-alt-h"></i> 怖さ</label>
                 <span class="badge badge-secondary ml-2">必須</span>
                 <p class="text-muted">
-                    <small>
-                        どの程度怖かったかを0～8で設定してください。
-                    </small>
+                    どの程度怖かったかを0～8で設定してください。
                 </p>
 
                 <div>
@@ -94,9 +88,7 @@
             <div class="form-group">
                 <label for="good_tags" class="hgn-label"><i class="fas fa-check"></i> 良かったところ</label>
                 <p class="text-muted">
-                    <small>
-                        このゲームの良かったところがあれば選択してください。
-                    </small>
+                    このゲームの良かったところがあれば選択してください。
                 </p>
                 <div class="d-flex flex-wrap">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -114,7 +106,7 @@
             <div class="form-group">
                 <label for="very_good_tags" class="hgn-label"><i class="fas fa-check"></i> すごく良かったところ</label>
                 <p class="text-muted">
-                    <small>良かったところの中で、他のゲームと比べても特に優れているところがあれば選択してください。</small>
+                    良かったところの中で、他のゲームと比べても特に優れているところがあれば選択してください。
                 </p>
                 <div class="d-flex flex-wrap">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -132,7 +124,7 @@
             <div class="form-group">
                 <label for="bad_tags" class="hgn-label"><i class="fas fa-check"></i> 悪かったところ</label>
                 <p class="text-muted">
-                    <small>このゲームの悪かったところがあれば選択してください。</small>
+                    このゲームの悪かったところがあれば選択してください。
                 </p>
                 <div class="d-flex flex-wrap">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -150,7 +142,7 @@
             <div class="form-group">
                 <label for="very_bad_tags" class="hgn-label"><i class="fas fa-check"></i> すごく悪かったところ</label>
                 <p class="text-muted">
-                    <small>悪かったところの中で、他のゲームと比べても特に劣っているところがあれば選択してください。</small>
+                    悪かったところの中で、他のゲームと比べても特に劣っているところがあれば選択してください。
                 </p>
                 <div class="d-flex flex-wrap" id="very_bad_select">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -169,11 +161,9 @@
             <div class="form-group">
                 <label for="url" class="hgn-label"><i class="fas fa-edit"></i> 外部レビュー</label>
                 <p class="text-muted">
-                    <small>
-                        レビューを投稿しているブログなどがあれば、そちらのURLを記載してください。<br>
-                        そちらへ案内するリンクをレビュー内に記載します。<br>
-                        ※管理人がチェックするまでURLのみ非公開状態となります。このレビュー自体は公開されます。
-                    </small>
+                    このゲームのレビューを投稿しているブログなどがあれば、URLを記載してください。<br>
+                    そちらへ案内するリンクをレビュー内に記載します。<br>
+                    ※管理人がチェックするまでURLのみ非公開状態となります。レビュー自体は公開されます。
                 </p>
                 <input type="text" name="url" id="url" class="form-control{{ invalid($errors, 'url') }}" value="{{ old('url', $draft->url) }}">
                 <i class="form-group__bar"></i>
@@ -185,7 +175,7 @@
             <div class="form-group">
                 <label for="good_comment" class="hgn-label"><i class="fas fa-edit"></i> 良い点</label>
                 <p class="text-muted">
-                    <small>このゲームの良い点について、言いたいことがあれば記入してください。</small>
+                    このゲームの良い点について、言いたいことがあれば記入してください。
                 </p>
                 <textarea name="good_comment" id="good_comment" class="form-control{{ invalid($errors, 'good_comment') }}">{{ old('good_comment', $draft->good_comment) }}</textarea>
                 <i class="form-group__bar"></i>
@@ -197,7 +187,7 @@
             <div class="form-group">
                 <label for="bad_comment" class="hgn-label"><i class="fas fa-edit"></i> 悪い点</label>
                 <p class="text-muted">
-                    <small>このゲームの悪い点について、言いたいことがあれば記入してください。</small>
+                    このゲームの悪い点について、言いたいことがあれば記入してください。
                 </p>
                 <textarea name="bad_comment" id="bad_comment" class="form-control{{ invalid($errors, 'bad_comment') }}">{{ old('bad_comment', $draft->bad_comment) }}</textarea>
                 <i class="form-group__bar"></i>
@@ -210,7 +200,7 @@
             <div class="form-group">
                 <label for="general_comment" class="hgn-label"><i class="fas fa-edit"></i> 総合評価</label>
                 <p class="text-muted">
-                    <small>総合評価を記入してください。</small>
+                    総合評価を記入してください。
                 </p>
                 <textarea name="general_comment" id="general_comment" class="form-control textarea-autosize{{ invalid($errors, 'general_comment') }}">{{ old('general_comment', $draft->general_comment) }}</textarea>
                 <i class="form-group__bar"></i>
@@ -223,11 +213,9 @@
             <div class="form-group">
                 <label for="is_spoiler" class="hgn-label"><i class="fas fa-check"></i> ネタバレ</label>
                 <p class="text-muted">
-                    <small>
-                        レビュー内容にネタバレを含む場合は、ありにチェックを入れてください。<br>
-                        ありにすると、「ネタバレ注意」の表記が付きます。<br>
-                        ネタバレがあるのになしに設定されていた場合、レビューを削除し、本ゲームのレビュー投稿を禁止します。
-                    </small>
+                    レビュー内容にネタバレを含む場合は、ありにチェックを入れてください。<br>
+                    ありにすると、「ネタバレ注意」の表記が付きます。<br>
+                    ネタバレがあるのになしに設定されていた場合、レビューが削除される場合があります。
                 </p>
 
                 <label class="custom-control custom-radio">
