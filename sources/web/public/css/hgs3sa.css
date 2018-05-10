@@ -281,6 +281,7 @@ a:active .no-image-text-inner {
 }
 
 .package-title {
+    font-size: 1.2rem;
 }
 
 .site-badge-item {
@@ -456,7 +457,7 @@ html.is-fixed body {
 }
 
 .package-info {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
 .handle-game-select-area {

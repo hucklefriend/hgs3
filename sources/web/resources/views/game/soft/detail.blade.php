@@ -115,45 +115,55 @@
                                     </div>
                                     <div class="ml-3">
                                         <div class="package-title">{{ $pkg->name }}</div>
-                                        <div class="d-flex flex-wrap package-info">
-                                            <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
-                                            <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
+                                        <div class="package-info mt-1">
+                                            <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span><br>
+                                            <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span><br>
                                             <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
-                                        </div>
-                                        <div class="mt-4">
-                                            <div class="d-inline shopping">
-                                            <i class="fas fa-shopping-cart mr-2"></i>
-                                            @foreach ($pkg->shops as $shop)
-                                                @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
-                                            @endforeach
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                @if (!empty($pkg->shops))
+                                <div class="mt-3">
+                                    <div class="shopping d-flex">
+                                        <i class="fas fa-shopping-cart mr-2 align-self-center"></i>
+                                        <div class="d-flex flex-wrap">
+                                        @foreach ($pkg->shops as $shop)
+                                            @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                                        @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
+
                                 @if (isset($packages[$i + 1]))
                                     @php $pkg = $packages[$i + 1]; @endphp
-                                    <br>
-                                    <div class="d-flex">
+                                    <hr>
+                                    <div class="d-flex mt-4">
                                         <div class="package-image-small">
                                             @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
                                         </div>
                                         <div class="ml-3">
                                             <div class="package-title">{{ $pkg->name }}</div>
-                                            <div class="d-flex flex-wrap package-info">
-                                                <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span>
-                                                <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span>
+                                            <div class="package-info mt-1">
+                                                <span class="mr-3"><i class="far fa-building"></i>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></span><br>
+                                                <span class="mr-3"><i class="fas fa-gamepad"></i>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></span><br>
                                                 <span><i class="far fa-calendar-alt"></i> {{ $pkg->release_at }}</span>
-                                            </div>
-                                            <div class="mt-4">
-                                                <div class="d-inline shopping">
-                                                <i class="fas fa-shopping-cart mr-2"></i>
-                                                @foreach ($pkg->shops as $shop)
-                                                    @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
-                                                @endforeach
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    @if (!empty($pkg->shops))
+                                    <div class="mt-3">
+                                        <div class="shopping d-flex">
+                                            <i class="fas fa-shopping-cart mr-2 align-self-center"></i>
+                                            <div class="d-flex flex-wrap">
+                                                @foreach ($pkg->shops as $shop)
+                                                    @include('game.common.shop', ['shopId' => $shop->shop_id, 'shopUrl' => $shop->shop_url])
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
                                 @endif
                             </div>
                         @endfor
@@ -336,11 +346,11 @@
 
 
     <div class="d-flex justify-content-between">
-        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}" class="btn btn-light">
+        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}" class="badge badge-pill and-more">
             <i class="fas fa-angle-left"></i>
             前のゲーム
         </a>
-        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}" class="btn btn-light">
+        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}" class="badge badge-pill and-more">
             次のゲーム
             <i class="fas fa-angle-right"></i>
         </a>
