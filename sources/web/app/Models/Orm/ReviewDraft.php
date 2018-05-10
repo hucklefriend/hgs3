@@ -61,7 +61,9 @@ class ReviewDraft extends \Eloquent
             ->where('user_id', $userId)
             ->first();
 
-        $draft->setTags();
+        if ($draft != null) {
+            $draft->setTags();
+        }
 
         return $draft ?? self::getDefault($userId, $softId);
     }
