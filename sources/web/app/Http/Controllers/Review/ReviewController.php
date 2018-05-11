@@ -22,7 +22,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return view('review.index', Review::getTopPageData(5));
+        return view('review.index');
     }
 
     /**

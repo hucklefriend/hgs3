@@ -14,7 +14,7 @@
         @foreach ($newInfo as $nf)
             <div class="listview__item">
 
-                <div class="listview__content text-truncate text-truncate">
+                <div class="listview__content">
                     <span class="listview__heading">
                         @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
                             <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。

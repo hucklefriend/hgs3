@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title'){{ $soft->name }}のレビュー@endsection
+@section('global_back_link'){{ route('レビュートップ') }}@endsection
+
+
 @section('content')
     <div class="content__inner">
         <header class="content__title">

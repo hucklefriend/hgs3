@@ -4,8 +4,12 @@
 @section('global_back_link'){{ route('トップ') }}@endsection
 
 @section('content')
-    <h1>工事中</h1>
-
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>レビュー</h1>
+            <p>工事中</p>
+        </header>
+    </div>
 @endsection
 
 @section('breadcrumb')
