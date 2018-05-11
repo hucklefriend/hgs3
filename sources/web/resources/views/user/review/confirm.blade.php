@@ -7,27 +7,33 @@
 
     <div class="content__inner">
         <header class="content__title">
-            <h1>レビュー投稿確認</h1>
+            <h1>{{ $soft->name }}</h1>
+            <p class="mb-0">{{ $user->name }}さんのレビュー(公開前の確認用)</p>
         </header>
 
         @include('review.common.show', ['review' => $draft])
 
-
-
-        <form method="POST" action="{{ route('レビュー公開') }}" autocomplete="off" class="text-center" onsubmit="return confirm('このレビューを公開します。\nよろしいですね？');">
-            <input type="hidden" name="soft_id" value="{{ $soft->id }}">
-            {{ csrf_field() }}
-
-            <div class="form-group">
-                <button class="btn btn-primary">レビューを公開する</button>
-                <p class="text-muted">
-                    <small>
-                        レビュー公開後は、編集できなくなります。<br>
-                        よくよくご確認の上、公開してください。
-                    </small>
-                </p>
+        <div class="row">
+            <div class="col-6 text-center">
+                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-light">修正する</a>
             </div>
-        </form>
+            <div class="col-6">
+                <form method="POST" action="{{ route('レビュー公開') }}" autocomplete="off" class="text-center" onsubmit="return confirm('このレビューを公開します。\nよろしいですね？');">
+                    <input type="hidden" name="soft_id" value="{{ $soft->id }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group">
+                        <button class="btn btn-primary">レビューを公開する</button>
+                        <p class="text-muted">
+                            <small>
+                                レビュー公開後は、編集できなくなります。<br>
+                                よくよくご確認の上、公開してください。
+                            </small>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
 

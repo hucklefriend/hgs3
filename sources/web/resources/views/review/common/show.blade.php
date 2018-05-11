@@ -3,33 +3,6 @@
         <div class="card card-hgn">
             <div class="card-body">
                 <div class="d-flex">
-                    <div class="package-image-small text-center">
-                        <a href="{{ route('ゲーム詳細', ['soft' => $soft->id]) }}">
-                            @include('game.common.packageImage', ['imageUrl' => small_image_url($soft->originalPackage())])
-                        </a>
-                    </div>
-                    <div class="w-100">
-                        <div class="review-game-title">
-                            <a href="{{ route('ゲーム詳細', ['soft' => $soft->id]) }}">{{ $soft->name }}</a>
-                        </div>
-                        <div class="mt-1">
-                            レビュー数<br>
-                            平均ポイント
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-right mt-2">
-                    他のレビューを見る
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6">
-        <div class="card card-hgn">
-            <div class="card-body">
-                <div class="d-flex">
                     <div class="review-point">
                         {{ $review->calcPoint() }}
                         <div class="review-point-mother"> / {{ \Hgs3\Constants\Review::MAX_POINT }}</div>
@@ -38,7 +11,7 @@
                     <table class="review-point-table">
                         <tr>
                             <th>基本点</th>
-                            <td class="text-right">50点</td>
+                            <td class="text-right">{{ \Hgs3\Constants\Review::BASE_POINT }}点</td>
                         </tr>
                         <tr>
                             <th>怖さ</th>
@@ -62,42 +35,25 @@
                         </tr>
                     </table>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="card card-hgn">
-            <div class="card-body">
-                <h5 class="card-title">投稿者</h5>
-
-                <div>
-                    {{ $user->name }}さん
-                </div>
-                <div>
-                    レビュー数 {{ $user->getReviewNum() }}本
-                </div>
-                <div class="mt-3" style="font-size: 0.9rem;">
-                    <i class="far fa-calendar-alt"></i>
-                    {{ $review->getOpenDate() }}
-                </div>
-
-                @if (!empty($review->url))
-                    <div class="mt-3">
-                        <p style="font-size: 0.85rem;">
-                            このゲームのレビューを別のサイトでも書いています。<br>
-                            そちらもご確認ください。<br>
-                            <a href="{{ $review->url }}" target="_blank">{{ $review->url }} <i class="fas fa-sign-out-alt"></i></a>
-                        </p>
-
+                <div class="mt-4">
+                    <div>
+                        <i class="far fa-calendar-alt"></i>
+                        {{ $review->getOpenDate() }}
                     </div>
-                @endif
+                    @if (!empty($review->url))
+                        <div class="mt-3">
+                            <p style="font-size: 0.85rem;">
+                                このゲームのレビューを別のサイトでも書いています。<br>
+                                そちらもご確認ください。<br>
+                                <a href="{{ $review->url }}" target="_blank">{{ $review->url }} <i class="fas fa-sign-out-alt"></i></a>
+                            </p>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
+
     <div class="col-sm-6">
         <div class="card card-hgn">
             <div class="card-body">
@@ -125,6 +81,7 @@
     </div>
 </div>
 
+
 @if ($review->is_spoiler == 1)
     <div class="alert alert-danger mb-5" role="alert">
         <h4 class="alert-heading">ネタバレ注意！</h4>
@@ -139,7 +96,10 @@
     <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">良い点</h5>
+                <h5 class="card-title">
+                    良い所
+                    <span class="card-title-sub"><i class="far fa-thumbs-up"></i>は特に良い所</span>
+                </h5>
 
                     @empty($review->getGoodTags())
                     <p>良い点はありません。</p>
@@ -153,8 +113,8 @@
                             @endif
                         </span>
                         @endforeach
-                    @endempty
                     </div>
+                    @endempty
 
                 <p class="mb-0">
                     @empty($draft->good_comment)
@@ -169,7 +129,10 @@
     <div class="col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">悪い点</h5>
+                <h5 class="card-title">
+                    悪い所
+                    <span class="card-title-sub"><i class="far fa-thumbs-down"></i>は特に悪い所</span>
+                </h5>
                     @empty($review->getBadTags())
                         <p>悪い点はありません。</p>
                     @else

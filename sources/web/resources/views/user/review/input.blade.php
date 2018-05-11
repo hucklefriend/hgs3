@@ -233,6 +233,7 @@
                 <button class="btn btn-primary">下書き保存して確認画面へ</button>
                 <p class="text-muted mt-2">
                     <small>
+                        下書き保存でも必須項目の入力は必要です。<br>
                         下書き保存してもまだ公開はされません。<br>
                         次の確認画面で公開することによって初めて公開されます。
                     </small>

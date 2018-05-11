@@ -79,6 +79,12 @@ code {
     font-size: 1.2rem;
 }
 
+.card-title-sub {
+    margin-left: 10px;
+    font-size: 0.8rem;
+    color: lightgray;
+}
+
 .review-point {
     font-size: 2.7rem;
     display: inline-block;
@@ -102,7 +108,11 @@ code {
 }
 
 .review-tag {
-    padding: 2px 3px;
+    border-radius: 20px;
+    padding: 8px 13px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 500px) {
@@ -117,6 +127,10 @@ code {
 
 .review-point-table tr {
     border-bottom: solid 1px grey;
+}
+
+.review-point-table th {
+    font-size: 0.85rem;
 }
 
 .review-point-table td {
@@ -803,4 +817,9 @@ input[type=text], textarea {
     padding: 5px;
     background-color: rgba(200, 200, 255, 0.125);
     border-radius: 3px;
+}
+
+.package-image-review {
+    text-align: center;
+    width: 40px;
 }
