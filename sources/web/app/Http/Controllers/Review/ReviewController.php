@@ -53,27 +53,6 @@ class ReviewController extends Controller
     }
 
     /**
-     * パッケージ選択
-     *
-     * @param Orm\GameSoft $soft
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function packageSelect(Orm\GameSoft $soft)
-    {
-        $review = new Review();
-        $packages = $review->getPackageList($soft->id);
-
-        return view('review.packageSelect', [
-            'soft'     => $soft,
-            'packages' => $packages,
-            'shops'    => Package::getShopData(array_pluck($packages, 'id')),
-            'drafts'   => Orm\ReviewDraft::getHashBySoft(Auth::id(), $soft->id),
-            'written'  => Orm\Review::getHashBySoft(Auth::id(), $soft->id),
-            'dateInt'  => $this->getDateInt()
-        ]);
-    }
-
-    /**
      * 今日の日付のintを取得(yyyymmdd)
      *
      * @return int
@@ -82,224 +61,6 @@ class ReviewController extends Controller
     {
         $dt = new \DateTime();
         return intval($dt->format('Ymd'));
-    }
-
-    /**
-     * 入力画面
-     *
-     * @param Orm\GameSoft $soft
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function input(Orm\gameSoft $soft)
-    {
-        $isDraft = false;
-        if (!empty(old())) {
-            $draft = new Orm\ReviewDraft(old());
-        } else {
-            $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id, $package->id);
-            if ($draft == null) {
-                $draft = Orm\ReviewDraft::getDefault(Auth::id(), $soft->id, $package->id);
-            } else {
-                $isDraft = true;
-            }
-        }
-
-        return view('review.input', [
-            'soft'    => $soft,
-            'draft'   => $draft,
-            'isDraft' => $isDraft
-        ]);
-    }
-
-    /**
-     * 確認
-     *
-     * @param WriteRequest $request
-     * @param Orm\GamePackage $package
-     * @param Orm\gameSoft $soft
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function confirm(WriteRequest $request, Orm\gameSoft $soft, Orm\GamePackage $package)
-    {
-        $draft = new Orm\ReviewDraft;
-        $this->setDraftData($request, $draft);
-
-        return view('review.confirm', [
-            'soft'    => $soft,
-            'package' => $package,
-            'user'    => Auth::user(),
-            'draft'   => $draft
-        ]);
-    }
-
-    /**
-     * 保存
-     *
-     * @param WriteRequest $request
-     * @param Orm\GameSoft $soft
-     * @param Orm\GamePackage $package
-     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function save(WriteRequest $request, Orm\GameSoft $soft, Orm\GamePackage $package)
-    {
-        // TODO: 発売日が過ぎているか
-
-
-        $draftType = $request->get('draft');
-
-        if ($draftType == -1) {
-            // 入力画面に戻る
-            return redirect('review/write/' . $soft->id . '/' . $package->id)->withInput();
-        } if ($draftType == 1) {
-            // 下書き保存
-            $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id, $package->id);
-            if ($draft === null) {
-                $draft = new Orm\ReviewDraft;
-            }
-
-            $this->setDraftData($request, $draft);
-            $draft->soft_id = $soft->id;
-            $draft->package_id = $package->id;
-            $draft->save();
-
-            return view('review.saveDraft', [
-                'package' => $package,
-                'soft'    => $soft
-            ]);
-        } else {
-            // 下書きに保存
-            $draft = new Orm\ReviewDraft;
-            $this->setDraftData($request, $draft);
-            $draft->soft_id = $package->soft_id;
-            $draft->package_id = $package->id;
-
-            // レビュー投稿
-            $review = new Orm\Review($draft->toArray());
-            $review->save();
-
-            return view('review.complete', [
-                'reviewId' => $review->id,
-                'package'  => $package,
-                'soft'     => $soft
-            ]);
-        }
-    }
-
-    /**
-     * 下書きモデルに値をセット
-     *
-     * @param WriteRequest $request
-     * @param Orm\ReviewDraft $draft
-     */
-    private function setDraftData(WriteRequest $request, Orm\ReviewDraft $draft)
-    {
-        $draft->user_id = \Auth::id();
-        $draft->soft_id = $request->get('soft_id');
-        $draft->package_id = $request->get('package_id');
-        $draft->title = $request->get('title') ?? '';
-        $draft->fear = intval($request->get('fear') ?? 3);
-        $draft->story = intval($request->get('story') ?? 3);
-        $draft->volume = intval($request->get('volume') ?? 3);
-        $draft->difficulty = intval($request->get('difficulty') ?? 3);
-        $draft->graphic = intval($request->get('graphic') ?? 3);
-        $draft->sound = intval($request->get('sound') ?? 3);
-        $draft->crowded = intval($request->get('crowded') ?? 3);
-        $draft->controllability = intval($request->get('controllability') ?? 3);
-        $draft->recommend = intval($request->get('recommend') ?? 3);
-        $draft->progress = $request->get('progress') ?? '';
-        $draft->text = $request->get('text') ?? '';
-        $draft->is_spoiler = $request->get('is_spoiler') ?? 0;
-        $draft->calcPoint();
-    }
-
-    /**
-     * 下書き削除
-     *
-     * @param int $softId
-     * @param int $packageId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function deleteDraft($softId, $packageId)
-    {
-        $draft = Orm\ReviewDraft::getData(Auth::id(), $softId, $packageId);
-        if ($draft) {
-            $draft->delete();
-        }
-
-        return redirect()->back();
-    }
-
-    /**
-     * レビューを編集
-     *
-     * @param Orm\Review $review
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(Orm\Review $review)
-    {
-        if ($review->user_id != Auth::id()) {
-            // 他のユーザーのデータを編集しようとしている
-            App::abort(403);
-        }
-
-        return view('review.edit', [
-            'review'      => $review,
-            'gamePackage' => Orm\GamePackage::find($review->package_id)
-        ]);
-    }
-
-    /**
-     * データの修正
-     *
-     * @param WriteRequest $request
-     * @param Orm\Review $review
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function update(WriteRequest $request, Orm\Review $review)
-    {
-        if ($review->user_id != Auth::id()) {
-            // 他のユーザーのデータを編集しようとしている
-            App::abort(403);
-        }
-
-        $review->title = $request->get('title') ?? '';
-        $review->fear = intval($request->get('fear') ?? 3);
-        $review->story = intval($request->get('story') ?? 3);
-        $review->volume = intval($request->get('volume') ?? 3);
-        $review->difficulty = intval($request->get('difficulty') ?? 3);
-        $review->graphic = intval($request->get('graphic') ?? 3);
-        $review->sound = intval($request->get('sound') ?? 3);
-        $review->crowded = intval($request->get('crowded') ?? 3);
-        $review->controllability = intval($request->get('controllability') ?? 3);
-        $review->recommend = intval($request->get('recommend') ?? 3);
-        $review->progress = $request->get('progress') ?? '';
-        $review->text = $request->get('text') ?? '';
-        $review->is_spoiler = $request->get('is_spoiler') ?? 0;
-        $review->calcPoint();
-
-        $review->save();
-
-        return redirect('review/detail/' . $review->id);
-    }
-
-    /**
-     * データ削除
-     *
-     * @param Orm\Review $review
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function delete(Orm\Review $review)
-    {
-        if ($review->user_id != Auth::id()) {
-            // 他のユーザーのデータを削除しようとしている
-            App::abort(403);
-        }
-
-        // TODO とりあえず削除
-        // β版では論理削除とデータのクリアにして、ID自体は残すようにする
-        $review->delete();
-
-        return redirect('review/game/' . $review->soft_id);
     }
 
     /**
@@ -312,20 +73,18 @@ class ReviewController extends Controller
     {
         $soft = Orm\GameSoft::find($review->soft_id);
 
-        $r = new Review();
-
         // 投稿者本人か
         $isWriter = $review->user_id == Auth::id();
 
         // いいね済みか
         $hasGood = false;
         if (!$isWriter) {
-            $hasGood = $r->hasGood($review->id, Auth::id());
+            //$hasGood = $r->hasGood($review->id, Auth::id());
         }
 
         return view('review.detail', [
             'soft'     => $soft,
-            'package'  => Orm\GamePackage::find($review->package_id),
+            'packages' => $review->getPackages(),
             'review'   => $review,
             'isWriter' => $isWriter,
             'hasGood'  => $hasGood,

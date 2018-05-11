@@ -44,7 +44,6 @@ class ProfileController extends Controller
 
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
-        $title = '';
 
         switch ($show) {
             case 'follow':{
@@ -80,8 +79,7 @@ class ProfileController extends Controller
             case 'review': {
                 $title = 'レビュー';
                 $data['parts'] = [
-                    'reviews'      => [],
-                    'gamePackages' => [],
+                    'reviews' => Review::getProfileList($user),
                 ];
             }
                 break;

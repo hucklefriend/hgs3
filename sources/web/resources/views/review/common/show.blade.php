@@ -36,10 +36,6 @@
                     </table>
                 </div>
                 <div class="mt-4">
-                    <div>
-                        <i class="far fa-calendar-alt"></i>
-                        {{ $review->getOpenDate() }}
-                    </div>
                     @if (!empty($review->url))
                         <div class="mt-3">
                             <p style="font-size: 0.85rem;">
@@ -74,7 +70,7 @@
                     @endforeach
                 </div>
                 @if (!empty($review->progress))
-                    <p class="mt-2">{{ nl2br($review->progress) }}</p>
+                    <p class="mt-2 review-text">{!! nl2br($review->progress) !!}</p>
                 @endif
             </div>
         </div>
@@ -93,7 +89,7 @@
 @endif
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-6">
         <div class="card card-hgn">
             <div class="card-body">
                 <h5 class="card-title">
@@ -116,17 +112,17 @@
                     </div>
                     @endempty
 
-                <p class="mb-0">
-                    @empty($draft->good_comment)
+                <p class="mb-0 review-text">
+                    @empty($review->good_comment)
                         良い点に関するコメントはありません。
                     @else
-                        {!! nl2br(e($draft->good_comment)) !!}
+                        {!! nl2br(e($review->good_comment)) !!}
                     @endempty
                 </p>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-lg-6">
         <div class="card card-hgn">
             <div class="card-body">
                 <h5 class="card-title">
@@ -148,11 +144,11 @@
                     </div>
                     @endempty
 
-                <p class="mb-0">
-                    @empty($draft->bad_comment)
+                <p class="mb-0 review-text">
+                    @empty($review->bad_comment)
                         悪い点に関するコメントはありません。
                     @else
-                        {!! nl2br(e($draft->bad_comment)) !!}
+                        {!! nl2br(e($review->bad_comment)) !!}
                     @endempty
                 </p>
             </div>
@@ -163,13 +159,11 @@
 <div class="card card-hgn">
     <div class="card-body">
         <h5 class="card-title">総合評価</h5>
-
-
-        <p class="mb-0">
-            @empty($draft->general_comment)
+        <p class="mb-0 review-text">
+            @empty($review->general_comment)
                 総合評価はありません。
             @else
-                {!! nl2br(e($draft->general_comment)) !!}
+                {!! nl2br(e($review->general_comment)) !!}
             @endempty
         </p>
     </div>

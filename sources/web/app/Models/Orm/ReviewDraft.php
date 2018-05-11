@@ -4,7 +4,8 @@
  */
 
 namespace Hgs3\Models\Orm;
-use Hgs3\Log;
+
+
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -206,34 +207,23 @@ class ReviewDraft extends \Eloquent
             ->get();
     }
 
-
     /**
      * 下書き削除
      *
      * @return bool|null
      * @throws \Exception
      */
-    public function delete()
+    public function deleteWithTag()
     {
-        $result = true;
+        // タグを削除
+        ReviewDraftTag::where('user_id', $this->user_id)
+            ->where('soft_id', $this->soft_id)
+            ->delete();
 
-        DB::beginTransaction();
-        try {
-            // タグを削除
-            ReviewDraftTag::where('user_id', $this->user_id)
-                ->where('soft_id', $this->soft_id)
-                ->delete();
-
-            // 下書きを削除
-            $result = parent::delete();
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::exceptionError($e);
-        }
-
-        return $result;
+        // 下書きを削除
+        self::where('user_id', $this->user_id)
+            ->where('soft_id', $this->soft_id)
+            ->delete();
     }
 
     /**
@@ -261,6 +251,11 @@ class ReviewDraft extends \Eloquent
         }
     }
 
+    /**
+     * ポイントを計算
+     *
+     * @return int|mixed
+     */
     public function calcPoint()
     {
         $this->setTags();
@@ -269,6 +264,11 @@ class ReviewDraft extends \Eloquent
             - (count($this->badTags) + (count($this->veryBadTags)));
     }
 
+    /**
+     * 公開日を取得
+     *
+     * @return string
+     */
     public function getOpenDate()
     {
         return 'まだ公開していません。';

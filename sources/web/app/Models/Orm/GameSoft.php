@@ -137,6 +137,25 @@ SQL;
     }
 
     /**
+     * パッケージ画像があるパッケージを取得
+     */
+    public function getImagePackage()
+    {
+        $packages = $this->getPackages();
+        if ($packages->count() == 0) {
+            return null;
+        }
+
+        foreach ($packages as $pkg) {
+            if (!empty(small_image_url($pkg))) {
+                return $pkg;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * パッケージを取得
      *
      * @return \Illuminate\Database\Eloquent\Collection

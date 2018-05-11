@@ -1,3 +1,11 @@
+<div>
+
+
+
+</div>
+
+
+
 <div class="d-flex align-items-stretch">
     <div class="align-self-top p-2">
         @include ('game.common.packageImage', ['imageUrl' => $r->small_image_url])

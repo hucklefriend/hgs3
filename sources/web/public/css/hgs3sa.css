@@ -98,6 +98,18 @@ code {
     border-radius: 5px;
 }
 
+.review-point-list {
+    font-size: 2rem;
+    display: inline-block;
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.2);
+    position: relative;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+}
+
 .review-point-mother {
     position: absolute;
     right: 0;
@@ -822,4 +834,19 @@ input[type=text], textarea {
 .package-image-review {
     text-align: center;
     width: 40px;
+}
+
+.package-image-review-list {
+    text-align: center;
+    width: 30px;
+    max-height: 40px;
+    display: inline-block;
+}
+
+.review-text {
+    font-size: 0.9rem;
+    line-height: 200%;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 5px;
 }

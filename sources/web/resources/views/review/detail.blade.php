@@ -1,68 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <section>
-        <div class="d-flex align-items-stretch">
-            <div class="p-2 text-center">
-                @include('game.common.packageImage', ['imageUrl' => $package->small_image_url])
-            </div>
-            <div class="p-12">
-                <h4>{{ $package->name }}</h4>
-                <a href="{{ url2('game/soft') }}/{{ $soft->id }}">ゲームの詳細</a> |
-                <a href="{{ url('review/soft') }}/{{ $soft->id }}">レビュー一覧</a>
-            </div>
-        </div>
-    </section>
+    <div class="content__inner">
+        <header class="content__title">
+            <h1>{{ $soft->name }}</h1>
+            <p class="mb-0">{{ $user->name }}さんのレビュー</p>
+        </header>
 
-    <section>
-        <div class="d-flex align-items-stretch">
-            <div class="p-2 align-self-center">
-                <div class="review-point-outline">
-                    <p class="review-point">{{ $review->point }}</p>
-                </div>
-            </div>
-            <div class="p-12 align-self-center">
-                @if($review->is_spoiler == 1) <span class="badge badge-pill badge-danger">ネタバレあり！</span> @endif
-                <div class="break-word" style="width: 100%;"><h5>{{ $review->title }}</h5></div>
-                <div>
-                    <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<a href="{{ url2('user/profile') }}/{{ $user->id }}">{{ $user->name }}</a>
-                    {{ $review->post_at }}
-                </div>
-            </div>
-        </div>
-        @include('review.common.chart', ['r' => $review])
+        @include('review.common.show', ['review' => $review])
+    </div>
 
-        <div style="margin-top: 10px;">
-            <h5>プレイ状況</h5>
-            <p class="break-word">{{ $review->progress }}</p>
-            <h5>レビュー @if($review->is_spoiler == 1) <span class="badge badge-pill badge-danger">ネタバレあり！</span> @endif </h5>
-            <p class="break-word">{!!  nl2br(e($review->text)) !!}</p>
-        </div>
-
-        <div>
-            @if (!$isWriter && Auth::check())
-                @if ($hasGood)
-                    <form action="{{ url('review/good') }}/{{ $review->id }}" method="POST">
-                        {{ method_field('DELETE') }}
-                        {{ csrf_field() }}
-                        {{ $review->post_at }}
-                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $review->good_num }}&nbsp;<button class="btn btn-sm btn-warning">いいね取り消し</button>
-                    </form>
-                @else
-                    <form action="{{ url('review/good') }}/{{ $review->id }}" method="POST">
-                        {{ csrf_field() }}
-                        {{ $review->post_at }}
-                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $review->good_num }} &nbsp;<button class="btn btn-sm btn-info">いいね</button>
-                    </form>
-                @endif
-            @else
-                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ $review->good_num }}
-            @endif
-            @if ($isWriter)
-                <a href="{{ url2('review/good/history') }}/{{ $review->id }}">いいねしてくれたユーザー一覧</a>
-            @endif
-        </div>
-    </section>
     @auth
     <hr>
 

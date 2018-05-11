@@ -217,6 +217,38 @@ class ToMe extends TimelineAbstract
     }
 
     /**
+     * レビューを書いた
+     *
+     * @param User $user
+     * @param Orm\GameSoft $soft
+     * @param Orm\Review $review
+     */
+    public static function addWriteReviewText(User $user, Orm\GameSoft $soft, Orm\Review $review)
+    {
+        $text = sprintf('<a href="%s">%sのレビュー</a>を公開しました！',
+            route('レビュー', ['review' => $review->id]),
+            e($soft->name)
+        );
+
+        self::insert($user->id, $text);
+    }
+
+    /**
+     * レビューのURLを承認してね
+     *
+     * @param User $user
+     * @param Orm\Review $review
+     */
+    public static function addReviewUrlApproveText(User $user, Orm\Review $review)
+    {
+        $text = sprintf('<a href="%s">外部レビューURLの承認</a>を行ってください。',
+            route('レビューURL判定', ['review' => $review->id])
+        );
+
+        self::insert($user->id, $text);
+    }
+
+    /**
      * データ削除
      *
      * @param $userId
@@ -233,14 +265,17 @@ class ToMe extends TimelineAbstract
             Log::exceptionError($e);
             return false;
         }
+
+        return true;
     }
 
     /**
      * データ登録
      *
-     * @param int $userId
-     * @param string $text
+     * @param $userId
+     * @param $text
      * @return bool
+     * @throws \Exception
      */
     private static function insert($userId, $text)
     {

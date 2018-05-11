@@ -327,6 +327,13 @@ function format_date($timestamp)
     return date('Y.n.j H:i', $timestamp);
 }
 
+/**
+ * 相互フォローアイコン
+ *
+ * @param array $followStatus
+ * @param $targetUserId
+ * @return \Illuminate\Support\HtmlString
+ */
 function follow_status_icon(array $followStatus, $targetUserId)
 {
     return new \Illuminate\Support\HtmlString(\Hgs3\Constants\FollowStatus::getIcon($followStatus[$targetUserId] ?? \Hgs3\Constants\FollowStatus::NONE));
@@ -394,12 +401,12 @@ function medium_image_url($package)
     return $imageUrl;
 }
 
-    /**
-     * 大きいパッケージを優先して取得
-     *
-     * @param $package
-     * @return string
-     */
+/**
+ * 大きいパッケージを優先して取得
+ *
+ * @param $package
+ * @return string
+ */
 function large_image_url($package)
 {
     $imageUrl = '';

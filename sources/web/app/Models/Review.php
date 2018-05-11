@@ -9,8 +9,10 @@ namespace Hgs3\Models;
 use Hgs3\Constants\Review\Status;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Log;
+use Illuminate\Support\Facades\Mail;
 
 class Review
 {
@@ -84,33 +86,33 @@ class Review
     /**
      * 下書きを公開
      *
+     * @param Orm\GameSoft $soft
      * @param Orm\ReviewDraft $draft
      * @throws \Exception
      */
-    public static function open(Orm\ReviewDraft $draft)
+    public static function open(Orm\GameSoft $soft, Orm\ReviewDraft $draft)
     {
         $review = new Orm\Review();
         $review->user_id = $draft->user_id;
+        $review->soft_id = $soft->id;
         $review->package_id = $draft->package_id;
         $review->fear = $draft->fear;
         $review->url = $draft->url;
+        $review->enable_url = 0;
         $review->progress = $draft->progress;
         $review->good_comment = $draft->good_comment;
         $review->bad_comment = $draft->bad_comment;
         $review->general_comment = $draft->general_comment;
         $review->is_spoiler = $draft->is_spoiler;
 
-        $goodTags = $draft->getGoodTags();
-        $veryGoodTags = $draft->getVeryGoodTags();
-        $badTags = $draft->getBadTags();
-        $veryBadTags = $draft->getVeryBadTags();
-
-        $review->good_tag_num = count($goodTags);
-        $review->very_good_tag_num = count($veryGoodTags);
-        $review->bad_tag_num = count($badTags);
-        $review->very_bad_tag_num = count($veryBadTags);
+        $review->goodTags = $draft->getGoodTags();
+        $review->veryGoodTags = $draft->getVeryGoodTags();
+        $review->badTags = $draft->getBadTags();
+        $review->veryBadTags = $draft->getVeryBadTags();
 
         $review->post_at = date('Y-m-d H:i:s');
+        $review->point = $draft->calcPoint();
+
         $review->status = Status::OPEN;
 
         DB::beginTransaction();
@@ -119,15 +121,11 @@ class Review
             // レビューに登録
             $review->save();
 
-            // タグに登録
-
-
             // 集計してねフラグを立てる
             self::upTotalFlag($draft->soft_id);
 
-            // 下書きの公開済みフラグをアップ
-            $draft->opended_flag = 1;
-            $draft->save();
+            // 下書きを削除
+            $draft->deleteWithTag();
 
             DB::commit();
         } catch (\Exception $e) {
@@ -136,18 +134,64 @@ class Review
         }
 
         // タイムラインに登録
+        Timeline\FollowUser::addWriteReviewText(Auth::user(), $soft, $review);
+        Timeline\ToMe::addWriteReviewText(Auth::user(), $soft, $review);
+
+        if (!empty($review->url)) {
+            // 管理人のタイムラインに流す
+            $admin = User::getAdmin();
+            Timeline\ToMe::addSiteApproveText($admin, $review);
+
+            // 管理人にメール送信
+            if (env('APP_ENV') == 'production') {
+                Mail::to(env('ADMIN_MAIL'))
+                    ->send(new \Hgs3\Mail\ReviewUrlApprovalWait());
+
+                Log::info('管理人にメール飛ばした');
+            }
+        }
     }
 
+    /**
+     * 集計してくださいフラグを立てる
+     *
+     * @param $softId
+     */
     private static function upTotalFlag($softId)
     {
         $sql =<<< SQL
-INSERT INTO review_total_flags (soft_id, flag, created_at, updated_at)
+INSERT INTO review_total_flags (soft_id, total_flag, created_at, updated_at)
 VALUES (:soft_id, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON DUPLICATE KEY UPDATE
-  flag = 1
+  total_flag = 1
   , updated_at = CURRENT_TIMESTAMP
 SQL;
 
         DB::insert($sql, ['soft_id' => $softId]);
+    }
+
+    /**
+     * プロフィールページ用の一覧を取得
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getProfileList(User $user)
+    {
+        $data = Orm\Review::where('user_id', $user->id)
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
+
+        if (empty($data->items())) {
+            return $data;
+        }
+
+        $softIds = array_pluck($data->items(), 'soft_id');
+        $soft = Orm\GameSoft::getHash($softIds);
+        foreach ($data->items() as &$review) {
+            $review->soft = $soft[$review->soft_id];
+        }
+
+        return $data;
     }
 }

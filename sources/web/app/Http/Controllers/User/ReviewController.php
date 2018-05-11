@@ -72,11 +72,13 @@ class ReviewController extends Controller
      */
     public function confirm(Orm\GameSoft $soft)
     {
+        // TODO 公開済みのレビューかチェック
+
         $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
 
         if ($draft->isDefault) {
             session(['nothing_draft_message' => 1]);
-            return redirect()->route('ユーザーのレビュー');
+            return redirect()->route('プロフィール2', ['user' => Auth::user()->show_id, 'show' => 'review']);
         } else {
             return view('user.review.confirm', [
                 'soft'      => $soft,
@@ -97,15 +99,14 @@ class ReviewController extends Controller
      */
     public function open(Orm\GameSoft $soft)
     {
+        // TODO 公開済みのレビューかチェック
+
         $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
 
         if ($draft->isDefault) {
-            session(['nothing_draft_message' => 1]);
-            return redirect()->route('ユーザーのレビュー');
         } else {
-            Review::open($draft);
-
-            return redirect()->back()->with('success', 1);
+            Review::open($soft, $draft);
+            return redirect()->route('プロフィール2', ['user' => Auth::user()->show_id, 'show' => 'review']);
         }
     }
 

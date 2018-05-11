@@ -25,6 +25,7 @@ class CreateReviewsTable2 extends Migration
             $table->text('package_id')->comment('パッケージID');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
             $table->text('url')->nullable()->comment('URL');
+            $table->unsignedInteger('enable_url')->default(0)->comment('URLが有効か');
             $table->text('progress')->nullable()->comment('ゲームの進行状態');
             $table->unsignedTinyInteger('good_tag_num')->comment('良いタグ数');
             $table->unsignedTinyInteger('very_good_tag_num')->comment('特に良いタグ数');

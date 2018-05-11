@@ -18,7 +18,7 @@
                 <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-light">修正する</a>
             </div>
             <div class="col-6">
-                <form method="POST" action="{{ route('レビュー公開') }}" autocomplete="off" class="text-center" onsubmit="return confirm('このレビューを公開します。\nよろしいですね？');">
+                <form method="POST" action="{{ route('レビュー公開', ['soft' => $soft->id]) }}" autocomplete="off" class="text-center" onsubmit="return confirm('このレビューを公開します。\nよろしいですね？');">
                     <input type="hidden" name="soft_id" value="{{ $soft->id }}">
                     {{ csrf_field() }}
 
