@@ -72,12 +72,14 @@
                 <label for="fear" class="hgn-label">😱 怖さ</label>
                 <span class="badge badge-secondary ml-2">必須</span>
                 <p class="text-muted">
-                    どの程度怖かったかを-30～30で設定してください。
+                    どの程度怖かったかを設定してください。
                 </p>
 
-                <div>
-                    <p id="fear_text"></p>
-                    <input type="range" id="fear" name="fear" min="-30" max="30" class="form-control-range{{ invalid($errors, 'fear') }}" value="{{ $draft->fear }}" step="10">
+                <div class="d-flex justify-content-around">
+                    <input type="hidden" name="fear" id="fear" value="{{ $draft->fear }}">
+                    <button class="btn btn-light btn--icon" type="button" id="fear_down"><i class="far fa-arrow-alt-circle-down"></i></button>
+                    <span id="fear_text"></span>
+                    <button class="btn btn-light btn--icon" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
                 </div>
             </div>
             <div class="form-help">
@@ -273,8 +275,7 @@
 
 
             $('#fear').on('input change', function (){
-                let val = parseInt($(this).val());
-                setFearText(val);
+                setFearText();
             });
 
             $('.good_tag').on('change', function (){
@@ -285,8 +286,7 @@
                 changeVeryBtn('bad', $(this).val(), $(this).prop('checked'));
             });
 
-            let fear = parseInt($('#fear').val());
-            setFearText(fear);
+            setFearText();
 
             if (goodTags.length > 0) {
                 goodTags.forEach(function (val){
@@ -334,8 +334,10 @@
             checked ? btn.show() : btn.hide();
         }
 
-        function setFearText(val)
+        function setFearText()
         {
+            let val = $('#fear').val();
+
             $('#fear_text').text(fearText[val]);
         }
     </script>
