@@ -30,7 +30,8 @@ class Kernel extends ConsoleKernel
         Commands\Init::class,
         Commands\Master\UpdateOriginalPackageId::class,
         Commands\Master\Import::class,
-        Commands\Sitemap::class
+        Commands\Sitemap::class,
+        Commands\ReviewTotal::class
     ];
 
     /**
@@ -41,8 +42,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('review:total')
+                  ->hourly();
     }
 
     /**
