@@ -58,6 +58,8 @@ class SoftController extends Controller
         $data['pltHash'] = Orm\GamePlatform::all('id', 'acronym')
             ->pluck('acronym', 'id');
 
+
+
         return view('game.soft.detail', $data);
     }
 
