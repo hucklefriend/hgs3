@@ -6,6 +6,7 @@
 namespace Hgs3\Models\Orm;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Log;
 
@@ -129,6 +130,7 @@ class Review extends \Eloquent
     public static function getNumByUser($userId)
     {
         return self::where('user_id', $userId)
+            ->where('status', \Hgs3\Constants\Review\Status::OPEN)
             ->count('id');
     }
 

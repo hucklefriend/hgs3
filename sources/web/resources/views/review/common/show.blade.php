@@ -35,8 +35,9 @@
                         </tr>
                     </table>
                 </div>
+                @if (!empty($review->url))
                 <div class="mt-4">
-                    @if (!empty($review->url))
+                    @if ($review->enable_url == 1)
                         <div class="mt-3">
                             <p style="font-size: 0.85rem;">
                                 このゲームのレビューを別のサイトでも書いています。<br>
@@ -44,8 +45,15 @@
                                 <a href="{{ $review->url }}" target="_blank">{{ $review->url }} <i class="fas fa-sign-out-alt"></i></a>
                             </p>
                         </div>
+                    @else
+                        <div class="mt-3">
+                            <p style="font-size: 0.85rem;">
+                                このゲームのレビューを別のサイトでも書いていますが、管理人がチェックするまで公開されません。
+                            </p>
+                        </div>
                     @endif
                 </div>
+                @endif
             </div>
         </div>
     </div>

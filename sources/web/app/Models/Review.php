@@ -194,4 +194,18 @@ SQL;
 
         return $data;
     }
+
+    /**
+     * いいね済みか
+     *
+     * @param $userId
+     * @param $reviewId
+     * @return bool
+     */
+    public static function hasGood($userId, $reviewId)
+    {
+        return Orm\ReviewGoodHistory::where('review_id', $reviewId)
+            ->where('user_id', $userId)
+            ->get()->count() > 0;
+    }
 }

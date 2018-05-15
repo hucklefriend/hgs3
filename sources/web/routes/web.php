@@ -97,14 +97,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/review/write/{soft}', 'User\ReviewController@input')->name('レビュー入力');
     Route::post('/review/write/{soft}', 'User\ReviewController@open')->name('レビュー公開');
     Route::delete('/review/delete/{soft}', 'User\ReviewController@delete')->name('レビュー削除');
+    Route::post('/review/good/{review}', 'Review\GoodController@good')->name('レビューいいね');
+    Route::delete('/review/good/{review}', 'Review\GoodController@cancel')->name('レビューいいね取消');
     /*
     Route::get('/review/package_select/{soft}', 'Review\ReviewController@packageSelect')->name('レビューパッケージ選択');
     Route::get('/review/write/{soft}/{package}', 'Review\ReviewController@input')->name('レビュー投稿');
     Route::post('/review/confirm/{soft}/{package}', 'Review\ReviewController@confirm')->name('レビュー投稿確認');
     Route::post('/review/save/{soft}/{package}', 'Review\ReviewController@save')->name('レビュー投稿処理');
     Route::delete('/review/draft/{softId}/{packageId}', 'Review\ReviewController@deleteDraft')->name('レビュー下書き削除');
-    Route::post('/review/good/{review}', 'Review\GoodController@good')->name('レビューいいね');
-    Route::delete('/review/good/{review}', 'Review\GoodController@cancel')->name('レビューいいね取消');
     Route::get('/review/edit/{review}', 'Review\ReviewController@edit')->name('レビュー編集');
     Route::patch('/review/edit/{review}', 'Review\ReviewController@update')->name('レビュー編集処理');
     Route::delete('/review/edit/{review}', 'Review\ReviewController@delete')->name('レビュー削除');

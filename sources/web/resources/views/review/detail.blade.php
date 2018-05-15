@@ -12,22 +12,48 @@
         </header>
 
         @include('review.common.show', ['review' => $review])
+
+        <div class="card card-hgn">
+            <div class="card-body">
+                <div class="d-flex flex-wrap site-info">
+                    <span>
+                        <i class="far fa-user"></i>
+                        <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">{{ $user->name }}</a>
+                    </span>
+                    <span>
+                    <span class="good-icon"><i class="fas fa-thumbs-up"></i></span>
+                        {{ number_format($review->good_num) }}
+                    </span>
+                    <span>
+                        <i class="fas fa-paw"></i>
+                        0
+                    </span>
+                    <span>
+                        <i class="fas fa-redo-alt"></i>
+                        {{ format_date($review->open_at) }}
+                    </span>
+                </div>
+
+
+                @auth
+                <div class="mt-3">
+                    @if ($hasGood)
+                        <form method="POST" action="{{ route('レビューいいね取消', ['review' => $review->id]) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button class="btn btn-good2 btn--icon"><i class="fas fa-thumbs-up"></i></button>
+                        </form>
+                    @else
+                        <form method="POST" action="{{ route('レビューいいね', ['review' => $review->id]) }}">
+                            {{ csrf_field() }}
+                            <button class="btn btn-good btn--icon"><i class="far fa-thumbs-up"></i></button>
+                        </form>
+                    @endif
+                    </div>
+                @endauth
+                </div>
+            </div>
+        </div>
+
     </div>
-
-    @auth
-    <hr>
-
-    <section>
-        @if (!$isWriter)
-        <a href="{{ url('review/fraud_report/report') }}/{{ $review->id }}">このレビューを不正報告</a> |
-        @endif
-        <a href="{{ url('review/fraud_report/list') }}/{{ $review->id }}">このレビューへの不正報告一覧</a>
-    </section>
-
-        @if ($isWriter)
-            <section>
-                <a href="{{ url2('review/edit') }}/{{ $review->id }}">レビューを修正・削除</a>
-            </section>
-        @endif
-    @endauth
 @endsection

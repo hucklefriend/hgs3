@@ -233,59 +233,6 @@ class ReviewController extends Controller
     }
 
     /**
-     * レビューを編集
-     *
-     * @param Orm\Review $review
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(Orm\Review $review)
-    {
-        if ($review->user_id != Auth::id()) {
-            // 他のユーザーのデータを編集しようとしている
-            App::abort(403);
-        }
-
-        return view('review.edit', [
-            'review'      => $review,
-            'gamePackage' => Orm\GamePackage::find($review->package_id)
-        ]);
-    }
-
-    /**
-     * データの修正
-     *
-     * @param WriteRequest $request
-     * @param Orm\Review $review
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function update(WriteRequest $request, Orm\Review $review)
-    {
-        if ($review->user_id != Auth::id()) {
-            // 他のユーザーのデータを編集しようとしている
-            App::abort(403);
-        }
-
-        $review->title = $request->get('title') ?? '';
-        $review->fear = intval($request->get('fear') ?? 3);
-        $review->story = intval($request->get('story') ?? 3);
-        $review->volume = intval($request->get('volume') ?? 3);
-        $review->difficulty = intval($request->get('difficulty') ?? 3);
-        $review->graphic = intval($request->get('graphic') ?? 3);
-        $review->sound = intval($request->get('sound') ?? 3);
-        $review->crowded = intval($request->get('crowded') ?? 3);
-        $review->controllability = intval($request->get('controllability') ?? 3);
-        $review->recommend = intval($request->get('recommend') ?? 3);
-        $review->progress = $request->get('progress') ?? '';
-        $review->text = $request->get('text') ?? '';
-        $review->is_spoiler = $request->get('is_spoiler') ?? 0;
-        $review->calcPoint();
-
-        $review->save();
-
-        return redirect('review/detail/' . $review->id);
-    }
-
-    /**
      * データ削除
      *
      * @param Orm\Review $review
