@@ -208,4 +208,72 @@ SQL;
             ->where('user_id', $userId)
             ->get()->count() > 0;
     }
+
+    /**
+     * いいね
+     *
+     * @param Orm\Review $review
+     * @param User $user
+     * @return bool
+     * @throws \Exception
+     */
+    public static function good(Orm\Review $review, User $user)
+    {
+        $sql =<<< SQL
+INSERT IGNORE INTO review_good_histories (
+  review_id, user_id, good_at, created_at, updated_at
+) VALUES (
+  :review_id, :user_id, NOW(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+)
+SQL;
+
+        try {
+            DB::insert($sql, [
+                'review_id' => $review->id,
+                'user_id'   => $user->id
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+            return false;
+        }
+
+        // タイムラインに登録
+
+
+        return true;
+    }
+
+    /**
+     * いいね取り消し
+     *
+     * @param Orm\Review $review
+     * @param User $user
+     * @throws \Exception
+     * @return bool
+     */
+    public static function cancelGood(Orm\Review $review, User $user)
+    {
+        DB::beginTransaction();
+
+        try {
+            Orm\ReviewGoodHistory::where('review_id', $review->id)
+                ->where('user_id', $user->id)
+                ->delete();
+
+            $review->good_num--;
+            $review->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+
+            return true;
+        }
+
+        return true;
+    }
 }

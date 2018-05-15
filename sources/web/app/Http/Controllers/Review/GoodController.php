@@ -15,16 +15,6 @@ use Illuminate\Support\Facades\Auth;
 class GoodController extends Controller
 {
     /**
-     * コンストラクタ
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        \Illuminate\Support\Facades\View::share('navActive', 'review');
-    }
-
-    /**
      * いいね
      *
      * @param Orm\Review $review
@@ -32,12 +22,8 @@ class GoodController extends Controller
      */
     public function good(Orm\Review $review)
     {
-        // TODO 同じレビューにいいねをできる回数を制限するか、
-        // 履歴に残して最初のいいねだけをタイムラインに残す？
-
-        $r = new Review();
-        if (!$r->hasGood($review->id, Auth::id())) {
-            $r->good($review, Auth::user());
+        if (Review::hasGood($review->id, Auth::id())) {
+            Review::good($review, Auth::user());
         }
 
         return redirect()->back();
