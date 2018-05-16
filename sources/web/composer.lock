@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f37c3a20eafc6be5acb11426c9d546d0",
+    "content-hash": "110ed2135ed9de8e07b16abb10ab44d6",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2260,16 +2260,16 @@
         },
         {
             "name": "revolution/laravel-amazon-product-api",
-            "version": "0.4.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kawax/laravel-amazon-product-api.git",
-                "reference": "4024d0ab29da84b84e3171e8f37a541f425ea3be"
+                "reference": "110cf930c5cc445e0987fe607dcffc457c6b1092"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kawax/laravel-amazon-product-api/zipball/4024d0ab29da84b84e3171e8f37a541f425ea3be",
-                "reference": "4024d0ab29da84b84e3171e8f37a541f425ea3be",
+                "url": "https://api.github.com/repos/kawax/laravel-amazon-product-api/zipball/110cf930c5cc445e0987fe607dcffc457c6b1092",
+                "reference": "110cf930c5cc445e0987fe607dcffc457c6b1092",
                 "shasum": ""
             },
             "require": {
@@ -2313,7 +2313,7 @@
                 "amazon",
                 "laravel"
             ],
-            "time": "2017-12-16T02:13:31+00:00"
+            "time": "2018-05-16T03:49:56+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

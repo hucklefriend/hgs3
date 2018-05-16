@@ -10,7 +10,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "*",
         "laravel/socialite" : "*",
-        "mongodb/mongodb" : "*",
+        "mongodb/mongodb" : "1.2.*",
         "revolution/laravel-amazon-product-api" : "*",
         "exeu/apai-io": "~2.0",
         "illuminate/support": "5.*",

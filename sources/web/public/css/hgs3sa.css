@@ -606,11 +606,12 @@ header.content__title {
 }
 
 .form-help {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 .invalid-feedback {
-    display: initial;
+    display: block;
+    color: white;
 }
 button, input, optgroup, select, textarea {
     font-family : inherit !important;
@@ -789,4 +790,8 @@ input[type=text], textarea {
     background-color: rgba(0, 0, 0, 0.2);
     padding: 15px;
     border-radius: 5px;
+}
+
+.form-control, .form-control:disabled, .form-control:focus, .form-control[readonly] {
+    background-color: rgba(255, 255, 255, 0.1);
 }

@@ -16,6 +16,7 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param User $follower
+     * @throws \Exception
      */
     public static function addFollowerText(User $user, User $follower)
     {
@@ -33,6 +34,7 @@ class ToMe extends TimelineAbstract
      * @param User $user
      * @param User $goodUser
      * @param Orm\Site $site
+     * @throws \Exception
      */
     public static function addSiteGoodText(User $user, User $goodUser, Orm\Site $site)
     {
@@ -59,6 +61,7 @@ class ToMe extends TimelineAbstract
      * @param User $user
      * @param Orm\Site $site
      * @param $prevMaxGoodNum
+     * @throws \Exception
      */
     public static function addSiteGoodNumText(User $user, Orm\Site $site, $prevMaxGoodNum)
     {
@@ -79,6 +82,7 @@ class ToMe extends TimelineAbstract
      * @param User $user
      * @param Orm\Site $site
      * @param User $favoriteUser
+     * @throws \Exception
      */
     public static function addSiteFavoriteText(user $user, Orm\Site $site, User $favoriteUser)
     {
@@ -99,6 +103,7 @@ class ToMe extends TimelineAbstract
      * @param Orm\Review $review
      * @param Orm\GamePackage $package
      * @param User $goodUser
+     * @throws \Exception
      */
     public static function addReviewGoodText(User $user, Orm\Review $review, Orm\GamePackage $package, User $goodUser)
     {
@@ -126,6 +131,7 @@ class ToMe extends TimelineAbstract
      * @param Orm\Review $review
      * @param Orm\GamePackage $package
      * @param $prevMaxGoodNum
+     * @throws \Exception
      */
     public static function addReviewGoodNumText(User $user, Orm\Review $review, Orm\GamePackage $package, $prevMaxGoodNum)
     {
@@ -145,6 +151,7 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Site $site
+     * @throws \Exception
      */
     public static function addSiteRegisteredText(User $user, Orm\Site $site)
     {
@@ -161,6 +168,7 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Site $site
+     * @throws \Exception
      */
     public static function addSiteUpdatedText(User $user, Orm\Site $site)
     {
@@ -177,6 +185,7 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Site $site
+     * @throws \Exception
      */
     public static function addSiteApproveText(User $user, Orm\Site $site)
     {
@@ -193,6 +202,7 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Site $site
+     * @throws \Exception
      */
     public static function addSiteRejectText(User $user, Orm\Site $site)
     {
@@ -208,6 +218,7 @@ class ToMe extends TimelineAbstract
      * ユーザー登録
      *
      * @param User $user
+     * @throws \Exception
      */
     public static function addRegisterText(User $user)
     {
@@ -222,6 +233,7 @@ class ToMe extends TimelineAbstract
      * @param User $user
      * @param Orm\GameSoft $soft
      * @param Orm\Review $review
+     * @throws \Exception
      */
     public static function addWriteReviewText(User $user, Orm\GameSoft $soft, Orm\Review $review)
     {
@@ -238,6 +250,7 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Review $review
+     * @throws \Exception
      */
     public static function addReviewUrlApproveText(User $user, Orm\Review $review)
     {

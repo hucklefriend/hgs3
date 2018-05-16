@@ -5,17 +5,12 @@
                 <div class="d-flex">
                     <div class="review-point">
                         {{ $review->calcPoint() }}
-                        <div class="review-point-mother"> / {{ \Hgs3\Constants\Review::MAX_POINT }}</div>
                     </div>
 
                     <table class="review-point-table">
                         <tr>
-                            <th>基本点</th>
-                            <td class="text-right">{{ \Hgs3\Constants\Review::BASE_POINT }}点</td>
-                        </tr>
-                        <tr>
                             <th>怖さ</th>
-                            <td class="text-right">{{ $review->fear }}点</td>
+                            <td class="text-right">{{ $review->fear * 5 }}点</td>
                         </tr>
                         <tr>
                             <th>良い所</th>

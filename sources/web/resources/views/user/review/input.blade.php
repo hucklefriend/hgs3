@@ -16,16 +16,6 @@
             </div>
         @endif
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $key => $error)
-                        <li>{{ $key }}: {{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <div class="mb-5">
             <p>入力される前に、注意事項をお読みください。</p>
         </div>
@@ -53,6 +43,9 @@
                     @endforeach
                 </div>
             </div>
+            <div class="form-help">
+                @include('common.error', ['formName' => 'package_id'])
+            </div>
 
             <div class="form-group">
                 <label for="progress" class="hgn-label"><i class="fas fa-edit"></i> 進捗状態</label>
@@ -74,12 +67,12 @@
                 <p class="text-muted">
                     どの程度怖かったかを設定してください。
                 </p>
-
-                <div class="d-flex justify-content-around">
-                    <input type="hidden" name="fear" id="fear" value="{{ $draft->fear }}">
+                <input type="hidden" name="fear" id="fear" value="{{ $draft->fear }}">
+                <div class="d-flex justify-content-between justify-content-sm-start">
                     <button class="btn btn-light btn--icon" type="button" id="fear_down"><i class="far fa-arrow-alt-circle-down"></i></button>
-                    <span id="fear_text"></span>
-                    <button class="btn btn-light btn--icon" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
+                    <button class="btn btn-light btn--icon hidden-xs-down mx-3" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
+                    <span id="fear_text" class="align-self-center"></span>
+                    <button class="btn btn-light btn--icon hidden-sm-up" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
                 </div>
             </div>
             <div class="form-help">
@@ -103,6 +96,7 @@
                     @endforeach
                 </div>
             </div>
+            <div class="form-help"></div>
 
             <div class="form-group">
                 <label for="very_good_tags" class="hgn-label"><i class="fas fa-check"></i> すごく良かったところ</label>
@@ -121,6 +115,7 @@
                     @endforeach
                 </div>
             </div>
+            <div class="form-help"></div>
 
             <div class="form-group">
                 <label for="bad_tags" class="hgn-label"><i class="fas fa-check"></i> 悪かったところ</label>
@@ -139,6 +134,7 @@
                     @endforeach
                 </div>
             </div>
+            <div class="form-help"></div>
 
             <div class="form-group">
                 <label for="very_bad_tags" class="hgn-label"><i class="fas fa-check"></i> すごく悪かったところ</label>
@@ -156,8 +152,8 @@
                         </div>
                     @endforeach
                 </div>
-
             </div>
+            <div class="form-help"></div>
 
             <div class="form-group">
                 <label for="url" class="hgn-label"><i class="fas fa-edit"></i> 外部レビュー</label>
@@ -259,7 +255,11 @@
         let badTagBtn = {};
         let veryBadTagBtn = {};
 
+        let fear = null;
+
         $(function (){
+            fear = $('#fear');
+
             $('.good_tag').each(function (){
                 goodTagBtn[$(this).val()] = $(this);
             });
@@ -273,17 +273,30 @@
                 veryBadTagBtn[$(this).val()] = $(this);
             });
 
-
-            $('#fear').on('input change', function (){
-                setFearText();
-            });
-
             $('.good_tag').on('change', function (){
                 changeVeryBtn('good', $(this).val(), $(this).prop('checked'));
             });
 
             $('.bad_tag').on('change', function (){
                 changeVeryBtn('bad', $(this).val(), $(this).prop('checked'));
+            });
+
+            $('#fear_down').on('click', function (){
+                let val = parseInt(fear.val());
+
+                if (val > 0) {
+                    fear.val(val - 1);
+                    setFearText();
+                }
+            });
+
+            $('#fear_up').on('click', function (){
+                let val = parseInt(fear.val());
+
+                if (val < fearText.length - 1) {
+                    fear.val(val + 1);
+                    setFearText();
+                }
             });
 
             setFearText();
@@ -318,13 +331,9 @@
                 });
             }
 
-
-
             packageId.forEach(function (pkgId){
                 toggleButton($('#pkg_' + pkgId), true);
             });
-
-
         });
 
         function changeVeryBtn(target, tagId, checked)
@@ -343,10 +352,6 @@
     </script>
 
     <style>
-        .form-group {
-            margin-bottom: 5rem !important;
-        }
-
         .very_bad, .very_good {
             display:none;
         }

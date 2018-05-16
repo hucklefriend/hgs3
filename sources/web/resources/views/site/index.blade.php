@@ -31,7 +31,7 @@
                     <div class="card-body">
                         <h4 class="card-title">新着サイト</h4>
                         <div class="card-text">
-                            @if (empty($newArrivals))
+                            @if ($newArrivals->count() == 0)
                                 <p>新着サイトはありません。</p>
                             @else
                                 <div class="swiper-container" id="new_arrivals_list">
@@ -66,7 +66,7 @@
                     <div class="card-body">
                         <h4 class="card-title">更新サイト</h4>
                         <div class="card-text">
-                            @if (empty($updateArrivals))
+                            @if ($updateArrivals->count() == 0)
                                 <p>更新サイトはありません。</p>
                             @else
                                 <div class="swiper-container" id="updates_list">

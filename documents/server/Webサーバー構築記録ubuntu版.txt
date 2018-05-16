@@ -1,4 +1,4 @@
-# sudo apt-get install openssh-server
+Ubuntu 18.04対応版
 
 
 ○以下、VMware環境のみ
@@ -14,6 +14,14 @@ VM wareのフォルダ共有設定をする
 $ sudo ln -s /mnt/hgfs/hgn /var/hgn
 
 
+○以下、VirtualBox環境のみ
+
+VirtualBox上でのフォルダ共有設定をする
+名称をhgnとした場合
+
+$ sudo ln -s /mnt/hgfs/hgn /var/hgn
+
+
 ○ Apache
 
 $ sudo apt-get install apache2
@@ -21,19 +29,16 @@ $ sudo apt-get install apache2
 
 ○ MariaDB
 
-※ ubuntu 18.04の場合は sudo apt install mariadb-server だけでOK
-
 sudo apt-get install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo add-apt-repository 'deb [arch=amd64,i386] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.2/ubuntu zesty main'
+sudo add-apt-repository 'deb [arch=amd64,i386] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.2/ubuntu artful main'
 sudo apt update
-sudo apt install mariadb-server
+sudo apt install mariadb-server-10.2
 
 
 
 # sudo mysql_secure_installation
 
-※ ubuntu 18.04の場合はsudo mysql でログインできる
 # mysql -u root
 
 
@@ -55,12 +60,11 @@ GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON `hgs3`.* TO 'hgs'@'localhost';
 exit;
 
 ○ PHP
-sudo apt-get install php php-cli php-common libapache2-mod-php php-mysql php-curl php-xml php-zip php-gd php-mbstring  php-bcmath php-mcrypt php-json
+sudo apt-get install php php-cli php-common libapache2-mod-php php-mysql php-curl php-xml php-zip php-gd php-mbstring php-bcmath php-json
 
 
 ○ Memcached
-sudo apt-get install memcached
-sudo apt-get install php-memcached
+sudo apt-get install memcached php-memcached
 
 
 

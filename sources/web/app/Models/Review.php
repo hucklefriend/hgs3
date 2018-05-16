@@ -121,6 +121,11 @@ class Review
             // レビューに登録
             $review->save();
 
+            // レビューURL確認待ち
+            if (!empty($review->url)) {
+                Orm\ReviewWaitUrl::insert(['review_id' => $review->id]);
+            }
+
             // 集計してねフラグを立てる
             self::upTotalFlag($draft->soft_id);
 
@@ -140,7 +145,7 @@ class Review
         if (!empty($review->url)) {
             // 管理人のタイムラインに流す
             $admin = User::getAdmin();
-            Timeline\ToMe::addSiteApproveText($admin, $review);
+            Timeline\ToMe::addReviewUrlApproveText($admin, $review);
 
             // 管理人にメール送信
             if (env('APP_ENV') == 'production') {
@@ -275,5 +280,47 @@ SQL;
         }
 
         return true;
+    }
+
+    /**
+     * 公開済みか？
+     *
+     * @param $userId
+     * @param $softId
+     * @return bool
+     */
+    public static function isOpened($userId, $softId)
+    {
+        return  Orm\Review::where('user_id', $userId)
+            ->where('soft_id', $softId)
+            ->count() > 0;
+    }
+
+    /**
+     * 無効期間内か？
+     *
+     * @param $userId
+     * @param $softId
+     * @return bool
+     * @throws \Exception
+     */
+    public static function isDisableTerm($userId, $softId)
+    {
+        $data = Orm\ReviewDisableTErm::where('user_id', $userId)
+            ->where('soft_id', $softId)
+            ->first();
+
+        if (empty($data)) {
+            return false;
+        } else {
+            $now = new \DateTime();
+            $now->setTime(0, 0, 0);
+
+            $limit = new \DateTime($data->start_date);
+            $limit->add(new \DateInterval('P6M'));
+
+            return $now < $limit;
+        }
+
     }
 }

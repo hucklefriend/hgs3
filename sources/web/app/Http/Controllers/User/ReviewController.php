@@ -49,6 +49,7 @@ class ReviewController extends Controller
      * 保存
      *
      * @param WriteRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
     public function save(WriteRequest $request)

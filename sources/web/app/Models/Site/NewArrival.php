@@ -5,9 +5,9 @@
 
 namespace Hgs3\Models\Site;
 
-use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Log;
 use Hgs3\Models\Orm;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class NewArrival
@@ -15,8 +15,8 @@ class NewArrival
     /**
      * 新着サイトを取得
      *
-     * @param int $num
-     * @return array
+     * @param $num
+     * @return Collection|static[]
      * @throws \Exception
      */
     public static function get($num)
@@ -33,7 +33,7 @@ class NewArrival
             ->toArray();
 
         if (empty($newArrivals)) {
-            return [];
+            return new Collection();
         }
 
         return Orm\Site::whereIn('id', $newArrivals)

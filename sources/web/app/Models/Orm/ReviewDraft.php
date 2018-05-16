@@ -32,7 +32,7 @@ class ReviewDraft extends \Eloquent
     public static function getDefault($userId, $softId)
     {
         $draft = new self([
-            'fear'            => 4,
+            'fear'            => 3,
             'url'             => '',
             'progress'        => '',
             'good_comment'    => '',
@@ -260,7 +260,7 @@ class ReviewDraft extends \Eloquent
     {
         $this->setTags();
 
-        return 50 + $this->fear + (count($this->goodTags) + (count($this->veryGoodTags)))
+        return ($this->fear * 5) + (count($this->goodTags) + (count($this->veryGoodTags)))
             - (count($this->badTags) + (count($this->veryBadTags)));
     }
 

@@ -13,6 +13,13 @@
 
         @include('review.common.show', ['review' => $draft])
 
+        <p class="alert alert-info" role="alert">
+            レビュー公開後は、修正することができません。<br>
+            削除はできますが、削除後半年は同じゲームのレビューを書くことができません。<br>
+            よくよくご確認の上、公開してください。
+        </p>
+
+
         <div class="row">
             <div class="col-6 text-center">
                 <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-light">修正する</a>
@@ -24,12 +31,6 @@
 
                     <div class="form-group">
                         <button class="btn btn-primary">レビューを公開する</button>
-                        <p class="text-muted">
-                            <small>
-                                レビュー公開後は、編集できなくなります。<br>
-                                よくよくご確認の上、公開してください。
-                            </small>
-                        </p>
                     </div>
                 </form>
             </div>

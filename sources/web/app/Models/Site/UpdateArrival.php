@@ -5,8 +5,7 @@
 
 namespace Hgs3\Models\Site;
 
-use Hgs3\Constants\Site\ApprovalStatus;
-use Hgs3\Log;
+
 use Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
