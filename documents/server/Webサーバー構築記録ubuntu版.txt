@@ -11,7 +11,7 @@ $ sudo ./patched-open-vm-tools.sh -d
 
 VM wareのフォルダ共有設定をする
 
-$ sudo ln -s /mnt/hgfs/hgs3 /var/hgs3
+$ sudo ln -s /mnt/hgfs/hgn /var/hgn
 
 
 ○ Apache
@@ -21,13 +21,22 @@ $ sudo apt-get install apache2
 
 ○ MariaDB
 
+※ ubuntu 18.04の場合は sudo apt install mariadb-server だけでOK
+
 sudo apt-get install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 sudo add-apt-repository 'deb [arch=amd64,i386] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.2/ubuntu zesty main'
 sudo apt update
 sudo apt install mariadb-server
 
+
+
+# sudo mysql_secure_installation
+
+※ ubuntu 18.04の場合はsudo mysql でログインできる
 # mysql -u root
+
+
 
 
 アプリ用ユーザー追加
@@ -60,8 +69,8 @@ sudo apt-get install php-memcached
 ○ Apacheコンフィグ
 
 # sudo vi /etc/apache2/sites-available/hgn.conf
-alias /hgn /var/hgs3/web/public
-<Directory /var/hgs3/web/public>
+alias /hgn /var/hgn/public
+<Directory /var/hgn/public>
     Options FollowSymLinks Indexes
     AllowOverride All
     Require all granted
@@ -142,9 +151,7 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A1
 echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
 sudo apt-get update
 sudo apt-get install mongodb-org
-sudo apt-get install php-dev
-sudo apt-get install pkg-config libssl-dev libsslcommon2-dev
-sudo apt-get install php-mongodb
+sudo apt-get install php-dev pkg-config libssl-dev libsslcommon2-dev php-mongodb
 sudo service mongod start
 sudo service apache2 restart
 

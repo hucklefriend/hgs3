@@ -1,6 +1,6 @@
 <?php
 /**
- * レビュー総計テーブルの作成
+ * レビュー集計テーブルの作成
  */
 
 use Illuminate\Support\Facades\Schema;
@@ -18,16 +18,22 @@ class CreateReviewTotalsTable2 extends Migration
     {
         Schema::dropIfExists('review_totals');
 
-        Schema::create('review_totals', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->unsignedInteger('soft_id')->primary()->comment('ゲームソフトID');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
             $table->unsignedTinyInteger('good_tag_num')->comment('良いタグ数');
             $table->unsignedTinyInteger('very_good_tag_num')->comment('特に良いタグ数');
+            $table->text('good_comment')->nullable()->comment('良い点');
             $table->unsignedTinyInteger('bad_tag_num')->comment('悪いタグ数');
             $table->unsignedTinyInteger('very_bad_tag_num')->comment('特に悪いタグ数');
+            $table->text('bad_comment')->nullable()->comment('悪い点');
+            $table->text('general_comment')->nullable()->comment('総合評価');
             $table->unsignedInteger('point')->comment('ポイント');
-            $table->unsignedInteger('update_num')->default(0)->comment('更新回数');
+            $table->unsignedInteger('review_num')->comment('レビュー数');
             $table->timestamps();
+            $table->unique(['soft_id', 'user_id']);
+            $table->index(['soft_id', 'status']);
+            $table->index(['user_id', 'status']);
         });
     }
 
@@ -38,6 +44,6 @@ class CreateReviewTotalsTable2 extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('review_totals');
     }
 }
