@@ -139,8 +139,9 @@ class Review
         }
 
         // タイムラインに登録
-        Timeline\FollowUser::addWriteReviewText(Auth::user(), $soft, $review);
-        Timeline\ToMe::addWriteReviewText(Auth::user(), $soft, $review);
+        $user = User::find($review->user_id);
+        Timeline\FollowUser::addWriteReviewText($user, $soft, $review);
+        Timeline\ToMe::addWriteReviewText($user, $soft, $review);
 
         if (!empty($review->url)) {
             // 管理人のタイムラインに流す
@@ -232,11 +233,20 @@ INSERT IGNORE INTO review_good_histories (
 )
 SQL;
 
+        $prevMaxGoodNum = $review->max_good_num;
+
         try {
             DB::insert($sql, [
                 'review_id' => $review->id,
                 'user_id'   => $user->id
             ]);
+
+            $review->good_num++;
+            if ($review->good_num > $prevMaxGoodNum) {
+                $review->max_good_num = $review->good_num;
+            }
+
+            $review->save();
 
             DB::commit();
         } catch (\Exception $e) {
@@ -245,7 +255,10 @@ SQL;
         }
 
         // TODO タイムラインに登録
-
+        $reviewUser = User::find($review->user_id);
+        $soft = Orm\GameSoft::find($review->soft_id);
+        Timeline\ToMe::addReviewGoodText($reviewUser, $review, $soft, $user);
+        Timeline\ToMe::addReviewGoodNumText($reviewUser, $review, $soft, $prevMaxGoodNum);
 
         return true;
     }

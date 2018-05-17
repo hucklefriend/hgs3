@@ -25,10 +25,6 @@
                         {{ number_format($review->good_num) }}
                     </span>
                     <span>
-                        <i class="fas fa-paw"></i>
-                        0
-                    </span>
-                    <span>
                         <i class="far fa-calendar-alt"></i>
                         {{ format_date(strtotime($review->post_at)) }}
                     </span>

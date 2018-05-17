@@ -69,10 +69,14 @@
                 </p>
                 <input type="hidden" name="fear" id="fear" value="{{ $draft->fear }}">
                 <div class="d-flex justify-content-between justify-content-sm-start">
-                    <button class="btn btn-light btn--icon" type="button" id="fear_down"><i class="far fa-arrow-alt-circle-down"></i></button>
-                    <button class="btn btn-light btn--icon hidden-xs-down mx-3" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
-                    <span id="fear_text" class="align-self-center"></span>
-                    <button class="btn btn-light btn--icon hidden-sm-up" type="button" id="fear_up2"><i class="far fa-arrow-alt-circle-up"></i></button>
+                    <div>
+                        <button class="btn btn-light btn--icon" type="button" id="fear_down"><i class="far fa-arrow-alt-circle-down"></i></button>
+                        <button class="btn btn-light btn--icon hidden-xs-down mx-3" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
+                    </div>
+                    <p id="fear_text" class="align-self-center lead force-break mx-2"></p>
+                    <div>
+                        <button class="btn btn-light btn--icon hidden-sm-up" type="button" id="fear_up2"><i class="far fa-arrow-alt-circle-up"></i></button>
+                    </div>
                 </div>
             </div>
             <div class="form-help">
@@ -80,9 +84,9 @@
             </div>
 
             <div class="form-group">
-                <label for="good_tags" class="hgn-label"><i class="fas fa-check"></i> 良かったところ</label>
+                <label for="good_tags" class="hgn-label"><i class="fas fa-check"></i> 良い点</label>
                 <p class="text-muted">
-                    このゲームの良かったところがあれば選択してください。
+                    このゲームの良いところがあれば選択してください。(<span id="good_check_num">0</span>個選択中)
                 </p>
                 <div class="d-flex flex-wrap">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -99,9 +103,9 @@
             <div class="form-help"></div>
 
             <div class="form-group">
-                <label for="very_good_tags" class="hgn-label"><i class="fas fa-check"></i> すごく良かったところ</label>
+                <label for="very_good_tags" class="hgn-label"><i class="fas fa-check"></i> すごく良い点</label>
                 <p class="text-muted">
-                    良かったところの中で、他のゲームと比べても特に優れているところがあれば選択してください。
+                    良い点の中で、他のゲームと比べても特に優れているところがあれば選択してください。(<span id="very_good_check_num">0</span>個選択中)
                 </p>
                 <div class="d-flex flex-wrap">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -113,14 +117,15 @@
                             </label>
                         </div>
                     @endforeach
+                    <p id="no_good_text">良い点が1つも選択されていません。</p>
                 </div>
             </div>
             <div class="form-help"></div>
 
             <div class="form-group">
-                <label for="bad_tags" class="hgn-label"><i class="fas fa-check"></i> 悪かったところ</label>
+                <label for="bad_tags" class="hgn-label"><i class="fas fa-check"></i> 悪い点</label>
                 <p class="text-muted">
-                    このゲームの悪かったところがあれば選択してください。
+                    このゲームの悪いところがあれば選択してください。(<span id="bad_check_num">0</span>個選択中)
                 </p>
                 <div class="d-flex flex-wrap">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -137,9 +142,9 @@
             <div class="form-help"></div>
 
             <div class="form-group">
-                <label for="very_bad_tags" class="hgn-label"><i class="fas fa-check"></i> すごく悪かったところ</label>
+                <label for="very_bad_tags" class="hgn-label"><i class="fas fa-check"></i> すごく悪い点</label>
                 <p class="text-muted">
-                    悪かったところの中で、他のゲームと比べても特に劣っているところがあれば選択してください。
+                    悪い点の中で、他のゲームと比べても特に劣っているところがあれば選択してください。(<span id="bad_check_num">0</span>個選択中)
                 </p>
                 <div class="d-flex flex-wrap" id="very_bad_select">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -151,6 +156,7 @@
                             </label>
                         </div>
                     @endforeach
+                    <p id="no_bad_text">良い点が1つも選択されていません。</p>
                 </div>
             </div>
             <div class="form-help"></div>
@@ -167,6 +173,18 @@
             </div>
             <div class="form-help">
                 @include('common.error', ['formName' => 'url'])
+            </div>
+
+            <div class="form-group">
+                <label for="fear_comment" class="hgn-label"><i class="fas fa-edit"></i> 怖さ</label>
+                <p class="text-muted">
+                    怖さについて、言いたいことがあれば記入してください。
+                </p>
+                <textarea name="fear_comment" id="fear_comment" class="form-control textarea-autosize{{ invalid($errors, 'fear_comment') }}">{{ old('fear_comment', $draft->fear_comment) }}</textarea>
+                <i class="form-group__bar"></i>
+            </div>
+            <div class="form-help">
+                @include('common.error', ['formName' => 'fear_comment'])
             </div>
 
             <div class="form-group">
@@ -226,6 +244,7 @@
                     <span class="custom-control-description">あり</span>
                 </label>
             </div>
+            <div class="form-help"></div>
 
             <div class="form-group text-center">
                 <button class="btn btn-primary">下書き保存して確認画面へ</button>
@@ -239,8 +258,6 @@
             </div>
         </form>
     </div>
-
-
 
     <script>
         let packageId = {!! old('package_id', null) == null ? $draft->package_id : json_encode(old('package_id')) !!}

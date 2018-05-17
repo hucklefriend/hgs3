@@ -183,103 +183,46 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h5 class="card-title">レビュー</h5>
+                    <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->reviewNum : 0) }}件</small></h4>
+                    @empty($reviewTotal)
                     <p class="card-text">工事中</p>
-                </div>
-{{--
-                <div class="card-body">
-                    @if ($reviewTotal != null)
-                        <div class="row" style="margin-bottom: 20px;">
-                            <div class="col-3 text-center">
-                                <div class="review-point-outline">
-                                    <p class="review-point">{{ $reviewTotal->point }}</p>
-                                </div>
+                    @else
+                        <div>
+                            <div class="review-point">
+                                {{ round($reviewTotal->point, 1) }}
                             </div>
-                            <div class="col-9">
-                                <canvas id="review_chart"></canvas>
-                            </div>
+
+                            <table class="review-point-table">
+                                <tr>
+                                    <th>怖さ</th>
+                                    <td class="text-right">{{ round($reviewTotal->fear * 5, 1) }}点</td>
+                                </tr>
+                                <tr>
+                                    <th>良い所</th>
+                                    <td class="text-right">{{ count($reviewTotal->getGoodTags()) }}点</td>
+                                </tr>
+                                <tr>
+                                    <th>すごく良い所</th>
+                                    <td class="text-right">{{ count($reviewTotal->getVeryGoodTags()) }}点</td>
+                                </tr>
+                                <tr>
+                                    <th>悪い所</th>
+                                    <td class="text-right">-{{ count($reviewTotal->getBadTags()) }}点</td>
+                                </tr>
+                                <tr>
+                                    <th>すごく悪い所</th>
+                                    <td class="text-right">-{{ count($reviewTotal->getVeryBadTags()) }}点</td>
+                                </tr>
+                            </table>
                         </div>
 
-                        <script>
-                            $(function (){
-                                let ctx = $("#review_chart");
 
-                                let data = {
-                                    labels: ["怖さ", "シナリオ", "ボリューム", "グラフィック", "サウンド", "操作性", "難易度", "やりこみ", "オススメ"],
-                                    datasets: [{
-                                        fill: false,
-                                        label: "",
-                                        backgroundColor: "white",
-                                        borderColor: "red",
-                                        pointBackgroundColor: "red",
-                                        data: [
-                                            {{ $reviewTotal->fear }},
-                                            {{ $reviewTotal->story }},
-                                            {{ $reviewTotal->volume }},
-                                            {{ $reviewTotal->graphic }},
-                                            {{ $reviewTotal->sound }},
-                                            {{ $reviewTotal->controllability }},
-                                            {{ $reviewTotal->difficulty }},
-                                            {{ $reviewTotal->crowded }},
-                                            {{ $reviewTotal->recommend }}
-                                        ]
-                                    }]
-                                };
+                        <div class="text-right">
+                            <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                        </div>
 
-                                let chart = new Chart(ctx, {
-                                    type: 'radar',
-                                    data: data,
-                                    options: {
-                                        legend: {
-                                            display: false,
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: false,
-                                            text: 'Chart.js Radar Chart'
-                                        },
-                                        scale: {
-                                            ticks: {
-                                                beginAtZero: true,
-                                                stepSize: 1
-                                            }
-                                        },
-                                        responsive: true
-                                    }
-                                });
-                            });
-                        </script>
-                    @else
-                        <p>
-                            レビューは投稿されていません。
-                            @auth
-                            <br>
-                            最初のレビューを投稿してみませんか？
-                            @endauth
-                        </p>
-                    @endif
-                        @if (\Illuminate\Support\Facades\Auth::check())
-                            <hr>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="text-center">
-                                        <a href="{{ route('ソフト別レビュー一覧', ['soft', $soft->id]) }}">レビューを見る</a>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="text-center">
-                                        <a href="{{ route('レビューパッケージ選択', ['soft', $soft->id]) }}">レビューを書く</a>
-                                    </div>
-                                </div>
-                            </div>
-                        @elseif ($reviewTotal !== null)
-                            <hr>
-                            <div class="text-center">
-                                <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}">レビューを見る</a>
-                            </div>
-                        @endif
+                    @endempty
                 </div>
---}}
             </div>
         </div>
     </div>

@@ -94,7 +94,7 @@ SQL;
             ->get();
 
         // レビュー
-        $data['reviewTotal'] = 0;//Orm\ReviewTotal::find($soft->id);
+        $data['reviewTotal'] = Orm\ReviewTotal::find($soft->id);
 
         // お気に入り登録ユーザー
         $data['favorites'] = self::getFavoriteUser($soft->id);

@@ -16,4 +16,9 @@ class Fear
         5 => '怖すぎた',
         6 => 'あまりにも怖すぎてもうやりたくない',
     ];
+
+    public static function getMaxPoint()
+    {
+        return 6;
+    }
 }

@@ -1,3 +1,0 @@
-crontab -e
-
-* * * * * php /var/www/hgs3/artisan schedule:run >> /dev/null 2>&1

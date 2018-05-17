@@ -236,4 +236,6 @@ return [
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
+
+    'faker_locale' => 'ja_JP',
 ];

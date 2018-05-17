@@ -9,23 +9,23 @@
 
                     <table class="review-point-table">
                         <tr>
-                            <th>怖さ</th>
+                            <th>😱 怖さ</th>
                             <td class="text-right">{{ $review->fear * 5 }}点</td>
                         </tr>
                         <tr>
-                            <th>良い所</th>
+                            <th><i class="far fa-thumbs-up"></i> 良い</th>
                             <td class="text-right">{{ count($review->getGoodTags()) }}点</td>
                         </tr>
                         <tr>
-                            <th>すごく良い所</th>
+                            <th><i class="far fa-thumbs-up"></i><i class="far fa-thumbs-up"></i> すごく良い</th>
                             <td class="text-right">{{ count($review->getVeryGoodTags()) }}点</td>
                         </tr>
                         <tr>
-                            <th>悪い所</th>
+                            <th><i class="far fa-thumbs-down"></i> 悪い</th>
                             <td class="text-right">-{{ count($review->getBadTags()) }}点</td>
                         </tr>
                         <tr>
-                            <th>すごく悪い所</th>
+                            <th><i class="far fa-thumbs-down"></i><i class="far fa-thumbs-down"></i> すごく悪い</th>
                             <td class="text-right">-{{ count($review->getVeryBadTags()) }}点</td>
                         </tr>
                     </table>
@@ -84,80 +84,89 @@
 @if ($review->is_spoiler == 1)
     <div class="alert alert-danger mb-5" role="alert">
         <h4 class="alert-heading">ネタバレ注意！</h4>
-        <p class="mb-0">
-            このレビューにはネタバレが含まれています。<br>
-            これより下にはネタバレを含む内容が記載されていますので、閲覧にはご注意ください。
-        </p>
+        <p class="mb-0">これより下にはネタバレを含む内容が記載されていますので、閲覧にはご注意ください。</p>
     </div>
 @endif
 
-<div class="row">
-    <div class="col-lg-6">
-        <div class="card card-hgn">
-            <div class="card-body">
-                <h5 class="card-title">
-                    良い所
-                    <span class="card-title-sub"><i class="far fa-thumbs-up"></i>は特に良い所</span>
-                </h5>
+    <div class="card card-hgn">
+        <div class="card-body">
+            <h5 class="card-title">😱 怖さ</h5>
 
-                    @empty($review->getGoodTags())
-                    <p>良い点はありません。</p>
-                    @else
-                    <div class="d-flex flex-wrap mb-2">
-                        @foreach ($review->getGoodTags() as $tagId)
+            <p class="lead">{{ Hgs3\Constants\Review\Fear::$data[$review->fear] }}</p>
+
+            <p class="mb-0 review-text">
+                @empty($review->fear_comment)
+                    怖さに関するコメントはありません。
+                @else
+                    {!! nl2br(e($review->fear_comment)) !!}
+                @endempty
+            </p>
+        </div>
+    </div>
+
+    <div class="card card-hgn">
+        <div class="card-body">
+            <h5 class="card-title">
+                <i class="far fa-thumbs-up"></i>良い点
+                <span class="card-title-sub"><i class="far fa-thumbs-up"></i>付きタグは特に良い点</span>
+            </h5>
+
+            @empty($review->getGoodTags())
+                <p>良い点はありません。</p>
+            @else
+                <div class="d-flex flex-wrap mb-2">
+                    @foreach ($review->getGoodTags() as $tagId)
                         <span class="review-tag">
-                            {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
+                                {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
                             @if ($review->isVeryGood($tagId))
-                            <i class="far fa-thumbs-up"></i>
+                                <i class="far fa-thumbs-up"></i>
                             @endif
-                        </span>
-                        @endforeach
-                    </div>
-                    @endempty
+                            </span>
+                    @endforeach
+                </div>
+            @endempty
 
-                <p class="mb-0 review-text">
-                    @empty($review->good_comment)
-                        良い点に関するコメントはありません。
-                    @else
-                        {!! nl2br(e($review->good_comment)) !!}
-                    @endempty
-                </p>
-            </div>
+            <p class="mb-0 review-text">
+                @empty($review->good_comment)
+                    良い点に関するコメントはありません。
+                @else
+                    {!! nl2br(e($review->good_comment)) !!}
+                @endempty
+            </p>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="card card-hgn">
-            <div class="card-body">
-                <h5 class="card-title">
-                    悪い所
-                    <span class="card-title-sub"><i class="far fa-thumbs-down"></i>は特に悪い所</span>
-                </h5>
-                    @empty($review->getBadTags())
-                        <p>悪い点はありません。</p>
-                    @else
-                    <div class="d-flex flex-wrap mb-2">
-                        @foreach ($review->getBadTags() as $tagId)
-                        <span class="review-tag">
-                            {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
-                                @if ($review->isVeryBad($tagId))
-                            <i class="far fa-thumbs-down"></i>
-                                @endif
-                        </span>
-                        @endforeach
-                    </div>
-                    @endempty
 
-                <p class="mb-0 review-text">
-                    @empty($review->bad_comment)
-                        悪い点に関するコメントはありません。
-                    @else
-                        {!! nl2br(e($review->bad_comment)) !!}
-                    @endempty
-                </p>
-            </div>
+    <div class="card card-hgn">
+        <div class="card-body">
+            <h5 class="card-title">
+                <i class="far fa-thumbs-down"></i> 悪い点
+                <span class="card-title-sub"><i class="far fa-thumbs-down"></i>付きタグは特に悪い点</span>
+            </h5>
+                @empty($review->getBadTags())
+                    <p>悪い点はありません。</p>
+                @else
+                <div class="d-flex flex-wrap mb-2">
+                    @foreach ($review->getBadTags() as $tagId)
+                    <span class="review-tag">
+                        {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
+                            @if ($review->isVeryBad($tagId))
+                        <i class="far fa-thumbs-down"></i>
+                            @endif
+                    </span>
+                    @endforeach
+                </div>
+                @endempty
+
+            <p class="mb-0 review-text">
+                @empty($review->bad_comment)
+                    悪い点に関するコメントはありません。
+                @else
+                    {!! nl2br(e($review->bad_comment)) !!}
+                @endempty
+            </p>
         </div>
     </div>
-</div>
+
 
 <div class="card card-hgn">
     <div class="card-body">

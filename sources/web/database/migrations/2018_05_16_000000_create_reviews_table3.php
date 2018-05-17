@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReviewsTable2 extends Migration
+class CreateReviewsTable3 extends Migration
 {
     /**
      * Run the migrations.
@@ -24,6 +24,7 @@ class CreateReviewsTable2 extends Migration
             $table->unsignedInteger('soft_id')->comment('ゲームソフトID');
             $table->text('package_id')->comment('パッケージID');
             $table->unsignedTinyInteger('fear')->comment('怖さ');
+            $table->text('fear_comment')->nullable()->comment('怖さコメント');
             $table->text('url')->nullable()->comment('URL');
             $table->unsignedInteger('enable_url')->default(0)->comment('URLが有効か');
             $table->text('progress')->nullable()->comment('ゲームの進行状態');

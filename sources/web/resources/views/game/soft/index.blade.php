@@ -73,14 +73,14 @@
                 <div class="d-flex justify-content-between mt-3">
                     <div>
                         @if ($no > 0)
-                            <a href="javascript:void(0);" onclick="changeTab('{{ $phonetics[$no - 1][0] }}')" class="btn btn-light">
+                            <a href="javascript:void(0);" onclick="changeTab('{{ $phonetics[$no - 1][0] }}')" class="badge badge-pill and-more">
                                 <i class="fas fa-angle-left"></i>&nbsp;{{ $phonetics[$no - 1][2] }}行
                             </a>
                         @endif
                     </div>
                     <div>
                         @if (!$loop->last)
-                        <a href="javascript:void(0);" onclick="changeTab('{{ $phonetics[$no + 1][0] }}')" class="btn btn-light">
+                        <a href="javascript:void(0);" onclick="changeTab('{{ $phonetics[$no + 1][0] }}')" class="badge badge-pill and-more">
                             {{ $phonetics[$no + 1][2] }}行&nbsp;<i class="fas fa-angle-right"></i>
                         </a>
                         @endif

@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-between align-items-center">
+<div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <div class="mb-1">
             @if($review->is_spoiler == 1)

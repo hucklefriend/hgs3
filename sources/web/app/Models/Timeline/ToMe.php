@@ -101,23 +101,23 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Review $review
-     * @param Orm\GamePackage $package
+     * @param Orm\GameSoft $soft
      * @param User $goodUser
      * @throws \Exception
      */
-    public static function addReviewGoodText(User $user, Orm\Review $review, Orm\GamePackage $package, User $goodUser)
+    public static function addReviewGoodText(User $user, Orm\Review $review, Orm\GameSoft $soft, User $goodUser)
     {
         if ($goodUser === null) {
             $text = sprintf('<a href="%s">%sのレビュー</a>がいいねされました。',
                 route('レビュー詳細', ['review' => $review->id]),
-                e($package->name)
+                e($soft->name)
             );
         } else {
             $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%sのレビュー</a>にいいねしてくれました。',
                 route('プロフィール', ['showId' => $goodUser->show_id]),
                 e($goodUser->name),
                 route('レビュー詳細', ['review' => $review->id]),
-                e($package->name)
+                e($soft->name)
             );
         }
 
@@ -129,16 +129,16 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Review $review
-     * @param Orm\GamePackage $package
+     * @param Orm\GameSoft $soft
      * @param $prevMaxGoodNum
      * @throws \Exception
      */
-    public static function addReviewGoodNumText(User $user, Orm\Review $review, Orm\GamePackage $package, $prevMaxGoodNum)
+    public static function addReviewGoodNumText(User $user, Orm\Review $review, Orm\GameSoft $soft, $prevMaxGoodNum)
     {
         if ($review->max_good_num > 1 && $prevMaxGoodNum < $review->max_good_num && $review->max_good_num % 100 == 0) {
             $text = sprintf('<a href="%s">%sのレビュー</a>へのいいねが%d件に達しました。',
                 route('レビュー詳細', ['review' => $review->id]),
-                e($package->name),
+                e($soft->name),
                 number_format($review->max_good_num)
             );
 

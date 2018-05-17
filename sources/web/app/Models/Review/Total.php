@@ -6,6 +6,7 @@
 
 namespace Hgs3\Models\Review;
 
+use Hgs3\Log;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +14,8 @@ class Total
 {
     /**
      * レビューの集計
+     *
+     * @throws \Exception
      */
     public static function total()
     {
@@ -22,18 +25,19 @@ class Total
             return;
         }
 
-        $soft_ids = implode(', ', $targetReviews->pluck('soft_id'));
+        $soft_ids = implode(', ', $targetReviews->pluck('soft_id')->toArray());
 
         $sql =<<< SQL
 INSERT INTO review_totals
-soft_id, fear, good_tag_num, very_good_tag_num, bad_tag_num, very_bad_tag_num, point, review_num, created_at, updated_at
+  (soft_id, fear, good_tag_num, very_good_tag_num, bad_tag_num, very_bad_tag_num,
+  point, review_num, created_at, updated_at)
 
 SELECT *
-(
+FROM (
   SELECT soft_id, AVG(fear) AS fear, AVG(good_tag_num) AS good_tag_num,
     AVG(very_good_tag_num) AS very_good_tag_num, AVG(bad_tag_num) AS bad_tag_num,
     AVG(very_bad_tag_num) AS very_bad_tag_num, AVG(point) AS point,
-    COUNT(id) AS review_num, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+    COUNT(id) AS review_num, CURRENT_TIMESTAMP AS created_at, CURRENT_TIMESTAMP AS updated_at 
   FROM reviews
   WHERE soft_id IN ({$soft_ids})
   GROUP BY soft_id
@@ -50,6 +54,18 @@ ON DUPLICATE KEY UPDATE
     updated_at = VALUES(updated_at)
 SQL;
 
-        DB::insert($sql);
+        DB::beginTransaction();
+        try {
+            DB::insert($sql);
+
+            Orm\ReviewTotalFlag::whereIn('soft_id', $targetReviews->pluck('soft_id'))
+                ->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::exceptionError($e);
+        }
     }
 }

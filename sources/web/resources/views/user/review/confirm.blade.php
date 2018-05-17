@@ -13,7 +13,7 @@
 
         @include('review.common.show', ['review' => $draft])
 
-        <p class="alert alert-info" role="alert">
+        <p class="alert alert-info mb-5" role="alert">
             レビュー公開後は、修正することができません。<br>
             削除はできますが、削除後半年は同じゲームのレビューを書くことができません。<br>
             よくよくご確認の上、公開してください。

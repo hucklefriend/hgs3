@@ -4,6 +4,7 @@
  */
 
 namespace Hgs3\Models\Test;
+
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm;
 
@@ -19,7 +20,8 @@ class GameSoft
         return DB::table('game_softs')
             ->select(['id'])
             ->get()
-            ->pluck('id');
+            ->pluck('id')
+            ->toArray();
     }
 
     /**
@@ -30,5 +32,21 @@ class GameSoft
     public static function get()
     {
         return Orm\GameSoft::all();
+    }
+
+    /**
+     * パッケージを取得
+     *
+     * @param $softId
+     * @return array
+     */
+    public static function getPackageIds($softId)
+    {
+        return DB::table('game_package_links')
+            ->select(['package_id'])
+            ->where('soft_id', $softId)
+            ->get()
+            ->pluck('package_id')
+            ->toArray();
     }
 }
