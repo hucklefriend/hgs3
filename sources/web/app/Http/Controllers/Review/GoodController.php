@@ -19,10 +19,11 @@ class GoodController extends Controller
      *
      * @param Orm\Review $review
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function good(Orm\Review $review)
     {
-        if (Review::hasGood($review->id, Auth::id())) {
+        if ($review->user_id != Auth::id() && !Review::hasGood($review->id, Auth::id())) {
             Review::good($review, Auth::user());
         }
 
@@ -34,42 +35,14 @@ class GoodController extends Controller
      *
      * @param Orm\Review $review
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function cancel(Orm\Review $review)
     {
-        $r = new Review();
-        if ($r->hasGood($review->id, Auth::id())) {
-            $r->cancelGood($review, Auth::id());
+        if ($review->user_id != Auth::id() && Review::hasGood($review->id, Auth::id())) {
+            Review::cancelGood($review, Auth::user());
         }
 
         return redirect()->back();
-    }
-
-    /**
-     * いいね履歴
-     *
-     * @param Orm\Review $review
-     * @return $this
-     */
-    public function history(Orm\Review $review)
-    {
-        // 投稿者本人しか見られない
-        if ($review->user_id != Auth::id()) {
-            // 他のユーザーのデータを編集しようとしている
-            App::abort(403);
-        }
-
-        $his = $review->getGoodHistory();
-        $users = [];
-        if (!empty($his)) {
-            $users = User::getHash(array_pluck($his->items(), 'user_id'));
-        }
-
-        return view('review.goodHistory', [
-            'user'      => Auth::user(),
-            'review'    => $review,
-            'histories' => $his,
-            'users'     => $users
-        ]);
     }
 }

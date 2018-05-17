@@ -242,10 +242,9 @@ SQL;
         } catch (\Exception $e) {
             DB::rollBack();
             Log::exceptionError($e);
-            return false;
         }
 
-        // タイムラインに登録
+        // TODO タイムラインに登録
 
 
         return true;
@@ -321,6 +320,52 @@ SQL;
 
             return $now < $limit;
         }
+    }
 
+    /**
+     * レビュー削除
+     *
+     * @param User $user
+     * @param Orm\Review $review
+     * @throws \Exception
+     */
+    public static function delete(User $user, Orm\Review $review)
+    {
+        $softId = $review->soft_id;
+
+        DB::beginTransaction();
+
+        try {
+            // いいね履歴を削除
+            Orm\ReviewGoodHistory::where('review_id')
+                ->delete();
+
+            // TODO 不正申告を削除
+
+            // レビューを削除
+            $review->delete();
+
+            // 累計データの再集計フラグを立てる
+            self::upTotalFlag($softId);
+
+            // 投稿できませんよ期間
+            $sql =<<< SQL
+INSERT INTO review_disable_terms (user_id, soft_id, start_date, created_at, updated_at)
+VALUES (:user_id, :soft_id, CURRENT_DATE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON DUPLICATE KEY UPDATE
+  start_date = VALUES(start_date),
+  updated_at = CURRENT_TIMESTAMP
+SQL;
+
+            DB::insert($sql, [
+                'user_id' => $user->id,
+                'soft_id' => $softId
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+        }
     }
 }

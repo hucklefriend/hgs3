@@ -72,7 +72,7 @@
                     <button class="btn btn-light btn--icon" type="button" id="fear_down"><i class="far fa-arrow-alt-circle-down"></i></button>
                     <button class="btn btn-light btn--icon hidden-xs-down mx-3" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
                     <span id="fear_text" class="align-self-center"></span>
-                    <button class="btn btn-light btn--icon hidden-sm-up" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
+                    <button class="btn btn-light btn--icon hidden-sm-up" type="button" id="fear_up2"><i class="far fa-arrow-alt-circle-up"></i></button>
                 </div>
             </div>
             <div class="form-help">
@@ -290,7 +290,7 @@
                 }
             });
 
-            $('#fear_up').on('click', function (){
+            $('#fear_up, #fear_up2').on('click', function (){
                 let val = parseInt(fear.val());
 
                 if (val < fearText.length - 1) {

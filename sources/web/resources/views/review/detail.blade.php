@@ -29,31 +29,28 @@
                         0
                     </span>
                     <span>
-                        <i class="fas fa-redo-alt"></i>
-                        {{ format_date($review->open_at) }}
+                        <i class="far fa-calendar-alt"></i>
+                        {{ format_date(strtotime($review->post_at)) }}
                     </span>
                 </div>
 
-
-                @auth
+                @if (Auth::check() && !$isWriter)
                 <div class="mt-3">
                     @if ($hasGood)
-                        <form method="POST" action="{{ route('レビューいいね取消', ['review' => $review->id]) }}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button class="btn btn-good2 btn--icon"><i class="fas fa-thumbs-up"></i></button>
-                        </form>
+                    <form method="POST" action="{{ route('レビューいいね取消', ['review' => $review->id]) }}">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-good2 btn--icon"><i class="fas fa-thumbs-up"></i></button>
+                    </form>
                     @else
-                        <form method="POST" action="{{ route('レビューいいね', ['review' => $review->id]) }}">
-                            {{ csrf_field() }}
-                            <button class="btn btn-good btn--icon"><i class="far fa-thumbs-up"></i></button>
-                        </form>
+                    <form method="POST" action="{{ route('レビューいいね', ['review' => $review->id]) }}">
+                        {{ csrf_field() }}
+                        <button class="btn btn-good btn--icon"><i class="far fa-thumbs-up"></i></button>
+                    </form>
                     @endif
-                    </div>
-                @endauth
                 </div>
+                @endauth
             </div>
         </div>
-
     </div>
 @endsection

@@ -92,9 +92,11 @@ class Review extends \Eloquent
     }
 
 
-
     /**
+     * レビュー削除
      *
+     * @return bool|null|void
+     * @throws \Exception
      */
     public function delete()
     {
@@ -116,8 +118,7 @@ class Review extends \Eloquent
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
+            Log::exceptionError($e);
         }
     }
 
