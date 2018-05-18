@@ -42,7 +42,7 @@ class SiteController extends Controller
             'newArrivals'    => $newArrivals,
             'updateArrivals' => $updateArrivals,
             'webmasters'     => User::getHash($webmasterIds),
-            'timelines'      => [],//Timeline\Site::get(time(), 20)
+            'timelines'      => Timeline\Site::get(time(), 20)
         ]);
     }
 

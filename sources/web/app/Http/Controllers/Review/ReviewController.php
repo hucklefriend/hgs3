@@ -41,7 +41,7 @@ class ReviewController extends Controller
         $total = Orm\ReviewTotal::find($soft->id);
         if ($total !== null) {
             $data['total'] = $total;
-            $data['reviews'] = Review::getNewArrivalsBySoft($soft->id, 10);
+            //$data['reviews'] = Review::getNewArrivalsBySoft($soft->id, 10);
 
             $pager = new LengthAwarePaginator([], $total->review_num, 10);
             $pager->setPath('');
@@ -79,7 +79,7 @@ class ReviewController extends Controller
         // いいね済みか
         $hasGood = false;
         if (!$isWriter) {
-            //$hasGood = $r->hasGood($review->id, Auth::id());
+            $hasGood = Review::hasGood(Auth::id(), $review->id);
         }
 
         return view('review.detail', [

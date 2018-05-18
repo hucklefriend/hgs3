@@ -23,7 +23,7 @@ class GoodController extends Controller
      */
     public function good(Orm\Review $review)
     {
-        if ($review->user_id != Auth::id() && !Review::hasGood($review->id, Auth::id())) {
+        if ($review->user_id != Auth::id() && !Review::hasGood(Auth::id(), $review->id)) {
             Review::good($review, Auth::user());
         }
 
@@ -39,7 +39,7 @@ class GoodController extends Controller
      */
     public function cancel(Orm\Review $review)
     {
-        if ($review->user_id != Auth::id() && Review::hasGood($review->id, Auth::id())) {
+        if ($review->user_id != Auth::id() && Review::hasGood(Auth::id(), $review->id)) {
             Review::cancelGood($review, Auth::user());
         }
 

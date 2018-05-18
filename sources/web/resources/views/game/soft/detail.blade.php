@@ -183,42 +183,43 @@
         <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->reviewNum : 0) }}件</small></h4>
+                    <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->review_num : 0) }}件</small></h4>
                     @empty($reviewTotal)
                     <p class="card-text">工事中</p>
                     @else
-                        <div>
+                        <div class="d-flex">
                             <div class="review-point">
                                 {{ round($reviewTotal->point, 1) }}
                             </div>
 
                             <table class="review-point-table">
                                 <tr>
-                                    <th>怖さ</th>
+                                    <th>😱 怖さ</th>
                                     <td class="text-right">{{ round($reviewTotal->fear * 5, 1) }}点</td>
                                 </tr>
                                 <tr>
-                                    <th>良い所</th>
-                                    <td class="text-right">{{ count($reviewTotal->getGoodTags()) }}点</td>
+                                    <th><i class="far fa-thumbs-up"></i> 良い所</th>
+                                    <td class="text-right">{{ round($reviewTotal->good_tag_num, 1)}}点</td>
                                 </tr>
                                 <tr>
-                                    <th>すごく良い所</th>
-                                    <td class="text-right">{{ count($reviewTotal->getVeryGoodTags()) }}点</td>
+                                    <th><i class="far fa-thumbs-up"></i><i class="far fa-thumbs-up"></i> すごく良い所</th>
+                                    <td class="text-right">{{ round($reviewTotal->very_good_tag_num, 1) }}点</td>
                                 </tr>
                                 <tr>
-                                    <th>悪い所</th>
-                                    <td class="text-right">-{{ count($reviewTotal->getBadTags()) }}点</td>
+                                    <th><i class="far fa-thumbs-down"></i> 悪い所</th>
+                                    <td class="text-right">-{{ round($reviewTotal->bad_tag_num, 1) }}点</td>
                                 </tr>
                                 <tr>
-                                    <th>すごく悪い所</th>
-                                    <td class="text-right">-{{ count($reviewTotal->getVeryBadTags()) }}点</td>
+                                    <th><i class="far fa-thumbs-down"></i><i class="far fa-thumbs-down"></i> すごく悪い所</th>
+                                    <td class="text-right">-{{ round($reviewTotal->very_bad_tag_num, 1) }}点</td>
                                 </tr>
                             </table>
                         </div>
+                        <p class="text-mute"><small>平均点です</small></p>
 
 
                         <div class="text-right">
-                            <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                            <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                         </div>
 
                     @endempty

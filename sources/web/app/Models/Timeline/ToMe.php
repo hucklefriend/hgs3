@@ -109,14 +109,14 @@ class ToMe extends TimelineAbstract
     {
         if ($goodUser === null) {
             $text = sprintf('<a href="%s">%sのレビュー</a>がいいねされました。',
-                route('レビュー詳細', ['review' => $review->id]),
+                route('レビュー', ['review' => $review->id]),
                 e($soft->name)
             );
         } else {
             $text = sprintf('<a href="%s">%sさん</a>が<a href="%s">%sのレビュー</a>にいいねしてくれました。',
                 route('プロフィール', ['showId' => $goodUser->show_id]),
                 e($goodUser->name),
-                route('レビュー詳細', ['review' => $review->id]),
+                route('レビュー', ['review' => $review->id]),
                 e($soft->name)
             );
         }
@@ -137,7 +137,7 @@ class ToMe extends TimelineAbstract
     {
         if ($review->max_good_num > 1 && $prevMaxGoodNum < $review->max_good_num && $review->max_good_num % 100 == 0) {
             $text = sprintf('<a href="%s">%sのレビュー</a>へのいいねが%d件に達しました。',
-                route('レビュー詳細', ['review' => $review->id]),
+                route('レビュー', ['review' => $review->id]),
                 e($soft->name),
                 number_format($review->max_good_num)
             );

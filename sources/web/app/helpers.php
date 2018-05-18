@@ -347,6 +347,10 @@ function follow_status_icon(array $followStatus, $targetUserId)
  */
 function small_image_url($package)
 {
+    if ($package == null) {
+        return '';
+    }
+
     $imageUrl = '';
 
     if ($package->is_adult) {

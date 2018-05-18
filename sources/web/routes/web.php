@@ -43,7 +43,9 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::patch('/admin/site/approval/judge/{site}/reject', 'Site\ApprovalController@reject')->name('サイト拒否');
 
     // 管理人によるレビューURL管理
-    Route::get('/admin/review/url/{review}', 'Review\UrlApprovalController@judge')->name('レビューURL判定');
+    Route::get('/admin/review/url', 'Review\ApprovalController@index')->name('レビューURL判定');
+    Route::patch('/admin/review/url/ok', 'Review\ApprovalController@ok')->name('レビューURL OK');
+    Route::patch('/admin/review/url/ng', 'Review\ApprovalController@ng')->name('レビューURL NG');
 });
 
 // エディターのみ
@@ -225,7 +227,6 @@ Route::get('/game/soft/{soft}', 'Game\SoftController@detail')->name('ゲーム�
 Route::get('/review', 'Review\ReviewController@index')->name('レビュートップ');
 Route::get('/review/soft/{soft}', 'Review\ReviewController@soft')->name('ソフト別レビュー一覧');
 Route::get('/review/detail/{review}', 'Review\ReviewController@detail')->name('レビュー');
-Route::get('/review/good/history/{review}', 'Review\GoodController@history')->name('レビューいいね履歴');
 Route::get('/review/new_arrivals', 'Review\ReviewController@newArrivals')->name('新着レビュー一覧');
 
 // 不正レビュー

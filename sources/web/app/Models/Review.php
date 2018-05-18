@@ -184,6 +184,8 @@ SQL;
      */
     public static function getProfileList(User $user)
     {
+        \ChromePhp::info($user->id);
+
         $data = Orm\Review::where('user_id', $user->id)
             ->orderBy('id', 'DESC')
             ->paginate(20);
@@ -196,6 +198,8 @@ SQL;
         $soft = Orm\GameSoft::getHash($softIds);
         foreach ($data->items() as &$review) {
             $review->soft = $soft[$review->soft_id];
+
+
         }
 
         return $data;
@@ -241,12 +245,11 @@ SQL;
                 'user_id'   => $user->id
             ]);
 
-            $review->good_num++;
-            if ($review->good_num > $prevMaxGoodNum) {
-                $review->max_good_num = $review->good_num;
-            }
-
-            $review->save();
+            DB::table('reviews')
+                ->where('id', $review->id)
+                ->update([
+                    'good_num' => DB::raw('good_num + 1')
+                ]);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -280,8 +283,11 @@ SQL;
                 ->where('user_id', $user->id)
                 ->delete();
 
-            $review->good_num--;
-            $review->save();
+            DB::table('reviews')
+                ->where('id', $review->id)
+                ->update([
+                    'good_num' => DB::raw('good_num - 1')
+                ]);
 
             DB::commit();
         } catch (\Exception $e) {
