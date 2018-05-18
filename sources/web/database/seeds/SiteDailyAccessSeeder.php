@@ -1,22 +1,20 @@
 <?php
-/**
- * サイト日別アクセス数のテストデータ生成
- */
 
-namespace Hgs3\Models\Test;
-use Hgs3\Models\Site\Good;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Orm;
+use Hgs3\Models\Test;
 
-class SiteDailyAccess
+class SiteDailyAccessSeeder extends Seeder
 {
     /**
-     * テストデータ生成
+     * サイトデータ生成
+     *
+     * @throws Exception
      */
-    public static function create()
+    public function run()
     {
-        echo 'create site daily access test data.'.PHP_EOL;
-
-        $sites = Site::getIds();
+        $sites = Test\Site::getIds();
 
         $startDate = new \DateTime();
         $startDate->sub(new \DateInterval('P3M'));

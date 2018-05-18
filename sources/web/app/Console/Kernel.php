@@ -13,19 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\TestData\User::class,
-        Commands\TestData\UserPlayedGame::class,
-        Commands\TestData\UserFavoriteGame::class,
-        Commands\TestData\ReviewGoodHistory::class,
-        Commands\TestData\Review::class,
-        Commands\TestData\Site::class,
-        Commands\TestData\SiteGood::class,
-        Commands\TestData\SiteDailyAccess::class,
-        Commands\TestData\SiteFootprint::class,
-        Commands\TestData\UserFavoriteSite::class,
-        Commands\TestData\UserFollow::class,
-        Commands\TestData\NewInformation::class,
-        Commands\TestData\SystemNotice::class,
         Commands\Mongo\Reset::class,
         Commands\Init::class,
         Commands\Master\UpdateOriginalPackageId::class,

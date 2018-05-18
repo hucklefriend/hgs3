@@ -28,6 +28,8 @@ class ReviewSeeder extends Seeder
                     continue;
                 }
 
+                $written[$s->id] = 1;
+
                 $draft = self::generateDraft($user, $s);
                 if ($draft === false) {
                     continue;
@@ -52,7 +54,6 @@ class ReviewSeeder extends Seeder
         $draft = new Hgs3\Models\Orm\ReviewDraft();
 
         $packageIds = Test\GameSoft::getPackageIds($soft->id);
-        echo json_encode($packageIds) . PHP_EOL;
         if (empty($packageIds)) {
             return false;
         }
@@ -70,6 +71,7 @@ class ReviewSeeder extends Seeder
         $draft->fear = rand(0, 6);
         $draft->url = rand(0, 1) ? '' : 'https://horrorgame.net/';
         $draft->progress = rand(0, 1) ? '' : '進捗状況';
+        $draft->fear_comment = file_get_contents(storage_path('test/review/good/' . $fileName));
         $draft->good_comment = file_get_contents(storage_path('test/review/good/' . $fileName));
         $draft->bad_comment = file_get_contents(storage_path('test/review/bad/' . $fileName));
         $draft->general_comment = file_get_contents(storage_path('test/review/general/' . $fileName));

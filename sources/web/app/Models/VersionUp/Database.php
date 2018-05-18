@@ -11,7 +11,7 @@ class Database
     /**
      * バージョンアップ実行
      */
-    public function versionUp()
+    public static function versionUp()
     {
 /*
         echo 'copy company'.PHP_EOL;

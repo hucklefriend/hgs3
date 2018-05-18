@@ -1,24 +1,23 @@
 <?php
-/**
- * ユーザーお気に入りサイトのテストデータ生成
- */
 
-namespace Hgs3\Models\Test;
-use Hgs3\Models\Site\Footprint;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Hgs3\Models\Orm;
+use Hgs3\Models\Test;
 
-class SiteFootprint
+class SiteFootprintSeeder extends Seeder
 {
     /**
-     * テストデータ生成
+     * サイトデータ生成
+     *
+     * @throws Exception
      */
-    public static function create()
+    public function run()
     {
-        echo 'create site footprint test data.'.PHP_EOL;
-
-        $users = User::get();
+        $users = Test\User::get();
         $userMax = $users->count() - 1;
 
-        $sites = Site::get();
+        $sites = Test\Site::get();
 
         $now = time();
         $start = $now - (86400 * 30 * 2);   // 2ヶ月前
@@ -40,7 +39,7 @@ class SiteFootprint
                     break;
                 }
 
-                Footprint::add($site, $user, $time);
+                \Hgs3\Models\Site\Footprint::add($site, $user, $time);
             }
         }
     }
