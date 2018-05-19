@@ -1,4 +1,4 @@
-2018.4.1 更新手順
+2018.5.20 更新手順
 
 ○GitHubのタグ付けする
 
@@ -7,11 +7,11 @@
 php artisan down
 
 ○DBをバックアップする
-mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs2 > hgs2_20180401.sql
-mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs3 > hgs3_20180401.sql
+mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs2 > hgs2_20180520.sql
+mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs3 > hgs3_20180520.sql
 
-tar -zcvf hgs2_20180401.tar.gz hgs2_20180401.sql
-tar -zcvf hgs3_20180401.tar.gz hgs3_20180401.sql
+tar -zcvf hgs2_20180520.tar.gz hgs2_20180520.sql
+tar -zcvf hgs3_20180520.tar.gz hgs3_20180520.sql
 
 sudo mongodump -d hgs3 -o ./
 
@@ -58,10 +58,10 @@ MariaDBを入れる
 
 sudo apt-get install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo add-apt-repository 'deb [arch=amd64,i386] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.2/ubuntu artful main'
+sudo add-apt-repository 'deb [arch=amd64] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.2/ubuntu bionic main'
 
 sudo apt update
-sudo apt install mariadb-server-10.2
+sudo apt install mariadb-server
 
 
 ○ソースをアップする
@@ -74,9 +74,6 @@ crontab -e
 
 ○DBマイグレーション
 php aritsan migrate
-
-○マスターリセット
-php artisan init
 
 ○マスターインポート
 php artisan master:import 20180519
