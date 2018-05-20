@@ -185,8 +185,15 @@
                 <div class="card-body">
                     <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->review_num : 0) }}件</small></h4>
                     @empty($reviewTotal)
-                    <p class="card-text">レビューはありません。</p>
                         @auth
+                            <p class="card-text">
+                                レビューはないか、集計待ち状態です。<br>
+                                このゲームのレビューを書いてみませんか？<br>
+                                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
+                                    <i class="fas fa-edit"></i> レビューを書く
+                                </a>
+                            </p>
+                        @else
                             <p class="card-text">レビューはありません。</p>
                         @endauth
                     @else

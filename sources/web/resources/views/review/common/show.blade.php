@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-md-5 col-lg-4">
         <div class="card card-hgn">
             <div class="card-body">
                 <div class="d-flex">
@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-md-7 col-lg-8">
         <div class="card card-hgn">
             <div class="card-body">
                 <h5 class="card-title">遊んだゲーム</h5>

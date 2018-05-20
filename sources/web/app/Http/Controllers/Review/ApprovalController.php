@@ -25,7 +25,7 @@ class ApprovalController extends Controller
         }
 
         return view('review.approval.index', [
-            'data' => $reviews
+            'reviews' => $reviews
         ]);
     }
 

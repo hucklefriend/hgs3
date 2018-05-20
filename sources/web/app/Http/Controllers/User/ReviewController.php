@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     /**
-     *
+     * レビュートップ
      */
     public function index()
     {
@@ -162,6 +162,7 @@ class ReviewController extends Controller
         $draft->fear = intval($request->get('fear'));
         $draft->url = $request->get('url', '');
         $draft->progress = $request->get('progress', '');
+        $draft->fear_comment = $request->get('fear_comment', '');
         $draft->good_comment = $request->get('good_comment', '');
         $draft->bad_comment = $request->get('bad_comment', '');
         $draft->general_comment = $request->get('general_comment', '');

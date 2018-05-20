@@ -123,7 +123,8 @@ class Review
 
             // レビューURL確認待ち
             if (!empty($review->url)) {
-                Orm\ReviewWaitUrl::insert(['review_id' => $review->id]);
+                $rwu = new Orm\ReviewWaitUrl(['review_id' => $review->id]);
+                $rwu->save();
             }
 
             // 集計してねフラグを立てる
@@ -257,7 +258,7 @@ SQL;
             Log::exceptionError($e);
         }
 
-        // TODO タイムラインに登録
+        // タイムラインに登録
         $reviewUser = User::find($review->user_id);
         $soft = Orm\GameSoft::find($review->soft_id);
         Timeline\ToMe::addReviewGoodText($reviewUser, $review, $soft, $user);

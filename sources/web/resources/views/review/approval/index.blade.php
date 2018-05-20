@@ -10,25 +10,27 @@
         </header>
 
         @foreach ($reviews as $review)
-        <div>
-            <a href="{{ route('レビュー', ['review' => $review->id]) }}" target="_blank" class="mr-3">レビュー</a>
-            <a href="{{ $review->url }}" target="_blank">{{ $review->url }}</a>
-        </div>
-        <div class="d-flex align-content-end">
-            <form method="POST" action="{{ route('レビューURL OK') }}">
-                {{ csrf_field() }}
-                {{ method_field('PATCH') }}
-                <input type="hidden" name="review_id" value="{{ $review->id }}">
-                <button class="btn btn-primary">OK</button>
-            </form>
-            <form method="POST" action="{{ route('レビューURL NG') }}">
-                {{ csrf_field() }}
-                {{ method_field('PATCH') }}
-                <input type="hidden" name="review_id" value="{{ $review->id }}">
-                <button class="btn btn-danger">OK</button>
-            </form>
-        </div>
-            @if (!$loop->isLast)
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <a href="{{ route('レビュー', ['review' => $review->id]) }}" target="_blank" class="mr-3">レビュー</a>
+                    <a href="{{ $review->url }}" target="_blank">{{ $review->url }}</a>
+                </div>
+                <div class="d-flex text-right col-12 col-sm-6">
+                    <form method="POST" action="{{ route('レビューURL OK') }}" class="mr-5">
+                        {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
+                        <input type="hidden" name="review_id" value="{{ $review->id }}">
+                        <button class="btn btn-primary">OK</button>
+                    </form>
+                    <form method="POST" action="{{ route('レビューURL NG') }}">
+                        {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
+                        <input type="hidden" name="review_id" value="{{ $review->id }}">
+                        <button class="btn btn-danger">NG</button>
+                    </form>
+                </div>
+            </div>
+            @if (!$loop->last)
                 <hr>
             @endif
         @endforeach

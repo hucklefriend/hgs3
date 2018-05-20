@@ -7,8 +7,25 @@
     <div class="content__inner">
         <header class="content__title">
             <h1>レビュー</h1>
-            <p>工事中</p>
         </header>
+
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h4 class="card-title">新着レビュー</h4>
+
+
+
+            </div>
+        </div>
+
+
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h4 class="card-title">いいねの多いレビュー</h4>
+                <p>工事中</p>
+            </div>
+        </div>
+
     </div>
 @endsection
 

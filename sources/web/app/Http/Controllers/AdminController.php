@@ -18,7 +18,8 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin', [
-            'approvalWaitNum' => Site\Approval::getWaitNum()
+            'approvalWaitNum' => Site\Approval::getWaitNum(),
+            'reviewUrlWaitNum' => Orm\ReviewWaitUrl::all()->count(),
         ]);
     }
 }
