@@ -185,7 +185,10 @@
                 <div class="card-body">
                     <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->review_num : 0) }}件</small></h4>
                     @empty($reviewTotal)
-                    <p class="card-text">工事中</p>
+                    <p class="card-text">レビューはありません。</p>
+                        @auth
+                            <p class="card-text">レビューはありません。</p>
+                        @endauth
                     @else
                         <div class="d-flex">
                             <div class="review-point">

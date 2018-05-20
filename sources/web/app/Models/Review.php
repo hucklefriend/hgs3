@@ -324,7 +324,7 @@ SQL;
      */
     public static function isDisableTerm($userId, $softId)
     {
-        $data = Orm\ReviewDisableTErm::where('user_id', $userId)
+        $data = Orm\ReviewDisableTerm::where('user_id', $userId)
             ->where('soft_id', $softId)
             ->first();
 

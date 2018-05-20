@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
-@section('title')レビュー投稿@endsection
+@section('title'){{ $soft->name }}のレビュー投稿@endsection
 @section('global_back_link'){{ route('プロフィール2', ['showId' => Auth::user()->show_id, 'show' => 'review']) }}@endsection
 
 @section('content')
 
     <div class="content__inner">
         <header class="content__title">
-            <h1>レビューを書く</h1>
+            <h1>{{ $soft->name }}</h1>
+            <p>レビュー投稿</p>
         </header>
 
         @if (!$draft->isDefault)
@@ -117,7 +118,7 @@
                             </label>
                         </div>
                     @endforeach
-                    <p id="no_good_text">良い点が1つも選択されていません。</p>
+                    <p id="no_good_text" class="text-warning">良い点を選択すると、すごく良い点が選択できるようになります。</p>
                 </div>
             </div>
             <div class="form-help"></div>
@@ -144,7 +145,7 @@
             <div class="form-group">
                 <label for="very_bad_tags" class="hgn-label"><i class="fas fa-check"></i> すごく悪い点</label>
                 <p class="text-muted">
-                    悪い点の中で、他のゲームと比べても特に劣っているところがあれば選択してください。(<span id="bad_check_num">0</span>個選択中)
+                    悪い点の中で、他のゲームと比べても特に劣っているところがあれば選択してください。(<span id="very_bad_check_num">0</span>個選択中)
                 </p>
                 <div class="d-flex flex-wrap" id="very_bad_select">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -156,7 +157,37 @@
                             </label>
                         </div>
                     @endforeach
-                    <p id="no_bad_text">良い点が1つも選択されていません。</p>
+                    <p id="no_bad_text" class="text-warning">悪い点を選択すると、すごく悪い点が選択できるようになります。</p>
+                </div>
+            </div>
+            <div class="form-help"></div>
+
+            <div class="form-group">
+                <div class="d-flex">
+                    <div class="review-point" id="total_point"></div>
+
+                    <table class="review-point-table">
+                        <tr>
+                            <th>😱 怖さ</th>
+                            <td class="text-right"><span id="total_fear"></span>点</td>
+                        </tr>
+                        <tr>
+                            <th><i class="far fa-thumbs-up"></i> 良い</th>
+                            <td class="text-right" id="total_point"><span id="total_good"></span>点</td>
+                        </tr>
+                        <tr>
+                            <th><i class="far fa-thumbs-up"></i><i class="far fa-thumbs-up"></i> すごく良い</th>
+                            <td class="text-right" id="total_point"><span id="total_very_good"></span>点</td>
+                        </tr>
+                        <tr>
+                            <th><i class="far fa-thumbs-down"></i> 悪い</th>
+                            <td class="text-right" id="total_point">-<span id="total_bad"></span>点</td>
+                        </tr>
+                        <tr>
+                            <th><i class="far fa-thumbs-down"></i><i class="far fa-thumbs-down"></i> すごく悪い</th>
+                            <td class="text-right" id="total_point">-<span id="total_very_bad"></span>点</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="form-help"></div>
@@ -261,7 +292,7 @@
 
     <script>
         let packageId = {!! old('package_id', null) == null ? $draft->package_id : json_encode(old('package_id')) !!}
-        let fearText = {!! json_encode(\Hgs3\Constants\Review\Fear::$data)  !!};
+        let fearText = {!! json_encode(\Hgs3\Constants\Review\Fear::$textWithPoint)  !!};
         let goodTags = {!! json_encode($draft->getGoodTags()) !!};
         let veryGoodTags = {!! json_encode($draft->getVeryGoodTags()) !!};
         let badTags = {!! json_encode($draft->getBadTags()) !!};
@@ -292,10 +323,25 @@
 
             $('.good_tag').on('change', function (){
                 changeVeryBtn('good', $(this).val(), $(this).prop('checked'));
+                setGoodTagNum();
+                setVeryGoodTagNum();
+                setTotalPoint();
             });
 
             $('.bad_tag').on('change', function (){
                 changeVeryBtn('bad', $(this).val(), $(this).prop('checked'));
+                setBadTagNum();
+                setVeryBadTagNum();
+                setTotalPoint();
+            });
+
+            $('.very_good_tag').on('change', function (){
+                setVeryGoodTagNum();
+                setTotalPoint();
+            });
+            $('.very_bad_tag').on('change', function (){
+                setVeryBadTagNum();
+                setTotalPoint();
             });
 
             $('#fear_down').on('click', function (){
@@ -305,6 +351,7 @@
                     fear.val(val - 1);
                     setFearText();
                 }
+                setTotalPoint();
             });
 
             $('#fear_up, #fear_up2').on('click', function (){
@@ -314,6 +361,7 @@
                     fear.val(val + 1);
                     setFearText();
                 }
+                setTotalPoint();
             });
 
             setFearText();
@@ -352,19 +400,25 @@
                 toggleButton($('#pkg_' + pkgId), true);
             });
 
-            console.debug('bbb');
-
             setGoodTagNum();
             setVeryGoodTagNum();
             setBadTagNum();
             setVeryBadTagNum();
+            setTotalPoint();
         });
 
         function changeVeryBtn(target, tagId, checked)
         {
             let btn = $('#very_' + target + '_btn_' + tagId);
+            let check = $('#very_' + target + '_tag_' + tagId);
 
-            checked ? btn.show() : btn.hide();
+            if (checked) {
+                btn.show()
+            } else {
+                check.prop('checked', false);
+                btn.hide();
+                setVeryGoodTagNum();setVeryBadTagNum();
+            }
         }
 
         function setFearText()
@@ -377,28 +431,46 @@
         function setGoodTagNum()
         {
             let num = $('.good_tag:checked').length;
-            console.debug('aaa: ' + num);
+            $('#good_check_num').text(num);
+
+            (num > 0) ? $('#no_good_text').hide() : $('#no_good_text').show();
         }
 
         function setVeryGoodTagNum()
         {
             let num = $('.very_good_tag:checked').length;
-            console.debug(num);
+            $('#very_good_check_num').text(num);
         }
 
         function setBadTagNum()
         {
             let num = $('.bad_tag:checked').length;
-            console.debug(num);
+            $('#bad_check_num').text(num);
+
+            (num > 0) ? $('#no_bad_text').hide() : $('#no_bad_text').show();
         }
 
         function setVeryBadTagNum()
         {
             let num = $('.very_bad_tag:checked').length;
-            console.debug(num);
+            $('#very_bad_check_num').text(num);
         }
 
+        function setTotalPoint()
+        {
+            let fear = $('#fear').val() * 5;
+            let goodNum = $('.good_tag:checked').length;
+            let veryGoodNum = $('.very_good_tag:checked').length;
+            let badNum = $('.bad_tag:checked').length;
+            let veryBadNum = $('.very_bad_tag:checked').length;
 
+            $('#total_point').text(fear + goodNum + veryGoodNum - badNum - veryBadNum);
+            $('#total_fear').text(fear);
+            $('#total_good').text(goodNum);
+            $('#total_very_good').text(veryGoodNum);
+            $('#total_bad').text(badNum);
+            $('#total_very_bad').text(veryBadNum);
+        }
 
     </script>
 
