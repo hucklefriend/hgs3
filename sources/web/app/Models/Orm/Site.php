@@ -84,8 +84,8 @@ class Site extends \Eloquent
         $query = self::where('user_id', $userId);
 
         if ($userId != Auth::id()) {
-            $query->where('approval_status', ApprovalStatus::OK)
-                ->where('open_type', OpenType::ALL);
+            $query->where('approval_status', ApprovalStatus::OK);
+                //->where('open_type', OpenType::ALL);
         }
 
         return $query->count('id');

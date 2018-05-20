@@ -495,8 +495,8 @@ SQL;
         $query = Orm\Site::where('user_id', $userId);
 
         if (!$isWebmaster) {
-            $query->where('approval_status', ApprovalStatus::OK)
-                ->where('open_type', OpenType::ALL);
+            $query->where('approval_status', ApprovalStatus::OK);
+                //->where('open_type', OpenType::ALL);
         }
 
         return $query
