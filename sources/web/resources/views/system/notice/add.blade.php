@@ -39,7 +39,7 @@
 
                 @foreach (\Hgs3\Constants\System\NoticeType::getData() as $id => $text)
                     <label class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" name="rate" id="type{{ $loop->index }}" value="{{ $id }}"{{ checked($id, old('type', \Hgs3\Constants\System\NoticeType::NORMAL)) }}>
+                        <input type="radio" class="custom-control-input" name="type" id="type{{ $loop->index }}" value="{{ $id }}"{{ checked($id, old('type', \Hgs3\Constants\System\NoticeType::NORMAL)) }}>
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">{{ $text }}</span>
                     </label>

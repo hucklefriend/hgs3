@@ -351,6 +351,13 @@
             packageId.forEach(function (pkgId){
                 toggleButton($('#pkg_' + pkgId), true);
             });
+
+            console.debug('bbb');
+
+            setGoodTagNum();
+            setVeryGoodTagNum();
+            setBadTagNum();
+            setVeryBadTagNum();
         });
 
         function changeVeryBtn(target, tagId, checked)
@@ -366,6 +373,33 @@
 
             $('#fear_text').text(fearText[val]);
         }
+
+        function setGoodTagNum()
+        {
+            let num = $('.good_tag:checked').length;
+            console.debug('aaa: ' + num);
+        }
+
+        function setVeryGoodTagNum()
+        {
+            let num = $('.very_good_tag:checked').length;
+            console.debug(num);
+        }
+
+        function setBadTagNum()
+        {
+            let num = $('.bad_tag:checked').length;
+            console.debug(num);
+        }
+
+        function setVeryBadTagNum()
+        {
+            let num = $('.very_bad_tag:checked').length;
+            console.debug(num);
+        }
+
+
+
     </script>
 
     <style>
