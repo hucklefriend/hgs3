@@ -16,6 +16,8 @@ class Shop
     const DMM_GAMES = 16;
     const APP_STORE = 31;
     const GOOGLE_PLAY = 32;
+    const GETCHU = 41;
+    const DL_SITE = 42;
 
     private static $names = [
         self::AMAZON             => 'Amazon',
@@ -23,10 +25,12 @@ class Shop
         self::PLAY_STATION_STORE => 'PlayStation Store',
         self::MICROSOFT_STORE    => 'Microsoft ストア',
         self::NINTENDO_STORE     => 'My Nintendo Store',
-        self::NINTENDO_E_SHOP    => 'ニンテンドーeショップ',
+        self::NINTENDO_E_SHOP    => 'Nintendo eShop',
         self::DMM_GAMES          => 'DMM GAMES',
         self::APP_STORE          => 'App Store',
         self::GOOGLE_PLAY        => 'Google Play',
+        self::GETCHU                => 'Getchu.com',
+        self::DL_SITE               => 'DLsite'
     ];
 
     /**
