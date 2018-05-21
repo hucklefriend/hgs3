@@ -10,7 +10,9 @@
             <p class="mb-0">レビュー</p>
         </header>
 
-        <div class="card card-hgn">
+        <div class="row">
+            <div class="col-12 col-sm-7 col-md-6 col-lg-5">
+                <div class="card card-hgn">
             <div class="card-body">
                 <h4 class="card-title">平均点</h4>
                 @if ($total !== null)
@@ -47,52 +49,50 @@
                 @endif
             </div>
         </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+                <div class="card card-hgn">
+                    <div class="card-body">広告</div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="card card-hgn">
             <div class="card-body">
                 <h4 class="card-title">みんなのレビュー</h4>
 
+                @foreach ($reviews as $review)
+                    <div class="mb-5 d-flex justify-content-between">
+                        <div class="d-flex">
+                            <span class="review-point-list">{{ $review->point }}</span>
+                            <div class="ml-3">
+                                <div class="d-flex flex-wrap">
+                                    <span class="mr-2 badge and-more">😱 {{ $review->fear * 5 }}</span>
+                                    <span class="mr-2 badge and-more">良 {{ $review->good_tag_num }}</span>
+                                    <span class="mr-2 badge and-more">特良 {{ $review->very_good_tag_num }}</span>
+                                    <span class="mr-2 badge and-more">悪 {{ $review->bad_tag_num }}</span>
+                                    <span class="mr-2 badge and-more">特悪 {{ $review->very_bad_tag_num }}</span>
+                                </div>
+                                <div>
+                                    <span><i class="far fa-user"></i> {{ $users[$review->user_id]->name }}</span><br>
+                                    <span><i class="far fa-calendar-alt"></i> {{ format_date(strtotime($review->post_at)) }}</span><br>
+                                    <span>🤔 {{ $review->good_num }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="align-self-center ml-5">
+                            <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
 
 
+                @endforeach
 
+
+                @include('common.pager', ['pager' => $reviews])
             </div>
         </div>
-
-
     </div>
-
-
-    @if ($total !== null)
-
-        <div class="d-flex align-items-stretch">
-            <div class="p-2 align-self-center" style="min-width: 3em;">
-                <div class="review-point-outline">
-                    <p class="review-point">{{ $total->point }}</p>
-                </div>
-            </div>
-            <div class="p-10 align-self-center">
-                <div class="break-word" style="width: 100%;"><h5>{{ $soft->name }}</h5></div>
-                <a href="{{ url('game/soft') }}/{{ $soft->id }}">ゲームの詳細</a> |
-                <a href="{{ url('review/package_select') }}/{{ $soft->id }}">レビューを投稿する</a>
-            </div>
-        </div>
-
-        @include('review.common.chart', ['r' => $total])
-
-    <hr>
-    <h5>レビュー一覧</h5>
-
-    {{ $pager->links() }}
-
-        @foreach ($reviews as $r)
-            @include('review.common.normal', ['r' => $r, 'showLastMonthGood' => false])
-            @if (!$loop->last)
-                <hr>
-            @endif
-        @endforeach
-
-    {{ $pager->links() }}
-    @else
-        <p>レビューが投稿されていません。</p>
-    @endif
 @endsection

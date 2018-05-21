@@ -41,12 +41,15 @@ class ReviewController extends Controller
         $total = Orm\ReviewTotal::find($soft->id);
         if ($total !== null) {
             $data['total'] = $total;
-            //$data['reviews'] = Review::getNewArrivalsBySoft($soft->id, 10);
+            $data['reviews'] = Orm\Review::where('soft_id', $soft->id)
+                ->orderBy('id', 'DESC')
+                ->paginate(10);
 
-            $pager = new LengthAwarePaginator([], $total->review_num, 10);
-            $pager->setPath('');
+            $data['users'] = [];
 
-            $data['pager'] = $pager;
+            if ($data['reviews']->isNotEmpty()) {
+                $data['users'] = User::getHash(array_pluck($data['reviews']->items(), 'user_id'));
+            }
         }
 
         return view('review.soft', $data);
