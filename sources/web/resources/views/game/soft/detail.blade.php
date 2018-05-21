@@ -225,9 +225,6 @@
                                 </tr>
                             </table>
                         </div>
-                        <p class="text-mute"><small>平均点です</small></p>
-
-
                         <div class="text-right">
                             <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                         </div>
