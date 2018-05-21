@@ -46,6 +46,9 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/admin/review/url', 'Review\ApprovalController@index')->name('レビューURL判定');
     Route::patch('/admin/review/url/ok', 'Review\ApprovalController@ok')->name('レビューURL OK');
     Route::patch('/admin/review/url/ng', 'Review\ApprovalController@ng')->name('レビューURL NG');
+
+
+    Route::get('/test', 'TopController@test');
 });
 
 // エディターのみ

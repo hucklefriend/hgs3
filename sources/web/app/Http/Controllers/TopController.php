@@ -5,8 +5,8 @@
 
 namespace Hgs3\Http\Controllers;
 
+use Hgs3\Models\Dmm;
 use Hgs3\Models\Orm;
-use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class TopController extends Controller
@@ -84,5 +84,10 @@ class TopController extends Controller
     public function about()
     {
         return view('about');
+    }
+
+    public function test()
+    {
+        return '<pre>' . print_r(Dmm::getItem('milu_0016'), true) .  '</pre>';
     }
 }
