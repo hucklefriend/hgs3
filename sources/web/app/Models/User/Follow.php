@@ -143,14 +143,16 @@ SQL;
      * 削除
      *
      * @param int $userId
-     * @param int $followUserId
+     * @param string $followUserShowId
      * @return int
      */
-    public static function remove($userId, $followUserId)
+    public static function remove($userId, $followUserShowId)
     {
+        $follow = User::findByShowId($followUserShowId);
+
         return DB::table('user_follows')
             ->where('user_id', $userId)
-            ->where('follow_user_id', $followUserId)
+            ->where('follow_user_id', $follow->id)
             ->delete();
     }
 
