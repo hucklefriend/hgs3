@@ -10,20 +10,21 @@ class Dmm
     /**
      * 商品情報を取得
      *
-     * @param $cid
+     * @param string $cid
+     * @param string $site
      * @return bool|mixed
      */
-    public static function getItem($cid)
+    public static function getItem($cid, $site)
     {
         $client = new \GuzzleHttp\Client();
 
         $url = 'https://api.dmm.com/affiliate/v3/ItemList?';
         $url .= http_build_query([
-            'api_id'        => env('DMM_API_ID'),
+            'api_id'       => env('DMM_API_ID'),
             'affiliate_id' => env('DMM_ID'),
-            'site'          => 'DMM.R18',
-            'cid'           => $cid,
-            'output'        => 'json'
+            'site'         => $site,
+            'cid'          => $cid,
+            'output'       => 'json'
         ]);
 
         // 念のため、5回は繰り返す

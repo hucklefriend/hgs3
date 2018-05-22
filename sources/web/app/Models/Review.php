@@ -100,6 +100,7 @@ class Review
         $review->url = $draft->url;
         $review->enable_url = 0;
         $review->progress = $draft->progress;
+        $review->fear_comment = $draft->fear_comment;
         $review->good_comment = $draft->good_comment;
         $review->bad_comment = $draft->bad_comment;
         $review->general_comment = $draft->general_comment;

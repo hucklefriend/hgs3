@@ -80,6 +80,31 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h5 class="card-title">レビューへの評価</h5>
+                <div>
+                    <span>🤔 {{ $review->fmfm }}</span>
+                    <span>😒 {{ $review->n }}</span>
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h5 class="card-title">広告</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @if ($review->is_spoiler == 1)
     <div class="alert alert-danger mb-5" role="alert">
@@ -166,7 +191,6 @@
             </p>
         </div>
     </div>
-
 
 <div class="card card-hgn">
     <div class="card-body">

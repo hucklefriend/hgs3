@@ -762,6 +762,12 @@ input[type=text], textarea {
     margin-top: 3px;
 }
 
+.list-review-point {
+    padding: 3px;
+    margin-bottom: 3px;
+    border-bottom: dotted 1px gray;
+}
+
 .shopping {
     padding: 5px;
 }
@@ -795,3 +801,11 @@ input[type=text], textarea {
 .form-control, .form-control:disabled, .form-control:focus, .form-control[readonly] {
     background-color: rgba(255, 255, 255, 0.1);
 }
+
+.one-line {
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+

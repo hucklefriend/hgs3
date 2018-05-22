@@ -68,17 +68,14 @@
                         <div class="d-flex">
                             <span class="review-point-list">{{ $review->point }}</span>
                             <div class="ml-3">
-                                <div class="d-flex flex-wrap">
-                                    <span class="mr-2 badge and-more">😱 {{ $review->fear * 5 }}</span>
-                                    <span class="mr-2 badge and-more">良 {{ $review->good_tag_num }}</span>
-                                    <span class="mr-2 badge and-more">特良 {{ $review->very_good_tag_num }}</span>
-                                    <span class="mr-2 badge and-more">悪 {{ $review->bad_tag_num }}</span>
-                                    <span class="mr-2 badge and-more">特悪 {{ $review->very_bad_tag_num }}</span>
+                                <div class="d-flex flex-wrap hidden-sm-down list-review-point">
+                                    <span class="mr-3">😱 {{ $review->fear * 5 }}</span>
+                                    <span class="mr-3"><i class="far fa-thumbs-up"></i> {{ $review->good_tag_num + $review->very_good_tag_num }}</span>
+                                    <span class="mr-3"><i class="far fa-thumbs-down"></i> -{{ $review->bad_tag_num + $review->very_bad_tag_num }}</span>
                                 </div>
-                                <div>
-                                    <span><i class="far fa-user"></i> {{ $users[$review->user_id]->name }}</span><br>
-                                    <span><i class="far fa-calendar-alt"></i> {{ format_date(strtotime($review->post_at)) }}</span><br>
-                                    <span>🤔 {{ $review->good_num }}</span>
+                                <div class="d-flex flex-wrap">
+                                    <span class="mr-3"><i class="far fa-user"></i> {{ $users[$review->user_id]->name }}</span>
+                                    <span class="mr-3"><i class="far fa-calendar-alt"></i> {{ format_date(strtotime($review->post_at)) }}</span>
                                 </div>
                             </div>
                         </div>

@@ -197,7 +197,7 @@
                             <p class="card-text">レビューはありません。</p>
                         @endauth
                     @else
-                        <div class="d-flex">
+                        <div class="d-flex mb-3">
                             <div class="review-point">
                                 {{ round($reviewTotal->point, 1) }}
                             </div>
