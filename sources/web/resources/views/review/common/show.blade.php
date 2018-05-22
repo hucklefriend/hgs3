@@ -84,13 +84,15 @@
     <div class="col-12 col-md-6">
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">レビューへの評価</h5>
-                <div>
-                    <span>🤔 {{ $review->fmfm }}</span>
-                    <span>😒 {{ $review->n }}</span>
-                </div>
-                <div>
-
+                <h5 class="card-title">レビューの印象(評価)</h5>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span>🤔 {{ $review->fmfm_num }}</span>
+                        <span>😒 {{ $review->n_num }}</span>
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,3 +206,36 @@
         </p>
     </div>
 </div>
+
+<div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="help" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header mb-0">
+                <h5 class="modal-title" id="fmfm">🤔 ふむふむ</h5>
+            </div>
+            <div class="modal-body py-2">
+                <p>レビューに対して、どちらかというと好印象</p>
+                <ul>
+                    <li>文章がまとまっていて、読みやすい</li>
+                    <li>書いてある意見に同意できる</li>
+                    <li>意見には同意できないけど、レビューとしてよく書けている</li>
+                </ul>
+            </div>
+            <div class="modal-header mb-0">
+                <h5 class="modal-title" id="n-">😒 んー…</h5>
+            </div>
+            <div class="modal-body py-2">
+                <p>レビューに対して、どちらかというと悪印象</p>
+                <ul>
+                    <li>文章が読みにくい</li>
+                    <li>書いてある意見に納得いかない</li>
+                    <li>レビューになってない</li>
+                </ul>
+            </div>
+            <div class="text-center mb-5">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+

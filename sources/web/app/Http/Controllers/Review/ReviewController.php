@@ -56,17 +56,6 @@ class ReviewController extends Controller
     }
 
     /**
-     * 今日の日付のintを取得(yyyymmdd)
-     *
-     * @return int
-     */
-    private function getDateInt()
-    {
-        $dt = new \DateTime();
-        return intval($dt->format('Ymd'));
-    }
-
-    /**
      * 詳細
      *
      * @param Orm\Review $review
@@ -79,18 +68,11 @@ class ReviewController extends Controller
         // 投稿者本人か
         $isWriter = $review->user_id == Auth::id();
 
-        // いいね済みか
-        $hasGood = false;
-        if (!$isWriter) {
-            $hasGood = Review::hasGood(Auth::id(), $review->id);
-        }
-
         return view('review.detail', [
             'soft'     => $soft,
             'packages' => $review->getPackages(),
             'review'   => $review,
             'isWriter' => $isWriter,
-            'hasGood'  => $hasGood,
             'user'     => User::find($review->user_id)
         ]);
     }
