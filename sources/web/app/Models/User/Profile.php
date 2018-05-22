@@ -127,7 +127,7 @@ class Profile
             'reviews' => []
         ];
 
-        $result['order'] = Orm\ReviewGoodHistory::where('user_id', $userId)
+        $result['order'] = Orm\ReviewImpressionHistory::where('user_id', $userId)
             ->orderBy('good_at', 'DESC')
             ->take(3)
             ->get();

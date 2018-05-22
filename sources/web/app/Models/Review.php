@@ -216,7 +216,7 @@ SQL;
      */
     public static function hasGood($userId, $reviewId)
     {
-        return Orm\ReviewGoodHistory::where('review_id', $reviewId)
+        return Orm\ReviewImpressionHistory::where('review_id', $reviewId)
             ->where('user_id', $userId)
             ->get()->count() > 0;
     }
@@ -281,7 +281,7 @@ SQL;
         DB::beginTransaction();
 
         try {
-            Orm\ReviewGoodHistory::where('review_id', $review->id)
+            Orm\ReviewImpressionHistory::where('review_id', $review->id)
                 ->where('user_id', $user->id)
                 ->delete();
 
@@ -358,7 +358,7 @@ SQL;
 
         try {
             // いいね履歴を削除
-            Orm\ReviewGoodHistory::where('review_id')
+            Orm\ReviewImpressionHistory::where('review_id')
                 ->delete();
 
             // TODO 不正申告を削除

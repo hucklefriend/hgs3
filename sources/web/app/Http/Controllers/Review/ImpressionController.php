@@ -1,6 +1,6 @@
 <?php
 /**
- * レビューのいいねコントローラ
+ * レビューの印象コントローラ
  */
 
 namespace Hgs3\Http\Controllers\Review;
@@ -12,7 +12,7 @@ use Hgs3\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-class GoodController extends Controller
+class ImpressionController extends Controller
 {
     /**
      * いいね
@@ -21,7 +21,7 @@ class GoodController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function good(Orm\Review $review)
+    public function impression(Orm\Review $review)
     {
         if ($review->user_id != Auth::id() && !Review::hasGood(Auth::id(), $review->id)) {
             Review::good($review, Auth::user());
@@ -31,18 +31,23 @@ class GoodController extends Controller
     }
 
     /**
-     * いいね取り消し
+     * 取り消し
      *
      * @param Orm\Review $review
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function cancel(Orm\Review $review)
+    public function update(Orm\Review $review)
     {
         if ($review->user_id != Auth::id() && Review::hasGood(Auth::id(), $review->id)) {
             Review::cancelGood($review, Auth::user());
         }
 
         return redirect()->back();
+    }
+
+    public function delete()
+    {
+
     }
 }

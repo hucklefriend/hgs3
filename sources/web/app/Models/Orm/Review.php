@@ -103,7 +103,7 @@ class Review extends \Eloquent
         DB::beginTransaction();
         try {
             // 履歴を削除
-            ReviewGoodHistory::where('review_id')
+            ReviewImpressionHistory::where('review_id')
                 ->delete();
 
             // TODO 不正報告を削除
