@@ -28,8 +28,10 @@ class Series extends MasterImportAbstract
             foreach ($files as $filePath) {
                 $data = \GuzzleHttp\json_decode(File::get($filePath), true);
 
-                DB::table('game_series')
-                    ->insert($data);
+                Orm\GameSeries::updateOrCreate(
+                    ['id' => $data['id']],
+                    $data
+                );
 
                 unset($data);
             }

@@ -3,7 +3,7 @@
  * DMM
  */
 
-namespace Hgs3\Models\Shop;
+namespace Hgs3\Models\Game\Shop;
 
 class Dmm
 {
@@ -26,6 +26,8 @@ class Dmm
             'cid'          => $cid,
             'output'       => 'json'
         ]);
+
+        $res = false;
 
         // 念のため、5回は繰り返す
         for ($i = 0; $i < 5; $i++) {

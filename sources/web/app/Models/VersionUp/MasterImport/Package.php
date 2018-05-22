@@ -31,7 +31,6 @@ class Package extends MasterImportAbstract
             echo 'nothing package manual update.' . PHP_EOL;
         }
 
-
         $path = storage_path('master/' . $date . '/package');
         if (!File::isDirectory($path)) {
             echo 'nothing package new data.' . PHP_EOL;
@@ -131,6 +130,10 @@ class Package extends MasterImportAbstract
                             if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
                                 \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
                             }
+                        } else if ($shopId == Shop::DMM || $shopId == Shop::DMM_R18) {
+                            //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
+                                \Hgs3\Models\Game\Package::saveImageByDmm($package->id, $shopUrl, $shopId);
+                            //}
                         } else if ($shopUrl) {
                             $pkgShop = new Orm\GamePackageShop([
                                 'package_id' => $package->id,

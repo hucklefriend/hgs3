@@ -1,0 +1,13 @@
+{
+  "id": 718,
+  "platform": "PC",
+  "company": "Digital Happiness",
+  "name": "DreadOut: Keepers of The Dark",
+  "release_int": 20160324,
+  "release_at": "2016年3月24日",
+  "shop": {
+    "Steam": "https://store.steampowered.com/app/418950/DreadOut_Keepers_of_The_Dark/",
+    "DMM.com": "digitalhappiness_0002"
+  },
+  "soft_id": [352]
+}

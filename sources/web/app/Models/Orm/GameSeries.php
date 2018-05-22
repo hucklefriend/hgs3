@@ -7,5 +7,5 @@ namespace Hgs3\Models\Orm;
 
 class GameSeries extends \Eloquent
 {
-    protected $guarded = ['id'];
+    protected $guarded = [''];
 }

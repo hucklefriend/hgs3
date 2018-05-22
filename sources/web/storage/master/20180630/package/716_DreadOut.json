@@ -1,0 +1,13 @@
+{
+  "id": 716,
+  "platform": "PC",
+  "company": "Digital Happiness",
+  "name": "DreadOut",
+  "release_int": 20140516,
+  "release_at": "2014年5月16日",
+  "shop": {
+    "Steam": "https://store.steampowered.com/app/269790/DreadOut/",
+    "DMM.com": "digitalhappiness_0001"
+  },
+  "soft_id": [351]
+}

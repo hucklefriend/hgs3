@@ -5,8 +5,8 @@
 
 namespace Hgs3\Http\Controllers;
 
-use Hgs3\Models\Dmm;
 use Hgs3\Models\Orm;
+use Hgs3\Models\Game\Shop\Dmm;
 use Illuminate\Support\Facades\DB;
 
 class TopController extends Controller
@@ -35,8 +35,6 @@ class TopController extends Controller
             ->orderBy('open_at', 'DESC')
             ->take(5)
             ->get();
-
-
 
         return view('top', [
             'newInfo'  => $newInfo,
@@ -88,6 +86,6 @@ class TopController extends Controller
 
     public function test()
     {
-        return '<pre>' . print_r(Dmm::getItem('milu_0016'), true) .  '</pre>';
+        return '<pre>' . print_r(Dmm::getItem('digitalhappiness_0001', 'DMM.com'), true) .  '</pre>';
     }
 }

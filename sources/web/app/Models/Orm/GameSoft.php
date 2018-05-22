@@ -1,6 +1,6 @@
 <?php
 /**
- * ORM: games
+ * ORM: game_softs
  */
 
 namespace Hgs3\Models\Orm;
@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 
 class GameSoft extends \Eloquent
 {
+    protected $guarded = [];
+
     /**
      * ゲームソフト名のハッシュを取得
      *

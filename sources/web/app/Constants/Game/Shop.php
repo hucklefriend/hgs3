@@ -18,6 +18,8 @@ class Shop
     const GOOGLE_PLAY = 32;
     const GETCHU = 41;
     const DL_SITE = 42;
+    const DMM = 43;
+    const DMM_R18 = 44;
 
     private static $names = [
         self::AMAZON             => 'Amazon',
@@ -29,8 +31,10 @@ class Shop
         self::DMM_GAMES          => 'DMM GAMES',
         self::APP_STORE          => 'App Store',
         self::GOOGLE_PLAY        => 'Google Play',
-        self::GETCHU                => 'Getchu.com',
-        self::DL_SITE               => 'DLsite'
+        self::GETCHU             => 'Getchu.com',
+        self::DL_SITE            => 'DLsite',
+        self::DMM                => 'DMM.com',
+        self::DMM_R18            => 'DMM.R18',
     ];
 
     /**

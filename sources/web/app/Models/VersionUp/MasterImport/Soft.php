@@ -36,28 +36,12 @@ class Soft extends MasterImportAbstract
                 }
 
                 $data = json_decode(File::get($filePath), true);
+                $data['genre'] = '';
 
-                $soft = new Orm\GameSoft;
-                $soft->name = $data['name'];
-                $soft->phonetic = $data['phonetic'];
-                $soft->phonetic2 = $data['phonetic2'] ?? $data['phonetic'];
-                $soft->genre = '';//$data['genre'];
-
-                if (isset($data['series'])) {
-                    if (isset($series[$data['series']])) {
-                        $soft->series_id = $series[$data['series']];
-                    } else {
-                        $s = new Orm\GameSeries;
-                        $s->name = $data['series'];
-                        $s->phonetic = $data['series'];
-                        $s->save();
-
-                        $soft->series_id = $s->id;
-                        unset($s);
-                    }
-                }
-
-                $soft->save();
+                Orm\GameSoft::updateOrCreate(
+                    ['id' => $data['id']],
+                    $data
+                );
                 unset($data);
             }
         }

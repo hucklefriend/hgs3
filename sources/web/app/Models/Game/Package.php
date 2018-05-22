@@ -8,6 +8,7 @@ namespace Hgs3\Models\Game;
 use Hgs3\Constants\Game\Shop;
 use Hgs3\Log;
 use Hgs3\Models\Game\Shop\Amazon;
+use Hgs3\Models\Game\Shop\Dmm;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm;
 
@@ -207,6 +208,33 @@ SQL;
     }
 
     /**
+     * DMMからデータを保存
+     *
+     * @param $packageId
+     * @param $cid
+     * @param $shopId
+     */
+    public static function saveImageByDmm($packageId, $cid, $shopId)
+    {
+        $shop = $shopId == Shop::DMM_R18 ? 'DMM.R18' : 'DMM.com';
+        $item = Dmm::getItem($cid, $shop);
+
+        if ($item === false || $item->result->total_count == 0) {
+            self::saveShop($packageId, $shopId, '', $cid);
+        } else {
+            $img = [
+                'small_image'  => ['url' => $item->result->items[0]->imageURL->list ?? null],
+                'medium_image' => ['url' => $item->result->items[0]->imageURL->small ?? null],
+                'large_image'  => ['url' => $item->result->items[0]->imageURL->large ?? null]
+            ];
+
+            self::saveImageData($packageId, $img);
+            self::saveShop($packageId, $shopId,
+                $item->result->items[0]->affiliateURL ?? $item->result->items[0]->URL, $cid);
+        }
+    }
+
+    /**
      * 画像情報の保存
      *
      * @param int $packageId
@@ -233,25 +261,33 @@ SQL;
     /**
      * ショップ情報の保存
      *
-     * @param int $packageId
-     * @param int $shopId
-     * @param string $shopUrl
-     * @param string|null $param1
+     * @param $packageId
+     * @param $shopId
+     * @param $shopUrl
+     * @param $param1
+     * @param null $param2
+     * @param null $param3
+     * @param null $param4
+     * @param null $param5
      */
-    public static function saveShop($packageId, $shopId, $shopUrl, $param1)
+    public static function saveShop($packageId, $shopId, $shopUrl, $param1, $param2 = null, $param3 = null, $param4 = null, $param5 = null)
     {
         $sql =<<< SQL
 INSERT INTO game_package_shops(
-  package_id, shop_id, shop_url, param1, created_at, updated_at
+  package_id, shop_id, shop_url, param1, param2, param3, param4, param5, created_at, updated_at
 ) VALUES (
-  ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+  ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
 )
 ON DUPLICATE KEY UPDATE
   shop_url = VALUES(shop_url)
   , param1 = VALUES(param1)
+  , param2 = VALUES(param2)
+  , param3 = VALUES(param3)
+  , param4 = VALUES(param4)
+  , param5 = VALUES(param5)
   , updated_at = CURRENT_TIMESTAMP 
 SQL;
 
-        DB::insert($sql, [$packageId, $shopId, $shopUrl, $param1]);
+        DB::insert($sql, [$packageId, $shopId, $shopUrl, $param1, $param2, $param3, $param4, $param5]);
     }
 }
