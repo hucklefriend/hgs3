@@ -4,7 +4,7 @@
 @section('global_back_link'){{ route('ゲーム一覧') }}@endsection
 
 @section('content')
-
+<div class="content__inner">
     <div class="row">
         <div class="col-md-12">
             <div class="card card-hgn">
@@ -184,6 +184,12 @@
             <div class="card card-hgn">
                 <div class="card-body">
                     <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->review_num : 0) }}件</small></h4>
+                    @if (!$released)
+                        <p class="card-text">
+                            発売されてないゲームなので、レビューは投稿できません。<br>
+                            発売日までお待ちください。
+                        </p>
+                    @else
                     @empty($reviewTotal)
                         @auth
                             <p class="card-text">
@@ -230,6 +236,7 @@
                         </div>
 
                     @endempty
+                    @endif
                 </div>
             </div>
         </div>
@@ -306,7 +313,7 @@
             <i class="fas fa-angle-right"></i>
         </a>
     </div>
-
+</div>
 @endsection
 
 @section('breadcrumb')

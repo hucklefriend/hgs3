@@ -80,6 +80,15 @@ SQL;
             $data['hasOriginalPackageImage'] = false;
         }
 
+        // 発売日を過ぎているか
+        $data['released'] = false;
+        $today = date('Ymd');
+        foreach ($data['packages'] as $pkg) {
+            if ($pkg->release_int <= $today) {
+                $data['released'] = true;
+                break;
+            }
+        }
 
         // プラットフォームリスト
         $platforms = [];

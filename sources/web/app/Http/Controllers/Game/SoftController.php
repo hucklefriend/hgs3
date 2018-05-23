@@ -44,12 +44,9 @@ class SoftController extends Controller
      */
     public function detail(Orm\GameSoft $soft)
     {
-        // TODO 発売日が過ぎていないとレビューを投稿するリンクは出さない
-
         session(['soft_phonetic_type' => $soft->phonetic_type]);
 
         $data = Soft::getDetail($soft);
-        $data['useChart'] = true;
         $data['favoriteHash'] = [];
         if (Auth::check()) {
             $data['favoriteHash'] = FavoriteSoft::getHash(Auth::id());
@@ -57,8 +54,6 @@ class SoftController extends Controller
 
         $data['pltHash'] = Orm\GamePlatform::all('id', 'acronym')
             ->pluck('acronym', 'id');
-
-
 
         return view('game.soft.detail', $data);
     }

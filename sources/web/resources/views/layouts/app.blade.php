@@ -131,12 +131,16 @@
                 <div style="white-space: nowrap;" class="text-right">
                     <a href="{{ route('サイトマップ') }}" class="align-self-center">サイトマップ</a>
                 </div>
-                <div style="height: 40px;line-height: 40px;" class="text-left;">
+                <div style="height: 40px;line-height: 40px;">
                     &copy; yu-ki
                     <a href="mailto:{{ env('ADMIN_MAIL') }}" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::MAIL) }}</a>
                     <a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</a>
                     <a href="https://github.com/hucklefriend/hgs3" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</a>
                     / since 2003.9.28
+                </div>
+                <div class="my-2">
+                    <a href="https://affiliate.dmm.com/api/"><img src="https://pics.dmm.com/af/web_service/com_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.com" /></a>
+                    <a href="https://affiliate.dmm.com/api/"><img src="https://pics.dmm.com/af/web_service/r18_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.R18" /></a>
                 </div>
             </footer>
 

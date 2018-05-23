@@ -202,7 +202,7 @@ SQL;
         if (empty($item)) {
             self::saveShop($packageId, Shop::AMAZON, '', $asin);
         } else {
-            self::saveImageData($packageId, $item);
+            self::saveImageData($packageId, Shop::AMAZON, $item);
             self::saveShop($packageId, Shop::AMAZON, $item['shop_url'], $asin);
         }
     }
@@ -228,7 +228,7 @@ SQL;
                 'large_image'  => ['url' => $item->result->items[0]->imageURL->large ?? null]
             ];
 
-            self::saveImageData($packageId, $img);
+            self::saveImageData($packageId, $shopId, $img);
             self::saveShop($packageId, $shopId,
                 $item->result->items[0]->affiliateURL ?? $item->result->items[0]->URL, $cid);
         }
@@ -238,13 +238,15 @@ SQL;
      * 画像情報の保存
      *
      * @param int $packageId
+     * @param int $shopId
      * @param array $item
      */
-    public static function saveImageData($packageId, array $item)
+    public static function saveImageData($packageId, $shopId, array $item)
     {
         DB::table('game_packages')
             ->where('id', $packageId)
             ->update([
+                'shop_id'             => $shopId,
                 'small_image_url'     => $item['small_image']['url'] ?? null,
                 'small_image_width'   => $item['small_image']['width'] ?? null,
                 'small_image_height'  => $item['small_image']['height'] ?? null,
