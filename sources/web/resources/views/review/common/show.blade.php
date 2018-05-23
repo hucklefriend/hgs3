@@ -9,24 +9,16 @@
 
                     <table class="review-point-table">
                         <tr>
-                            <th>😱 怖さ</th>
-                            <td class="text-right">{{ $review->fear * 5 }}点</td>
+                            <th>怖さ{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</th>
+                            <td class="text-right">{{ $review->fear * 5 }}pt</td>
                         </tr>
                         <tr>
-                            <th><i class="far fa-thumbs-up"></i> 良い</th>
-                            <td class="text-right">{{ count($review->getGoodTags()) }}点</td>
+                            <th>良い点<i class="far fa-thumbs-up"></i></th>
+                            <td class="text-right">{{ count($review->getGoodTags()) + count($review->getVeryGoodTags()) }}pt</td>
                         </tr>
                         <tr>
-                            <th><i class="far fa-thumbs-up"></i><i class="far fa-thumbs-up"></i> すごく良い</th>
-                            <td class="text-right">{{ count($review->getVeryGoodTags()) }}点</td>
-                        </tr>
-                        <tr>
-                            <th><i class="far fa-thumbs-down"></i> 悪い</th>
-                            <td class="text-right">-{{ count($review->getBadTags()) }}点</td>
-                        </tr>
-                        <tr>
-                            <th><i class="far fa-thumbs-down"></i><i class="far fa-thumbs-down"></i> すごく悪い</th>
-                            <td class="text-right">-{{ count($review->getVeryBadTags()) }}点</td>
+                            <th>悪い点<i class="far fa-thumbs-down"></i></th>
+                            <td class="text-right">-{{ count($review->getBadTags()) + count($review->getVeryBadTags()) }}pt</td>
                         </tr>
                     </table>
                 </div>
@@ -81,14 +73,14 @@
 </div>
 
 <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-sm-6 col-md-5 col-lg-4">
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">レビューの印象(評価)</h5>
+                <p>読んだユーザーが受けた印象</p>
                 <div class="d-flex justify-content-between">
-                    <div>
-                        <span>🤔 {{ $review->fmfm_num }}</span>
-                        <span>😒 {{ $review->n_num }}</span>
+                    <div class="align-self-center">
+                        <span class="review-tag">🤔 {{ $review->fmfm_num }}</span>
+                        <span class="review-tag">😒 {{ $review->n_num }}</span>
                     </div>
                     <div class="text-right">
                         <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
@@ -98,7 +90,7 @@
         </div>
     </div>
 
-    <div class="col-12 col-md-6">
+    <div class="col-sm-6 col-md-7 col-lg-8">
         <div class="card card-hgn">
             <div class="card-body">
                 <h5 class="card-title">広告</h5>
@@ -117,9 +109,7 @@
 
     <div class="card card-hgn">
         <div class="card-body">
-            <h5 class="card-title">😱 怖さ</h5>
-
-            <p class="lead">{{ Hgs3\Constants\Review\Fear::$data[$review->fear] }}</p>
+            <h5 class="card-title">{{ Hgs3\Constants\Review\Fear::$data[$review->fear] }}</h5>
 
             <p class="mb-0 review-text">
                 @empty($review->fear_comment)
@@ -214,7 +204,7 @@
                 <h5 class="modal-title" id="fmfm">🤔 ふむふむ</h5>
             </div>
             <div class="modal-body py-2">
-                <p>レビューに対して、どちらかというと好印象</p>
+                <p>どちらかというと好印象</p>
                 <ul>
                     <li>文章がまとまっていて、読みやすい</li>
                     <li>書いてある意見に同意できる</li>
@@ -225,7 +215,7 @@
                 <h5 class="modal-title" id="n-">😒 んー…</h5>
             </div>
             <div class="modal-body py-2">
-                <p>レビューに対して、どちらかというと悪印象</p>
+                <p>どちらかというと悪印象</p>
                 <ul>
                     <li>文章が読みにくい</li>
                     <li>書いてある意見に納得いかない</li>

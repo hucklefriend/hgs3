@@ -8,6 +8,7 @@ namespace Hgs3\Models\Review;
 
 use Hgs3\Log;
 use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class Impression
@@ -21,10 +22,23 @@ class Impression
      */
     public static function has($userId, $reviewId)
     {
-        return Orm\ReviewImpressionHistory::where('user_id', $userId)
+        return self::get($userId, $reviewId) != 0;
+    }
+
+    /**
+     * 印象を取得
+     *
+     * @param $userId
+     * @param $reviewId
+     * @return int|mixed
+     */
+    public static function get($userId, $reviewId)
+    {
+        $his = Orm\ReviewImpressionHistory::where('user_id', $userId)
             ->where('review_id', $reviewId)
-            ->get()
-            ->count() > 0;
+            ->first();
+
+        return $his->fmfm_or_n ?? 0;
     }
 
     /**
@@ -32,21 +46,57 @@ class Impression
      *
      * @param User $user
      * @param Orm\Review $review
+     * @throws \Exception
      */
     public static function fmfm(User $user, Orm\Review $review)
     {
+        DB::beginTransaction();
 
+        try {
+            DB::table('reviews')
+                ->where('id', $review->id)
+                ->update(['fmfm_num' => DB::raw('fmfm_num + 1')]);
+
+            // 基本的にエラーがなければ、データが存在した状態で印象を投稿することはないはず
+            Orm\ReviewImpressionHistory::updateOrInsert(
+                ['user_id' => $user->id, 'review_id' => $review->id],
+                ['fmfm_or_n' => 1]
+            );
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+        }
     }
 
     /**
-     * んー
+     * んー…
      *
      * @param User $user
      * @param Orm\Review $review
+     * @throws \Exception
      */
     public static function n(User $user, Orm\Review $review)
     {
+        DB::beginTransaction();
 
+        try {
+            DB::table('reviews')
+                ->where('id', $review->id)
+                ->update(['n_num' => DB::raw('n_num + 1')]);
+
+            // 基本的にエラーがなければ、データが存在した状態で印象を投稿することはないはず
+            Orm\ReviewImpressionHistory::updateOrInsert(
+                ['user_id' => $user->id, 'review_id' => $review->id],
+                ['fmfm_or_n' => 2]
+            );
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::exceptionError($e);
+        }
     }
 
     /**
@@ -79,7 +129,10 @@ class Impression
                 ->update([$subColumn => DB::raw($subColumn . ' - 1')]);
 
             // 履歴を削除
-            $his->delete();
+            DB::table('review_impression_histories')
+                ->where('user_id', $user->id)
+                ->where('review_id', $review->id)
+                ->delete();
 
             DB::commit();
         } catch (\Exception $e) {

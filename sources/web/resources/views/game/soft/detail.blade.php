@@ -210,24 +210,16 @@
 
                             <table class="review-point-table">
                                 <tr>
-                                    <th>😱 怖さ</th>
-                                    <td class="text-right">{{ round($reviewTotal->fear * 5, 1) }}点</td>
+                                    <th>怖さ {{ \Hgs3\Constants\Review\Fear::$face[round($reviewTotal->fear, 0)] }}</th>
+                                    <td class="text-right">{{ round($reviewTotal->fear * 5, 1) }}pt</td>
                                 </tr>
                                 <tr>
-                                    <th><i class="far fa-thumbs-up"></i> 良い所</th>
-                                    <td class="text-right">{{ round($reviewTotal->good_tag_num, 1)}}点</td>
+                                    <th>良い点 <i class="far fa-thumbs-up"></i></th>
+                                    <td class="text-right">{{ round($reviewTotal->good_tag_num + $reviewTotal->very_good_tag_num, 1)}}pt</td>
                                 </tr>
                                 <tr>
-                                    <th><i class="far fa-thumbs-up"></i><i class="far fa-thumbs-up"></i> すごく良い所</th>
-                                    <td class="text-right">{{ round($reviewTotal->very_good_tag_num, 1) }}点</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="far fa-thumbs-down"></i> 悪い所</th>
-                                    <td class="text-right">-{{ round($reviewTotal->bad_tag_num, 1) }}点</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="far fa-thumbs-down"></i><i class="far fa-thumbs-down"></i> すごく悪い所</th>
-                                    <td class="text-right">-{{ round($reviewTotal->very_bad_tag_num, 1) }}点</td>
+                                    <th>悪い所 <i class="far fa-thumbs-down"></i></th>
+                                    <td class="text-right">-{{ round($reviewTotal->bad_tag_num + $reviewTotal->very_bad_tag_num, 1) }}pt</td>
                                 </tr>
                             </table>
                         </div>

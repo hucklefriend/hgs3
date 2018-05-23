@@ -68,12 +68,19 @@ class ReviewController extends Controller
         // 投稿者本人か
         $isWriter = $review->user_id == Auth::id();
 
+        // 印象
+        $impression = 0;
+        if (Auth::check()) {
+            $impression = Review\Impression::get(Auth::id(), $review->id);
+        }
+
         return view('review.detail', [
-            'soft'     => $soft,
-            'packages' => $review->getPackages(),
-            'review'   => $review,
-            'isWriter' => $isWriter,
-            'user'     => User::find($review->user_id)
+            'soft'       => $soft,
+            'packages'   => $review->getPackages(),
+            'review'     => $review,
+            'isWriter'   => $isWriter,
+            'user'       => User::find($review->user_id),
+            'impression' => $impression
         ]);
     }
 
@@ -92,5 +99,15 @@ class ReviewController extends Controller
             'writers'      => User::getHash(array_pluck($reviews->items(), 'user_id')),
             'gamePackages' => Orm\GamePackage::getHash(array_pluck($reviews->items(), 'package_id'))
         ]);
+    }
+
+    /**
+     * レビューについて
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function about()
+    {
+        return view('review.about');
     }
 }

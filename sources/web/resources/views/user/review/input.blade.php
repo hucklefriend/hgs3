@@ -169,24 +169,28 @@
                     <table class="review-point-table">
                         <tr>
                             <th>😱 怖さ</th>
-                            <td class="text-right"><span id="total_fear"></span>点</td>
+                            <td class="text-right"><span id="total_fear"></span>pt</td>
                         </tr>
                         <tr>
-                            <th><i class="far fa-thumbs-up"></i> 良い</th>
-                            <td class="text-right" id="total_point"><span id="total_good"></span>点</td>
+                            <th><i class="far fa-thumbs-up"></i> 良い点</th>
+                            <td class="text-right" id="total_point"><span id="total_good"></span>pt</td>
                         </tr>
+{{--
                         <tr>
                             <th><i class="far fa-thumbs-up"></i><i class="far fa-thumbs-up"></i> すごく良い</th>
                             <td class="text-right" id="total_point"><span id="total_very_good"></span>点</td>
                         </tr>
+--}}
                         <tr>
-                            <th><i class="far fa-thumbs-down"></i> 悪い</th>
-                            <td class="text-right" id="total_point">-<span id="total_bad"></span>点</td>
+                            <th><i class="far fa-thumbs-down"></i> 悪い点</th>
+                            <td class="text-right" id="total_point">-<span id="total_bad"></span>pt</td>
                         </tr>
+{{--
                         <tr>
                             <th><i class="far fa-thumbs-down"></i><i class="far fa-thumbs-down"></i> すごく悪い</th>
                             <td class="text-right" id="total_point">-<span id="total_very_bad"></span>点</td>
                         </tr>
+--}}
                     </table>
                 </div>
             </div>
@@ -466,10 +470,10 @@
 
             $('#total_point').text(fear + goodNum + veryGoodNum - badNum - veryBadNum);
             $('#total_fear').text(fear);
-            $('#total_good').text(goodNum);
-            $('#total_very_good').text(veryGoodNum);
-            $('#total_bad').text(badNum);
-            $('#total_very_bad').text(veryBadNum);
+            $('#total_good').text(goodNum + veryGoodNum);
+            //$('#total_very_good').text(veryGoodNum);
+            $('#total_bad').text(badNum + veryBadNum);
+            //$('#total_very_bad').text(veryBadNum);
         }
 
     </script>

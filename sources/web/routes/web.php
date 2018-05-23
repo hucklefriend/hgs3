@@ -102,7 +102,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/review/write/{soft}', 'User\ReviewController@input')->name('レビュー入力');
     Route::post('/user/review/write/{soft}', 'User\ReviewController@open')->name('レビュー公開');
     Route::delete('/user/review/{soft}', 'User\ReviewController@delete')->name('レビュー削除');
-    Route::put('/user/review/impression/{review}', 'Account\LeaveController@index')->name('レビュー印象');
+    Route::put('/user/review/fmfm/{review}', 'Review\ImpressionController@fmfm')->name('ふむふむ');
+    Route::put('/user/review/n/{review}', 'Review\ImpressionController@n')->name('んー…');
+    Route::delete('/user/review/impression/{review}', 'Review\ImpressionController@delete')->name('レビュー印象取り消し');
 
     // サイト管理
     Route::get('/user/site_manage', 'User\SiteManageController@index')->name('サイト管理');

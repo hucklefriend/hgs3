@@ -3,34 +3,64 @@
 @section('title'){{ $soft->name }}のレビュー@endsection
 @section('global_back_link'){{ route('レビュートップ') }}@endsection
 
-
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>{{ $soft->name }}</h1>
-            <p class="mb-0">{{ $user->name }}さんのレビュー</p>
+            <h1 class="mb-2">{{ $soft->name }}</h1>
+            <p class="mb-0"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">{{ $user->name }}さん</a>のレビュー</p>
+            <p class="mb-0">{{ format_date(strtotime($review->post_at)) }} 投稿</p>
         </header>
 
         @include('review.common.show', ['review' => $review])
 
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4">
                 <div class="card card-hgn">
                     <div class="card-body">
-                        <h5 class="card-title">レビューの印象</h5>
+                        @if ($impression == 0)
+                        <p>レビューを読んで、印象はいかがでしたか？<br>
+                            好印象 → 🤔、悪印象 → 😒</p>
+                        @elseif ($impression == 1)
+                            <p>
+                                🤔で印象を投稿済みです。<br>
+                                印象の変更や取り消しを、↓のボタンで行えます。
+                            </p>
+                        @elseif ($impression == 2)
+                            <p>
+                                😒で印象を投稿済みです。<br>
+                                印象の変更や取り消しを、↓のボタンで行えます。
+                            </p>
+                        @endif
                         @auth
                             @if (!$isWriter)
-                                <form method="POST" action="{{ route('レビュー印象', ['review' => $review->id]) }}">
-                                    {{ csrf_field() }}
-                                    {{ method_field('PUT') }}
-                                    <button class="btn btn-light mr-2 px-2">🤔 ふむふむ</button>
-                                    <button class="btn btn-light px-2">😒 んー…</button>
-                                </form>
+                                <div class="row">
+                                    @if ($impression != 1)
+                                    <form method="POST" action="{{ route('ふむふむ', ['review' => $review->id]) }}" class="col-6">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PUT') }}
+                                        <button class="btn btn-light btn-block">🤔 ふむふむ</button>
+                                    </form>
+                                    @endif
+                                    @if ($impression != 2)
+                                    <form method="POST" action="{{ route('んー…', ['review' => $review->id]) }}" class="col-6">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PUT') }}
+                                        <button class="btn btn-light btn-block">😒 んー…</button>
+                                    </form>
+                                    @endif
+                                    @if ($impression != 0)
+                                    <form method="POST" action="{{ route('レビュー印象取り消し', ['review' => $review->id]) }}" class="col-6">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <button class="btn btn-light btn-block">取り消し</button>
+                                    </form>
+                                    @endif
+                                </div>
                             @else
                                 <p>レビュー投稿者はできません。</p>
                             @endif
                         @else
-                            <p>印象を評価するにはログインしてください。</p>
+                            <p>印象を投稿するにはログインしてください。</p>
                             <div class="text-right mt-2">
                                 <a href="{{ route('ログイン') }}" class="badge badge-pill and-more">ログイン</a>
                             </div>
@@ -38,21 +68,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
-            <div class="card card-hgn">
-                <div class="card-body">
-                    <div class="d-flex flex-wrap site-info">
-                        <span class="capsule">
-                            <span class="capsule-title">投稿者</span>
-                            <span class="capsule-body"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">{{ $user->name }}</a></span>
-                        </span>
-                        <span class="capsule">
-                            <span class="capsule-title">投稿日時</span>
-                            <span class="capsule-body">{{ format_date(strtotime($review->post_at)) }}</span>
-                        </span>
+            <div class="hidden-xs-down col-sm-5 col-md-6 col-lg-7 col-xl-8">
+                <div class="card card-hgn">
+                    <div class="card-body">
+                        広告
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>

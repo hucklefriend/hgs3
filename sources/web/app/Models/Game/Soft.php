@@ -6,6 +6,7 @@
 namespace Hgs3\Models\Game;
 
 use Hgs3\Models\Orm;
+use Hgs3\Models\Review\Impression;
 use Hgs3\Models\Timeline;
 use Hgs3\Models\User;
 use Hgs3\Models\User\FavoriteSoft;
