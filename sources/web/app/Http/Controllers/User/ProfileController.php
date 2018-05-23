@@ -103,6 +103,18 @@ class ProfileController extends Controller
                 ];
             }
                 break;
+            case 'good_site': {
+                $title = 'いいねしたサイト';
+                $goodSites = Site\Good::getList($user);
+                $sites = Orm\Site::getHash(page_pluck($goodSites, 'site_id'));
+
+                $data['parts'] = [
+                    'goodSites' => $goodSites,
+                    'sites'     => $sites,
+                    'users'     => User::getHash(array_pluck($sites, 'user_id'))
+                ];
+            }
+                break;
             case 'timeline':
                 // TODO タイムライン実装時にここに追加
             case 'profile':

@@ -36,6 +36,7 @@ class Good
      * @param Orm\Site $site
      * @param User $user
      * @return bool
+     * @throws \Exception
      */
     public static function good(Orm\Site $site, User $user)
     {
@@ -98,6 +99,7 @@ SQL;
      * @param Orm\Site $site
      * @param User $user
      * @return bool
+     * @throws \Exception
      */
     public static function cancelGood(Orm\Site $site, User $user)
     {
@@ -129,5 +131,18 @@ SQL;
         }
 
         return true;
+    }
+
+    /**
+     * 一覧を取得
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getList(User $user)
+    {
+        return Orm\SiteGoodHistory::where('user_id', $user->id)
+            ->orderBy('good_at', 'DESC')
+            ->paginate(20);
     }
 }

@@ -25,7 +25,8 @@ class Profile
             'reviewNum'       => Orm\Review::getNumByUser($userId),
             'siteNum'         => Orm\Site::getNumByUser($userId),
             'favoriteSoftNum' => Orm\UserFavoriteSoft::getNumByUser($userId),
-            'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId)
+            'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId),
+            'goodSiteNum'     => Orm\SiteGoodHistory::getNumByUser($userId)
         ];
     }
 

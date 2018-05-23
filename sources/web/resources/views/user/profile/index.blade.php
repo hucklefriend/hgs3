@@ -16,7 +16,7 @@
                 </header>
                 <div class="ml-auto text-right hidden-xs-down">
                     <a href="{{ route('ユーザー設定') }}" class="btn btn-sm btn-outline-dark mr-3"><i class="fas fa-cog"></i> 設定</a>
-                    <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
+                    <a href="{{ route('ログアウト') }}" class="btn btn-sm btn-outline-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
                 </div>
             </div>
         @else
@@ -38,13 +38,17 @@
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
+
+                    @if ($isMyself)
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}" class="nav-link @if($show == 'good_site') active @endif" aria-expanded="true">いいねしたサイト {{ $goodSiteNum }}件</a>
+                    @endif
                 </div>
             </div>
             <div style="width: 100%;">
                 <div class="hidden-sm-up mb-5">
                     <div class="card">
                         <div class="card-body">
-                            <labal for="small_menu"><small>プロフィールメニュー</small></labal>
+                            <label for="small_menu"><small>プロフィールメニュー</small></label>
                             <div class="form-group">
                                 <select class="select2" data-minimum-results-for-search="Infinity" id="small_menu">
                                     <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}"{{ selected($show, 'profile') }}>プロフィール</option>
@@ -54,6 +58,9 @@
                                     <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}"{{ selected($show, 'review') }}>レビュー</option>
                                     <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}"{{ selected($show, 'site') }}>サイト</option>
                                     <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}"{{ selected($show, 'favorite_site') }}>お気に入りサイト</option>
+                                    @if ($isMyself)
+                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}"{{ selected($show, 'good_site') }}>いいねしたサイト</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
