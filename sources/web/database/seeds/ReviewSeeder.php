@@ -28,6 +28,11 @@ class ReviewSeeder extends Seeder
                     continue;
                 }
 
+                if (\Hgs3\Models\Review::isOpened($user->id, $s->id)) {
+                    continue;
+                }
+
+
                 $written[$s->id] = 1;
 
                 $draft = self::generateDraft($user, $s);

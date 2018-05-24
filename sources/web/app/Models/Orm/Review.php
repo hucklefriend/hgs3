@@ -39,12 +39,9 @@ class Review extends \Eloquent
         if ($isNew) {
             // 新規登録
             $this->sort_order = 0;
-            $this->good_num = 0;
+            $this->fmfm_num = 0;
+            $this->n_num = 0;
             $this->post_at = new \DateTime();
-            $this->update_num = 0;
-        } else {
-            // データ修正
-            $this->update_num++;
         }
 
         parent::save($options);
