@@ -55,7 +55,7 @@
                     例：プレイ時間、何周クリアした、エンディング全種類見た、PS2版は全クリアしたけどPC版は半分まで、etc...<br>
                     <span style="color: indianred;">※ネタバレとなるような内容をここに書かないでください。</span>
                 </p>
-                <textarea name="progress" id="progress" class="form-control textarea-autosize{{ invalid($errors, 'progress') }}">{{ $draft->progress }}</textarea>
+                <textarea name="progress" id="progress" class="form-control textarea-autosize{{ invalid($errors, 'progress') }}">{{ old('progress', $draft->progress) }}</textarea>
                 <i class="form-group__bar"></i>
             </div>
             <div class="form-help">
@@ -68,7 +68,7 @@
                 <p class="text-muted">
                     どの程度怖かったかを設定してください。
                 </p>
-                <input type="hidden" name="fear" id="fear" value="{{ $draft->fear }}">
+                <input type="hidden" name="fear" id="fear" value="{{ old('fear', $draft->fear) }}">
                 <div class="d-flex justify-content-between justify-content-sm-start">
                     <div>
                         <button class="btn btn-light btn--icon" type="button" id="fear_down"><i class="far fa-arrow-alt-circle-down"></i></button>
@@ -297,10 +297,10 @@
     <script>
         let packageId = {!! old('package_id', null) == null ? $draft->package_id : json_encode(old('package_id')) !!}
         let fearText = {!! json_encode(\Hgs3\Constants\Review\Fear::$textWithPoint)  !!};
-        let goodTags = {!! json_encode($draft->getGoodTags()) !!};
-        let veryGoodTags = {!! json_encode($draft->getVeryGoodTags()) !!};
-        let badTags = {!! json_encode($draft->getBadTags()) !!};
-        let veryBadTags = {!! json_encode($draft->getVeryBadTags()) !!};
+        let goodTags = {!! json_encode(old('good_tags', $draft->getGoodTags())) !!};
+        let veryGoodTags = {!! json_encode(old('very_good_tags', $draft->getVeryGoodTags())) !!};
+        let badTags = {!! json_encode(old('bad_tags', $draft->getBadTags())) !!};
+        let veryBadTags = {!! json_encode(old('very_bad_tags', $draft->getVeryBadTags())) !!};
 
         let goodTagBtn = {};
         let veryGoodTagBtn = {};
@@ -471,9 +471,7 @@
             $('#total_point').text(fear + goodNum + veryGoodNum - badNum - veryBadNum);
             $('#total_fear').text(fear);
             $('#total_good').text(goodNum + veryGoodNum);
-            //$('#total_very_good').text(veryGoodNum);
             $('#total_bad').text(badNum + veryBadNum);
-            //$('#total_very_bad').text(veryBadNum);
         }
 
     </script>

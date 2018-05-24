@@ -169,7 +169,7 @@ SQL;
      * @param int $softId
      * @return array
      */
-    private static function getPackages($softId)
+    public static function getPackages($softId)
     {
         $packageIds = DB::table('game_package_links')
             ->select(['package_id'])

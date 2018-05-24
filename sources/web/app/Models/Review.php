@@ -7,6 +7,7 @@
 namespace Hgs3\Models;
 
 use Hgs3\Constants\Review\Status;
+use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\Auth;
@@ -186,8 +187,6 @@ SQL;
      */
     public static function getProfileList(User $user)
     {
-        \ChromePhp::info($user->id);
-
         $data = Orm\Review::where('user_id', $user->id)
             ->orderBy('id', 'DESC')
             ->paginate(20);
@@ -300,6 +299,26 @@ SQL;
         }
 
         return true;
+    }
+
+    /**
+     * 発売済みか？
+     *
+     * @param $softId
+     * @return bool
+     */
+    public static function isReleased($softId)
+    {
+        $today = date('Ymd');
+
+        $packages = Soft::getPackages($softId);
+        foreach ($packages as $pkg) {
+            if ($pkg->release_int <= $today) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

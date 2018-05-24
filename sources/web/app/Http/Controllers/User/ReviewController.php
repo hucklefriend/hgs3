@@ -42,6 +42,10 @@ class ReviewController extends Controller
             return view('user.review.disable');
         }
 
+        if (!Review::isReleased($softId)) {
+            return view('user.review.notRelease');
+        }
+
         return null;
     }
 
@@ -62,6 +66,10 @@ class ReviewController extends Controller
 
         // 下書きを取得
         $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+
+
+
+
 
         return view('user.review.input', [
             'soft'     => $soft,
