@@ -83,6 +83,13 @@ class ProfileController extends Controller
                 ];
             }
                 break;
+            case 'review_draft': {
+                $title = 'レビュー下書き';
+                $data['parts'] = [
+                    'drafts' => Review::getProfileDraftList($user),
+                ];
+            }
+                break;
             case 'site': {
                 $title = 'サイト';
                 $data['parts'] = [

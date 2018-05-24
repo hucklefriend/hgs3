@@ -273,4 +273,16 @@ class ReviewDraft extends \Eloquent
     {
         return 'まだ公開していません。';
     }
+
+    /**
+     * 特定ユーザーが持っているレビューの下書き数を取得
+     *
+     * @param $userId
+     * @return int
+     */
+    public static function getNumByUser($userId)
+    {
+        return self::where('user_id', $userId)
+            ->count('soft_id');
+    }
 }

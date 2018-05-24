@@ -15,7 +15,7 @@ class SiteGoodSeeder extends Seeder
         $users = Test\User::get();
         $userMax = $users->count() - 1;
 
-        $sites = Test\Site::get();
+        $sites = Test\Site::getOpen();
         foreach ($sites as $site) {
             $num = rand(0, $userMax);
 

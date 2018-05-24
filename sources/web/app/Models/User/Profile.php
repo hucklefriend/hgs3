@@ -23,6 +23,7 @@ class Profile
             'followNum'       => Follow::getFollowNum($userId),
             'followerNum'     => Follow::getFollowerNum($userId),
             'reviewNum'       => Orm\Review::getNumByUser($userId),
+            'reviewDraftNum'  => Orm\ReviewDraft::getNumByUser($userId),
             'siteNum'         => Orm\Site::getNumByUser($userId),
             'favoriteSoftNum' => Orm\UserFavoriteSoft::getNumByUser($userId),
             'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId),

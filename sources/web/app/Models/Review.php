@@ -199,8 +199,30 @@ SQL;
         $soft = Orm\GameSoft::getHash($softIds);
         foreach ($data->items() as &$review) {
             $review->soft = $soft[$review->soft_id];
+        }
 
+        return $data;
+    }
 
+    /**
+     * プロフィールページ用の下書き一覧を取得
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getProfileDraftList(User $user)
+    {
+        $data = Orm\ReviewDraft::where('user_id', $user->id)
+            ->orderBy('created_at')
+            ->paginate(20);
+
+        if (empty($data->items())) {
+            return $data;
+        }
+
+        $soft = Orm\GameSoft::getHash(page_pluck($data, 'soft_id'));
+        foreach ($data->items() as &$review) {
+            $review->soft = $soft[$review->soft_id];
         }
 
         return $data;
