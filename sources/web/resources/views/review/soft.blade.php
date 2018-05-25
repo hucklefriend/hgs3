@@ -9,12 +9,12 @@
             <h1>{{ $soft->name }}</h1>
             <p class="mb-0">レビュー</p>
         </header>
-
         <div class="row">
-            <div class="col-12 col-sm-7 col-md-6 col-lg-5">
+            <div class="col-12 col-md-6 col-lg-5">
                 <div class="card card-hgn">
                     <div class="card-body">
-                        <h4 class="card-title">平均点</h4>
+                        <div class="d-flex">
+
                         @if ($total !== null)
                             <div class="d-flex">
                                 <div class="review-point">
@@ -39,13 +39,46 @@
                         @else
                             <p class="mb-0">集計されていません。</p>
                         @endif
+                        </div>
+
+                        <p class="text-muted">
+                            <small>
+                                怖さを基準点に、良い所を足し、悪い所を引いて計算しています。<br>
+                                詳しくは<a href="{{ route('レビューについて') }}">レビューについて</a>をご確認ください。
+                            </small>
+                        </p>
+
+                        @auth
+                            <div class="mt-3">
+                            @if ($writtenReview)
+                                {{ Auth::user()->name }}さんレビュー投稿ありがとうございました。<br>
+                                <a href="{{ route('レビュー', ['review' => $writtenReview->id]) }}">ご自身の投稿はこちら</a>です。
+                            @elseif ($isWriteDraft)
+                                こちらのゲームの下書きがあるようです。<br>
+                                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
+                                    <i class="fas fa-edit"></i> 下書きの続きを書く
+                                </a>
+                            @else
+                                {{ Auth::user()->name }}さんもレビューを書いてみませんか？<br>
+                                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
+                                    <i class="fas fa-edit"></i> レビューを書く
+                                </a>
+                            @endif
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+            <div class="col-12 col-md-6 col-lg-7">
                 <div class="card card-hgn">
-                    <div class="card-body">広告</div>
+                    <div class="card-body">
+                        @auth
+                        <p>
+
+                        </p>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

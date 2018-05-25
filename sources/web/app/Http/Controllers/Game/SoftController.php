@@ -10,6 +10,7 @@ use Hgs3\Http\Requests\Game\GameSoftRequest;
 use Hgs3\Models\Orm;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
+use Hgs3\Models\Review;
 use Hgs3\Models\User\FavoriteSoft;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -50,6 +51,9 @@ class SoftController extends Controller
         $data['favoriteHash'] = [];
         if (Auth::check()) {
             $data['favoriteHash'] = FavoriteSoft::getHash(Auth::id());
+
+            $data['isWriteReview'] = Review::isOpened(Auth::id(), $soft->id);
+            $data['isWriteReviewDraft'] = Review::isWriteDraft(Auth::id(), $soft->id);
         }
 
         $data['pltHash'] = Orm\GamePlatform::all('id', 'acronym')

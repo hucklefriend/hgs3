@@ -9,10 +9,8 @@
                     <div class="d-flex">
                         <div class="review-point-list mr-2">{{ $draft->calcPoint() }}</div>
                         <div>
-                            <div>
-                                <div class="package-image-review-list">@include ('game.common.packageImage', ['imageUrl' => small_image_url($draft->soft->getImagePackage())])</div>
-                                {{ $draft->soft->name }}
-                            </div>
+                            <div class="package-image-review-list">@include ('game.common.packageImage', ['imageUrl' => small_image_url($draft->soft->getImagePackage())])</div>
+                            {{ $draft->soft->name }}
                         </div>
                     </div>
                 </div>

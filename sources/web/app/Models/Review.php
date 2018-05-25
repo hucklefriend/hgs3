@@ -344,15 +344,49 @@ SQL;
     }
 
     /**
+     * ユーザーIDとソフトIDからレビューを取得
+     *
+     * @param int $userId
+     * @param int $softId
+     * @return Orm\Review|null
+     */
+    public static function getByUserAndSoft($userId, $softId)
+    {
+        $review = Orm\Review::where('user_id', $userId)
+            ->where('soft_id', $softId)
+            ->first();
+
+        if ($review) {
+            return $review;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * 公開済みか？
      *
-     * @param $userId
-     * @param $softId
+     * @param int $userId
+     * @param int $softId
      * @return bool
      */
     public static function isOpened($userId, $softId)
     {
         return  Orm\Review::where('user_id', $userId)
+            ->where('soft_id', $softId)
+            ->count() > 0;
+    }
+
+    /**
+     * 下書きがあるか？
+     *
+     * @param int $userId
+     * @param int $softId
+     * @return bool
+     */
+    public static function isWriteDraft($userId, $softId)
+    {
+        return Orm\ReviewDraft::where('user_id', $userId)
             ->where('soft_id', $softId)
             ->count() > 0;
     }

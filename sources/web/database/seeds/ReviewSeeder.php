@@ -18,7 +18,9 @@ class ReviewSeeder extends Seeder
         $softNum = $soft->count();
 
         foreach ($users as $user) {
-            $num = rand(0, 10);
+            if ($user->id == 0) continue;
+
+            $num = rand(2, 10);
             $written = [];
 
             for ($i = 0; $i < $num; $i++) {
@@ -31,7 +33,6 @@ class ReviewSeeder extends Seeder
                 if (\Hgs3\Models\Review::isOpened($user->id, $s->id)) {
                     continue;
                 }
-
 
                 $written[$s->id] = 1;
 

@@ -222,6 +222,7 @@ Route::get('/review', 'Review\ReviewController@index')->name('レビュートッ
 Route::get('/review/soft/{soft}', 'Review\ReviewController@soft')->name('ソフト別レビュー一覧');
 Route::get('/review/detail/{review}', 'Review\ReviewController@detail')->name('レビュー');
 Route::get('/review/new_arrivals', 'Review\ReviewController@newArrivals')->name('新着レビュー一覧');
+Route::get('/review/about', 'Review\ReviewController@about')->name('レビューについて');
 
 // 不正レビュー
 Route::get('/review/fraud_report/report/{review}', 'Review\FraudReportController@input');

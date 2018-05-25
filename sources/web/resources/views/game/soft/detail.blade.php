@@ -195,9 +195,15 @@
                             <p class="card-text">
                                 レビューはないか、集計待ち状態です。<br>
                                 このゲームのレビューを書いてみませんか？<br>
-                                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
-                                    <i class="fas fa-edit"></i> レビューを書く
-                                </a>
+                                @if ($isWriteReviewDraft)
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more mt-2">
+                                        <i class="fas fa-edit"></i> 下書きの続きを書く
+                                    </a>
+                                @else
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more mt-2">
+                                        <i class="fas fa-edit"></i> レビューを書く
+                                    </a>
+                                @endif
                             </p>
                         @else
                             <p class="card-text">レビューはありません。</p>
@@ -223,10 +229,30 @@
                                 </tr>
                             </table>
                         </div>
+                        @auth
+                            @if ($isWriteReview)
+                                <div class="text-right">
+                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                                </div>
+                            @else
+                                <div class="d-flex justify-content-between">
+                                    @if ($isWriteReviewDraft)
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
+                                        <i class="fas fa-edit"></i> 下書きの続きを書く
+                                    </a>
+                                    @else
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
+                                        <i class="fas fa-edit"></i> レビューを書く
+                                    </a>
+                                    @endif
+                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                                </div>
+                            @endif
+                        @else
                         <div class="text-right">
                             <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                         </div>
-
+                        @endauth
                     @endempty
                     @endif
                 </div>

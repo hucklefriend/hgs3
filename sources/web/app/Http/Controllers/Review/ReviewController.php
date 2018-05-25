@@ -52,6 +52,11 @@ class ReviewController extends Controller
             }
         }
 
+        if (Auth::check()) {
+            $data['writtenReview'] = Review::getByUserAndSoft(Auth::id(), $soft->id);
+            $data['isWriteDraft'] = Review::isWriteDraft(Auth::id(), $soft->id);
+        }
+
         return view('review.soft', $data);
     }
 

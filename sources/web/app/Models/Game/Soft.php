@@ -106,6 +106,7 @@ SQL;
         // レビュー
         $data['reviewTotal'] = Orm\ReviewTotal::find($soft->id);
 
+
         // お気に入り登録ユーザー
         $data['favorites'] = self::getFavoriteUser($soft->id);
         $data['favoriteNum'] = Orm\UserFavoriteSoft::where('soft_id', $soft->id)->count(['user_id']);
