@@ -129,6 +129,8 @@
             <footer class="footer">
                 <div style="overflow: hidden" class="mb-2">@yield('breadcrumb')</div>
                 <div style="white-space: nowrap;" class="text-right">
+                    <a href="{{ route('プライバシーポリシー') }}" class="align-self-center">プライバシーポリシー</a>
+                    <span class="mx-2">・</span>
                     <a href="{{ route('サイトマップ') }}" class="align-self-center">サイトマップ</a>
                 </div>
                 <div style="height: 40px;line-height: 40px;">
@@ -139,8 +141,8 @@
                     / since 2003.9.28
                 </div>
                 <div class="my-2">
-                    <a href="https://affiliate.dmm.com/api/"><img src="https://pics.dmm.com/af/web_service/com_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.com" /></a>
-                    <a href="https://affiliate.dmm.com/api/"><img src="https://pics.dmm.com/af/web_service/r18_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.R18" /></a>
+
+
                 </div>
             </footer>
 

@@ -84,6 +84,16 @@ class TopController extends Controller
         return view('about');
     }
 
+    /**
+     * プライバシーポリシー
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function privacy()
+    {
+        return view('privacy');
+    }
+
     public function test()
     {
         return '<pre>' . print_r(Dmm::getItem('digitalhappiness_0001', 'DMM.com'), true) .  '</pre>';

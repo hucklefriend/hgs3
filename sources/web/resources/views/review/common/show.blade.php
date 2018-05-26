@@ -10,15 +10,15 @@
                     <table class="review-point-table">
                         <tr>
                             <th>怖さ{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</th>
-                            <td class="text-right">{{ $review->fear * 5 }}pt</td>
+                            <td class="text-right">{{ $review->fear * \Hgs3\Constants\Review\Fear::POINT_RATE }}pt</td>
                         </tr>
                         <tr>
                             <th>良い点<i class="far fa-thumbs-up"></i></th>
-                            <td class="text-right">{{ count($review->getGoodTags()) + count($review->getVeryGoodTags()) }}pt</td>
+                            <td class="text-right">{{ (count($review->getGoodTags()) + count($review->getVeryGoodTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt</td>
                         </tr>
                         <tr>
                             <th>悪い点<i class="far fa-thumbs-down"></i></th>
-                            <td class="text-right">-{{ count($review->getBadTags()) + count($review->getVeryBadTags()) }}pt</td>
+                            <td class="text-right">-{{ (count($review->getBadTags()) + count($review->getVeryBadTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt</td>
                         </tr>
                     </table>
                 </div>

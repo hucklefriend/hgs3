@@ -24,15 +24,15 @@
                                 <table class="review-point-table">
                                     <tr>
                                         <th>😱 怖さ</th>
-                                        <td class="text-right">{{ round($total->fear * 5, 1) }}pt</td>
+                                        <td class="text-right">{{ round($total->fear * \Hgs3\Constants\Review\Fear::POINT_RATE, 1) }}pt</td>
                                     </tr>
                                     <tr>
                                         <th><i class="far fa-thumbs-up"></i> 良い点</th>
-                                        <td class="text-right">{{ round($total->good_tag_num + $total->very_good_tag_num, 1)}}pt</td>
+                                        <td class="text-right">{{ round(($total->good_tag_num + $total->very_good_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE, 1)}}pt</td>
                                     </tr>
                                     <tr>
                                         <th><i class="far fa-thumbs-down"></i> 悪い所</th>
-                                        <td class="text-right">-{{ round($total->bad_tag_num + $total->very_bad_tag_num, 1) }}pt</td>
+                                        <td class="text-right">-{{ round(($total->bad_tag_num + $total->very_bad_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE, 1) }}pt</td>
                                     </tr>
                                 </table>
                             </div>
@@ -93,9 +93,9 @@
                             <span class="review-point-list">{{ $review->point }}</span>
                             <div class="ml-3">
                                 <div>
-                                    {{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}{{ $review->fear * 5 }} +
-                                    <i class="far fa-thumbs-up"></i>{{ $review->good_tag_num + $review->very_good_tag_num }} -
-                                    <i class="far fa-thumbs-down"></i>{{ $review->bad_tag_num + $review->very_bad_tag_num }}
+                                    {{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}{{ $review->fear * \Hgs3\Constants\Review\Fear::POINT_RATE }} +
+                                    <i class="far fa-thumbs-up"></i>{{ ($review->good_tag_num + $review->very_good_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE }} -
+                                    <i class="far fa-thumbs-down"></i>{{ ($review->bad_tag_num + $review->very_bad_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE }}
                                 </div>
                                 <div class="d-flex flex-wrap">
                                     <span class="mr-3"><i class="far fa-user"></i> {{ $users[$review->user_id]->name }}</span>

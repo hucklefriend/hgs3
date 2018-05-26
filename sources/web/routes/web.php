@@ -277,3 +277,4 @@ Route::post('/social/google/{mode}', 'Social\GoogleController@redirect')->name('
 Route::get('/sitemap', 'TopController@sitemap')->name('サイトマップ');
 Route::get('/new_information', 'TopController@newInformation')->name('新着情報');
 Route::get('/about', 'TopController@about')->name('当サイトについて');
+Route::get('/privacy', 'TopController@privacy')->name('プライバシーポリシー');

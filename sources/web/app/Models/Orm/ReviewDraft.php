@@ -6,6 +6,8 @@
 namespace Hgs3\Models\Orm;
 
 
+use Hgs3\Constants\Review\Fear;
+use Hgs3\Constants\Review\Tag;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -260,8 +262,9 @@ class ReviewDraft extends \Eloquent
     {
         $this->setTags();
 
-        return ($this->fear * 5) + (count($this->goodTags) + (count($this->veryGoodTags)))
-            - (count($this->badTags) + (count($this->veryBadTags)));
+        return ($this->fear * Fear::POINT_RATE)
+            + ((count($this->goodTags) + (count($this->veryGoodTags))) * Tag::POINT_RATE)
+            - ((count($this->badTags) + (count($this->veryBadTags))) * Tag::POINT_RATE);
     }
 
     /**

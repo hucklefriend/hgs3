@@ -87,7 +87,7 @@
             <div class="form-group">
                 <label for="good_tags" class="hgn-label"><i class="fas fa-check"></i> 良い点</label>
                 <p class="text-muted">
-                    このゲームの良いところがあれば選択してください。(<span id="good_check_num">0</span>個選択中)
+                    このゲームの良いところがあれば選択してください。最大10個まで。(<span id="good_check_num">0</span>個選択中)
                 </p>
                 <div class="d-flex flex-wrap">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -126,7 +126,7 @@
             <div class="form-group">
                 <label for="bad_tags" class="hgn-label"><i class="fas fa-check"></i> 悪い点</label>
                 <p class="text-muted">
-                    このゲームの悪いところがあれば選択してください。(<span id="bad_check_num">0</span>個選択中)
+                    このゲームの悪いところがあれば選択してください。最大10個まで。(<span id="bad_check_num">0</span>個選択中)
                 </p>
                 <div class="d-flex flex-wrap">
                     @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
@@ -175,22 +175,10 @@
                             <th><i class="far fa-thumbs-up"></i> 良い点</th>
                             <td class="text-right" id="total_point"><span id="total_good"></span>pt</td>
                         </tr>
-{{--
-                        <tr>
-                            <th><i class="far fa-thumbs-up"></i><i class="far fa-thumbs-up"></i> すごく良い</th>
-                            <td class="text-right" id="total_point"><span id="total_very_good"></span>点</td>
-                        </tr>
---}}
                         <tr>
                             <th><i class="far fa-thumbs-down"></i> 悪い点</th>
                             <td class="text-right" id="total_point">-<span id="total_bad"></span>pt</td>
                         </tr>
-{{--
-                        <tr>
-                            <th><i class="far fa-thumbs-down"></i><i class="far fa-thumbs-down"></i> すごく悪い</th>
-                            <td class="text-right" id="total_point">-<span id="total_very_bad"></span>点</td>
-                        </tr>
---}}
                     </table>
                 </div>
             </div>
@@ -199,9 +187,8 @@
             <div class="form-group">
                 <label for="url" class="hgn-label"><i class="fas fa-edit"></i> 外部レビュー</label>
                 <p class="text-muted">
-                    このゲームのレビューを投稿しているブログなどがあれば、URLを記載してください。<br>
-                    そちらへ案内するリンクをレビュー内に記載します。<br>
-                    ※管理人がチェックするまでURLのみ非公開状態となります。レビュー自体は公開されます。
+                    このゲームのレビューを投稿しているブログなどがあれば、URLを記載して頂くと、案内するリンクをレビュー内に記載します。<br>
+                    ※このURLのみ、管理人がチェックするまで非公開状態となります。
                 </p>
                 <input type="text" name="url" id="url" class="form-control{{ invalid($errors, 'url') }}" value="{{ old('url', $draft->url) }}">
                 <i class="form-group__bar"></i>
@@ -326,6 +313,13 @@
             });
 
             $('.good_tag').on('change', function (){
+                let goodTagNum = $('.good_tag:checked').length;
+                if (goodTagNum >= 10) {
+                    $('.good_tag:not(:checked)').prop('disabled', true);
+                } else {
+                    $('.good_tag:not(:checked)').prop('disabled', false);
+                }
+
                 changeVeryBtn('good', $(this).val(), $(this).prop('checked'));
                 setGoodTagNum();
                 setVeryGoodTagNum();
@@ -333,6 +327,13 @@
             });
 
             $('.bad_tag').on('change', function (){
+                let badTagNum = $('.bad_tag:checked').length;
+                if (badTagNum >= 10) {
+                    $('.bad_tag:not(:checked)').prop('disabled', true);
+                } else {
+                    $('.bad_tag:not(:checked)').prop('disabled', false);
+                }
+
                 changeVeryBtn('bad', $(this).val(), $(this).prop('checked'));
                 setBadTagNum();
                 setVeryBadTagNum();
@@ -462,7 +463,7 @@
 
         function setTotalPoint()
         {
-            let fear = $('#fear').val() * 5;
+            let fear = $('#fear').val() * {{ \Hgs3\Constants\Review\Fear::POINT_RATE }};
             let goodNum = $('.good_tag:checked').length;
             let veryGoodNum = $('.very_good_tag:checked').length;
             let badNum = $('.bad_tag:checked').length;
@@ -470,8 +471,8 @@
 
             $('#total_point').text(fear + goodNum + veryGoodNum - badNum - veryBadNum);
             $('#total_fear').text(fear);
-            $('#total_good').text(goodNum + veryGoodNum);
-            $('#total_bad').text(badNum + veryBadNum);
+            $('#total_good').text((goodNum + veryGoodNum) * {{ \Hgs3\Constants\Review\Tag::POINT_RATE }});
+            $('#total_bad').text((badNum + veryBadNum) * {{ \Hgs3\Constants\Review\Tag::POINT_RATE }});
         }
 
     </script>

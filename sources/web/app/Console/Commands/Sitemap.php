@@ -63,22 +63,10 @@ class Sitemap extends Command
         <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://horrorgame.net/account/signup</loc>
-        <lastmod>$lastmod</lastmod>
+        <loc>https://horrorgame.net/privacy</loc>
+        <lastmod>2018-06-02</lastmod>
         <changefreq>never</changefreq>
         <priority>0.2</priority>
-    </url>
-    <url>
-        <loc>https://horrorgame.net/auth/forget</loc>
-        <lastmod>$lastmod</lastmod>
-        <changefreq>never</changefreq>
-        <priority>0.0</priority>
-    </url>
-    <url>
-        <loc>https://horrorgame.net/auth/login</loc>
-        <lastmod>$lastmod</lastmod>
-        <changefreq>never</changefreq>
-        <priority>0.1</priority>
     </url>
     <url>
         <loc>https://horrorgame.net/new_information</loc>
