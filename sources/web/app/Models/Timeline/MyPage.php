@@ -5,34 +5,43 @@
 
 namespace Hgs3\Models\Timeline;
 
+use Hgs3\Log;
 use Hgs3\Models\Orm;
+use Hgs3\Models\UserActionTimeline;
 
 class MyPage extends TimelineAbstract
 {
     /**
      * タイムライン取得
      *
+     * @param bool $isMyself
      * @param int $userId
-     * @param float $time
+     * @param int $time
      * @param int $num
-     * return array
+     * @return array
      */
-    public static function getTimeline($userId, $time, $num)
+    public static function getTimeline($isMyself, $userId, $time, $num)
     {
         // 各タイムラインのデータを必要数+1取得
         // +1取るのは、次があるかのチェックのため
-        $favoriteSoft = self::getFavoriteSoftTimeline($userId, $time, $num + 1);
-        $favoriteSite = self::getFavoriteSiteTimeline($userId, $time, $num + 1);
-        $toMe = self::getToMeTimeline($userId, $time, $num + 1);
-        $followUser = self::getFollowUserTimeline($userId, $time, $num + 1);
+        if ($isMyself) {
+            $favoriteSoft = self::getFavoriteSoftTimeline($userId, $time, $num + 1);
+            $favoriteSite = self::getFavoriteSiteTimeline($userId, $time, $num + 1);
+            $followUser = self::getFollowUserTimeline($userId, $time, $num + 1);
+            $toMe = self::getToMeTimeline($userId, $time, $num + 1);
+            $userAction = self::getUserActionTimeline($userId, $time, $num + 1);
 
-        // 混ぜる
-        $timeline = array_merge($favoriteSoft, $favoriteSite, $toMe, $followUser);
+            // 混ぜる
+            $timeline = array_merge($favoriteSoft, $favoriteSite, $toMe, $followUser, $userAction);
 
-        unset($favoriteSoft);
-        unset($favoriteSite);
-        unset($toMe);
-        unset($followUser);
+            unset($favoriteSoft);
+            unset($favoriteSite);
+            unset($toMe);
+            unset($followUser);
+            unset($userAction);
+        } else {
+            $timeline = UserActionTimeline::getMyPage($userId, $time, $num);
+        }
 
         if (empty($timeline)) {
             return [
@@ -168,5 +177,27 @@ class MyPage extends TimelineAbstract
         ];
 
         return self::getDB()->to_me_timeline->find($filter, $options)->toArray();
+    }
+
+    /**
+     * 自分の行動タイムライン
+     *
+     * @param $userId
+     * @param $time
+     * @param $num
+     * @return array
+     */
+    private static function getUserActionTimeline($userId, $time, $num)
+    {
+        $filter = [
+            'user_id' => $userId,
+            'time' => ['$lt' => $time]
+        ];
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $num,
+        ];
+
+        return self::getDB()->user_action_timeline->find($filter, $options)->toArray();
     }
 }

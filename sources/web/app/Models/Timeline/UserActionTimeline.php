@@ -27,44 +27,6 @@ class UserActionTimeline
     }
 
     /**
-     * マイページ
-     *
-     * @param $userId
-     * @param $num
-     * @return array
-     */
-    public function getMyPage($userId, $num)
-    {
-        $collection = self::getMongoCollection();
-
-        $filter = [
-            '$or' => [
-                ['target_user_id' => 1],
-                ['game_id' => ['$in' => $this->user->getFavoriteGame()]],
-                ['user_id' => ['$in' => $this->user->getFollow()]],
-                ['site_id' => ['$in' => $this->user->getFavoriteSite()]]
-            ],
-            'user_id' => ['$ne' => 1]
-        ];
-
-        $itemNum = $collection->count($filter);
-
-        $pager = new LengthAwarePaginator([], $itemNum, $num);
-        $pager->setPath('');
-
-        $options = [
-            'sort'  => ['time' => -1],
-            'limit' => $num,
-            'skip'  => ($pager->currentPage() - 1) * $num
-        ];
-
-        return [
-            'pager'     => $pager,
-            'timelines' => $collection->find($filter, $options)
-        ];
-    }
-
-    /**
      * サインアップ
      */
     public function addSignUpText()

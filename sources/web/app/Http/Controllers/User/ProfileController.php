@@ -122,8 +122,11 @@ class ProfileController extends Controller
                 ];
             }
                 break;
-            case 'timeline':
-                // TODO タイムライン実装時にここに追加
+            case 'timeline': {
+                $title = 'タイムライン';
+                $data['parts'] = Timeline\MyPage::getTimeline($data['isMyself'], Auth::id(), time(), 20);
+            }
+                break;
             case 'profile':
             default: {
                 $show = 'profile';
@@ -191,12 +194,16 @@ class ProfileController extends Controller
     /**
      * さらにタイムラインを取得
      *
-     * @param User $user
+     * @param string $showId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function moreTimelineMyPage(User $user)
+    public function moreTimelineMyPage($showId)
     {
+        $user = User::findByShowId($showId);
+
+        $isMyself = $user->id == Auth::id();
+
         $time = floatval(Input::get('time', 0));
-        return Response::json(Timeline\MyPage::getTimeline($user->id, $time, 20));
+        return Response::json(Timeline\MyPage::getTimeline($isMyself, $user->id, $time, 20));
     }
 }

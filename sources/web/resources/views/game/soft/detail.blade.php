@@ -114,7 +114,7 @@
                                         @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
                                     </div>
                                     <div class="ml-3">
-                                        <div class="package-title">{{ $pkg->name }}</div>
+                                        <div class="package-title">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
                                         <div class="package-info mt-1">
                                             <div><span class="package-info-icon"><i class="far fa-building"></i></span>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></div>
                                             <div><span class="package-info-icon"><i class="fas fa-gamepad"></i></span>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></div>
@@ -144,7 +144,7 @@
                                             @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
                                         </div>
                                         <div class="ml-3">
-                                            <div class="package-title">{{ $pkg->name }}</div>
+                                            <div class="package-title">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
                                             <div class="package-info mt-1">
                                                 <div><span class="package-info-icon"><i class="far fa-building"></i></span>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></div>
                                                 <div><span class="package-info-icon"><i class="fas fa-gamepad"></i></span>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></div>

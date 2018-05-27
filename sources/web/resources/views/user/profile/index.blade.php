@@ -32,6 +32,7 @@
             <div class="p-2 hidden-xs-down" style="width: 300px;">
                 <div class="nav flex-column nav-pills">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="nav-link @if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
@@ -56,6 +57,7 @@
                             <div class="form-group">
                                 <select class="select2" data-minimum-results-for-search="Infinity" id="small_menu">
                                     <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}"{{ selected($show, 'profile') }}>プロフィール</option>
+                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}"{{ selected($show, 'timeline') }}>タイムライン</option>
                                     <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}"{{ selected($show, 'follow') }}>フォロー</option>
                                     <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}"{{ selected($show, 'follower') }}>フォロワー</option>
                                     <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}"{{ selected($show, 'favorite_soft') }}>お気に入りゲーム</option>

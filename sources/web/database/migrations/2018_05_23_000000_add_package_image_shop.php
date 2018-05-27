@@ -16,8 +16,8 @@ class AddPackageImageShop extends Migration
      */
     public function up()
     {
-        Schema::table('packages', function (Blueprint $table) {
-            $table->unsignedInteger('shop_id')->nullabel()->comment('画像のショップID')->after('is_adult');
+        Schema::table('game_packages', function (Blueprint $table) {
+            $table->unsignedInteger('shop_id')->nullable()->comment('画像のショップID')->after('is_adult');
         });
     }
 

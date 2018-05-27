@@ -511,6 +511,11 @@ html.is-fixed body {
     width: 90px;
 }
 
+.package-image-small img {
+    max-height: 80px;
+}
+
+
 .label-big-hgn {
     font-size: 1.5rem;
 }
