@@ -133,16 +133,12 @@
                     <span class="mx-2">・</span>
                     <a href="{{ route('サイトマップ') }}" class="align-self-center">サイトマップ</a>
                 </div>
-                <div style="height: 40px;line-height: 40px;">
+                <div style="height: 40px;line-height: 40px;" class="my-3">
                     &copy; yu-ki
                     <a href="mailto:{{ env('ADMIN_MAIL') }}" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::MAIL) }}</a>
                     <a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}</a>
                     <a href="https://github.com/hucklefriend/hgs3" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}</a>
                     / since 2003.9.28
-                </div>
-                <div class="my-2">
-
-
                 </div>
             </footer>
 

@@ -6,14 +6,11 @@
 namespace Hgs3\Http\Controllers\Review;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\Review\WriteRequest;
-use Hgs3\Models\Game\Package;
 use Hgs3\Models\Review;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class ReviewController extends Controller
 {
@@ -35,22 +32,22 @@ class ReviewController extends Controller
     {
         $data = [
             'soft'  => $soft,
-            'total' => null
+            'total' => null,
+            'reviews' => []
         ];
 
-        $total = Orm\ReviewTotal::find($soft->id);
-        if ($total !== null) {
-            $data['total'] = $total;
-            $data['reviews'] = Orm\Review::where('soft_id', $soft->id)
-                ->orderBy('id', 'DESC')
-                ->paginate(10);
+        $data['total'] = Orm\ReviewTotal::find($soft->id);
 
-            $data['users'] = [];
+        $data['reviews'] = Orm\Review::where('soft_id', $soft->id)
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
 
-            if ($data['reviews']->isNotEmpty()) {
-                $data['users'] = User::getHash(array_pluck($data['reviews']->items(), 'user_id'));
-            }
+        $data['users'] = [];
+
+        if ($data['reviews']->isNotEmpty()) {
+            $data['users'] = User::getHash(array_pluck($data['reviews']->items(), 'user_id'));
         }
+
 
         if (Auth::check()) {
             $data['writtenReview'] = Review::getByUserAndSoft(Auth::id(), $soft->id);
@@ -113,6 +110,12 @@ class ReviewController extends Controller
      */
     public function about()
     {
-        return view('review.about');
+        $from = Input::get('from', 'top');
+        $soft = intval(Input::get('soft', 0));
+
+        return view('review.about', [
+            'from' => $from,
+            'soft' => $soft
+        ]);
     }
 }

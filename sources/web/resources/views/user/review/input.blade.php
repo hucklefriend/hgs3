@@ -11,15 +11,15 @@
             <p>レビュー投稿</p>
         </header>
 
+        <div class="mb-5 alert alert-warning alert-warning-hgn" style="border: none;">
+            入力される前に、<a href="{{ route('レビューについて') }}?from=input&soft={{ $soft->id }}">レビューについて</a>を一度お読みください。
+        </div>
+
         @if (!$draft->isDefault)
             <div class="alert alert-secondary alert-secondary-hgn" role="alert">
                 下書きを読み込みました。
             </div>
         @endif
-
-        <div class="mb-5">
-            <p>入力される前に、注意事項をお読みください。</p>
-        </div>
 
         <form method="POST" action="{{ route('レビュー保存') }}" autocomplete="off">
             <input type="hidden" name="soft_id" value="{{ $soft->id }}">

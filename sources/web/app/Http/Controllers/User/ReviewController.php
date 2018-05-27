@@ -67,10 +67,6 @@ class ReviewController extends Controller
         // 下書きを取得
         $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
 
-
-
-
-
         return view('user.review.input', [
             'soft'     => $soft,
             'packages' => $soft->getPackages(),

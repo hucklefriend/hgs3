@@ -13,7 +13,6 @@
             <div class="col-12 col-md-6 col-lg-5">
                 <div class="card card-hgn">
                     <div class="card-body">
-                        <div class="d-flex">
 
                         @if ($total !== null)
                             <div class="d-flex">
@@ -36,20 +35,22 @@
                                     </tr>
                                 </table>
                             </div>
-                        @else
-                            <p class="mb-0">集計されていません。</p>
-                        @endif
-                        </div>
 
-                        <p class="text-muted">
-                            <small>
-                                怖さを基準点に、良い所を足し、悪い所を引いて計算しています。<br>
-                                詳しくは<a href="{{ route('レビューについて') }}">レビューについて</a>をご確認ください。
-                            </small>
-                        </p>
+                            <p class="text-muted">
+                                <small>
+                                    怖さを基準点に、良い点を足し、悪い点を引いて計算しています。<br>
+                                    詳しくは<a href="{{ route('レビューについて') }}?from=soft&soft={{ $soft->id }}">レビューについて</a>をご確認ください。
+                                </small>
+                            </p>
+                        @else
+                            <p class="mb-0">
+                                集計されていないか、レビューが投稿されていません。<br>
+                                一定時間毎に集計しておりますので、しばらくお待ちください。
+                            </p>
+                        @endif
 
                         @auth
-                            <div class="mt-3">
+                            <div class="mt-4">
                             @if ($writtenReview)
                                 {{ Auth::user()->name }}さんレビュー投稿ありがとうございました。<br>
                                 <a href="{{ route('レビュー', ['review' => $writtenReview->id]) }}">ご自身の投稿はこちら</a>です。
