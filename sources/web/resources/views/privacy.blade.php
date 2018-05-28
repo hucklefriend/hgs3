@@ -38,10 +38,11 @@
                 <ul>
                     <li>メール・パスワード認証の登録の際にメールをお送りしています。</li>
                     <li>メール・パスワード認証でログインする場合、メールアドレスの入力が必要です。</li>
-                    <li>パスワードを忘れた場合の再設定にメールをお送りしています。</li>
+                    <li>パスワードを忘れた場合に、再発行のためメールアドレスの入力が必要です。</li>
+                    <li>パスワードを忘れた場合に、再発行のメールをお送りしています。</li>
                 </ul>
                 <p>
-                    上記以外のことでメールをお送りすることはありません。<br>
+                    上記以外のことでメールアドレスの入力を求めたり、メールをお送りすることはありません。<br>
                     連絡事項がある場合は、当サイト内のメッセージ機能でご連絡します。
                 </p>
             </div>
@@ -62,6 +63,15 @@
                     <li><a href="https://github.com/" target="_blank">GitHub</a></li>
                     <li><a href="https://plus.google.com/" target="_blank">Google+</a></li>
                 </ul>
+
+                <p>
+                    また、取得し、当サイト内で保存している内容は以下の通りです。
+                </p>
+                <ul>
+                    <li>名前(ニックネームにあたるもの)</li>
+                    <li>OAuth認証に必要なトークンおよびシークレットトークン</li>
+                </ul>
+
                 <p>
                     現在のところ、いずれのサービスにおいても、新規登録とログインでのみアカウント情報の取得・利用を行っております。<br>
                     今後、増える可能性がありますが、その場合はこちらに記載していきます。
@@ -78,13 +88,20 @@
                     当サイト内において、アフィリエイトサービスの画像の表示や商品ページへのリンクを行っている部分があります。<br>
                     また、各サービスにおいて、クッキーを使ってのデータ収集が行われております。
                 </p>
-                <ul>
+                <ul class="mb-4">
                     <li class="mb-2"><a href="https://affiliate.amazon.co.jp/" target="_blank">Amazon.co.jpアソシエイト</a></li>
                     <li class="mb-2">
                         <a href="https://affiliate.dmm.com/" target="_blank">DMM アフィリエイト</a>
                         <a href="https://affiliate.dmm.com/api/" target="_blank"><img src="https://pics.dmm.com/af/web_service/com_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.com" /></a>
                         <a href="https://affiliate.dmm.com/api/" target="_blank"><img src="https://pics.dmm.com/af/web_service/r18_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.R18" /></a>
                     </li>
+                </ul>
+                <p>
+                    当サイトでは18禁のアダルトゲームも取り扱っていますが、下記の条件にあてはまらない限り、アダルトゲームのパッケージ画像の表示や商品ページへのリンク、18歳以上向けの広告表示は行っておりません。
+                </p>
+                <ul>
+                    <li>当サイトのユーザーとして登録している</li>
+                    <li>ユーザーの設定で、「18歳以上で、かつ性的な表現があっても問題ありません」を有効にしている</li>
                 </ul>
             </div>
         </div>
