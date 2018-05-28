@@ -142,6 +142,12 @@ XML;
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://horrorgame.net/review/soft/{$game->id}</loc>
+        <lastmod>$lastmod</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://horrorgame.net/game/favorite/{$game->id}</loc>
         <lastmod>$lastmod</lastmod>
         <changefreq>monthly</changefreq>
@@ -183,7 +189,7 @@ XML;
         foreach ($series as $s) {
             $xml .=<<< XML
     <url>
-        <loc>https://horrorgame.net/game/platform/{$s->id}</loc>
+        <loc>https://horrorgame.net/game/series/{$s->id}</loc>
         <lastmod>$lastmod</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.4</priority>
