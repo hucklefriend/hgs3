@@ -27,7 +27,10 @@ class SendPRMailRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email|max:255|unique:users,email'
+            'email'    => 'required|string|email|max:255|unique:users,email',
+            'name'     => 'required|max:50',
+            'password' => 'required|string|alpha_dash|min:4|max:16',
+            'adult'    => '',
         ];
     }
 }

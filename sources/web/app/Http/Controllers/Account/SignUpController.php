@@ -11,6 +11,7 @@ use Hgs3\Http\Requests\Account\SendPRMailRequest;
 use Hgs3\Mail\ProvisionalRegistration;
 use Hgs3\Models\Account\SignUp;
 use Hgs3\Models\Orm;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -36,6 +37,15 @@ class SignUpController extends Controller
     public function sendPRMail(SendPRMailRequest $request)
     {
         $email = $request->get('email');
+        $data = [
+            'name' => $request->get('name'),
+            'password' => bcrypt($request->get('password')),
+            'adult' => $request->get('adult', 0)
+        ];
+
+        if ($data['adult'] != 0) {
+            $data['adult'] = 1;
+        }
 
         $emailHash = md5($email);
 
@@ -52,6 +62,8 @@ class SignUpController extends Controller
             $pr = new Orm\UserProvisionalRegistration;
             $pr->email = $email;
         }
+
+        $pr->user_data = \json_encode($data);
 
         // リミットは1日後
         $limitDate = new \DateTime();
@@ -77,10 +89,11 @@ class SignUpController extends Controller
     }
 
     /**
-     * 登録画面
+     * 登録完了
      *
      * @param string $token
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function register($token)
     {
@@ -89,28 +102,12 @@ class SignUpController extends Controller
             return view('account.signup.tokenError');
         } else {
             $orm = Orm\UserProvisionalRegistration::where('token', $token)->first();
-            return view('account.signup.register', [
-                'pr' => $orm
-            ]);
-        }
-    }
+            $userData = \json_decode($orm->user_data);
+            $userData['email'] = $orm->email;
 
-    /**
-     * 本登録
-     *
-     * @param RegisterRequest $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Exception
-     */
-    public function registration(RegisterRequest $request)
-    {
-        $token = $request->get('token');
+            // ユーザー情報を登録
+            User::register($userData, false);
 
-        if (!SignUp::validateToken($token)) {
-            SignUp::deleteToken($token);
-            return view('account.signup.tokenError');
-        } else {
-            SignUp::register($token, $request->get('name'), $request->get('password'));
             return view('account.signup.complete');
         }
     }

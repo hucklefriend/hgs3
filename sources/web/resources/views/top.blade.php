@@ -2,16 +2,6 @@
 
 @section('content')
     <div class="content__inner">
-        <div class="card card-hgn">
-            <div class="card-body">
-                <p class="card-text" style="color: #e7c3c3;">
-                    現在、テスト用のユーザーとサイトが多数登録されています。<br>
-                    本運営開始時に削除しますが、それまでは動作確認などで利用します。<br>
-                    邪魔かと思いますが、ご理解とご了承をお願いしますm(_ _)m
-                </p>
-            </div>
-        </div>
-
         <div class="row">
             <div class="@if(!Auth::check()) col-md-7 @else col-md-12 @endif">
                 <div class="card card-hgn">

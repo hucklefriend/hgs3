@@ -114,13 +114,18 @@ class User extends Authenticatable
      * @return User
      * @throws \Exception
      */
-    public static function register($data)
+    public static function register($data, $isBcrypt = true)
     {
+        $password = null;
+        if (isset($data['password'])) {
+            $password = $isBcrypt ? bcrypt($data['password']) : $data['password'];
+        }
+
         $self = new self;
         $self->show_id = $data['show_id'] ?? self::generateShowId();
         $self->name = $data['name'];
         $self->email = $data['email'] ?? null;
-        $self->password = isset($data['password']) ? bcrypt($data['password']) : null;
+        $self->password = $password;
         $self->role = $data['role']  ?? UserRole::USER;
         $self->profile = $data['profile'] ?? '';
         $self->sign_up_at = $data['sign_up_at'] ?? date('Y-m-d H:i:s');

@@ -9,14 +9,6 @@
             <h1>サイト登録</h1>
         </header>
 
-        @if ($isTakeOver)
-            <p>
-                「{{ $site->name }}」から引き継ぎます。<br>
-                変更がある場合は入力内容を修正して、登録してください。<br>
-                入力項目のほかに、登録日時、INカウント、OUTカウント、日別アクセス数で引き継ぎます。
-            </p>
-        @endif
-
         <form method="POST" action="{{ route('サイト登録処理') }}" enctype="multipart/form-data" autocomplete="off">
         {{ csrf_field() }}
         @include('user.siteManage.common.form')
