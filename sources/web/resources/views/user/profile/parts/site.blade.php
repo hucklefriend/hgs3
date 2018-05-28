@@ -14,21 +14,8 @@
     </div>
 </div>
 @if ($isMyself && count($sites) < env('MAX_SITES'))
-    @if ($hasHgs2Site)
-        <div class="row">
-            <div class="col-6">
-                <a href="{{ route('サイト登録') }}" class="btn btn-info btn-block">サイトを追加する</a>
-            </div>
-            <div class="col-6">
-                <a href="{{ route('サイト引継選択') }}" class="btn btn-info btn-block">H.G.S.から引き継ぎ</a>
-            </div>
-        </div>
-    @else
-    <div>
-        <button class="btn btn-link btn-block">
-            <a href="{{ route('サイト登録') }}" class="btn btn-info btn-block">サイトを追加する</a>
-        </button>
+    <div class="text-center">
+        <a href="{{ route('サイト登録') }}" class="btn btn-info">サイトを追加する</a>
     </div>
-    @endif
 @endif
 

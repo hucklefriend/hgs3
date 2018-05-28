@@ -652,6 +652,10 @@ SQL;
         Orm\SiteUpdateHistory::where('site_id', $site->id)
             ->delete();
 
+        // 日別アクセス数
+        Orm\SiteDailyAccess::where('site_id', $site->id)
+            ->delete();
+
         // サイト自体
         $site->delete();
     }

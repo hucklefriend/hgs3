@@ -94,8 +94,18 @@ class TopController extends Controller
         return view('privacy');
     }
 
+    /**
+     * HGSのユーザーさんへ
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function hgs()
+    {
+        return view('hgs');
+    }
+
     public function test()
     {
-        return '<pre>' . print_r(Dmm::getItem('digitalhappiness_0001', 'DMM.com'), true) .  '</pre>';
+        return '';
     }
 }

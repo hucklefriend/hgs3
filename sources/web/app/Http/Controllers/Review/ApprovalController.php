@@ -34,6 +34,7 @@ class ApprovalController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function ok(Request $request)
     {

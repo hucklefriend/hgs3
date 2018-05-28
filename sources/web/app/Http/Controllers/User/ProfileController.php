@@ -93,8 +93,7 @@ class ProfileController extends Controller
             case 'site': {
                 $title = 'サイト';
                 $data['parts'] = [
-                    'sites'       => Site::getUserSites($user->id, $data['isMyself']),
-                    'hasHgs2Site' => Site\TakeOver::hasHgs2Site($user)
+                    'sites' => Site::getUserSites($user->id, $data['isMyself'])
                 ];
             }
                 break;

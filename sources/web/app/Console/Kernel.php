@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         Commands\Master\UpdateOriginalPackageId::class,
         Commands\Master\Import::class,
         Commands\Sitemap::class,
-        Commands\ReviewTotal::class
+        Commands\ReviewTotal::class,
+        Commands\TranslateHgs::class
     ];
 
     /**

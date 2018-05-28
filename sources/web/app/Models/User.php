@@ -112,6 +112,7 @@ class User extends Authenticatable
      *
      * @param $data
      * @return User
+     * @throws \Exception
      */
     public static function register($data)
     {
@@ -123,6 +124,7 @@ class User extends Authenticatable
         $self->role = $data['role']  ?? UserRole::USER;
         $self->profile = $data['profile'] ?? '';
         $self->sign_up_at = $data['sign_up_at'] ?? date('Y-m-d H:i:s');
+        $self->last_login_at = $data['last_login_at'] ?? null;
 
         $self->save();
 
@@ -148,6 +150,8 @@ class User extends Authenticatable
                 return $usedShowIds->show_id;
             } catch (\Exception $e) {}
         }
+
+        return false;
     }
 
     /**
@@ -259,7 +263,7 @@ class User extends Authenticatable
         DB::beginTransaction();
         try {
             // サイト
-            $sites = Orm\Site::where('user_id', $this->id);
+            $sites = Orm\Site::where('user_id', $this->id)->get();
             foreach ($sites as $site) {
                 Site::delete($site);
             }
@@ -330,7 +334,7 @@ class User extends Authenticatable
 
     public static function deleteTestData()
     {
-        for ($id = 2; $id <= 100; $id++) {
+        for ($id = 2; $id <= 103; $id++) {
             $u = User::find($id);
             if ($u != null) {
                 $u->leave();

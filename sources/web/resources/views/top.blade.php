@@ -93,6 +93,10 @@
                                 </div>
                             </div>
                         </form>
+
+                        <p class="mt-3 mb-0">
+                            <small><a href="{{ route('HGSユーザーへ') }}">H.G.S.にご登録いただいていたユーザーの方はこちらをご覧ください</a></small>
+                        </p>
                     </div>
                 </div>
             </div>
