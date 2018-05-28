@@ -507,30 +507,42 @@ SQL;
     /**
      * 検索
      *
-     * @param Orm\GameSoft $soft
-     * @param int $mainContents
-     * @param int $targetGender
-     * @param int $rate
+     * @param Orm\GameSoft|null $soft
+     * @param array|null $mainContents
+     * @param array|null $targetGender
+     * @param array|null $rate
      * @param int $pagePerNum
      * @return array
      */
-    public static function search(Orm\GameSoft $soft, $mainContents, $targetGender, $rate, $pagePerNum)
+    public static function search(?Orm\GameSoft $soft, ?array $mainContents, ?array $targetGender, ?array $rate, $pagePerNum)
     {
         $data = ['soft' => $soft];
 
+        $query = DB::table('site_search_indices')
+            ->select('site_id');
+
+        if ($soft !== null) {
+            $query->where('soft_id', '=', $soft->id);
+        }
+        if ($mainContents !== null) {
+            $query->whereIn('main_contents_id', $mainContents);
+        }
+        if ($targetGender !== null) {
+            $query->whereIn('gender', $targetGender);
+        }
+        if ($rate !== null) {
+            $query->whereIn('rate', $rate);
+        }
+
+        $query->groupBy('site_id')
+            ->orderBy('updated_timestamp', 'DESC');
+
         // 検索テーブルからIDを取得
-        $data['pager'] = DB::table('site_search_indices')
-            ->select('site_id')
-            ->where('soft_id', '=', $soft->id)
-            //->where('main_contents_id', '=', $mainContents)
-            //->where('gender', '=', $targetGender)
-            //->where('rate', '=', $rate)
-            ->orderBy('updated_timestamp', 'DESC')
-            ->paginate($pagePerNum);
+        $data['pager'] = $query->paginate($pagePerNum);
 
         $data['sites'] = [];
         if (!empty($data['pager'])) {
-            $data['sites'] = Orm\Site::getHash(array_pluck($data['pager']->items(), 'site_id'));
+            $data['sites'] = Orm\Site::getHash(page_pluck($data['pager'], 'site_id'));
             $data['users'] = User::getHash(array_pluck($data['sites'], 'user_id'));
         }
 

@@ -96,40 +96,97 @@
         </div>
     </div>
 
-{{--
     <div class="card card-hgn">
         <div class="card-body">
-            <h4 class="card-title">ゲームからサイトを探す</h4>
-            <div class="card-text">
-                <div>
-                    ゲームから探す
-                </div>
-                <div>
+            <h4 class="card-title">サイトを探す</h4>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card card-hgn">
-        <div class="card-body">
-            <h4 class="card-title">メインコンテンツからサイトを探す</h4>
-            <div class="card-text">
-                <div class="contacts row">
-                    @foreach (\Hgs3\Constants\Site\MainContents::getData() as $mcId => $mcName)
-                        <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
-                            <div class="contacts__item">
-                                <div>
-                                    <a href="{{ route('ゲーム会社詳細', ['company' => $mcId]) }}">{{ $mcName }}</a>
-                                </div>
+            <form method="get" action="{{ route('サイト検索') }}">
+                <div class="form-group">
+                    <div>
+                        <label for="main_contents" class="hgn-label"><i class="fas fa-check"></i> メインコンテンツを絞る</label>
+                    </div>
+                    <div class="d-flex flex-wrap">
+                        @foreach (\Hgs3\Constants\Site\MainContents::getData() as $mcId => $mcName)
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="mc_{{ $mcId }}" name="mc[]" value="{{ $mcId }}" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">{{ $mcName }}</span>
+                                </label>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+                <div class="form-help"></div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="gender" class="hgn-label"><i class="fas fa-check"></i> 性別傾向を絞る</label>
+                    </div>
+                    <div class="d-flex">
+                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::NONE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::NONE }}" autocomplete="off">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">傾向なし</span>
+                            </label>
+                        </div>
+                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::MALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::MALE }}" autocomplete="off">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">男性向け</span>
+                            </label>
+                        </div>
+                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::FEMALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::FEMALE }}" autocomplete="off">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">女性向け</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-help"></div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="rate" class="hgn-label"><i class="fas fa-check"></i> 対象年齢を絞る</label>
+                    </div>
+                    <div class="d-flex">
+                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                <input type="checkbox" class="custom-control-input" id="rate_0" name="r[]" value="0" autocomplete="off">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">制限なし</span>
+                            </label>
+                        </div>
+                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                <input type="checkbox" class="custom-control-input" id="rate_15" name="r[]" value="15" autocomplete="off">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">R-15</span>
+                            </label>
+                        </div>
+                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                <input type="checkbox" class="custom-control-input" id="rate_18" name="r[]" value="18" autocomplete="off">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">R-18</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-help"></div>
+
+                <button class="btn">サイトを探す</button>
+            </form>
+            <p class="mt-4">
+                ゲーム単位でサイトをお探しの場合は、<a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a>よりゲームを選択し、サイト情報を参照してください。
+            </p>
         </div>
     </div>
---}}
+
     <style>
 
         .ticker {

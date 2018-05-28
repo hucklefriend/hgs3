@@ -1,17 +1,20 @@
 <div class="form-group">
     <label for="name" class="hgn-label"><i class="fas fa-edit"></i> サイト名</label>
     <span class="badge badge-secondary ml-2">必須</span>
-    <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}" placeholder="サイト名">
+    <input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $site->name) }}">
     <i class="form-group__bar"></i>
 </div>
 <div class="form-help">
     @include('common.error', ['formName' => 'name'])
+    <p class="form-text text-muted">
+        <small>最大文字数：100</small>
+    </p>
 </div>
 
 <div class="form-group">
     <label for="url" class="hgn-label"><i class="fas fa-edit"></i> URL</label>
     <span class="badge badge-secondary ml-2">必須</span>
-    <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}" placeholder="サイトのURL">
+    <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}">
     <i class="form-group__bar"></i>
 </div>
 <div class="form-help">
@@ -44,6 +47,9 @@
             </small>
         </p>
     @endif
+    <p class="form-text text-muted">
+        <small>サイト内で扱っているゲームを選択してください。</small>
+    </p>
 </div>
 
 <div class="form-group">
@@ -62,7 +68,12 @@
     </div>
 </div>
 <div class="form-help">
-
+    <p class="form-text text-muted">
+        <small>
+            サイト内で一番メインに扱っているコンテンツを1つだけ選択してください。<br>
+            複数あるかもしれませんが、その中でも中心となるものを1つだけでお願いします。
+        </small>
+    </p>
 </div>
 
 <div class="form-group">
@@ -72,6 +83,9 @@
 </div>
 <div class="form-help">
     @include('common.error', ['formName' => 'presentation'])
+    <p class="form-text text-muted">
+        <small>最大文字数：1000</small>
+    </p>
 </div>
 
 <div class="form-group">
@@ -103,7 +117,14 @@
     </div>
 </div>
 <div class="form-help">
-
+    <p class="form-text text-muted">
+        <small>
+            年齢制限コンテンツを扱っている場合は選択してください。<br>当サイト内では、下記のように定義します。<br>
+            R-15: 下着やヌード。一般的に芸術作品としての絵画や造形物のヌード表現の範囲内におさまっている。<br>
+            R-18: 性行為またはそれに準ずる好意を連想させる、もしくは行っている表現がある。<br>
+            暴力的表現に関しては、だいたいCEROのZ指定っぽい感じならR-18、D指定っぽい感じならR-15としてください。
+        </small>
+    </p>
 </div>
 
 

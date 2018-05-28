@@ -47,6 +47,20 @@ class SiteController extends Controller
     }
 
     /**
+     * ゲーム指定なしで検索
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search()
+    {
+        $mainContents = Input::get('mc');
+        $targetGender = Input::get('g');
+        $rate = Input::get('r');
+
+        return view('site.search', Site::search(null, $mainContents, $targetGender, $rate, 20));
+    }
+
+    /**
      * タイムライン
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

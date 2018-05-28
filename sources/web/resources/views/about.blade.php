@@ -73,7 +73,7 @@
                 </p>
                 <p>
                     バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>でご連絡をお願い致します。<br>
-                    {{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}GitHubのIssuesにIssueを登録して頂いても大丈夫です。
+                    {{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのIssuesにIssueを登録して頂いても大丈夫です。
                 </p>
             </div>
         </div>

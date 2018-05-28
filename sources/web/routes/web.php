@@ -231,6 +231,7 @@ Route::get('/review/fraud_report/list/{review}', 'Review\FraudReportController@l
 
 // サイト
 Route::get('/site', 'Site\SiteController@index')->name('サイトトップ');
+Route::get('/site/search', 'Site\SiteController@search')->name('サイト検索');
 Route::get('/site/timeline', 'Site\SiteController@timeline')->name('サイトタイムライン');
 Route::get('/site/new_arrival', 'Site\SiteController@newArrival')->name('新着サイト一覧');
 Route::get('/site/update', 'Site\SiteController@updateArrival')->name('更新サイト一覧');

@@ -57,7 +57,7 @@
 
                     <div class="form-group">
                         <label for="name" class="hgn-label"><i class="fas fa-edit"></i> メールアドレス</label>
-                        <input id="email" type="email" class="form-control{{ invalid($errors, 'email') }}" name="email" value="{{ old('email') }}" required>
+                        <input id="email" type="email" class="form-control{{ invalid($errors, 'email') }}" name="email" value="{{ old('email') }}" required maxlength="50">
                         <i class="form-group__bar"></i>
                     </div>
                     <div class="form-help">
@@ -71,7 +71,8 @@
                     </div>
                     <div class="form-help">
                         @include('common.error', ['formName' => 'name'])
-                        <small class="form-text text-muted">最大文字数：50文字</small>
+                        <small class="form-text text-muted">最大文字数：50文字<br>
+                            ※表示ページによっては、「14文字＋…」に制限させていただきます。</small>
                     </div>
 
                     <div class="form-group">
