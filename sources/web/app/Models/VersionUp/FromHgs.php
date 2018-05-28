@@ -136,6 +136,21 @@ SQL;
         $site->updated_timestamp = $hgsSite->updated_date;
         $site->hgs2_site_id = $hgsSite->id;
 
+        if (starts_with($site->list_banner_url, '/uploader/banner/id/')) {
+            $bannerId = substr($site->list_banner_url, 20);
+            $sql = 'SELECT path FROM hgs2.hgs_u_upload WHERE id = ?';
+            $path = DB::select($sql, [$bannerId]);
+
+            if (empty($path)) {
+                $site->list_banner_upload_flag = 0;
+                $site->list_banner_url = null;
+            } else {
+                $name = substr($path[0]->path, 8);
+                $site->list_banner_url = 'https://horrorgame.net/img/hgs_banner/' . $name . '.jpg';
+            }
+        }
+
+
         $site->save();
 
         Site::saveHandleSofts($site, $handleGames);     // 取扱いゲームの保存
