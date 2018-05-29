@@ -45,7 +45,7 @@ class UpdateAffiliate extends Command
     public function handle()
     {
         $shops = Orm\GamePackageShop::orderBy('updated_timestamp')
-            ->take(50)
+            ->take(10)
             ->get();
 
         foreach ($shops as $shop) {
@@ -62,8 +62,6 @@ class UpdateAffiliate extends Command
                 $shop->updated_timestamp = time();
                 $shop->insertOrUpdate();
             }
-
-            sleep(2);
         }
     }
 }
