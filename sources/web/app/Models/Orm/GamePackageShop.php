@@ -19,11 +19,12 @@ class GamePackageShop extends \Eloquent
     public function insertOrUpdate()
     {
         $sql =<<< SQL
-INSERT INTO game_package_shops (package_id, shop_id, shop_url, param1, created_at, updated_at)
-VALUES (:package_id, :shop_id, :shop_url, :param1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+INSERT INTO game_package_shops (package_id, shop_id, shop_url, param1, updated_timestamp, created_at, updated_at)
+VALUES (:package_id, :shop_id, :shop_url, :param1, UNIX_TIMESTAMP(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON DUPLICATE KEY UPDATE
   shop_url = VALUES(shop_url)
   , param1 = VALUES(param1)
+  , updated_timestamp = VALUES(updated_timestamp)
   , updated_at = CURRENT_TIMESTAMP 
 SQL;
 
