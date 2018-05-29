@@ -464,4 +464,22 @@ SQL;
             Log::exceptionError($e);
         }
     }
+
+    /**
+     * 動画で見た用のダミーパッケージデータを取得
+     *
+     * @return Orm\GamePackage
+     */
+    public static function getWatchMoviePackage()
+    {
+        $pkg = new Orm\GamePackage;
+
+        $pkg->id = 0;
+        $pkg->name = '動画等で他人のプレイを見た';
+        $pkg->small_image_url = url('img/movie_pkg.svg');
+        $pkg->medium_image_url = url('img/movie_pkg.svg');
+        $pkg->large_image_url = url('img/movie_pkg.svg');
+
+        return $pkg;
+    }
 }

@@ -11,12 +11,12 @@
             <p>レビュー投稿</p>
         </header>
 
-        <div class="mb-5 alert alert-warning alert-warning-hgn" style="border: none;">
+        <div class="@if ($draft->isDefault) mb-5 @endif alert alert-warning alert-warning-hgn" style="border: none;">
             入力される前に、<a href="{{ route('レビューについて') }}?from=input&soft={{ $soft->id }}">レビューについて</a>を一度お読みください。
         </div>
 
         @if (!$draft->isDefault)
-            <div class="alert alert-secondary alert-secondary-hgn" role="alert">
+            <div class="alert mt-3 mb-4 alert-secondary alert-secondary-hgn" role="alert">
                 下書きを読み込みました。
             </div>
         @endif
@@ -42,6 +42,13 @@
                             </label>
                         </div>
                     @endforeach
+                    <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                        <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                            <input type="checkbox" class="custom-control-input" id="pkg_0" name="package_id[]" value="0" autocomplete="off">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">動画等で他人のプレイを見た</span>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="form-help">
@@ -52,7 +59,7 @@
                 <label for="progress" class="hgn-label"><i class="fas fa-edit"></i> 進捗状態</label>
                 <p class="text-muted">
                     このゲームをどの程度遊んだか、簡単に書いてください。<br>
-                    例：プレイ時間、何周クリアした、エンディング全種類見た、PS2版は全クリアしたけどPC版は半分まで、etc...<br>
+                    例：プレイ時間、何周クリアした、エンディング全種類見た、PS2版は全クリアしたけどPC版は半分まで、××さんの実況動画を見た、友達がやっているのを横で見ていた、etc...<br>
                     <span style="color: indianred;">※ネタバレとなるような内容をここに書かないでください。</span>
                 </p>
                 <textarea name="progress" id="progress" class="form-control textarea-autosize{{ invalid($errors, 'progress') }}">{{ old('progress', $draft->progress) }}</textarea>
@@ -182,7 +189,15 @@
                     </table>
                 </div>
             </div>
+            <div class="form-group p-4 mt-2" style="background-color: rgba(0, 0, 0, 0.2);">
+                <p class="text-muted">
+                    点数に関わる項目があるのはここまでです。<br>
+                    一旦保存して、コメントは後でゆっくり書くというのはいかがでしょう？
+                </p>
+                <button class="btn btn-primary">下書き保存して確認画面へ</button>
+            </div>
             <div class="form-help"></div>
+
 
             <div class="form-group">
                 <label for="url" class="hgn-label"><i class="fas fa-edit"></i> 外部レビュー</label>

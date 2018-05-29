@@ -6,12 +6,13 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Http\Requests\Review\BadRequest;
+use Hgs3\Http\Requests\Review\FearRequest;
+use Hgs3\Http\Requests\Review\GeneralRequest;
+use Hgs3\Http\Requests\Review\GoodRequest;
 use Hgs3\Http\Requests\Review\WriteRequest;
-use Hgs3\Models\Game\Package;
 use Hgs3\Models\Review;
 use Hgs3\Models\Orm;
-use Hgs3\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,6 +98,166 @@ class ReviewController extends Controller
 
         return redirect()->route('レビュー投稿確認', ['soft' => $draft->soft_id]);
     }
+
+    /**
+     * 怖さ入力
+     *
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function inputFear(Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+
+        return view('user.review.inputFear', [
+            'soft'  => $soft,
+            'draft' => $draft
+        ]);
+    }
+
+    /**
+     * 怖さ保存
+     *
+     * @param FearRequest $request
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveFear(FearRequest $request, Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+        $draft->fear_comment = $request->get('fear_comment');
+        $draft->save();
+
+        return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
+    }
+
+    /**
+     * 良い点入力
+     *
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function inputGood(Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+
+        return view('user.review.inputGood', [
+            'soft'  => $soft,
+            'draft' => $draft
+        ]);
+    }
+
+    /**
+     * 良い点保存
+     *
+     * @param GoodRequest $request
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveGood(GoodRequest $request, Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+        $draft->good_comment = $request->get('good_comment');
+        $draft->save();
+
+        return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
+    }
+
+    /**
+     * 悪い点入力
+     *
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function inputBad(Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+
+        return view('user.review.inputBad', [
+            'soft'  => $soft,
+            'draft' => $draft
+        ]);
+    }
+
+    /**
+     * 悪い点保存
+     *
+     * @param BadRequest $request
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveBad(BadRequest $request, Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+        $draft->bad_comment = $request->get('bad_comment');
+        $draft->save();
+
+        return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
+    }
+
+    /**
+     * 総評入力
+     *
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function inputGeneral(Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+
+        return view('user.review.inputGeneral', [
+            'soft'  => $soft,
+            'draft' => $draft
+        ]);
+    }
+
+    /**
+     * 総評保存
+     *
+     * @param GeneralRequest $request
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveGeneral(GeneralRequest $request, Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+        $draft->general_comment = $request->get('general_comment');
+        $draft->save();
+
+        return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
+    }
+
+    /**
+     * やっぱりネタバレあり
+     *
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveSpoiler(Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+        $draft->is_spoiler = 1;
+        $draft->save();
+
+        return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
+    }
+
+    /**
+     * やっぱりネタバレなし
+     *
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveNotSpoiler(Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+        $draft->is_spoiler = 0;
+        $draft->save();
+
+        return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
+    }
+
+
 
     /**
      * 確認

@@ -205,8 +205,14 @@ class ReviewDraft extends \Eloquent
             return new Collection();
         }
 
-        return GamePackage::whereIn('id', $arr)
+        $packages = GamePackage::whereIn('id', $arr)
             ->get();
+
+        if (in_array(0, $arr)) {
+            $packages->push(\Hgs3\Models\Review::getWatchMoviePackage());
+        }
+
+        return $packages;
     }
 
     /**

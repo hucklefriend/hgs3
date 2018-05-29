@@ -48,7 +48,7 @@
     <div class="col-sm-6 col-md-7 col-lg-8">
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">遊んだゲーム</h5>
+                <h5 class="card-title">プレイ状況</h5>
 
                 <div class="row">
                     @foreach ($packages as $pkg)

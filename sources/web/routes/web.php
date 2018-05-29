@@ -100,6 +100,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/review/save', 'User\ReviewController@save')->name('レビュー保存');
     Route::get('/user/review/confirm/{soft}', 'User\ReviewController@confirm')->name('レビュー投稿確認');
     Route::get('/user/review/write/{soft}', 'User\ReviewController@input')->name('レビュー入力');
+    Route::get('/user/review/{soft}/fear', 'User\ReviewController@inputFear')->name('レビュー怖さ入力');
+    Route::post('/user/review/{soft}/fear', 'User\ReviewController@saveFear')->name('レビュー怖さ保存');
+    Route::get('/user/review/{soft}/good', 'User\ReviewController@inputGood')->name('レビュー良い点入力');
+    Route::post('/user/review/{soft}/good', 'User\ReviewController@saveGood')->name('レビュー良い点保存');
+    Route::get('/user/review/{soft}/bad', 'User\ReviewController@inputBad')->name('レビュー悪い点入力');
+    Route::post('/user/review/{soft}/bad', 'User\ReviewController@saveBad')->name('レビュー悪い点保存');
+    Route::get('/user/review/{soft}/general', 'User\ReviewController@inputGeneral')->name('レビュー総評入力');
+    Route::post('/user/review/{soft}/general', 'User\ReviewController@saveGeneral')->name('レビュー総評保存');
+    Route::patch('/user/review/{soft}/spoiler', 'User\ReviewController@saveSpoiler')->name('レビューネタバレありだった');
+    Route::patch('/user/review/{soft}/not_spoiler', 'User\ReviewController@saveNotSpoiler')->name('レビューネタバレなしだった');
     Route::post('/user/review/write/{soft}', 'User\ReviewController@open')->name('レビュー公開');
     Route::delete('/user/review/{soft}', 'User\ReviewController@delete')->name('レビュー削除');
     Route::put('/user/review/fmfm/{review}', 'Review\ImpressionController@fmfm')->name('ふむふむ');
