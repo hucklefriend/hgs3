@@ -179,7 +179,7 @@
                     </div>
                     <div class="form-help"></div>
 
-                    <button class="btn">サイトを探す</button>
+                    <button class="btn btn-light">この条件で検索</button>
                 </form>
                 <p class="mt-4">
                     ゲーム単位でサイトをお探しの場合は、<a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a>よりゲームを選択し、サイト情報を参照してください。
