@@ -45,24 +45,25 @@ class UpdateAffiliate extends Command
     public function handle()
     {
         $shops = Orm\GamePackageShop::orderBy('updated_timestamp')
-            ->take(10)
+            ->take(50)
             ->get();
 
         foreach ($shops as $shop) {
             $this->info($shop->package_id . ' の更新中');
 
             if ($shop->shop_id == Shop::AMAZON) {
-                //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
-                    \Hgs3\Models\Game\Package::saveImageByAsin($shop->package_id, $shop->param1);
-                //}
+                \Hgs3\Models\Game\Package::saveImageByAsin($shop->package_id, $shop->param1);
             } else if ($shop->shop_id == Shop::DMM || $shop->shop_id == Shop::DMM_R18) {
-                //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
-                    \Hgs3\Models\Game\Package::saveImageByDmm($shop->package_id->id, $shop->param1, $shop->shop_id);
-                //}
+                $pkg = Orm\GamePackage::find($shop->package_id);
+                if ($pkg->shop_id != Shop::AMAZON) {
+                    \Hgs3\Models\Game\Package::saveImageByDmm($shop->package_id, $shop->param1, $shop->shop_id);
+                }
             } else {
                 $shop->updated_timestamp = time();
-                $shop->save();
+                $shop->insertOrUpdate();
             }
+
+            sleep(2);
         }
     }
 }

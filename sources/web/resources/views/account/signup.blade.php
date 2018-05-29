@@ -72,7 +72,7 @@
                     <div class="form-help">
                         @include('common.error', ['formName' => 'name'])
                         <small class="form-text text-muted">最大文字数：50文字<br>
-                            ※表示ページによっては、「14文字＋…」に制限させていただきます。</small>
+                            ※表示ページによっては、長い名前はカットする場合があります。</small>
                     </div>
 
                     <div class="form-group">

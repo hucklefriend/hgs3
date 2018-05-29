@@ -38,9 +38,9 @@ class SignUpController extends Controller
     {
         $email = $request->get('email');
         $data = [
-            'name' => $request->get('name'),
+            'name'      => $request->get('name'),
             'password' => bcrypt($request->get('password')),
-            'adult' => $request->get('adult', 0)
+            'adult'     => $request->get('adult', 0)
         ];
 
         if ($data['adult'] != 0) {
@@ -102,11 +102,13 @@ class SignUpController extends Controller
             return view('account.signup.tokenError');
         } else {
             $orm = Orm\UserProvisionalRegistration::where('token', $token)->first();
-            $userData = \json_decode($orm->user_data);
+            $userData = \json_decode($orm->user_data, true);
             $userData['email'] = $orm->email;
 
             // ユーザー情報を登録
             User::register($userData, false);
+
+            $orm->delete();
 
             return view('account.signup.complete');
         }
