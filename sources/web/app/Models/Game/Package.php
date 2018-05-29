@@ -39,9 +39,11 @@ class Package
 
             if (!empty($asin)) {
                 if (!empty($amazonData)) {
-                    self::saveShop($package->id, Shop::AMAZON, $amazonData['shop_url'], $asin);
+                    self::saveShop($package->id, Shop::AMAZON, $amazonData['shop_url'],
+                        $amazonData['small_image']['url'] ?? null, $amazonData['medium_image']['url'] ?? null,
+                        $amazonData['large_image']['url'] ?? null, $asin);
                 } else {
-                    self::saveShop($package->id, Shop::AMAZON, '', $asin);
+                    self::saveShop($package->id, Shop::AMAZON, '', null, null, null, $asin);
                 }
             }
 
@@ -79,9 +81,11 @@ class Package
             $package->save();
             if (!empty($asin)) {
                 if (!empty($amazonData)) {
-                    self::saveShop($package->id, Shop::AMAZON, $amazonData['shop_url'], $asin);
+                    self::saveShop($package->id, Shop::AMAZON, $amazonData['shop_url'],
+                        $amazonData['small_image']['url'] ?? null, $amazonData['medium_image']['url'] ?? null,
+                        $amazonData['large_image']['url'] ?? null, $asin);
                 } else {
-                    self::saveShop($package->id, Shop::AMAZON, '', $asin);
+                    self::saveShop($package->id, Shop::AMAZON, '', null, null, null, $asin);
                 }
             }
 
@@ -200,10 +204,11 @@ SQL;
         $item = Amazon::getData($asin);
 
         if (empty($item)) {
-            self::saveShop($packageId, Shop::AMAZON, '', $asin);
+            self::saveShop($packageId, Shop::AMAZON, '', null, null, null, $asin);
         } else {
             self::saveImageData($packageId, Shop::AMAZON, $item);
-            self::saveShop($packageId, Shop::AMAZON, $item['shop_url'], $asin);
+            self::saveShop($packageId, Shop::AMAZON, $item['shop_url'],
+                $item['small_image']['url'] ?? null, $item['medium_image']['url'] ?? null, $item['large_image']['url'] ?? null, $asin);
         }
     }
 
@@ -220,7 +225,7 @@ SQL;
         $item = Dmm::getItem($cid, $shop);
 
         if ($item === false || $item->result->total_count == 0) {
-            self::saveShop($packageId, $shopId, '', $cid);
+            self::saveShop($packageId, $shopId, '', null, null, null, $cid);
         } else {
             $img = [
                 'small_image'  => ['url' => $item->result->items[0]->imageURL->list ?? null],
@@ -230,7 +235,8 @@ SQL;
 
             self::saveImageData($packageId, $shopId, $img);
             self::saveShop($packageId, $shopId,
-                $item->result->items[0]->affiliateURL ?? $item->result->items[0]->URL, $cid);
+                $item->result->items[0]->affiliateURL ?? $item->result->items[0]->URL,
+                $img['small_image']['url'], $img['medium_image']['url'], $img['large_image']['url'], $cid);
         }
     }
 
@@ -263,33 +269,41 @@ SQL;
     /**
      * ショップ情報の保存
      *
-     * @param $packageId
-     * @param $shopId
-     * @param $shopUrl
+     * @param int $packageId
+     * @param int $shopId
+     * @param string $shopUrl
+     * @param string $smallUrl
+     * @param string $mediumUrl
+     * @param string $largeUrl
      * @param $param1
      * @param null $param2
      * @param null $param3
      * @param null $param4
      * @param null $param5
      */
-    public static function saveShop($packageId, $shopId, $shopUrl, $param1, $param2 = null, $param3 = null, $param4 = null, $param5 = null)
+    public static function saveShop($packageId, $shopId, $shopUrl, $smallUrl, $mediumUrl, $largeUrl, $param1, $param2 = null, $param3 = null, $param4 = null, $param5 = null)
     {
         $sql =<<< SQL
 INSERT INTO game_package_shops(
-  package_id, shop_id, shop_url, param1, param2, param3, param4, param5, created_at, updated_at
+  package_id, shop_id, shop_url, small_image_url, medium_image_url, large_image_url
+  , param1, param2, param3, param4, param5, updated_timestamp, created_at, updated_at
 ) VALUES (
-  ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
+  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, UNIX_TIMESTAMP(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP 
 )
 ON DUPLICATE KEY UPDATE
   shop_url = VALUES(shop_url)
+  , small_image_url = VALUES(small_image_url)
+  , medium_image_url = VALUES(medium_image_url)
+  , large_image_url = VALUES(large_image_url)
   , param1 = VALUES(param1)
   , param2 = VALUES(param2)
   , param3 = VALUES(param3)
   , param4 = VALUES(param4)
   , param5 = VALUES(param5)
+  , updated_timestamp = VALUES(updated_timestamp)
   , updated_at = CURRENT_TIMESTAMP 
 SQL;
 
-        DB::insert($sql, [$packageId, $shopId, $shopUrl, $param1, $param2, $param3, $param4, $param5]);
+        DB::insert($sql, [$packageId, $shopId, $shopUrl, $smallUrl, $mediumUrl, $largeUrl, $param1, $param2, $param3, $param4, $param5]);
     }
 }

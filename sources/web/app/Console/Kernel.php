@@ -15,8 +15,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Mongo\Reset::class,
         Commands\Init::class,
-        Commands\Master\UpdateOriginalPackageId::class,
         Commands\Master\Import::class,
+        Commands\Master\UpdateOriginalPackageId::class,
+        Commands\Master\UpdateAffiliate::class,
         Commands\Sitemap::class,
         Commands\ReviewTotal::class,
         Commands\TranslateHgs::class
@@ -32,6 +33,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('review:total')
                   ->hourly();
+
+        $schedule->command('master:affiliate')
+            ->dailyAt('04:00');
     }
 
     /**
