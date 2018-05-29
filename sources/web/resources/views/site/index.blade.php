@@ -13,14 +13,15 @@
         <div class="ticker-title hidden-sm-up">
             <span>新着情報！</span>
         </div>
-        <div class="ticker">
-            <ul>
-    @foreach ($timelines as $tl)
-                <li>{!! $tl['text'] !!}</li>
-    @endforeach
-            </ul>
-
-            <div class="ticker-title-inline hidden-xs-down">新着情報！</div>
+        <div class="ticker-container">
+            <div class="ticker-title-inline hidden-xs-down"><span>新着情報！</span></div>
+            <div class="ticker">
+                <ul>
+                    @foreach ($timelines as $tl)
+                        <li>{!! $tl['text'] !!}</li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
 
         @endif
@@ -94,162 +95,107 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card card-hgn">
-        <div class="card-body">
-            <h4 class="card-title">サイトを探す</h4>
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h4 class="card-title">サイトを探す</h4>
 
-            <form method="get" action="{{ route('サイト検索') }}">
-                <div class="form-group">
-                    <div>
-                        <label for="main_contents" class="hgn-label"><i class="fas fa-check"></i> メインコンテンツを絞る</label>
+                <form method="get" action="{{ route('サイト検索') }}">
+                    <div class="form-group">
+                        <div>
+                            <label for="main_contents" class="hgn-label"><i class="fas fa-check"></i> メインコンテンツを絞る</label>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            @foreach (\Hgs3\Constants\Site\MainContents::getData() as $mcId => $mcName)
+                                <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                    <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                        <input type="checkbox" class="custom-control-input" id="mc_{{ $mcId }}" name="mc[]" value="{{ $mcId }}" autocomplete="off">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">{{ $mcName }}</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="d-flex flex-wrap">
-                        @foreach (\Hgs3\Constants\Site\MainContents::getData() as $mcId => $mcName)
+                    <div class="form-help"></div>
+
+                    <div class="form-group">
+                        <div>
+                            <label for="gender" class="hgn-label"><i class="fas fa-check"></i> 性別傾向を絞る</label>
+                        </div>
+                        <div class="d-flex">
                             <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                 <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                    <input type="checkbox" class="custom-control-input" id="mc_{{ $mcId }}" name="mc[]" value="{{ $mcId }}" autocomplete="off">
+                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::NONE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::NONE }}" autocomplete="off">
                                     <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">{{ $mcName }}</span>
+                                    <span class="custom-control-description">傾向なし</span>
                                 </label>
                             </div>
-                        @endforeach
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::MALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::MALE }}" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">男性向け</span>
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::FEMALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::FEMALE }}" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">女性向け</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-help"></div>
+                    <div class="form-help"></div>
 
-                <div class="form-group">
-                    <div>
-                        <label for="gender" class="hgn-label"><i class="fas fa-check"></i> 性別傾向を絞る</label>
+                    <div class="form-group">
+                        <div>
+                            <label for="rate" class="hgn-label"><i class="fas fa-check"></i> 対象年齢を絞る</label>
+                        </div>
+                        <div class="d-flex">
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="rate_0" name="r[]" value="0" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">制限なし</span>
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="rate_15" name="r[]" value="15" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">R-15</span>
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="rate_18" name="r[]" value="18" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">R-18</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex">
-                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::NONE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::NONE }}" autocomplete="off">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">傾向なし</span>
-                            </label>
-                        </div>
-                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::MALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::MALE }}" autocomplete="off">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">男性向け</span>
-                            </label>
-                        </div>
-                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::FEMALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::FEMALE }}" autocomplete="off">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">女性向け</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-help"></div>
+                    <div class="form-help"></div>
 
-                <div class="form-group">
-                    <div>
-                        <label for="rate" class="hgn-label"><i class="fas fa-check"></i> 対象年齢を絞る</label>
-                    </div>
-                    <div class="d-flex">
-                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                <input type="checkbox" class="custom-control-input" id="rate_0" name="r[]" value="0" autocomplete="off">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">制限なし</span>
-                            </label>
-                        </div>
-                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                <input type="checkbox" class="custom-control-input" id="rate_15" name="r[]" value="15" autocomplete="off">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">R-15</span>
-                            </label>
-                        </div>
-                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                <input type="checkbox" class="custom-control-input" id="rate_18" name="r[]" value="18" autocomplete="off">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">R-18</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-help"></div>
-
-                <button class="btn">サイトを探す</button>
-            </form>
-            <p class="mt-4">
-                ゲーム単位でサイトをお探しの場合は、<a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a>よりゲームを選択し、サイト情報を参照してください。
-            </p>
+                    <button class="btn">サイトを探す</button>
+                </form>
+                <p class="mt-4">
+                    ゲーム単位でサイトをお探しの場合は、<a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a>よりゲームを選択し、サイト情報を参照してください。
+                </p>
+            </div>
         </div>
+
     </div>
-
-    <style>
-
-        .ticker {
-            position: relative;
-            padding: 0 0 0 0;
-            background-color: rgba(0,0,0,.2);
-            border-radius: 3px;
-            margin-bottom: 20px;
-        }
-
-
-        .ticker-title {
-            background-color: rgba(0,0,0,.4);
-            padding: 10px;
-            color: #FFF;
-            display: inline-block;
-        }
-
-        .ticker-title-inline {
-            content: "新着情報！";
-            display: inline-block;
-            background-color: rgba(0,0,0,.2);
-            padding: 10px;
-            color: #FFF;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        .ticker:after {
-            content: '';
-            display: block;
-            top: 0;
-            left: 80px;
-            height: 80px;
-        }
-        .ticker ul {
-            padding-left: 20px !important;
-        }
-        .ticker ul li {
-            list-style: none;
-            padding: 10px 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        @media (min-width:576px) {
-            .ticker {
-                padding: 0 0 0 80px;
-            }
-        }
-
-    </style>
-
-    <script src="{{ url('js/jquery.easy-ticker.min.js') }}"></script>
     <script>
         let swiper = null;
         let swiper2 = null;
+        let ticker = null;
 
         $(function(){
-            $('.ticker').easyTicker({
-                visible: 1,
-                interval: 4000
-            });
+            ticker = new Ticker('.ticker');
+            ticker.start();
 
             swiper = new Swiper('#new_arrivals_list', {
                 pagination: {

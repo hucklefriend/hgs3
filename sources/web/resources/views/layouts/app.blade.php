@@ -34,6 +34,7 @@
         <script src="{{ url('vendors/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
         <script src="{{ url('/js/super_admin.min.js') }}"></script>
         <script src="{{ url('/js/common.js') }}"></script>
+        <script src="{{ url('/js/ticker.js') }}"></script>
 
         @yield('head_append')
 

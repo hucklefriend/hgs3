@@ -814,3 +814,48 @@ input[type=text], textarea {
     text-overflow: ellipsis;
 }
 
+.ticker-container {
+    border-radius: 3px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.ticker {
+    padding: 0 0 0 0;
+    background-color: rgba(0,0,0,.2);
+    overflow: hidden;
+    height: 40px;
+    width: 100%;
+}
+
+.ticker-title {
+    background-color: rgba(0,0,0,.4);
+    padding: 10px;
+    color: #FFF;
+    display: inline-block;
+}
+
+.ticker-title-inline {
+    display: inline-block;
+    background-color: rgba(0,0,0,.4);
+    padding: 10px;
+    color: #FFF;
+    white-space: nowrap;
+}
+
+.ticker ul {
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+.ticker ul li {
+    list-style: none;
+    padding-left: 5px;
+    line-height: 40px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    transform: translate3d(0,0,0);
+}
