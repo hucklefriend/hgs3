@@ -18,8 +18,7 @@
                 <div class="card card-hgn">
                     <div class="card-body">
                         @if ($impression == 0)
-                        <p>レビューを読んで、印象はいかがでしたか？<br>
-                            好印象 → 🤔、悪印象 → 😒</p>
+                        <p>レビューを読んで、印象はいかがでしたか？</p>
                         @elseif ($impression == 1)
                             <p>
                                 🤔で印象を投稿済みです。<br>

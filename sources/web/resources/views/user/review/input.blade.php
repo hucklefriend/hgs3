@@ -81,7 +81,9 @@
                         <button class="btn btn-light btn--icon" type="button" id="fear_down"><i class="far fa-arrow-alt-circle-down"></i></button>
                         <button class="btn btn-light btn--icon hidden-xs-down mx-3" type="button" id="fear_up"><i class="far fa-arrow-alt-circle-up"></i></button>
                     </div>
-                    <p id="fear_text" class="align-self-center lead force-break mx-2"></p>
+                    <div class="align-self-center">
+                        <p id="fear_text" class="lead force-break mx-2 mb-0"></p>
+                    </div>
                     <div>
                         <button class="btn btn-light btn--icon hidden-sm-up" type="button" id="fear_up2"><i class="far fa-arrow-alt-circle-up"></i></button>
                     </div>

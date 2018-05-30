@@ -24,21 +24,6 @@ START TRANSACTION;
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `game_companies`
---
-
-CREATE TABLE `game_companies` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'ゲーム会社ID',
-  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ゲーム会社名',
-  `acronym` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '略称',
-  `phonetic` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ゲーム会社名のよみがな',
-  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'サイトのURL',
-  `wikipedia` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'WikipediaのURL',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
 -- 挿入前にテーブルを空にする `game_companies`
 --
 
@@ -208,19 +193,6 @@ INSERT INTO `game_companies` (`id`, `name`, `acronym`, `phonetic`, `url`, `wikip
 (166, 'Digital Happiness', 'Digital Happiness', 'でじたるはぴねす', 'http://digitalhappiness.net/', 'https://en.wikipedia.org/wiki/Digital_Happiness', '2018-05-29 22:37:42', '2018-05-29 22:37:42');
 
 -- --------------------------------------------------------
-
---
--- テーブルの構造 `game_official_sites`
---
-
-CREATE TABLE `game_official_sites` (
-  `soft_id` int(10) UNSIGNED NOT NULL COMMENT 'ソフトID',
-  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'タイトル',
-  `url` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'URL',
-  `priority` tinyint(3) UNSIGNED NOT NULL COMMENT '優先度',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 挿入前にテーブルを空にする `game_official_sites`
@@ -480,34 +452,6 @@ INSERT INTO `game_official_sites` (`soft_id`, `title`, `url`, `priority`, `creat
 (352, '公式', 'http://dreadout.com/', 1, '2018-05-29 22:37:52', '2018-05-29 22:37:52');
 
 -- --------------------------------------------------------
-
---
--- テーブルの構造 `game_packages`
---
-
-CREATE TABLE `game_packages` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'ゲームパッケージID',
-  `platform_id` int(10) UNSIGNED NOT NULL COMMENT 'プラットフォームID',
-  `company_id` int(10) UNSIGNED DEFAULT NULL COMMENT 'ゲーム会社ID',
-  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'パッケージ名称',
-  `acronym` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '略称',
-  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公式サイトURL',
-  `release_int` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '発売日(数値)',
-  `release_at` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '発売日',
-  `is_adult` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'R-18か',
-  `shop_id` int(10) UNSIGNED DEFAULT NULL COMMENT '画像のショップID',
-  `small_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '小画像URL',
-  `small_image_width` smallint(5) UNSIGNED DEFAULT NULL COMMENT '小画像の幅',
-  `small_image_height` smallint(5) UNSIGNED DEFAULT NULL COMMENT '小画像の高さ',
-  `medium_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '中画像URL',
-  `medium_image_width` smallint(5) UNSIGNED DEFAULT NULL COMMENT '中画像の幅',
-  `medium_image_height` smallint(5) UNSIGNED DEFAULT NULL COMMENT '中画像の高さ',
-  `large_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '大画像URL',
-  `large_image_width` smallint(5) UNSIGNED DEFAULT NULL COMMENT '大画像の幅',
-  `large_image_height` smallint(5) UNSIGNED DEFAULT NULL COMMENT '大画像の高さ',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 挿入前にテーブルを空にする `game_packages`
@@ -1222,18 +1166,6 @@ INSERT INTO `game_packages` (`id`, `platform_id`, `company_id`, `name`, `acronym
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `game_package_links`
---
-
-CREATE TABLE `game_package_links` (
-  `soft_id` int(10) UNSIGNED NOT NULL COMMENT 'ゲームソフトID',
-  `package_id` int(10) UNSIGNED NOT NULL COMMENT 'パッケージID',
-  `sort_order` bigint(20) UNSIGNED NOT NULL COMMENT '表示順',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
 -- 挿入前にテーブルを空にする `game_package_links`
 --
 
@@ -1943,32 +1875,6 @@ INSERT INTO `game_package_links` (`soft_id`, `package_id`, `sort_order`, `create
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `game_package_shops`
---
-
-CREATE TABLE `game_package_shops` (
-  `package_id` int(10) UNSIGNED NOT NULL COMMENT 'ゲームパッケージID',
-  `shop_id` int(10) UNSIGNED NOT NULL COMMENT 'ショップID',
-  `shop_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ショップ販売ページのURL',
-  `small_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '小画像URL',
-  `medium_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '中画像URL',
-  `large_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '大画像URL',
-  `param1` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター1',
-  `param2` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター2',
-  `param3` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター3',
-  `param4` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター4',
-  `param5` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター5',
-  `param6` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター6',
-  `param7` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター7',
-  `param8` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター8',
-  `param9` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター9',
-  `param10` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター10',
-  `updated_timestamp` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'データ更新日時',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
 -- 挿入前にテーブルを空にする `game_package_shops`
 --
 
@@ -2631,22 +2537,6 @@ INSERT INTO `game_package_shops` (`package_id`, `shop_id`, `shop_url`, `small_im
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `game_platforms`
---
-
-CREATE TABLE `game_platforms` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'プラットフォームID',
-  `company_id` int(10) UNSIGNED DEFAULT NULL COMMENT 'ゲーム会社ID',
-  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'プラットフォーム名',
-  `acronym` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '略称',
-  `sort_order` int(10) UNSIGNED NOT NULL COMMENT '表示順',
-  `url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公式サイトURL',
-  `wikipedia` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Wikipedia URL',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
 -- 挿入前にテーブルを空にする `game_platforms`
 --
 
@@ -2691,18 +2581,6 @@ INSERT INTO `game_platforms` (`id`, `company_id`, `name`, `acronym`, `sort_order
 (37, NULL, 'PCエンジン', 'PCE', 19871030, '', 'https://ja.wikipedia.org/wiki/PC%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3', '2018-03-24 10:22:05', '2018-03-24 10:22:05');
 
 -- --------------------------------------------------------
-
---
--- テーブルの構造 `game_series`
---
-
-CREATE TABLE `game_series` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'シリーズID',
-  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'シリーズ名称',
-  `phonetic` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'シリーズ名称のよみがな',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 挿入前にテーブルを空にする `game_series`
@@ -2768,27 +2646,6 @@ INSERT INTO `game_series` (`id`, `name`, `phonetic`, `created_at`, `updated_at`)
 (64, 'DreadOut', 'どれっどあうと', '2018-05-29 22:37:42', '2018-05-29 22:37:42');
 
 -- --------------------------------------------------------
-
---
--- テーブルの構造 `game_softs`
---
-
-CREATE TABLE `game_softs` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'ゲームソフトID',
-  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
-  `phonetic` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'よみがな',
-  `phonetic2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'よみがな2(ソート用)',
-  `phonetic_type` tinyint(3) UNSIGNED NOT NULL COMMENT 'よみがな区分',
-  `phonetic_order` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'よみがなでの表示順',
-  `genre` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ジャンル',
-  `series_id` int(10) UNSIGNED DEFAULT NULL COMMENT 'シリーズID',
-  `order_in_series` int(10) UNSIGNED DEFAULT NULL COMMENT 'シリーズ内での表示順',
-  `original_package_id` int(10) UNSIGNED DEFAULT NULL COMMENT '原点のパッケージID',
-  `introduction` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '説明文',
-  `introduction_from` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '説明文引用元',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 挿入前にテーブルを空にする `game_softs`
@@ -3118,64 +2975,6 @@ INSERT INTO `game_softs` (`id`, `name`, `phonetic`, `phonetic2`, `phonetic_type`
 -- Indexes for dumped tables
 --
 
---
--- Indexes for table `game_companies`
---
-ALTER TABLE `game_companies`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `game_companies_phonetic_index` (`phonetic`);
-
---
--- Indexes for table `game_official_sites`
---
-ALTER TABLE `game_official_sites`
-  ADD PRIMARY KEY (`soft_id`,`url`),
-  ADD KEY `game_official_sites_soft_id_priority_index` (`soft_id`,`priority`);
-
---
--- Indexes for table `game_packages`
---
-ALTER TABLE `game_packages`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `game_packages_platform_id_index` (`platform_id`),
-  ADD KEY `game_packages_company_id_index` (`company_id`);
-
---
--- Indexes for table `game_package_links`
---
-ALTER TABLE `game_package_links`
-  ADD PRIMARY KEY (`soft_id`,`package_id`),
-  ADD KEY `game_package_links_soft_id_sort_order_index` (`soft_id`,`sort_order`);
-
---
--- Indexes for table `game_package_shops`
---
-ALTER TABLE `game_package_shops`
-  ADD PRIMARY KEY (`package_id`,`shop_id`),
-  ADD KEY `game_package_shops_shop_id_index` (`shop_id`),
-  ADD KEY `game_package_shops_updated_timestamp_index` (`updated_timestamp`);
-
---
--- Indexes for table `game_platforms`
---
-ALTER TABLE `game_platforms`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `game_platforms_company_id_index` (`company_id`),
-  ADD KEY `game_platforms_sort_order_index` (`sort_order`);
-
---
--- Indexes for table `game_series`
---
-ALTER TABLE `game_series`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `game_softs`
---
-ALTER TABLE `game_softs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `game_softs_series_id_index` (`series_id`),
-  ADD KEY `game_softs_phonetic_order_index` (`phonetic_order`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

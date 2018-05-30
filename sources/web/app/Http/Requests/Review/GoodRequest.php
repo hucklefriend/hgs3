@@ -27,7 +27,9 @@ class GoodRequest extends FormRequest
     public function rules()
     {
         return [
-            'Good_comment' => 'nullable|string|max:10000'
+            'good_tags'      => 'nullable|array|max:10',
+            'very_good_tags' => 'nullable|array|max:10',
+            'Good_comment'   => 'nullable|string|max:10000'
         ];
     }
 }

@@ -8,11 +8,10 @@
     <div class="content__inner">
         <header class="content__title">
             <h1>{{ $soft->name }}</h1>
-            <p>レビュー投稿</p>
+            <p>レビュー投稿　プレイ状況編集</p>
         </header>
 
-        <form method="POST" action="{{ route('レビュー保存') }}" autocomplete="off">
-            <input type="hidden" name="soft_id" value="{{ $soft->id }}">
+        <form method="POST" action="{{ route('レビュー悪い点保存', ['soft' => $soft->id]) }}" autocomplete="off">
             {{ csrf_field() }}
 
             <div class="form-group">
@@ -24,18 +23,12 @@
                 <i class="form-group__bar"></i>
             </div>
             <div class="form-help">
+                <small>最大文字数：10,000</small>
                 @include('common.error', ['formName' => 'bad_comment'])
             </div>
 
             <div class="form-group text-center">
-                <button class="btn btn-primary">下書き保存して確認画面へ</button>
-                <p class="text-muted mt-2">
-                    <small>
-                        下書き保存でも必須項目の入力は必要です。<br>
-                        下書き保存してもまだ公開はされません。<br>
-                        次の確認画面で公開することによって初めて公開されます。
-                    </small>
-                </p>
+                <button class="btn btn-primary">悪い点を保存</button>
             </div>
         </form>
     </div>

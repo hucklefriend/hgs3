@@ -125,6 +125,7 @@ class ReviewController extends Controller
     public function saveFear(FearRequest $request, Orm\GameSoft $soft)
     {
         $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+        $draft->fear = intval($request->get('fear'));
         $draft->fear_comment = $request->get('fear_comment');
         $draft->save();
 
@@ -153,12 +154,15 @@ class ReviewController extends Controller
      * @param GoodRequest $request
      * @param Orm\GameSoft $soft
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function saveGood(GoodRequest $request, Orm\GameSoft $soft)
     {
         $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
         $draft->good_comment = $request->get('good_comment');
-        $draft->save();
+
+        Review::saveDraft($draft, $request->get('good_tags', []), $request->get('very_good_tags', []),
+            $draft->getBadTags(), $draft->getVeryBadTags());
 
         return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
     }
@@ -185,12 +189,15 @@ class ReviewController extends Controller
      * @param BadRequest $request
      * @param Orm\GameSoft $soft
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function saveBad(BadRequest $request, Orm\GameSoft $soft)
     {
         $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
         $draft->bad_comment = $request->get('bad_comment');
-        $draft->save();
+
+        Review::saveDraft($draft, $draft->getGoodTags(), $draft->getVeryGoodTags(),
+            $request->get('bad_tags', []), $request->get('very_bad_tags', []));
 
         return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
     }

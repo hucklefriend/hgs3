@@ -27,7 +27,8 @@ class FearRequest extends FormRequest
     public function rules()
     {
         return [
-            'general_comment' => 'nullable|string|max:10000'
+            'fear'         => 'required|integer|between:0,6',
+            'fear_comment' => 'nullable|string|max:10000'
         ];
     }
 }

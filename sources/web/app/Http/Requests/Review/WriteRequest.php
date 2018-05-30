@@ -28,7 +28,7 @@ class WriteRequest extends FormRequest
     {
         return [
             'soft_id'         => 'required|exists:game_softs,id',
-            'url'             => 'url',
+            'url'             => 'nullable|url',
             'package_id'      => 'required|array',
             'progress'        => 'nullable|string|max:300',
             'fear'            => 'required|integer|between:0,6',

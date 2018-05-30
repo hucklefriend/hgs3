@@ -115,7 +115,13 @@
 
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">{{ Hgs3\Constants\Review\Fear::$data[$draft->fear] }}</h5>
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">{{ Hgs3\Constants\Review\Fear::$data[$draft->fear] }}</h5>
+                    <div>
+                        <a href="{{ route('レビュー怖さ入力', ['soft' => $draft->soft_id]) }}"><i class="fas fa-edit"></i>編集</a>
+                    </div>
+                </div>
+
 
                 <p class="mb-0 review-text">
                     @empty($draft->fear_comment)
@@ -129,10 +135,15 @@
 
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">
-                    <i class="far fa-thumbs-up"></i>良い点
-                    <span class="card-title-sub"><i class="far fa-thumbs-up"></i>付きタグは特に良い点</span>
-                </h5>
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">
+                        <i class="far fa-thumbs-up"></i>良い点
+                        <span class="card-title-sub"><i class="far fa-thumbs-up"></i>付きタグは特に良い点</span>
+                    </h5>
+                    <div>
+                        <a href="{{ route('レビュー良い点入力', ['soft' => $draft->soft_id]) }}"><i class="fas fa-edit"></i>編集</a>
+                    </div>
+                </div>
 
                 @empty($draft->getGoodTags())
                     <p>良い点はありません。</p>
@@ -161,10 +172,15 @@
 
         <div class="card card-hgn">
             <div class="card-body">
-                <h5 class="card-title">
-                    <i class="far fa-thumbs-down"></i> 悪い点
-                    <span class="card-title-sub"><i class="far fa-thumbs-down"></i>付きタグは特に悪い点</span>
-                </h5>
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">
+                        <i class="far fa-thumbs-down"></i> 悪い点
+                        <span class="card-title-sub"><i class="far fa-thumbs-down"></i>付きタグは特に悪い点</span>
+                    </h5>
+                    <div>
+                        <a href="{{ route('レビュー悪い点入力', ['soft' => $draft->soft_id]) }}"><i class="fas fa-edit"></i>編集</a>
+                    </div>
+                </div>
                 @empty($draft->getBadTags())
                     <p>悪い点はありません。</p>
                 @else
@@ -195,7 +211,7 @@
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title">総合評価</h5>
                     <div>
-                        <a href="{{ route('レビュー総評入力', ['soft' => $draft->soft_id]) }}" class="badge badge-pill and-more mt-0">編集</a>
+                        <a href="{{ route('レビュー総評入力', ['soft' => $draft->soft_id]) }}"><i class="fas fa-edit"></i>編集</a>
                     </div>
                 </div>
 
@@ -241,17 +257,17 @@
             </div>
         </div>
 
-        @if ($draft->is_spoiler == 0)
+        @if ($draft->is_spoiler == 1)
             <form method="POST" action="{{ route('レビューネタバレなしだった', ['soft' => $soft->id]) }}">
                 {{ csrf_field() }}
                 {{ method_field('PATCH') }}
-                <button class="btn btn-light">読み直したらネタバレはなかったのでネタバレなしにする</button>
+                <button class="btn btn-light">読み直したらネタバレはなかったのでなしにする</button>
             </form>
         @else
             <form method="POST" action="{{ route('レビューネタバレありだった', ['soft' => $soft->id]) }}">
                 {{ csrf_field() }}
                 {{ method_field('PATCH') }}
-                <button class="btn btn-light">読み直したらネタバレがあったのでネタバレありにする</button>
+                <button class="btn btn-light">読み直したらネタバレがあったのでありにする</button>
             </form>
         @endif
 

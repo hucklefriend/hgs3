@@ -27,7 +27,9 @@ class BadRequest extends FormRequest
     public function rules()
     {
         return [
-            'bad_comment' => 'nullable|string|max:10000'
+            'bad_tags'     => 'nullable|array|max:10',
+            'ver_bad_tags' => 'nullable|array|max:10',
+            'bad_comment'  => 'nullable|string|max:10000'
         ];
     }
 }

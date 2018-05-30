@@ -5,9 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
         @if (View::hasSection('title'))
-        <title>@yield('title') | {{ env('APP_NAME') }} (β)</title>
+        <title>@yield('title') | {{ env('APP_NAME') }} (RC)</title>
         @else
-        <title>{{ env('APP_NAME') }} (β)</title>
+        <title>{{ env('APP_NAME') }} (RC)</title>
         @endif
 
         <link rel="stylesheet" href="{{ url('vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}">
@@ -19,7 +19,7 @@
         @if (env('APP_ENV') != 'production')
             <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver={{ time() }}">
         @else
-            <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver=20180519">
+            <link rel="stylesheet" href="{{ url('css/hgs3sa.css') }}?ver={{ env('SYSTEM_VERSION') }}">
         @endif
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/layzr.js/2.2.2/layzr.min.js"></script>
