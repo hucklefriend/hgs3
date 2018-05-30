@@ -47,6 +47,16 @@
             </div>
         </div>
 
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">集計のタイミングについて</h4>
+                <p>
+                    一定時間毎に集計処理を走らせています。<br>
+                    レビュー投稿時点で集計されないため、一部ページで表示しているレビュー数や平均ポイントが、実際の数値とズレている場合があります。
+                </p>
+            </div>
+        </div>
+
 
         <div class="card">
             <div class="card-body">

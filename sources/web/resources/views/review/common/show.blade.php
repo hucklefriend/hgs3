@@ -49,8 +49,8 @@
                 <p>読んだユーザーが受けた印象</p>
                 <div class="d-flex justify-content-between">
                     <div class="align-self-center">
-                        <span class="review-tag">🤔 {{ $review->fmfm_num }}</span>
-                        <span class="review-tag">😒 {{ $review->n_num }}</span>
+                        <span class="p-2">🤔 {{ $review->fmfm_num }}</span>
+                        <span class="p-2">😒 {{ $review->n_num }}</span>
                     </div>
                     <div class="text-right">
                         <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
