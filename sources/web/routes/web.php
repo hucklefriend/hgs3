@@ -100,6 +100,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/review/save', 'User\ReviewController@save')->name('レビュー保存');
     Route::get('/user/review/confirm/{soft}', 'User\ReviewController@confirm')->name('レビュー投稿確認');
     Route::get('/user/review/write/{soft}', 'User\ReviewController@input')->name('レビュー入力');
+    Route::get('/user/review/{soft}/playing', 'User\ReviewController@inputPlaying')->name('レビュープレイ状況入力');
+    Route::post('/user/review/{soft}/playing', 'User\ReviewController@savePlaying')->name('レビュープレイ状況保存');
     Route::get('/user/review/{soft}/fear', 'User\ReviewController@inputFear')->name('レビュー怖さ入力');
     Route::post('/user/review/{soft}/fear', 'User\ReviewController@saveFear')->name('レビュー怖さ保存');
     Route::get('/user/review/{soft}/good', 'User\ReviewController@inputGood')->name('レビュー良い点入力');

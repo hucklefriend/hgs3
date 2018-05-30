@@ -43,6 +43,21 @@
                 @endif
             </div>
         </div>
+
+        <div class="card card-hgn mt-5">
+            <div class="card-body">
+                <p>読んだユーザーが受けた印象</p>
+                <div class="d-flex justify-content-between">
+                    <div class="align-self-center">
+                        <span class="review-tag">🤔 {{ $review->fmfm_num }}</span>
+                        <span class="review-tag">😒 {{ $review->n_num }}</span>
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="col-sm-6 col-md-7 col-lg-8">
@@ -71,34 +86,6 @@
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-sm-6 col-md-5 col-lg-4">
-        <div class="card card-hgn">
-            <div class="card-body">
-                <p>読んだユーザーが受けた印象</p>
-                <div class="d-flex justify-content-between">
-                    <div class="align-self-center">
-                        <span class="review-tag">🤔 {{ $review->fmfm_num }}</span>
-                        <span class="review-tag">😒 {{ $review->n_num }}</span>
-                    </div>
-                    <div class="text-right">
-                        <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-md-7 col-lg-8">
-        <div class="card card-hgn">
-            <div class="card-body">
-                <h5 class="card-title">広告</h5>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 @if ($review->is_spoiler == 1)
     <div class="alert alert-danger mb-5" role="alert">

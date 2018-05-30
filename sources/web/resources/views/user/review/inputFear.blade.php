@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title'){{ $soft->name }}のレビュー投稿@endsection
-@section('global_back_link'){{ route('プロフィール2', ['showId' => Auth::user()->show_id, 'show' => 'review']) }}@endsection
+@section('global_back_link'){{ route('レビュー投稿確認', ['soft' => $soft->id]) }}@endsection
 
 @section('content')
     <div class="content__inner">

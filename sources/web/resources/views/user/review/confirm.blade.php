@@ -49,12 +49,33 @@
                         @endif
                     </div>
                 </div>
+
+
+                <div class="card card-hgn mt-5">
+                    <div class="card-body">
+                        <p>読んだユーザーが受けた印象</p>
+                        <div class="d-flex justify-content-between">
+                            <div class="align-self-center">
+                                <span class="p-2">🤔 0</span>
+                                <span class="p-2">😒 0</span>
+                            </div>
+                            <div class="text-right">
+                                <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-sm-6 col-md-7 col-lg-8">
                 <div class="card card-hgn">
                     <div class="card-body">
-                        <h5 class="card-title">プレイ状況</h5>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">プレイ状況</h5>
+                            <div>
+                                <a href="{{ route('レビュープレイ状況入力', ['soft' => $draft->soft_id]) }}"><i class="fas fa-edit"></i>編集</a>
+                            </div>
+                        </div>
 
                         <div class="row">
                             @foreach ($packages as $pkg)
@@ -73,33 +94,6 @@
                         @if (!empty($draft->progress))
                             <p class="mt-2 review-text">{!! nl2br($draft->progress) !!}</p>
                         @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6 col-md-5 col-lg-4">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        <p>読んだユーザーが受けた印象</p>
-                        <div class="d-flex justify-content-between">
-                            <div class="align-self-center">
-                                <span class="review-tag">🤔 0</span>
-                                <span class="review-tag">😒 0</span>
-                            </div>
-                            <div class="text-right">
-                                <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-7 col-lg-8">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        広告用スペース
                     </div>
                 </div>
             </div>

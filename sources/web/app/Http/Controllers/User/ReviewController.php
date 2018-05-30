@@ -10,6 +10,7 @@ use Hgs3\Http\Requests\Review\BadRequest;
 use Hgs3\Http\Requests\Review\FearRequest;
 use Hgs3\Http\Requests\Review\GeneralRequest;
 use Hgs3\Http\Requests\Review\GoodRequest;
+use Hgs3\Http\Requests\Review\PlayingRequest;
 use Hgs3\Http\Requests\Review\WriteRequest;
 use Hgs3\Models\Review;
 use Hgs3\Models\Orm;
@@ -97,6 +98,40 @@ class ReviewController extends Controller
             $request->get('bad_tags', []), $request->get('very_bad_tags', []));
 
         return redirect()->route('レビュー投稿確認', ['soft' => $draft->soft_id]);
+    }
+
+    /**
+     * プレイ状況入力
+     *
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function inputPlaying(Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+
+        return view('user.review.inputPlaying', [
+            'soft'     => $soft,
+            'packages' => $soft->getPackages(),
+            'draft'    => $draft
+        ]);
+    }
+
+    /**
+     * プレイ状況保存
+     *
+     * @param PlayingRequest $request
+     * @param Orm\GameSoft $soft
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function savePlaying(PlayingRequest $request, Orm\GameSoft $soft)
+    {
+        $draft = Orm\ReviewDraft::getData(Auth::id(), $soft->id);
+        $draft->package_id = json_encode($request->get('package_id', []));
+        $draft->progress = $request->get('progress', '');
+        $draft->save();
+
+        return redirect()->route('レビュー投稿確認', ['soft' => $soft->id]);
     }
 
     /**
