@@ -8,8 +8,7 @@
         <header class="content__title">
             <h1>サイト</h1>
         </header>
-@if (!empty($timelines))
-
+    @if (!empty($timelines))
         <div class="ticker-title hidden-sm-up">
             <span>新着情報！</span>
         </div>
@@ -24,7 +23,7 @@
             </div>
         </div>
 
-        @endif
+    @endif
 
         <div class="row">
             <div class="col-md-6">

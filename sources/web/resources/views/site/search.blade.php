@@ -28,6 +28,7 @@
 
         <div class="card card-hgn mt-5">
             <div class="card-body">
+                <h4 class="card-title">検索条件</h4>
                 <form method="GET" action="{{ route('サイト検索') }}">
                     <div class="form-group">
                         <div>
