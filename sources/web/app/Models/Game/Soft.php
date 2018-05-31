@@ -116,8 +116,12 @@ SQL;
         }
 
         // サイト
-        $data['site'] = self::getSite($soft->id);
         $data['siteNum'] = Orm\SiteSearchIndex::where('soft_id', $soft->id)->count(['site_id']);
+        if ($data['siteNum'] > 0) {
+            $data['site'] = self::getSite($soft->id, $data['siteNum']);
+        } else {
+            $data['site'] = null;
+        }
 
         // 遊んだゲーム
         $data['playedUsers'] = [];//self::getPlayedUsers($soft->id);
@@ -227,28 +231,28 @@ SQL;
     }
 
     /**
-     * サイト情報を取得
+     * ランダムピックアップサイト
      *
-     * @param $softId
+     * @param int $softId
+     * @param int $siteNum
      * @return array|\Illuminate\Database\Eloquent\Collection|static[]
      */
-    private static function getSite($softId)
+    private static function getSite($softId, $siteNum)
     {
+        $idx = rand(0, $siteNum - 1);
+
         $siteIds = DB::table('site_search_indices')
             ->select(['site_id'])
             ->where('soft_id', $softId)
-            ->orderBy('updated_timestamp', 'DESC')
-            ->take(5)
-            ->get()
-            ->pluck('site_id')->toArray();
+            ->limit(1)
+            ->offset($idx)
+            ->first();
 
         if (empty($siteIds)) {
-            return [];
+            return null;
         }
 
-        return Orm\Site::whereIn('id', $siteIds)
-            ->orderBy('updated_at', 'DESC')
-            ->get();
+        return Orm\Site::find($siteIds->site_id);
     }
 
     /**

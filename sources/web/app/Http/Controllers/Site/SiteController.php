@@ -127,9 +127,9 @@ class SiteController extends Controller
      */
     public function soft(Orm\GameSoft $soft)
     {
-        $mainContents = intval(Input::get('mc', 0));
-        $targetGender = intval(Input::get('tg', 0));
-        $rate = intval(Input::get('r', 0));
+        $mainContents = Input::get('mc', []);
+        $targetGender = Input::get('tg', []);
+        $rate = Input::get('r', []);
 
         return view('site.soft', Site::search($soft, $mainContents, $targetGender, $rate, 20));
     }

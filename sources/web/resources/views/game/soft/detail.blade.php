@@ -80,7 +80,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
             <div class="card card-hgn">
                 <div class="card-body">
                     <h4 class="card-title">パッケージ情報</h4>
@@ -109,12 +109,12 @@
                         @for ($i = 0; $i < $packageNum; $i += 2)
                             <div class="swiper-slide">
                                 @php $pkg = $packages[$i]; @endphp
+                                <div class="package-title">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
                                 <div class="d-flex">
-                                    <div class="package-image-small text-center">
+                                    <div class="package-image-small">
                                         @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
                                     </div>
                                     <div class="ml-3">
-                                        <div class="package-title">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
                                         <div class="package-info mt-1">
                                             <div><span class="package-info-icon"><i class="far fa-building"></i></span>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></div>
                                             <div><span class="package-info-icon"><i class="fas fa-gamepad"></i></span>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></div>
@@ -139,12 +139,12 @@
                                 @if (isset($packages[$i + 1]))
                                     @php $pkg = $packages[$i + 1]; @endphp
                                     <hr>
-                                    <div class="d-flex mt-4">
+                                    <div class="package-title mt-4">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
+                                    <div class="d-flex">
                                         <div class="package-image-small">
                                             @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
                                         </div>
                                         <div class="ml-3">
-                                            <div class="package-title">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
                                             <div class="package-info mt-1">
                                                 <div><span class="package-info-icon"><i class="far fa-building"></i></span>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></div>
                                                 <div><span class="package-info-icon"><i class="fas fa-gamepad"></i></span>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></div>
@@ -178,9 +178,30 @@
                     @endif
                 </div>
             </div>
+            <div class="card card-hgn">
+                <div class="card-body">
+                    <h4 class="card-title">サイト <small>{{ number_format($siteNum) }}サイト</small></h4>
+
+                    <div class="card-text">
+                        @if (empty($site))
+                            <p>サイトは登録されていません。</p>
+                        @else
+                            <h6>ランダムピックアップ！</h6>
+
+                            <div class="no-padding-site-normal">
+                                @include('site.common.normal', ['s' => $site, 'noUser' => true])
+                            </div>
+
+                            <div class="text-right">
+                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-sm-6">
             <div class="card card-hgn">
                 <div class="card-body">
                     <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->review_num : 0) }}件</small></h4>
@@ -211,7 +232,7 @@
                     @else
                         <div class="d-flex mb-3">
                             <div class="review-point">
-                                {{ round($reviewTotal->point, 1) }}
+                                {{ round($reviewTotal->point, 0) }}
                             </div>
 
                             <table class="review-point-table">
@@ -257,33 +278,6 @@
                     @endif
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-hgn">
-                <div class="card-body">
-                    <h4 class="card-title">サイト <small>{{ number_format($siteNum) }}サイト</small></h4>
-
-                    <div class="card-text">
-                        @if (empty($site))
-                            <p>サイトは登録されていません。</p>
-                        @else
-                            @foreach ($site as $s)
-                                <div style="margin-bottom: 20px;">
-                                @include('site.common.minimal', ['s' => $s])
-                                </div>
-                            @endforeach
-                            <div class="text-right">
-                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
             <div class="card card-hgn">
                 <div class="card-body">
                     <h4 class="card-title">お気に入り <small>{{ number_format($favoriteNum) }}人</small></h4>
@@ -291,12 +285,21 @@
                         @if ($favoriteNum == 0)
                             お気に入りに登録しているユーザーはいません。
                         @else
-                            @foreach ($favorites as $favorite)
-                                <div class="mb-3">
-                                    @include('user.common.icon', ['u' => $users[$favorite->user_id]])
-                                    @include('user.common.user_name', ['u' => $users[$favorite->user_id], 'followStatus' => $followStatus[$favorite->user_id] ?? \Hgs3\Constants\FollowStatus::NONE])
-                                </div>
-                            @endforeach
+                            <div class="widget-signups__list">
+                                @foreach ($favorites as $favorite)
+                                    @php $user = $users[$favorite->user_id]; @endphp
+                                    @if ($user->icon_upload_flag == 1)
+                                        <a data-toggle="tooltip" title="{{ $user->name }}" href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">
+                                            <img class="avatar-img" src="{{ url('img/user_icon/' . $user->icon_file_name) }}" alt="">
+                                        </a>
+                                    @else
+                                        <a data-toggle="tooltip" title="{{ $user->name }}" href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">
+                                            <div class="avatar-char">{{ mb_substr($user->name, 0, 1) }}</div>
+                                        </a>
+                                    @endif
+                                @endforeach
+                            </div>
+
                             <div class="text-right">
                                 <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
@@ -306,6 +309,7 @@
             </div>
         </div>
     </div>
+
 
     @if ($series)
     <div class="card card-hgn">
