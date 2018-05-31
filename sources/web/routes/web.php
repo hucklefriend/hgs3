@@ -250,7 +250,7 @@ Route::get('/site/update', 'Site\SiteController@updateArrival')->name('更新サ
 Route::get('/site/soft/{soft}', 'Site\SiteController@soft')->name('ソフト別サイト一覧');
 Route::get('/site/user/{showId}', 'Site\SiteController@user')->name('ユーザーサイト一覧');
 Route::get('/site/detail/{site}', 'Site\SiteController@detail')->name('サイト詳細');
-Route::get('/site/go/{site}', 'Site\SiteController@go')->name('サイト遷移');
+Route::get('/site/go/{site}', 'Site\SiteController@go')->name('サイト遷移')->middleware(['goSite']);
 
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index')->name('ゲーム会社一覧');

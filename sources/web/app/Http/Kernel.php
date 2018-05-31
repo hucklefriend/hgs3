@@ -56,6 +56,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Hgs3\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'yourSite' => \Hgs3\Http\Middleware\YourSiteMiddleware::class,
+        'goSite' => \Hgs3\Http\Middleware\GoToSite::class,
     ];
 }

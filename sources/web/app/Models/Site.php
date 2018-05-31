@@ -524,13 +524,13 @@ SQL;
         if ($soft !== null) {
             $query->where('soft_id', '=', $soft->id);
         }
-        if ($mainContents !== null) {
+        if ($mainContents !== null && !empty($mainContents)) {
             $query->whereIn('main_contents_id', $mainContents);
         }
-        if ($targetGender !== null) {
+        if ($targetGender !== null && !empty($targetGender)) {
             $query->whereIn('gender', $targetGender);
         }
-        if ($rate !== null) {
+        if ($rate !== null && !empty($rate)) {
             $query->whereIn('rate', $rate);
         }
 
@@ -539,6 +539,8 @@ SQL;
 
         // 検索テーブルからIDを取得
         $data['pager'] = $query->paginate($pagePerNum);
+
+
 
         $data['sites'] = [];
         if (!empty($data['pager'])) {

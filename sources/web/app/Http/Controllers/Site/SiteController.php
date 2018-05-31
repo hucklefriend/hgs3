@@ -53,11 +53,16 @@ class SiteController extends Controller
      */
     public function search()
     {
-        $mainContents = Input::get('mc');
-        $targetGender = Input::get('g');
-        $rate = Input::get('r');
+        $mainContents = Input::get('mc', []);
+        $targetGender = Input::get('g', []);
+        $rate = Input::get('r', []);
 
-        return view('site.search', Site::search(null, $mainContents, $targetGender, $rate, 20));
+        $data = Site::search(null, $mainContents, $targetGender, $rate, 20);
+        $data['mc'] = $mainContents;
+        $data['g'] = $targetGender;
+        $data['r'] = $rate;
+
+        return view('site.search', $data);
     }
 
     /**
@@ -214,20 +219,7 @@ class SiteController extends Controller
      */
     public function go(Orm\Site $site)
     {
-        // TODO 終了処理ミドルウェアを使って、リダイレクト後に処理させる
-        if (Auth::check()) {
-            // 足跡を残す処理をしているかどうか
-            if (Auth::user()->footprint == 1) {
-                Site\Footprint::add($site, Auth::user());
-            } else {
-                Site\Footprint::add($site, null);
-            }
-        } else {
-            Site\Footprint::add($site, null);
-        }
-
-        Site::access($site);
-
+        // 足跡を残す処理は、GoToSiteミドルウェアに
         return redirect($site->url);
     }
 }
