@@ -798,11 +798,7 @@ input[type=text], textarea {
 }
 
 .review-text {
-    font-size: 0.9rem;
     line-height: 200%;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    border-radius: 5px;
 }
 
 .form-control, .form-control:disabled, .form-control:focus, .form-control[readonly] {
@@ -860,4 +856,58 @@ input[type=text], textarea {
     left: 100%;
     top: 0;
     transform: translate3d(0,0,0);
+}
+
+
+/* 拝借元: https://jsdo.it/blogparts/KVNL */
+.tag {
+    position: relative;
+    display: inline-block;
+    line-height: 1.5;
+    font-size: 0.9em;
+    padding: 0 0.2em;
+    border-radius: 1.2em 0 0 1.2em;
+    border-width: 0.2em 0.3em 0.2em 1.6em;
+    border-style: solid;
+    border-color: gray;
+    background-color: white;
+}
+.tag::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -1.1em;
+    top: 0.4em;
+    background: white;
+    border-radius: 100%;
+    width: 0.6em;
+    height: 0.6em;
+}
+
+.tag.simple {
+    position: relative;
+    display: inline-block;
+    line-height: 1.5;
+    font-size: 0.9em;
+    padding: 0.2em 0.5em 0.2em 1.8em;
+    border-radius: 1.2em 0 0 1.2em;
+    border-width: 0;
+    border-style: solid;
+    border-color: white;
+    background-color: gray;
+    color: white;
+}
+.tag.simple::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 0.6em;
+    top: 0.6em;
+    background: white;
+    border-radius: 100%;
+    width: 0.6em;
+    height: 0.6em;
+}
+.tag.simple::after {
+    content: none;
 }

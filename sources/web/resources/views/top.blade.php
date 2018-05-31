@@ -84,6 +84,10 @@
                             </div>
                         </form>
 
+                        <div>
+                            <a href="{{ route('ユーザー登録') }}" class="btn btn-primary" role="button" aria-pressed="true">新規登録はこちらで</a>
+                        </div>
+
                         <p class="mt-3 mb-0">
                             <small><a href="{{ route('HGSユーザーへ') }}">H.G.S.に登録していた方はこちらをご覧ください</a></small>
                         </p>
@@ -153,35 +157,20 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        <h5 class="card-title">バグと今後の実装予定</h5>
-                        バグや実装予定の機能は<a href="https://github.com/hucklefriend/hgs3/issues/" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのIssue</a>で管理しています。<br>
-                        バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter</a>か<a href="mailto:{{ env('ADMIN_MAIL') }}">{{ sns_icon(\Hgs3\Constants\SocialSite::MAIL) }}メール</a>でご連絡をお願い致します。<br>
-                        {{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのことをわかっている方は、Issueの作成やコメントをしていただいてもOKです。
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h5>SPECIAL THANKS</h5>
+                <div class="d-flex flex-wrap">
+                    <div class="mr-2 mb-2">
+                        <a href="http://www.gameha.com/s/r.cgi?mode=r_link&id=18424" target="_blank">
+                            <img data-normal="{{ url('img/special_thanks/gameha_sd.gif') }}" border="0" alt="【創作・同人検索エンジン】GAMEHA.COM - ガメハコム - ">
+                        </a>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        <h5>SPECIAL THANKS</h5>
-                        <div class="d-flex flex-wrap">
-                            <div class="m-3">
-                                <a href="http://www.gameha.com/s/r.cgi?mode=r_link&id=18424" target="_blank">
-                                    <img data-normal="{{ url('img/special_thanks/gameha_sd.gif') }}" border="0" alt="【創作・同人検索エンジン】GAMEHA.COM - ガメハコム - ">
-                                </a>
-                            </div>
-                            <div class="m-3">
-                                <a href="http://gameofserch.com/" target="_blank"><img data-normal="{{ url('img/special_thanks/gameofserch.gif') }}"></a>
-                            </div>
-                            <div class="m-3">
-                                <a href="http://hemisphere.gonna.jp/sirensearch/" target="_blank"><img data-normal="{{ url('img/special_thanks/sirensearch.png') }}"></a>
-                            </div>
-                        </div>
+                    <div class="mr-2 mb-2">
+                        <a href="http://gameofserch.com/" target="_blank"><img data-normal="{{ url('img/special_thanks/gameofserch.gif') }}"></a>
+                    </div>
+                    <div class="mr-2 mb-2">
+                        <a href="http://hemisphere.gonna.jp/sirensearch/" target="_blank"><img data-normal="{{ url('img/special_thanks/sirensearch.png') }}"></a>
                     </div>
                 </div>
             </div>

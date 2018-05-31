@@ -13,6 +13,7 @@
 
         @include('review.common.show', ['review' => $review])
 
+        @if (!$isWriter)
         <div class="row">
             <div class="col-12 col-sm-7 col-md-6 col-lg-5 col-xl-4">
                 <div class="card card-hgn">
@@ -31,33 +32,29 @@
                             </p>
                         @endif
                         @auth
-                            @if (!$isWriter)
-                                <div class="row">
-                                    @if ($impression != 1)
-                                    <form method="POST" action="{{ route('ふむふむ', ['review' => $review->id]) }}" class="col-6">
-                                        {{ csrf_field() }}
-                                        {{ method_field('PUT') }}
-                                        <button class="btn btn-light btn-block">🤔 ふむふむ</button>
-                                    </form>
-                                    @endif
-                                    @if ($impression != 2)
-                                    <form method="POST" action="{{ route('んー…', ['review' => $review->id]) }}" class="col-6">
-                                        {{ csrf_field() }}
-                                        {{ method_field('PUT') }}
-                                        <button class="btn btn-light btn-block">😒 んー…</button>
-                                    </form>
-                                    @endif
-                                    @if ($impression != 0)
-                                    <form method="POST" action="{{ route('レビュー印象取り消し', ['review' => $review->id]) }}" class="col-6">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <button class="btn btn-light btn-block">取り消し</button>
-                                    </form>
-                                    @endif
-                                </div>
-                            @else
-                                <p>レビュー投稿者はできません。</p>
-                            @endif
+                            <div class="row">
+                                @if ($impression != 1)
+                                <form method="POST" action="{{ route('ふむふむ', ['review' => $review->id]) }}" class="col-6">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
+                                    <button class="btn btn-light btn-block">🤔 ふむふむ</button>
+                                </form>
+                                @endif
+                                @if ($impression != 2)
+                                <form method="POST" action="{{ route('んー…', ['review' => $review->id]) }}" class="col-6">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
+                                    <button class="btn btn-light btn-block">😒 んー…</button>
+                                </form>
+                                @endif
+                                @if ($impression != 0)
+                                <form method="POST" action="{{ route('レビュー印象取り消し', ['review' => $review->id]) }}" class="col-6">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <button class="btn btn-light btn-block">取り消し</button>
+                                </form>
+                                @endif
+                            </div>
                         @else
                             <p>印象を投稿するにはログインしてください。</p>
                             <div class="text-right mt-2">
@@ -67,13 +64,16 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden-xs-down col-sm-5 col-md-6 col-lg-7 col-xl-8">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        広告
-                    </div>
-                </div>
-            </div>
         </div>
+            @endif
     </div>
+@endsection
+
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-footer">
+            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">サイトマップ</li>
+        </ol>
+    </nav>
 @endsection

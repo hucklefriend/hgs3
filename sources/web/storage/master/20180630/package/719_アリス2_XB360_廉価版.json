@@ -1,0 +1,13 @@
+{
+  "id": 719,
+  "platform": "XB360",
+  "company": "EA",
+  "name": "Alice: Madness Returns",
+  "release_int": 20120726,
+  "release_at": "2012年7月26日",
+  "shop": {
+    "amazon": "B007XQ5ZRC",
+    "DMM.com": "g_048jes100153b"
+  },
+  "soft_id": [103]
+}

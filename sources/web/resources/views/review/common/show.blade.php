@@ -120,7 +120,7 @@
             @else
                 <div class="d-flex flex-wrap mb-2">
                     @foreach ($review->getGoodTags() as $tagId)
-                        <span class="review-tag">
+                        <span class="tag simple mr-2 mb-2">
                                 {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
                             @if ($review->isVeryGood($tagId))
                                 <i class="far fa-thumbs-up"></i>
@@ -151,7 +151,7 @@
                 @else
                 <div class="d-flex flex-wrap mb-2">
                     @foreach ($review->getBadTags() as $tagId)
-                    <span class="review-tag">
+                    <span class="tag simple mr-2 mb-2">
                         {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
                             @if ($review->isVeryBad($tagId))
                         <i class="far fa-thumbs-down"></i>
