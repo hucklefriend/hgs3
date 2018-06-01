@@ -201,8 +201,8 @@
                         <div class="top-item-title">Friends</div>
                         <p>
                             同じホラーゲームが好きな人とのつながりをお探しですか？<br>
-                            {{ $userNum }}人のユーザーがいます。<br>
-                            好きなゲームが近い人を探す機能は、近々実装を開始します。<br>
+                            {{ $userNum }}人のユーザーが参加しています。<br>
+                            好きなゲームが近い人を探す機能は、近々実装を開始します。
                         </p>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 top-item">

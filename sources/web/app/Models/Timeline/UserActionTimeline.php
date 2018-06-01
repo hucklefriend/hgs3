@@ -31,17 +31,17 @@ class UserActionTimeline
      */
     public function addSignUpText()
     {
-        $text = sprintf('%sに参加しました！', env('APP_NAME'));
+        $text = sprintf('当サイトに参加しました！');
 
         $this->insert(UserActionTimelineType::SIGN_UP, $text);
     }
 
     /**
-     * フォロー
+     * サイト登録
      *
      * @param User $followUser
      */
-    public function addFollowText(User $followUser)
+    public function addSiteText(User $followUser)
     {
         $text = sprintf(
             '<a href="%s">%sさん</a>をフォローしました。',

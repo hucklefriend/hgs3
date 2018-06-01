@@ -19,7 +19,13 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return view('review.index');
+        $newArrivals = Review::getNewArrival(10);
+
+
+
+        return view('review.index', [
+            'newArrivals' => $newArrivals
+        ]);
     }
 
     /**

@@ -498,4 +498,31 @@ SQL;
             ->first()
             ->num;
     }
+
+    /**
+     * 新着レビュー
+     *
+     * @param $num
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getNewArrival($num)
+    {
+        $reviews = Orm\Review::orderByDesc('updated_at')
+            ->limit($num)
+            ->get();
+
+        if ($reviews->count() == 0) {
+            return $reviews;
+        }
+
+        $softs = Orm\GameSoft::getHash(array_pluck($reviews, 'soft_id'));
+        $users = User::getHash(array_pluck($reviews, 'user_id'));
+
+        foreach ($reviews as &$review) {
+            $review->soft = $softs[$review->soft_id];
+            $review->user = $users[$review->user_id];
+        }
+
+        return $reviews;
+    }
 }
