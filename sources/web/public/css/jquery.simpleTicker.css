@@ -1,12 +1,8 @@
 .ticker {
-  margin: 0 auto;
-  padding: 10px;
-  width: 600px;
+  width: 100%;
   text-align: left;
-  border: #ccc 1px solid;
   position: relative;
   overflow: hidden;
-  background-color:#ffffff;
 }
 
 .ticker ul {
@@ -17,5 +13,7 @@
 .ticker ul li {
   width: 100%;
   display: none;
+  line-height: unset;
+  padding: 10px 10px;
 }
 

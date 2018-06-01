@@ -923,3 +923,17 @@ input[type=text], textarea {
 .tag.simple::after {
     content: none;
 }
+
+.card-title-flex {
+    margin-bottom: 1.5rem;
+}
+
+.card-title-flex .card-title {
+    margin-bottom: 0;
+}
+
+
+.top-item-title {
+    font-family: 'Lalezar', cursive;
+    font-size: 2rem;
+}

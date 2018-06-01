@@ -29,12 +29,16 @@ class TopController extends Controller
         $gameHash = Orm\GameSoft::getNameHash($newInfo->pluck('soft_id')->toArray());
         $siteHash = Orm\Site::getNameHash($newInfo->pluck('site_id')->toArray());
 
-        $notices = Orm\SystemNotice::select(['id', 'title', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
-            ->where('open_at', '<=', DB::raw('NOW()'))
-            ->where('close_at', '>=', DB::raw('NOW()'))
+        $notices = Orm\SystemNotice::select(['id', 'title', 'message'])
+            ->where('top_start_at', '<=', DB::raw('NOW()'))
+            ->where('top_end_at', '>=', DB::raw('NOW()'))
             ->orderBy('open_at', 'DESC')
-            ->take(5)
             ->get();
+
+
+        $gameNum = Orm\GameSoft::all()->count();
+
+
 
         return view('top', [
             'newInfo'  => $newInfo,

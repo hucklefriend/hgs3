@@ -57,7 +57,7 @@
             </div>
 
             <div class="form-group">
-                <label for="open_at" class="hgn-label"><i class="far fa-calendar-alt"></i> 公開終了日</label>
+                <label for="close_at" class="hgn-label"><i class="far fa-calendar-alt"></i> 公開終了日</label>
                 <input type="datetime-local" name="close_at" id="close_at" class="form-control{{ invalid($errors, 'close_at') }}" value="{{ old('close_at', $notice->close_at) }}" required max="2100-12-31T23:59">
                 <i class="form-group__bar"></i>
             </div>
@@ -65,6 +65,23 @@
                 @include('common.error', ['formName' => 'close_at'])
             </div>
 
+            <div class="form-group">
+                <label for="top_start_at" class="hgn-label"><i class="far fa-calendar-alt"></i> トップ公開開始日</label>
+                <input type="datetime-local" name="top_start_at" id="top_start_at" class="form-control{{ invalid($errors, 'top_start_at') }}" value="{{ old('top_start_at', $notice->top_start_at) }}" required max="2100-12-31T23:59">
+                <i class="form-group__bar"></i>
+            </div>
+            <div class="form-help">
+                @include('common.error', ['formName' => 'top_start_at'])
+            </div>
+
+            <div class="form-group">
+                <label for="top_end_at" class="hgn-label"><i class="far fa-calendar-alt"></i> トップ公開終了日</label>
+                <input type="datetime-local" name="top_end_at" id="top_end_at" class="form-control{{ invalid($errors, 'top_end_at') }}" value="{{ old('top_end_at', $notice->top_end_at) }}" required max="2100-12-31T23:59">
+                <i class="form-group__bar"></i>
+            </div>
+            <div class="form-help">
+                @include('common.error', ['formName' => 'top_end_at'])
+            </div>
 
             <button type="submit" class="btn btn-primary">編集</button>
         </form>

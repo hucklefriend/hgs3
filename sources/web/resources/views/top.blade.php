@@ -3,30 +3,44 @@
 @section('content')
     <div class="content__inner">
         <div class="row">
-            <div class="@if(!Auth::check()) col-md-7 @else col-md-12 @endif">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        <h4 class="card-title">ようこそ</h4>
-                        <p class="card-text">
-                            {{ env('APP_NAME') }}は、ホラーゲーム好きが繋がるポータルサイトになるべく開発中のサイトです。<br>
-                            <a href="http://horrorgame.net/">H.G.S.-Horror Game Search-</a>の後継として開発を進めています。<br>
-                            公開テスト段階ですのでいろいろと不具合などありますが、よろしければテストにご協力ください。<br>
-                            <a href="{{ route('当サイトについて') }}">当サイトについて詳しくはこちらをご覧ください。</a><br>
-                        </p>
-                        @if (!Auth::check())
-                        <div class="text-center">
-                            <a href="{{ route('ユーザー登録') }}" class="btn btn-primary btn-lg" role="button" aria-pressed="true">新規登録</a>
+            @if ($notices->count() > 0)
+                <div class="col-12 col-md-6">
+                    <div class="card card-hgn">
+                        <div class="card-body">
+                            <h5 class="card-title">お知らせ</h5>
                         </div>
-                        @endif
+
+                        <div class="listview listview--hover">
+                            @foreach ($notices as $notice)
+                                <a class="listview__item" href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}">
+                                    <div class="listview__content">
+                                        <div class="listview__heading">{{ $notice->title }}</div>
+                                        <p>{{ mb_substr($notice->message, 0, 200) }}</p>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+
+                        <div class="card-body">
+                            <div class="text-right">
+                                <a href="{{ route('お知らせ') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
-            @if (!Auth::check())
-            <div class="col-md-5">
+            @if (!\Illuminate\Support\Facades\Auth::check())
+            <div class="col-12 col-sm-6">
                 <div class="card card-hgn">
                     <div class="card-body">
-                        <h5 class="card-title">ログイン</h5>
+                        <div class="d-flex justify-content-between card-title-flex">
+                            <h5 class="card-title">ログイン</h5>
+                            <div>
+                                <a href="{{ route('ユーザー登録') }}" class="btn btn-sm btn-outline-success" role="button" aria-pressed="true">新規登録</a>
+                            </div>
+                        </div>
+
                         <div class="top-login d-flex">
                             <form method="POST" action="{{ route('Twitter', ['mode' => \Hgs3\Constants\Social\Mode::LOGIN]) }}">
                                 {{ csrf_field() }}
@@ -84,38 +98,63 @@
                             </div>
                         </form>
 
-                        <div>
-                            <a href="{{ route('ユーザー登録') }}" class="btn btn-primary" role="button" aria-pressed="true">新規登録はこちらで</a>
-                        </div>
-
-                        <p class="mt-3 mb-0">
+                        <p class="mt-3 mb-0 text-center">
                             <small><a href="{{ route('HGSユーザーへ') }}">H.G.S.に登録していた方はこちらをご覧ください</a></small>
                         </p>
                     </div>
                 </div>
             </div>
             @endif
-        </div>
 
-        <div class="row">
-            <div class="col-md-6">
+            <div @if (!\Illuminate\Support\Facades\Auth::check() || $notices->count() > 0) class="col-12 col-md-6" @else class="col-12 col-sm-8 col-md-7 col-lg-6 col-xl-5" @endif>
                 <div class="card card-hgn">
                     <div class="card-body">
                         <h5 class="card-title">新着情報</h5>
-                        @foreach ($newInfo as $nf)
-                            <p class="card-text">
-                                <small>{{ format_date($nf->open_at_ts) }}</small><br>
-                                @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
-                                    <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
-                                @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
-                                    新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ hv($siteHash, $nf->site_id) }}」</a>
-                                @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
-                                    <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
-                                @endif
-                            </p>
-                        @endforeach
                         @if ($newInfo->count() > 0)
-                            <div class="text-right">
+                            @if ($newInfo->count() > 2)
+                                <script>
+                                    let swiper = null;
+                                    $(function(){
+                                        swiper = new Swiper('#new_information', {
+                                            pagination: {
+                                                el: '#packages_pagination',
+                                                type: 'fraction',
+                                            },
+                                            navigation: {
+                                                nextEl: '#packages_next',
+                                                prevEl: '#packages_prev',
+                                            },
+                                            loop: true,
+                                            autoplay: {
+                                                delay: 3000,
+                                                disableOnInteraction: false,
+                                            },
+                                        });
+                                    });
+                                </script>
+                            @endif
+
+                            <div class="swiper-container" id="new_information">
+                                <div class="swiper-wrapper">
+                                    @foreach ($newInfo as $nf)
+                                    <div class="swiper-slide">
+                                        <div>
+                                            <small>{{ format_date($nf->open_at_ts) }}</small>
+                                        </div>
+                                        <p class="mb-0">
+                                        @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
+                                            <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
+                                        @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
+                                            新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ hv($siteHash, $nf->site_id) }}」</a>
+                                        @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
+                                            <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
+                                        @endif
+                                        </p>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="text-right mt-3">
                                 <a href="{{ route('新着情報') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @else
@@ -125,55 +164,63 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        <h5 class="card-title">お知らせ</h5>
-                        @foreach ($notices as $notice)
-                            <div class="my-2">
-                                <div class="d-flex justify-content-between">
-                                    <div class="text-left force-break">
-                                        <small>{{ format_date($notice->open_at_ts) }}</small><br>
-                                        {{ $notice->title }}
-                                    </div>
-                                    <div class="align-self-center">
-                                        <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-dark border-0 d-block">
-                                            <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+            @if (\Illuminate\Support\Facades\Auth::check() && $notices->count() == 0)
 
-                        @if ($notices->count() > 0)
-                            <div class="text-right">
-                                <a href="{{ route('お知らせ') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                            </div>
-                        @else
-                            <p class="card-text">お知らせはありません。</p>
-                        @endif
-                    </div>
-                </div>
+            <div class="hidden-xs-down col-sm-4 col-md-5 col-lg-6 col-xl-7">
             </div>
+            @endif
         </div>
 
         <div class="card card-hgn">
             <div class="card-body">
-                <h5>SPECIAL THANKS</h5>
-                <div class="d-flex flex-wrap">
-                    <div class="mr-2 mb-2">
-                        <a href="http://www.gameha.com/s/r.cgi?mode=r_link&id=18424" target="_blank">
-                            <img data-normal="{{ url('img/special_thanks/gameha_sd.gif') }}" border="0" alt="【創作・同人検索エンジン】GAMEHA.COM - ガメハコム - ">
-                        </a>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="top-item-title">
+                            <a href="{{ route('ゲーム一覧') }}">Games</a>
+                        </div>
+                        <p>
+                            どんなホラーゲームがあるかお探しですか？<br>
+                        </p>
                     </div>
-                    <div class="mr-2 mb-2">
-                        <a href="http://gameofserch.com/" target="_blank"><img data-normal="{{ url('img/special_thanks/gameofserch.gif') }}"></a>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="top-item-title"><a href="{{ route('レビュートップ') }}">Reviews</a></div>
+                        <p>
+                            ホラーゲームの評判をお探しですか？<br>
+                        </p>
                     </div>
-                    <div class="mr-2 mb-2">
-                        <a href="http://hemisphere.gonna.jp/sirensearch/" target="_blank"><img data-normal="{{ url('img/special_thanks/sirensearch.png') }}"></a>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="top-item-title">Friends</div>
+                        <p>
+                            同じホラーゲームが好きな人とのつながりをお探しですか？<br>
+                            こちらはただいま準備中です。
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="top-item-title"><a href="{{ route('サイトトップ') }}">Sites</a></div>
+                        <p>
+                            ホラーゲームを扱っているホームページをお探しですか？
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="top-item-title">Creations</div>
+                        <p>
+                            ホラーゲームの二次創作物をお探しですか？<br>
+                            こちらはただいま準備中です。
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h5 class="card-title">SPECIAL THANKS</h5>
+                <div class="d-flex flex-wrap justify-content-center justify-content-sm-start">
+                    <div class="mr-2 mb-4"><a href="http://www.gameha.com/s/r.cgi?mode=r_link&id=18424" target="_blank"><img data-normal="{{ url('img/special_thanks/gameha_sd.gif') }}" border="0" alt="【創作・同人検索エンジン】GAMEHA.COM - ガメハコム - "></a></div>
+                    <div class="mr-2 mb-4"><a href="http://gameofserch.com/" target="_blank"><img data-normal="{{ url('img/special_thanks/gameofserch.gif') }}"></a></div>
+                    <div class="mr-2 mb-4"><a href="http://hemisphere.gonna.jp/sirensearch/" target="_blank"><img data-normal="{{ url('img/special_thanks/sirensearch.png') }}"></a></div>
+                </div>
+            </div>
+        </div>
     </div>
+
 @endsection

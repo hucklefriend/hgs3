@@ -105,6 +105,8 @@ class NoticeController extends Controller
         $notice->type = $request->input('type');
         $notice->open_at = $request->input('open_at');
         $notice->close_at = $request->input('close_at');
+        $notice->top_start_at = $request->input('top_start_at');
+        $notice->top_end_at = $request->input('top_end_at');
 
         $notice->save();
 
@@ -121,6 +123,8 @@ class NoticeController extends Controller
     {
         $notice->open_at = format_date_local($notice->open_at);
         $notice->close_at = format_date_local($notice->close_at);
+        $notice->top_start_at = format_date_local($notice->top_start_at);
+        $notice->top_end_at = format_date_local($notice->top_end_at);
 
         return view('system.notice.edit', [
             'notice' => $notice
@@ -141,6 +145,8 @@ class NoticeController extends Controller
         $notice->type = $request->input('type');
         $notice->open_at = $request->input('open_at');
         $notice->close_at = $request->input('close_at');
+        $notice->top_start_at = $request->input('top_start_at');
+        $notice->top_end_at = $request->input('top_end_at');
 
         $notice->save();
 

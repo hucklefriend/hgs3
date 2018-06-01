@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{{ url('vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/animate.css/animate.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/select2/dist/css/select2.min.css') }}">
-        <link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/css/swiper.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
         @if (env('APP_ENV') != 'production')
@@ -73,7 +73,7 @@
                     @if (env('APP_ENV') == 'staging')
                     <h1><a href="{{ route('トップ') }}">STG</a></h1>
                     @else
-                    <h1><a href="{{ route('トップ') }}">β版</a></h1>
+                    <h1><a href="{{ route('トップ') }}">RC版</a></h1>
                     @endif
                 </div>
 
