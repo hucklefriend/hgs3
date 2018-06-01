@@ -405,4 +405,17 @@ SQL;
                 ->first();
         }
     }
+
+    /**
+     * 総ソフト数を取得
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getNum()
+    {
+        return DB::table('game_softs')
+            ->select([DB::raw('COUNT(id) AS num')])
+            ->get()
+            ->first()->num;
+    }
 }

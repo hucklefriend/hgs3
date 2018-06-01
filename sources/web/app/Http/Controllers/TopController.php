@@ -5,8 +5,11 @@
 
 namespace Hgs3\Http\Controllers;
 
+use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm;
-use Hgs3\Models\Game\Shop\Dmm;
+use Hgs3\Models\Review;
+use Hgs3\Models\Site;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class TopController extends Controller
@@ -35,16 +38,15 @@ class TopController extends Controller
             ->orderBy('open_at', 'DESC')
             ->get();
 
-
-        $gameNum = Orm\GameSoft::all()->count();
-
-
-
         return view('top', [
-            'newInfo'  => $newInfo,
-            'gameHash' => $gameHash,
-            'siteHash' => $siteHash,
-            'notices'  => $notices
+            'newInfo'   => $newInfo,
+            'gameHash'  => $gameHash,
+            'siteHash'  => $siteHash,
+            'notices'   => $notices,
+            'softNum'   => Soft::getNum(),
+            'reviewNum' => Review::getNum(),
+            'siteNum'   => Site::getNum(),
+            'userNum'   => User::getNum()
         ]);
     }
 

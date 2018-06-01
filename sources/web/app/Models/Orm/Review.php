@@ -120,7 +120,7 @@ class Review extends \Eloquent
     }
 
     /**
-     * 特定ユーザーが持っているサイト数を取得
+     * 特定ユーザーが持っているレビュー数を取得
      *
      * @param $userId
      * @return int

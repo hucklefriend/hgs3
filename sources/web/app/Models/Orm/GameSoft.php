@@ -173,11 +173,4 @@ SQL;
         return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
             ->get();
     }
-
-    public static function getNum()
-    {
-        DB::table('game_softs')
-            ->select([DB::raw('COUNT(id) AS num')])
-            ->get('num');
-    }
 }

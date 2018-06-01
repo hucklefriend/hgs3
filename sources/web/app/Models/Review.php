@@ -482,4 +482,20 @@ SQL;
 
         return $pkg;
     }
+
+
+
+    /**
+     * 総レビュー数を取得
+     *
+     * @return int
+     */
+    public static function getNum()
+    {
+        return DB::table('reviews')
+            ->select([DB::raw('COUNT(id) AS num')])
+            ->get()
+            ->first()
+            ->num;
+    }
 }

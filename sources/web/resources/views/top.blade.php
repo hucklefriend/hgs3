@@ -111,7 +111,7 @@
                     <div class="card-body">
                         <h5 class="card-title">新着情報</h5>
                         @if ($newInfo->count() > 0)
-                            @if ($newInfo->count() > 2)
+                            @if ($newInfo->count() > 1)
                                 <script>
                                     let swiper = null;
                                     $(function(){
@@ -174,38 +174,57 @@
         <div class="card card-hgn">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="col-12 col-sm-6 col-lg-4 top-item">
                         <div class="top-item-title">
                             <a href="{{ route('ゲーム一覧') }}">Games</a>
                         </div>
                         <p>
                             どんなホラーゲームがあるかお探しですか？<br>
+                            ゲームの一覧がありますので、ぜひ眺めていってください。<br>
+                            {{ $softNum }}個のホラーゲームを扱っています。<br>
                         </p>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="col-12 col-sm-6 col-lg-4 top-item">
                         <div class="top-item-title"><a href="{{ route('レビュートップ') }}">Reviews</a></div>
                         <p>
                             ホラーゲームの評判をお探しですか？<br>
+                            @if ($reviewNum == 0)
+                                レビューを投稿する機能はあるのですが、まだ書いている人がいない状況です…<br>
+                                今まで遊んだゲームでレビューを書いてみたいという方はぜひ書いていってください。
+                            @else
+                                {{ $reviewNum }}件のユーザーのレビューがありますので、ぜひ見てください。<br>
+                                レビューの投稿もお待ちしております。
+                            @endif
                         </p>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="col-12 col-sm-6 col-lg-4 top-item">
                         <div class="top-item-title">Friends</div>
                         <p>
                             同じホラーゲームが好きな人とのつながりをお探しですか？<br>
-                            こちらはただいま準備中です。
+                            {{ $userNum }}人のユーザーがいます。<br>
+                            好きなゲームが近い人を探す機能は、近々実装を開始します。<br>
                         </p>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="col-12 col-sm-6 col-lg-4 top-item">
                         <div class="top-item-title"><a href="{{ route('サイトトップ') }}">Sites</a></div>
                         <p>
-                            ホラーゲームを扱っているホームページをお探しですか？
+                            ホラーゲームを扱っているホームページをお探しですか？<br>
+                            {{ $siteNum }}個のサイトが登録されています。<br>
+                            サイトをお持ちの方は、ぜひ登録していってください。
                         </p>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="top-item-title">Creations</div>
+                    <div class="col-12 col-sm-6 col-lg-4 top-item">
+                        <div class="top-item-title">Secondary Creations</div>
                         <p>
                             ホラーゲームの二次創作物をお探しですか？<br>
-                            こちらはただいま準備中です。
+                            イラストや小説などを紹介できる機能はいずれ実装したいと考えております。
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4 top-item">
+                        <div class="top-item-title">Game Creations</div>
+                        <p>
+                            ご自身でホラーゲームを作られていますか？<br>
+                            当サイトのカテゴリとして登録できる機能はいずれ実装したいと考えております。
                         </p>
                     </div>
                 </div>

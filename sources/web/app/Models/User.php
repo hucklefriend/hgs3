@@ -336,6 +336,19 @@ class User extends Authenticatable
             ->count('id');
     }
 
+    /**
+     * ユーザー数を取得
+     *
+     * @return mixed
+     */
+    public static function getNum()
+    {
+        return DB::table('users')
+            ->select([DB::raw('COUNT(id) num')])
+            ->get()
+            ->first()
+            ->num;
+    }
 
     public static function deleteTestData()
     {

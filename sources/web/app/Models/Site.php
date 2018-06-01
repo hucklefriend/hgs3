@@ -821,6 +821,20 @@ SQL;
         return true;
     }
 
+    /**
+     * サイト数を取得
+     *
+     * @return mixed
+     */
+    public static function getNum()
+    {
+        return DB::table('sites')
+            ->select([DB::raw('COUNT(id) num')])
+            ->where('approval_status', ApprovalStatus::OK)
+            ->get()
+            ->first()
+            ->num;
+    }
 
     public static function deleteTestData($isAll)
     {

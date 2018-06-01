@@ -932,6 +932,9 @@ input[type=text], textarea {
     margin-bottom: 0;
 }
 
+.top-item {
+    margin-bottom: 20px;
+}
 
 .top-item-title {
     font-family: 'Lalezar', cursive;
