@@ -53,14 +53,8 @@ class Master
         echo 'update original package id.' . PHP_EOL;
         \Hgs3\Models\Game\Soft::updateOriginalPackageId(false);
 
-        if ($date == '20180519') {
-            Site::deleteTestData(false);
-        }
-
-        if ($date == '20180927') {
-            Site::deleteTestData(true);
-            User::deleteTestData();
-        }
+        echo 'update game_package_shops release_int'. PHP_EOL;
+        MasterImport\Package::updateShopReleaseInt();
     }
 
     public static function importSql($date)

@@ -128,7 +128,7 @@
             </section>
 
             <footer class="footer">
-                @if (in_array(env('APP_ENV'), ['production']))
+                @if (in_array(env('APP_ENV'), ['production', 'staging']))
                     @include('common.footerSponser')
                 @endif
                 <div style="overflow: hidden" class="mb-2">@yield('breadcrumb')</div>

@@ -966,3 +966,10 @@ input[type=text], textarea {
 .sponser-footer img {
     max-width: 100%;
 }
+
+.new-game-title {
+    margin-top: 5px;
+    font-size: 0.8rem;
+    max-height: 5rem;
+    overflow: hidden;
+}

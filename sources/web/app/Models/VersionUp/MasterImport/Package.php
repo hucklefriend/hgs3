@@ -67,7 +67,12 @@ class Package extends MasterImportAbstract
 
         $updateSofts = array_merge(self::update($date), $updateSofts);
         foreach ($updateSofts as $softId) {
-            NewInformation::addUpdateGameText($softs[$softId]);
+            $soft = Orm\GameSoft::find($softId);
+            if ($soft !== null) {
+                NewInformation::addUpdateGameText($soft);
+            } else {
+                echo 'nothing soft id: ' . $softId . PHP_EOL;
+            }
         }
     }
 
@@ -139,9 +144,9 @@ class Package extends MasterImportAbstract
 
                     if ($shopId) {
                         if ($shopId == Shop::AMAZON) {
-                            if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
+                            //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
                                 \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
-                            }
+                            //}
                         } else if ($shopId == Shop::DMM || $shopId == Shop::DMM_R18) {
                             //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
                                 \Hgs3\Models\Game\Package::saveImageByDmm($package->id, $shopUrl, $shopId);
@@ -202,7 +207,7 @@ class Package extends MasterImportAbstract
             unset($data['id']);
             $pkg->update($data);
 
-            $links = Orm\GamePackageLink::where('package_id', $data->id)
+            $links = Orm\GamePackageLink::where('package_id', $data['id'])
                 ->get();
             foreach ($links as $link) {
                 $updated[$link->soft_id] = $link->soft_id;
@@ -253,5 +258,20 @@ class Package extends MasterImportAbstract
         DB::table('game_packages')
             ->whereIn('id', [669,625,665,666,679,660,661,633,634,635,662,663,664,638,653,641,642,571,579,646,647,648,631,632])
             ->update(['is_adult' => 1]);
+    }
+
+    public static function updateShopReleaseInt()
+    {
+        $sql =<<< SQL
+UPDATE
+	game_package_shops, game_packages
+SET
+	game_package_shops.release_int = game_packages.release_int
+WHERE
+	game_package_shops.package_id = game_packages.id
+SQL;
+
+        DB::update($sql);
+
     }
 }

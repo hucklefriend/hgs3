@@ -5,6 +5,7 @@
 
 namespace Hgs3\Http\Controllers;
 
+use Hgs3\Models\Game\Package;
 use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Review;
@@ -39,7 +40,8 @@ class TopController extends Controller
             'softNum'    => Soft::getNum(),
             'reviewNum'  => Review::getNum(),
             'siteNum'    => Site::getNum(),
-            'userNum'    => User::getNum()
+            'userNum'    => User::getNum(),
+            'newGames'   => Package::getNewGame()
         ]);
     }
 

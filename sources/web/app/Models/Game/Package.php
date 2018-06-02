@@ -306,4 +306,28 @@ SQL;
 
         DB::insert($sql, [$packageId, $shopId, $shopUrl, $smallUrl, $mediumUrl, $largeUrl, $param1, $param2, $param3, $param4, $param5]);
     }
+
+    /**
+     * 新作ゲームを取得
+     *
+     * @return array
+     */
+    public static function getNewGame()
+    {
+        $sql =<<< SQL
+SELECT
+	shop.*,
+	pkg.name
+FROM (
+	SELECT package_id, release_int, shop_url, small_image_url
+	FROM game_package_shops
+	WHERE shop_id = ? AND small_image_url IS NOT NULL
+	ORDER BY release_int DESC
+	LIMIT 20
+) shop
+	INNER JOIN game_packages pkg ON pkg.id = shop.package_id
+SQL;
+
+        return DB::select($sql, [Shop::AMAZON]);
+    }
 }
