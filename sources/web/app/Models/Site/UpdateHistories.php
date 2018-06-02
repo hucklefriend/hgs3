@@ -85,6 +85,7 @@ class UpdateHistories
             // タイムラインに登録
             Timeline\FavoriteSite::addUpdateSiteText($site);
             Timeline\Site::addUpdateText($site);
+            Timeline\NewInformation::addUpdateSiteText($site);
         }
 
         return true;

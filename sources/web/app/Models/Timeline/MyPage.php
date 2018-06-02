@@ -174,6 +174,7 @@ class MyPage extends TimelineAbstract
         $options = [
             'sort'  => ['time' => -1],
             'limit' => $num,
+            'skip'  => $offset
         ];
 
         return self::getDB()->to_me_timeline->find($filter, $options)->toArray();

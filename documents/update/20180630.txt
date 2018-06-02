@@ -28,6 +28,11 @@ sudo systemctl start apache2
 sudo apt update
 sudo apt upgrade
 
+○mongodbのコレクションを追加
+mongo hgs3
+db.createCollection('new_information');
+db.new_information.createIndex({time: -1});
+
 
 ○ソースをアップする
 

@@ -128,6 +128,9 @@
             </section>
 
             <footer class="footer">
+                @if (in_array(env('APP_ENV'), ['production']))
+                    @include('common.footerSponser')
+                @endif
                 <div style="overflow: hidden" class="mb-2">@yield('breadcrumb')</div>
                 <div style="white-space: nowrap;" class="text-right">
                     <a href="{{ route('プライバシーポリシー') }}" class="align-self-center">プライバシーポリシー</a>

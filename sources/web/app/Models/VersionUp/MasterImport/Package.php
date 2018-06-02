@@ -9,6 +9,7 @@ namespace Hgs3\Models\VersionUp\MasterImport;
 use Hgs3\Constants\Game\Shop;
 use Hgs3\Log;
 use Hgs3\Models\Orm;
+use Hgs3\Models\Timeline\NewInformation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -42,6 +43,8 @@ class Package extends MasterImportAbstract
             $companies = self::getCompanyHash();
             $platforms = self::getPlatformHash();
 
+            $updateSofts = [];
+
             foreach ($files as $filePath) {
                 if (ends_with($filePath, 'update.php')) {
                     continue;
@@ -51,12 +54,21 @@ class Package extends MasterImportAbstract
 
                 self::insert($data, $softs, $companies, $platforms);
 
+                $links = Orm\GamePackageLink::where('package_id', $data->id)
+                    ->get();
+                foreach ($links as $link) {
+                    $updateSofts[$link->soft_id] = $link->soft_id;
+                }
+
                 unset($data);
                 unset($platform);
             }
         }
 
-        self::update($date);
+        $updateSofts = array_merge(self::update($date), $updateSofts);
+        foreach ($updateSofts as $softId) {
+            NewInformation::addUpdateGameText($softs[$softId]);
+        }
     }
 
     /**
@@ -170,14 +182,17 @@ class Package extends MasterImportAbstract
      * データの更新
      *
      * @param $date
+     * @return array
      */
     private static function update($date)
     {
         $path = storage_path('master/' . $date . '/package/update.php');
         if (!File::isFile($path)) {
             echo 'nothing package update data.' . PHP_EOL;
-            return;
+            return [];
         }
+
+        $updated = [];
 
         $packages = include($path);
         foreach ($packages as $p) {
@@ -187,11 +202,19 @@ class Package extends MasterImportAbstract
             unset($data['id']);
             $pkg->update($data);
 
+            $links = Orm\GamePackageLink::where('package_id', $data->id)
+                ->get();
+            foreach ($links as $link) {
+                $updated[$link->soft_id] = $link->soft_id;
+            }
+
             unset($data);
             unset($pkg);
         }
 
         unset($packages);
+
+        return $updated;
     }
 
     /**

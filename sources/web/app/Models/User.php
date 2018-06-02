@@ -281,10 +281,6 @@ class User extends Authenticatable
             Orm\UserFollow::where('follow_user_id', $this->id)
                 ->delete();
 
-            // 新着情報
-            Orm\NewInformation::where('user_id', $this->id)
-                ->delete();
-
             // パスワードリセット
             Orm\PasswordReset::where('user_id', $this->id)
                 ->delete();

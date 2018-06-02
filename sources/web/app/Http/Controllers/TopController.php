@@ -9,7 +9,10 @@ use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Review;
 use Hgs3\Models\Site;
+use Hgs3\Models\Timeline\NewInformation;
 use Hgs3\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class TopController extends Controller
@@ -21,32 +24,22 @@ class TopController extends Controller
      */
     public function index()
     {
-        $newInfo = Orm\NewInformation::select([
-            'soft_id', 'site_id', 'text_type',
-            DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')
-        ])
-            ->orderBy('open_at', 'DESC')
-            ->take(5)
-            ->get();
-
-        $gameHash = Orm\GameSoft::getNameHash($newInfo->pluck('soft_id')->toArray());
-        $siteHash = Orm\Site::getNameHash($newInfo->pluck('site_id')->toArray());
-
-        $notices = Orm\SystemNotice::select(['id', 'title', 'message'])
+        $notices = Orm\SystemNotice::select(['id', 'title', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
             ->where('top_start_at', '<=', DB::raw('NOW()'))
             ->where('top_end_at', '>=', DB::raw('NOW()'))
             ->orderBy('open_at', 'DESC')
             ->get();
 
+        $newInfo = NewInformation::get(time(), 10);
+
         return view('top', [
-            'newInfo'   => $newInfo,
-            'gameHash'  => $gameHash,
-            'siteHash'  => $siteHash,
-            'notices'   => $notices,
-            'softNum'   => Soft::getNum(),
-            'reviewNum' => Review::getNum(),
-            'siteNum'   => Site::getNum(),
-            'userNum'   => User::getNum()
+            'newInfo'    => $newInfo,
+            'newInfoNum' => count($newInfo),
+            'notices'    => $notices,
+            'softNum'    => Soft::getNum(),
+            'reviewNum'  => Review::getNum(),
+            'siteNum'    => Site::getNum(),
+            'userNum'    => User::getNum()
         ]);
     }
 
@@ -65,18 +58,14 @@ class TopController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function newInformation()
+    public function newInformation(Request $request)
     {
-        $newInfo = Orm\NewInformation::select(['*', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
-            ->orderBy('open_at', 'DESC')
-            ->paginate(30);
-        $gameHash = Orm\GameSoft::getNameHash(array_pluck($newInfo->items(), 'game_id'));
-        $siteHash = Orm\Site::getNameHash(array_pluck($newInfo->items(), 'site_id'));
+        $page = intval($request->query('page', 1));
+        $items = NewInformation::getPage($page, 30);
+        $num = NewInformation::getNum();
 
         return view('newInformation', [
-            'newInfo'  => $newInfo,
-            'gameHash' => $gameHash,
-            'siteHash' => $siteHash
+            'newInfo' => new LengthAwarePaginator($items, $num, 30, $page, ['path' => $request->url()])
         ]);
     }
 

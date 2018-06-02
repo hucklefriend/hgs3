@@ -6,6 +6,7 @@
 namespace Hgs3\Models\VersionUp\MasterImport;
 
 use Hgs3\Models\Orm;
+use Hgs3\Models\Timeline\NewInformation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -38,11 +39,21 @@ class Soft extends MasterImportAbstract
                 $data = json_decode(File::get($filePath), true);
                 $data['genre'] = '';
 
-                Orm\GameSoft::updateOrCreate(
+                $isNew = Orm\GameSoft::find($data['id']) != null;
+
+                $orm = Orm\GameSoft::updateOrCreate(
                     ['id' => $data['id']],
                     $data
                 );
+
+                if ($isNew) {
+                    NewInformation::addNewGameText($orm);
+                } else {
+                    NewInformation::addUpdateGameText($orm);
+                }
+
                 unset($data);
+                unset($orm);
             }
         }
 

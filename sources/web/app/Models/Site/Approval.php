@@ -67,6 +67,7 @@ class Approval
         // タイムラインに登録
         $user = User::find($site->user_id);
         Site::saveNewSiteInformation($user, $site, explode(',', $site->handle_soft));
+        Timeline\NewInformation::addNewSiteText($site);
 
         return true;
     }

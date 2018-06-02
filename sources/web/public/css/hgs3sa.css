@@ -924,6 +924,8 @@ input[type=text], textarea {
     content: none;
 }
 
+
+
 .card-title-flex {
     margin-bottom: 1.5rem;
 }
@@ -932,11 +934,35 @@ input[type=text], textarea {
     margin-bottom: 0;
 }
 
+.card-title-link {
+    margin-top: -7px;
+}
+
+.badge.show-all {
+    background-color: rgba(255, 255, 255, 0.125);
+}
+
 .top-item {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+.top-item p {
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .top-item-title {
     font-family: 'Lalezar', cursive;
     font-size: 2rem;
+}
+
+.sponsor {
+    margin-bottom: 2.3rem;
+}
+
+.sponser-footer {
+    margin-bottom: 2rem;
+}
+.sponser-footer img {
+    max-width: 100%;
 }

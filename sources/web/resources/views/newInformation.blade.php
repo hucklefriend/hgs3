@@ -15,15 +15,9 @@
             <div class="listview__item">
                 <div class="listview__content">
                     <span class="listview__heading">
-                        @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
-                            <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
-                        @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
-                            新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ hv($siteHash, $nf->site_id) }}」</a>
-                        @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
-                            <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
-                        @endif
+                        {!! $nf['text'] !!}
                     </span>
-                    <p>{{ format_date($nf->open_at_ts) }}</p>
+                    <p>{{ format_date($nf->time) }}</p>
                 </div>
             </div>
 

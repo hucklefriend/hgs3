@@ -218,6 +218,7 @@ class Site
             Timeline\ToMe::addSiteUpdatedText($user, $site);
             Timeline\FavoriteSite::addUpdateSiteText($site);
             Timeline\Site::addUpdateText($site);
+            Timeline\NewInformation::addUpdateSiteText($site);
 
             // 直前に取り扱ってないゲームを追加
             $softHash = Orm\GameSoft::getHash($handleSoftIds);
@@ -631,10 +632,6 @@ SQL;
         // 足跡を削除
         Footprint::delete($site->id);
 
-        // 新着情報
-        Orm\NewInformation::where('site_id', $site->id)
-            ->delete();
-
         // お気に入りサイト
         Orm\UserFavoriteSite::where('site_id', $site->id)
             ->delete();
@@ -760,10 +757,11 @@ SQL;
                 unset($softHash);
             }
 
-            // お知らせ
-            Orm\NewInformation::addNewSite($site->id);
             // サイトタイムライン
             Timeline\Site::addNewArrivalText($site);
+
+            // 新着情報
+            Timeline\NewInformation::addNewSiteText($site);
         } catch (\Exception $e) {
             Log::exceptionError($e);
         }

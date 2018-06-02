@@ -171,8 +171,9 @@ db.createCollection('follow_user_timeline');
 db.createCollection('myself_timeline');
 db.createCollection('user_action_timeline');
 db.createCollection('site_footprint');
+db.createCollection('new_information');
 
-
+db.new_information.createIndex({time: -1});
 db.user_action_timeline.createIndex({user_id: 1, time: -1});
 
 

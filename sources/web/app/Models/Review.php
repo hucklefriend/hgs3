@@ -145,6 +145,7 @@ class Review
         $user = User::find($review->user_id);
         Timeline\FollowUser::addWriteReviewText($user, $soft, $review);
         Timeline\ToMe::addWriteReviewText($user, $soft, $review);
+        Timeline\NewInformation::addNewReviewText($soft, $review);
 
         if (!empty($review->url)) {
             // 管理人のタイムラインに流す

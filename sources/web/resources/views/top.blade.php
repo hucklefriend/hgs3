@@ -3,32 +3,91 @@
 @section('content')
     <div class="content__inner">
         <div class="row">
-            @if ($notices->count() > 0)
                 <div class="col-12 col-md-6">
+                        <div class="card card-hgn">
+                            <div class="card-body">
+                                @if ($newInfoNum > 0)
+                                    <div class="d-flex justify-content-between card-title-flex">
+                                        <h5 class="card-title">新着情報</h5>
+
+                                        <div class="card-title-link">
+                                            <a href="{{ route('新着情報') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                    @if ($newInfoNum > 1)
+                                        <script>
+                                            let swiper = null;
+                                            $(function(){
+                                                swiper = new Swiper('#new_information', {
+                                                    pagination: {
+                                                        el: '#packages_pagination',
+                                                        type: 'fraction',
+                                                    },
+                                                    navigation: {
+                                                        nextEl: '#packages_next',
+                                                        prevEl: '#packages_prev',
+                                                    },
+                                                    loop: true,
+                                                    autoplay: {
+                                                        delay: 3000,
+                                                        disableOnInteraction: false,
+                                                    },
+                                                });
+                                            });
+                                        </script>
+                                    @endif
+
+                                    <div class="swiper-container" id="new_information">
+                                        <div class="swiper-wrapper">
+                                            @foreach ($newInfo as $nf)
+                                                <div class="swiper-slide">
+                                                    <div>
+                                                        <small>{{ format_date($nf['time']) }}</small>
+                                                    </div>
+                                                    <p class="mb-0">
+                                                        {!! $nf['text'] !!}
+                                                    </p>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @else
+                                    <h5 class="card-title">新着情報</h5>
+                                    <p class="card-text">新着情報はありません。</p>
+                                @endif
+                            </div>
+                        </div>
+
+
                     <div class="card card-hgn">
                         <div class="card-body">
-                            <h5 class="card-title">お知らせ</h5>
-                        </div>
+                            <div class="d-flex justify-content-between card-title-flex">
+                                <h5 class="card-title">お知らせ</h5>
 
-                        <div class="listview listview--hover">
-                            @foreach ($notices as $notice)
-                                <a class="listview__item" href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}">
-                                    <div class="listview__content">
-                                        <div class="listview__heading">{{ $notice->title }}</div>
-                                        <p>{{ mb_substr($notice->message, 0, 200) }}</p>
-                                    </div>
-                                </a>
-                            @endforeach
-                        </div>
-
-                        <div class="card-body">
-                            <div class="text-right">
-                                <a href="{{ route('お知らせ') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                                <div class="card-title-link">
+                                    <a href="{{ route('お知らせ') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
+                                </div>
                             </div>
+                            @if ($notices->count() == 0)
+                                <p>現在、お知らせはありません。</p>
+                            @else
+                            @foreach ($notices as $notice)
+                                <div class="d-flex justify-content-between">
+                                    <div class="text-left force-break">
+                                        <small>{{ format_date($notice->open_at_ts) }}</small><br>
+                                        <p class="mb-0 force-break">{{ $notice->title }}</p>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-dark border-0 d-block">
+                                            <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
-            @endif
 
             @if (!\Illuminate\Support\Facades\Auth::check())
             <div class="col-12 col-sm-6">
@@ -105,87 +164,24 @@
                 </div>
             </div>
             @endif
-
-            <div @if (!\Illuminate\Support\Facades\Auth::check() || $notices->count() > 0) class="col-12 col-md-6" @else class="col-12 col-sm-8 col-md-7 col-lg-6 col-xl-5" @endif>
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        <h5 class="card-title">新着情報</h5>
-                        @if ($newInfo->count() > 0)
-                            @if ($newInfo->count() > 1)
-                                <script>
-                                    let swiper = null;
-                                    $(function(){
-                                        swiper = new Swiper('#new_information', {
-                                            pagination: {
-                                                el: '#packages_pagination',
-                                                type: 'fraction',
-                                            },
-                                            navigation: {
-                                                nextEl: '#packages_next',
-                                                prevEl: '#packages_prev',
-                                            },
-                                            loop: true,
-                                            autoplay: {
-                                                delay: 3000,
-                                                disableOnInteraction: false,
-                                            },
-                                        });
-                                    });
-                                </script>
-                            @endif
-
-                            <div class="swiper-container" id="new_information">
-                                <div class="swiper-wrapper">
-                                    @foreach ($newInfo as $nf)
-                                    <div class="swiper-slide">
-                                        <div>
-                                            <small>{{ format_date($nf->open_at_ts) }}</small>
-                                        </div>
-                                        <p class="mb-0">
-                                        @if ($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_GAME)
-                                            <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>が追加されました。
-                                        @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_SITE)
-                                            新着サイトです！<a href="{{ route('サイト詳細', ['site' => $nf->site_id]) }}">「{{ hv($siteHash, $nf->site_id) }}」</a>
-                                        @elseif($nf->text_type == \Hgs3\Constants\NewInformationText::NEW_REVIEW)
-                                            <a href="{{ route('ゲーム詳細', ['soft' => $nf->soft_id]) }}">「{{ hv($gameHash, $nf->soft_id) }}」</a>の新しいレビューが投稿されました！
-                                        @endif
-                                        </p>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="text-right mt-3">
-                                <a href="{{ route('新着情報') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                            </div>
-                        @else
-                            <p class="card-text">新着情報はありません。</p>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            @if (\Illuminate\Support\Facades\Auth::check() && $notices->count() == 0)
-
-            <div class="hidden-xs-down col-sm-4 col-md-5 col-lg-6 col-xl-7">
-            </div>
-            @endif
         </div>
 
         <div class="card card-hgn">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-sm-6 col-lg-4 top-item">
-                        <div class="top-item-title">
-                            <a href="{{ route('ゲーム一覧') }}">Games</a>
-                        </div>
+                    <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
+                        <div class="top-item-title">Games</div>
                         <p>
                             どんなホラーゲームがあるかお探しですか？<br>
                             ゲームの一覧がありますので、ぜひ眺めていってください。<br>
                             {{ $softNum }}個のホラーゲームを扱っています。<br>
                         </p>
+                        <div class="tags__body">
+                            <a href="{{ route('ゲーム一覧') }}">ゲーム一覧へ</a>
+                        </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item">
-                        <div class="top-item-title"><a href="{{ route('レビュートップ') }}">Reviews</a></div>
+                    <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
+                        <div class="top-item-title">Reviews</div>
                         <p>
                             ホラーゲームの評判をお探しですか？<br>
                             @if ($reviewNum == 0)
@@ -196,31 +192,37 @@
                                 レビューの投稿もお待ちしております。
                             @endif
                         </p>
+                        <div class="tags__body">
+                            <a href="{{ route('レビュートップ') }}">レビューへ</a>
+                        </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item">
+                    <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
                         <div class="top-item-title">Friends</div>
                         <p>
-                            同じホラーゲームが好きな人とのつながりをお探しですか？<br>
+                            同じホラーゲームが好きな人をお探しですか？<br>
                             {{ $userNum }}人のユーザーが参加しています。<br>
                             好きなゲームが近い人を探す機能は、近々実装を開始します。
                         </p>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item">
-                        <div class="top-item-title"><a href="{{ route('サイトトップ') }}">Sites</a></div>
+                    <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
+                        <div class="top-item-title">Sites</div>
                         <p>
-                            ホラーゲームを扱っているホームページをお探しですか？<br>
+                            ホラーゲームを扱っているサイトをお探しですか？<br>
                             {{ $siteNum }}個のサイトが登録されています。<br>
                             サイトをお持ちの方は、ぜひ登録していってください。
                         </p>
+                        <div class="tags__body">
+                            <a href="{{ route('サイトトップ') }}">サイトへ</a>
+                        </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item">
+                    <div class="col-12 col-sm-6 col-lg-4 top-item d-none">
                         <div class="top-item-title">Secondary Creations</div>
                         <p>
                             ホラーゲームの二次創作物をお探しですか？<br>
                             イラストや小説などを紹介できる機能はいずれ実装したいと考えております。
                         </p>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item">
+                    <div class="col-12 col-sm-6 col-lg-4 top-item d-none">
                         <div class="top-item-title">Game Creations</div>
                         <p>
                             ご自身でホラーゲームを作られていますか？<br>
@@ -241,5 +243,4 @@
             </div>
         </div>
     </div>
-
 @endsection
