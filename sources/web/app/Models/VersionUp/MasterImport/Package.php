@@ -267,6 +267,7 @@ UPDATE
 	game_package_shops, game_packages
 SET
 	game_package_shops.release_int = game_packages.release_int
+	, game_package_shops.is_adult = game_packages.is_adult
 WHERE
 	game_package_shops.package_id = game_packages.id
 SQL;

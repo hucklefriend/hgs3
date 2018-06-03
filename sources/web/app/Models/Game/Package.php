@@ -9,6 +9,7 @@ use Hgs3\Constants\Game\Shop;
 use Hgs3\Log;
 use Hgs3\Models\Game\Shop\Amazon;
 use Hgs3\Models\Game\Shop\Dmm;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Models\Orm;
 
@@ -314,6 +315,11 @@ SQL;
      */
     public static function getNewGame()
     {
+        $appendQuery = ' AND is_adult = 0';
+        if (Auth::check() && Auth::user()->is_adult == 1) {
+            $appendQuery = '';
+        }
+
         $sql =<<< SQL
 SELECT
 	shop.*,
@@ -321,7 +327,7 @@ SELECT
 FROM (
 	SELECT package_id, release_int, shop_url, small_image_url
 	FROM game_package_shops
-	WHERE shop_id = ? AND small_image_url IS NOT NULL
+	WHERE shop_id = ? AND small_image_url IS NOT NULL {$appendQuery}
 	ORDER BY release_int DESC
 	LIMIT 20
 ) shop

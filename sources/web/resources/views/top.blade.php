@@ -5,58 +5,59 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card card-hgn">
-                        <div class="card-body">
-                            @if ($newInfoNum > 0)
-                                <div class="d-flex justify-content-between card-title-flex">
-                                    <h5 class="card-title">新着情報</h5>
-
-                                    <div class="card-title-link">
-                                        <a href="{{ route('新着情報') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
-                                    </div>
-                                </div>
-                                @if ($newInfoNum > 1)
-                                    <script>
-                                        let swiper = null;
-                                        $(function(){
-                                            swiper = new Swiper('#new_information', {
-                                                pagination: {
-                                                    el: '#packages_pagination',
-                                                    type: 'fraction',
-                                                },
-                                                navigation: {
-                                                    nextEl: '#packages_next',
-                                                    prevEl: '#packages_prev',
-                                                },
-                                                loop: true,
-                                                autoplay: {
-                                                    delay: 3000,
-                                                    disableOnInteraction: false,
-                                                },
-                                            });
-                                        });
-                                    </script>
-                                @endif
-
-                                <div class="swiper-container" id="new_information">
-                                    <div class="swiper-wrapper">
-                                        @foreach ($newInfo as $nf)
-                                            <div class="swiper-slide">
-                                                <div>
-                                                    <small>{{ format_date($nf['time']) }}</small>
-                                                </div>
-                                                <p class="mb-0">
-                                                    {!! $nf['text'] !!}
-                                                </p>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @else
+                    <div class="card-body">
+                        @if ($newInfoNum > 0)
+                            <div class="d-flex justify-content-between card-title-flex">
                                 <h5 class="card-title">新着情報</h5>
-                                <p class="card-text">新着情報はありません。</p>
+
+                                <div class="card-title-link">
+                                    <a href="{{ route('新着情報') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                            @if ($newInfoNum > 1)
+                                <script>
+                                    let swiper = null;
+                                    $(function(){
+                                        swiper = new Swiper('#new_information', {
+                                            pagination: {
+                                                el: '#packages_pagination',
+                                                type: 'fraction',
+                                            },
+                                            navigation: {
+                                                nextEl: '#packages_next',
+                                                prevEl: '#packages_prev',
+                                            },
+                                            loop: true,
+                                            autoplay: {
+                                                delay: 3000,
+                                                disableOnInteraction: false,
+                                            },
+                                        });
+                                    });
+                                </script>
                             @endif
-                        </div>
+
+                            <div class="swiper-container" id="new_information">
+                                <div class="swiper-wrapper">
+                                    @foreach ($newInfo as $nf)
+                                        <div class="swiper-slide">
+                                            <div>
+                                                <small>{{ format_date($nf['time']) }}</small>
+                                            </div>
+                                            <p class="mb-0">
+                                                {!! $nf['text'] !!}
+                                            </p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @else
+                            <h5 class="card-title">新着情報</h5>
+                            <p class="card-text">新着情報はありません。</p>
+                        @endif
                     </div>
+                </div>
+                @if ($notices->count() > 0)
                 <div class="card card-hgn">
                     <div class="card-body">
                         <div class="d-flex justify-content-between card-title-flex">
@@ -66,9 +67,6 @@
                                 <a href="{{ route('お知らせ') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
                             </div>
                         </div>
-                        @if ($notices->count() == 0)
-                            <p>現在、お知らせはありません。</p>
-                        @else
                         @foreach ($notices as $notice)
                             <div class="d-flex justify-content-between">
                                 <div class="text-left force-break">
@@ -82,9 +80,10 @@
                                 </div>
                             </div>
                         @endforeach
-                        @endif
+
                     </div>
                 </div>
+                @endif
             </div>
 
             @if (!\Illuminate\Support\Facades\Auth::check())
@@ -163,7 +162,7 @@
             </div>
             @endif
 
-            <div class="col-12 col-md-6 mb-5">
+            <div class="col-12 @if (\Illuminate\Support\Facades\Auth::check()) col-md-6 @endif mb-5">
                 <p class="mb-1 text-muted"><small>スポンサーリンク</small></p>
                 <div class="swiper-container" id="new_game">
                     <div class="swiper-wrapper">
@@ -178,26 +177,83 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="d-flex justify-content-around my-2 py-1">
-                        <button id="new_game_prev" class="btn btn-light btn-sm"><i class="fas fa-angle-left"></i></button>
-                        <spam class="align-self-center"><i class="fab fa-amazon"></i> Amazon</spam>
-                        <button id="new_game_next" class="btn btn-light btn-sm"><i class="fas fa-angle-right"></i></button>
-                    </div>
+                </div>
+                <div class="d-flex justify-content-around my-2 py-1">
+                    <button id="new_game_prev" class="btn btn-light btn-sm"><i class="fas fa-angle-left"></i></button>
+                    <spam class="align-self-center"><i class="fab fa-amazon"></i> Amazon</spam>
+                    <button id="new_game_next" class="btn btn-light btn-sm"><i class="fas fa-angle-right"></i></button>
                 </div>
             </div>
             <script>
                 let swiperNewGame = null;
+                let slidesPerView = 3;
                 $(function(){
+                    @if (!\Illuminate\Support\Facades\Auth::check())
+                    let windowWidth = $(window).width();
+                    if (windowWidth < 768) {
+                        slidesPerView = 3;
+                    } else if (windowWidth < 992) {
+                        slidesPerView = 5;
+                    } else if (windowWidth < 1120) {
+                        slidesPerView = 6;
+                    } else {
+                        slidesPerView = 8;
+                    }
+
+                    initNewGameSwiper(slidesPerView);
+
+                    $(window).on('resize', function (){
+                        let windowWidth = $(window).width();
+                        if (windowWidth < 768) {
+                            if (slidesPerView == 3) {
+                                return;
+                            }
+                            slidesPerView = 3;
+                        } else if (windowWidth < 992) {
+                            if (slidesPerView == 5) {
+                                return;
+                            }
+                            slidesPerView = 5;
+                        } else if (windowWidth < 1120) {
+                            if (slidesPerView == 6) {
+                                return;
+                            }
+
+                            slidesPerView = 6;
+                        } else {
+                            if (slidesPerView == 8) {
+                                return;
+                            }
+
+                            slidesPerView = 8;
+                        }
+
+                        initNewGameSwiper(slidesPerView);
+                    });
+
+                    @endif
+
+                    initNewGameSwiper(slidesPerView);
+                });
+
+                function initNewGameSwiper(num)
+                {
+                    if (swiperNewGame != null) {
+                        swiperNewGame.destroy(true, true);
+                    }
+
+
                     swiperNewGame = new Swiper('#new_game', {
                         navigation: {
                             nextEl: '#new_game_next',
                             prevEl: '#new_game_prev',
                         },
-                        slidesPerView: 4,
-                        spaceBetween: 30,
+                        slidesPerView: num,
+                        spaceBetween: 20,
                         loop: true,
                     });
-                });
+                }
+
             </script>
         </div>
 

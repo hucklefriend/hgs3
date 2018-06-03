@@ -19,6 +19,7 @@ class AddShopReleaseDate extends Migration
     {
         Schema::table('game_package_shops', function (Blueprint $table) {
             $table->unsignedBigInteger('release_int')->default(0)->comment('発売日(数値)')->after('large_image_url');
+            $table->unsignedTinyInteger('is_adult')->default(0)->comment('アダルトゲームかどうか')->after('release_int');
             $table->index(['shop_id', 'release_int']);
         });
     }
