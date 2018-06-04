@@ -6,7 +6,7 @@
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>レビュー未保存</h1>
+            <h1>下書きのレビューがありません。</h1>
         </header>
 
         <p>下書きのレビューがないため、公開できません。</p>

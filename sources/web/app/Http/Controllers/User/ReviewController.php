@@ -12,6 +12,7 @@ use Hgs3\Http\Requests\Review\GeneralRequest;
 use Hgs3\Http\Requests\Review\GoodRequest;
 use Hgs3\Http\Requests\Review\PlayingRequest;
 use Hgs3\Http\Requests\Review\WriteRequest;
+use Hgs3\Log;
 use Hgs3\Models\Review;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\App;

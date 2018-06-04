@@ -88,37 +88,6 @@ class Review extends \Eloquent
         return true;
     }
 
-
-    /**
-     * レビュー削除
-     *
-     * @return bool|null|void
-     * @throws \Exception
-     */
-    public function delete()
-    {
-        DB::beginTransaction();
-        try {
-            // 履歴を削除
-            ReviewImpressionHistory::where('review_id')
-                ->delete();
-
-            // TODO 不正報告を削除
-
-            $gameId = $this->gameId;
-            parent::delete();
-
-            // 累計データの修正
-            ReviewTotal::calculate($gameId);
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            Log::exceptionError($e);
-        }
-    }
-
     /**
      * 特定ユーザーが持っているレビュー数を取得
      *

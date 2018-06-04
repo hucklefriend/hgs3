@@ -45,6 +45,9 @@ crontab -e
 ○DBマイグレーション
 php aritsan migrate
 
+○DB手動修正
+review_disable_termsのsoft_idを tiny int から int に修正
+
 ○マスターインポート
 mysql -u root -p hgs3 < storage/master/all/20180630.sql
 php artisan master:import 20180630

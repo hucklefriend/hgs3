@@ -113,7 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/user/review/{soft}/spoiler', 'User\ReviewController@saveSpoiler')->name('レビューネタバレありだった');
     Route::patch('/user/review/{soft}/not_spoiler', 'User\ReviewController@saveNotSpoiler')->name('レビューネタバレなしだった');
     Route::post('/user/review/write/{soft}', 'User\ReviewController@open')->name('レビュー公開');
-    Route::delete('/user/review/{soft}', 'User\ReviewController@delete')->name('レビュー削除');
+    Route::delete('/user/review/{review}', 'User\ReviewController@delete')->name('レビュー削除');
     Route::put('/user/review/fmfm/{review}', 'Review\ImpressionController@fmfm')->name('ふむふむ');
     Route::put('/user/review/n/{review}', 'Review\ImpressionController@n')->name('んー…');
     Route::delete('/user/review/impression/{review}', 'Review\ImpressionController@delete')->name('レビュー印象取り消し');

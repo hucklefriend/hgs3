@@ -7,8 +7,10 @@
     <div class="content__inner">
         <header class="content__title">
             <h1 class="mb-2">{{ $soft->name }}</h1>
-            <p class="mb-0"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">{{ $user->name }}さん</a>のレビュー</p>
-            <p class="mb-0">{{ format_date(strtotime($review->post_at)) }} 投稿</p>
+            <div class="d-flex flex-wrap">
+                <p class="mb-0"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">{{ $user->name }}さん</a>のレビュー</p>
+                <p class="mb-0">{{ format_date(strtotime($review->post_at)) }} 投稿</p>
+            </div>
         </header>
 
         @include('review.common.show', ['review' => $review])
@@ -65,7 +67,18 @@
                 </div>
             </div>
         </div>
-            @endif
+        @else
+            <div class="card card-hgn border-info">
+                <div class="card-body">
+                    <h4 class="card-title">投稿者さま用</h4>
+                    <form action="{{ route('レビュー削除', ['review' => $review->id]) }}" method="POST" onsubmit="return confirm('このレビューを削除してよろしいですか？')">
+                        {{ method_field('DELETE') }}
+                        {{ csrf_field() }}
+                        <button class="btn btn-danger">削除する</button>
+                    </form>
+                </div>
+            </div>
+        @endif
     </div>
 @endsection
 

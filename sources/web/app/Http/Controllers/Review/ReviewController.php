@@ -50,7 +50,7 @@ class ReviewController extends Controller
         $data['users'] = [];
 
         if ($data['reviews']->isNotEmpty()) {
-            $data['users'] = User::getHash(array_pluck($data['reviews']->items(), 'user_id'));
+            $data['users'] = User::getHash(page_pluck($data['reviews'], 'user_id'));
         }
 
         if (Auth::check()) {

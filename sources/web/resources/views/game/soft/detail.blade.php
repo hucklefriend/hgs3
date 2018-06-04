@@ -171,9 +171,9 @@
                     </div>
                     @if ($packageNum > 2)
                         <div class="text-center mt-3">
-                            <button class="btn btn-light btn--icon" id="packages_prev"><i class="fas fa-caret-left"></i></button>
+                            <a class="btn btn-outline-dark border-0 d-inline-block"><button class="btn btn-light btn--icon" id="packages_prev"><i class="fas fa-caret-left"></i></button></a>
                             <span id="packages_pagination" class="mx-5"></span>
-                            <button class="btn btn-light btn--icon" id="packages_next"><i class="fas fa-caret-right"></i></button>
+                            <a class="btn btn-outline-dark border-0 d-inline-block"><button class="btn btn-light btn--icon" id="packages_next"><i class="fas fa-caret-right"></i></button></a>
                         </div>
                     @endif
                 </div>
@@ -192,7 +192,7 @@
                                 @include('site.common.normal', ['s' => $site, 'noUser' => true])
                             </div>
 
-                            <div class="text-right">
+                            <div class="text-right mt-2">
                                 <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @endif
@@ -237,7 +237,7 @@
 
                             <table class="review-point-table">
                                 <tr>
-                                    <th>怖さ {{ \Hgs3\Constants\Review\Fear::$face[round($reviewTotal->fear, 0)] }}</th>
+                                    <th>怖さ {{ \Hgs3\Constants\Review\Fear::$face[intval(round($reviewTotal->fear, 0))] }}</th>
                                     <td class="text-right">{{ round($reviewTotal->fear * \Hgs3\Constants\Review\Fear::POINT_RATE, 1) }}pt</td>
                                 </tr>
                                 <tr>
@@ -252,11 +252,11 @@
                         </div>
                         @auth
                             @if ($isWriteReview)
-                                <div class="text-right">
+                                <div class="text-right mt-2">
                                     <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                                 </div>
                             @else
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between mt-2">
                                     @if ($isWriteReviewDraft)
                                     <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
                                         <i class="fas fa-edit"></i> 下書きの続きを書く
@@ -270,7 +270,7 @@
                                 </div>
                             @endif
                         @else
-                        <div class="text-right">
+                        <div class="text-right mt-2">
                             <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                         </div>
                         @endauth
@@ -300,7 +300,7 @@
                                 @endforeach
                             </div>
 
-                            <div class="text-right">
+                            <div class="text-right mt-2">
                                 <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @endif

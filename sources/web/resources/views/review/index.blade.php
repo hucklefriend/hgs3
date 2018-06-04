@@ -100,7 +100,7 @@
                                         <p class="mb-2 text-center">{{ $loop->index + 1 }}位</p>
                                         <p class="mb-0" style="font-size: 1.2rem;">
                                             {{ \Hgs3\Constants\Review\Fear::$face[intval(round($fear->fear))] }}
-                                            {{ sprintf('%.1f', $fear->fear) }}
+                                            {{ round($fear->fear * \Hgs3\Constants\Review\Fear::POINT_RATE) }}
                                         </p>
                                     </div>
                                     <div class="d-flex justify-content-between align-self-center">
