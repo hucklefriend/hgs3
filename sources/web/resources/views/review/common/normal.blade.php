@@ -1,25 +1,28 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <div class="mb-1">
-            @if($review->is_spoiler == 1)
-                <span class="badge badge-pill badge-danger">ネタバレあり！</span>
-            @endif
-        </div>
+<div class="mb-5">
+    <div class="review-list-title"><a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a></div>
+    <div class="d-flex justify-content-between">
         <div class="d-flex">
-            <div class="review-point-list mr-2">{{ $review->calcPoint() }}</div>
+            <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
             <div>
-                <div>
-                    <div class="package-image-review-list">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
-                    {{ $review->soft->name }}
+                <div class="d-flex">
+                    <div class="review-list-point mr-1">{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</div>
+                    <div class="review-list-point mr-2">{{ $review->calcPoint() }}</div>
+                    @if($review->is_spoiler == 1)
+                        <div>
+                            <span class="badge badge-pill badge-danger">ネタバレ</span>
+                        </div>
+                    @endif
                 </div>
-                <div class="d-flex flex-wrap mt-2">
-                    <span class="mr-3"><i class="far fa-thumbs-up"></i> {{ number_format($review->good_num) }}</span>
-                    <span><i class="far fa-calendar-alt"></i> {{ $review->getOpenDate() }}</span>
+                <div>
+                    <p class="mb-0"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
                 </div>
             </div>
         </div>
-    </div>
-    <div>
-        <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
+        <div class="align-self-center">
+            <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-outline-dark border-0 d-block">
+                <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
+            </a>
+        </div>
     </div>
 </div>
+

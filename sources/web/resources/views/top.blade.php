@@ -163,7 +163,7 @@
             @endif
 
             <div class="col-12 @if (\Illuminate\Support\Facades\Auth::check()) col-md-6 @endif mb-5">
-                <p class="mb-1 text-muted"><small>スポンサーリンク <i class="fab fa-amazon"></i> Amazon</small></p>
+                <p class="mb-1 text-muted"><small>スポンサーリンク</small> <i class="fab fa-amazon"></i></p>
                 <div class="swiper-container" id="new_game">
                     <div class="swiper-wrapper">
                         @foreach ($newGames as $newGame)
@@ -177,10 +177,8 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
-                <div class="d-flex justify-content-around my-2 py-1">
-                    <button id="new_game_prev" class="btn btn-light btn-sm"><i class="fas fa-angle-left"></i></button>
-                    <button id="new_game_next" class="btn btn-light btn-sm"><i class="fas fa-angle-right"></i></button>
+                    <div class="swiper-button-next swiper-button-next-hgn"></div>
+                    <div class="swiper-button-prev swiper-button-prev-hgn"></div>
                 </div>
             </div>
             <script>
@@ -241,11 +239,10 @@
                         swiperNewGame.destroy(true, true);
                     }
 
-
                     swiperNewGame = new Swiper('#new_game', {
                         navigation: {
-                            nextEl: '#new_game_next',
-                            prevEl: '#new_game_prev',
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
                         },
                         slidesPerView: num,
                         spaceBetween: 20,

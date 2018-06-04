@@ -24,7 +24,7 @@
                                     <div>
                                         <div class="d-flex">
                                             <div class="review-list-point mr-1">{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</div>
-                                            <div class="review-list-point mr-2">-{{ $review->calcPoint() }}</div>
+                                            <div class="review-list-point mr-2">{{ $review->calcPoint() }}</div>
                                             @if($review->is_spoiler == 1)
                                                 <div>
                                                     <span class="badge badge-pill badge-danger">ネタバレ</span>
