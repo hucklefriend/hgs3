@@ -17,32 +17,24 @@
 
                         @foreach ($newArrivals as $review)
                         <div class="mb-5">
-                            <div class="review-list-title"><a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a></div>
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex">
+                            @if($review->is_spoiler == 1)
+                                <span class="badge badge-sm badge-danger">ネタバレあり！</span>
+                            @endif
+                            <div class="review-list-title">
+                                <a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
                                     <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
-                                    <div>
-                                        <div class="d-flex">
-                                            <div class="review-list-point mr-1">{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</div>
-                                            <div class="review-list-point mr-2">{{ $review->calcPoint() }}</div>
-                                            @if($review->is_spoiler == 1)
-                                                <div>
-                                                    <span class="badge badge-pill badge-danger">ネタバレ</span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            <p class="mb-0 force-break one-line"><small>{{ $review->user->name }}さん</small></p>
-                                            <p class="mb-0"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
-                                        </div>
-                                    </div>
+                                    <div class="review-list-point mr-1 d-inline-block">{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</div>
+                                    <div class="review-list-point mr-2 d-inline-block">{{ $review->calcPoint() }}</div>
                                 </div>
                                 <div class="align-self-center">
-                                    <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-outline-dark border-0 d-block">
-                                        <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
-                                    </a>
+                                    <a class="btn btn-light btn--icon" href="{{ route('レビュー', ['review' => $review->id]) }}"><i class="fas fa-angle-right"></i></a>
                                 </div>
                             </div>
+                            <p class="mb-0 one-line" style="line-height: 1;"><small>{{ $review->user->name }}さん</small></p>
+                            <p class="mb-0" style="line-height: 1;"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
                         </div>
                         @endforeach
 
@@ -74,9 +66,7 @@
                                     </a>
                                 </div>
                                 <div class="align-self-center">
-                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-outline-dark border-0 d-block">
-                                        <button class="btn btn-light btn--icon"><i class="fas fa-pencil-alt"></i></button>
-                                    </a>
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-pencil-alt"></i></a>
                                 </div>
                             </div>
                         @endforeach
@@ -118,9 +108,7 @@
                                 </div>
 
                                 <div class="align-self-center">
-                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $fear->soft_id]) }}" class="btn btn-outline-dark border-0 d-block">
-                                        <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
-                                    </a>
+                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $fear->soft_id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
                                 </div>
                             </div>
                         @endforeach
@@ -155,9 +143,7 @@
                                 </div>
 
                                 <div class="align-self-center">
-                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $point->soft_id]) }}" class="btn btn-outline-dark border-0 d-block">
-                                        <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
-                                    </a>
+                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $point->soft_id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
                                 </div>
                             </div>
                         @endforeach

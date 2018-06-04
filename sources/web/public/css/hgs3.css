@@ -59,9 +59,14 @@ code {
 
 .review-list-package-image {
     text-align: center;
+    min-width: 40px;
     width: 40px;
     max-height: 40px;
     display: inline-block;
+}
+
+.review-list-package-image img {
+    max-height: 3rem !important;
 }
 
 .review-list-user-name {
@@ -910,6 +915,7 @@ input[type=text], textarea {
     border-style: solid;
     border-color: gray;
     background-color: white;
+    margin-right: 5px;
 }
 .tag::before {
     content: "";
@@ -1021,4 +1027,15 @@ input[type=text], textarea {
 
 .swiper-button-next.swiper-button-next-hgn {
     right: 0;
+}
+
+.badge.badge-sm {
+    font-size: 0.8rem;
+    padding: 0.2rem;
+}
+
+.btn--icon {
+    line-height: 1;
+    display:table-cell;
+    vertical-align: middle;
 }

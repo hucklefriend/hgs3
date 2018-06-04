@@ -6,13 +6,13 @@
             @endif
             <div class="card-body">
                 <h4 class="card-title">{{ $site->name }}</h4>
-                <div>
-                    <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
+                <div class="mb-3">
+                    <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
                     @if ($site->rate > 0)
-                        <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
+                        <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
                     @endif
                     @if ($site->gender != \Hgs3\Constants\Site\Gender::NONE)
-                        <span class="badge badge-pill badge-success">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
+                        <span class="tag simple">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
                     @endif
                 </div>
                 <p class="card-text">

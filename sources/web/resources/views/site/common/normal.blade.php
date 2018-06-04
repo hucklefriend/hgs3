@@ -1,5 +1,18 @@
 <div class="site-normal">
     <div>
+        @if (isset($showApprovalStatus) && $showApprovalStatus)
+            @if ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
+                <span class="badge badge-success">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
+            @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
+                <span class="badge badge-danger">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
+            @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
+                <span class="badge badge-secondary">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
+            @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::DRAFT)
+                <span class="badge badge-secondary">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
+            @endif
+        @endif
+    </div>
+    <div>
     @if (empty($s->list_banner_url))
         <div class="no-banner-site-name">
             <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
@@ -19,17 +32,6 @@
     @endif
 
     <div class="d-flex flex-wrap site-badge my-3">
-        @if (isset($showApprovalStatus) && $showApprovalStatus)
-            @if ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
-                <span class="badge badge-success">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
-            @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
-                <span class="badge badge-danger">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
-            @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT)
-                <span class="badge badge-secondary">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
-            @elseif ($s->approval_status == \Hgs3\Constants\Site\ApprovalStatus::DRAFT)
-                <span class="badge badge-secondary">{{ \Hgs3\Constants\Site\ApprovalStatus::getText($s->approval_status) }}</span>
-            @endif
-        @endif
         <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($s->main_contents_id) }}</span>
         @if ($s->rate > 0)
             <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($s->rate) }}</span>

@@ -40,7 +40,7 @@ class MyPage extends TimelineAbstract
             unset($followUser);
             unset($userAction);
         } else {
-            $timeline = UserActionTimeline::getMyPage($userId, $time, $num);
+            $timeline = self::getUserActionTimeline($userId, $time, $num + 1);
         }
 
         if (empty($timeline)) {
@@ -173,8 +173,7 @@ class MyPage extends TimelineAbstract
         ];
         $options = [
             'sort'  => ['time' => -1],
-            'limit' => $num,
-            'skip'  => $offset
+            'limit' => $num
         ];
 
         return self::getDB()->to_me_timeline->find($filter, $options)->toArray();
