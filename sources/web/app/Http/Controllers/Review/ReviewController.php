@@ -19,12 +19,12 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $newArrivals = Review::getNewArrival(10);
-
-
+        $newArrivals = Review::getNewArrival(5);
+        $wantToWrite = Review::getWantToWrite();
 
         return view('review.index', [
-            'newArrivals' => $newArrivals
+            'newArrivals' => $newArrivals,
+            'wantToWrite' => $wantToWrite
         ]);
     }
 
@@ -53,7 +53,6 @@ class ReviewController extends Controller
         if ($data['reviews']->isNotEmpty()) {
             $data['users'] = User::getHash(array_pluck($data['reviews']->items(), 'user_id'));
         }
-
 
         if (Auth::check()) {
             $data['writtenReview'] = Review::getByUserAndSoft(Auth::id(), $soft->id);

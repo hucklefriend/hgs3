@@ -343,23 +343,26 @@ function follow_status_icon(array $followStatus, $targetUserId)
  * 小さいパッケージ画像を優先して取得
  *
  * @param $package
+ * @param $withNoImage
  * @return string
  */
-function small_image_url($package)
+function small_image_url($package, $withNoImage = false)
 {
+    $noImageUrl = $withNoImage ? url('img/pkg_no_img_s.png') : '';
+
     if ($package == null) {
-        return '';
+        return $noImageUrl;
     }
 
-    $imageUrl = '';
+    $imageUrl = $noImageUrl;
 
     if ($package->is_adult) {
         if (!\Illuminate\Support\Facades\Auth::check()) {
-            return '';
+            return $noImageUrl;
         }
         $user = \Illuminate\Support\Facades\Auth::user();
         if ($user->adult != 1) {
-            return '';
+            return $noImageUrl;
         }
     }
 

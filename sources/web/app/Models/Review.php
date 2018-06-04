@@ -526,4 +526,43 @@ SQL;
 
         return $reviews;
     }
+
+    /**
+     * 書いてみませんか？
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
+     */
+    public static function getWantToWrite()
+    {
+        $sql =<<< SQL
+SELECT `id`, `name`, `original_package_id`
+FROM game_softs
+WHERE id NOT IN (SELECT soft_id FROM review_totals) 
+ORDER BY rand()
+SQL;
+
+        $softs = DB::select($sql);
+
+        if (count($softs) < 20) {
+            $getNum = 20 - count($softs);
+
+            $sql = 'SELECT soft_id FROM review_totals ORDER BY num DESC LIMIT ' . $getNum;
+            $appendSoftIds = DB::select($sql);
+
+            $appendSofts = DB::table('game_softs')
+                ->select(['id', 'name', 'original_package_id'])
+                ->whereIn('id', array_pluck($appendSoftIds, 'soft_id'))
+                ->get()
+                ->toArray();
+
+            $softs = array_merge($softs, $appendSofts);
+        }
+
+        $packages = Orm\GamePackage::getHash(array_pluck($softs, 'original_package_id'));
+        foreach ($softs as &$soft) {
+            $soft->package = $packages[$soft->original_package_id] ?? null;
+        }
+
+        return array_slice($softs, 0, 5);
+    }
 }

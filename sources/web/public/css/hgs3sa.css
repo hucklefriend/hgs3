@@ -68,7 +68,18 @@ code {
 
 }
 
+.package-list-small {
 
+}
+
+.package-list-small-mother {
+    width: 40px;
+    text-align: center;
+}
+
+.package-list-small img {
+    max-height: 40px;
+}
 
 .review-point-mother {
     position: absolute;
@@ -410,6 +421,11 @@ button.btn:hover {
     align-items: stretch;
     justify-content: left;
     margin-bottom: 10px;
+}
+
+.package-card > a {
+    width: 100%;
+    display: table;
 }
 
 .package-card-image {
