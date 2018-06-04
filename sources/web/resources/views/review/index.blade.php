@@ -10,7 +10,7 @@
         </header>
 
         <div class="row">
-            <div class="col-12 col-md-6 col-xl-4">
+            <div class="col-12 col-md-6 col-xl-5">
                 <div class="card card-hgn">
                     <div class="card-body">
                         <h5 class="card-title">新着レビュー</h5>
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6 col-xl-4">
+            <div class="col-12 col-md-6 col-xl-5">
                 <div class="card card-hgn">
                     <div class="card-body">
                         <h5 class="card-title">レビュー書いてみませんか？</h5>
@@ -76,6 +76,87 @@
                                 <div class="align-self-center">
                                     <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-outline-dark border-0 d-block">
                                         <button class="btn btn-light btn--icon"><i class="fas fa-pencil-alt"></i></button>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-xl-5">
+                <div class="card card-hgn">
+                    <div class="card-body">
+                        <h5 class="card-title">怖いと評判のゲーム</h5>
+
+                        @foreach ($fearRanking as $fear)
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <div class="align-self-center mr-2 nowrap">
+                                        <p class="mb-2 text-center">{{ $loop->index + 1 }}位</p>
+                                        <p class="mb-0" style="font-size: 1.2rem;">
+                                            {{ \Hgs3\Constants\Review\Fear::$face[intval(round($fear->fear))] }}
+                                            {{ sprintf('%.1f', $fear->fear) }}
+                                        </p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-self-center">
+                                        <div class="package-card">
+                                            <a href="{{ route('ソフト別レビュー一覧', ['soft' => $fear->soft_id]) }}" class="align-self-center">
+                                                <div style="display: table-row;">
+                                                    <div class="package-card-image">
+                                                        @include ('game.common.packageImage', ['imageUrl' => small_image_url($fear)])
+                                                    </div>
+                                                    <div class="package-card-name"><small>{{ $fear->name }}</small></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="align-self-center">
+                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $fear->soft_id]) }}" class="btn btn-outline-dark border-0 d-block">
+                                        <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-5">
+                <div class="card card-hgn">
+                    <div class="card-body">
+                        <h5 class="card-title">総合ポイントの高いゲーム</h5>
+                        @foreach ($pointRanking as $point)
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <div class="align-self-center mr-2 nowrap">
+                                        <p class="mb-2 text-center">{{ $loop->index + 1 }}位</p>
+                                        <p class="mb-0" style="font-size: 1.2rem;">
+                                            {{ sprintf('%.1f', $point->point) }}pt
+                                        </p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-self-center">
+                                        <div class="package-card">
+                                            <a href="{{ route('ソフト別レビュー一覧', ['soft' => $point->soft_id]) }}" class="align-self-center">
+                                                <div style="display: table-row;">
+                                                    <div class="package-card-image">
+                                                        @include ('game.common.packageImage', ['imageUrl' => small_image_url($point)])
+                                                    </div>
+                                                    <div class="package-card-name"><small>{{ $point->name }}</small></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="align-self-center">
+                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $point->soft_id]) }}" class="btn btn-outline-dark border-0 d-block">
+                                        <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
                                     </a>
                                 </div>
                             </div>

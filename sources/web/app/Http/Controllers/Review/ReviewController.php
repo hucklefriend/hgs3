@@ -19,12 +19,11 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $newArrivals = Review::getNewArrival(5);
-        $wantToWrite = Review::getWantToWrite();
-
         return view('review.index', [
-            'newArrivals' => $newArrivals,
-            'wantToWrite' => $wantToWrite
+            'newArrivals'  => Review::getNewArrival(5),
+            'wantToWrite'  => Review::getWantToWrite(),
+            'fearRanking'  => Review::getFearRanking(),
+            'pointRanking' => Review::getPointRanking(),
         ]);
     }
 
@@ -37,8 +36,8 @@ class ReviewController extends Controller
     public function soft(Orm\GameSoft $soft)
     {
         $data = [
-            'soft'  => $soft,
-            'total' => null,
+            'soft'    => $soft,
+            'total'   => null,
             'reviews' => []
         ];
 

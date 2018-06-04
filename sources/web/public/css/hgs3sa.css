@@ -412,7 +412,7 @@ button.btn:hover {
 }
 
 .site-badge span:last-child {
-    margin-right: 0px;
+    margin-right: 0;
 }
 
 .package-card {
@@ -999,4 +999,8 @@ input[type=text], textarea {
     font-size: 0.8rem;
     max-height: 5rem;
     overflow: hidden;
+}
+
+.nowrap {
+    white-space: nowrap;
 }

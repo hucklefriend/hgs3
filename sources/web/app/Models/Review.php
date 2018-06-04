@@ -565,4 +565,38 @@ SQL;
 
         return array_slice($softs, 0, 5);
     }
+
+    public static function getFearRanking()
+    {
+        $sql =<<< SQL
+SELECT rank.fear, rank.soft_id, soft.name, pkg.small_image_url, pkg.medium_image_url, pkg.is_adult
+FROM (
+	SELECT fear, soft_id
+	FROM review_totals
+	ORDER BY fear DESC, soft_id
+	LIMIT 5
+) rank
+	JOIN game_softs soft ON soft.id = rank.soft_id
+	LEFT OUTER JOIN game_packages pkg ON soft.original_package_id = pkg.id
+SQL;
+
+        return DB::select($sql);
+    }
+
+    public static function getPointRanking()
+    {
+        $sql =<<< SQL
+SELECT rank.point, rank.soft_id, soft.name, pkg.small_image_url, pkg.medium_image_url, pkg.is_adult
+FROM (
+	SELECT point, soft_id
+	FROM review_totals
+	ORDER BY point DESC, soft_id
+	LIMIT 5
+) rank
+	JOIN game_softs soft ON soft.id = rank.soft_id
+	LEFT OUTER JOIN game_packages pkg ON soft.original_package_id = pkg.id
+SQL;
+
+        return DB::select($sql);
+    }
 }
