@@ -163,7 +163,7 @@
             @endif
 
             <div class="col-12 @if (\Illuminate\Support\Facades\Auth::check()) col-md-6 @endif mb-5">
-                <p class="mb-1 text-muted"><small>スポンサーリンク</small></p>
+                <p class="mb-1 text-muted"><small>スポンサーリンク <i class="fab fa-amazon"></i> Amazon</small></p>
                 <div class="swiper-container" id="new_game">
                     <div class="swiper-wrapper">
                         @foreach ($newGames as $newGame)
@@ -180,7 +180,6 @@
                 </div>
                 <div class="d-flex justify-content-around my-2 py-1">
                     <button id="new_game_prev" class="btn btn-light btn-sm"><i class="fas fa-angle-left"></i></button>
-                    <spam class="align-self-center"><i class="fab fa-amazon"></i> Amazon</spam>
                     <button id="new_game_next" class="btn btn-light btn-sm"><i class="fas fa-angle-right"></i></button>
                 </div>
             </div>

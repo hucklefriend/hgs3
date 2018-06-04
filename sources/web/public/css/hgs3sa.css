@@ -39,17 +39,36 @@ code {
     border-radius: 5px;
 }
 
-.review-point-list {
-    font-size: 2rem;
+
+
+.review-list-title {
+    font-size: 1.3rem;
+}
+
+.review-list-point {
+    font-size: 1.1rem;
     display: inline-block;
     text-align: center;
     background-color: rgba(255, 0, 0, 0.2);
-    min-width: 50px;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
+    min-width: 35px;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
     border-radius: 5px;
 }
+
+.review-list-package-image {
+    text-align: center;
+    width: 40px;
+    max-height: 40px;
+    display: inline-block;
+}
+
+.review-list-user-name {
+
+}
+
+
 
 .review-point-mother {
     position: absolute;
@@ -802,13 +821,6 @@ input[type=text], textarea {
     width: 40px;
 }
 
-.package-image-review-list {
-    text-align: center;
-    width: 30px;
-    max-height: 40px;
-    display: inline-block;
-}
-
 .review-text {
     line-height: 200%;
 }
@@ -818,7 +830,6 @@ input[type=text], textarea {
 }
 
 .one-line {
-    width: 100px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

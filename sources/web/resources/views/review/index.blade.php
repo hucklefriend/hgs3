@@ -11,30 +11,39 @@
 
         <div class="card card-hgn">
             <div class="card-body">
-                <h4 class="card-title">新着レビュー</h4>
+                <div class="d-flex justify-content-between card-title-flex">
+                    <h5 class="card-title">新着レビュー</h5>
 
-
+                    <div class="card-title-link">
+                        <a href="{{ route('お知らせ') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
+                    </div>
+                </div>
                 <div class="row">
                     @foreach ($newArrivals as $review)
-                        <div class="col-12 col-md-6 col-lg-4">
-                        <a class="listview__item" href="{{ route('レビュー', ['review' => $review->id]) }}">
-                            <div>
-                                @if($review->is_spoiler == 1)
-                                    <div class="mb-1">
-                                        <span class="badge badge-pill badge-danger">ネタバレあり！</span><br>
-                                    </div>
-                                @endif
-                                <div>{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }} {{ $review->soft->name }}</div>
-                                <div class="d-flex">
-                                    <div class="package-image-review-list mr-1">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
-                                    <div class="review-point-list mr-2">{{ $review->calcPoint() }}</div>
-                                    <div>
-                                        <p class="mb-1">{{ $review->user->name }}さん</p>
-                                        <p class="mb-1">{{ format_date(strtotime($review->post_at)) }}</p>
+                        <div class="col-12 col-sm-6 col-lg-4 mb-5 pr-5">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="review-list-title"><a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a></div>
+                                    <div class="d-flex">
+                                        <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
+                                        <div>
+                                            <div class="d-flex">
+                                                <div class="review-list-point mr-1">{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</div>
+                                                <div class="review-list-point mr-2">-{{ $review->calcPoint() }}</div>
+                                                @if($review->is_spoiler == 1)
+                                                <div>
+                                                    <span class="badge badge-pill badge-danger">ネタバレ</span>
+                                                </div>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <p class="mb-0 force-break one-line"><small>{{ $review->user->name }}さん</small></p>
+                                                <p class="mb-0"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </a>
                         </div>
                     @endforeach
                 </div>
