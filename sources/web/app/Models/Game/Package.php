@@ -316,7 +316,7 @@ SQL;
     public static function getNewGame()
     {
         $appendQuery = ' AND is_adult = 0';
-        if (Auth::check() && Auth::user()->is_adult == 1) {
+        if (Auth::check() && Auth::user()->adult == 1) {
             $appendQuery = '';
         }
 

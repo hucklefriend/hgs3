@@ -170,7 +170,7 @@
                             <div class="swiper-slide">
                                 <div class="text-center">
                                     <a href="{{ $newGame->shop_url }}" target="_blank" class="text-center">
-                                        <img src="{{ $newGame->small_image_url }}">
+                                        <img data-normal="{{ $newGame->small_image_url }}">
                                         <p class="force-break new-game-title">{{ $newGame->name }}</p>
                                     </a>
                                 </div>
@@ -268,7 +268,7 @@
                             {{ $softNum }}個のホラーゲームを扱っています。<br>
                         </p>
                         <div class="tags__body">
-                            <a href="{{ route('ゲーム一覧') }}">ゲーム一覧へ</a>
+                            <a href="{{ route('ゲーム一覧') }}">&gt;&gt; ゲーム一覧へ &lt;&lt;</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
@@ -284,7 +284,7 @@
                             @endif
                         </p>
                         <div class="tags__body">
-                            <a href="{{ route('レビュートップ') }}">レビューへ</a>
+                            <a href="{{ route('レビュートップ') }}">&gt;&gt; レビューへ &lt;&lt;</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
@@ -303,7 +303,7 @@
                             サイトをお持ちの方は、ぜひ登録していってください。
                         </p>
                         <div class="tags__body">
-                            <a href="{{ route('サイトトップ') }}">サイトへ</a>
+                            <a href="{{ route('サイトトップ') }}">&gt;&gt; サイトへ &lt;&lt;</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 top-item d-none">

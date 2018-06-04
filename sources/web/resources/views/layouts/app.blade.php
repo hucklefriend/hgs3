@@ -78,15 +78,15 @@
                 </div>
 
                 <ul class="top-nav">
-
                     <li class="hidden-xs-down">
                         <a href="{{ route('ゲーム一覧') }}">ゲーム</a>
                     </li>
-
+                    <li class="hidden-xs-down">
+                        <a href="{{ route('レビュートップ') }}">レビュー</a>
+                    </li>
                     <li class="hidden-xs-down">
                         <a href="{{ route('サイトトップ') }}">サイト</a>
                     </li>
-
                     @if (is_admin())
                         <li class="hidden-xs-down">
                             <a href="{{ route('管理メニュー') }}">管理</a>
@@ -108,6 +108,7 @@
 
                         <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-112px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
                             <a href="{{ route('ゲーム一覧') }}" class="dropdown-item">ゲーム</a>
+                            <a href="{{ route('レビュートップ') }}" class="dropdown-item">レビュー</a>
                             <a href="{{ route('サイトトップ') }}" class="dropdown-item">サイト</a>
                             @if (Auth::check())
                                 @if (is_admin())
@@ -128,9 +129,8 @@
             </section>
 
             <footer class="footer">
-                @if (in_array(env('APP_ENV'), ['production', 'staging']))
-                    @include('common.footerSponser')
-                @endif
+                @include('common.footerSponser')
+
                 <div style="overflow: hidden" class="mb-2">@yield('breadcrumb')</div>
                 <div style="white-space: nowrap;" class="text-right">
                     <a href="{{ route('プライバシーポリシー') }}" class="align-self-center">プライバシーポリシー</a>
