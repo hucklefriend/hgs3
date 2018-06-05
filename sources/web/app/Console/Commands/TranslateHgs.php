@@ -12,6 +12,7 @@ use Hgs3\Models\VersionUp\FromHgs;
 use Hgs3\Models\VersionUp\Master;
 use Illuminate\Console\Command;
 use Hgs3\Models\VersionUp\Database;
+use Illuminate\Support\Facades\DB;
 
 class TranslateHgs extends Command
 {
@@ -47,8 +48,15 @@ class TranslateHgs extends Command
      */
     public function handle()
     {
-        User::deleteTestData();
+        DB::beginTransaction();
 
-        FromHgs::translate();
+        try {
+            User::deleteTestData();
+            FromHgs::translate();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
     }
 }

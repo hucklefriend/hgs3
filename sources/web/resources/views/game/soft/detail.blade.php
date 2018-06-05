@@ -186,8 +186,7 @@
                         @if (empty($site))
                             <p>サイトは登録されていません。</p>
                         @else
-                            <h6>ランダムピックアップ！</h6>
-
+                            <div class="site-random-pickup">ランダムピックアップ！</div>
                             <div class="no-padding-site-normal">
                                 @include('site.common.normal', ['s' => $site, 'noUser' => true])
                             </div>

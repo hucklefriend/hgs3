@@ -16,6 +16,9 @@
 
                         @if ($total !== null)
                             <div class="d-flex">
+                                <div class="review-point mr-2">
+                                    {{ \Hgs3\Constants\Review\Fear::$face[intval(round($total->fear))] }}
+                                </div>
                                 <div class="review-point">
                                     {{ round($total->point, 1) }}
                                 </div>
@@ -74,43 +77,47 @@
             <div class="col-12 col-md-6 col-lg-7">
                 <div class="card card-hgn">
                     <div class="card-body">
-                        @auth
-                        <p>
-
-                        </p>
-                        @endif
+                        ここにはランキング関係の情報を出す
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card card-hgn">
-            <div class="card-body">
-                <h4 class="card-title">みんなのレビュー</h4>
+        <div class="row">
+            <div class="col-12 col-sm-9 col-md-9 col-lg-8 col-xl-7">
+                <div class="card card-hgn">
+                    <div class="card-body">
+                        <h4 class="card-title">みんなのレビュー</h4>
 
-                @foreach ($reviews as $review)
-                    <div class="mb-5 d-flex justify-content-between">
-                        <div class="d-flex">
-                            <span class="review-point-list">{{ $review->point }}</span>
-                            <div class="ml-3">
-                                <div>
-                                    {{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}{{ $review->fear * \Hgs3\Constants\Review\Fear::POINT_RATE }} +
-                                    <i class="far fa-thumbs-up"></i>{{ ($review->good_tag_num + $review->very_good_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE }} -
-                                    <i class="far fa-thumbs-down"></i>{{ ($review->bad_tag_num + $review->very_bad_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE }}
-                                </div>
-                                <div class="d-flex flex-wrap">
-                                    <span class="mr-3"><i class="far fa-user"></i> {{ $users[$review->user_id]->name }}</span>
-                                    <span class="mr-3"><i class="far fa-calendar-alt"></i> {{ format_date(strtotime($review->post_at)) }}</span>
+                        @foreach ($reviews as $review)
+                            <div class="mb-5">
+                                @if($review->is_spoiler == 1)
+                                    <span class="badge badge-sm badge-danger">ネタバレあり！</span>
+                                @endif
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <div class="my-1" style="font-size: 1.3rem;">{{ \Hgs3\Constants\Review\Fear::$data[$review->fear] }}</div>
+                                        <div class="d-flex">
+                                            <div class="review-list-point mr-2">{{ $review->calcPoint() }}</div>
+                                            <div>
+                                                <p class="mb-0"><small><i class="far fa-user"></i> {{ $users[$review->user_id]->name }}</small></p>
+                                                <p class="mb-0"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-outline-dark border-0 d-block">
+                                            <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="align-self-center ml-5">
-                            <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                @endforeach
+                        @endforeach
 
-                @include('common.pager', ['pager' => $reviews])
+                        @include('common.pager', ['pager' => $reviews])
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

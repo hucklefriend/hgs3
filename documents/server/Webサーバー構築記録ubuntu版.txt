@@ -13,13 +13,9 @@ VM wareのフォルダ共有設定をする
 
 $ sudo ln -s /mnt/hgfs/hgn /var/hgn
 
+※2018.6.5 このやり方で共有できなくなってる？
 
-○以下、VirtualBox環境のみ
 
-VirtualBox上でのフォルダ共有設定をする
-名称をhgnとした場合
-
-$ sudo ln -s /mnt/hgfs/hgn /var/hgn
 
 
 ○ Apache
@@ -31,7 +27,7 @@ $ sudo apt-get install apache2
 
 sudo apt-get install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo add-apt-repository 'deb [arch=amd64,i386] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.2/ubuntu artful main'
+sudo add-apt-repository 'deb [arch=amd64] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.2/ubuntu bionic main'
 sudo apt update
 sudo apt install mariadb-server-10.2
 
@@ -51,6 +47,7 @@ CREATE DATABASE hgs3 CHARACTER SET utf8mb4;
 CREATE DATABASE hgs2;
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON `hgs3`.* TO 'hgs'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, CREATE VIEW, EVENT, TRIGGER, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON `hgs2`.* TO 'hgs'@'localhost';
+
 
 -- 本番用
 CREATE USER 'hgs'@'localhost' IDENTIFIED BY 'パスワード';
@@ -154,8 +151,7 @@ https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
 echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
 sudo apt-get update
-sudo apt-get install mongodb-org
-sudo apt-get install php-dev pkg-config libssl-dev libsslcommon2-dev php-mongodb
+sudo apt-get install mongodb-org php-dev pkg-config libssl-dev php-mongodb
 sudo service mongod start
 sudo service apache2 restart
 
@@ -168,13 +164,18 @@ mongo hgs3
 db.createCollection('game_timeline');
 db.createCollection('site_timeline');
 db.createCollection('follow_user_timeline');
-db.createCollection('myself_timeline');
+db.createCollection('to_me_timeline');
 db.createCollection('user_action_timeline');
 db.createCollection('site_footprint');
 db.createCollection('new_information');
 
-db.new_information.createIndex({time: -1});
+db.site_timeline.createIndex({site_id: 1, time: -1});
+db.game_timeline.createIndex({soft_id: 1, time: -1});
+db.follow_user_timeline.createIndex({user_id: 1, time: -1});
+db.to_me_timeline.createIndex({user_id: 1, time: -1});
 db.user_action_timeline.createIndex({user_id: 1, time: -1});
+db.site_footprint.createIndex({site_id: 1, time: -1});
+db.new_information.createIndex({time: -1});
 
 
 ※データ削除

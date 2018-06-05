@@ -356,4 +356,9 @@ class User extends Authenticatable
             }
         }
     }
+
+    public function isAdult()
+    {
+        return $this->adult == 1;
+    }
 }

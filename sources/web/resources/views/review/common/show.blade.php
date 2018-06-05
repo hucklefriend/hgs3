@@ -3,21 +3,24 @@
         <div class="card card-hgn">
             <div class="card-body">
                 <div class="d-flex">
+                    <div class="review-point mr-2">
+                        {{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}
+                    </div>
                     <div class="review-point">
                         {{ $review->calcPoint() }}
                     </div>
 
                     <table class="review-point-table">
                         <tr>
-                            <th>怖さ{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</th>
+                            <th>{{ \Hgs3\Constants\Review\Fear::$face[\Hgs3\Constants\Review\Fear::getMaxPoint()] }}怖さ</th>
                             <td class="text-right">{{ $review->fear * \Hgs3\Constants\Review\Fear::POINT_RATE }}pt</td>
                         </tr>
                         <tr>
-                            <th>良い点<i class="far fa-thumbs-up"></i></th>
+                            <th><i class="far fa-thumbs-up"></i>良い点</th>
                             <td class="text-right">{{ (count($review->getGoodTags()) + count($review->getVeryGoodTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt</td>
                         </tr>
                         <tr>
-                            <th>悪い点<i class="far fa-thumbs-down"></i></th>
+                            <th><i class="far fa-thumbs-down"></i>悪い点</th>
                             <td class="text-right">-{{ (count($review->getBadTags()) + count($review->getVeryBadTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt</td>
                         </tr>
                     </table>
@@ -96,7 +99,7 @@
 
     <div class="card card-hgn">
         <div class="card-body">
-            <h5 class="card-title">{{ Hgs3\Constants\Review\Fear::$data[$review->fear] }}</h5>
+            <h5 class="card-title">怖さ：{{ Hgs3\Constants\Review\Fear::$data[$review->fear] }}</h5>
 
             <p class="mb-0 review-text">
                 @empty($review->fear_comment)
@@ -111,14 +114,13 @@
     <div class="card card-hgn">
         <div class="card-body">
             <h5 class="card-title">
-                <i class="far fa-thumbs-up"></i>良い点
-                <span class="card-title-sub"><i class="far fa-thumbs-up"></i>付きタグは特に良い点</span>
+                <i class="far fa-thumbs-up"></i>良い点：{{ (count($review->getGoodTags()) + count($review->getVeryGoodTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt
             </h5>
 
             @empty($review->getGoodTags())
                 <p>良い点はありません。</p>
             @else
-                <div class="d-flex flex-wrap mb-2">
+                <div class="d-flex flex-wrap">
                     @foreach ($review->getGoodTags() as $tagId)
                         <span class="tag simple mr-2 mb-2">
                                 {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
@@ -128,9 +130,12 @@
                             </span>
                     @endforeach
                 </div>
+                <div>
+                    <small><i class="far fa-thumbs-up"></i>付きタグは特に良い点</small>
+                </div>
             @endempty
 
-            <p class="mb-0 review-text">
+            <p class="mb-0 review-text mt-4">
                 @empty($review->good_comment)
                     良い点に関するコメントはありません。
                 @else
@@ -143,13 +148,12 @@
     <div class="card card-hgn">
         <div class="card-body">
             <h5 class="card-title">
-                <i class="far fa-thumbs-down"></i> 悪い点
-                <span class="card-title-sub"><i class="far fa-thumbs-down"></i>付きタグは特に悪い点</span>
+                <i class="far fa-thumbs-down"></i> 悪い点：-{{ (count($review->getBadTags()) + count($review->getVeryBadTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt
             </h5>
                 @empty($review->getBadTags())
                     <p>悪い点はありません。</p>
                 @else
-                <div class="d-flex flex-wrap mb-2">
+                <div class="d-flex flex-wrap">
                     @foreach ($review->getBadTags() as $tagId)
                     <span class="tag simple mr-2 mb-2">
                         {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
@@ -159,9 +163,12 @@
                     </span>
                     @endforeach
                 </div>
+                <div>
+                    <small><i class="far fa-thumbs-down"></i>付きタグは特に悪い点</small>
+                </div>
                 @endempty
 
-            <p class="mb-0 review-text">
+            <p class="mb-0 review-text mt-4">
                 @empty($review->bad_comment)
                     悪い点に関するコメントはありません。
                 @else

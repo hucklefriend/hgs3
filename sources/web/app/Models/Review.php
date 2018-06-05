@@ -546,7 +546,7 @@ SQL;
         if (count($softs) < 20) {
             $getNum = 20 - count($softs);
 
-            $sql = 'SELECT soft_id FROM review_totals ORDER BY num DESC LIMIT ' . $getNum;
+            $sql = 'SELECT soft_id FROM review_totals ORDER BY review_num DESC LIMIT ' . $getNum;
             $appendSoftIds = DB::select($sql);
 
             $appendSofts = DB::table('game_softs')

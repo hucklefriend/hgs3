@@ -15,6 +15,9 @@ use Hgs3\Models\Orm;
 
 class FromHgs
 {
+    /**
+     * 移行
+     */
     public static function translate()
     {
         $sql =<<< SQL
@@ -23,25 +26,15 @@ WHERE id <> 254
 SQL;
 
         $hgsUsers = DB::select($sql);
+        foreach ($hgsUsers as $hgsUser) {
+            // HGNにユーザーとして登録
+            $user = self::register($hgsUser);
 
-        DB::beginTransaction();
-
-        try {
-            foreach ($hgsUsers as $hgsUser) {
-                // HGNにユーザーとして登録
-                $user = self::register($hgsUser);
-
-                // サイト情報を取得
-                $hgsSites = self::getSites($hgsUser->id);
-                foreach ($hgsSites as $hgsSite) {
-                    self::saveSite($user, $hgsSite);
-                }
+            // サイト情報を取得
+            $hgsSites = self::getSites($hgsUser->id);
+            foreach ($hgsSites as $hgsSite) {
+                self::saveSite($user, $hgsSite);
             }
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
         }
     }
 
@@ -150,11 +143,14 @@ SQL;
             }
         }
 
-
         $site->save();
 
         Site::saveHandleSofts($site, $handleGames);     // 取扱いゲームの保存
         Site::saveSearchIndex($site, $handleGames);     // 検索インデックス更新
+
+        DB::table('site_search_indices')
+            ->where('site_id', $site->id)
+            ->update(['updated_timestamp' => $site->updated_timestamp]);
 
         $sqlDailyAccess =<<< SQL
 INSERT INTO site_daily_accesses (site_id, `date`, in_count, out_count, created_at, updated_at)

@@ -199,7 +199,7 @@ FROM (
   LEFT OUTER JOIN game_platforms plt ON pkg.platform_id = plt.id
   LEFT OUTER JOIN game_companies com ON pkg.company_id = com.id
 ORDER BY
-  pkg.release_int, pkg.platform_id, pkg.id
+  pkg.release_int DESC, pkg.platform_id, pkg.id
 SQL;
 
         $data = DB::select($sql);
