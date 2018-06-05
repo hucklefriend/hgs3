@@ -46,51 +46,6 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/admin/review/url', 'Review\ApprovalController@index')->name('レビューURL判定');
     Route::patch('/admin/review/url/ok', 'Review\ApprovalController@ok')->name('レビューURL OK');
     Route::patch('/admin/review/url/ng', 'Review\ApprovalController@ng')->name('レビューURL NG');
-
-
-    Route::get('/test', 'TopController@test');
-});
-
-// エディターのみ
-Route::group(['middleware' => ['auth', 'can:editor']], function () {
-    // マスター
-    Route::get('/master', 'Master\TopController@index')->name('マスターメニュー');
-
-    // ゲーム会社
-    Route::get('/master/game_company', 'Master\GameCompanyController@index')->name('ゲーム会社マスター');
-    Route::get('/master/game_company/edit/{gameCompany}', 'Master\GameCompanyController@edit')->name('ゲーム会社編集');
-    Route::patch('/master/game_company/edit/{gameCompany}', 'Master\GameCompanyController@update')->name('ゲーム会社編集処理');
-
-    // ゲーム登録・編集
-    Route::get('/game/soft/add', 'Game\SoftController@add')->name('ゲームソフト登録');
-    Route::post('/game/soft/add', 'Game\SoftController@insert')->name('ゲームソフト登録処理');
-    Route::get('/game/soft/edit/{soft}', 'Game\SoftController@edit')->name('ゲームソフト編集');
-    Route::patch('/game/soft/edit/{soft}', 'Game\SoftController@update')->name('ゲームソフト編集処理');
-
-    // パッケージ登録・編集
-    Route::get('/game/soft/package/add/{soft}', 'Game\PackageController@add')->name('パッケージ登録');
-    Route::post('/game/soft/package/add/{soft}', 'Game\PackageController@insert')->name('パッケージ登録処理');
-    Route::get('/game/soft/package/edit/{soft}/{package}', 'Game\PackageController@edit')->name('パッケージ編集');
-    Route::patch('/game/soft/package/edit/{soft}/{package}', 'Game\PackageController@update')->name('パッケージ編集処理');
-    Route::delete('/game/soft/package/{package}', 'Game\PackageController@delete')->name('パッケージ削除処理');
-
-    // ゲーム会社登録・編集
-    Route::get('/game/company/add', 'Game\CompanyController@add')->name('ゲーム会社登録');
-    Route::post('/game/company/add', 'Game\CompanyController@insert')->name('ゲーム会社登録処理');
-    Route::get('/game/company/edit/{company}', 'Game\CompanyController@edit')->name('ゲーム会社編集');
-    Route::patch('/game/company/edit/{company}', 'Game\CompanyController@update')->name('ゲーム会社編集処理');
-
-    // プラットフォーム
-    Route::get('/game/platform/add', 'Game\PlatformController@add')->name('プラットフォーム登録');
-    Route::post('/game/platform/add', 'Game\PlatformController@insert')->name('プラットフォーム登録処理');
-    Route::get('/game/platform/edit/{platform}', 'Game\PlatformController@edit')->name('プラットフォーム編集');
-    Route::patch('/game/platform/edit/{platform}', 'Game\PlatformController@update')->name('プラットフォーム編集処理');
-
-    // シリーズ
-    Route::get('/game/series/add', 'Game\SeriesController@add')->name('シリーズ登録');
-    Route::post('/game/series/add', 'Game\SeriesController@insert')->name('シリーズ登録処理');
-    Route::get('/game/series/edit/{series}', 'Game\SeriesController@edit')->name('シリーズ編集');
-    Route::patch('/game/series/edit/{series}', 'Game\SeriesController@update')->name('シリーズ編集処理');
 });
 
 
@@ -140,17 +95,9 @@ Route::group(['middleware' => ['auth']], function () {
     // サイト
     Route::post('/site/good/{site}', 'Site\GoodController@good')->name('サイトいいね');
     Route::delete('/site/good/{site}', 'Site\GoodController@cancel')->name('サイトいいねキャンセル');
-    Route::get('/site/good_history/{site}', 'Site\GoodController@history');
-    Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@site');
-    Route::get('/site/update_history/{site}', 'Site\SiteController@updateHistory')->name('サイト更新履歴');
     
     // マイページ
     Route::get('/mypage', 'User\MyPageController@index')->name('マイページ');
-    Route::get('/mypage/favorite_soft', 'User\FavoriteSoftController@myself');
-    Route::get('/mypage/favorite_site', 'User\FavoriteSiteController@myself');
-    Route::get('/mypage/follow', 'User\MyPageController@follow');
-    Route::get('/mypage/follower', 'User\MyPageController@follower');
-    Route::get('/mypage/review', 'User\MyPageController@review');
 
     // ユーザー設定
     Route::get('/user/setting', 'User\SettingController@index')->name('ユーザー設定');
@@ -187,9 +134,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->name('お気に入りゲーム登録処理');
     Route::delete('/user/favorite_soft', 'User\FavoriteSoftController@remove')->name('お気に入りゲーム削除処理');
 
-    Route::post('/user/played_soft/{soft}', 'User\PlayedSoftController@add');
-    Route::put('/user/played_soft/{upg}', 'User\PlayedSoftController@edit');
-    Route::delete('user/played_soft/{upg}', 'User\PlayedSoftController@remove');
     Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add')->name('お気に入りサイト登録処理');
     Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove')->name('お気に入りサイト削除処理');
     Route::post('/user/follow', 'User\FollowController@add')->name('フォロー登録');
@@ -251,6 +195,7 @@ Route::get('/site/soft/{soft}', 'Site\SiteController@soft')->name('ソフト別�
 Route::get('/site/user/{showId}', 'Site\SiteController@user')->name('ユーザーサイト一覧');
 Route::get('/site/detail/{site}', 'Site\SiteController@detail')->name('サイト詳細');
 Route::get('/site/go/{site}', 'Site\SiteController@go')->name('サイト遷移')->middleware(['goSite']);
+Route::get('/site/update_history/{site}', 'Site\SiteController@updateHistory')->name('サイト更新履歴');
 
 // ゲーム会社
 Route::get('/game/company', 'Game\CompanyController@index')->name('ゲーム会社一覧');
@@ -266,15 +211,6 @@ Route::get('/game/series/{series}', 'Game\SeriesController@detail')->name('シ�
 
 // お気に入りゲーム
 Route::get('/game/favorite/{soft}', 'Game\FavoriteSoftController@index')->name('お気に入りゲーム登録ユーザー一覧');
-
-// 遊んだゲーム
-Route::get('game/played_user/{soft}', 'Game\PlayedUserController@index');
-Route::get('user/played_soft/{user}', 'User\PlayedSoftController@index');
-
-// お気に入りサイト
-Route::get('/site/favorite/{site}', 'Site\FavoriteSiteController@index');
-
-// フォロー
 
 // SNS
 Route::get('/social/twitter/callback', 'Social\TwitterController@callback')->name('Twitterコールバック');
@@ -292,3 +228,6 @@ Route::get('/new_information', 'TopController@newInformation')->name('新着情�
 Route::get('/about', 'TopController@about')->name('当サイトについて');
 Route::get('/privacy', 'TopController@privacy')->name('プライバシーポリシー');
 Route::get('/hgs', 'TopController@hgs')->name('HGSユーザーへ');
+
+
+Route::get('/test', 'TopController@test');

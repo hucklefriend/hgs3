@@ -64,6 +64,7 @@ class Collection
         $db->createCollection('user_action_timeline');
         $db->createCollection('site_footprint');
         $db->createCollection('site_timeline');
+        $db->createCollection('new_information');
 
         echo 'create indexes'.PHP_EOL;
         $db->favorite_soft_timeline->createIndex([
@@ -95,6 +96,9 @@ class Collection
             'time'    => -1,
         ]);
         $db->site_timeline->createIndex([
+            'time' => -1
+        ]);
+        $db->new_information->createIndex([
             'time' => -1
         ]);
     }

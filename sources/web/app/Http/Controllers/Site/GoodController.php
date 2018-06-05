@@ -19,6 +19,7 @@ class GoodController extends Controller
      *
      * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function good(Orm\Site $site)
     {
@@ -33,6 +34,7 @@ class GoodController extends Controller
      *
      * @param Orm\Site $site
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function cancel(Orm\Site $site)
     {
@@ -40,22 +42,5 @@ class GoodController extends Controller
         $good->cancelGood($site, Auth::user());
 
         return redirect()->back();
-    }
-
-    /**
-     * いいね履歴
-     *
-     * @param Orm\Site $site
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function history(Orm\Site $site)
-    {
-        // いいね履歴は登録者本人しか確認できない
-        // ただしH.G.N.管理人は除く
-        if ($site->user_id != Auth::id() && !UserRole::isAdmin()) {
-            return $this->forbidden(['site_id' => $site->id]);
-        }
-
-        return view('site.goodHistory', ['site' => $site]);
     }
 }

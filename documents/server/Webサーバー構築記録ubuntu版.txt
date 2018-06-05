@@ -159,32 +159,6 @@ sudo service apache2 restart
 sudo systemctl enable mongod.service
 
 
-
-mongo hgs3
-db.createCollection('game_timeline');
-db.createCollection('site_timeline');
-db.createCollection('follow_user_timeline');
-db.createCollection('to_me_timeline');
-db.createCollection('user_action_timeline');
-db.createCollection('site_footprint');
-db.createCollection('new_information');
-
-db.site_timeline.createIndex({site_id: 1, time: -1});
-db.game_timeline.createIndex({soft_id: 1, time: -1});
-db.follow_user_timeline.createIndex({user_id: 1, time: -1});
-db.to_me_timeline.createIndex({user_id: 1, time: -1});
-db.user_action_timeline.createIndex({user_id: 1, time: -1});
-db.site_footprint.createIndex({site_id: 1, time: -1});
-db.new_information.createIndex({time: -1});
-
-
-※データ削除
-db.timeline.remove({});
-db.user_action_timeline.remove({});
-db.site_footprint.remove({});
-
-
-
 ○16.04からアップグレードできない場合の対処
 After changing the setting in /etc/update-manager/releases-upgrades from lts to normal, you need to run sudo apt-get update.
 
