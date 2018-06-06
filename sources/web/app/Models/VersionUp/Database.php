@@ -29,7 +29,7 @@ class Database
         $this->setOriginalPackageId();
 */
         echo 'generate password'.PHP_EOL;
-        if (env('APP_ENV') == 'local') {
+        if (env('APP_ENV') != 'production') {
             $password = 'huckle';
         } else {
             $password = str_random(10);

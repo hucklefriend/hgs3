@@ -49,7 +49,7 @@ class Init extends Command
         $db->versionUp();
 
         // マスターデータが更新されたら、新しいSQLを生成して日付を変える
-        Master::importSql(20180401);
+        //Master::importSql(20180401);
 
         //Collection::create();
     }

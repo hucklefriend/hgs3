@@ -20,7 +20,6 @@ class Collection
     private function __construct()
     {
         $client = new \MongoDB\Client("mongodb://localhost:27017");
-
         if (env('APP_ENV') == 'staging') {
             self::$db = $client->hgs3_stg;
         } else {
@@ -47,8 +46,8 @@ class Collection
      */
     public static function create()
     {
+        // TODO .envに書く
         $client = new \MongoDB\Client("mongodb://localhost:27017");
-
         $dbName = env('APP_ENV') == 'staging' ? 'hgs3_stg' : 'hgs3';
 
         echo 'drop hgs3'.PHP_EOL;
