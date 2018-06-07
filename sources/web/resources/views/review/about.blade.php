@@ -1,16 +1,7 @@
 @extends('layouts.app')
 
 @section('title')レビューについて@endsection
-
-@if($from == 'top')
-    @section('global_back_link'){{ route('レビュートップ') }}@endsection
-@elseif($from == 'input')
-    @section('global_back_link'){{ route('レビュー入力', ['soft' => $soft]) }}@endsection
-@elseif ($from == 'detail')
-    @section('global_back_link'){{ route('レビュー', ['soft' => $soft]) }}@endsection
-@elseif ($from == 'soft')
-    @section('global_back_link'){{ route('ソフト別レビュー一覧', ['soft' => $soft]) }}@endsection
-@endif
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::about() }}@endsection
 
 @section('content')
     <div class="content__inner">

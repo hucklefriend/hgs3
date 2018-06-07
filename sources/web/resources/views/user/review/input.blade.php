@@ -12,7 +12,7 @@
         </header>
 
         <div class="@if ($draft->isDefault) mb-5 @endif alert alert-warning alert-warning-hgn" style="border: none;">
-            入力される前に、<a href="{{ route('レビューについて') }}?from=input&soft={{ $soft->id }}">レビューについて</a>を一度お読みください。
+            入力される前に、<a href="{{ route('レビューについて') }}">レビューについて</a>を一度お読みください。
         </div>
 
         @if (!$draft->isDefault)

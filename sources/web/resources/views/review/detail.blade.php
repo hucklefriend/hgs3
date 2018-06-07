@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title'){{ $soft->name }}のレビュー@endsection
-@section('global_back_link'){{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::review($review) }}@endsection
 
 @section('content')
     <div class="content__inner">

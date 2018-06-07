@@ -114,12 +114,6 @@ class ReviewController extends Controller
      */
     public function about()
     {
-        $from = Input::get('from', 'top');
-        $soft = intval(Input::get('soft', 0));
-
-        return view('review.about', [
-            'from' => $from,
-            'soft' => $soft
-        ]);
+        return view('review.about');
     }
 }

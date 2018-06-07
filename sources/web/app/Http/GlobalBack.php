@@ -411,14 +411,98 @@ class GlobalBack
         }
     }
 
+    /**
+     * レビュー
+     *
+     * @param Orm\Review $review
+     * @return string
+     */
     public static function review(Orm\Review $review)
     {
-        $before = self::before();
+        $before = self::beforeHas([
+            PageId::NEW_INFORMATION,
+            PageId::REVIEW_BY_SOFT,
+            PageId::USER_TIMELINE,
+            PageId::USER_REVIEW,
+            PageId::FRIEND_TIMELINE,
+            PageId::FRIEND_REVIEW
+        ]);
 
         self::push(PageId::REVIEW, $review->id);
 
         if ($before === false) {
-            return self::route('トップ');
+            return self::route('レビュートップ');
+        } else {
+            return $before[1];
+        }
+    }
+
+    /**
+     * 新着レビューリスト
+     *
+     * @return string
+     */
+    public static function reviewNewList()
+    {
+        self::push(PageId::REVIEW_NEW_LIST);
+        return self::route('レビュートップ');
+    }
+
+    /**
+     * ゲーム別レビュー一覧
+     *
+     * @param Orm\GameSoft $soft
+     * @return string
+     */
+    public static function reviewBySoft(Orm\GameSoft $soft)
+    {
+        $before = self::beforeHas([PageId::GAME_DETAIL]);
+
+        self::push(PageId::REVIEW_BY_SOFT, $soft->id);
+
+        if ($before === false) {
+            return self::route('レビュートップ');
+        } else {
+            return $before[1];
+        }
+    }
+
+    /**
+     * レビュー入力
+     *
+     * @param Orm\GameSoft $soft
+     * @return string
+     */
+    public static function reviewInput(Orm\GameSoft $soft)
+    {
+        $before = self::beforeHas([PageId::REVIEW_BY_SOFT]);
+
+        self::push(PageId::REVIEW_INPUT, $soft->id);
+
+        if ($before === false) {
+            return self::route('レビュートップ');
+        } else {
+            return $before[1];
+        }
+    }
+
+    /**
+     * レビューについて
+     *
+     * @return string
+     */
+    public static function reviewAbout()
+    {
+        $before = self::beforeHas([
+            PageId::REVIEW_INPUT,
+            PageId::REVIEW,
+            PageId::REVIEW_BY_SOFT
+        ]);
+
+        self::push(PageId::REVIEW_ABOUT);
+
+        if ($before === false) {
+            return self::route('レビュートップ');
         } else {
             return $before[1];
         }

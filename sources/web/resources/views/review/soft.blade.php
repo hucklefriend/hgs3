@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title'){{ $soft->name }}のレビュー@endsection
-@section('global_back_link'){{ route('ゲーム詳細', ['soft' => $soft->id]) }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::reviewBySoft($soft) }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -42,7 +42,7 @@
                             <p class="text-muted">
                                 <small>
                                     怖さを基準点に、良い点を足し、悪い点を引いて計算しています。<br>
-                                    詳しくは<a href="{{ route('レビューについて') }}?from=soft&soft={{ $soft->id }}">レビューについて</a>をご確認ください。
+                                    詳しくは<a href="{{ route('レビューについて') }}">レビューについて</a>をご確認ください。
                                 </small>
                             </p>
                         @else
