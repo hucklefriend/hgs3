@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')お知らせ詳細@endsection
-@section('global_back_link'){{ route('お知らせ') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('お知らせ') }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -27,14 +27,4 @@
             @endif
         </div>
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('お知らせ') }}">お知らせ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">お知らせ内容</li>
-        </ol>
-    </nav>
 @endsection

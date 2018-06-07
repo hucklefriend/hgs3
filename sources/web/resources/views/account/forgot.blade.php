@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')パスワード再発行@endsection
-@section('global_back_link'){{ route('トップ') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('トップ') }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -30,13 +30,4 @@
             <button type="submit" class="btn btn-primary">パスワード再設定メール送信</button>
         </form>
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">パスワード再設定</li>
-        </ol>
-    </nav>
 @endsection

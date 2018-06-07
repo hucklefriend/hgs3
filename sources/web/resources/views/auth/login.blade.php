@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')ログイン@endsection
-@section('global_back_link'){{ route('トップ') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('トップ') }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -83,7 +83,17 @@
             </div>
         </div>
     </div>
+    <script>
+        $(function (){
+            $('#global_back').click(function (e){
+                e.preventDefault();
 
+                history.back();
+
+                return false;
+            });
+        });
+    </script>
 @endsection
 
 @section('breadcrumb')

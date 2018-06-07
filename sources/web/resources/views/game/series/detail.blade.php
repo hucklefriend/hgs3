@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')シリーズ@endsection
-@section('global_back_link'){{ route('シリーズ一覧') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::seriesDetail($series) }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -37,14 +37,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('シリーズ一覧') }}">シリーズ一覧</a></li>
-            <li class="breadcrumb-item active" aria-current="page">詳細</li>
-        </ol>
-    </nav>
 @endsection

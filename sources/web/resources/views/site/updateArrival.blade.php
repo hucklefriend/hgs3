@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')更新サイト@endsection
-@section('global_back_link'){{ route('サイトトップ') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('サイトトップ') }}@endsection
 
 @section('content')
     <div class="content__inner">

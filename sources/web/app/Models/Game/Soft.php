@@ -123,13 +123,9 @@ SQL;
             $data['site'] = null;
         }
 
-        // 遊んだゲーム
-        $data['playedUsers'] = [];//self::getPlayedUsers($soft->id);
-
         if (Auth::check()) {
             $fav = new FavoriteSoft();
             $data['isFavorite'] = $fav->isFavorite(Auth::id(), $soft->id);
-            $data['playedGame'] = Orm\UserPlayedSoft::findByUserAndGame(Auth::id(), $soft->id);
         }
 
         $data['users'] = User::getHash(array_merge(

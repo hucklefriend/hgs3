@@ -64,7 +64,7 @@
             <header class="header">
                 <div class="global-link">
                     @if (View::hasSection('global_back_link'))
-                        <a href="@yield('global_back_link')" class="d-flex justify-content-center">
+                        <a href="@yield('global_back_link')" class="d-flex justify-content-center" id="global_back">
                             <i class="fas fa-angle-left align-self-center"></i>
                         </a>
                     @endif
@@ -132,7 +132,7 @@
             <footer class="footer">
                 @include('common.footerSponser')
 
-                <div style="overflow: hidden" class="mb-2">@yield('breadcrumb')</div>
+                {{-- <div style="overflow: hidden" class="mb-2">@yield('breadcrumb')</div> --}}
                 <div style="white-space: nowrap;" class="text-right">
                     <a href="{{ route('プライバシーポリシー') }}" class="align-self-center">プライバシーポリシー</a>
                     <span class="mx-2">・</span>

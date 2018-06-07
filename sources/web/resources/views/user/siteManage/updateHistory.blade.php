@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title')サイト登録@endsection
+@section('title')サイト更新履歴@endsection
 @section('global_back_link'){{ route('サイト詳細', ['site' => $site->id]) }}@endsection
 
 @section('content')
@@ -51,15 +51,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイト詳細', ['site' => $site->id]) }}">サイト詳細</a></li>
-            <li class="breadcrumb-item active" aria-current="page">更新履歴登録</li>
-        </ol>
-    </nav>
 @endsection

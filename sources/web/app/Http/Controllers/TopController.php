@@ -5,6 +5,8 @@
 
 namespace Hgs3\Http\Controllers;
 
+use Hgs3\Constants\PageId;
+use Hgs3\Http\GlobalBack;
 use Hgs3\Models\Game\Package;
 use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Orm;
@@ -25,6 +27,8 @@ class TopController extends Controller
      */
     public function index()
     {
+        GlobalBack::clear();
+
         $notices = Orm\SystemNotice::select(['id', 'title', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
             ->where('top_start_at', '<=', DB::raw('NOW()'))
             ->where('top_end_at', '>=', DB::raw('NOW()'))
@@ -62,6 +66,8 @@ class TopController extends Controller
      */
     public function newInformation(Request $request)
     {
+        GlobalBack::newInformation();
+
         $page = intval($request->query('page', 1));
         $items = NewInformation::getPage($page, 30);
         $num = NewInformation::getNum();

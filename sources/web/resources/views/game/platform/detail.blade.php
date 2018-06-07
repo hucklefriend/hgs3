@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')プラットフォーム@endsection
-@section('global_back_link'){{ route('プラットフォーム一覧') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::platformDetail($platform) }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -43,19 +43,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 @endsection
 
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('プラットフォーム一覧') }}">プラットフォーム一覧</a></li>
-            <li class="breadcrumb-item active" aria-current="page">詳細</li>
-        </ol>
-    </nav>
-@endsection

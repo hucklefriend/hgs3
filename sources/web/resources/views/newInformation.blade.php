@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')新着情報@endsection
-@section('global_back_link'){{ route('トップ') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::newInformation() }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -24,14 +24,6 @@
         @endforeach
 
         @include('common.pager', ['pager' => $newInfo])
+        </div>
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">新着情報</li>
-        </ol>
-    </nav>
 @endsection

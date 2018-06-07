@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title')ゲーム@endsection
-@section('global_back_link'){{ route('トップ') }}@endsection
+@section('title')ゲーム一覧@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('トップ') }}@endsection
 
 @section('content')
     @php
@@ -128,13 +128,4 @@
         }
 
     </script>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ゲーム一覧</li>
-        </ol>
-    </nav>
 @endsection

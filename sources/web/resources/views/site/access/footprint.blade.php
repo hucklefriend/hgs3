@@ -12,7 +12,8 @@
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>{{ $site->name }}の足跡</h1>
+            <h1>{{ $site->name }}</h1>
+            <p>足跡</p>
         </header>
 
         <div class="card">
@@ -42,18 +43,3 @@
 
 @endsection
 
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイト詳細', ['site' => $site->id]) }}">詳細</a></li>
-            @isset($ym)
-            <li class="breadcrumb-item"><a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $ym }}">アクセスログ</a></li>
-            @else
-            <li class="breadcrumb-item"><a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}">アクセスログ</a></li>
-            @endif
-            <li class="breadcrumb-item active" aria-current="page">足跡</li>
-        </ol>
-    </nav>
-@endsection

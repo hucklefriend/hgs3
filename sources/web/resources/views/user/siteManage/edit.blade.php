@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')サイト編集@endsection
-@section('global_back_link'){{ route('サイト詳細', ['site' => $site->id]) }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('サイト詳細', ['site' => $site->id]) }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -284,15 +284,4 @@
 
 @section('outsideContent')
     @include('user.siteManage.common.handleSoftSelect')
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('マイページ') }}">ユーザー</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイト管理') }}">サイト</a></li>
-            <li class="breadcrumb-item active" aria-current="page">編集</li>
-        </ol>
-    </nav>
 @endsection

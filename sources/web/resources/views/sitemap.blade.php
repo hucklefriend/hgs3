@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')サイトマップ@endsection
-@section('global_back_link'){{ route('トップ') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('トップ') }}@endsection
 
 @section('content')
     <div class="content__inner">
@@ -37,13 +37,4 @@
             <li class="list-group-item"><a href="https://github.com/hucklefriend/hgs3" target="_blank">GitHubのリポジトリ</a></li>
         </ul>
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">サイトマップ</li>
-        </ol>
-    </nav>
 @endsection

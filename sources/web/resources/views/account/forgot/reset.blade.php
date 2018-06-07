@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title')パスワード再設定@endsection
+
 @section('content')
     <div class="content__inner">
         <header class="content__title">

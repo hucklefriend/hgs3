@@ -7,7 +7,8 @@
 
     <div class="content__inner">
         <header class="content__title">
-            <h1>{{ $site->name }}のアクセスログ</h1>
+            <h1>{{ $site->name }}</h1>
+            <p>アクセスログ</p>
         </header>
 
         <div class="row quick-stats">
@@ -240,13 +241,3 @@
     </form>
 @endsection
 
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイト詳細', ['site' => $site->id]) }}">詳細</a></li>
-            <li class="breadcrumb-item active" aria-current="page">アクセスログ</li>
-        </ol>
-    </nav>
-@endsection

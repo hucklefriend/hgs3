@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title')ゲーム@endsection
-@section('global_back_link'){{ route('ゲーム一覧') }}@endsection
+@section('title'){{ $soft->name }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::softDetail($soft) }}@endsection
 
 @section('content')
 <div class="content__inner">
@@ -335,14 +335,4 @@
         </a>
     </div>
 </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
-            <li class="breadcrumb-item active" aria-current="page">詳細</li>
-        </ol>
-    </nav>
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title')サイト@endsection
-@section('global_back_link'){{ route('サイトトップ') }}@endsection
+@section('title'){{ $site->name }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::site($site) }}@endsection
 
 @section('content')
 
@@ -59,14 +59,4 @@
     @endif
     </div>
 
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-            <li class="breadcrumb-item active" aria-current="page">サイト詳細</li>
-        </ol>
-    </nav>
 @endsection

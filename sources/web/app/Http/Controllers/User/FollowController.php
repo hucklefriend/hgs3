@@ -14,67 +14,18 @@ use Illuminate\Support\Facades\Auth;
 class FollowController extends Controller
 {
     /**
-     * フォロー一覧
-     *
-     * @param string $showId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index($showId)
-    {
-        $user = User::findByShowId($showId);
-        if ($user == null) {
-            return view('user.profile.notExist');
-        }
-
-        $isMyself = $user->id == Auth::id();
-        $follows = Follow::getFollow($user->id);
-
-        return view('user.profile.follow', [
-            'user'           => $user,
-            'isMyself'       => $isMyself,
-            'follows'        => $follows,
-            'users'          => User::getHash(page_pluck($follows, 'follow_user_id')),
-            'mutualFollower' => Follow::getFollowerHash($user->id, page_pluck($follows, 'follow_user_id'))
-        ]);
-    }
-
-    /**
-     * フォロワー一覧
-     *
-     * @param string $showId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function follower($showId)
-    {
-        $user = User::findByShowId($showId);
-        if ($user == null) {
-            return view('user.profile.notExist');
-        }
-
-        $isMyself = $user->id == Auth::id();
-        $followers = Follow::getFollower($user->id);
-
-        return view('user.profile.follower', [
-            'user'         => $user,
-            'isMyself'     => $isMyself,
-            'followers'    => $followers,
-            'users'        => User::getHash(page_pluck($followers, 'user_id')),
-            'mutualFollow' => Follow::getFollowHash($user->id, page_pluck($followers, 'user_id'))
-        ]);
-    }
-
-    /**
      * フォローする
      *
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function add(Request $request)
     {
         $followUserId = $request->get('follow_user_id');
         $followUser = User::find($followUserId);
         if ($followUser) {
-            $follow = new Follow();
-            $follow->add(Auth::user(), $followUser, 0);
+            Follow::add(Auth::user(), $followUser, 0);
         }
 
         return redirect()->back();
@@ -88,8 +39,7 @@ class FollowController extends Controller
      */
     public function remove(Request $request)
     {
-        $follow = new Follow();
-        $follow->remove(Auth::id(), $request->get('follow_user_id'));
+        Follow::remove(Auth::id(), $request->get('follow_user_id'));
 
         return redirect()->back();
     }

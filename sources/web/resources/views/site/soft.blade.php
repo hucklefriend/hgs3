@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title')サイト@endsection
-@section('global_back_link'){{ route('ゲーム詳細', ['game' => $soft->id]) }}@endsection
+@section('title'){{ $soft->name }}を扱っているサイト@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::siteBySoft($soft) }}@endsection
 
 @section('content')
     <div class="content__inner">
         <header class="content__title">
             <h1>{{ $soft->name }}</h1>
-            <p>このゲームを扱っているサイト</p>
+            <p>取扱いサイト</p>
         </header>
 
         @foreach ($pager as $p)

@@ -121,6 +121,7 @@ class Follow
      * @param User $user
      * @param User $followUser
      * @param int $followCategory
+     * @throws \Exception
      */
     public static function add(User $user, User $followUser, $followCategory = 0)
     {

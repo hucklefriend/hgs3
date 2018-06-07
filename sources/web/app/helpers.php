@@ -449,3 +449,16 @@ function sns_icon($socialSiteId)
 {
     return \Hgs3\Constants\SocialSite::getIcon($socialSiteId);
 }
+
+/**
+ * グローバルバック用のroute
+ *
+ * @param $name
+ * @param array $parameters
+ * @param bool $absolute
+ * @return string
+ */
+function gb_route($name, $parameters = [], $absolute = true)
+{
+    return \Hgs3\Http\GlobalBack::route($name, $parameters, $absolute);
+}

@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Constants\IconRoundType;
+use Hgs3\Constants\PageId;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Profile\ChangeIconImageRequest;
 use Hgs3\Http\Requests\User\Profile\ChangeIconRoundRequest;
@@ -54,6 +55,7 @@ class ProfileController extends Controller
                     'users'   => User::getHash(page_pluck($follows, 'follow_user_id')),
                     'mutualFollower' => Follow::getFollowerHash($user->id, page_pluck($follows, 'follow_user_id'))
                 ];
+                $data['pageId'] = $data['isMyself'] ? PageId::USER_FOLLOW : PageId::FRIEND_FOLLOW;
             }
                 break;
             case 'follower':{
@@ -64,6 +66,7 @@ class ProfileController extends Controller
                     'users'     => User::getHash(page_pluck($followers, 'user_id')),
                     'mutualFollow' => Follow::getFollowHash($user->id, page_pluck($followers, 'user_id'))
                 ];
+                $data['pageId'] = $data['isMyself'] ? PageId::USER_FOLLOWER : PageId::FRIEND_FOLLOWER;
             }
                 break;
             case 'favorite_soft':{
@@ -74,6 +77,7 @@ class ProfileController extends Controller
                     'favoriteSofts' => $favoriteSofts,
                     'softs'         => Orm\GameSoft::getHash(page_pluck($favoriteSofts, 'soft_id'))
                 ];
+                $data['pageId'] = $data['isMyself'] ? PageId::USER_FAVORITE_GAME : PageId::FRIEND_FAVORITE_GAME;
             }
                 break;
             case 'review': {
@@ -81,6 +85,7 @@ class ProfileController extends Controller
                 $data['parts'] = [
                     'reviews' => Review::getProfileList($user),
                 ];
+                $data['pageId'] = $data['isMyself'] ? PageId::USER_REVIEW : PageId::FRIEND_REVIEW;
             }
                 break;
             case 'review_draft': {
@@ -88,6 +93,7 @@ class ProfileController extends Controller
                 $data['parts'] = [
                     'drafts' => Review::getProfileDraftList($user),
                 ];
+                $data['pageId'] = PageId::USER_REVIEW_DRAFT;
             }
                 break;
             case 'site': {
@@ -95,6 +101,7 @@ class ProfileController extends Controller
                 $data['parts'] = [
                     'sites' => Site::getUserSites($user->id, $data['isMyself'])
                 ];
+                $data['pageId'] = $data['isMyself'] ? PageId::USER_SITE : PageId::FRIEND_SITE;
             }
                 break;
             case 'favorite_site': {
@@ -107,6 +114,7 @@ class ProfileController extends Controller
                     'sites'         => $sites,
                     'users'         => User::getHash(array_pluck($sites, 'user_id'))
                 ];
+                $data['pageId'] = $data['isMyself'] ? PageId::USER_FAVORITE_SITE : PageId::FRIEND_FAVORITE_SITE;
             }
                 break;
             case 'good_site': {
@@ -119,11 +127,13 @@ class ProfileController extends Controller
                     'sites'     => $sites,
                     'users'     => User::getHash(array_pluck($sites, 'user_id'))
                 ];
+                $data['pageId'] = PageId::USER_GOOD_SITE;
             }
                 break;
             case 'timeline': {
                 $title = 'タイムライン';
                 $data['parts'] = Timeline\MyPage::getTimeline($data['isMyself'], Auth::id(), time(), 20);
+                $data['pageId'] = $data['isMyself'] ? PageId::USER_TIMELINE : PageId::FRIEND_TIMELINE;
             }
                 break;
             case 'profile':
@@ -133,6 +143,7 @@ class ProfileController extends Controller
                 $data['parts'] = [
                     'snsAccounts' => SocialSite::getAccounts($user, true)
                 ];
+                $data['pageId'] = $data['isMyself'] ? PageId::USER_PROFILE : PageId::FRIEND_PROFILE;
             }
                 break;
         }
@@ -174,20 +185,6 @@ class ProfileController extends Controller
             'user'        => $user,
             'snsAccounts' => SocialSite::getAccounts($user, true)
         ]);
-    }
-
-    /**
-     * タイムライン
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function timeline()
-    {
-        $data = Timeline\MyPage::getTimeline(Auth::id(), time(), 20);
-        $data['user'] = Auth::user();
-        $data['isMyself'] = true;
-
-        return view('user.profile.timeline', $data);
     }
 
     /**

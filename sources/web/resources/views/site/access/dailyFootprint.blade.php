@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
-
-@section('title')アクセスログ@endsection
+@section('title'){{ $date->format('Y年n月j日') }}の足跡@endsection
 @section('global_back_link')
     @isset($ym)
     {{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $ym }}
@@ -13,7 +12,8 @@
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>{{ $date->format('Y年n月j日') }}の足跡</h1>
+            <h1>{{ $site->name }}</h1>
+            <p>{{ $date->format('Y年n月j日') }}の足跡</p>
         </header>
 
         <div class="card">
@@ -41,20 +41,4 @@
         </div>
     </div>
 
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイト詳細', ['site' => $site->id]) }}">詳細</a></li>
-            @isset($ym)
-            <li class="breadcrumb-item"><a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $ym }}">アクセスログ</a></li>
-            @else
-            <li class="breadcrumb-item"><a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}">アクセスログ</a></li>
-            @endif
-            <li class="breadcrumb-item active" aria-current="page">足跡</li>
-        </ol>
-    </nav>
 @endsection

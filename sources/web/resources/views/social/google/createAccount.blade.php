@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')Google+でユーザー登録@endsection
-@section('global_back_link'){{ route('ログイン') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('ログイン') }}@endsection
 
 @section('content')
     <div class="content__inner">

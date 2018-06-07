@@ -5,6 +5,7 @@
 
 namespace Hgs3\Http\Controllers\Game;
 
+use Hgs3\Http\GlobalBack;
 use Hgs3\Http\Requests\Game\GameSeriesRequest;
 use Hgs3\Models\Orm;
 use Hgs3\Http\Controllers\Controller;

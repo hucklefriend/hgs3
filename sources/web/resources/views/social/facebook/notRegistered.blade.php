@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')facebookでログイン@endsection
-@section('global_back_link'){{ route('ログイン') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('ログイン') }}@endsection
 
 @section('content')
     <div class="content__inner">

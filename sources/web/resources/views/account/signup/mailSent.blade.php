@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')ユーザー登録@endsection
-@section('global_back_link'){{ route('トップ') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('トップ') }}@endsection
 
 @section('content')
 
@@ -26,13 +26,4 @@
         </div>
 
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ユーザー登録</li>
-        </ol>
-    </nav>
 @endsection

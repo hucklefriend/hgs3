@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')設定@endsection
-@section('global_back_link'){{ route('プロフィール', ['showId' => $user->show_id]) }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('プロフィール', ['showId' => $user->show_id]) }}@endsection
 
 @section('content')
 
@@ -48,14 +48,4 @@
         </div>
     </form>
 
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">ユーザー</a></li>
-            <li class="breadcrumb-item active" aria-current="page">設定</li>
-        </ol>
-    </nav>
 @endsection

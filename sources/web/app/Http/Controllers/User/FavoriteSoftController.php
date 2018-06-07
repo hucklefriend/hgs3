@@ -15,40 +15,6 @@ use Illuminate\Support\Facades\Auth;
 class FavoriteSoftController extends Controller
 {
     /**
-     * お気に入りゲームリスト
-     *
-     * @param string $showId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index($showId)
-    {
-        $user = User::findByShowId($showId);
-        if ($user == null) {
-            return view('user.profile.notExist');
-        }
-
-        $isMyself = $user->id == Auth::id();
-        $favoriteSofts = FavoriteSoft::get($user->id);
-
-        return view('user.profile.favoriteSoft', [
-            'user'          => $user,
-            'isMyself'      => $isMyself,
-            'favoriteSofts' => $favoriteSofts,
-            'softs'         => Orm\GameSoft::getHash(page_pluck($favoriteSofts, 'soft_id'))
-        ]);
-    }
-
-    /**
-     * お気に入りゲームリスト(自分)
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function myself()
-    {
-        return $this->index(Auth::user());
-    }
-
-    /**
      * お気に入りゲーム追加
      *
      * @param Request $request

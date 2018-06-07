@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
-@section('title')お気に入りゲーム@endsection
-@section('global_back_link'){{ route('ゲーム詳細', ['soft' => $soft->id]) }}@endsection
+@section('title'){{ $soft->name }}をお気に入り登録しているユーザー@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::gameFavoriteUserList($soft) }}@endsection
 
 @section('content')
     <div class="content__inner">
         <header class="content__title">
             <h1>{{ $soft->name }}</h1>
-            <p>お気に入り登録ユーザー</p>
+            <p>お気に入りに登録しているユーザー</p>
         </header>
 
         <div class="card">
             <div class="card-body">
                 @if ($favoriteUsers->count() == 0)
-                    <div>お気に入り登録ユーザーはいません。</div>
+                    <p class="mb-0">お気に入りに登録しているユーザー</p>
                 @endif
                 <div class="contacts row">
                     @foreach ($favoriteUsers as $favoriteUser)
@@ -47,15 +47,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム詳細', ['soft' => $soft->id]) }}">詳細</a></li>
-            <li class="breadcrumb-item active" aria-current="page">お気に入り登録ユーザー</li>
-        </ol>
-    </nav>
 @endsection
