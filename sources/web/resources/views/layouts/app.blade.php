@@ -121,7 +121,6 @@
                             @endif
                         </div>
                     </li>
-
                 </ul>
             </header>
 
@@ -130,13 +129,18 @@
             </section>
 
             <footer class="footer">
-                @include('common.footerSponser')
+                @include('common.footerSponsored')
 
-                {{-- <div style="overflow: hidden" class="mb-2">@yield('breadcrumb')</div> --}}
-                <div style="white-space: nowrap;" class="text-right">
-                    <a href="{{ route('プライバシーポリシー') }}" class="align-self-center">プライバシーポリシー</a>
-                    <span class="mx-2">・</span>
-                    <a href="{{ route('サイトマップ') }}" class="align-self-center">サイトマップ</a>
+                <div class="my-3 text-right">
+                    <div class="d-block d-sm-inline-block p-2">
+                        <a href="{{ route('当サイトについて') }}">当サイトについて</a>
+                    </div>
+                    <div class="d-block d-sm-inline-block p-2">
+                        <a href="{{ route('プライバシーポリシー') }}">プライバシーポリシー</a>
+                    </div>
+                    <div class="d-block d-sm-inline-block p-2">
+                        <a href="{{ route('サイトマップ') }}">サイトマップ</a>
+                    </div>
                 </div>
                 <div style="height: 40px;line-height: 40px;" class="my-3">
                     &copy; yu-ki

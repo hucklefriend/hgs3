@@ -230,21 +230,24 @@
                         @endauth
                     @else
                         <div class="d-flex mb-3">
+                            <div class="review-point mr-2">
+                                {{ \Hgs3\Constants\Review\Fear::$face[intval(round($reviewTotal->fear, 0))] }}
+                            </div>
                             <div class="review-point">
                                 {{ round($reviewTotal->point, 0) }}
                             </div>
 
                             <table class="review-point-table">
                                 <tr>
-                                    <th>怖さ {{ \Hgs3\Constants\Review\Fear::$face[intval(round($reviewTotal->fear, 0))] }}</th>
+                                    <th>{{ \Hgs3\Constants\Review\Fear::$face[\Hgs3\Constants\Review\Fear::getMaxPoint()] }} 怖さ</th>
                                     <td class="text-right">{{ round($reviewTotal->fear * \Hgs3\Constants\Review\Fear::POINT_RATE, 1) }}pt</td>
                                 </tr>
                                 <tr>
-                                    <th>良い点 <i class="far fa-thumbs-up"></i></th>
+                                    <th><i class="far fa-thumbs-up"></i> 良い点</th>
                                     <td class="text-right">{{ round(($reviewTotal->good_tag_num + $reviewTotal->very_good_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE, 1)}}pt</td>
                                 </tr>
                                 <tr>
-                                    <th>悪い所 <i class="far fa-thumbs-down"></i></th>
+                                    <th><i class="far fa-thumbs-down"></i> 悪い所</th>
                                     <td class="text-right">-{{ round(($reviewTotal->bad_tag_num + $reviewTotal->very_bad_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE, 1) }}pt</td>
                                 </tr>
                             </table>
