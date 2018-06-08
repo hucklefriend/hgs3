@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')サイト登録@endsection
-@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('サイト管理') }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::siteAdd() }}@endsection
 
 @section('content')
     <div class="content__inner">

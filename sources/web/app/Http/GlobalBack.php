@@ -7,6 +7,7 @@
 namespace Hgs3\Http;
 
 use Hgs3\Constants\PageId;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Hgs3\Models\Orm;
 
@@ -541,5 +542,54 @@ class GlobalBack
     {
         self::push(PageId::SITE_ACCESS_LOG);
         return self::route('サイト詳細', ['site' => $site->id]);
+    }
+
+    /**
+     * サイト登録
+     *
+     * @return string
+     */
+    public static function siteAdd()
+    {
+        self::push(PageId::SITE_ADD);
+        return self::route('プロフィール2', ['showId' => Auth::user()->show_id]);
+    }
+
+    /**
+     * サイトバナー
+     *
+     * @param Orm\Site $site
+     * @return string
+     */
+    public static function siteBanner(Orm\Site $site)
+    {
+        $before = self::beforeHas([PageId::SITE_ADD]);
+
+        self::push(PageId::SITE_BANNER);
+
+        if ($before === false) {
+            return self::route('サイト詳細', ['site' => $site->id]);
+        } else {
+            return $before[1];
+        }
+    }
+
+    /**
+     * サイトバナー(R-18)
+     *
+     * @param Orm\Site $site
+     * @return string
+     */
+    public static function siteBannerR18(Orm\Site $site)
+    {
+        $before = self::beforeHas([PageId::SITE_BANNER]);
+
+        self::push(PageId::SITE_BANNER_R18);
+
+        if ($before === false) {
+            return self::route('サイト詳細', ['site' => $site->id]);
+        } else {
+            return $before[1];
+        }
     }
 }

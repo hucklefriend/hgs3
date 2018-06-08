@@ -60,6 +60,8 @@ class PageId
     const SITE_UPDATE_HISTORY_ADD = 742;
     const SITE_UPDATE_HISTORY_EDIT = 743;
     const SITE_ADD_CONFIRM = 744;
+    const SITE_BANNER = 745;
+    const SITE_BANNER_R18 = 746;
     const SITE_JUDGE_LIST = 760;
     const SITE_JUDGE = 761;
 

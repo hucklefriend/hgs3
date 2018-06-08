@@ -17,10 +17,10 @@ class AddSiteR18Banner extends Migration
     public function up()
     {
         Schema::table('sites', function (Blueprint $table) {
-            $table->unsignedTinyInteger('list_banner_upload_flag_r18')->nullable()->comment('一覧用バナーアップロードフラグ(R-18)');
-            $table->string('list_banner_url_r18', 200)->nullable()->comment('一覧用バナーURL(R-18)');
-            $table->unsignedTinyInteger('detail_banner_upload_flag_r18')->nullable()->comment('詳細用バナーアップロードフラグ(R-18)');
-            $table->string('detail_banner_url_r18', 200)->nullable()->comment('詳細用バナーURL(R-18)');
+            $table->unsignedTinyInteger('list_banner_upload_flag_r18')->nullable()->after('detail_banner_url')->comment('一覧用バナーアップロードフラグ(R-18)');
+            $table->string('list_banner_url_r18', 200)->nullable()->after('list_banner_upload_flag_r18')->comment('一覧用バナーURL(R-18)');
+            $table->unsignedTinyInteger('detail_banner_upload_flag_r18')->nullable()->after('list_banner_url_r18')->comment('詳細用バナーアップロードフラグ(R-18)');
+            $table->string('detail_banner_url_r18', 200)->nullable()->after('detail_banner_upload_flag_r18')->comment('詳細用バナーURL(R-18)');
         });
     }
 
