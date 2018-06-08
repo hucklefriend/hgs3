@@ -16,7 +16,6 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param User $follower
-     * @throws \Exception
      */
     public static function addFollowerText(User $user, User $follower)
     {
@@ -34,7 +33,6 @@ class ToMe extends TimelineAbstract
      * @param User $user
      * @param User $goodUser
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addSiteGoodText(User $user, User $goodUser, Orm\Site $site)
     {
@@ -61,7 +59,6 @@ class ToMe extends TimelineAbstract
      * @param User $user
      * @param Orm\Site $site
      * @param $prevMaxGoodNum
-     * @throws \Exception
      */
     public static function addSiteGoodNumText(User $user, Orm\Site $site, $prevMaxGoodNum)
     {
@@ -82,7 +79,6 @@ class ToMe extends TimelineAbstract
      * @param User $user
      * @param Orm\Site $site
      * @param User $favoriteUser
-     * @throws \Exception
      */
     public static function addSiteFavoriteText(user $user, Orm\Site $site, User $favoriteUser)
     {
@@ -103,7 +99,6 @@ class ToMe extends TimelineAbstract
      * @param Orm\Review $review
      * @param Orm\GameSoft $soft
      * @param User $goodUser
-     * @throws \Exception
      */
     public static function addReviewGoodText(User $user, Orm\Review $review, Orm\GameSoft $soft, User $goodUser)
     {
@@ -131,7 +126,6 @@ class ToMe extends TimelineAbstract
      * @param Orm\Review $review
      * @param Orm\GameSoft $soft
      * @param $prevMaxGoodNum
-     * @throws \Exception
      */
     public static function addReviewGoodNumText(User $user, Orm\Review $review, Orm\GameSoft $soft, $prevMaxGoodNum)
     {
@@ -151,7 +145,6 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addSiteRegisteredText(User $user, Orm\Site $site)
     {
@@ -168,7 +161,6 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addSiteUpdatedText(User $user, Orm\Site $site)
     {
@@ -185,7 +177,6 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addSiteApproveText(User $user, Orm\Site $site)
     {
@@ -202,7 +193,6 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addSiteRejectText(User $user, Orm\Site $site)
     {
@@ -218,11 +208,10 @@ class ToMe extends TimelineAbstract
      * ユーザー登録
      *
      * @param User $user
-     * @throws \Exception
      */
     public static function addRegisterText(User $user)
     {
-        $text = sprintf('%sに参加しました！', env('APP_NAME'));
+        $text = sprintf('ようこそ%sへ！', env('APP_NAME'));
 
         self::insert($user->id, $text);
     }
@@ -233,7 +222,6 @@ class ToMe extends TimelineAbstract
      * @param User $user
      * @param Orm\GameSoft $soft
      * @param Orm\Review $review
-     * @throws \Exception
      */
     public static function addWriteReviewText(User $user, Orm\GameSoft $soft, Orm\Review $review)
     {
@@ -250,7 +238,6 @@ class ToMe extends TimelineAbstract
      *
      * @param User $user
      * @param Orm\Review $review
-     * @throws \Exception
      */
     public static function addReviewUrlApproveText(User $user, Orm\Review $review)
     {
@@ -265,8 +252,6 @@ class ToMe extends TimelineAbstract
      * データ削除
      *
      * @param $userId
-     * @return bool
-     * @throws \Exception
      */
     public static function delete($userId)
     {
@@ -275,11 +260,8 @@ class ToMe extends TimelineAbstract
                 'user_id' => $userId
             ]);
         } catch (\Exception $e) {
-            Log::exceptionError($e);
-            return false;
+            Log::exceptionErrorNoThrow($e);
         }
-
-        return true;
     }
 
     /**
@@ -287,8 +269,6 @@ class ToMe extends TimelineAbstract
      *
      * @param $userId
      * @param $text
-     * @return bool
-     * @throws \Exception
      */
     private static function insert($userId, $text)
     {
@@ -299,10 +279,7 @@ class ToMe extends TimelineAbstract
                 'time'    => microtime(true)
             ]);
         } catch (\Exception $e) {
-            Log::exceptionError($e);
-            return false;
+            Log::exceptionErrorNoThrow($e);
         }
-
-        return true;
     }
 }

@@ -24,14 +24,10 @@ class AddRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                 => 'required|max:100',
-            'url'                  => 'required|max:300|url',
-            'handle_soft'          => 'required',
-            'presentation'         => 'max:1000',
-            'list_banner_upload'   => 'file|image|max:1024',
-            'detail_banner_upload' => 'file|image|max:3072',
-            'draft'                => 'nullable',
-            'hgs2_site_id'         => ''
+            'name'         => 'required|max:100',
+            'url'          => 'required|max:300|url',
+            'handle_soft'  => 'required',
+            'presentation' => 'max:1000',
         ];
     }
 }

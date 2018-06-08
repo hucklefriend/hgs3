@@ -5,7 +5,7 @@
 
 namespace Hgs3\Models\Timeline;
 
-use Illuminate\Support\Facades\Log;
+use Hgs3\Log;
 use Hgs3\Models\Orm;
 
 class FavoriteSite extends TimelineAbstract
@@ -82,7 +82,6 @@ class FavoriteSite extends TimelineAbstract
      *
      * @param int $siteId
      * @param string $text
-     * @return bool
      */
     private static function insert($siteId, $text)
     {
@@ -93,12 +92,7 @@ class FavoriteSite extends TimelineAbstract
                 'time'    => microtime(true)
             ]);
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
+            Log::exceptionErrorNoThrow($e);
         }
-
-        return true;
     }
 }

@@ -712,7 +712,7 @@ button, input, optgroup, select, textarea {
     cursor: pointer;
 }
 
-input[type=text], textarea {
+input[type=text], input[type=number],input[type=url],input[type=password],input[type=email], textarea {
     font-size: 16px !important;
 }
 
@@ -1041,4 +1041,8 @@ input[type=text], textarea {
 
 .footer .link {
 
+}
+
+.custom-radio:hover {
+    cursor: pointer;
 }

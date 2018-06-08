@@ -6,9 +6,7 @@
 namespace Hgs3\Models\Timeline;
 
 use Hgs3\Log;
-use Hgs3\Models\User;
 use Hgs3\Models\Orm;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class NewInformation extends TimelineAbstract
 {
@@ -67,7 +65,6 @@ class NewInformation extends TimelineAbstract
      * 新着サイト
      *
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addNewSiteText(Orm\Site $site)
     {
@@ -83,7 +80,6 @@ class NewInformation extends TimelineAbstract
      * 更新サイト
      *
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addUpdateSiteText(Orm\Site $site)
     {
@@ -99,7 +95,6 @@ class NewInformation extends TimelineAbstract
      * 新しいゲーム
      *
      * @param Orm\GameSoft $soft
-     * @throws \Exception
      */
     public static function addNewGameText(Orm\GameSoft $soft)
     {
@@ -115,7 +110,6 @@ class NewInformation extends TimelineAbstract
      * 新しいゲーム
      *
      * @param Orm\GameSoft $soft
-     * @throws \Exception
      */
     public static function addUpdateGameText(Orm\GameSoft $soft)
     {
@@ -132,7 +126,6 @@ class NewInformation extends TimelineAbstract
      *
      * @param Orm\GameSoft $soft
      * @param Orm\Review $review
-     * @throws \Exception
      */
     public static function addNewReviewText(Orm\GameSoft $soft, Orm\Review $review)
     {
@@ -149,8 +142,6 @@ class NewInformation extends TimelineAbstract
      * データ登録
      *
      * @param $text
-     * @return bool
-     * @throws \Exception
      */
     private static function insert($text)
     {
@@ -160,10 +151,7 @@ class NewInformation extends TimelineAbstract
                 'time' => microtime(true)
             ]);
         } catch (\Exception $e) {
-            Log::exceptionError($e);
-            return false;
+            Log::exceptionErrorNoThrow($e);
         }
-
-        return true;
     }
 }

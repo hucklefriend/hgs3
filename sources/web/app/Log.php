@@ -123,4 +123,15 @@ class Log extends \Illuminate\Support\Facades\Log
         self::error($e->getTraceAsString());
         throw $e;
     }
+
+    /**
+     * 例外エラー
+     *
+     * @param \Exception $e
+     */
+    public static function exceptionErrorNoThrow(\Exception $e)
+    {
+        self::error($e->getMessage());
+        self::error($e->getTraceAsString());
+    }
 }

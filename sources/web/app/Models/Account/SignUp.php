@@ -65,13 +65,6 @@ class SignUp
 
         DB::beginTransaction();
         try {
-/*
-            $signUpAt = null;
-            $hgs2User = User::getHgs2UserByEmail($orm->email);
-            if ($hgs2User !== null) {
-                $signUpAt = date('Y-m-d H:i:s', $hgs2User->updated_date);
-            }
-*/
             // ユーザーテーブルに登録
             User::register([
                 'name'       => $name,
@@ -107,14 +100,6 @@ class SignUp
             $userData = [
                 'name' => $socialUser->getName()
             ];
-/*
-            if ($socialSiteId == \Hgs3\Constants\SocialSite::TWITTER) {
-                $hgs2User = User::getHgs2UserByTwitterId($socialUser->id);
-                if ($hgs2User !== null) {
-                    $userData['sign_up_at'] = date('Y-m-d H:i:s', $hgs2User->updated_date);
-                }
-            }
-  */
 
             $user = User::register($userData);
 

@@ -36,10 +36,15 @@ class FollowController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function remove(Request $request)
     {
-        Follow::remove(Auth::id(), $request->get('follow_user_id'));
+        $followUserId = $request->get('follow_user_id');
+        $followUser = User::find($followUserId);
+        if ($followUser) {
+            Follow::remove(Auth::user(), $followUser);
+        }
 
         return redirect()->back();
     }

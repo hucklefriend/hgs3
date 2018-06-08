@@ -134,6 +134,7 @@ class User extends Authenticatable
         $self->save();
 
         Timeline\ToMe::addRegisterText($self);
+        Timeline\UserActionTimeline::addSignUpText($self);
 
         return $self;
     }
@@ -306,10 +307,6 @@ class User extends Authenticatable
             Orm\UserFavoriteSoft::where('user_id', $this->id)
                 ->delete();
 
-            // 遊んだゲーム
-            Orm\UserPlayedSoft::where('user_id', $this->id)
-                ->delete();
-
             // ユーザー
             $this->delete();
 
@@ -325,6 +322,11 @@ class User extends Authenticatable
         return;
     }
 
+    /**
+     * レビュー数を取得
+     *
+     * @return int
+     */
     public function getReviewNum()
     {
         return DB::table('reviews')
@@ -357,6 +359,11 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * 18歳以上で表現OKか
+     *
+     * @return bool
+     */
     public function isAdult()
     {
         return $this->adult == 1;

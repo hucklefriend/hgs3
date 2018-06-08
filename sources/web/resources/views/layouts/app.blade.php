@@ -129,8 +129,9 @@
             </section>
 
             <footer class="footer">
+                @if (!(isset($disableFooterSponsored) && $disableFooterSponsored))
                 @include('common.footerSponsored')
-
+                @endif
                 <div class="my-3 text-right">
                     <div class="d-block d-sm-inline-block p-2">
                         <a href="{{ route('当サイトについて') }}">当サイトについて</a>

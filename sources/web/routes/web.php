@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/site_manage', 'User\SiteManageController@index')->name('サイト管理');
     Route::get('/user/site_manage/add', 'User\SiteManageController@add')->name('サイト登録');
     Route::post('/user/site_manage/add', 'User\SiteManageController@insert')->name('サイト登録処理');
+    Route::get('/user/site_manage/banner/{site}/{isFirst}', 'User\SiteManageController@banner')->name('サイトバナー設定');
+    Route::post('/user/site_manage/banner/{site}', 'User\SiteManageController@saveBanner')->name('サイトバナー設定処理');
     Route::get('/user/site_manage/edit/{site}', 'User\SiteManageController@edit')->name('サイト編集');
     Route::patch('/user/site_manage/edit/{site}', 'User\SiteManageController@update')->name('サイト編集処理');
     Route::get('/user/site_manage/takeover', 'User\SiteManageController@takeOverSelect')->name('サイト引継選択');

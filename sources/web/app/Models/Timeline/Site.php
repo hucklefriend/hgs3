@@ -14,7 +14,6 @@ class Site extends TimelineAbstract
      * 新着サイト
      *
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addNewArrivalText(Orm\Site $site)
     {
@@ -30,7 +29,6 @@ class Site extends TimelineAbstract
      * 更新サイト
      *
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addUpdateText(Orm\Site $site)
     {
@@ -47,7 +45,6 @@ class Site extends TimelineAbstract
      *
      * @param Orm\Site $site
      * @param $prevMaxGoodNum
-     * @throws \Exception
      */
     public static function addGoodNumText(Orm\Site $site, $prevMaxGoodNum)
     {
@@ -66,7 +63,6 @@ class Site extends TimelineAbstract
      * アクセス数がn件を超えた
      *
      * @param Orm\Site $site
-     * @throws \Exception
      */
     public static function addAccessNumText(Orm\Site $site)
     {
@@ -86,7 +82,6 @@ class Site extends TimelineAbstract
      *
      * @param int $siteId
      * @param string $text
-     * @throws \Exception
      */
     private static function insert($siteId, $text)
     {
@@ -98,7 +93,7 @@ class Site extends TimelineAbstract
                 'time'     => microtime(true)
             ]);
         } catch (\Exception $e) {
-            Log::exceptionError($e);
+            Log::exceptionErrorNoThrow($e);
         }
     }
 

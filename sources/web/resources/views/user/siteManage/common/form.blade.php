@@ -14,7 +14,7 @@
 <div class="form-group">
     <label for="url" class="hgn-label"><i class="fas fa-edit"></i> URL</label>
     <span class="badge badge-secondary ml-2">必須</span>
-    <input type="text" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}">
+    <input type="url" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $site->url) }}">
     <i class="form-group__bar"></i>
 </div>
 <div class="form-help">
@@ -59,7 +59,7 @@
     </div>
     <div class="mt-3">
     @foreach (\Hgs3\Constants\Site\MainContents::getData() as $val => $name)
-        <label class="custom-control custom-radio">
+        <label class="custom-control custom-radio mb-2">
             <input type="radio" class="custom-control-input" name="main_contents" id="main_contents{{ $val }}" value="{{ $val }}"{{ checked(old('main_contents', $site->main_contents_id), $val) }}>
             <span class="custom-control-indicator"></span>
             <span class="custom-control-description">{{ $name }}</span>
@@ -84,7 +84,10 @@
 <div class="form-help">
     @include('common.error', ['formName' => 'presentation'])
     <p class="form-text text-muted">
-        <small>最大文字数：1000</small>
+        <small>
+            最大文字数：1000<br>
+            サイトでやっていることなど、サイトの紹介文を記入してください。
+        </small>
     </p>
 </div>
 
@@ -118,12 +121,7 @@
 </div>
 <div class="form-help">
     <p class="form-text text-muted">
-        <small>
-            年齢制限コンテンツを扱っている場合は選択してください。<br>当サイト内では、下記のように定義します。<br>
-            R-15: 下着やヌード。一般的に芸術作品としての絵画や造形物のヌード表現の範囲内におさまっている。<br>
-            R-18: 性行為またはそれに準ずる好意を連想させる、もしくは行っている表現がある。<br>
-            暴力的表現に関しては、だいたいCEROのZ指定っぽい感じならR-18、D指定っぽい感じならR-15としてください。
-        </small>
+        <small>年齢制限コンテンツを扱っている場合は選択してください。</small>
     </p>
 </div>
 
@@ -157,6 +155,8 @@
     </div>
 </div>
 <div class="form-help">
-
+    <p class="form-text text-muted">
+        <small>コンテンツに性別の傾向がある場合は選択してください。</small>
+    </p>
 </div>
 

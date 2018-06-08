@@ -5,7 +5,7 @@
 
 namespace Hgs3\Models\Timeline;
 
-use Illuminate\Support\Facades\Log;
+use Hgs3\Log;
 use Hgs3\Models\User;
 use Hgs3\Models\Orm;
 
@@ -90,7 +90,6 @@ class FollowUser extends TimelineAbstract
      *
      * @param int $userId
      * @param string $text
-     * @return bool
      */
     private static function insert($userId, $text)
     {
@@ -101,12 +100,7 @@ class FollowUser extends TimelineAbstract
                 'time'    => microtime(true)
             ]);
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
+            Log::exceptionErrorNoThrow($e);
         }
-
-        return true;
     }
 }

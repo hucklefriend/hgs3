@@ -136,25 +136,25 @@ VALUES (?, ?, ?, NOW(), NOW())
 SQL;
         DB::insert($sql, [$user->id, $followCategory, $followUser->id]);
 
-
-        Timeline\ToMe::addFollowerText($followUser, $user);
+        Timeline\ToMe::addFollowerText($followUser, $user);     // フォローした相手のタイムラインに表示
+        Timeline\UserActionTimeline::addFollowText($user, $followUser); // 自分の行動タイムラインに表示
     }
 
     /**
      * 削除
      *
-     * @param int $userId
-     * @param string $followUserShowId
-     * @return int
+     * @param User $user
+     * @param User $followUser
+     * @throws \Exception
      */
-    public static function remove($userId, $followUserShowId)
+    public static function remove(User $user, User $followUser)
     {
-        $follow = User::findByShowId($followUserShowId);
-
-        return DB::table('user_follows')
-            ->where('user_id', $userId)
-            ->where('follow_user_id', $follow->id)
+        DB::table('user_follows')
+            ->where('user_id', $user->id)
+            ->where('follow_user_id', $followUser->id)
             ->delete();
+
+        Timeline\UserActionTimeline::addFollowRemoveText($user, $followUser); // 自分の行動タイムラインに表示
     }
 
     /**

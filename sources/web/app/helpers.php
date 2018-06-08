@@ -462,3 +462,11 @@ function gb_route($name, $parameters = [], $absolute = true)
 {
     return \Hgs3\Http\GlobalBack::route($name, $parameters, $absolute);
 }
+
+/**
+ * フッターの広告を消す
+ */
+function disable_footer_sponsored()
+{
+    \Illuminate\Support\Facades\View::share('disableFooterSponsored', true);
+}

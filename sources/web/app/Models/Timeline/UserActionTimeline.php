@@ -3,85 +3,126 @@
  * ユーザー行動タイムラインモデル
  */
 
-namespace Hgs3\Models;
+namespace Hgs3\Models\Timeline;
 
-use Hgs3\Constants\UserActionTimelineType;
+use Hgs3\Log;
+use Hgs3\Models\Orm;
 use Hgs3\Models\User;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-class UserActionTimeline
+class UserActionTimeline extends TimelineAbstract
 {
     /**
-     * @var User
-     */
-    private $user = null;
-
-    /**
-     * コンストラクタ
+     * 参加
      *
      * @param User $user
      */
-    public function __construct(User $user)
+    public static function addSignUpText(User $user)
     {
-        $this->user = $user;
+        $text = '当サイトに参加しました！';
+
+        self::insert($user->id, $text);
     }
 
     /**
-     * サインアップ
+     * フォローした
+     *
+     * @param User $user
+     * @param User $followUser
      */
-    public function addSignUpText()
+    public static function addFollowText(User $user, User $followUser)
     {
-        $text = sprintf('当サイトに参加しました！');
+        $text = sprintf('<a href="%s">%sさん</a>をフォローしました。',
+            route('プロフィール', ['showId' => $followUser->show_id]),
+            e($followUser->name)
+        );
 
-        $this->insert(UserActionTimelineType::SIGN_UP, $text);
+        self::insert($user->id, $text);
+    }
+
+    /**
+     * フォロー解除した
+     *
+     * @param User $user
+     * @param User $followUser
+     */
+    public static function addFollowRemoveText(User $user, User $followUser)
+    {
+        $text = sprintf('<a href="%s">%sさん</a>のフォローを解除しました。',
+            route('プロフィール', ['showId' => $followUser->show_id]),
+            e($followUser->name)
+        );
+
+        self::insert($user->id, $text);
     }
 
     /**
      * サイト登録
      *
-     * @param User $followUser
+     * @param User $user
+     * @param Orm\Site $site
      */
-    public function addSiteText(User $followUser)
+    public static function addSiteText(User $user, Orm\Site $site)
     {
-        $text = sprintf(
-            '<a href="%s">%sさん</a>をフォローしました。',
-            route('プロフィール', ['showId' => $followUser->show_id]),
-            $followUser->name
+        $text = sprintf('サイト「<a href="%s">%s</a>」を登録しました。',
+            route('サイト詳細', ['site' => $site->id]),
+            e($site->name)
         );
 
-        $this->insert(UserActionTimelineType::SIGN_UP, $text);
+        self::insert($user->id, $text);
     }
 
     /**
-     * MongoDBのコレクションを取得
+     * サイト更新
      *
-     * @return \MongoDB\Collection
+     * @param User $user
+     * @param Orm\Site $site
      */
-    public static function getMongoCollection()
+    public static function addSiteUpdateText(User $user, Orm\Site $site)
     {
-        $client = new \MongoDB\Client("mongodb://localhost:27017");
-        return $client->hgs3->user_action_timeline;
+        $text = sprintf('サイト「<a href="%s">%s</a>」を更新しました。',
+            route('サイト詳細', ['site' => $site->id]),
+            e($site->name)
+        );
+
+        self::insert($user->id, $text);
     }
 
     /**
      * データ登録
      *
-     * @param int $type
+     * @param int $userId
      * @param string $text
-     * @param int $userOnly
-     * @param array $option
      */
-    private function insert($type, $text, $userOnly = 0, $option = [])
+    private static function insert($userId, $text)
     {
-        $data = [
-            'type' => $type,
-            'text' => $text,
-            'user_id'   => $this->user->id,
-            'user_only' => $userOnly,
-            'time' => time()
+        try {
+            self::getDB()->user_action_timeline->insertOne([
+                'user_id' => $userId,
+                'text'    => $text,
+                'time'    => microtime(true)
+            ]);
+        } catch (\Exception $e) {
+            Log::exceptionErrorNoThrow($e);
+        }
+    }
+
+    /**
+     * タイムラインを取得
+     *
+     * @param int $time
+     * @param int $num
+     * @return array
+     */
+    public static function get($time, $num)
+    {
+        $filter = [
+            'time' => ['$lt' => $time]
+        ];
+        $options = [
+            'sort'  => ['time' => -1],
+            'limit' => $num,
         ];
 
-        $collection = self::getMongoCollection();
-        $collection->insertOne($data + $option);
+        return self::getDB()->user_action_timeline->find($filter, $options)->toArray();
     }
 }

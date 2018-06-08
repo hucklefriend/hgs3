@@ -17,6 +17,7 @@ use Hgs3\Log;
 use Hgs3\Models\Site;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
+use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\Auth;
 
 class SiteManageController extends Controller
@@ -60,60 +61,15 @@ class SiteManageController extends Controller
             return view('user.siteManage.max');
         }
 
+        disable_footer_sponsored();
+
         return view('user.siteManage.add', [
-            'isTakeOver' => false,
             'softs'      => Orm\GameSoft::getPhoneticTypeHash(),
             'site'       => new Orm\Site([
                 'main_contents_id' => MainContents::WALKTHROUGH,
                 'rate'               => Rate::ALL,
                 'gender'             => Gender::NONE,
-            ]),
-            'listBannerUploadFlag'   => old('list_banner_upload_flag', 0),
-            'detailBannerUploadFlag' => old('detail_banner_upload_flag', 0)
-        ]);
-    }
-
-    /**
-     * 引き継ぐサイトを選択
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function takeOverSelect()
-    {
-        // サイト登録可能数チェック
-        if (Site::isMax(Auth::id())) {
-            return view('user.siteManage.max');
-        }
-
-        return view('user.siteManage.takeOverSelect', [
-            'hgs2Sites' => Site\TakeOver::getHgs2Sites(Auth::user())
-        ]);
-    }
-
-    /**
-     * 引き継ぎ登録画面
-     *
-     * @param $hgs2SiteId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function takeOver($hgs2SiteId)
-    {
-        // サイト登録可能数チェック
-        if (Site::isMax(Auth::id())) {
-            return view('user.siteManage.max');
-        }
-
-        // 本人しか引き継げない
-        if (!Site\TakeOver::isOwner(Auth::user(), $hgs2SiteId)) {
-            return $this->forbidden(['site_id' => $hgs2SiteId]);
-        }
-
-        return view('user.siteManage.add', [
-            'isTakeOver' => true,
-            'softs'      => Orm\GameSoft::getPhoneticTypeHash(),
-            'site'       => Site\TakeOver::getHgs2Site(Auth::user(), $hgs2SiteId),
-            'listBannerUploadFlag'   => old('list_banner_upload_flag', 0),
-            'detailBannerUploadFlag' => old('detail_banner_upload_flag', 0)
+            ])
         ]);
     }
 
@@ -132,32 +88,9 @@ class SiteManageController extends Controller
         }
 
         $site = new Orm\Site;
-
-        // 引き継ぎの場合は登録日と、アクセスカウントをコピー
-        $hgs2SiteId = $request->get('hgs2_site_id', 0);
-        if ($hgs2SiteId > 0) {
-            // 本人しか引き継げない
-            if (!Site\TakeOver::isOwner(Auth::user(), $hgs2SiteId)) {
-                return $this->forbidden(['site_id' => $hgs2SiteId]);
-            }
-
-            $hgs2Site = Site\TakeOver::getHgs2Site(Auth::user(), $hgs2SiteId);
-            if ($hgs2Site != null) {
-                $site->in_count = $hgs2Site->in;
-                $site->out_count = $hgs2Site->out;
-                $site->registered_timestamp = $hgs2Site->registered_date;
-            } else {
-                $site->in_count = 0;
-                $site->out_count = 0;
-                $site->registered_timestamp = time();
-            }
-
-            $site->hgs2_site_id = $hgs2SiteId;
-        } else {
-            $site->in_count = 0;
-            $site->out_count = 0;
-            $site->registered_timestamp = time();
-        }
+        $site->in_count = 0;
+        $site->out_count = 0;
+        $site->registered_timestamp = time();
 
         $this->setRequestData($site, $request);
         $site->open_type = 0;
@@ -166,22 +99,116 @@ class SiteManageController extends Controller
         $site->bad_num = 0;
         $site->updated_timestamp = 0;       // 更新日時は0
 
-        $listBanner = $request->file('list_banner_upload');
-        $detailBanner = $request->file('detail_banner_upload');
+        // 登録処理
+        Site::insert(Auth::user(), $site);
 
-        $isDraft = $request->get('draft', 0) == 1;
+        return redirect()->route('サイトバナー設定', ['site' => $site->id, 'isFirst' => 1]);
+    }
 
-        if (!Site::insert(Auth::user(), $site, $listBanner, $detailBanner, $isDraft)) {
-            session(['se' => 1]);
-            return redirect()->back()->withInput();
-        } else {
-            Log::info('サイト登録成功' . Auth::id(), $request->toArray());
+
+    /**
+     * バナー設定画面
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function banner(Orm\Site $site, $isFirst = 0)
+    {
+        // 本人しか更新できない
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
         }
 
-        session(['a' => 1]);
+        $isFirst = $isFirst != 0;
+
+        disable_footer_sponsored();
+
+        $listBannerUrl = '';
+        $listBannerUploadFlag = old('list_banner_upload_flag', false);
+        if (!$isFirst && $listBannerUploadFlag === false) {
+            $listBannerUploadFlag = 3;
+        }
+
+        if ($listBannerUploadFlag == 1) {
+            $listBannerUrl = old('list_banner_url', $site->list_banner_url);
+        }
+
+        $detailBannerUrl = '';
+        $detailBannerUploadFlag = old('detail_banner_upload_flag', false);
+        if (!$isFirst && $detailBannerUploadFlag === false) {
+            $detailBannerUploadFlag = 3;
+        }
+
+        if ($detailBannerUploadFlag == 1) {
+            $detailBannerUrl = old('detail_banner_url', $site->detail_banner_url);
+        }
+
+        return view('user.siteManage.banner', [
+            'site' => $site,
+            'user' => Auth::user(),
+            'isFirst' => $isFirst,
+            'listBannerUploadFlag'   => $listBannerUploadFlag,
+            'listBannerUrl'          => $listBannerUrl,
+            'detailBannerUploadFlag' => $detailBannerUploadFlag,
+            'detailBannerUrl'        => $detailBannerUrl,
+        ]);
+    }
+
+    /**
+     * バナー情報の更新
+     *
+     * @param SiteManage\BannerRequest $request
+     * @param Orm\Site $site
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveBanner(SiteManage\BannerRequest $request, Orm\Site $site)
+    {
+        // 一覧用バナーがアップロードされる場合、ファイルを配置
+        $listBannerUploadFlag = intval($request->get('list_banner_upload_flag'));
+        switch ($listBannerUploadFlag) {
+            case 0:     // なしにする
+                Site\Banner::deleteListBanner($site);
+                $site->list_banner_upload_flag = 0;
+                $site->list_banner_url = '';
+                break;
+            case 1:
+                Site\Banner::deleteListBanner($site);
+                $site->list_banner_upload_flag = 1;
+                $site->list_banner_url = $request->get('list_banner_url');
+                break;
+            case 2:
+                Site\Banner::uploadListBannerFile($site, $request->file('list_banner_upload'));
+                $site->list_banner_upload_flag = 2;
+                break;
+        }
+
+        // 詳細用バナーがアップロードされる場合、ファイルを配置
+        $detailBannerUploadFlag = intval($request->get('detail_banner_upload_flag'));
+        switch ($detailBannerUploadFlag) {
+            case 0:     // なしにする
+                Site\Banner::deleteDetailBanner($site);
+                $site->detail_banner_upload_flag = 0;
+                $site->detail_banner_url = '';
+                break;
+            case 1:
+                Site\Banner::deleteDetailBanner($site);
+                $site->detail_banner_upload_flag = 1;
+                $site->detail_banner_url = $request->get('detail_banner_url');
+                break;
+            case 2:
+                Site\Banner::uploadDetailBannerFile($site, $request->file('detail_banner_upload'));
+                $site->detail_banner_upload_flag = 2;
+                break;
+        }
+
+        if ($listBannerUploadFlag != 3 || $detailBannerUploadFlag != 3) {
+            $site->save();
+            Site::registerUpdateTimeline(Auth::user(), $site);
+        }
 
         return redirect()->route('サイト詳細', ['site' => $site->id]);
     }
+
 
     /**
      * 編集画面

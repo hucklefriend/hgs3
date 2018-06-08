@@ -7,7 +7,6 @@ namespace Hgs3\Models\Timeline;
 
 use Hgs3\Log;
 use Hgs3\Models\Orm;
-use Hgs3\Models\UserActionTimeline;
 
 class MyPage extends TimelineAbstract
 {

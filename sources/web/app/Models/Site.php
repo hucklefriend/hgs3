@@ -11,9 +11,7 @@ use Hgs3\Models\Orm;
 use Hgs3\Models\Site\Footprint;
 use Hgs3\Models\Site\NewArrival;
 use Hgs3\Models\Site\UpdateArrival;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Hgs3\Models\Timeline;
 use Illuminate\Support\Facades\Mail;
 use Hgs3\Log;
@@ -23,15 +21,11 @@ class Site
     /**
      * 登録
      *
-     * @param \Hgs3\Models\User $user
+     * @param User $user
      * @param Orm\Site $site
-     * @param UploadedFile|null $listBanner
-     * @param UploadedFile|null $detailBanner
-     * @param bool $isDraft
-     * @return bool
      * @throws \Exception
      */
-    public static function insert(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isDraft)
+    public static function insert(User $user, Orm\Site $site)
     {
         // Laravelの方でカンマ区切りは配列にしてくれるっぽい？
         if (is_array($site->handle_soft)) {
@@ -42,15 +36,7 @@ class Site
             $handleSoftIds = explode(',', $site->handle_soft);
         }
 
-        $isTakeOver = $site->hgs2_site_id != null;      // H.G.S.からの引き継ぎか？
-
-        // サイトの承認状況を設定
-        if ($isDraft) {
-            $site->approval_status = ApprovalStatus::DRAFT;     // 下書き
-        } else {
-            // 引き継ぎなら承認なしでOK
-            $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
-        }
+        $site->approval_status = ApprovalStatus::DRAFT;     // 下書き
 
         DB::beginTransaction();
         try {
@@ -60,58 +46,27 @@ class Site
             // 取扱いゲームを保存
             self::saveHandleSofts($site, $handleSoftIds);
 
-            // バナー保存
-            if (self::saveBanner($site, $listBanner, $detailBanner, false, false)) {
-                $site->save();      // URLが変わっているのでさらにUPDATE
-            }
-
-            // 引き継ぎの場合
-            if ($isTakeOver) {
-                // 日別アクセス数のコピー
-                self::takeOverDailyAccess($site->id, $site->hgs2_site_id);
-
-                // 下書きでなければそのまま登録
-                if (!$isDraft) {
-                    // 新着サイトに登録
-                    NewArrival::add($site->id);
-
-                    // 検索インデックスへの登録
-                    self::saveSearchIndex($site, $handleSoftIds);
-                }
-            }
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             Log::exceptionError($e);
-            return false;
         }
 
-        // 下書きじゃなければ
-        if (!$isDraft) {
-            // 引き継ぎはこのまま登録させるのでタイムラインに登録
-            if ($isTakeOver) {
-                self::saveNewSiteInformation($user, $site, $handleSoftIds);
-            } else {
-                try {
-                    // 管理人のタイムラインに流す
-                    $admin = User::getAdmin();
-                    Timeline\ToMe::addSiteApproveText($admin, $site);
+        try {
+            // 管理人のタイムラインに流す
+            $admin = User::getAdmin();
+            Timeline\ToMe::addSiteApproveText($admin, $site);
 
-                    // 管理人にメール送信
-                    if (env('APP_ENV') == 'production') {
-                        Mail::to(env('ADMIN_MAIL'))
-                            ->send(new \Hgs3\Mail\SiteApprovalWait($site));
+            // 管理人にメール送信
+            if (env('APP_ENV') == 'production') {
+                Mail::to(env('ADMIN_MAIL'))
+                    ->send(new \Hgs3\Mail\SiteApprovalWait($site));
 
-                        Log::info('管理人にメール飛ばした');
-                    }
-                } catch (\Exception $e) {
-                    Log::exceptionError($e);
-                }
+                Log::info('管理人にメール飛ばした');
             }
+        } catch (\Exception $e) {
+            Log::exceptionError($e);
         }
-
-        return true;
     }
 
     /**
@@ -119,15 +74,9 @@ class Site
      *
      * @param User $user
      * @param Orm\Site $site
-     * @param UploadedFile|null $listBanner
-     * @param UploadedFile|null $detailBanner
-     * @param bool $isDraft
-     * @param bool $isDeleteListBanner
-     * @param bool $isDeleteDetailBanner
-     * @return bool
      * @throws \Exception
      */
-    public static function update(User $user, Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isDraft, $isDeleteListBanner, $isDeleteDetailBanner)
+    public static function update(User $user, Orm\Site $site)
     {
         // カンマ区切りを配列にしてくれるっぽい？
         if (is_array($site->handle_soft)) {
@@ -137,26 +86,9 @@ class Site
             $handleSoftIds = explode(',', $site->handle_soft);
         }
 
-        $isNewArrival = $site->approval_status == ApprovalStatus::DRAFT && !$isDraft;   // 下書きから登録
-        $isTakeOver = $site->hgs2_site_id != null;                     // H.G.S.からの引き継ぎ
-
-        // サイトの承認状況を設定
-        if ($isDraft) {
-            $site->approval_status = ApprovalStatus::DRAFT;
-        } else if ($site->approval_status == ApprovalStatus::REJECT) {
-            // リジェクトからの場合は再度審査
-            $site->approval_status = ApprovalStatus::WAIT;
-        } else if ($site->approval_status == ApprovalStatus::DRAFT) {
-            // 下書きから正式登録の場合は審査
-            // ただしH.G.S.引き継ぎなら審査なしでOK
-            $site->approval_status = $isTakeOver ? ApprovalStatus::OK : ApprovalStatus::WAIT;
-        }
-
-        if (!$isNewArrival && $site->approval_status == ApprovalStatus::OK) {
+        $isApproved = $site->approval_status == ApprovalStatus::OK;   // 承認済み？
+        if ($isApproved) {
             $site->updated_timestamp = time();
-        }
-
-        if (!$isNewArrival) {
             // タイムライン用に現在の取扱いゲームを取得
             $prevHandleSoftIds = DB::table('site_handle_softs')
                 ->select(['soft_id'])
@@ -166,17 +98,13 @@ class Site
                 ->toArray();
         }
 
+
         DB::beginTransaction();
         try {
             self::saveHandleSofts($site, $handleSoftIds);
-            self::saveBanner($site, $listBanner, $detailBanner, $isDeleteListBanner, $isDeleteDetailBanner);
             $site->save();
 
-            if ($isNewArrival && $isTakeOver) {
-                // 下書きからの更新かつ引き継ぎならそのまま登録
-                NewArrival::add($site->id);                     // 新着サイト
-                self::saveSearchIndex($site, $handleSoftIds);   // 検索インデックスに登録
-            } else if ($site->approval_status == ApprovalStatus::OK) {
+            if ($isApproved) {
                 // 承認済みサイトの更新
                 UpdateArrival::add($site->id);                  // 更新サイト
                 self::saveSearchIndex($site, $handleSoftIds);   // 検索インデックス更新
@@ -190,35 +118,9 @@ class Site
         }
 
         // サイト追加タイムライン
-        if ($isNewArrival) {
-            // 引き継ぎはこのまま登録させるのでタイムラインに登録
-            if ($isTakeOver) {
-                self::saveNewSiteInformation($user, $site, $handleSoftIds);
-            } else {
-                try {
-                    // 管理人のタイムラインに流す
-                    $admin = User::getAdmin();
-                    Timeline\ToMe::addSiteApproveText($admin, $site);
-
-                    // 管理人にメール送信
-                    if (env('APP_ENV') == 'production') {
-                        Mail::to(env('ADMIN_MAIL'))
-                            ->send(new \Hgs3\Mail\SiteApprovalWait($site));
-
-                        Log::info('管理人にメール飛ばした');
-                    }
-                } catch (\Exception $e) {
-                    Log::error($e->getMessage());
-                    Log::error($e->getTraceAsString());
-                }
-            }
-        } else if ($site->approval_status == ApprovalStatus::OK) {
+        if ($isApproved) {
             // サイト更新タイムライン
-            Timeline\FollowUser::addUpdateSiteText($user, $site);
-            Timeline\ToMe::addSiteUpdatedText($user, $site);
-            Timeline\FavoriteSite::addUpdateSiteText($site);
-            Timeline\Site::addUpdateText($site);
-            Timeline\NewInformation::addUpdateSiteText($site);
+            self::registerUpdateTimeline($user, $site);
 
             // 直前に取り扱ってないゲームを追加
             $softHash = Orm\GameSoft::getHash($handleSoftIds);
@@ -233,74 +135,21 @@ class Site
     }
 
     /**
-     * バナー情報の保存
+     * サイト更新タイムラインの保存
      *
+     * @param User $user
      * @param Orm\Site $site
-     * @param UploadedFile|null $listBanner
-     * @param UploadedFile|null $detailBanner
-     * @param bool $isDeleteListBanner
-     * @param bool $isDeleteDetailBanner
-     * @return bool
      */
-    private static function saveBanner(Orm\Site $site, ?UploadedFile $listBanner, ?UploadedFile $detailBanner, $isDeleteListBanner, $isDeleteDetailBanner)
+    public static function registerUpdateTimeline(User $user, Orm\Site $site)
     {
-        $isChange = false;
-        $bannerDirectoryPath = base_path() . '/public/img/site_banner/' . $site->id;
-
-        // バナー用ディレクトリ作成
-        if (!File::exists($bannerDirectoryPath)) {
-            File::makeDirectory($bannerDirectoryPath);
+        if ($site->approval_status == ApprovalStatus::OK) {
+            Timeline\FollowUser::addUpdateSiteText($user, $site);
+            Timeline\ToMe::addSiteUpdatedText($user, $site);
+            Timeline\FavoriteSite::addUpdateSiteText($site);
+            Timeline\Site::addUpdateText($site);
+            Timeline\NewInformation::addUpdateSiteText($site);
+            Timeline\UserActionTimeline::addSiteUpdateText($user, $site);
         }
-
-        // 一覧用バナー削除
-        if ($isDeleteListBanner && !empty($site->list_banner_url)) {
-            $listBannerFileName = 'list.' . substr($site->list_banner_url, strrpos($site->list_banner_url, '.'));
-            if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
-                File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
-            }
-
-            $site->list_banner_url = '';
-            $isChange = true;
-        }
-
-        // 一覧用バナーをアップロード
-        if ($listBanner !== null) {
-            // アップロード
-            $listBannerFileName = 'list.' . $listBanner->getClientOriginalExtension();
-            if (File::exists($bannerDirectoryPath . '/' . $listBannerFileName)) {
-                File::delete($bannerDirectoryPath . '/' . $listBannerFileName);
-            }
-
-            $listBanner->move($bannerDirectoryPath, $listBannerFileName);
-            $site->list_banner_url = url('img/site_banner/' . $site->id . '/' . $listBannerFileName);
-            $isChange = true;
-        }
-
-        // 詳細用バナー削除
-        if ($isDeleteDetailBanner && !empty($site->detail_banner_url)) {
-            $detailBannerFileName = 'detail.' . substr($site->detail_banner_url, strrpos($site->detail_banner_url, '.'));
-            if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
-                File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
-            }
-
-            $site->detail_banner_url = '';
-            $isChange = true;
-        }
-
-        // 詳細用バナーをアップロード
-        if ($detailBanner != null) {
-            // アップロード
-            $detailBannerFileName = 'detail.' . $detailBanner->getClientOriginalExtension();
-            if (File::exists($bannerDirectoryPath . '/' . $detailBannerFileName)) {
-                File::delete($bannerDirectoryPath . '/' . $detailBannerFileName);
-            }
-
-            $detailBanner->move($bannerDirectoryPath, $detailBannerFileName);
-            $site->detail_banner_url = url('img/site_banner/' . $site->id . '/' . $detailBannerFileName);
-            $isChange = true;
-        }
-
-        return $isChange;
     }
 
     /**

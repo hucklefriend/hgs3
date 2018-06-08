@@ -118,7 +118,6 @@ class FavoriteSoft extends TimelineAbstract
      *
      * @param int $softId
      * @param string $text
-     * @return bool
      */
     private static function insert($softId, $text)
     {
@@ -129,12 +128,7 @@ class FavoriteSoft extends TimelineAbstract
                 'time'    => microtime(true)
             ]);
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return false;
+            \Hgs3\Log::exceptionErrorNoThrow($e);
         }
-
-        return true;
     }
 }
