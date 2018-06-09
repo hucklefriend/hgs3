@@ -41,7 +41,7 @@
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" value="1" name="adult"{{ checked(old('checkbox', $user->adult), 1) }}>
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">18歳以上で、かつ性的な表現があっても問題ありません</span>
+                        <span class="custom-control-description">18歳以上で、かつ暴力や性的な表現があっても問題ありません</span>
                     </label>
                 </div>
             </div>

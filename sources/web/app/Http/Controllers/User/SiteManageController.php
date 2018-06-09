@@ -16,7 +16,10 @@ use Hgs3\Http\Requests\User\SiteManage;
 use Hgs3\Log;
 use Hgs3\Models\Site;
 use Hgs3\Models\Orm;
+use Hgs3\Models\Timeline;
+use Hgs3\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class SiteManageController extends Controller
 {
@@ -193,7 +196,11 @@ class SiteManageController extends Controller
             Site::registerUpdateTimeline(Auth::user(), $site);
         }
 
-        return redirect()->route('サイト詳細', ['site' => $site->id]);
+        if ($request->get('go_to_r18') == 1) {
+            return redirect()->route('R-18サイトバナー設定', ['site' => $site->id, 'isFirst' => 1]);
+        } else {
+            return redirect()->route('サイト詳細', ['site' => $site->id]);
+        }
     }
 
     /**
@@ -238,7 +245,7 @@ class SiteManageController extends Controller
             $detailBannerUrl = old('detail_banner_url', $site->detail_banner_url_r18);
         }
 
-        return view('user.siteManage.banner', [
+        return view('user.siteManage.bannerR18', [
             'site'                   => $site,
             'user'                   => Auth::user(),
             'isFirst'                => $isFirst,
@@ -374,6 +381,43 @@ class SiteManageController extends Controller
         $site->rate = intval($request->get('rate',Rate::ALL));
         $site->gender = intval($request->get('gender', Gender::NONE));
         $site->handle_soft = $request->get('handle_soft');
+    }
+
+    /**
+     * 登録申請
+     *
+     * @param Orm\Site $site
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function approve(Orm\Site $site)
+    {
+        // 本人しかできない
+        if ($site->user_id != Auth::id()) {
+            return $this->forbidden(['site_id' => $site->id]);
+        }
+
+        // 下書きか、リジェクト状態の時しかできない
+        if (!in_array($site->approval_status, [ApprovalStatus::DRAFT, ApprovalStatus::REJECT])) {
+            return redirect()->route('サイト詳細', ['site' => $site->id]);
+        }
+
+        $site->approval_status = ApprovalStatus::WAIT;
+        $site->save();
+
+
+        // 管理人のタイムラインに流す
+        $admin = User::getAdmin();
+        Timeline\ToMe::addSiteApproveText($admin, $site);
+
+        // 管理人にメール送信
+        if (env('APP_ENV') == 'production') {
+            Mail::to(env('ADMIN_MAIL'))
+                ->send(new \Hgs3\Mail\SiteApprovalWait($site));
+
+            Log::info('管理人にメール飛ばした');
+        }
+
+        return redirect()->route('サイト詳細', ['site' => $site->id]);
     }
 
     /**

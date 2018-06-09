@@ -83,8 +83,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/site_manage/r18banner/{site}', 'User\SiteManageController@saveBannerR18')->name('R-18サイトバナー設定処理');
     Route::get('/user/site_manage/edit/{site}', 'User\SiteManageController@edit')->name('サイト編集');
     Route::patch('/user/site_manage/edit/{site}', 'User\SiteManageController@update')->name('サイト編集処理');
-    Route::get('/user/site_manage/takeover', 'User\SiteManageController@takeOverSelect')->name('サイト引継選択');
-    Route::get('/user/site_manage/takeover/{hgs2SiteId}', 'User\SiteManageController@takeOver')->name('サイト引継登録');
+    Route::post('/user/site_manage/approve/{site}', 'User\SiteManageController@approve')->name('サイト登録申請');
     Route::delete('/user/site_manage/{site}', 'User\SiteManageController@delete')->name('サイト削除');
     Route::get('/user/site_manage/update_history/add/{site}', 'User\SiteManageController@addUpdateHistory')->name('サイト更新履歴登録');
     Route::post('/user/site_manage/update_history/add/{site}', 'User\SiteManageController@insertUpdateHistory')->name('サイト更新履歴登録処理');

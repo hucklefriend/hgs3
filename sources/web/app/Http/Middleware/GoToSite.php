@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Middleware;
 
 use Closure;
+use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Log;
 use Hgs3\Models\Site;
 use Hgs3\Models\Orm;
@@ -35,7 +36,7 @@ class GoToSite
     public function terminate($request, $response)
     {
         // 足跡を追加
-        if ($request->site != null) {
+        if ($request->site != null && $response->site->approval_status == ApprovalStatus::OK) {
             if (Auth::check()) {
                 // 足跡を残す設定かどうか
                 if (Auth::user()->footprint == 1) {

@@ -51,22 +51,6 @@ class Site
             DB::rollBack();
             Log::exceptionError($e);
         }
-
-        try {
-            // 管理人のタイムラインに流す
-            $admin = User::getAdmin();
-            Timeline\ToMe::addSiteApproveText($admin, $site);
-
-            // 管理人にメール送信
-            if (env('APP_ENV') == 'production') {
-                Mail::to(env('ADMIN_MAIL'))
-                    ->send(new \Hgs3\Mail\SiteApprovalWait($site));
-
-                Log::info('管理人にメール飛ばした');
-            }
-        } catch (\Exception $e) {
-            Log::exceptionError($e);
-        }
     }
 
     /**
@@ -74,6 +58,7 @@ class Site
      *
      * @param User $user
      * @param Orm\Site $site
+     * @return bool
      * @throws \Exception
      */
     public static function update(User $user, Orm\Site $site)
@@ -98,7 +83,6 @@ class Site
                 ->toArray();
         }
 
-
         DB::beginTransaction();
         try {
             self::saveHandleSofts($site, $handleSoftIds);
@@ -117,9 +101,8 @@ class Site
             return false;
         }
 
-        // サイト追加タイムライン
+        // サイト更新タイムライン
         if ($isApproved) {
-            // サイト更新タイムライン
             self::registerUpdateTimeline($user, $site);
 
             // 直前に取り扱ってないゲームを追加

@@ -7,6 +7,7 @@
 namespace Hgs3\Http;
 
 use Hgs3\Constants\PageId;
+use Hgs3\Constants\Site\ApprovalStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Hgs3\Models\Orm;
@@ -243,7 +244,7 @@ class GlobalBack
 
         self::push(PageId::SITE, $site->id);
 
-        $backToSiteMange = [
+        $backToSiteManage = [
             PageId::SITE_ADD_CONFIRM,
             PageId::SITE_UPDATE_HISTORY_ADD,
             PageId::SITE_UPDATE_HISTORY_EDIT,
@@ -251,11 +252,13 @@ class GlobalBack
             PageId::SITE_ACCESS_LOG
         ];
 
-        if ($before === false) {
+        if ($site->approval_status != ApprovalStatus::OK) {
+            return self::route('プロフィール2', ['showId' => Auth::user()->show_id, 'show' => 'site']);
+        } else if ($before === false) {
             return self::route('サイトトップ');
         } else if ($before[0] == PageId::GAME_DETAIL) {
             return self::route('ソフト別サイト一覧', ['soft' => $before[2]]);
-        } else if (in_array($before[0], $backToSiteMange)) {
+        } else if (in_array($before[0], $backToSiteManage)) {
             return self::route('サイト管理');
         } else {
             return $before[1];
@@ -552,7 +555,7 @@ class GlobalBack
     public static function siteAdd()
     {
         self::push(PageId::SITE_ADD);
-        return self::route('プロフィール2', ['showId' => Auth::user()->show_id]);
+        return self::route('プロフィール2', ['showId' => Auth::user()->show_id, 'show' => 'site']);
     }
 
     /**

@@ -94,15 +94,14 @@
                             <label class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" value="1" name="adult"{{ checked(old('checkbox'), 1) }}>
                                 <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">18歳以上で、かつ性的な表現があっても問題ありません</span>
+                                <span class="custom-control-description">18歳以上で、かつ暴力や性的な表現があっても問題ありません</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-help">
                         <p class="form-text text-muted">
                             <small>
-                                18禁エロゲのパッケージと、商品へのリンクが表示されるようになります。<br>
-                                CERO-Zのパッケージには影響しません。<br>
+                                18禁ゲーム(CERO-Z指定のゲームやエロゲ)のパッケージと、商品へのリンクが表示されるようになります。<br>
                                 ※今後、イラストや小説などのアップロードといった機能が実装されるとなれば、このチェックが影響するかもしれません。
                             </small>
                         </p>

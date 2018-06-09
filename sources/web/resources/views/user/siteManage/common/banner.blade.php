@@ -1,263 +1,265 @@
-<ul class="nav nav-pills">
-    <li class="nav-item">
-        <a class="nav-link active" id="for_list">一覧用</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="for_detail">詳細用</a>
-    </li>
-</ul>
+{{ csrf_field() }}
+<div class="tab-container">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#list_banner" role="tab">一覧用</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#detail_banner" role="tab">詳細用</a>
+        </li>
+    </ul>
 
-    {{ csrf_field() }}
-    <div id="list_banner" class="mt-4">
-        <div class="form-group">
-            <div>
-                <label for="list_banner_upload_flag" class="hgn-label"><i class="far fa-image"></i> 一覧用バナー</label>
+    <div class="tab-content">
+        <div class="tab-pane active fade show" id="list_banner" role="tabpanel">
+            <div class="form-group">
+                <div>
+                    <label for="list_banner_upload_flag" class="hgn-label"><i class="far fa-image"></i> 一覧用バナー</label>
+                </div>
             </div>
-        </div>
-        <div class="form-help">
-            <p>
-                一覧表示される画面で表示するバナーです。<br>
-                幅は最大468pxで、レスポンシブルに拡縮します。<br>
-                高さは最大60pxで、60pxを超えている分はカットされます。
-            </p>
-            <p>
-                URLを指定して直リンクするか、当サイト内にアップロードすることができます。
-            </p>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="list_banner_upload_flag" class="hgn-label"><i class="fas fa-check"></i> どうしますか？</label>
+            <div class="form-help">
+                <p>
+                    一覧表示される画面で表示するバナーです。<br>
+                    幅は最大468pxで、レスポンシブルに拡縮します。<br>
+                    高さは最大60pxで、60pxを超えている分はカットされます。
+                </p>
+                <p>
+                    URLを指定して直リンクするか、当サイト内にアップロードすることができます。
+                </p>
             </div>
-            <div class="mt-3 mb-2">
-                <label class="custom-control custom-radio mb-3">
-                    <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_0" value="0"{{ checked($listBannerUploadFlag, 0) }}>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">バナーなしでいい</span>
-                </label>
 
-                <label class="custom-control custom-radio mb-3">
-                    <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_1" value="1"{{ checked($listBannerUploadFlag, 1) }}>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">URLを指定する</span>
-                </label>
-
-                <label class="custom-control custom-radio mb-3">
-                    <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_2" value="2"{{ checked($listBannerUploadFlag, 2) }}>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">アップロードする</span>
-                </label>
-
-                @if (!$isFirst)
+            <div class="form-group">
+                <div>
+                    <label for="list_banner_upload_flag" class="hgn-label"><i class="fas fa-check"></i> どうしますか？</label>
+                </div>
+                <div class="mt-3 mb-2">
                     <label class="custom-control custom-radio mb-3">
-                        <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_3" value="3"{{ checked($listBannerUploadFlag, 3) }}>
+                        <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_0" value="0"{{ checked($listBannerUploadFlag, 0) }}>
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">今のまま変えない</span>
+                        <span class="custom-control-description">バナーなしでいい</span>
                     </label>
-                @endif
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <div id="list_banner_none_area">
-            <div class="form-help"></div>
-        </div>
 
-        <div id="list_banner_link_area">
-            <div class="form-group">
-                <label for="list_banner_url" class="hgn-label"><i class="fas fa-edit"></i> 画像のURL</label>
-                <input type="url" class="form-control{{ invalid($errors, 'list_banner_url') }}" id="list_banner_url" name="list_banner_url" value="{{ $listBannerUrl }}">
-                <i class="form-group__bar"></i>
-            </div>
-            <div class="form-help">
-                <p class="form-text text-muted">
-                    <small>
-                        <strong>httpsで始まるURLのみ</strong><br>
-                        それ以外のURLはご利用いただけませんので、画像をアップロードしてください。
-                    </small>
-                </p>
-                <p class="form-text text-muted">
-                    <small>サーバーによっては直リンクできない所もありますので、事前にご確認ください。</small>
-                </p>
-            </div>
-        </div>
-
-        <div id="list_banner_upload_area">
-
-            <div class="form-group">
-                <label for="list_banner_url" class="hgn-label"><i class="fas fa-upload"></i> アップロードするファイル</label>
-                <input type="file" name="list_banner_upload" id="list_banner_upload" class="form-control-file{{ invalid($errors, 'list_banner_upload') }}" accept="image/*">
-                <i class="form-group__bar"></i>
-            </div>
-
-            <div class="form-help">
-                <p class="form-text text-muted">
-                    <small>容量は1MBまで、形式はjpg/png/gif/bmp/svg</small>
-                </p>
-            </div>
-        </div>
-
-        <h6>表示サンプル</h6>
-        <div class="site-normal">
-            <div>
-                <div class="no-banner-site-name list_banner_none">
-                    <span class="site_name">{{ $site->name }}</span>
-                </div>
-
-                <div class="list_banner_exist">
-                    <span class="site_name">{{ $site->name }}</span>
-                </div>
-                <div class="list-site-banner-outline list_banner_exist">
-                    <span><img src="{{ $site->list_banner_url }}" class="img-responsive" id="list_banner_img"></span>
-                </div>
-            </div>
-
-            <div class="site-presentation mt-2">{{ e(str_limit($site->presentation, 150)) }}</div>
-
-            <div class="d-flex flex-wrap site-badge my-3">
-                <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
-                @if ($site->rate > 0)
-                    <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
-                @endif
-                @if ($site->gender != \Hgs3\Constants\Site\Gender::NONE)
-                    <span class="tag simple">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
-                @endif
-            </div>
-
-            <div class="d-flex align-content-start flex-wrap site-info">
-                <span><i class="far fa-user"></i> {{ $user->name }}</span>
-                <span><span class="good-icon2"><i class="far fa-thumbs-up"></i></span> {{ number_format($site->good_num) }}</span>
-                <span><i class="fas fa-paw"></i> {{ number_format($site->out_count) }}</span>
-                @if ($site->updated_timestamp > 0)
-                    <span><i class="fas fa-redo-alt"></i> {{ format_date($site->updated_timestamp) }}</span>
-                @endif
-            </div>
-            <div class="mt-2"><a href="{{ $site->url }}" target="_blank"><small>{{ $site->url }}</small></a></div>
-        </div>
-    </div>
-
-    <div id="detail_banner" class="mt-4" style="display:none;">
-        <div class="form-group">
-            <div>
-                <label for="detail_banner_upload_flag" class="hgn-label"><i class="far fa-image"></i> 詳細用バナー</label>
-            </div>
-        </div>
-        <div class="form-help">
-            <p>
-                このサイト専用の詳細ページで表示されるバナーです。<br>
-                画像はレスポンシブルに拡縮します。<br>
-                一覧用バナーのようにトリムはしていません
-            </p>
-            <p>
-                URLを指定して直リンクするか、当サイト内にアップロードすることができます。
-            </p>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="detail_banner_upload_flag" class="hgn-label"><i class="fas fa-check"></i> どうしますか？</label>
-            </div>
-            <div class="mt-3 mb-2">
-                <label class="custom-control custom-radio mb-3">
-                    <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_0" value="0"{{ checked($detailBannerUploadFlag, 0) }}>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">バナーなしでいい</span>
-                </label>
-
-                <label class="custom-control custom-radio mb-3">
-                    <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_1" value="1"{{ checked($detailBannerUploadFlag, 1) }}>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">URLを指定する</span>
-                </label>
-
-                <label class="custom-control custom-radio mb-3">
-                    <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_2" value="2"{{ checked($detailBannerUploadFlag, 2) }}>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">アップロードする</span>
-                </label>
-
-                @if (!$isFirst)
                     <label class="custom-control custom-radio mb-3">
-                        <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_3" value="3"{{ checked($detailBannerUploadFlag, 3) }}>
+                        <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_1" value="1"{{ checked($listBannerUploadFlag, 1) }}>
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">今のまま変えない</span>
+                        <span class="custom-control-description">URLを指定する</span>
                     </label>
-                @endif
-                <div class="clearfix"></div>
+
+                    <label class="custom-control custom-radio mb-3">
+                        <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_2" value="2"{{ checked($listBannerUploadFlag, 2) }}>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">アップロードする</span>
+                    </label>
+
+                    @if (!$isFirst)
+                        <label class="custom-control custom-radio mb-3">
+                            <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_3" value="3"{{ checked($listBannerUploadFlag, 3) }}>
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">今のまま変えない</span>
+                        </label>
+                    @endif
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div id="list_banner_none_area">
+                <div class="form-help"></div>
+            </div>
+
+            <div id="list_banner_link_area">
+                <div class="form-group">
+                    <label for="list_banner_url" class="hgn-label"><i class="fas fa-edit"></i> 画像のURL</label>
+                    <input type="url" class="form-control{{ invalid($errors, 'list_banner_url') }}" id="list_banner_url" name="list_banner_url" value="{{ $listBannerUrl }}">
+                    <i class="form-group__bar"></i>
+                </div>
+                <div class="form-help">
+                    <p class="form-text text-muted">
+                        <small>
+                            <strong>httpsで始まるURLのみ</strong><br>
+                            それ以外のURLはご利用いただけませんので、画像をアップロードしてください。
+                        </small>
+                    </p>
+                    <p class="form-text text-muted">
+                        <small>サーバーによっては直リンクできない所もありますので、事前にご確認ください。</small>
+                    </p>
+                </div>
+            </div>
+
+            <div id="list_banner_upload_area">
+
+                <div class="form-group">
+                    <label for="list_banner_url" class="hgn-label"><i class="fas fa-upload"></i> アップロードするファイル</label>
+                    <input type="file" name="list_banner_upload" id="list_banner_upload" class="form-control-file{{ invalid($errors, 'list_banner_upload') }}" accept="image/*">
+                    <i class="form-group__bar"></i>
+                </div>
+
+                <div class="form-help">
+                    <p class="form-text text-muted">
+                        <small>容量は1MBまで、形式はjpg/png/gif/bmp/svg</small>
+                    </p>
+                </div>
+            </div>
+
+            <h6>表示サンプル</h6>
+            <div class="site-normal">
+                <div>
+                    <div class="no-banner-site-name list_banner_none">
+                        <span class="site_name">{{ $site->name }}</span>
+                    </div>
+
+                    <div class="list_banner_exist">
+                        <span class="site_name">{{ $site->name }}</span>
+                    </div>
+                    <div class="list-site-banner-outline list_banner_exist">
+                        <span><img src="{{ $site->list_banner_url }}" class="img-responsive" id="list_banner_img"></span>
+                    </div>
+                </div>
+
+                <div class="site-presentation mt-2">{{ e(str_limit($site->presentation, 150)) }}</div>
+
+                <div class="d-flex flex-wrap site-badge my-3">
+                    <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
+                    @if ($site->rate > 0)
+                        <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
+                    @endif
+                    @if ($site->gender != \Hgs3\Constants\Site\Gender::NONE)
+                        <span class="tag simple">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
+                    @endif
+                </div>
+
+                <div class="d-flex align-content-start flex-wrap site-info">
+                    <span><i class="far fa-user"></i> {{ $user->name }}</span>
+                    <span><span class="good-icon2"><i class="far fa-thumbs-up"></i></span> {{ number_format($site->good_num) }}</span>
+                    <span><i class="fas fa-paw"></i> {{ number_format($site->out_count) }}</span>
+                    @if ($site->updated_timestamp > 0)
+                        <span><i class="fas fa-redo-alt"></i> {{ format_date($site->updated_timestamp) }}</span>
+                    @endif
+                </div>
+                <div class="mt-2"><a href="{{ $site->url }}" target="_blank"><small>{{ $site->url }}</small></a></div>
             </div>
         </div>
-        <div id="detail_banner_none_area">
-            <div class="form-help"></div>
-        </div>
-
-        <div id="detail_banner_link_area">
+        <div class="tab-pane fade" id="detail_banner" role="tabpanel">
             <div class="form-group">
-                <label for="detail_banner_url" class="hgn-label"><i class="fas fa-edit"></i> 画像のURL</label>
-                <input type="url" class="form-control{{ invalid($errors, 'detail_banner_url') }}" id="detail_banner_url" name="detail_banner_url" value="{{ $detailBannerUrl }}">
-                <i class="form-group__bar"></i>
+                <div>
+                    <label for="detail_banner_upload_flag" class="hgn-label"><i class="far fa-image"></i> 詳細用バナー</label>
+                </div>
             </div>
             <div class="form-help">
-                <p class="form-text text-muted">
-                    <small>
-                        <strong>httpsで始まるURLのみ</strong><br>
-                        それ以外のURLはご利用いただけませんので、画像をアップロードしてください。
-                    </small>
+                <p>
+                    このサイト専用の詳細ページで表示されるバナーです。<br>
+                    画像はレスポンシブルに拡縮します。<br>
+                    一覧用バナーのようにトリムはしていません
                 </p>
-                <p class="form-text text-muted">
-                    <small>サーバーによっては直リンクできない所もありますので、事前にご確認ください。</small>
+                <p>
+                    URLを指定して直リンクするか、当サイト内にアップロードすることができます。
                 </p>
             </div>
-        </div>
-
-        <div id="detail_banner_upload_area">
 
             <div class="form-group">
-                <label for="detail_banner_url" class="hgn-label"><i class="fas fa-upload"></i> アップロードするファイル</label>
-                <input type="file" name="detail_banner_upload" id="detail_banner_upload" class="form-control-file{{ invalid($errors, 'detail_banner_upload') }}" accept="image/*">
-                <i class="form-group__bar"></i>
+                <div>
+                    <label for="detail_banner_upload_flag" class="hgn-label"><i class="fas fa-check"></i> どうしますか？</label>
+                </div>
+                <div class="mt-3 mb-2">
+                    <label class="custom-control custom-radio mb-3">
+                        <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_0" value="0"{{ checked($detailBannerUploadFlag, 0) }}>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">バナーなしでいい</span>
+                    </label>
+
+                    <label class="custom-control custom-radio mb-3">
+                        <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_1" value="1"{{ checked($detailBannerUploadFlag, 1) }}>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">URLを指定する</span>
+                    </label>
+
+                    <label class="custom-control custom-radio mb-3">
+                        <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_2" value="2"{{ checked($detailBannerUploadFlag, 2) }}>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">アップロードする</span>
+                    </label>
+
+                    @if (!$isFirst)
+                        <label class="custom-control custom-radio mb-3">
+                            <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_3" value="3"{{ checked($detailBannerUploadFlag, 3) }}>
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">今のまま変えない</span>
+                        </label>
+                    @endif
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div id="detail_banner_none_area">
+                <div class="form-help"></div>
             </div>
 
-            <div class="form-help">
-                <p class="form-text text-muted">
-                    <small>容量は3MBまで、形式はjpg/png/gif/bmp/svg</small>
-                </p>
+            <div id="detail_banner_link_area">
+                <div class="form-group">
+                    <label for="detail_banner_url" class="hgn-label"><i class="fas fa-edit"></i> 画像のURL</label>
+                    <input type="url" class="form-control{{ invalid($errors, 'detail_banner_url') }}" id="detail_banner_url" name="detail_banner_url" value="{{ $detailBannerUrl }}">
+                    <i class="form-group__bar"></i>
+                </div>
+                <div class="form-help">
+                    <p class="form-text text-muted">
+                        <small>
+                            <strong>httpsで始まるURLのみ</strong><br>
+                            それ以外のURLはご利用いただけませんので、画像をアップロードしてください。
+                        </small>
+                    </p>
+                    <p class="form-text text-muted">
+                        <small>サーバーによっては直リンクできない所もありますので、事前にご確認ください。</small>
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <h6>表示サンプル</h6>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card card-hgn">
-                    <img class="card-img-top" src="{{ $site->detail_banner_url }}" id="detail_banner_img">
+            <div id="detail_banner_upload_area">
+                <div class="form-group">
+                    <label for="detail_banner_url" class="hgn-label"><i class="fas fa-upload"></i> アップロードするファイル</label>
+                    <input type="file" name="detail_banner_upload" id="detail_banner_upload" class="form-control-file{{ invalid($errors, 'detail_banner_upload') }}" accept="image/*">
+                    <i class="form-group__bar"></i>
+                </div>
 
-                    <div class="card-body">
-                        <h4 class="card-title">{{ $site->name }}</h4>
-                        <div class="mb-3">
-                            <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
-                            @if ($site->rate > 0)
-                                <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
-                            @endif
-                            @if ($site->gender != \Hgs3\Constants\Site\Gender::NONE)
-                                <span class="tag simple">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
-                            @endif
-                        </div>
-                        <p class="card-text">
-                            <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">{{ $site->url }}</a>
-                        </p>
-                        <div class="d-flex align-content-start flex-wrap site-info">
-                            <span><i class="far fa-user"></i> {{ $user->name }}</span>
-                            <span><span class="favorite-icon"><i class="fas fa-star"></i></span> XXX</span>
-                            <span><span class="good-icon"><i class="fas fa-thumbs-up"></i></span> XXX</span>
-                            <span><i class="fas fa-paw"></i> XXX</span>
-                            @if ($site->updated_timestamp > 0)
-                                <span><i class="fas fa-redo-alt"></i> {{ format_date($site->updated_timestamp) }}</span>
-                            @endif
+                <div class="form-help">
+                    <p class="form-text text-muted">
+                        <small>容量は3MBまで、形式はjpg/png/gif/bmp/svg</small>
+                    </p>
+                </div>
+            </div>
+
+            <h6>表示サンプル</h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-hgn">
+                        <img class="card-img-top" src="{{ $site->detail_banner_url }}" id="detail_banner_img">
+
+                        <div class="card-body">
+                            <h4 class="card-title">{{ $site->name }}</h4>
+                            <div class="mb-3">
+                                <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
+                                @if ($site->rate > 0)
+                                    <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
+                                @endif
+                                @if ($site->gender != \Hgs3\Constants\Site\Gender::NONE)
+                                    <span class="tag simple">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
+                                @endif
+                            </div>
+                            <p class="card-text">
+                                <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">{{ $site->url }}</a>
+                            </p>
+                            <div class="d-flex align-content-start flex-wrap site-info">
+                                <span><i class="far fa-user"></i> {{ $user->name }}</span>
+                                <span><span class="favorite-icon"><i class="fas fa-star"></i></span> XXX</span>
+                                <span><span class="good-icon"><i class="fas fa-thumbs-up"></i></span> XXX</span>
+                                <span><i class="fas fa-paw"></i> XXX</span>
+                                @if ($site->updated_timestamp > 0)
+                                    <span><i class="fas fa-redo-alt"></i> {{ format_date($site->updated_timestamp) }}</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
+</div>
 <script>
     let originalListBannerUrl = '{{ $site->list_banner_url }}';
     let listBannerUrl = '';

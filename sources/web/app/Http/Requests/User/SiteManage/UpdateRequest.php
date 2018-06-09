@@ -28,11 +28,7 @@ class UpdateRequest extends FormRequest
             'url'                  => 'required|max:300|url',
             'handle_soft'          => 'required',
             'presentation'         => 'max:1000',
-            'list_banner_edit'     => 'required|in:1,2,3',
-            'list_banner_upload'   => 'required_if:list_banner_edit,2|file|image|max:1024',
-            'detail_banner_edit'   => 'required|in:1,2,3',
-            'detail_banner_upload' => 'required_if:detail_banner_edit,2|file|image|max:3072',
-            'draft'                => 'nullable',
+
         ];
     }
 }

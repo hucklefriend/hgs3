@@ -19,6 +19,10 @@
             </div>
         @endif
 
+        <div class="alert alert-info" role="alert">
+            R-18バナーは、設定で「18歳以上で、かつ暴力または性的な表現があっても問題ありません」にチェックを入れているユーザーが見た時だけ、通常バナーと差し変わります。
+        </div>
+
         @if ($isFirst)
         <div class="mb-4 py-2">
             <a href="{{ route('サイト詳細', ['site' => $site->id]) }}">R-18バナーを設定せずにスキップ</a>
