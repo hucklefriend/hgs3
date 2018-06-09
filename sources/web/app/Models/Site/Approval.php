@@ -55,6 +55,7 @@ class Approval
             // 検索インデックスに登録
             Site::saveHandleSofts($site);
             Site::saveSearchIndex($site);
+            NewArrival::add($site->id);
 
             DB::commit();
         } catch (\Exception $e) {

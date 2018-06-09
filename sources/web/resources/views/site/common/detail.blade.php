@@ -1,8 +1,9 @@
 <div class="row">
     <div class="col-md-6">
         <div class="card card-hgn">
-            @if (!empty($site->detail_banner_url))
-            <img class="card-img-top" src="{{ $site->detail_banner_url }}">
+            @php $detailBannerUrl = detail_banner($site) @endphp
+            @if (!empty($detailBannerUrl))
+            <img class="card-img-top" src="{{ $detailBannerUrl }}">
             @endif
             <div class="card-body">
                 <h4 class="card-title">{{ $site->name }}</h4>

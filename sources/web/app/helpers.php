@@ -470,3 +470,50 @@ function disable_footer_sponsored()
 {
     \Illuminate\Support\Facades\View::share('disableFooterSponsored', true);
 }
+
+/**
+ * サイトの一覧用バナー
+ *
+ * @param $site
+ * @return string
+ */
+function list_banner($site)
+{
+    $url = '';
+
+    if (!empty($site->list_banner_url)) {
+        $url = $site->list_banner_url;
+    }
+
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        if (\Illuminate\Support\Facades\Auth::user()->isAdult() && !empty($site->list_banner_url_r18)) {
+            $url = $site->list_banner_url_r18;
+        }
+    }
+
+    return $url;
+}
+
+
+/**
+ * サイトの詳細用バナー
+ *
+ * @param $site
+ * @return string
+ */
+function detail_banner($site)
+{
+    $url = '';
+
+    if (!empty($site->detail_banner_url)) {
+        $url = $site->detail_banner_url;
+    }
+
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        if (\Illuminate\Support\Facades\Auth::user()->isAdult() && !empty($site->detail_banner_url_r18)) {
+            $url = $site->detail_banner_url_r18;
+        }
+    }
+
+    return $url;
+}

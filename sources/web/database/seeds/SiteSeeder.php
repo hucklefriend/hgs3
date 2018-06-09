@@ -29,7 +29,7 @@ class SiteSeeder extends Seeder
 
         for ($i = 0; $i < $maxUser; $i++) {
             $u = $users[$i];
-            $n = rand(0, 3);
+            $n = rand(1, 3);
 
             for ($j = 0; $j < $n; $j++) {
                 $orm = new Orm\Site();
@@ -37,7 +37,7 @@ class SiteSeeder extends Seeder
                 $orm->name = self::getSampleTitle();
                 $orm->url = 'http://horrorgame.net';
                 $orm->presentation = self::getSampleText();
-                $orm->rate = $rates[rand(0, 2)];
+                $orm->rate = 18;//$rates[rand(0, 2)];
                 $orm->main_contents_id = rand(1, 7);
                 $orm->gender = rand(0, 2);
                 $orm->open_type = 0;
@@ -61,7 +61,7 @@ class SiteSeeder extends Seeder
                     $orm->hgs2_site_id = rand(1, 100);
                 }
 
-                \Hgs3\Models\Site::insert($u, $orm, null, null, rand(0, 100) > 95);
+                \Hgs3\Models\Site::insert($u, $orm);
 
                 if (rand(0, 10) > 2) {
                     $orm->list_banner_upload_flag = 1;
@@ -73,7 +73,19 @@ class SiteSeeder extends Seeder
                     $orm->detail_banner_url = self::getSampleSiteDetailBanner();
                 }
 
+                if ($orm->rate == 18) {
+                    $orm->list_banner_upload_flag_r18 = 1;
+                    $orm->list_banner_url_r18 = self::getSampleSiteBannerR18();
+
+                    $orm->detail_banner_upload_flag_r18 = 1;
+                    $orm->detail_banner_url_r18 = self::getSampleSiteDetailBannerR18();
+                }
+
                 $orm->save();
+
+                //if (rand(0, 5) > 1) {
+                    \Hgs3\Models\Site\Approval::approve($orm, '');
+                //}
 
                 if (mt_rand(0, 10) == 0) {
                     \Hgs3\Models\Site::update($u, $orm, null, null, 0, false, false);
@@ -185,6 +197,17 @@ FOOTER;
 
         return 'https://horrorgame.net/img/test/site/list_banner/' . $banners[rand(0, count($banners) - 1)];
     }
+    private static function getSampleSiteBannerR18()
+    {
+        $banners = [
+            '001.jpg',
+            '002.jpg',
+            '003.jpg',
+            '004.gif'
+        ];
+
+        return 'https://beta.horrorgame.net/img/test/site/list_banner_r18/' . $banners[rand(0, count($banners) - 1)];
+    }
 
     private static function getSampleSiteDetailBanner()
     {
@@ -203,5 +226,17 @@ FOOTER;
         ];
 
         return 'https://horrorgame.net/img/test/site/detail_banner/' . $banners[rand(0, count($banners) - 1)];
+    }
+
+    private static function getSampleSiteDetailBannerR18()
+    {
+        $banners = [
+            '001.jpg',
+            '002.jpg',
+            '003.jpg',
+            '004.jpg'
+        ];
+
+        return 'https://beta.horrorgame.net/img/test/site/detail_banner_r18/' . $banners[rand(0, count($banners) - 1)];
     }
 }
