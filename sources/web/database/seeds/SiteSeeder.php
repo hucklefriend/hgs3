@@ -35,9 +35,9 @@ class SiteSeeder extends Seeder
                 $orm = new Orm\Site();
                 $orm->user_id = $u->id;
                 $orm->name = self::getSampleTitle();
-                $orm->url = 'http://horrorgame.net';
+                $orm->url = 'https://horrorgame.net';
                 $orm->presentation = self::getSampleText();
-                $orm->rate = 18;//$rates[rand(0, 2)];
+                $orm->rate = $rates[rand(0, 2)];
                 $orm->main_contents_id = rand(1, 7);
                 $orm->gender = rand(0, 2);
                 $orm->open_type = 0;

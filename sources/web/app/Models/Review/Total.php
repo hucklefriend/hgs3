@@ -19,9 +19,6 @@ class Total
      */
     public static function total()
     {
-        self::fearRanking();
-        self::pointRanking();
-
         // 集計対象を取得
         $targetReviews = Orm\ReviewTotalFlag::where('total_flag', 1)->get();
         if ($targetReviews->count() == 0) {

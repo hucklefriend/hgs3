@@ -20,7 +20,7 @@ class ReviewSeeder extends Seeder
         foreach ($users as $user) {
             if ($user->id == 0) continue;
 
-            $num = rand(2, 10);
+            $num = rand(2, 30);
             $written = [];
 
             for ($i = 0; $i < $num; $i++) {
