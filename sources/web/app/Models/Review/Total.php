@@ -19,6 +19,9 @@ class Total
      */
     public static function total()
     {
+        self::fearRanking();
+        self::pointRanking();
+
         // 集計対象を取得
         $targetReviews = Orm\ReviewTotalFlag::where('total_flag', 1)->get();
         if ($targetReviews->count() == 0) {
@@ -67,5 +70,93 @@ SQL;
 
             Log::exceptionError($e);
         }
+
+        self::fearRanking();
+        self::pointRanking();
+    }
+
+
+    private static function fearRanking()
+    {
+        $sql =<<< SQL
+SELECT soft_id, ROUND(fear * 10) AS fear
+FROM review_totals
+ORDER BY fear DESC
+SQL;
+
+        $data = DB::select($sql);
+
+        $rank = 1;
+        $sql =<<< SQL
+INSERT INTO review_fear_rankings (
+  rank, soft_id, fear, fear_face, created_at, updated_at
+) VALUES 
+SQL;
+
+        DB::table('review_fear_rankings')->delete();
+
+        $num = count($data);
+        if ($num > 0) {
+            $sql .= sprintf('(%d, %d, %d, %d, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
+                $rank, $data[0]->soft_id, $data[0]->fear, round($data[0]->fear / 10));
+        }
+
+        $sameRankNum = 1;
+        for ($i = 1; $i < $num; $i++) {
+            if ($data[$i]->fear == $data[$i - 1]->fear) {
+                $sameRankNum++;
+            } else {
+                $rank += $sameRankNum;
+                $sameRankNum = 1;
+            }
+
+
+            $sql .= sprintf(', (%d, %d, %d, %d, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
+                $rank, $data[$i]->soft_id, $data[$i]->fear, round($data[$i]->fear / 10));
+        }
+
+        DB::insert($sql);
+    }
+
+
+    private static function pointRanking()
+    {
+        $sql =<<< SQL
+SELECT soft_id, ROUND(point) AS point
+FROM review_totals
+ORDER BY point DESC
+SQL;
+
+        $data = DB::select($sql);
+
+        $rank = 1;
+        $sql =<<< SQL
+INSERT INTO review_point_rankings (
+  rank, soft_id, point, created_at, updated_at
+) VALUES 
+SQL;
+
+        DB::table('review_point_rankings')->delete();
+
+        $num = count($data);
+        if ($num > 0) {
+            $sql .= sprintf('(%d, %d, %d, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
+                $rank, $data[0]->soft_id, $data[0]->point);
+        }
+
+        $sameRankNum = 1;
+        for ($i = 1; $i < $num; $i++) {
+            if ($data[$i]->point == $data[$i - 1]->point) {
+                $sameRankNum++;
+            } else {
+                $rank += $sameRankNum;
+                $sameRankNum = 1;
+            }
+
+            $sql .= sprintf(', (%d, %d, %d, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
+                $rank, $data[$i]->soft_id, $data[$i]->point);
+        }
+
+        DB::insert($sql);
     }
 }

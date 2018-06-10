@@ -326,6 +326,7 @@
                     <div class="mr-2 mb-4"><a href="http://www.gameha.com/s/r.cgi?mode=r_link&id=18424" target="_blank"><img data-normal="{{ url('img/special_thanks/gameha_sd.gif') }}" border="0" alt="【創作・同人検索エンジン】GAMEHA.COM - ガメハコム - "></a></div>
                     <div class="mr-2 mb-4"><a href="http://gameofserch.com/" target="_blank"><img data-normal="{{ url('img/special_thanks/gameofserch.gif') }}"></a></div>
                     <div class="mr-2 mb-4"><a href="http://hemisphere.gonna.jp/sirensearch/" target="_blank"><img data-normal="{{ url('img/special_thanks/sirensearch.png') }}"></a></div>
+                    <div class="mr-2 mb-4 align-self-center"><a href="http://icooon-mono.com/" class="d-block p-2" target="_blank">ICOON MONO</a></div>
                 </div>
             </div>
         </div>
