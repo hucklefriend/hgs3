@@ -373,12 +373,23 @@ SQL;
         // 検索テーブルからIDを取得
         $data['pager'] = $query->paginate($pagePerNum);
 
-
-
         $data['sites'] = [];
         if (!empty($data['pager'])) {
             $data['sites'] = Orm\Site::getHash(page_pluck($data['pager'], 'site_id'));
             $data['users'] = User::getHash(array_pluck($data['sites'], 'user_id'));
+        }
+
+        if ($soft !== null) {
+            $data['pager']->appends('soft_id', $soft->id);
+        }
+        if ($mainContents !== null && !empty($mainContents)) {
+            $data['pager']->appends('mc', $mainContents);
+        }
+        if ($targetGender !== null && !empty($targetGender)) {
+            $data['pager']->appends('g', $targetGender);
+        }
+        if ($rate !== null && !empty($rate)) {
+            $data['pager']->appends('r', $rate);
         }
 
         return $data;

@@ -57,7 +57,7 @@ class SiteController extends Controller
         $targetGender = Input::get('g', []);
         $rate = Input::get('r', []);
 
-        $data = Site::search(null, $mainContents, $targetGender, $rate, 20);
+        $data = Site::search(null, $mainContents, $targetGender, $rate, 5);
         $data['mc'] = $mainContents;
         $data['g'] = $targetGender;
         $data['r'] = $rate;
