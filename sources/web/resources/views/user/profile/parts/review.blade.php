@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
-        @if (empty($reviews))
-        <div>レビューは投稿していません。</div>
+        @if ($reviews->isEmpty())
+        <div>レビューを投稿していません。</div>
         @else
             @if ($isMyself)
                 @foreach ($reviews as $review)

@@ -14,33 +14,36 @@
                 <div class="card card-hgn">
                     <div class="card-body">
                         <h5 class="card-title">新着レビュー</h5>
-
-                        @foreach ($newArrivals as $review)
-                        <div class="mb-5">
-                            @if($review->is_spoiler == 1)
-                                <span class="badge badge-sm badge-danger">ネタバレあり！</span>
-                            @endif
-                            <div class="review-list-title">
-                                <a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>
-                                    <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
-                                    <div class="review-list-point mr-1 d-inline-block">{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</div>
-                                    <div class="review-list-point mr-2 d-inline-block">{{ $review->calcPoint() }}</div>
+                        @if ($newArrivals->isNotEmpty())
+                            @foreach ($newArrivals as $review)
+                            <div class="mb-5">
+                                @if($review->is_spoiler == 1)
+                                    <span class="badge badge-sm badge-danger">ネタバレあり！</span>
+                                @endif
+                                <div class="review-list-title">
+                                    <a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a>
                                 </div>
-                                <div class="align-self-center">
-                                    <a class="btn btn-light btn--icon" href="{{ route('レビュー', ['review' => $review->id]) }}"><i class="fas fa-angle-right"></i></a>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>
+                                        <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
+                                        <div class="review-list-point mr-1 d-inline-block">{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</div>
+                                        <div class="review-list-point mr-2 d-inline-block">{{ $review->calcPoint() }}</div>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <a class="btn btn-light btn--icon" href="{{ route('レビュー', ['review' => $review->id]) }}"><i class="fas fa-angle-right"></i></a>
+                                    </div>
                                 </div>
+                                <p class="mb-0 one-line" style="line-height: 1;"><small>{{ $review->user->name }}さん</small></p>
+                                <p class="mb-0" style="line-height: 1;"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
                             </div>
-                            <p class="mb-0 one-line" style="line-height: 1;"><small>{{ $review->user->name }}さん</small></p>
-                            <p class="mb-0" style="line-height: 1;"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
-                        </div>
-                        @endforeach
+                            @endforeach
 
-                        <div class="mt-2 text-right">
-                            <a href="{{ route('新着レビュー一覧') }}" class="badge badge-pill and-more">もっと見る</a>
-                        </div>
+                            <div class="mt-2 text-right">
+                                <a href="{{ route('新着レビュー一覧') }}" class="badge badge-pill and-more">もっと見る</a>
+                            </div>
+                        @else
+                            <p class="mb-0">3ヶ月以内に投稿されたレビューはありません。</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -86,6 +89,9 @@
                     <div class="card-body">
                         <h5 class="card-title">怖いと評判のゲーム</h5>
 
+                        @if (empty($fearRanking))
+                            <p class="mb-0">レビューが投稿されていません。</p>
+                        @else
                         @foreach ($fearRanking as $fear)
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex">
@@ -115,6 +121,7 @@
                                 </div>
                             </div>
                         @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -122,6 +129,9 @@
                 <div class="card card-hgn">
                     <div class="card-body">
                         <h5 class="card-title">総合ポイントの高いゲーム</h5>
+                        @if (empty($fearRanking))
+                            <p class="mb-0">レビューが投稿されていません。</p>
+                        @else
                         @foreach ($pointRanking as $point)
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex">
@@ -150,6 +160,7 @@
                                 </div>
                             </div>
                         @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

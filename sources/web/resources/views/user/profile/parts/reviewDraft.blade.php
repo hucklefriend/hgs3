@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">
-        @if (empty($drafts))
+        @if ($drafts->isEmpty())
         <div>レビューの下書きはありません。</div>
         @else
             @foreach ($drafts as $draft)

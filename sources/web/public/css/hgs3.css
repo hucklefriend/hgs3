@@ -981,11 +981,12 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 .top-item p {
     margin-top: 20px;
     margin-bottom: 30px;
+    line-height: 200%;
 }
 
 .top-item-title {
     font-family: 'Lalezar', cursive;
-    font-size: 2rem;
+    font-size: 150%;
 }
 
 .sponsor {

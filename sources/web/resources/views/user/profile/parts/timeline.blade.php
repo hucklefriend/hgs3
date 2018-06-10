@@ -1,5 +1,8 @@
 <div class="card">
     <div class="card-body">
+        @if (empty($timelines))
+            <p class="mb-0">タイムラインはありません。</p>
+        @else
         <div id="timeline">
             @foreach ($timelines as $tl)
                 <p class="mb-4">
@@ -9,6 +12,7 @@
                 <hr>
             @endforeach
         </div>
+        @endif
 @if ($hasNext)
         <div class="text-center">
             <button type="button" class="btn btn-outline-light" id="more_btn">さらに読み込む</button>
