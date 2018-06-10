@@ -25,6 +25,16 @@ SELECT * FROM hgs2.hgs_u_user
 WHERE id <> 254
 SQL;
 
+        $deleteList = [5, 9, 10, 14, 16, 21, 22, 24, 33, 42, 43, 47, 57,
+            56, 66, 72, 69, 68, 67, 78, 79, 82, 83, 84, 85, 94, 96, 98,
+            107, 110, 111, 117, 118, 120, 131, 128, 132, 135, 141, 149,
+            142, 155, 168, 172, 173, 174, 175, 185, 188, 196, 201, 218,
+            219, 225, 226, 228, 176, 240, 234, 80, 235, 236, 237, 244,
+            221, 148, 205, 238, 264, 272, 325, 305, 302, 300, 299, 296,
+            289, 286, 282, 281, 277, 275, 274, 272, 266, 264, 263, 261,
+            260,
+        ];
+
         $hgsUsers = DB::select($sql);
         foreach ($hgsUsers as $hgsUser) {
             // HGNにユーザーとして登録
@@ -33,6 +43,9 @@ SQL;
             // サイト情報を取得
             $hgsSites = self::getSites($hgsUser->id);
             foreach ($hgsSites as $hgsSite) {
+                if (in_array($hgsSite->id, $deleteList)) {
+                    continue;
+                }
                 self::saveSite($user, $hgsSite);
             }
         }

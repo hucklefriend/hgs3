@@ -7,6 +7,7 @@ namespace Hgs3\Http\Controllers;
 
 use Hgs3\Models\Orm;
 use Hgs3\Models\Site;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -21,5 +22,15 @@ class AdminController extends Controller
             'approvalWaitNum' => Site\Approval::getWaitNum(),
             'reviewUrlWaitNum' => Orm\ReviewWaitUrl::all()->count(),
         ]);
+    }
+
+
+    public function hgs2SiteChecker()
+    {
+        $sites = DB::table('hgs2.hgs_u_site')
+            ->orderBy('id')
+            ->get();
+
+        return view('admin.hgs2SiteChecker', ['sites' => $sites]);
     }
 }
