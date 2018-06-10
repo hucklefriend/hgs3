@@ -4,10 +4,19 @@
 @section('global_back_link'){{ \Hgs3\Http\GlobalBack::reviewNewList() }}@endsection
 
 @section('content')
-    @foreach ($reviews as $r)
-        @include('review.common.normalSplit', ['review' => $r, 'writer' => $writers[$r->user_id], 'gamePackage' => $gamePackages[$r->package_id]])
-        <hr>
-    @endforeach
+    <div class="content__inner">
+        <header class="content__title">
+            <h1 class="mb-2">レビュー</h1>
+            <p>3ヶ月以内に投稿されたレビューの一覧</p>
+        </header>
 
-    {{ $reviews->links() }}
+        <div class="row">
+            @foreach ($reviews as $review)
+                @include('review.common.card', ['review' => $review])
+            @endforeach
+        </div>
+
+        {{ $reviews->links() }}
+    </div>
+
 @endsection

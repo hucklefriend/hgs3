@@ -97,13 +97,26 @@ class ReviewController extends Controller
      */
     public function newArrivals()
     {
-        $reviews = Orm\Review::orderBy('id', 'desc')
+        $date = new \DateTime();
+        $date->sub(new \DateInterval('P3M'));
+
+        $reviews = Orm\Review::where('post_at', '>=', $date->format('Y-m-d 00:00:00'))
+            ->orderBy('id', 'desc')
             ->paginate(20);
+
+        if ($reviews->isNotEmpty()) {
+            $writers = User::getHash(page_pluck($reviews, 'user_id'));
+            $soft = Orm\GameSoft::getHash(page_pluck($reviews, 'soft_id'));
+
+            foreach ($reviews as &$review) {
+                $review->user = $writers[$review->user_id];
+                $review->soft = $soft[$review->soft_id];
+            }
+
+        }
 
         return view('review.newArrivals', [
             'reviews'      => $reviews,
-            'writers'      => User::getHash(array_pluck($reviews->items(), 'user_id')),
-            'gamePackages' => Orm\GamePackage::getHash(array_pluck($reviews->items(), 'package_id'))
         ]);
     }
 

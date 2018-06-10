@@ -38,6 +38,9 @@
                         </div>
                         @endforeach
 
+                        <div class="mt-2 text-right">
+                            <a href="{{ route('新着レビュー一覧') }}" class="badge badge-pill and-more">もっと見る</a>
+                        </div>
                     </div>
                 </div>
             </div>

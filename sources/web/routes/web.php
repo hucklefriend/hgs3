@@ -144,7 +144,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/follow', 'User\FollowController@add')->name('フォロー登録');
     Route::delete('/user/follow', 'User\FollowController@remove')->name('フォロー解除');
 
-
     // 退会処理
     Route::get('/user/leave', 'Account\LeaveController@index')->name('退会');
     Route::delete('/user/leave', 'Account\LeaveController@leave')->name('退会処理');
