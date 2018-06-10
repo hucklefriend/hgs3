@@ -50,13 +50,19 @@ class ReviewController extends Controller
         $data['users'] = [];
 
         if ($data['reviews']->isNotEmpty()) {
-            $data['users'] = User::getHash(page_pluck($data['reviews'], 'user_id'));
+            $users = User::getHash(page_pluck($data['reviews'], 'user_id'));
+            foreach ($data['reviews'] as &$review) {
+                $review->user = $users[$review->user_id];
+            }
         }
 
         if (Auth::check()) {
             $data['writtenReview'] = Review::getByUserAndSoft(Auth::id(), $soft->id);
             $data['isWriteDraft'] = Review::isWriteDraft(Auth::id(), $soft->id);
         }
+
+        $data['fearRanking'] = Orm\ReviewFearRanking::find($soft->id);
+        $data['pointRanking'] = Orm\ReviewPointRanking::find($soft->id);
 
         return view('review.soft', $data);
     }
@@ -94,6 +100,7 @@ class ReviewController extends Controller
      * 新着
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function newArrivals()
     {

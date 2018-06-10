@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')レビューについて@endsection
-@section('global_back_link'){{ \Hgs3\Http\GlobalBack::about() }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::reviewAbout() }}@endsection
 
 @section('content')
     <div class="content__inner">

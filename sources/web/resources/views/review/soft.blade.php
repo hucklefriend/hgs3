@@ -13,14 +13,13 @@
             <div class="col-12 col-md-6 col-lg-5">
                 <div class="card card-hgn">
                     <div class="card-body">
-
                         @if ($total !== null)
+                            <div class="review-list-fear">
+                                {{ \Hgs3\Constants\Review\Fear::$data[intval(round($total->fear))] }}
+                            </div>
                             <div class="d-flex">
-                                <div class="review-point mr-2">
-                                    {{ \Hgs3\Constants\Review\Fear::$face[intval(round($total->fear))] }}
-                                </div>
                                 <div class="review-point">
-                                    {{ round($total->point, 1) }}
+                                    {{ round($total->point, 1) }}pt
                                 </div>
 
                                 <table class="review-point-table">
@@ -75,49 +74,46 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-7">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        ここにはランキング関係の情報を出す
+                <div class="row quick-stats">
+                    <div class="col-6">
+                        <div class="quick-stats__item">
+                            <div class="quick-stats__info">
+                                @if($fearRanking)
+                                    <h2>{{ $fearRanking->rank }}位</h2>
+                                @else
+                                    <h2>-位</h2>
+                                @endif
+                                <small>怖さの評判</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="quick-stats__item">
+                            <div class="quick-stats__info">
+
+                                @if($pointRanking)
+                                    <h2>{{ $pointRanking->rank }}位</h2>
+                                @else
+                                    <h2>-位</h2>
+                                @endif
+                                <small>ゲームの評判</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12 col-sm-9 col-md-9 col-lg-8 col-xl-7">
-                <div class="card card-hgn">
-                    <div class="card-body">
-                        <h4 class="card-title">みんなのレビュー</h4>
-
-                        @foreach ($reviews as $review)
-                            <div class="mb-5">
-                                @if($review->is_spoiler == 1)
-                                    <span class="badge badge-sm badge-danger">ネタバレあり！</span>
-                                @endif
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <div class="my-1" style="font-size: 1.3rem;">{{ \Hgs3\Constants\Review\Fear::$data[$review->fear] }}</div>
-                                        <div class="d-flex">
-                                            <div class="review-list-point mr-2">{{ $review->calcPoint() }}</div>
-                                            <div>
-                                                <p class="mb-0"><small><i class="far fa-user"></i> {{ $users[$review->user_id]->name }}</small></p>
-                                                <p class="mb-0"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-outline-dark border-0 d-block">
-                                            <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-
-                        @include('common.pager', ['pager' => $reviews])
-
-                    </div>
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h4 class="card-title">みんなのレビュー</h4>
+                <div class="row">
+                    @foreach ($reviews as $review)
+                        @include('review.common.card', ['review' => $review])
+                    @endforeach
                 </div>
+                @include('common.pager', ['pager' => $reviews])
             </div>
         </div>
     </div>

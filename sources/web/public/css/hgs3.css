@@ -27,10 +27,10 @@ code {
 }
 
 .review-point {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     display: inline-block;
     text-align: center;
-    background-color: rgba(255, 0, 0, 0.2);
+    background-color: rgba(255, 0, 0, 0.1);
     position: relative;
     width: 70px;
     height: 70px;
@@ -105,11 +105,6 @@ code {
     margin-right: 5px;
     margin-bottom: 3px;
     background-color: rgba(255, 255, 255, 0.1);
-}
-
-@media (min-width: 500px) {
-    .review-point {
-    }
 }
 
 .review-point-table {

@@ -2,10 +2,15 @@
     <div class="card">
         <div class="card-body">
             <div class="review-list-fear">{{ \Hgs3\Constants\Review\Fear::$data[$review->fear] }}</div>
+
+            @isset($review->soft)
             <div class="review-list-title"><a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a></div>
+            @endif
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
+                    @isset($review->soft)
                     <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
+                    @endisset
                     <div>
 
                         <div class="d-flex">
