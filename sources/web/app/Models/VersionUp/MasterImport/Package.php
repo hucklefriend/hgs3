@@ -142,23 +142,30 @@ class Package extends MasterImportAbstract
                 foreach ($data->shop as $shop => $shopUrl) {
                     $shopId = Shop::getIdByName($shop);
 
-                    if ($shopId) {
-                        if ($shopId == Shop::AMAZON) {
-                            //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
-                                \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
-                            //}
-                        } else if ($shopId == Shop::DMM || $shopId == Shop::DMM_R18) {
-                            //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
-                                \Hgs3\Models\Game\Package::saveImageByDmm($package->id, $shopUrl, $shopId);
-                            //}
-                        } else if ($shopUrl) {
-                            $pkgShop = new Orm\GamePackageShop([
-                                'package_id' => $package->id,
-                                'shop_id'    => $shopId,
-                                'shop_url'   => $shopUrl
-                            ]);
+                    if ($shopUrl == 'delete') {
+                        Orm\GamePackageShop::where('package_id', $package->id)
+                            ->where('shop_id', $shopId)
+                            ->delete();
+                    } else {
 
-                            $pkgShop->insertOrUpdate();
+                        if ($shopId) {
+                            if ($shopId == Shop::AMAZON) {
+                                //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
+                                \Hgs3\Models\Game\Package::saveImageByAsin($package->id, $shopUrl);
+                                //}
+                            } else if ($shopId == Shop::DMM || $shopId == Shop::DMM_R18) {
+                                //if (env('APP_ENV') == 'production' || env('APP_ENV') == 'staging') {
+                                \Hgs3\Models\Game\Package::saveImageByDmm($package->id, $shopUrl, $shopId);
+                                //}
+                            } else if ($shopUrl) {
+                                $pkgShop = new Orm\GamePackageShop([
+                                    'package_id' => $package->id,
+                                    'shop_id'    => $shopId,
+                                    'shop_url'   => $shopUrl
+                                ]);
+
+                                $pkgShop->insertOrUpdate();
+                            }
                         }
                     }
                 }

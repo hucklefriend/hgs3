@@ -1,0 +1,11 @@
+{
+  "id": 563,
+  "platform": "PC",
+  "company": "DMM",
+  "name": "祝姫 DL版",
+  "shop": {
+    "DMM GAMES": "delete",
+    "DMM.com": "dmmgames_0001",
+    "DMM.R18": "dmmgames_0001"
+  }
+}

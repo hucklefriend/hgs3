@@ -1,0 +1,12 @@
+{
+  "id": 728,
+  "platform": "PC",
+  "company": "DMM",
+  "name": "祝姫",
+  "release_int": 20160201,
+  "release_at": "2016年2月1日",
+  "shop": {
+    "DMM.R18": "d_dg0001"
+  },
+  "soft_id": [293]
+}
