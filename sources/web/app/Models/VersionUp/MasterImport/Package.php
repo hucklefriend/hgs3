@@ -232,39 +232,20 @@ class Package extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180519()
+    private static function manual20180611()
     {
         // うみねこを同人と、CSで分ける
         // CSはさらにEP1～4と、EP5～8で分ける(PS3版に合わせる)
 
         DB::table('game_package_links')
-            ->where('soft_id', 239)
-            ->update(['soft_id' => 247]);
-
-        DB::table('game_package_links')
-            ->where('soft_id', 122)
-            ->update(['soft_id' => 123]);
-
-
-        DB::table('game_package_links')
-            ->where('soft_id', 89)
-            ->where('package_id', '>=', 685)
-            ->delete();
-
-        DB::table('game_package_links')
-            ->whereIn('package_id', [421, 210,364,369,370,371,387,388,389,390,391,392])
+            ->whereIn('package_id', [417])
             ->delete();
         DB::table('game_package_shops')
-            ->whereBetween('package_id', [685, 763, 421,364,369,370,371,387,388,389,390,391,392])
+            ->whereIn('package_id', [685, 763, 421,364,369,370,371,387,388,389,390,391,392, 417])
             ->delete();
         DB::table('game_packages')
-            ->whereBetween('id', [685, 763, 421, 210,364,369,370,371,387,388,389,390,391,392])
+            ->whereIn('id', [685, 763, 421, 210,364,369,370,371,387,388,389,390,391,392, 417])
             ->delete();
-
-
-        DB::table('game_packages')
-            ->whereIn('id', [669,625,665,666,679,660,661,633,634,635,662,663,664,638,653,641,642,571,579,646,647,648,631,632])
-            ->update(['is_adult' => 1]);
     }
 
     public static function updateShopReleaseInt()

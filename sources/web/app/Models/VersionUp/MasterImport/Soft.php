@@ -91,17 +91,11 @@ class Soft extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180519()
+    private static function manual20180611()
     {
-        // うみねこを同人と、CSで分ける
-        // CSはさらにEP1～4と、EP5～8で分ける(PS3版に合わせる)
+        // アパシーを一回削除
         DB::table('game_softs')
-            ->where('id', 239)
-            ->update(['original_package_id' => null]);
-
-        // 鬼太郎が2つある、マーセ3Dは削除、物体Xも1つに統合
-        DB::table('game_softs')
-            ->whereIn('id', [307, 244, 122, 150, 217, 229, 220])
+            ->whereIn('id', [242])
             ->delete();
     }
 }
