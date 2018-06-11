@@ -16,7 +16,7 @@
             @endforeach
         </div>
 
-        {{ $reviews->links() }}
+        @include('common.pager', ['pager' => $reviews])
     </div>
 
 @endsection
