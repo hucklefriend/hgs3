@@ -70,14 +70,12 @@
 
                 <div class="row">
                     @foreach ($packages as $pkg)
-                        <div class="col-12 col-md-6 col-xl-4 mb-2">
-                            <div class="d-flex mr-2">
-                                <div style="width: 30px;" class="align-self-center text-center mr-2">
-                                    @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
-                                </div>
-                                <div class="align-self-center">
-                                    <small>{{ $pkg->name }}</small>
-                                </div>
+                        <div class="col-12 col-md-6 col-xl-4 mb-2 review-playing-package">
+                            <div class="review-playing-package-image">
+                                {!! small_image($pkg) !!}
+                            </div>
+                            <div class="review-playing-package-title">
+                                <small>{{ $pkg->name }}</small>
                             </div>
                         </div>
                     @endforeach
@@ -123,11 +121,11 @@
                 <div class="d-flex flex-wrap">
                     @foreach ($review->getGoodTags() as $tagId)
                         <span class="tag simple mr-2 mb-2">
-                                {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
-                            @if ($review->isVeryGood($tagId))
-                                <i class="far fa-thumbs-up"></i>
-                            @endif
-                            </span>
+                            {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
+                        @if ($review->isVeryGood($tagId))
+                            <i class="far fa-thumbs-up"></i>
+                        @endif
+                        </span>
                     @endforeach
                 </div>
                 <div>
@@ -157,9 +155,9 @@
                     @foreach ($review->getBadTags() as $tagId)
                     <span class="tag simple mr-2 mb-2">
                         {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
-                            @if ($review->isVeryBad($tagId))
-                        <i class="far fa-thumbs-down"></i>
-                            @endif
+                        @if ($review->isVeryBad($tagId))
+                            <i class="far fa-thumbs-down"></i>
+                        @endif
                     </span>
                     @endforeach
                 </div>

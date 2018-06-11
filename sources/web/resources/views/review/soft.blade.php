@@ -19,7 +19,7 @@
                             </div>
                             <div class="d-flex">
                                 <div class="review-point">
-                                    {{ round($total->point, 1) }}pt
+                                    {{ round($total->point) }}pt
                                 </div>
 
                                 <table class="review-point-table">
@@ -58,12 +58,12 @@
                                 <a href="{{ route('レビュー', ['review' => $writtenReview->id]) }}">ご自身の投稿はこちら</a>です。
                             @elseif ($isWriteDraft)
                                 こちらのゲームの下書きがあるようです。<br>
-                                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
+                                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="and-more">
                                     <i class="fas fa-edit"></i> 下書きの続きを書く
                                 </a>
                             @else
                                 {{ Auth::user()->name }}さんもレビューを書いてみませんか？<br>
-                                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
+                                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="and-more">
                                     <i class="fas fa-edit"></i> レビューを書く
                                 </a>
                             @endif
@@ -109,7 +109,7 @@
                 <h4 class="card-title">みんなのレビュー</h4>
                 <div class="row">
                     @foreach ($reviews as $review)
-                        @include('review.common.card', ['review' => $review])
+                        @include('review.common.noSoftCard', ['review' => $review])
                     @endforeach
                 </div>
                 @include('common.pager', ['pager' => $reviews])

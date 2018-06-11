@@ -109,7 +109,7 @@
                         </p>
                     @endforeach
                     <div class="text-right">
-                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                     </div>
                 @else
                     <p class="card-text">更新履歴はありません。</p>

@@ -413,7 +413,7 @@ SQL;
             $now->setTime(0, 0, 0);
 
             $limit = new \DateTime($data->start_date);
-            $limit->add(new \DateInterval('P6M'));
+            $limit->add(new \DateInterval('P1M'));
 
             return $now < $limit;
         }

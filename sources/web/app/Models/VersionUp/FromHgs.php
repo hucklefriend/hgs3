@@ -125,8 +125,15 @@ SQL;
         $site->user_id = $user->id;
         $site->name = $hgsSite->site_name;
         $site->url = $hgsSite->url;
-        $site->list_banner_upload_flag = 1;
-        $site->list_banner_url = $hgsSite->banner_url;
+
+        if (empty($hgsSite->banner_url) || starts_with($hgsSite->banner_url, 'http://')) {
+            $site->list_banner_upload_flag = 0;
+            $site->list_banner_url = '';
+        } else {
+            $site->list_banner_upload_flag = 1;
+            $site->list_banner_url = $hgsSite->banner_url;
+        }
+
         $site->detail_banner_upload_flag = 0;
         $site->detail_banner_url = null;
         $site->presentation = $hgsSite->presentation;

@@ -60,7 +60,7 @@
                         @else
                             <p>印象を投稿するにはログインしてください。</p>
                             <div class="text-right mt-2">
-                                <a href="{{ route('ログイン') }}" class="badge badge-pill and-more">ログイン</a>
+                                <a href="{{ route('ログイン') }}" class="and-more">ログイン</a>
                             </div>
                         @endauth
                     </div>

@@ -22,15 +22,15 @@
 
                             <table class="review-point-table">
                                 <tr>
-                                    <th>怖さ{{ \Hgs3\Constants\Review\Fear::$face[$draft->fear] }}</th>
+                                    <th>{{ \Hgs3\Constants\Review\Fear::$face[\Hgs3\Constants\Review\Fear::getMaxPoint()] }}怖さ</th>
                                     <td class="text-right">{{ $draft->fear * \Hgs3\Constants\Review\Fear::POINT_RATE }}pt</td>
                                 </tr>
                                 <tr>
-                                    <th>良い点<i class="far fa-thumbs-up"></i></th>
+                                    <th><i class="far fa-thumbs-up"></i>良い点</th>
                                     <td class="text-right">{{ (count($draft->getGoodTags()) + count($draft->getVeryGoodTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt</td>
                                 </tr>
                                 <tr>
-                                    <th>悪い点<i class="far fa-thumbs-down"></i></th>
+                                    <th><i class="far fa-thumbs-down"></i>悪い点</th>
                                     <td class="text-right">-{{ (count($draft->getBadTags()) + count($draft->getVeryBadTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt</td>
                                 </tr>
                             </table>
@@ -79,14 +79,12 @@
 
                         <div class="row">
                             @foreach ($packages as $pkg)
-                                <div class="col-12 col-md-6 col-xl-4 mb-2">
-                                    <div class="d-flex mr-2">
-                                        <div style="width: 30px;" class="align-self-center text-center mr-2">
-                                            @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
-                                        </div>
-                                        <div class="align-self-center">
-                                            <small>{{ $pkg->name }}</small>
-                                        </div>
+                                <div class="col-12 col-md-6 col-xl-4 mb-2 review-playing-package">
+                                    <div class="review-playing-package-image">
+                                        {!! small_image($pkg) !!}
+                                    </div>
+                                    <div class="review-playing-package-title">
+                                        <small>{{ $pkg->name }}</small>
                                     </div>
                                 </div>
                             @endforeach
@@ -110,7 +108,7 @@
         <div class="card card-hgn">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <h5 class="card-title">{{ Hgs3\Constants\Review\Fear::$data[$draft->fear] }}</h5>
+                    <h5 class="card-title">怖さ：{{ Hgs3\Constants\Review\Fear::$data[$draft->fear] }}</h5>
                     <div>
                         <a href="{{ route('レビュー怖さ入力', ['soft' => $draft->soft_id]) }}"><i class="fas fa-edit"></i>編集</a>
                     </div>
@@ -131,8 +129,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title">
-                        <i class="far fa-thumbs-up"></i>良い点
-                        <span class="card-title-sub"><i class="far fa-thumbs-up"></i>付きタグは特に良い点</span>
+                        <i class="far fa-thumbs-up"></i>良い点：{{ (count($draft->getGoodTags()) + count($draft->getVeryGoodTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt
                     </h5>
                     <div>
                         <a href="{{ route('レビュー良い点入力', ['soft' => $draft->soft_id]) }}"><i class="fas fa-edit"></i>編集</a>
@@ -144,17 +141,20 @@
                 @else
                     <div class="d-flex flex-wrap mb-2">
                         @foreach ($draft->getGoodTags() as $tagId)
-                            <span class="review-tag">
-                                {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
+                            <span class="tag simple mr-2 mb-2">
+                            {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
                                 @if ($draft->isVeryGood($tagId))
                                     <i class="far fa-thumbs-up"></i>
                                 @endif
-                            </span>
+                        </span>
                         @endforeach
+                    </div>
+                    <div>
+                        <small><i class="far fa-thumbs-up"></i>付きタグは特に良い点</small>
                     </div>
                 @endempty
 
-                <p class="mb-0 review-text">
+                <p class="mb-0 mt-3 review-text">
                     @empty($draft->good_comment)
                         良い点に関するコメントはありません。
                     @else
@@ -168,8 +168,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title">
-                        <i class="far fa-thumbs-down"></i> 悪い点
-                        <span class="card-title-sub"><i class="far fa-thumbs-down"></i>付きタグは特に悪い点</span>
+                        <i class="far fa-thumbs-down"></i> 悪い点：-{{ (count($draft->getBadTags()) + count($draft->getVeryBadTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt
                     </h5>
                     <div>
                         <a href="{{ route('レビュー悪い点入力', ['soft' => $draft->soft_id]) }}"><i class="fas fa-edit"></i>編集</a>
@@ -180,17 +179,19 @@
                 @else
                     <div class="d-flex flex-wrap mb-2">
                         @foreach ($draft->getBadTags() as $tagId)
-                            <span class="review-tag">
-                        {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
+                            <span class="tag simple mr-2 mb-2">{{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
                                 @if ($draft->isVeryBad($tagId))
                                     <i class="far fa-thumbs-down"></i>
                                 @endif
-                    </span>
+                            </span>
                         @endforeach
+                    </div>
+                    <div>
+                        <small><i class="far fa-thumbs-down"></i>付きタグは特に悪い点</small>
                     </div>
                 @endempty
 
-                <p class="mb-0 review-text">
+                <p class="mb-0 mt-3 review-text">
                     @empty($draft->bad_comment)
                         悪い点に関するコメントはありません。
                     @else
@@ -267,7 +268,7 @@
 
         <p class="alert alert-warning alert-warning-hgn mt-5 mb-2" role="alert">
             レビュー公開後は、修正することができません。<br>
-            削除はできますが、削除後半年は同じゲームのレビューを書くことができません。<br>
+            削除はできますが、削除後1ヶ月は同じゲームのレビューを書くことができません。<br>
             よくよくご確認の上、公開してください。
         </p>
 

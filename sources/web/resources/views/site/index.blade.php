@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="text-right mt-5">
-                                    <a href="{{ route('新着サイト一覧') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                                    <a href="{{ route('新着サイト一覧') }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                                 </div>
                             @endif
                         </div>
@@ -86,7 +86,7 @@
                                 </div>
 
                                 <div class="text-right mt-5">
-                                    <a href="{{ route('更新サイト一覧') }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                                    <a href="{{ route('更新サイト一覧') }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                                 </div>
                             @endif
                         </div>

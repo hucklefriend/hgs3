@@ -205,7 +205,7 @@
                             </div>
 
                             <div class="text-right mt-2">
-                                <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                                <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @endif
                     </div>
