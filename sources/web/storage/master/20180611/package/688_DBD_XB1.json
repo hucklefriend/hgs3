@@ -1,0 +1,13 @@
+{
+  "id": 688,
+  "platform": "XB1",
+  "company": "Starbreeze",
+  "name": "Dead By Daylight (北米版)",
+  "shop": {
+    "Amazon": "B06W6SWMCN",
+    "Microsoft ストア": "https://www.microsoft.com/ja-jp/store/p/Dead-by-Daylight-Special-Edition/C0N22P73QZ60?rtc=1"
+  },
+  "release_int": 20170620,
+  "release_at": "2017年6月20日",
+  "soft_id": [266]
+}

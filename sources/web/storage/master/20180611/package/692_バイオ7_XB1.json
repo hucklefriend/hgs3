@@ -1,0 +1,13 @@
+{
+  "id": 692,
+  "platform": "XB1",
+  "company": "カプコン",
+  "name": "BIOHAZARD7 -Resident Evil-",
+  "shop": {
+    "Amazon": "B01M0FN72S",
+    "Microsoft ストア": "https://www.microsoft.com/ja-jp/store/p/biohazard-7-resident-evil/bvfdtj1xf6cs"
+  },
+  "release_int": 20170126,
+  "release_at": "2017年1月26日",
+  "soft_id": [265]
+}

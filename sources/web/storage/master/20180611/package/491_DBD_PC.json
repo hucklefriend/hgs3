@@ -1,0 +1,12 @@
+{
+  "id": 491,
+  "platform": "PC",
+  "company": "Starbreeze",
+  "name": "Dead By Daylight",
+  "shop": {
+    "Steam": "http://store.steampowered.com/app/381210/Dead_by_Daylight/"
+  },
+  "release_int": 20170614,
+  "release_at": "2017年6月14日",
+  "soft_id": [266]
+}
