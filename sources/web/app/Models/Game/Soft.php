@@ -105,6 +105,15 @@ SQL;
 
         // レビュー
         $data['reviewTotal'] = Orm\ReviewTotal::find($soft->id);
+        $data['reviewFearRank'] = '-';
+        $data['reviewPointRank'] = '-';
+        if ($data['reviewTotal'] != null) {
+            $fearRanking = Orm\ReviewFearRanking::find($soft->id);
+            $data['reviewFearRank'] = $fearRanking->rank ?? '-';
+
+            $pointRanking = Orm\ReviewPointRanking::find($soft->id);
+            $data['reviewPointRank'] = $pointRanking->rank ?? '-';
+        }
 
 
         // お気に入り登録ユーザー
@@ -222,7 +231,7 @@ SQL;
     {
         return Orm\UserFavoriteSoft::where('soft_id', $softId)
             ->orderBy('id', 'DESC')
-            ->take(5)
+            ->take(20)
             ->get();
     }
 

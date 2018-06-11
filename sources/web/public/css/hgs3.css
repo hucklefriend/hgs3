@@ -26,57 +26,6 @@ code {
     color: lightgray;
 }
 
-.review-point {
-    font-size: 1.5rem;
-    display: inline-block;
-    text-align: center;
-    background-color: rgba(255, 0, 0, 0.1);
-    position: relative;
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
-    border-radius: 5px;
-}
-
-
-
-.review-list-title {
-    font-size: 1.3rem;
-}
-
-.review-list-point {
-    font-size: 1.1rem;
-    display: inline-block;
-    text-align: center;
-    background-color: rgba(255, 0, 0, 0.2);
-    min-width: 35px;
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-    border-radius: 5px;
-}
-
-.review-list-package-image {
-    text-align: center;
-    min-width: 40px;
-    width: 40px;
-    max-height: 40px;
-    display: inline-block;
-}
-
-.review-list-package-image img {
-    max-height: 3rem !important;
-}
-
-.review-list-user-name {
-
-}
-
-.review-list-fear {
-    font-size: 1.2rem;
-    margin-bottom: 4px;
-}
-
 .package-list-small {
 
 }
@@ -90,51 +39,6 @@ code {
     max-height: 40px;
 }
 
-.review-point-mother {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    font-size: 0.9rem;
-    padding: 5px;
-    line-height: 0.9rem;
-}
-
-.review-tag {
-    border-radius: 20px;
-    padding: 8px 13px;
-    margin-right: 5px;
-    margin-bottom: 3px;
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.review-point-table {
-    margin-left: 10px;
-}
-
-
-.review-point-table tr {
-    border-bottom: solid 1px grey;
-}
-
-.review-point-table th {
-    font-size: 0.85rem;
-}
-
-.review-point-table td {
-    padding-left: 10px;
-}
-
-
-
-.review-point-outline {
-    padding: 5px;
-    max-width: 100px;
-    border: 1px solid #00aced;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .user-icn {
     font-size: 30px;
@@ -248,10 +152,6 @@ a:active .no-image-text-inner {
     border:none;
 }
 
-.package-image {
-    max-width: 100%;
-}
-
 .package-select-item {
     width: 100px;
     margin-right: 5px;
@@ -318,7 +218,7 @@ a:active .no-image-text-inner {
 }
 
 .package-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 .site-badge-item {
@@ -498,16 +398,6 @@ html.is-fixed body {
     font-size: 0.8rem;
 }
 
-.package-info {
-    font-size: 0.9rem;
-}
-
-.package-info-icon {
-    display: inline-block;
-    width: 20px;
-    text-align: center;
-}
-
 .handle-game-select-area {
     margin-top: 10px;
 }
@@ -545,13 +435,192 @@ html.is-fixed body {
     line-height: 1.4rem;
 }
 
-.package-image-small {
+
+/* ゲーム詳細のパッケージ情報 */
+
+.soft-detail-package .package-image {
+    display: table-cell;
+    text-align: center;
+    width: 90px;
+    height: 90px;
+}
+
+.soft-detail-package .package-image img {
+    max-width: 80px;
+    max-height: 90px;
+}
+
+
+.soft-detail-package .package-data {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.soft-detail-package .package-info {
+    font-size: 0.9rem;
+}
+
+.soft-detail-package .package-info-icon {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+}
+
+/* ゲーム詳細のサイト */
+
+
+/* ゲーム詳細のレビュー */
+
+.review-total-table tr {
+    border-bottom: solid 1px rgba(255, 200, 200, 0.125);
+}
+
+.review-total-table th {
+    font-size: 1.2rem;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.review-total-table td {
+    vertical-align: bottom;
+}
+
+.review-total-table tr.title {
+    border-bottom: none;
+}
+.review-total-table tr.title td {
+    vertical-align: middle;
+    text-align: center;
+    padding-right: 10px;
+    line-height: 15px;
+}
+
+
+/* レビュー */
+
+.review-list table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.review-list table tr td:nth-child(1) {
+    vertical-align: top;
+    text-align: left;
+    width: 70px;
+    height: 90px;
+}
+
+.review-list table tr td:nth-child(1) img {
+    max-width: 70px;
+    max-height: 90px;
+}
+
+.review-list table tr td:nth-child(2) {
+    padding-left: 5px;
+    display: table-cell;
+    vertical-align: top;
+    width: calc(100% - 70px - 40px);
+}
+
+.review-list table tr td:nth-child(3) {
+    width: 40px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.review-point {
+    font-size: 1.5rem;
+    display: inline-block;
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.1);
+    position: relative;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 5px;
+}
+
+.review-list-title {
+    font-size: 1.3rem;
+}
+
+.review-list-point {
+    font-size: 1.1rem;
+    display: inline-block;
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.2);
+    min-width: 35px;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 5px;
+}
+
+.review-list-package-image {
+    text-align: center;
+    min-width: 40px;
+    width: 40px;
+    max-height: 40px;
+    display: inline-block;
+}
+
+.review-list-package-image img {
+    max-height: 3rem !important;
+}
+
+.review-list-user-name {
 
 }
 
-.package-image-small img {
-    max-width: 90px;
-    max-height: 80px;
+.review-list-fear {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.review-point-mother {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 0.9rem;
+    padding: 5px;
+    line-height: 0.9rem;
+}
+
+.review-tag {
+    border-radius: 20px;
+    padding: 8px 13px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.review-point-table {
+    margin-left: 10px;
+}
+
+.review-point-table tr {
+    border-bottom: solid 1px grey;
+}
+
+.review-point-table th {
+    font-size: 0.85rem;
+}
+
+.review-point-table td {
+    padding-left: 10px;
+}
+
+.review-point-outline {
+    padding: 5px;
+    max-width: 100px;
+    border: 1px solid #00aced;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -560,21 +629,6 @@ html.is-fixed body {
 .label-big-hgn {
     font-size: 1.5rem;
 }
-
-
-@media (min-width: 576px) {
-
-}
-
-@media (min-width: 768px) {
-    .package-card {
-    }
-}
-
-@media (min-width: 992px) {
-}
-
-
 
 body {
     /* font-family: "Sawarabi Mincho", "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "MS P明朝", "MS PMincho", serif; */
@@ -587,7 +641,7 @@ body {
 }
 
 .card-body {
-    padding: 1.5rem !important;
+    padding: 1.4rem 0.8rem;
 }
 
 .breadcrumb-item+.breadcrumb-item::before {
@@ -599,6 +653,16 @@ body, main {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+a, .tags__body>a {
+    color:#84b0f0;
+    transition: all 300ms 0s ease;
+}
+
+a:hover, .tags__body>a:hover {
+    color:#b9e9ff;
+    text-decoration:none
 }
 
 .footer {
@@ -725,16 +789,19 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     background-color: rgba(0,0,0,.2);
     border-radius: 2px;
     box-shadow: 0 1px 5px rgba(0,0,0,.1);
-    padding: 1.8rem 1.5rem 1.15rem;
+    padding: 1.15rem;
     margin-bottom: 30px;
 }
 
 .random-pickup .site-normal {
-    background-color: rgba(0,0,0,.2);
-    border-radius: 0;
-    box-shadow: revert;
-    padding: 0;
-    margin-bottom: 0;
+    padding: 1.2rem;
+    border: solid 1px rgba(255, 200, 200, 0.125);
+}
+
+.site-random-pickup {
+    text-align: center;
+    background-color: rgba(255, 200, 200, 0.125);
+    padding: 5px;
 }
 
 .site-swipe {
@@ -814,10 +881,22 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     color: grey;
 }
 
-.badge.and-more {
+.and-more {
+    display: inline-block;
+    font-size: 85%;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    vertical-align: baseline;
+    border-radius: 10rem;
     background-color: rgba(255, 255, 255, 0.125);
     padding: 10px;
     margin-top: 3px;
+    transition: all 300ms 0s ease;
+}
+
+.and-more:hover {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .list-review-point {
@@ -940,6 +1019,7 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     border-color: white;
     background-color: gray;
     color: white;
+    margin-bottom: 5px;
 }
 .tag.simple::before {
     content: "";
@@ -956,8 +1036,6 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     content: none;
 }
 
-
-
 .card-title-flex {
     margin-bottom: 1.5rem;
 }
@@ -968,6 +1046,10 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 
 .card-title-link {
     margin-top: -7px;
+}
+
+.card.card-in-card {
+    padding: 0;
 }
 
 .badge.show-all {
@@ -1053,6 +1135,12 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 
 /* SM */
 @media (min-width: 576px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+    .site-normal {
+        padding: 1.8rem 1.5rem 1.15rem;
+    }
 }
 
 

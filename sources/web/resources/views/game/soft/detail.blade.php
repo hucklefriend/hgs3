@@ -5,11 +5,14 @@
 
 @section('content')
 <div class="content__inner">
+    <header class="content__title">
+        <h1>{{ $soft->name }}</h1>
+    </header>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <h1 class="card-title">{{ $soft->name }}</h1>
                     <div class="d-flex flex-column flex-sm-row">
                         @if ($hasOriginalPackageImage)
                             <div class="text-center mb-3">
@@ -29,26 +32,28 @@
                                 </blockquote>
                             </div>
                             @endif
+{{--
                             @if (!empty($platforms))
                             <div class="d-flex mb-2">
                                 <div style="width: 30px;" class="text-center">
                                     <i class="fas fa-gamepad"></i>
                                 </div>
-                                <div class="d-flex flex-wrap">
+                                <div>
                                 @foreach ($platforms as $plt)
-                                    <a href="#" class="mr-2 badge badge-light">{{ $pltHash[$plt] ?? '？' }}</a>
+                                    <span class="badge badge-pill badge-secondary">{{ $pltHash[$plt] ?? '？' }}</span>
                                 @endforeach
                                 </div>
                             </div>
                             @endif
+--}}
                             @if ($officialSites->isNotEmpty())
                             <div class="d-flex">
                                 <div style="width: 30px;" class="text-center">
                                     <i class="fas fa-info-circle"></i>
                                 </div>
-                                <div class="d-flex flex-wrap">
+                                <div>
                                 @foreach ($officialSites as $officialSite)
-                                    <a href="{{ $officialSite->url }}" target="_blank" class="ml-2"><small>{{ $officialSite->title }}</small></a>
+                                    <a href="{{ $officialSite->url }}" target="_blank" class="mr-2"><small>{{ $officialSite->title }}</small></a>
                                 @endforeach
                                 </div>
                             </div>
@@ -107,14 +112,14 @@
                     <div class="package_slide swiper-container" id="packages_list">
                         <div class="swiper-wrapper">
                         @for ($i = 0; $i < $packageNum; $i += 2)
-                            <div class="swiper-slide">
+                            <div class="swiper-slide soft-detail-package">
                                 @php $pkg = $packages[$i]; @endphp
-                                <div class="package-title">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
-                                <div class="d-flex">
-                                    <div class="package-image-small">
-                                        @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
+                                <div class="d-table-row">
+                                    <div class="package-image">
+                                        {!! small_image($pkg) !!}
                                     </div>
-                                    <div class="ml-3">
+                                    <div class="package-data">
+                                        <div class="package-title">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
                                         <div class="package-info mt-1">
                                             <div><span class="package-info-icon"><i class="far fa-building"></i></span>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></div>
                                             <div><span class="package-info-icon"><i class="fas fa-gamepad"></i></span>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></div>
@@ -135,16 +140,15 @@
                                 </div>
                                 @endif
 
-
                                 @if (isset($packages[$i + 1]))
                                     @php $pkg = $packages[$i + 1]; @endphp
                                     <hr>
-                                    <div class="package-title mt-4">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
-                                    <div class="d-flex">
-                                        <div class="package-image-small">
-                                            @include('game.common.packageImage', ['imageUrl' => small_image_url($pkg)])
+                                    <div class="d-table-row">
+                                        <div class="package-image">
+                                            {!! small_image($pkg) !!}
                                         </div>
-                                        <div class="ml-3">
+                                        <div class="package-data">
+                                            <div class="package-title">{{ $pkg->name }}@if(env('APP_ENV') == 'local') ({{ $pkg->id }}) @endif</div>
                                             <div class="package-info mt-1">
                                                 <div><span class="package-info-icon"><i class="far fa-building"></i></span>&nbsp;<a href="{{ route('ゲーム会社詳細', ['company' => $pkg->company_id]) }}">{{ $pkg->company_name }}</a></div>
                                                 <div><span class="package-info-icon"><i class="fas fa-gamepad"></i></span>&nbsp;<a href="{{ route('プラットフォーム詳細', ['platform' => $pkg->platform_id]) }}">{{ $pkg->platform_name }}</a></div>
@@ -172,111 +176,9 @@
                     @if ($packageNum > 2)
                         <div class="text-center mt-3">
                             <a class="btn btn-outline-dark border-0 d-inline-block"><button class="btn btn-light btn--icon" id="packages_prev"><i class="fas fa-caret-left"></i></button></a>
-                            <span id="packages_pagination" class="mx-5"></span>
+                            <span id="packages_pagination" class="mx-4"></span>
                             <a class="btn btn-outline-dark border-0 d-inline-block"><button class="btn btn-light btn--icon" id="packages_next"><i class="fas fa-caret-right"></i></button></a>
                         </div>
-                    @endif
-                </div>
-            </div>
-            <div class="card card-hgn">
-                <div class="card-body">
-                    <h4 class="card-title">サイト <small>{{ number_format($siteNum) }}サイト</small></h4>
-
-                    <div class="card-text">
-                        @if (empty($site))
-                            <p>サイトは登録されていません。</p>
-                        @else
-                            <div class="site-random-pickup">ランダムピックアップ！</div>
-                            <div class="no-padding-site-normal">
-                                @include('site.common.normal', ['s' => $site, 'noUser' => true])
-                            </div>
-
-                            <div class="text-right mt-2">
-                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6">
-            <div class="card card-hgn">
-                <div class="card-body">
-                    <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->review_num : 0) }}件</small></h4>
-                    @if (!$released)
-                        <p class="card-text">
-                            発売されてないゲームなので、レビューは投稿できません。<br>
-                            発売日までお待ちください。
-                        </p>
-                    @else
-                    @empty($reviewTotal)
-                        @auth
-                            <p class="card-text">
-                                レビューはないか、集計待ち状態です。<br>
-                                このゲームのレビューを書いてみませんか？<br>
-                                @if ($isWriteReviewDraft)
-                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more mt-2">
-                                        <i class="fas fa-edit"></i> 下書きの続きを書く
-                                    </a>
-                                @else
-                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more mt-2">
-                                        <i class="fas fa-edit"></i> レビューを書く
-                                    </a>
-                                @endif
-                            </p>
-                        @else
-                            <p class="card-text">レビューはありません。</p>
-                        @endauth
-                    @else
-                        <div class="d-flex mb-3">
-                            <div class="review-point mr-2">
-                                {{ \Hgs3\Constants\Review\Fear::$face[intval(round($reviewTotal->fear, 0))] }}
-                            </div>
-                            <div class="review-point">
-                                {{ round($reviewTotal->point, 0) }}
-                            </div>
-
-                            <table class="review-point-table">
-                                <tr>
-                                    <th>{{ \Hgs3\Constants\Review\Fear::$face[\Hgs3\Constants\Review\Fear::getMaxPoint()] }} 怖さ</th>
-                                    <td class="text-right">{{ round($reviewTotal->fear * \Hgs3\Constants\Review\Fear::POINT_RATE, 1) }}pt</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="far fa-thumbs-up"></i> 良い点</th>
-                                    <td class="text-right">{{ round(($reviewTotal->good_tag_num + $reviewTotal->very_good_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE, 1)}}pt</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="far fa-thumbs-down"></i> 悪い所</th>
-                                    <td class="text-right">-{{ round(($reviewTotal->bad_tag_num + $reviewTotal->very_bad_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE, 1) }}pt</td>
-                                </tr>
-                            </table>
-                        </div>
-                        @auth
-                            @if ($isWriteReview)
-                                <div class="text-right mt-2">
-                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                                </div>
-                            @else
-                                <div class="d-flex justify-content-between mt-2">
-                                    @if ($isWriteReviewDraft)
-                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
-                                        <i class="fas fa-edit"></i> 下書きの続きを書く
-                                    </a>
-                                    @else
-                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">
-                                        <i class="fas fa-edit"></i> レビューを書く
-                                    </a>
-                                    @endif
-                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                                </div>
-                            @endif
-                        @else
-                        <div class="text-right mt-2">
-                            <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="badge badge-pill and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                        </div>
-                        @endauth
-                    @endempty
                     @endif
                 </div>
             </div>
@@ -287,7 +189,7 @@
                         @if ($favoriteNum == 0)
                             お気に入りに登録しているユーザーはいません。
                         @else
-                            <div class="widget-signups__list">
+                            <div class="widget-signups__list text-left">
                                 @foreach ($favorites as $favorite)
                                     @php $user = $users[$favorite->user_id]; @endphp
                                     @if ($user->icon_upload_flag == 1)
@@ -310,29 +212,135 @@
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="col-sm-6">
+            <div class="card card-hgn soft-detail-review">
+                <div class="card-body">
+                    <h4 class="card-title">レビュー <small>{{ number_format($reviewTotal ? $reviewTotal->review_num : 0) }}件</small></h4>
+                    @if (!$released)
+                        <p class="card-text">
+                            発売されてないゲームなので、レビューは投稿できません。<br>
+                            発売日までお待ちください。
+                        </p>
+                    @else
+                    @empty($reviewTotal)
+                        @auth
+                            <p class="card-text">
+                                レビューはないか、集計待ち状態です。<br>
+                                このゲームのレビューを書いてみませんか？<br>
+                                @if ($isWriteReviewDraft)
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="and-more mt-2">
+                                        <i class="fas fa-edit"></i> 下書きの続きを書く
+                                    </a>
+                                @else
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="and-more mt-2">
+                                        <i class="fas fa-edit"></i> レビューを書く
+                                    </a>
+                                @endif
+                            </p>
+                        @else
+                            <p class="card-text">レビューはありません。</p>
+                        @endauth
+                    @else
+                        <div>
+                            <div class="d-inline-block">
+                                <div class="review-list-fear mb-0">
+                                    {{ \Hgs3\Constants\Review\Fear::$data[intval(round($reviewTotal->fear, 0))] }}
+                                </div>
+                                <p class="text-right"><small>―との評判です。</small></p>
+                            </div>
+                        </div>
 
-    @if ($series)
-    <div class="card card-hgn">
-        <div class="card-body">
-            <h5 class="card-title">同じシリーズのゲーム</h5>
-            <div class="package-list">
-                @foreach ($seriesSofts as $seriesSoft)
-                    @include('game.common.packageCard', ['soft' => $seriesSoft, 'favorites' => $favoriteHash])
-                @endforeach
+                        <table class="review-total-table">
+                            <tr class="title">
+                                <td rowspan="4">
+                                    <small>み<br>ん<br>な<br>の<br>評<br>価</small>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ round($reviewTotal->point, 0) }}pt</th>
+                                <td>評価点の平均</td>
+                            </tr>
+                            <tr>
+                                <th>{{ $reviewFearRank }}位</th>
+                                <td>怖さの評判</td>
+                            </tr>
+                            <tr>
+                                <th>{{ $reviewPointRank }}位</th>
+                                <td>ゲームの評判</td>
+                            </tr>
+                        </table>
+
+                        @auth
+                            @if ($isWriteReview)
+                                <div class="text-right mt-4">
+                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="and-more">レビューを見る <i class="fas fa-angle-right"></i></a>
+                                </div>
+                            @else
+                                <div class="d-flex justify-content-between mt-4 flex-wrap">
+                                    @if ($isWriteReviewDraft)
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="and-more">
+                                        <i class="fas fa-edit"></i> 下書きの続きを書く
+                                    </a>
+                                    @else
+                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="and-more">
+                                        <i class="fas fa-edit"></i> レビューを書く
+                                    </a>
+                                    @endif
+                                    <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="and-more">レビューを見る <i class="fas fa-angle-right"></i></a>
+                                </div>
+                            @endif
+                        @else
+                        <div class="text-right mt-4">
+                            <a href="{{ route('ソフト別レビュー一覧', ['soft' => $soft->id]) }}" class="and-more">レビューを見る <i class="fas fa-angle-right"></i></a>
+                        </div>
+                        @endauth
+                    @endempty
+                    @endif
+                </div>
+            </div>
+            <div class="card card-hgn">
+                <div class="card-body">
+                    <h4 class="card-title">サイト <small>{{ number_format($siteNum) }}サイト</small></h4>
+
+                    <div class="card-text">
+                        @if (empty($site))
+                            <p>サイトは登録されていません。</p>
+                        @else
+                            <div class="site-random-pickup">ランダムピックアップ！</div>
+                            <div class="random-pickup">
+                                @include('site.common.normal', ['s' => $site, 'noUser' => true])
+                            </div>
+
+                            <div class="text-right mt-3">
+                                <a href="{{ route('ソフト別サイト一覧', ['soft' => $soft->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    @if ($series)
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h5 class="card-title">同じシリーズのゲーム</h5>
+                <div class="package-list">
+                    @foreach ($seriesSofts as $seriesSoft)
+                        @include('game.common.packageCard', ['soft' => $seriesSoft, 'favorites' => $favoriteHash])
+                    @endforeach
+                </div>
+            </div>
+        </div>
     @endif
 
-
     <div class="d-flex justify-content-between">
-        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}" class="badge badge-pill and-more">
+        <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}" class="and-more">
             <i class="fas fa-angle-left"></i>
             前のゲーム
         </a>
-        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}" class="badge badge-pill and-more">
+        <a href="{{ route('ゲーム詳細', ['soft' => $nextGame->id]) }}" class="and-more">
             次のゲーム
             <i class="fas fa-angle-right"></i>
         </a>

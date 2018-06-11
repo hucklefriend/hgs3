@@ -16,30 +16,24 @@
                         <h5 class="card-title">新着レビュー</h5>
                         @if ($newArrivals->isNotEmpty())
                             @foreach ($newArrivals as $review)
-                            <div class="mb-5">
-                                @if($review->is_spoiler == 1)
-                                    <span class="badge badge-sm badge-danger">ネタバレあり！</span>
-                                @endif
-                                <div class="review-list-title">
-                                    <a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a>
+                                <div class="mb-4 review-list">
+                                    <p class="mb-1">{{ \Hgs3\Constants\Review\Fear::$data[$review->fear] }}</p>
+                                    <table>
+                                        <tr>
+                                            <td>{{ small_image($review->soft->getImagePackage()) }}</td>
+                                            <td>
+                                                <p>{{ $review->soft->name }}</p>
+                                                <p class="mb-0 one-line"><small><i class="fas fa-user"></i>&nbsp;{{ $review->user->name }}さん</small></p>
+                                                <p class="mb-0"><small><i class="fas fa-calendar-alt"></i>&nbsp;{{ format_date(strtotime($review->post_at)) }}</small></p>
+                                            </td>
+                                            <td><a class="btn btn-light btn--icon" href="{{ route('レビュー', ['review' => $review->id]) }}"><i class="fas fa-angle-right"></i></a></td>
+                                        </tr>
+                                    </table>
                                 </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <div>
-                                        <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
-                                        <div class="review-list-point mr-1 d-inline-block">{{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}</div>
-                                        <div class="review-list-point mr-2 d-inline-block">{{ $review->calcPoint() }}</div>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <a class="btn btn-light btn--icon" href="{{ route('レビュー', ['review' => $review->id]) }}"><i class="fas fa-angle-right"></i></a>
-                                    </div>
-                                </div>
-                                <p class="mb-0 one-line" style="line-height: 1;"><small>{{ $review->user->name }}さん</small></p>
-                                <p class="mb-0" style="line-height: 1;"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
-                            </div>
                             @endforeach
 
                             <div class="mt-2 text-right">
-                                <a href="{{ route('新着レビュー一覧') }}" class="badge badge-pill and-more">もっと見る</a>
+                                <a href="{{ route('新着レビュー一覧') }}" class="and-more">もっと見る <i class="fas fa-angle-right"></i></a>
                             </div>
                         @else
                             <p class="mb-0">3ヶ月以内に投稿されたレビューはありません。</p>

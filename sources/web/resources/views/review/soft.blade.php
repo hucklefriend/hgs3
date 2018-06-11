@@ -25,15 +25,15 @@
                                 <table class="review-point-table">
                                     <tr>
                                         <th>😱 怖さ</th>
-                                        <td class="text-right">{{ round($total->fear * \Hgs3\Constants\Review\Fear::POINT_RATE, 1) }}pt</td>
+                                        <td class="text-right">{{ round($total->fear * \Hgs3\Constants\Review\Fear::POINT_RATE) }}pt</td>
                                     </tr>
                                     <tr>
                                         <th><i class="far fa-thumbs-up"></i> 良い点</th>
-                                        <td class="text-right">{{ round(($total->good_tag_num + $total->very_good_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE, 1)}}pt</td>
+                                        <td class="text-right">{{ round(($total->good_tag_num + $total->very_good_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE)}}pt</td>
                                     </tr>
                                     <tr>
                                         <th><i class="far fa-thumbs-down"></i> 悪い所</th>
-                                        <td class="text-right">-{{ round(($total->bad_tag_num + $total->very_bad_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE, 1) }}pt</td>
+                                        <td class="text-right">-{{ round(($total->bad_tag_num + $total->very_bad_tag_num) * \Hgs3\Constants\Review\Tag::POINT_RATE) }}pt</td>
                                     </tr>
                                 </table>
                             </div>
@@ -91,7 +91,6 @@
                     <div class="col-6">
                         <div class="quick-stats__item">
                             <div class="quick-stats__info">
-
                                 @if($pointRanking)
                                     <h2>{{ $pointRanking->rank }}位</h2>
                                 @else

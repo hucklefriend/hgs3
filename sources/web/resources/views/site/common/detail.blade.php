@@ -17,7 +17,7 @@
                     @endif
                 </div>
                 <p class="card-text">
-                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">{{ $site->url }}</a>
+                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">{{ $site->url }} <i class="fas fa-sign-out-alt"></i></a>
                 </p>
                 <div class="d-flex align-content-start flex-wrap site-info">
                     <span>

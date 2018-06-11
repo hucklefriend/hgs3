@@ -52,5 +52,5 @@
             <span><i class="fas fa-redo-alt"></i> {{ format_date($s->updated_timestamp) }}</span>
         @endif
     </div>
-    <div class="mt-2"><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank"><small>{{ $s->url }}</small></a></div>
+    <div class="mt-2"><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank"><small>{{ $s->url }}</small> <i class="fas fa-sign-out-alt"></i></a></div>
 </div>

@@ -339,6 +339,13 @@ function follow_status_icon(array $followStatus, $targetUserId)
     return new \Illuminate\Support\HtmlString(\Hgs3\Constants\FollowStatus::getIcon($followStatus[$targetUserId] ?? \Hgs3\Constants\FollowStatus::NONE));
 }
 
+function small_image($package)
+{
+    $url = small_image_url($package, true);
+
+    return new \Illuminate\Support\HtmlString(sprintf('<img data-normal="%s">', e($url)));
+}
+
 /**
  * 小さいパッケージ画像を優先して取得
  *
