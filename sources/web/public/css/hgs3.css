@@ -1047,3 +1047,25 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 .custom-radio:hover {
     cursor: pointer;
 }
+
+
+
+
+/* SM */
+@media (min-width: 576px) {
+}
+
+
+/* MD */
+@media (min-width: 768px) {
+}
+
+
+/* LG */
+@media (min-width: 992px) {
+}
+
+/* XL */
+@media (min-width: 1200px) {
+}
+

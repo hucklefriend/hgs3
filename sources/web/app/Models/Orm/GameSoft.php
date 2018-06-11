@@ -80,6 +80,7 @@ class GameSoft extends \Eloquent
                 $result[$row->id]->small_image_url = $packages[$row->original_package_id]->small_image_url;
                 $result[$row->id]->medium_image_url = $packages[$row->original_package_id]->medium_image_url;
                 $result[$row->id]->large_image_url = $packages[$row->original_package_id]->large_image_url;
+                $result[$row->id]->is_adult = $packages[$row->original_package_id]->is_adult;
             }
         }
 

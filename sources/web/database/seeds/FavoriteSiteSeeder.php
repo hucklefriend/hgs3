@@ -14,6 +14,9 @@ class FavoriteSiteSeeder extends Seeder
     {
         $users = Test\User::get();
         $userMax = $users->count() - 1;
+        if ($userMax > 100) {
+            $userMax = 100;
+        }
 
         $sites = Test\Site::getOpen();
 

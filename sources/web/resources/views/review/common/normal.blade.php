@@ -13,9 +13,9 @@
 
                     <div>
                     @isset($review->user)
-                        <p class="mb-0"><small>{{ $review->user->name }} </small></p>
+                        <p class="mb-0 mr-2"><small><i class="fas fa-user"></i>&nbsp;{{ $review->user->name }}</small></p>
                     @endif
-                        <p class="mb-0"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
+                        <p class="mb-0"><small><i class="fas fa-calendar-alt"></i>&nbsp;{{ format_date(strtotime($review->post_at)) }}</small></p>
                     </div>
                 </div>
             </div>

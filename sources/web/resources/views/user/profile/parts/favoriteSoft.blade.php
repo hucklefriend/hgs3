@@ -13,7 +13,7 @@
                             <div class="mr-3">
                                 <a href="{{ route('ゲーム詳細', ['soft' => $fg->soft_id]) }}" class="d-block">
                                     <span class="package-card-image">
-                                        @php $imageUrl = small_image_url($soft); @endphp
+                                        @php $imageUrl = small_image_url($soft, true); @endphp
                                         @if (empty($imageUrl))
                                             <i class="far fa-image"></i>
                                         @else

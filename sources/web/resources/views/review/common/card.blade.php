@@ -12,15 +12,13 @@
                     <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($review->soft->getImagePackage())])</div>
                     @endisset
                     <div>
-
                         <div class="d-flex">
                             <div class="review-list-point mr-2">{{ $review->calcPoint() }}</div>
-
                             <div>
-                                @isset($review->user)
-                                    <p class="mb-0"><small>{{ $review->user->name }} </small></p>
-                                @endif
-                                <p class="mb-0"><small>{{ format_date(strtotime($review->post_at)) }} 投稿</small></p>
+                            @isset($review->user)
+                                <p class="mb-0 mr-2"><small><i class="fas fa-user"></i>&nbsp;{{ $review->user->name }}</small></p>
+                            @endif
+                                <p class="mb-0"><small><i class="fas fa-calendar-alt"></i>&nbsp;{{ format_date(strtotime($review->post_at)) }}</small></p>
                             </div>
                         </div>
                     </div>

@@ -354,18 +354,16 @@ function small_image_url($package, $withNoImage = false)
         return $noImageUrl;
     }
 
-    $imageUrl = $noImageUrl;
-
     if ($package->is_adult) {
         if (!\Illuminate\Support\Facades\Auth::check()) {
             return $noImageUrl;
         }
-        $user = \Illuminate\Support\Facades\Auth::user();
-        if ($user->adult != 1) {
+        if (!\Illuminate\Support\Facades\Auth::user()->isAdult()) {
             return $noImageUrl;
         }
     }
 
+    $imageUrl = $noImageUrl;
     if (!empty($package->small_image_url)) {
         $imageUrl = $package->small_image_url;
     } else if (!empty($package->medium_image_url)) {
