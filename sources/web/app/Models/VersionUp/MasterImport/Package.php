@@ -269,6 +269,47 @@ WHERE
 SQL;
 
         DB::update($sql);
+    }
 
+    public static function updateShopImage()
+    {
+        // なるべくAmazonの画像を使うが、指定したIDのものはDMMの画像を使う
+        $dmmId = [];
+        $dmms = [Shop::DMM, Shop::DMM_R18];
+
+        $packages = Orm\GamePackage::all();
+
+        foreach ($packages as $pkg) {
+            $shopImages = Orm\GamePackageShop::where('package_id', $pkg->id)
+                ->whereIn('shop_id', [Shop::AMAZON, Shop::DMM, Shop::DMM_R18])
+                ->get();
+
+            if ($shopImages->isNotEmpty()) {
+                $pkg->shop_id = $shopImages[0]->shop_id;
+                $pkg->small_image_url = $shopImages[0]->small_image_url;
+                $pkg->medium_image_url = $shopImages[0]->medium_image_url;
+                $pkg->large_image_url = $shopImages[0]->large_image_url;
+
+                $useDmm = in_array($pkg->id, $dmmId);
+
+                for ($i = 1; $i < $shopImages->count(); $i++) {
+                    if ($useDmm && in_array($shopImages[$i]->shop_id, $dmms)) {
+                        $pkg->shop_id = $shopImages[$i]->shop_id;
+                        $pkg->small_image_url = $shopImages[$i]->small_image_url;
+                        $pkg->medium_image_url = $shopImages[$i]->medium_image_url;
+                        $pkg->large_image_url = $shopImages[$i]->large_image_url;
+                    } else if ($shopImages[$i]->shop_id == Shop::AMAZON) {
+                        $pkg->shop_id = $shopImages[$i]->shop_id;
+                        $pkg->small_image_url = $shopImages[$i]->small_image_url;
+                        $pkg->medium_image_url = $shopImages[$i]->medium_image_url;
+                        $pkg->large_image_url = $shopImages[$i]->large_image_url;
+                    }
+                }
+            }
+
+            $pkg->save();
+
+            unset($shopImages);
+        }
     }
 }

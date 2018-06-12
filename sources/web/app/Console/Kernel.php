@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\Master\Import::class,
         Commands\Master\UpdateOriginalPackageId::class,
         Commands\Master\UpdateAffiliate::class,
+        Commands\Master\UpdateShopImage::class,
         Commands\Sitemap::class,
         Commands\ReviewTotal::class,
         Commands\TranslateHgs::class

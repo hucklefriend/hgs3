@@ -55,6 +55,9 @@ class Master
 
         echo 'update game_package_shops release_int'. PHP_EOL;
         MasterImport\Package::updateShopReleaseInt();
+
+        echo 'update shop image'. PHP_EOL;
+        MasterImport\Package::updateShopImage();
     }
 
     public static function importSql($date)
