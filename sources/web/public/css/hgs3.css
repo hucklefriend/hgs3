@@ -501,8 +501,8 @@ html.is-fixed body {
 /* レビュー */
 
 .review-list table {
-    table-layout: fixed;
     width: 100%;
+    table-layout: fixed;
 }
 
 .review-list table tr td:nth-child(1) {
@@ -520,6 +520,7 @@ html.is-fixed body {
     padding-left: 5px;
     display: table-cell;
     vertical-align: top;
+    text-align: left;
 }
 
 .review-list table tr td:nth-child(3) {
@@ -527,6 +528,15 @@ html.is-fixed body {
     display: table-cell;
     vertical-align: middle;
     text-align: right;
+}
+
+.review-list table.point-only tr td:nth-child(1) {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.5rem;
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 50px;
 }
 
 .review-point {

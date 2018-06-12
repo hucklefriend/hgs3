@@ -31,7 +31,7 @@
                 @if($review->is_spoiler == 1)
                     <span class="badge badge-pill badge-danger mr-2">ネタバレ注意！</span>
                 @endif
-                <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="badge badge-pill and-more">レビューを読む</a>
+                <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="and-more">レビューを読む</a>
             </div>
         </div>
     </div>
