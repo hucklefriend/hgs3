@@ -2,6 +2,7 @@
 
 namespace Hgs3\Console;
 
+use Hgs3\Log;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

@@ -25,13 +25,6 @@ class Package extends MasterImportAbstract
     {
         if ($date == 20180401) return;
 
-        $manualMethod = 'manual' . $date;
-        if (method_exists(new self(), $manualMethod)) {
-            self::$manualMethod();
-        } else {
-            echo 'nothing package manual update.' . PHP_EOL;
-        }
-
         $path = storage_path('master/' . $date . '/package');
         if (!File::isDirectory($path)) {
             echo 'nothing package new data.' . PHP_EOL;
@@ -73,6 +66,13 @@ class Package extends MasterImportAbstract
             } else {
                 echo 'nothing soft id: ' . $softId . PHP_EOL;
             }
+        }
+
+        $manualMethod = 'manual' . $date;
+        if (method_exists(new self(), $manualMethod)) {
+            self::$manualMethod();
+        } else {
+            echo 'nothing package manual update.' . PHP_EOL;
         }
     }
 
@@ -252,7 +252,7 @@ class Package extends MasterImportAbstract
                 587, 588, 627, 626, 630, 628, 629, 163, 162, 514, 516, 515, 190, 189, 420, 419, 601, 602, 603,
                 604, 618, 619, 617, 581, 580, 215, 216, 528, 527, 531, 532, 252, 251, 685, 521, 522, 523, 691,
                 695, 689, 693, 701, 431, 432, 702, 704, 703, 154, 705, 1, 706, 6, 2, 437, 44, 43, 42, 41, 45,
-                697, 698])
+                697, 698, 552, 553, 551, 528, 527, 530, 529, 448, 449, 450, 526, 525, 524])
             ->update(['is_adult' => 2]);
     }
 
