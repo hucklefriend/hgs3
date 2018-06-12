@@ -57,7 +57,7 @@ class SiteController extends Controller
         $targetGender = Input::get('g', []);
         $rate = Input::get('r', []);
 
-        $data = Site::search(null, $mainContents, $targetGender, $rate, 5);
+        $data = Site::search(null, $mainContents, $targetGender, $rate, 10);
         $data['mc'] = $mainContents;
         $data['g'] = $targetGender;
         $data['r'] = $rate;
@@ -89,7 +89,7 @@ class SiteController extends Controller
      */
     public function newArrival()
     {
-        $newArrivals = Site\NewArrival::getPage(20);
+        $newArrivals = Site\NewArrival::getPage(10);
         $sites = Orm\Site::getHash(page_pluck($newArrivals, 'site_id'));
         $users = User::getHash(array_pluck($sites, 'user_id'));
 
@@ -108,7 +108,7 @@ class SiteController extends Controller
      */
     public function updateArrival()
     {
-        $updateArrivals = Site\UpdateArrival::getPage(20);
+        $updateArrivals = Site\UpdateArrival::getPage(10);
         $sites = Orm\Site::getHash(page_pluck($updateArrivals, 'site_id'));
         $users = User::getHash(array_pluck($sites, 'user_id'));
 
@@ -131,7 +131,7 @@ class SiteController extends Controller
         $targetGender = Input::get('tg', []);
         $rate = Input::get('r', []);
 
-        return view('site.soft', Site::search($soft, $mainContents, $targetGender, $rate, 20));
+        return view('site.soft', Site::search($soft, $mainContents, $targetGender, $rate, 10));
     }
 
     /**
@@ -145,7 +145,7 @@ class SiteController extends Controller
         $updateHistories = Orm\SiteUpdateHistory::where('site_id', $site->id)
             ->where('site_updated_at', '<=', DB::raw('CURDATE()'))
             ->orderBy('site_updated_at', 'DESC')
-            ->paginate(20);
+            ->paginate(10);
 
         return view('site.updateHistory', [
             'site'            => $site,
