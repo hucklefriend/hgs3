@@ -226,6 +226,7 @@ SQL;
         $item = Dmm::getItem($cid, $shop);
 
         if ($item === false || $item->result->total_count == 0) {
+            echo 'package id: ' . $packageId . ' is nothing in DMM(' . $shopId . ')' . PHP_EOL;
             self::saveShop($packageId, $shopId, '', null, null, null, $cid);
         } else {
             $img = [

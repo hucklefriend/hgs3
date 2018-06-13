@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class GamePlatform extends \Eloquent
 {
-    protected $guarded = [''];
+    protected $guarded = [];
 
     /**
      * ソフト情報を取得

@@ -44,6 +44,9 @@ class Master
         echo 'import package.'.PHP_EOL;
         MasterImport\Package::import($date);
 
+        echo 'import shop.'.PHP_EOL;
+        MasterImport\Shop::import($date);
+
         echo 'import official site.' . PHP_EOL;
         MasterImport\OfficialSite::import($date);
 

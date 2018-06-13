@@ -1,0 +1,13 @@
+{
+  "id": 808,
+  "platform": "PC",
+  "company": "Liar-Soft",
+  "name": "フェアリーテイル・アンコール DL版",
+  "release_int": 20151225,
+  "release_at": "2015年12月25日",
+  "shop": {
+    "DMM.R18": "bpartner_0029"
+  },
+  "soft_id": [329],
+  "is_adult": 1
+}

@@ -1,0 +1,13 @@
+{
+  "id": 815,
+  "platform": "PC",
+  "company": "美遊",
+  "name": "幽明境を異にする DL版",
+  "release_int": 20091228,
+  "release_at": "2009年12月28日",
+  "shop": {
+    "DMM.R18": "ggs_0231"
+  },
+  "soft_id": [224],
+  "is_adult": 1
+}

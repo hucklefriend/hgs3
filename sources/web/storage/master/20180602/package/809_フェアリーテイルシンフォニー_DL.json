@@ -1,0 +1,13 @@
+{
+  "id": 809,
+  "platform": "PC",
+  "company": "Liar-Soft",
+  "name": "フェアリーテイル・シンフォニー Another Side DL版",
+  "release_int": 20170616,
+  "release_at": "2017年6月16日",
+  "shop": {
+    "DMM.R18": "bpartner_0040"
+  },
+  "soft_id": [329, 330],
+  "is_adult": 1
+}

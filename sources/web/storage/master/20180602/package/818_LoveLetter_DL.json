@@ -1,0 +1,13 @@
+{
+  "id": 818,
+  "platform": "PC",
+  "company": "美遊",
+  "name": "Love Letter DL版",
+  "release_int": 20100202,
+  "release_at": "2010年2月2日",
+  "shop": {
+    "DMM.R18": "ggs_0233"
+  },
+  "soft_id": [207],
+  "is_adult": 1
+}

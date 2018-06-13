@@ -1,0 +1,13 @@
+{
+  "id": 819,
+  "platform": "PC",
+  "company": " ruf",
+  "name": "螺旋回廊 DL版",
+  "release_int": 20101224,
+  "release_at": "2010年12月24日",
+  "shop": {
+    "DMM.R18": "will_0080"
+  },
+  "soft_id": [225],
+  "is_adult": 1
+}

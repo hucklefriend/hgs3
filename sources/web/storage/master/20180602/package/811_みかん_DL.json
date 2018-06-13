@@ -1,0 +1,13 @@
+{
+  "id": 811,
+  "platform": "PC",
+  "company": "シーズウェア",
+  "name": "蜜柑 DL版",
+  "release_int": 20070805,
+  "release_at": "2007年8月5日",
+  "shop": {
+    "DMM.R18": "hobc_0028"
+  },
+  "soft_id": [222],
+  "is_adult": 1
+}

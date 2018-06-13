@@ -232,7 +232,7 @@ class Package extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180602()
+    private static function manual20180603()
     {
         DB::table('game_softs')
             ->whereIn('id', [242])
@@ -240,7 +240,10 @@ class Package extends MasterImportAbstract
         DB::table('game_package_links')
             ->whereIn('soft_id', [242])
             ->delete();
-
+        DB::table('game_package_links')
+            ->where('soft_id', 207)
+            ->whereIn('package_id', [816, 819])
+            ->delete();
 
         DB::table('game_packages')
             ->whereIn('id', [725, 665, 723, 722, 724, 572])
@@ -251,7 +254,9 @@ class Package extends MasterImportAbstract
             ->update(['is_adult' => 2]);
 
         $deleteShops = [
-            [620, Shop::DMM]
+            [620, Shop::DMM],
+            [648, Shop::DMM],
+            [647, Shop::DMM],
         ];
         foreach ($deleteShops as $deleteShop) {
             self::deleteShop($deleteShop[0], $deleteShop[1]);
@@ -332,6 +337,11 @@ SQL;
                         $pkg->large_image_url = $shopImages[$i]->large_image_url;
                     }
                 }
+            } else {
+                $pkg->shop_id = null;
+                $pkg->small_image_url = null;
+                $pkg->medium_image_url = null;
+                $pkg->large_image_url = null;
             }
 
             $pkg->save();

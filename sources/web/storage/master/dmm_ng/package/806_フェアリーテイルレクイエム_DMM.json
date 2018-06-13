@@ -1,0 +1,13 @@
+{
+  "id": 806,
+  "platform": "PC",
+  "company": "Liar-Soft",
+  "name": "フェアリーテイル・レクイエム DMMオリジナルイラストカード付",
+  "release_int": 20150724,
+  "release_at": "2015年7月24日",
+  "shop": {
+    "DMM.R18": "820liar002"
+  },
+  "soft_id": [330],
+  "is_adult": 1
+}

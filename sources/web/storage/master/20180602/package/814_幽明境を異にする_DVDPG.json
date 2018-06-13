@@ -1,0 +1,14 @@
+{
+  "id": 814,
+  "platform": "DVD-PG",
+  "company": "美遊",
+  "name": "幽明境を異にする DVD-PG版",
+  "release_int": 20060526,
+  "release_at": "2006年5月26日",
+  "shop": {
+    "amazon": "B001FLSZKU",
+    "DMM.R18": "1150mudv1001"
+  },
+  "soft_id": [224],
+  "is_adult": 1
+}
