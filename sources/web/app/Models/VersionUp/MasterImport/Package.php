@@ -62,8 +62,6 @@ class Package extends MasterImportAbstract
 
                 unset($data);
                 unset($platform);
-
-                sleep(2);
             }
         }
 
@@ -234,26 +232,56 @@ class Package extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180601()
+    private static function manual20180602()
     {
+        DB::table('game_softs')
+            ->whereIn('id', [242])
+            ->delete();
         DB::table('game_package_links')
-            ->whereIn('package_id', [417])
-            ->delete();
-        DB::table('game_package_shops')
-            ->whereIn('package_id', [685, 763, 421,364,369,370,371,387,388,389,390,391,392, 417])
-            ->delete();
-        DB::table('game_packages')
-            ->whereIn('id', [685, 763, 421, 210,364,369,370,371,387,388,389,390,391,392, 417])
+            ->whereIn('soft_id', [242])
             ->delete();
 
+
         DB::table('game_packages')
-            ->whereIn('id', [575, 574, 573, 576, 577, 623, 624, 719, 720, 30, 430, 429, 497, 498, 620,
-                587, 588, 627, 626, 630, 628, 629, 163, 162, 514, 516, 515, 190, 189, 420, 419, 601, 602, 603,
-                604, 618, 619, 617, 581, 580, 215, 216, 528, 527, 531, 532, 252, 251, 685, 521, 522, 523, 691,
-                695, 689, 693, 701, 431, 432, 702, 704, 703, 154, 705, 1, 706, 6, 2, 437, 44, 43, 42, 41, 45,
-                697, 698, 552, 553, 551, 528, 527, 530, 529, 448, 449, 450, 526, 525, 524])
+            ->whereIn('id', [725, 665, 723, 722, 724, 572])
+            ->update(['is_adult' => 1]);
+
+        DB::table('game_packages')
+            ->whereIn('id', [238, 587, 575, 574, 573, 576, 577, 578])
             ->update(['is_adult' => 2]);
+
+        $deleteShops = [
+            [620, Shop::DMM]
+        ];
+        foreach ($deleteShops as $deleteShop) {
+            self::deleteShop($deleteShop[0], $deleteShop[1]);
+        }
     }
+
+    private static function deleteShop($pkgId, $shopId)
+    {
+        DB::table('game_package_shops')
+            ->where('package_id', $pkgId)
+            ->where('shop_id', $shopId)
+            ->delete();
+    }
+
+    private static function packageShopCombine($fromPkgId, $toPackageId, $shopId)
+    {
+        DB::table('game_package_shops')
+            ->where('package_id', $fromPkgId)
+            ->where('shop_id', $shopId)
+            ->update(['package_id' => $toPackageId]);
+
+        DB::table('game_packages')
+            ->where('id', $fromPkgId)
+            ->delete();
+        DB::table('game_package_links')
+            ->where('package_id', $fromPkgId)
+            ->delete();
+    }
+
+
 
     public static function updateShopReleaseInt()
     {

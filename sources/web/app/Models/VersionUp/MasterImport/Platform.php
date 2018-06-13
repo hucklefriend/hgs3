@@ -37,8 +37,6 @@ class Platform extends MasterImportAbstract
                 $data['company_id'] = $companies[$data['company']] ?? null;
                 unset($data['company']);
 
-                print_r($data);
-
                 $platform = new Orm\GamePlatform($data);
                 $platform->save();
 
