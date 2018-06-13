@@ -49,11 +49,7 @@ php aritsan migrate
 review_disable_termsのsoft_idを tiny int から int に修正
 
 ○マスターインポート
-mysql -u root -p hgs3b < storage/master/all/20180630.sql
-php artisan master:import 20180601
-php artisan master:import 20180602
-php artisan master:import 20180603
-php artisan master:import 20180604
+mysql -u root -p hgs3b < storage/master/all/20180601.sql
 php artisan master:import 20180630
 
 ○テストデータの削除とH.G.S.からの移行バッチ実行
