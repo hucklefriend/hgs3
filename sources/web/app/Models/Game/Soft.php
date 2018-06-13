@@ -342,6 +342,15 @@ SQL;
         }
 
         foreach ($softs as $soft) {
+
+            // Mirage～淫宴の触手病棟～ Another Story Of D'ERLANGER
+            if ($soft->id == 321) {
+                // No Imageという画像になっているので、DVD-PGを採用
+                $soft->original_package_id = 632;
+                $soft->save();
+                continue;
+            }
+
             $pkg = Orm\GamePackageLink::where('soft_id', $soft->id)
                 ->get()
                 ->pluck('package_id')
