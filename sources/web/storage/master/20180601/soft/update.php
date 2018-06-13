@@ -8,5 +8,6 @@ return array(
     array('id' => '248','name' => 'BIOHAZARD REVELATIONS','phonetic' => 'ばいおはざーどりべれーしょんず','phonetic2' => 'ばいおはざーどりべれーしょんず10','series_id' => '65','order_in_series' => '1'),
     array('id' => '249','name' => 'BIOHAZARD オペレーションラクーンシティ','phonetic' => 'ばいおはざーどおぺれーしょんらくーんしてぃ','phonetic2' => 'ばいおはざーどおぺれーしょんらくーんしてぃ','series_id' => null,'order_in_series' => null),
     array('id' => '282','name' => 'BIOHAZARD REVELATIONS2','phonetic' => 'ばいおはざーどりべれーしょんず2','phonetic2' => 'ばいおはざーどりべれーしょんず20','series_id' => '65','order_in_series' => 2),
-    array('id' => '289','name' => '深夜廻')
+    array('id' => '289','name' => '深夜廻'),
+    array('id' => '288','name' => '夜廻')
 );

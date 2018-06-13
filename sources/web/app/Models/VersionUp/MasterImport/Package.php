@@ -25,6 +25,13 @@ class Package extends MasterImportAbstract
     {
         if ($date == 20180401) return;
 
+        $manualMethod = 'manual' . $date;
+        if (method_exists(new self(), $manualMethod)) {
+            self::$manualMethod();
+        } else {
+            echo 'nothing package manual update.' . PHP_EOL;
+        }
+
         $path = storage_path('master/' . $date . '/package');
         if (!File::isDirectory($path)) {
             echo 'nothing package new data.' . PHP_EOL;
@@ -66,13 +73,6 @@ class Package extends MasterImportAbstract
             } else {
                 echo 'nothing soft id: ' . $softId . PHP_EOL;
             }
-        }
-
-        $manualMethod = 'manual' . $date;
-        if (method_exists(new self(), $manualMethod)) {
-            self::$manualMethod();
-        } else {
-            echo 'nothing package manual update.' . PHP_EOL;
         }
     }
 
@@ -234,9 +234,6 @@ class Package extends MasterImportAbstract
      */
     private static function manual20180611()
     {
-        // うみねこを同人と、CSで分ける
-        // CSはさらにEP1～4と、EP5～8で分ける(PS3版に合わせる)
-
         DB::table('game_package_links')
             ->whereIn('package_id', [417])
             ->delete();
