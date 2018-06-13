@@ -264,7 +264,7 @@
                             ゲームの一覧がありますので、ぜひ眺めていってください。
                         </p>
                         <div class="tags__body">
-                            <a href="{{ route('ゲーム一覧') }}">&gt;&gt; ゲーム一覧へ &lt;&lt;</a>
+                            <a href="{{ route('ゲーム一覧') }}">&gt;&gt; ゲーム一覧 &lt;&lt;</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
@@ -280,7 +280,7 @@
                             @endif
                         </p>
                         <div class="tags__body">
-                            <a href="{{ route('レビュートップ') }}">&gt;&gt; レビューへ &lt;&lt;</a>
+                            <a href="{{ route('レビュートップ') }}">&gt;&gt; レビュー &lt;&lt;</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
@@ -299,7 +299,7 @@
                             サイトをお持ちの方は、ぜひ登録していってください。
                         </p>
                         <div class="tags__body">
-                            <a href="{{ route('サイトトップ') }}">&gt;&gt; サイトへ &lt;&lt;</a>
+                            <a href="{{ route('サイトトップ') }}">&gt;&gt; サイト &lt;&lt;</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 top-item d-none">

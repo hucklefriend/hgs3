@@ -1,0 +1,12 @@
+{
+  "id": 798,
+  "platform": "PC",
+  "company": "Digital Happiness",
+  "name": "DreadEye VR",
+  "release_int": 20171129,
+  "release_at": "2017年11月29日",
+  "shop": {
+    "Steam": "https://store.steampowered.com/app/692930/DreadEye_VR/"
+  },
+  "soft_id": [355]
+}

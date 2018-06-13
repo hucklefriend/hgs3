@@ -1,10 +1,11 @@
 {
-  "id": 699,
-  "platform": "PS4",
+  "id": 700,
+  "platform": "Switch",
   "company": "バンナム",
   "name": "LITTLE NIGHTMARES -リトルナイトメア- デラックスエディション",
   "shop": {
-    "Amazon": "B07BQV5JSK"
+    "Amazon": "B07BQXJGW5",
+    "DMM.com": "g_013hacpaeb8a"
   },
   "release_int": 20180607,
   "release_at": "2018年6月7日",

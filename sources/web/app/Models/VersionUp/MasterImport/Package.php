@@ -62,6 +62,8 @@ class Package extends MasterImportAbstract
 
                 unset($data);
                 unset($platform);
+
+                sleep(2);
             }
         }
 
@@ -232,7 +234,7 @@ class Package extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180611()
+    private static function manual20180601()
     {
         DB::table('game_package_links')
             ->whereIn('package_id', [417])
