@@ -16,13 +16,13 @@
                         <h5 class="card-title">新着レビュー</h5>
                         @if ($newArrivals->isNotEmpty())
                             @foreach ($newArrivals as $review)
-                                <div class="mb-4 review-list">
-                                    <p class="mb-1">{{ \Hgs3\Constants\Review\Fear::$data[$review->fear] }}</p>
+                                <div class="mb-5 review-list">
+                                    <p class="mb-1 lead">{{ \Hgs3\Constants\Review\Fear::$data[$review->fear] }}</p>
                                     <table>
                                         <tr>
                                             <td>{{ small_image($review->soft->getImagePackage()) }}</td>
                                             <td>
-                                                <p>{{ $review->soft->name }}</p>
+                                                <p class="mb-2">{{ $review->soft->name }}</p>
                                                 <p class="mb-0 one-line"><small><i class="fas fa-user"></i>&nbsp;{{ $review->user->name }}さん</small></p>
                                                 <p class="mb-0"><small><i class="fas fa-calendar-alt"></i>&nbsp;{{ format_date(strtotime($review->post_at)) }}</small></p>
                                             </td>
