@@ -136,6 +136,10 @@
                         @include('game.common.packageCardSmall', ['soft' => $soft])
                     @endforeach
                 </div>
+
+                <div class="mt-4 text-center">
+                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank" class="badge badge-pill badge-secondary">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
+                </div>
             </div>
         </div>
     </div>
