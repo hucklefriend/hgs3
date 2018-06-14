@@ -68,15 +68,15 @@
                 <h4 class="card-title">オープンソース</h4>
                 <p>
                     {{ env('APP_NAME') }}のソースコードをGitHubで公開しています。<br>
-                    <a href="https://github.com/hucklefriend/hgs3">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubリポジトリはこちら</a>
+                    <a href="https://github.com/hucklefriend/hgs3">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubリポジトリはこちら <i class="fas fa-sign-out-alt"></i></a>
                 </p>
                 <p>
                     LAMP(Linux + Apache + MariaDB + PHP) と MongoDBを使って開発しています。<br>
                     PHPのフレームワークにはLaravelを採用しています。
                 </p>
                 <p>
-                    バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter</a>か<a href="mailto:webmaster@horrorgame.net">メール</a>でご連絡をお願い致します。<br>
-                    <a href="https://github.com/hucklefriend/hgs3/issues" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのIssues</a>にIssueを登録して頂いても大丈夫です。
+                    バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter <i class="fas fa-sign-out-alt"></i></a>か<a href="mailto:webmaster@horrorgame.net">{{ sns_icon(\Hgs3\Constants\SocialSite::MAIL) }}メール</a>でご連絡をお願い致します。<br>
+                    <a href="https://github.com/hucklefriend/hgs3/issues" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのIssues <i class="fas fa-sign-out-alt"></i></a>にIssueを登録して頂いても大丈夫です。
                 </p>
             </div>
         </div>

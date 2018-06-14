@@ -19,9 +19,9 @@
                     また、当サイトで利用している外部サービスにおいても、クッキーを利用して情報を収集しているものがあります。<br>
                     外部サービス毎に項目を用意しておりますので、本画面下部を参照ください。<br>
                     <br>
-                    クッキーについて詳しくは、こちらを参照ください。<br>
-                    <a href="https://ja.wikipedia.org/wiki/HTTP_cookie" target="_blank">HTTP cookie - Wikipedia</a>
+                    クッキーについて詳しくは、こちらを参照ください。
                 </p>
+                <a href="https://ja.wikipedia.org/wiki/HTTP_cookie" target="_blank">HTTP cookie - Wikipedia <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
 
@@ -54,10 +54,10 @@
                     利用できるサービスは以下の通りです。
                 </p>
                 <ul>
-                    <li><a href="https://twitter.com/" target="_blank">Twitter</a></li>
-                    <li><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>
-                    <li><a href="https://github.com/" target="_blank">GitHub</a></li>
-                    <li><a href="https://plus.google.com/" target="_blank">Google+</a></li>
+                    <li><a href="https://twitter.com/" target="_blank">Twitter <i class="fas fa-sign-out-alt"></i></a></li>
+                    <li><a href="https://www.facebook.com/" target="_blank">Facebook <i class="fas fa-sign-out-alt"></i></a></li>
+                    <li><a href="https://github.com/" target="_blank">GitHub <i class="fas fa-sign-out-alt"></i></a></li>
+                    <li><a href="https://plus.google.com/" target="_blank">Google+ <i class="fas fa-sign-out-alt"></i></a></li>
                 </ul>
 
                 <p>
@@ -93,11 +93,11 @@
                     また、各サービスにおいて、クッキーを使ってのデータ収集が行われております。
                 </p>
                 <ul class="mb-4">
-                    <li class="mb-2"><a href="https://affiliate.amazon.co.jp/" target="_blank">Amazon.co.jpアソシエイト</a></li>
+                    <li class="mb-2"><a href="https://affiliate.amazon.co.jp/" target="_blank">Amazon.co.jpアソシエイト <i class="fas fa-sign-out-alt"></i></a></li>
                     <li class="mb-2">
-                        <a href="https://affiliate.dmm.com/" target="_blank">DMM アフィリエイト</a>
-                        <a href="https://affiliate.dmm.com/api/" target="_blank"><img src="https://pics.dmm.com/af/web_service/com_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.com" /></a>
-                        <a href="https://affiliate.dmm.com/api/" target="_blank"><img src="https://pics.dmm.com/af/web_service/r18_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.R18" /></a>
+                        <a href="https://affiliate.dmm.com/" target="_blank">DMM アフィリエイト <i class="fas fa-sign-out-alt"></i></a>
+                        <a href="https://affiliate.dmm.com/api/" target="_blank" class="ml-1"><img src="https://pics.dmm.com/af/web_service/com_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.com" /></a>
+                        <a href="https://affiliate.dmm.com/api/" target="_blank" class="ml-1"><img src="https://pics.dmm.com/af/web_service/r18_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.R18" /></a>
                     </li>
                 </ul>
                 <p>
@@ -115,11 +115,12 @@
                 <h4 class="card-title">Google Analytics</h4>
 
                 <p>
-                    アクセス情報の収集・解析のために、<a href="https://www.google.com/intl/ja_jp/analytics" target="_blank">Google Analytics</a>を利用しています。<br>
+                    アクセス情報の収集・解析のために、<a href="https://www.google.com/intl/ja_jp/analytics" target="_blank">Google Analytics <i class="fas fa-sign-out-alt"></i></a>を利用しています。<br>
                     Google Analyticsはクッキーを使っての情報収集が行われております。<br>
-                    データが収集、処理される仕組みについては、下記のサイトを参照ください。<br>
-                    <a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank">Google のサービスを使用するサイトやアプリから収集した情報の Google による使用 – ポリシーと規約 – Google</a>
+                    データが収集、処理される仕組みについては、下記のサイトを参照ください。
                 </p>
+
+                <a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank">Google のサービスを使用するサイトやアプリから収集した情報の Google による使用 – ポリシーと規約 – Google <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
 

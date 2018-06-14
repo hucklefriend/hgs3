@@ -235,10 +235,10 @@ class Package extends MasterImportAbstract
     private static function manual20180603()
     {
         DB::table('game_softs')
-            ->whereIn('id', [242])
+            ->whereIn('id', [242, 243])
             ->delete();
         DB::table('game_package_links')
-            ->whereIn('soft_id', [242])
+            ->whereIn('soft_id', [242, 243])
             ->delete();
         DB::table('game_package_links')
             ->where('soft_id', 207)
@@ -253,14 +253,30 @@ class Package extends MasterImportAbstract
             ->whereIn('id', [238, 587, 575, 574, 573, 576, 577, 578])
             ->update(['is_adult' => 2]);
 
+        DB::table('game_packages')
+            ->whereIn('id', [517, 500])
+            ->delete();
+        DB::table('game_package_shops')
+            ->whereIn('package_id', [517, 500])
+            ->delete();
+        DB::table('game_package_links')
+            ->whereIn('package_id', [517, 500])
+            ->delete();
+
+        DB::table('game_series')
+            ->whereIn('id', [18])
+            ->delete();
+
         $deleteShops = [
             [620, Shop::DMM],
             [648, Shop::DMM],
             [647, Shop::DMM],
+            [688, Shop::DMM],
         ];
         foreach ($deleteShops as $deleteShop) {
             self::deleteShop($deleteShop[0], $deleteShop[1]);
         }
+
     }
 
     private static function deleteShop($pkgId, $shopId)

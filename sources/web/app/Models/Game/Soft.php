@@ -195,7 +195,7 @@ SQL;
         $packageIdsComma = implode(',', $packageIds);
 
         $sql =<<< SQL
-SELECT pkg.*, plt.acronym AS platform_name, com.acronym AS company_name
+SELECT pkg.*, plt.acronym AS platform_name, com.name AS company_name
 FROM (
   SELECT id, `name`, platform_id, release_at, company_id, medium_image_url, small_image_url, large_image_url, is_adult, release_int, url
   FROM game_packages
@@ -204,7 +204,7 @@ FROM (
   LEFT OUTER JOIN game_platforms plt ON pkg.platform_id = plt.id
   LEFT OUTER JOIN game_companies com ON pkg.company_id = com.id
 ORDER BY
-  pkg.release_int DESC, pkg.platform_id, pkg.id
+  pkg.release_int DESC, plt.sort_order DESC, pkg.id
 SQL;
 
         $data = DB::select($sql);

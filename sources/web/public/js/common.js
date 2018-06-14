@@ -21,6 +21,7 @@ function toggleButton(check, on)
 
 // delete  query string
 // クエリストリング取得
+/*
 var urlQueryString = document.location.search;
 var replaceQueryString = "";
 if (urlQueryString !== "") {
@@ -50,3 +51,4 @@ if (urlQueryString !== "") {
 
 // URLに新しいクエリストリングを付与
 history.pushState(null,null,replaceQueryString);
+*/
