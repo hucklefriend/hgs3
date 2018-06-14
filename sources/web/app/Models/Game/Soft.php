@@ -162,12 +162,13 @@ SQL;
 SELECT soft.id, soft.name, package.small_image_url, package.medium_image_url, package.large_image_url, package.is_adult
 FROM
   (
-    SELECT id, `name`, original_package_id
+    SELECT id, `name`, original_package_id, order_in_series
     FROM game_softs
     WHERE series_id = ?
       AND id <> ?
   ) soft
   LEFT OUTER JOIN game_packages package ON package.id = soft.original_package_id
+ORDER BY soft.order_in_series
 SQL;
 
         return DB::select($sql, [$seriesId, $softId]);

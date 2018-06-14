@@ -16,6 +16,7 @@ class Shop
     const DMM_GAMES = 16;
     const APP_STORE = 31;
     const GOOGLE_PLAY = 32;
+    const SQM = 33;
     const GETCHU = 41;
     const DL_SITE = 42;
     const DMM = 43;
@@ -31,6 +32,7 @@ class Shop
         self::DMM_GAMES          => 'DMM GAMES',
         self::APP_STORE          => 'App Store',
         self::GOOGLE_PLAY        => 'Google Play',
+        self::SQM        => 'スクエニマーケット',
         self::GETCHU             => 'Getchu.com',
         self::DL_SITE            => 'DLsite',
         self::DMM                => 'DMM.com',

@@ -1,0 +1,13 @@
+{
+  "id": 829,
+  "platform": "PC",
+  "company": "テトラ",
+  "name": "B～蒼き背徳～",
+  "release_int": 20010427,
+  "release_at": "2001年4月27日",
+  "soft_id": [358],
+  "is_adult": 1,
+  "shop": {
+    "amazon": "B00005OIPQ"
+  }
+}
