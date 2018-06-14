@@ -32,20 +32,7 @@
                                 </blockquote>
                             </div>
                             @endif
-{{--
-                            @if (!empty($platforms))
-                            <div class="d-flex mb-2">
-                                <div style="width: 30px;" class="text-center">
-                                    <i class="fas fa-gamepad"></i>
-                                </div>
-                                <div>
-                                @foreach ($platforms as $plt)
-                                    <span class="badge badge-pill badge-secondary">{{ $pltHash[$plt] ?? '？' }}</span>
-                                @endforeach
-                                </div>
-                            </div>
-                            @endif
---}}
+
                             @if ($officialSites->isNotEmpty())
                             <div class="d-flex">
                                 <div style="width: 30px;" class="text-center">
@@ -59,24 +46,6 @@
                             </div>
                             @endif
 
-                            @if (Auth::check())
-                            <div class="mt-4">
-                                @if ($isFavorite)
-                                    <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                                        {{ method_field('DELETE') }}
-                                        <button class="btn btn-favorite2 btn--icon"><i class="fas fa-star"></i></button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                                        <button class="btn btn-favorite btn--icon"><i class="far fa-star"></i></button>
-                                    </form>
-                                @endif
-                            </div>
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -187,7 +156,26 @@
                     <h4 class="card-title">お気に入り <small>{{ number_format($favoriteNum) }}人</small></h4>
                     <div class="card-text">
                         @if ($favoriteNum == 0)
-                            お気に入りに登録しているユーザーはいません。
+                            <p>お気に入りに登録しているユーザーはいません。</p>
+
+                            @if (Auth::check())
+                                <div class="mt-4">
+                                    @if ($isFavorite)
+                                        <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                                            {{ method_field('DELETE') }}
+                                            <button class="btn btn-favorite2"><i class="fas fa-star"></i></button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                                            <button class="btn btn-favorite"><i class="far fa-star"></i></button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endif
                         @else
                             <div class="widget-signups__list text-left">
                                 @foreach ($favorites as $favorite)
@@ -204,9 +192,29 @@
                                 @endforeach
                             </div>
 
-                            <div class="text-right mt-2">
+                        <div class="d-flex justify-content-between flex-wrap mt-4">
+                            @if (Auth::check())
+                                <div>
+                                    @if ($isFavorite)
+                                        <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                                            {{ method_field('DELETE') }}
+                                            <button class="btn btn-favorite2"><i class="fas fa-star"></i></button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" value="{{ $soft->id }}" name="soft_id">
+                                            <button class="btn btn-favorite"><i class="far fa-star"></i> 登録</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endif
+                            <div class="text-right">
                                 <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                             </div>
+                        </div>
                         @endif
                     </div>
                 </div>

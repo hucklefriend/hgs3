@@ -887,9 +887,18 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     background-color: rgba(255, 255, 255, 0.2);
     color: yellow;
 }
+
+.btn-favorite2:after {
+    content: "済み";
+}
+
 .btn-favorite2:hover {
     background-color: rgba(255, 255, 255, 0.125);
     color: grey;
+}
+
+.btn-favorite2:hover:after {
+    content: "解除";
 }
 
 .btn-good {
@@ -1093,11 +1102,12 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     margin-top: 20px;
     margin-bottom: 30px;
     line-height: 200%;
+    min-height: 100px;
 }
 
 .top-item-title {
     font-family: 'Lalezar', cursive;
-    font-size: 150%;
+    font-size: 2rem;
 }
 
 .sponsor {
