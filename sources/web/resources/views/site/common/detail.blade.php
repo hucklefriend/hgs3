@@ -7,7 +7,7 @@
             @endif
             <div class="card-body">
                 <h4 class="card-title">{{ $site->name }}</h4>
-                <div class="mb-3">
+                <div class="mb-4">
                     <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($site->main_contents_id) }}</span>
                     @if ($site->rate > 0)
                         <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($site->rate) }}</span>
@@ -16,9 +16,6 @@
                         <span class="tag simple">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
                     @endif
                 </div>
-                <p class="card-text">
-                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">{{ $site->url }} <i class="fas fa-sign-out-alt"></i></a>
-                </p>
                 <div class="d-flex align-content-start flex-wrap site-info">
                     <span>
                         <i class="far fa-user"></i>
@@ -43,7 +40,6 @@
                     </span>
                     @endif
                 </div>
-
 
                 @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
                     @if (!$isWebMaster && Auth::check())
@@ -83,6 +79,10 @@
                     @endif
                 @endif
 
+
+                <div class="mt-3 text-right">
+                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank" class="badge badge-pill badge-secondary">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
+                </div>
             </div>
         </div>
     </div>
@@ -91,6 +91,20 @@
             <div class="card-body">
                 <h4 class="card-title">紹介</h4>
                 <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
+                <div class="mt-3 text-right">
+                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank" class="badge badge-pill badge-secondary">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h5 class="card-title">このサイトで扱っているゲーム</h5>
+                <div class="row">
+                    @foreach ($handleSofts as $soft)
+                        @include('game.common.packageCardSmall', ['soft' => $soft])
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -103,9 +117,9 @@
 
                 @if ($updateHistories->count() > 0)
                     @foreach ($updateHistories as $uh)
-                        <p class="card-text">
-                            {{ $uh->site_updated_at }}<br>
-                            {!! nl2br(e($uh->detail)) !!}
+                        <p class="card-text mb-3">
+                            <p class="mb-1"><small>{{ format_date2(strtotime($uh->site_updated_at)) }}</small></p>
+                            <p class="mb-0">{!! nl2br(e($uh->detail)) !!}</p>
                         </p>
                     @endforeach
                     <div class="text-right">
@@ -115,16 +129,6 @@
                     <p class="card-text">更新履歴はありません。</p>
                 @endif
             </div>
-        </div>
-    </div>
-</div>
-<div class="card card-hgn">
-    <div class="card-body">
-        <h5 class="card-title">このサイトで扱っているゲーム</h5>
-        <div class="row">
-            @foreach ($handleSofts as $soft)
-                @include('game.common.packageCard', ['soft' => $soft, 'favorites' => $favoriteHash ?? []])
-            @endforeach
         </div>
     </div>
 </div>

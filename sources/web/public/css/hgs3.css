@@ -353,6 +353,37 @@ button.btn:hover {
     vertical-align: middle;
 }
 
+
+/* 小さいパッケージイメージ */
+.package-card-small {
+    min-height: 50px;
+    margin-bottom: 10px;
+}
+
+.package-card-small a {
+    width: 100%;
+    display: flex;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.125);
+    transition: all 300ms 0s ease;
+    justify-content: start;
+    align-items: center;
+    padding: 5px 5px;
+}
+
+
+.package-card-small a img {
+    align-self: center;
+    text-align: center;
+    max-width: 40px;
+    max-height: 25px;
+    margin: 3px 5px;
+}
+
+.package-card-small a span {
+    align-self: center;
+}
+
 .one-content {
     margin-top: 50px;
 }

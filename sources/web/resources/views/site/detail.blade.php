@@ -47,45 +47,35 @@
 
                 @if ($site->approval_status != \Hgs3\Constants\Site\ApprovalStatus::WAIT)
                 <div class="d-flex flex-wrap">
-                    <span class="btn btn-light mr-2 mb-2">
-                        <i class="far fa-edit"></i>&nbsp;<a href="{{ route('サイト編集', ['site' => $site->id]) }}">サイト情報を編集</a>
-                    </span>
-                    <span class="btn btn-light mr-2 mb-2">
-                        <i class="fas fa-image"></i>&nbsp;<a href="{{ route('サイトバナー設定', ['site' => $site->id, 'isFirst' => 0]) }}">バナー設定</a>
-                    </span>
+                    <a href="{{ route('サイト編集', ['site' => $site->id]) }}" class="and-more mr-2 mb-2"><i class="far fa-edit"></i>&nbsp;サイト情報を編集</a>
+                    <a href="{{ route('サイトバナー設定', ['site' => $site->id, 'isFirst' => 0]) }}" class="and-more mr-2 mb-2"><i class="fas fa-image"></i>&nbsp;バナー設定</a>
                     @if ($site->rate == 18)
-                    <span class="btn btn-light mr-2 mb-2">
-                        🔞&nbsp;<a href="{{ route('R-18サイトバナー設定', ['site' => $site->id, 'isFirst' => 0]) }}">R-18バナー設定</a>
-                    </span>
+                    <a href="{{ route('R-18サイトバナー設定', ['site' => $site->id, 'isFirst' => 0]) }}" class="and-more mr-2 mb-2">🔞&nbsp;R-18バナー設定</a>
                     @endif
                     @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::OK)
-                    <span class="btn btn-light mr-2 mb-2">
-                        <i class="fas fa-history"></i>&nbsp;<a href="{{ route('サイト更新履歴登録', ['site' => $site->id]) }}">サイト更新履歴を登録</a>
-                    </span>
-                    <span class="btn btn-light mr-2 mb-2">
-                        <i class="fas fa-paw"></i>&nbsp;<a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}">アクセスログ</a>
-                    </span>
+                    <a href="{{ route('サイト更新履歴登録', ['site' => $site->id]) }}" class="and-more mr-2 mb-2"><i class="fas fa-history"></i>&nbsp;サイト更新履歴を登録</a>
+                    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}" class="and-more mr-2 mb-2"><i class="fas fa-paw"></i>&nbsp;アクセスログ</a>
                     @endif
                 </div>
                 @endif
-                @if ($site->approval_status != \Hgs3\Constants\Site\ApprovalStatus::WAIT || $site->approval_status != \Hgs3\Constants\Site\ApprovalStatus::REJECT)
-                <div class="d-flex flex-wrap justify-content-between mt-4">
-                    <form method="POST" action="{{ route('サイト登録申請', ['site' => $site->id]) }}" onsubmit="return confirm('登録申請を行います。よろしいですね？')" style="margin: 5px 0;">
-                        {{ csrf_field() }}
-
-                        <button class="btn btn-primary btn-lg"><i class="fas fa-clipboard-check"></i>&nbsp;登録申請</button>
-                    </form>
-                    <div class="text-right align-self-end">
-                        <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')" style="margin: 5px 0;">
+                @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT || $site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
+                    <div class="d-flex flex-wrap justify-content-between mt-4">
+                        <form method="POST" action="{{ route('サイト登録申請', ['site' => $site->id]) }}" onsubmit="return confirm('登録申請を行います。よろしいですね？')" style="margin: 5px 0;">
                             {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
 
-                            <button class="btn btn-danger btn-sm"><i class="fas fa-eraser"></i>&nbsp;サイトを削除</button>
+                            <button class="btn btn-primary btn-lg"><i class="fas fa-clipboard-check"></i>&nbsp;登録申請</button>
                         </form>
+                        <div class="text-right align-self-end">
+                            <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')" style="margin: 5px 0;">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <button class="btn btn-danger btn-sm"><i class="fas fa-eraser"></i>&nbsp;サイトを削除</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 @else
-                    <div class="text-right">
+                    <div class="text-right mt-4">
                         <form method="POST" action="{{ route('サイト削除', ['site' => $site->id]) }}" onsubmit="return confirm('{{ $site->name }}を削除します。\nよろしいですか？')" style="margin: 5px 0;">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}

@@ -6,21 +6,20 @@
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>サイト更新履歴</h1>
+            <h1>{{ $site->name }}</h1>
+            <p>サイトの更新履歴</p>
         </header>
 
-    @foreach($updateHistories as $updateHistory)
         <div class="card">
             <div class="card-body">
-                <div><small>{{ $updateHistory->site_updated_at }}</small></div>
-                <div>{!! nl2br(e($updateHistory->detail)); !!}</div>
+                @foreach($updateHistories as $updateHistory)
+                <p class="mb-1"><small>{{ format_date2(strtotime($updateHistory->site_updated_at)) }}</small></p>
+                <p class="mb-0">{!! nl2br(e($updateHistory->detail)); !!}</p>
+                @if (!$loop->last) <hr> @endif
+                @endforeach
             </div>
         </div>
-        @if (!$loop->last) <hr> @endif
-    @endforeach
-
-    @include('common.pager', ['pager' => $updateHistories])
-
+        @include('common.pager', ['pager' => $updateHistories])
     </div>
 
 @endsection

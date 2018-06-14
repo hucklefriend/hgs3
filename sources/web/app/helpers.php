@@ -327,6 +327,17 @@ function format_date($timestamp)
     return date('Y.n.j H:i', $timestamp);
 }
 
+function format_date2($timestamp)
+{
+    if ($GLOBALS['today_start_timestamp'] <= $timestamp && $timestamp <= $GLOBALS['today_end_timestamp']) {
+        return date('今日', $timestamp);
+    } else if ($GLOBALS['yesterday_start_timestamp'] <= $timestamp && $timestamp <= $GLOBALS['yesterday_end_timestamp']) {
+        return date('昨日', $timestamp);
+    }
+
+    return date('Y.n.j', $timestamp);
+}
+
 /**
  * 相互フォローアイコン
  *
