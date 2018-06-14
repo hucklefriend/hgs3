@@ -20,13 +20,3 @@
     </div>
 @endsection
 
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム一覧') }}">ゲーム一覧</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}">詳細</a></li>
-            <li class="breadcrumb-item active" aria-current="page">取扱いサイト</li>
-        </ol>
-    </nav>
-@endsection

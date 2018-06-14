@@ -29,7 +29,7 @@
     </div>
 
     @if (!isset($hidePresentation) || !$hidePresentation)
-        <div class="site-presentation mt-2">{{ e(str_limit($s->presentation, 150)) }}</div>
+        <div class="site-presentation mt-2">{{ e(str_limit($s->presentation, Hgs3\Constants\Site::LIST_PRESENTATION_LENGTH)) }}</div>
     @endif
 
     <div class="d-flex flex-wrap site-badge my-3">
@@ -42,15 +42,15 @@
         @endif
     </div>
 
-    <div class="d-flex align-content-start flex-wrap site-info">
+    <div class="site-info">
         @if (!isset($noUser) || !$noUser)
-        <span><i class="far fa-user"></i> <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}">{{ $u->name }}</a></span>
+        <span class="d-inline-block"><i class="far fa-user"></i> <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}" class="one-line user-name-link">{{ $u->name }}</a></span>
         @endif
-        <span><span class="good-icon2"><i class="far fa-thumbs-up"></i></span> {{ number_format($s->good_num) }}</span>
-        <span><i class="fas fa-paw"></i> {{ number_format($s->out_count) }}</span>
+        <span class="d-inline-block"><span class="good-icon2"><i class="far fa-thumbs-up"></i></span> {{ number_format($s->good_num) }}</span>
+        <span class="d-inline-block"><i class="fas fa-paw"></i> {{ number_format($s->out_count) }}</span>
         @if ($s->updated_timestamp > 0)
-            <span><i class="fas fa-redo-alt"></i> {{ format_date($s->updated_timestamp) }}</span>
+            <span class="d-inline-block"><i class="fas fa-redo-alt"></i> {{ format_date($s->updated_timestamp) }}</span>
         @endif
     </div>
-    <div class="mt-2"><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank"><small>{{ $s->url }}</small> <i class="fas fa-sign-out-alt"></i></a></div>
+    <div class="mt-3 text-center"><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" class="badge badge-pill badge-secondary" target="_blank">サイトへ行く <i class="fas fa-sign-out-alt"></i></a></div>
 </div>

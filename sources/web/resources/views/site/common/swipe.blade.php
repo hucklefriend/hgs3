@@ -6,17 +6,31 @@
             <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
         </div>
     @else
-        <div>
+        <p class="mb-1">
             <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
-        </div>
+        </p>
         <div class="list-site-banner-outline">
             <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img src="{{ $listBannerUrl }}" class="img-responsive"></a>
         </div>
     @endif
     </div>
-    <div class="mt-2 mb-2"><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank"><small>{{ $s->url }}</small></a></div>
+
+
+    <div class="d-flex flex-wrap site-badge my-3">
+        <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($s->main_contents_id) }}</span>
+        @if ($s->rate > 0)
+            <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($s->rate) }}</span>
+        @endif
+        @if ($s->gender != \Hgs3\Constants\Site\Gender::NONE)
+            <span class="tag simple">{{ \Hgs3\Constants\Site\Gender::getText($s->gender) }}</span>
+        @endif
+    </div>
 
     @if (strlen($s->presentation) > 0)
-    <div class="break-word mt-2"><small>{{ e(str_limit($s->presentation, 150)) }}</small></div>
+    <div class="break-word mt-2"><small>{{ e(str_limit($s->presentation, Hgs3\Constants\Site::LIST_PRESENTATION_LENGTH)) }}</small></div>
     @endif
+
+    <div class="mt-4 text-center">
+        <a href="{{ route('サイト遷移', ['site' => $s->id]) }}" target="_blank" class="badge badge-pill badge-secondary"><small>サイトへ行く <i class="fas fa-sign-out-alt"></i></small></a>
+    </div>
 </div>

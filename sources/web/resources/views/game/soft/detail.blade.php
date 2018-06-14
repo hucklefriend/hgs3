@@ -40,7 +40,7 @@
                                 </div>
                                 <div>
                                 @foreach ($officialSites as $officialSite)
-                                    <a href="{{ $officialSite->url }}" target="_blank" class="mr-2"><small>{{ $officialSite->title }}</small></a>
+                                    <a href="{{ $officialSite->url }}" target="_blank" class="mr-2 badge badge-pill badge-secondary"><small>{{ $officialSite->title }}</small> <i class="fas fa-sign-out-alt"></i></a>
                                 @endforeach
                                 </div>
                             </div>
@@ -144,9 +144,9 @@
                     </div>
                     @if ($packageNum > 2)
                         <div class="text-center mt-3">
-                            <a class="btn btn-outline-dark border-0 d-inline-block"><button class="btn btn-light btn--icon" id="packages_prev"><i class="fas fa-caret-left"></i></button></a>
+                            <button class="btn btn-light" id="packages_prev"><i class="fas fa-caret-left"></i></button>
                             <span id="packages_pagination" class="mx-4"></span>
-                            <a class="btn btn-outline-dark border-0 d-inline-block"><button class="btn btn-light btn--icon" id="packages_next"><i class="fas fa-caret-right"></i></button></a>
+                            <button class="btn btn-light" id="packages_next"><i class="fas fa-caret-right"></i></button>
                         </div>
                     @endif
                 </div>

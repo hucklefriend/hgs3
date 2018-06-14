@@ -17,12 +17,16 @@
                 </div>
             </div>
         @else
+
+
+            <div class="row">
             @foreach ($pager as $p)
                 <?php $s = $sites[$p->site_id]; ?>
-                <div style="margin-top: 10px;margin-bottom: 30px;">
+                    <div class="mb-5 col-12 col-md-6">
                     @include('site.common.normal', ['s' => $s, 'u' => $users[$s->user_id]])
                 </div>
             @endforeach
+            </div>
             @include('common.pager', ['pager' => $pager])
         @endif
 
@@ -113,14 +117,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('サイトトップ') }}">サイト</a></li>
-            <li class="breadcrumb-item active" aria-current="page">サイト検索</li>
-        </ol>
-    </nav>
 @endsection

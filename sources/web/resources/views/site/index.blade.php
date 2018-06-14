@@ -47,13 +47,13 @@
 
                                     <!-- Add Pagination -->
                                     <div class="text-center mt-3">
-                                        <button class="btn btn-light btn--icon" id="new_arrivals_prev"><i class="fas fa-caret-left"></i></button>
+                                        <button class="btn btn-light" id="new_arrivals_prev"><i class="fas fa-caret-left"></i></button>
                                         <span id="new_arrivals_pagination" class="mx-5"></span>
-                                        <button class="btn btn-light btn--icon" id="new_arrivals_next"><i class="fas fa-caret-right"></i></button>
+                                        <button class="btn btn-light" id="new_arrivals_next"><i class="fas fa-caret-right"></i></button>
                                     </div>
                                 </div>
 
-                                <div class="text-right mt-5">
+                                <div class="text-right mt-4">
                                     <a href="{{ route('新着サイト一覧') }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                                 </div>
                             @endif
@@ -79,13 +79,13 @@
                                     </div>
 
                                     <div class="text-center mt-3">
-                                        <button class="btn btn-light btn--icon" id="updates_prev"><i class="fas fa-caret-left"></i></button>
+                                        <button class="btn btn-light" id="updates_prev"><i class="fas fa-caret-left"></i></button>
                                         <span id="updates_pagination" class="mx-5"></span>
-                                        <button class="btn btn-light btn--icon" id="updates_next"><i class="fas fa-caret-right"></i></button>
+                                        <button class="btn btn-light" id="updates_next"><i class="fas fa-caret-right"></i></button>
                                     </div>
                                 </div>
 
-                                <div class="text-right mt-5">
+                                <div class="text-right mt-4">
                                     <a href="{{ route('更新サイト一覧') }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                                 </div>
                             @endif
