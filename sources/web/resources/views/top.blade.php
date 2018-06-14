@@ -247,6 +247,7 @@
                         slidesPerView: num,
                         spaceBetween: 20,
                         loop: true,
+                        freeMode: true,
                     });
                 }
 

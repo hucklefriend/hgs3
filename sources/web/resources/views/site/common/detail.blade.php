@@ -49,12 +49,12 @@
                                 <form action="{{ route('お気に入りサイト削除処理', ['site' => $site->id]) }}" method="POST" class="mr-4">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button class="btn btn-favorite2 btn--icon"><i class="fas fa-star"></i></button>
+                                    <button class="btn btn-favorite2"><i class="fas fa-star"></i></button>
                                 </form>
                             @else
                                 <form action="{{ route('お気に入りサイト登録処理', ['site' => $site->id]) }}" method="POST" class="mr-4">
                                     {{ csrf_field() }}
-                                    <button class="btn btn-favorite btn--icon"><i class="far fa-star"></i></button>
+                                    <button class="btn btn-favorite"><i class="far fa-star"></i></button>
                                 </form>
                             @endif
 
@@ -62,36 +62,67 @@
                                 <form method="POST" action="{{ route('サイトいいねキャンセル', ['site' => $site]) }}">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button class="btn btn-good2 btn--icon"><i class="fas fa-thumbs-up"></i></button>
+                                    <button class="btn btn-good2"><i class="fas fa-thumbs-up"></i></button>
                                 </form>
                             @else
                                 <form method="POST" action="{{ route('サイトいいね', ['site' => $site]) }}">
                                     {{ csrf_field() }}
-                                    <button class="btn btn-good btn--icon"><i class="far fa-thumbs-up"></i></button>
+                                    <button class="btn btn-good"><i class="far fa-thumbs-up"></i></button>
                                 </form>
                             @endif
                             </div>
 
                             <div>
-                                <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
+                                <button class="btn btn-light" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
                             </div>
                         </div>
                     @endif
                 @endif
 
-
-                <div class="mt-3 text-right">
+                <div class="mt-4 text-center">
                     <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank" class="badge badge-pill badge-secondary">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card card-hgn">
+
+        {{-- 紹介は2か所にあるので直す際は注意 --}}
+        <div class="card card-hgn hidden-md-up">
             <div class="card-body">
                 <h4 class="card-title">紹介</h4>
                 <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
-                <div class="mt-3 text-right">
+                <div class="mt-3 text-center">
+                    <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank" class="badge badge-pill badge-secondary">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h4 class="card-title">更新履歴</h4>
+
+                @if ($updateHistories->count() > 0)
+                    @foreach ($updateHistories as $uh)
+                        <p class="card-text mb-3">
+                        <p class="mb-1"><small>{{ format_date2(strtotime($uh->site_updated_at)) }}</small></p>
+                        <p class="mb-0">{!! nl2br(e($uh->detail)) !!}</p>
+                        </p>
+                    @endforeach
+                    <div class="text-right">
+                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
+                    </div>
+                @else
+                    <p class="card-text">更新履歴はありません。</p>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        {{-- 紹介は2か所にあるので直す際は注意 --}}
+        <div class="card card-hgn hidden-sm-down">
+            <div class="card-body">
+                <h4 class="card-title">紹介</h4>
+                <p class="card-text">{!! nl2br(e($site->presentation)) !!}</p>
+                <div class="mt-3 text-center">
                     <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank" class="badge badge-pill badge-secondary">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
                 </div>
             </div>
@@ -105,29 +136,6 @@
                         @include('game.common.packageCardSmall', ['soft' => $soft])
                     @endforeach
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="card card-hgn">
-            <div class="card-body">
-                <h4 class="card-title">更新履歴</h4>
-
-                @if ($updateHistories->count() > 0)
-                    @foreach ($updateHistories as $uh)
-                        <p class="card-text mb-3">
-                            <p class="mb-1"><small>{{ format_date2(strtotime($uh->site_updated_at)) }}</small></p>
-                            <p class="mb-0">{!! nl2br(e($uh->detail)) !!}</p>
-                        </p>
-                    @endforeach
-                    <div class="text-right">
-                        <a href="{{ route('サイト更新履歴', ['site' => $site->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                    </div>
-                @else
-                    <p class="card-text">更新履歴はありません。</p>
-                @endif
             </div>
         </div>
     </div>
