@@ -69,7 +69,7 @@ class Package extends MasterImportAbstract
         foreach ($updateSofts as $softId) {
             $soft = Orm\GameSoft::find($softId);
             if ($soft !== null) {
-                NewInformation::addUpdateGameText($soft);
+                //NewInformation::addUpdateGameText($soft);
             } else {
                 echo 'nothing soft id: ' . $softId . PHP_EOL;
             }

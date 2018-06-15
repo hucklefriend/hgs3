@@ -39,7 +39,7 @@ class Soft extends MasterImportAbstract
                 $data = json_decode(File::get($filePath), true);
                 $data['genre'] = '';
 
-                $isNew = Orm\GameSoft::find($data['id']) != null;
+                $isNew = Orm\GameSoft::find($data['id']) == null;
 
                 $orm = Orm\GameSoft::updateOrCreate(
                     ['id' => $data['id']],
