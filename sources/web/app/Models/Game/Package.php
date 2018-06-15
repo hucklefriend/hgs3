@@ -324,7 +324,8 @@ SQL;
         $sql =<<< SQL
 SELECT
 	shop.*,
-	pkg.name
+	pkg.name,
+	plt.acronym AS platform_name
 FROM (
 	SELECT package_id, release_int, shop_url, small_image_url
 	FROM game_package_shops
@@ -333,6 +334,7 @@ FROM (
 	LIMIT 20
 ) shop
 	INNER JOIN game_packages pkg ON pkg.id = shop.package_id
+    INNER JOIN game_platforms plt ON pkg.platform_id = plt.id
 SQL;
 
         return DB::select($sql, [Shop::AMAZON]);

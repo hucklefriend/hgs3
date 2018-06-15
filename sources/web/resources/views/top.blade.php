@@ -9,7 +9,6 @@
                         @if ($newInfoNum > 0)
                             <div class="d-flex justify-content-between card-title-flex">
                                 <h5 class="card-title">新着情報</h5>
-
                                 <div class="card-title-link">
                                     <a href="{{ route('新着情報') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
                                 </div>
@@ -41,12 +40,8 @@
                                 <div class="swiper-wrapper">
                                     @foreach ($newInfo as $nf)
                                         <div class="swiper-slide">
-                                            <div>
-                                                <small>{{ format_date($nf['time']) }}</small>
-                                            </div>
-                                            <p class="mb-0">
-                                                {!! $nf['text'] !!}
-                                            </p>
+                                            <p class="mb-1"><small>{{ format_date($nf['time']) }}</small></p>
+                                            <p class="mb-0">{!! $nf['text'] !!}</p>
                                         </div>
                                     @endforeach
                                 </div>
@@ -171,7 +166,7 @@
                                 <div class="text-center">
                                     <a href="{{ $newGame->shop_url }}" target="_blank" class="text-center">
                                         <img data-normal="{{ $newGame->small_image_url }}">
-                                        <p class="force-break new-game-title">{{ $newGame->name }}</p>
+                                        <p class="force-break new-game-title">[{{ $newGame->platform_name }}]{{ $newGame->name }}</p>
                                     </a>
                                 </div>
                             </div>

@@ -7,15 +7,17 @@
     <div class="content__inner">
         <header class="content__title">
             <h1>{{ $soft->name }}</h1>
-            <p>取扱いサイト</p>
+            <p>を取り扱っているサイト</p>
         </header>
 
+        <div class="row">
         @foreach ($pager as $p)
             <?php $s = $sites[$p->site_id]; ?>
-            <div style="margin-top: 10px;margin-bottom: 30px;">
+                <div class="mb-5 col-12 col-md-6">
                 @include('site.common.normal', ['s' => $s, 'u' => $users[$s->user_id]])
             </div>
         @endforeach
+        </div>
         @include('common.pager', ['pager' => $pager])
     </div>
 @endsection
