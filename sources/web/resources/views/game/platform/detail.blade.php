@@ -9,19 +9,24 @@
             <h1>{{ $platform->name }}</h1>
         </header>
 
-        <div>
-            @if ($platform->url != null)
-                <a href="{{ $platform->url }}" target="_blank">公式サイト</a>
-            @endif
-            @if ($platform->wikipedia != null)
-                <a href="{{ $platform->wikipedia }}" target="_blank">Wikipedia</a>
-            @endif
-        </div>
-        <hr>
+        @if (!empty($platform->url) && !empty($platform->wikipedia))
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                        @if (!empty($platform->url))
+                            <a href="{{ $platform->url }}" class="badge badge-pill badge-secondary mr-3" target="_blank">公式サイト <i class="fas fa-sign-out-alt"></i></a>
+                        @endif
+                        @if (!empty($platform->wikipedia))
+                            <a href="{{ $platform->wikipedia }}" class="badge badge-pill badge-secondary mr-3" target="_blank">Wikipedia <i class="fas fa-sign-out-alt"></i></a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">対応ゲーム</h4>
+                <h4 class="card-title">販売ゲーム</h4>
                 <div class="contacts row mt-5">
                     @foreach ($soft as $s)
                         <div class="col-xl-2 col-lg-3 col-sm-4 col-12">

@@ -19,9 +19,10 @@ class Soft
     /**
      * 一覧用データ取得
      *
+     * @param array $favoriteHash
      * @return array
      */
-    public static function getList()
+    public static function getList(array $favoriteHash)
     {
         $sql =<<< SQL
 SELECT
@@ -42,9 +43,16 @@ SQL;
         $tmp = DB::select($sql);
 
         $result = array();
+        $favorite = [];
         foreach ($tmp as $game) {
             $result[$game->phonetic_type][] = $game;
+
+            if (isset($favoriteHash[$game->id])) {
+                $favorite[] = $game;
+            }
         }
+
+        $result['favorite'] = $favorite;
 
         unset($tmp);
 

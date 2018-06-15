@@ -25,6 +25,10 @@ class FavoriteSoftController extends Controller
         $softId = $request->get('soft_id');
         $soft = Orm\GameSoft::find($softId);
         if ($soft != null) {
+            if (FavoriteSoft::isMax(Auth::id())) {
+                return redirect()->route('お気に入りゲームMAX', ['soft' => $softId]);
+            }
+
             FavoriteSoft::add(Auth::user(), $soft);
         }
 
@@ -46,5 +50,10 @@ class FavoriteSoftController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function max(Orm\GameSoft $soft)
+    {
+        return view('game.favoriteSoft.max', ['soft' => $soft]);
     }
 }

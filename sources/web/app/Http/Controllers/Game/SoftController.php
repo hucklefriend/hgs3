@@ -31,7 +31,7 @@ class SoftController extends Controller
 
         return view('game.soft.index', [
             'phoneticList'        => PhoneticType::getId2CharData(),
-            'list'                => Soft::getList(),
+            'list'                => Soft::getList($favoriteHash),
             'favoriteHash'        => $favoriteHash,
             'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ'))
         ]);

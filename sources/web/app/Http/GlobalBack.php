@@ -595,4 +595,23 @@ class GlobalBack
             return $before[1];
         }
     }
+
+    /**
+     * お気に入り登録できません
+     *
+     * @param Orm\GameSoft $soft
+     * @return string
+     */
+    public static function maxFavoriteSoft(Orm\GameSoft $soft)
+    {
+        $before = self::beforeHas([PageId::GAME_DETAIL]);
+
+        self::push(PageId::GAME_FAVORITE_MAX, $soft->id);
+
+        if ($before === false) {
+            return self::route('ゲーム詳細', ['soft' => $soft->id]);
+        } else {
+            return $before[1];
+        }
+    }
 }

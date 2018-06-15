@@ -103,8 +103,36 @@ SQL;
     {
         return Orm\UserFavoriteSoft::select(['soft_id'])
             ->where('user_id', $userId)
+            ->orderBy('created_at', 'DESC')
             ->get()
             ->pluck('soft_id', 'soft_id')
             ->toArray();
+    }
+
+    /**
+     * 登録数を取得
+     *
+     * @param $userId
+     * @return mixed
+     */
+    public static function getNum($userId)
+    {
+        $data = Orm\UserFavoriteSoft::select([DB::raw('COUNT(id) AS num')])
+            ->where('user_id', $userId)
+            ->get()
+            ->first();
+
+        return $data->num;
+    }
+
+    /**
+     * 最大に達しているか？
+     *
+     * @param $userId
+     * @return bool
+     */
+    public static function isMax($userId)
+    {
+        return self::getNum($userId) >= \Hgs3\Constants\User\FavoriteSoft::MAX;
     }
 }

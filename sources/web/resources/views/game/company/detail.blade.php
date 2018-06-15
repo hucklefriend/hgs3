@@ -12,12 +12,12 @@
         @if (!empty($company->url) && !empty($company->wikipedia))
         <div class="card">
             <div class="card-body">
-                <div class="d-flex">
+                <div class="d-flex flex-wrap">
                     @if (!empty($company->url))
-                        <a href="{{ $company->url }}" target="_blank" class="mr-3">公式サイト</a>
+                        <a href="{{ $company->url }}" class="badge badge-pill badge-secondary mr-3" target="_blank">公式サイト <i class="fas fa-sign-out-alt"></i></a>
                     @endif
                     @if (!empty($company->wikipedia))
-                        <a href="{{ $company->wikipedia }}" target="_blank">Wikipedia</a>
+                        <a href="{{ $company->wikipedia }}" class="badge badge-pill badge-secondary mr-3" target="_blank">Wikipedia <i class="fas fa-sign-out-alt"></i></a>
                     @endif
                 </div>
             </div>

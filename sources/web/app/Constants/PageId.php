@@ -31,6 +31,7 @@ class PageId
     const GAME_PLATFORM_DETAIL = 341;
     const GAME_SERIES_LIST = 360;
     const GAME_SERIES_DETAIL = 361;
+    const GAME_FAVORITE_MAX = 380;
 
     const REVIEW_TOP = 500;
     const REVIEW_BY_SOFT = 501;
