@@ -52,7 +52,7 @@ SQL;
             }
         }
 
-        $result['favorite'] = $favorite;
+        $result[100] = $favorite;
 
         unset($tmp);
 
