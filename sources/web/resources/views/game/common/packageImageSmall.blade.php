@@ -4,6 +4,6 @@
     </div>
 @else
     <div class="text-center">
-        <img src="{{ $imageUrl }}" class="img-responsive package-image">
+        <img data-normal="{{ $imageUrl }}" class="img-responsive package-image">
     </div>
 @endif

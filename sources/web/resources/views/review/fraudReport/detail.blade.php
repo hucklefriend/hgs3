@@ -9,7 +9,7 @@
     <section>
         <div class="row">
             <div class="col-1 text-center">
-                <img src="{{ $pkg->small_image_url }}" class="thumbnail"><br>
+                <img data-normal="{{ $pkg->small_image_url }}" class="thumbnail"><br>
                 <a href="{{ url('game/review/detail') }}/{{ $review->id }}">{{ $pkg->name }}</a>
             </div>
             <div class="col-1">{{ $review->point }}</div>

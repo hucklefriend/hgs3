@@ -10,7 +10,7 @@
             <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
         </p>
         <div class="list-site-banner-outline">
-            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img src="{{ $listBannerUrl }}" class="img-responsive"></a>
+            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img data-normal="{{ $listBannerUrl }}" class="img-responsive"></a>
         </div>
     @endif
     </div>

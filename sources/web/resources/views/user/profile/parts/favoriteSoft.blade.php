@@ -17,7 +17,7 @@
                                     @if (empty($imageUrl))
                                         <i class="far fa-image"></i>
                                     @else
-                                        <img src="{{ $imageUrl }}" class="img-responsive">
+                                        <img data-normal="{{ $imageUrl }}" class="img-responsive">
                                     @endif
                                 </span>
                                 <div class="package-card-name">

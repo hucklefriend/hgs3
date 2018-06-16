@@ -24,9 +24,9 @@
                                 <div class="contacts__item">
                                     <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}" class="contacts__img">
                                         @if ($u->icon_upload_flag == 1)
-                                            <img src="{{ url('img/user_icon/' . $u->icon_file_name) }}" class="{{ \Hgs3\Constants\IconRoundType::getClass($u->icon_round_type) }}">
+                                            <img data-normal="{{ url('img/user_icon/' . $u->icon_file_name) }}" class="{{ \Hgs3\Constants\IconRoundType::getClass($u->icon_round_type) }}">
                                         @else
-                                            <img src="{{ url('img/user-no-img.svg') }}" class="rounded-0">
+                                            <img data-normal="{{ url('img/user-no-img.svg') }}" class="rounded-0">
                                         @endif
                                     </a>
 

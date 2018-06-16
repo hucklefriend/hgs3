@@ -3,7 +3,7 @@
         <div class="card card-hgn">
             @php $detailBannerUrl = detail_banner($site) @endphp
             @if (!empty($detailBannerUrl))
-            <img class="card-img-top" src="{{ $detailBannerUrl }}">
+            <img class="card-img-top" data-normal="{{ $detailBannerUrl }}">
             @endif
             <div class="card-body">
                 <h4 class="card-title">{{ $site->name }}</h4>

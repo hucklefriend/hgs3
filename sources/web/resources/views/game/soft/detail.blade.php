@@ -182,7 +182,7 @@
                                     @php $user = $users[$favorite->user_id]; @endphp
                                     @if ($user->icon_upload_flag == 1)
                                         <a data-toggle="tooltip" title="{{ $user->name }}" href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">
-                                            <img class="avatar-img" src="{{ url('img/user_icon/' . $user->icon_file_name) }}" alt="">
+                                            <img class="avatar-img" data-normal="{{ url('img/user_icon/' . $user->icon_file_name) }}" alt="">
                                         </a>
                                     @else
                                         <a data-toggle="tooltip" title="{{ $user->name }}" href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">
