@@ -294,6 +294,10 @@ class Package extends MasterImportAbstract
             ->whereIn('id', [841])
             ->update(['company_id' => 140]);
 
+        DB::table('game_packages')
+            ->where('company_id', 122)
+            ->update(['company_id' => 151]);
+
     }
 
     private static function deleteShop($pkgId, $shopId)

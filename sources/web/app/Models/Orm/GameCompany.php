@@ -77,7 +77,7 @@ SQL;
                 // 既にデータあり
 
                 // パッケージがある方を優先
-                if (empty($data[$pkg->soft_id]->package_image_url) && $pkg->is_adult && !$isAdultUser) {
+                if (empty($data[$pkg->soft_id]->package_image_url)) {
                     $data[$pkg->soft_id]->package_image_url = $pkg->medium_image_url;
                     $data[$pkg->soft_id]->is_adult = $pkg->is_adult;
                 }
@@ -86,13 +86,8 @@ SQL;
             } else {
                 $data[$pkg->soft_id] = new \stdClass();
 
-                if ($pkg->is_adult && !$isAdultUser) {
-                    $data[$pkg->soft_id]->package_image_url = '';
-                    $data[$pkg->soft_id]->is_adult = 0;
-                } else {
-                    $data[$pkg->soft_id]->package_image_url = $pkg->medium_image_url;
-                    $data[$pkg->soft_id]->is_adult = $pkg->is_adult;
-                }
+                $data[$pkg->soft_id]->medium_image_url = $pkg->medium_image_url;
+                $data[$pkg->soft_id]->is_adult = $pkg->is_adult;
 
                 $data[$pkg->soft_id]->platforms = [
                     $pkg->platform_id => $pkg->platform_id,

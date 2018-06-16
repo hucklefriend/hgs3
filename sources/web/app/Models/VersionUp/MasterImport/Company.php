@@ -6,6 +6,7 @@
 namespace Hgs3\Models\VersionUp\MasterImport;
 
 use Hgs3\Models\Orm;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class Company extends MasterImportAbstract
@@ -83,5 +84,27 @@ class Company extends MasterImportAbstract
         }
 
         unset($companies);
+    }
+
+    /**
+     * 手動設定
+     */
+    private static function manual20180630()
+    {
+        DB::table('game_companies')
+            ->whereIn('id', [24, 55, 154, 63, 138, 26, 74, 155, 89, 122])
+            ->delete();
+
+        DB::table('game_companies')
+            ->whereIn('id', [94, 73, 134, 141, 148, 84, 71, 78, 85, 93, 92, 77, 144, 87, 147, 91,
+                145, 116, 72, 90, 139, 171, 86, 132, 157, 88, 169, 149, 79, 76, 82, 80, 143, 83, 156, 81, 70, 75])
+            ->update(['is_adult_url' => 1]);
+
+
+
+        // SUNSOFTを統合
+
+        // TETRATECH間違ってない？
+        // ノクターンってB&A？
     }
 }

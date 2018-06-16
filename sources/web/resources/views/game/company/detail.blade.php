@@ -32,11 +32,7 @@
                         <div class="col-xl-2 col-lg-3 col-sm-4 col-12">
                             <div class="contacts__item">
                                 <a href="{{ route('ゲーム詳細', ['soft' => $s->id]) }}" class="contacts__img">
-                                    @empty($packages[$s->id]->package_image_url)
-                                        <img data-normal="{{ url('img/pkg_no_img_m.png') }}" class="rounded big-package-card">
-                                    @else
-                                        <img data-normal="{{ $packages[$s->id]->package_image_url }}" class="rounded-0 big-package-card">
-                                    @endif
+                                    <img data-normal="{{ medium_image_url($packages[$s->id], true) }}" class="rounded-0 big-package-card">
                                 </a>
 
                                 <div>

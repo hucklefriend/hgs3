@@ -397,19 +397,20 @@ function small_image_url($package, $withNoImage = false)
  * 中→大→小パッケージを優先して取得
  *
  * @param $package
+ * @param bool $withNoImage
  * @return string
  */
-function medium_image_url($package)
+function medium_image_url($package, $withNoImage = false)
 {
-    $imageUrl = '';
+    $noImageUrl = $withNoImage ? url('img/pkg_no_img_m.png') : '';
 
     if ($package->is_adult) {
         if (!\Illuminate\Support\Facades\Auth::check()) {
-            return '';
+            return $noImageUrl;
         }
         $user = \Illuminate\Support\Facades\Auth::user();
         if ($user->adult != 1) {
-            return '';
+            return $noImageUrl;
         }
     }
 
@@ -419,6 +420,8 @@ function medium_image_url($package)
         $imageUrl = $package->large_image_url;
     } else if (!empty($package->small_image_url)) {
         $imageUrl = $package->small_image_url;
+    } else {
+        $imageUrl = $noImageUrl;
     }
 
     return $imageUrl;
