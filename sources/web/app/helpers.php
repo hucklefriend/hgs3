@@ -536,3 +536,8 @@ function detail_banner($site)
 
     return $url;
 }
+
+function enable_adult_sponsor()
+{
+    \Illuminate\Support\Facades\View::share('adultSponsor', true);
+}

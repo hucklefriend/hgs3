@@ -39,6 +39,16 @@ class Fear
         6 => '😱',
     ];
 
+    public static $acronym = [
+        0 => '無怖',
+        1 => 'ちょ怖',
+        2 => '少怖',
+        3 => '普怖',
+        4 => 'けっ怖',
+        5 => '怖すぎ',
+        6 => '無理',
+    ];
+
     public static function getMaxPoint()
     {
         return 6;
