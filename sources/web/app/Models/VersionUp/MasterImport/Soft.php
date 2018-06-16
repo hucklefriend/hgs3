@@ -91,11 +91,12 @@ class Soft extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180611()
+    private static function manual20180630()
     {
-        // アパシーを一回削除
         DB::table('game_softs')
-            ->whereIn('id', [242])
-            ->delete();
+            ->whereIn('id', [343, 199, 210, 340, 318, 341, 206, 201, 347, 211,198, 338, 51, 212, 218, 216, 219,
+                339, 324, 227, 215, 228, 208, 204, 325, 205, 326, 298, 297, 358, 203, 330, 329, 209, 200, 223, 321, 222,
+                224, 213, 225, 226, 207])
+            ->update(['introduction_from_adult' => 1]);
     }
 }

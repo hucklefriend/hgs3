@@ -250,7 +250,7 @@ class Package extends MasterImportAbstract
             ->update(['is_adult' => 1]);
 
         DB::table('game_packages')
-            ->whereIn('id', [238, 587, 575, 574, 573, 576, 577, 578])
+            ->whereIn('id', [238, 587, 575, 574, 573, 576, 577, 578, 834, 833])
             ->update(['is_adult' => 2]);
 
         DB::table('game_packages')
@@ -276,6 +276,23 @@ class Package extends MasterImportAbstract
         foreach ($deleteShops as $deleteShop) {
             self::deleteShop($deleteShop[0], $deleteShop[1]);
         }
+    }
+
+    private static function manual20180630()
+    {
+        DB::table('game_packages')
+            ->whereIn('id', [721, 726, 727, 729, 747, 743, 744, 745, 746, 823, 748, 749, 750, 751, 158,
+                757, 756, 755, 752, 753, 754, 758, 759, 760, 761, 762, 763, 765, 764, 766, 767, 768, 769, 770,
+                771, 640, 639, 772, 773, 803, 802, 829, 809, 811, 812, 816, 815, 814, 819, 818, 817])
+            ->update(['is_adult' => 1]);
+
+        DB::table('game_packages')
+            ->whereIn('id', [719, 720, 564, 565, 740, 853])
+            ->update(['is_adult' => 2]);
+
+        DB::table('game_packages')
+            ->whereIn('id', [841])
+            ->update(['company_id' => 140]);
 
     }
 

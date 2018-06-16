@@ -67,6 +67,12 @@ SQL;
      */
     public static function getDetail(Orm\GameSoft $soft)
     {
+        if (!(Auth::check() && Auth::user()->isAdult())) {
+            if ($soft->introduction_from_adult == 1) {
+                $soft->introduction_from = trim(strip_tags($soft->introduction_from));
+            }
+        }
+
         $data = ['soft' => $soft];
 
         // 同じシリーズのソフト取得
@@ -107,9 +113,13 @@ SQL;
         $data['platforms'] = $platforms;
 
         // 公式サイト
-        $data['officialSites'] = Orm\GameOfficialSite::where('soft_id', $soft->id)
-            ->orderBy('priority')
-            ->get();
+        $query = Orm\GameOfficialSite::where('soft_id', $soft->id)
+            ->orderBy('priority');
+        if (!(Auth::check() && Auth::user()->isAdult())) {
+            $query->where('is_adult', 0);
+        }
+
+        $data['officialSites'] = $query->get();
 
         // レビュー
         $data['reviewTotal'] = Orm\ReviewTotal::find($soft->id);

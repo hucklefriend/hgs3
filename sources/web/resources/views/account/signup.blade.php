@@ -57,7 +57,7 @@
 
                     <div class="form-group">
                         <label for="name" class="hgn-label"><i class="fas fa-edit"></i> メールアドレス</label>
-                        <input id="email" type="email" class="form-control{{ invalid($errors, 'email') }}" name="email" value="{{ old('email') }}" required maxlength="50">
+                        <input id="email" type="email" class="form-control{{ invalid($errors, 'email') }}" name="email" value="{{ old('email') }}" required maxlength="50" autocomplete="off">
                         <i class="form-group__bar"></i>
                     </div>
                     <div class="form-help">

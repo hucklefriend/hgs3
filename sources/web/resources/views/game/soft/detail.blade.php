@@ -40,7 +40,7 @@
                                 </div>
                                 <div>
                                 @foreach ($officialSites as $officialSite)
-                                    <a href="{{ $officialSite->url }}" target="_blank" class="mr-2 badge badge-pill badge-secondary"><small>{{ $officialSite->title }}</small> <i class="fas fa-sign-out-alt"></i></a>
+                                    <a href="{{ $officialSite->url }}" target="_blank" class="mr-2 mb-2 badge badge-pill badge-secondary"><small>{{ $officialSite->title }}</small> <i class="fas fa-sign-out-alt"></i></a>
                                 @endforeach
                                 </div>
                             </div>
