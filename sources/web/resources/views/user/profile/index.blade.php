@@ -28,6 +28,88 @@
             </header>
         @endif
 
+        <style>
+            .swiper-slide {
+                width: 120px;
+                margin: 10px;
+                text-align: center;
+            }
+
+            .swiper-slide a {
+                padding: 10px 0;
+                display: block;
+            }
+            .swiper-slide a.active {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        </style>
+
+        <div class="swiper-container mb-3 hidden-sm-up" id="profile_slide_menu">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="@if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}" class="@if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="@if($show == 'follow') active @endif" aria-expanded="true">フォロー</a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="@if($show == 'follower') active @endif" aria-expanded="true">フォロワー</a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="@if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム</a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="@if($show == 'review') active @endif" aria-expanded="true">レビュー</a>
+                </div>
+            @if ($isMyself)
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review_draft']) }}" class="@if($show == 'review_draft') active @endif" aria-expanded="true">レビューの下書き</a>
+                </div>
+            @endif
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="@if($show == 'site') active @endif" aria-expanded="true">サイト</a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="@if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト</a>
+                </div>
+                @if ($isMyself)
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}" class="@if($show == 'good_site') active @endif" aria-expanded="true">いいねしたサイト</a>
+                </div>
+                @endif
+            </div>
+            <div class="swiper-scrollbar"></div>
+        </div>
+            <script>
+                let swiper = null;
+                $(function(){
+                    let startIndex = 0;
+                    $('.swiper-slide a').each(function (){
+                        if ($(this).hasClass('active')) {
+                            return false;
+                        }
+
+                        startIndex++;
+                    });
+
+                    swiper = new Swiper('#profile_slide_menu', {
+                        slidesPerView: 'auto',
+                        initialSlide: startIndex,
+                        spaceBetween: 30,
+                        centeredSlides: true,
+                        scrollbar: {
+                            el: '.swiper-scrollbar',
+                            hide: true
+                        },
+                    });
+                });
+            </script>
+
+
+
         <div class="d-flex flex-row">
             <div class="p-2 hidden-xs-down" style="width: 300px;">
                 <div class="nav flex-column nav-pills">
@@ -50,32 +132,6 @@
                 </div>
             </div>
             <div style="width: 100%;">
-                <div class="hidden-sm-up mb-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <label for="small_menu"><small>プロフィールメニュー</small></label>
-                            <div class="form-group">
-                                <select class="select2" data-minimum-results-for-search="Infinity" id="small_menu">
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}"{{ selected($show, 'profile') }}>プロフィール</option>
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}"{{ selected($show, 'timeline') }}>タイムライン</option>
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}"{{ selected($show, 'follow') }}>フォロー</option>
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}"{{ selected($show, 'follower') }}>フォロワー</option>
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}"{{ selected($show, 'favorite_soft') }}>お気に入りゲーム</option>
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}"{{ selected($show, 'review') }}>レビュー</option>
-                                    @if ($isMyself)
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review_draft']) }}"{{ selected($show, 'review_draft') }}>レビューの下書き</option>
-                                    @endif
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}"{{ selected($show, 'site') }}>サイト</option>
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}"{{ selected($show, 'favorite_site') }}>お気に入りサイト</option>
-                                    @if ($isMyself)
-                                    <option data-url="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}"{{ selected($show, 'good_site') }}>いいねしたサイト</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 @include('user.profile.parts.' . camel_case($show), $parts)
             </div>
         </div>

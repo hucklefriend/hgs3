@@ -583,9 +583,8 @@ html.is-fixed body {
     text-align: center;
     background-color: rgba(255, 0, 0, 0.1);
     position: relative;
-    width: 70px;
+    min-width: 70px;
     height: 70px;
-    line-height: 70px;
     border-radius: 5px;
 }
 

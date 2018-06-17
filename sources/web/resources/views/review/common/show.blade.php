@@ -3,10 +3,11 @@
         <div class="card card-hgn">
             <div class="card-body">
                 <div class="d-flex">
-                    <div class="review-point mr-2">
-                        {{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}
+                    <div class="review-point mr-2" style="padding-top: 5px;">
+                        {{ \Hgs3\Constants\Review\Fear::$face[$review->fear] }}<br>
+                        <small>{{ \Hgs3\Constants\Review\Fear::$acronym[$review->fear] }}</small>
                     </div>
-                    <div class="review-point">
+                    <div class="review-point" style="line-height: 70px;">
                         {{ $review->calcPoint() }}
                     </div>
 
