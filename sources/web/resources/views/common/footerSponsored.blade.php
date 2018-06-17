@@ -1,17 +1,81 @@
 @php
-
     if (isset($adultSponsor) && $adultSponsor) {
         // 728x90
         $largeLinks = [
-            ''
+            '<a href="http://www.dmm.co.jp/lp/game/flowerknightgirl/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg017/728_90.jpg" width="728" height="90" alt="FLOWER KNIGHT GIRL~X指定~ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/aigis/index01_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg005/728_90.jpg" width="728" height="90" alt="千年戦争アイギスR　オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/inyouchu/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg026/728_90.jpg" width="728" height="90" alt="淫妖蟲 禁　～少女姦姦物語～ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/taimaninasagi/index002_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg024/728_90.jpg" width="728" height="90" alt="対魔忍アサギ～決戦アリーナ～ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/idolwarsz/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg022/728_90.jpg" width="728" height="90" alt="アイドルうぉーずZ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/goddesskissx/index003_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg035/728_90.jpg" width="728" height="90" alt="女神にキスを！" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/senpuri/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg029/728_90.jpg" width="728" height="90" alt="戦乱プリンセスG" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/kamipror/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg027/728_90.jpg" width="728" height="90" alt="神姫PROJECT R" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/killdoyar/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg038/728_90.jpg" width="728" height="90" alt="キルドヤR" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/maou/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg040/728_90.jpg" width="728" height="90" alt="魔王の始め方" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/otogir/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg039/728_90.jpg" width="728" height="90" alt="オトギフロンティアR" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/pr/dc/pcgame/001/=/af=hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_pcgame151/728_90.jpg" width="728" height="90" alt="ダイレクト特集ページ用バナー（ダウンロード版）" border="0"></a>',
+            '<a href="http://dlsoft.dmm.co.jp/subsc/hgn-001" target="_blank"><img data-normal="http://pics.dmm.com/af/a_pcgame222/728_90.jpg" width="728" height="90" alt="DMM GAMES 遊び放題" border="0"></a>',
+            '<a href="http://dlsoft.dmm.co.jp/subsc/hgn-001" target="_blank"><img data-normal="http://pics.dmm.com/af/a_pcgame223/728_90.jpg" width="728" height="90" alt="DMM GAMES 遊び放題（戦国ランス版）" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/mono/doujin/=/_jloff=1/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/doj_e/728_90.jpg" width="728" height="90" alt="同人通販" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/mono/book/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_mono_book001/728_90.jpg" width="728" height="90" alt="アダルトブック通販" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=dmmmg_0466/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book020/728_90.jpg" width="728" height="90" alt="ロードオブワルキューレ　ダウンロード販売" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b289amris00786/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book035/728_90.jpg" width="728" height="90" alt="ビッチが集まるテーマパーク！水龍敬ランド～ JKもビッチ！OLもビッチ！！主婦もビッチ！！！～" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b195asrd00518/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book031/728_90.jpg" width="728" height="90" alt="バレたら終わり！私は親友の弟と交尾しちゃっている" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b289amris00632/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book029/728_90.jpg" width="728" height="90" alt="ヴァージンツィート　ダウンロード販売" border="0"></a>',
         ];
 
+
         // 468x60
-        $mediumLinks = [];
+        $mediumLinks = [
+            '<a href="http://www.dmm.co.jp/lp/game/flowerknightgirl/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg017/468_60.jpg" width="468" height="60" alt="FLOWER KNIGHT GIRL~X指定~ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/aigis/index01_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg005/468_60.jpg" width="468" height="60" alt="千年戦争アイギスR　オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/inyouchu/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg026/468_60.jpg" width="468" height="60" alt="淫妖蟲 禁　～少女姦姦物語～ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/taimaninasagi/index002_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg024/468_60.jpg" width="468" height="60" alt="対魔忍アサギ～決戦アリーナ～ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/idolwarsz/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg022/468_60.jpg" width="468" height="60" alt="アイドルうぉーずZ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/goddesskissx/index003_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg035/468_60.jpg" width="468" height="60" alt="女神にキスを！" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/senpuri/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg029/468_60.jpg" width="468" height="60" alt="戦乱プリンセスG" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/kamipror/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg027/468_60.jpg" width="468" height="60" alt="神姫PROJECT R" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/killdoyar/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg038/468_60.jpg" width="468" height="60" alt="キルドヤR" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/maou/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg040/468_60.jpg" width="468" height="60" alt="魔王の始め方" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/otogir/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg039/468_60.jpg" width="468" height="60" alt="オトギフロンティアR" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/pr/dc/pcgame/001/=/af=hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_pcgame151/468_60.jpg" width="468" height="60" alt="ダイレクト特集ページ用バナー（ダウンロード版）" border="0"></a>',
+            '<a href="http://dlsoft.dmm.co.jp/subsc/hgn-001" target="_blank"><img data-normal="http://pics.dmm.com/af/a_pcgame222/468_60.jpg" width="468" height="60" alt="DMM GAMES 遊び放題" border="0"></a>',
+            '<a href="http://dlsoft.dmm.co.jp/subsc/hgn-001" target="_blank"><img data-normal="http://pics.dmm.com/af/a_pcgame223/468_60.jpg" width="468" height="60" alt="DMM GAMES 遊び放題（戦国ランス版）" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/mono/doujin/=/_jloff=1/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/doj_e/468_60.jpg" width="468" height="60" alt="同人通販" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/mono/book/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_mono_book001/468_60.jpg" width="468" height="60" alt="アダルトブック通販" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b289amris00632/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book029/468_60.jpg" width="468" height="60" alt="ヴァージンツィート　ダウンロード販売" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=dmmmg_0466/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book020/468_60.jpg" width="468" height="60" alt="ロードオブワルキューレ　ダウンロード販売" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b289amris00786/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book035/468_60.jpg" width="468" height="60" alt="ビッチが集まるテーマパーク！水龍敬ランド～ JKもビッチ！OLもビッチ！！主婦もビッチ！！！～" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b195asrd00518/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book031/468_60.jpg" width="468" height="60" alt="バレたら終わり！私は親友の弟と交尾しちゃっている" border="0"></a>',
+        ];
+
+
+
 
 
         // 125x125
-        $smallLinks = [];
+        $smallLinks = [
+            '<a href="http://www.dmm.co.jp/lp/game/flowerknightgirl/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg017/125_125.jpg" width="125" height="125" alt="FLOWER KNIGHT GIRL~X指定~ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/aigis/index01_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg005/125_125.jpg" width="125" height="125" alt="千年戦争アイギスR　オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/inyouchu/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg026/125_125.jpg" width="125" height="125" alt="淫妖蟲 禁　～少女姦姦物語～ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/taimaninasagi/index002_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg024/125_125.jpg" width="125" height="125" alt="対魔忍アサギ～決戦アリーナ～ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/idolwarsz/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg022/125_125.jpg" width="125" height="125" alt="アイドルうぉーずZ オンラインゲーム" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/goddesskissx/index003_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg035/125_125.jpg" width="125" height="125" alt="女神にキスを！" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/senpuri/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg029/125_125.jpg" width="125" height="125" alt="戦乱プリンセスG" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/kamipror/index001.html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg027/125_125.jpg" width="125" height="125" alt="神姫PROJECT R" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/killdoyar/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg038/125_125.jpg" width="125" height="125" alt="キルドヤR" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/maou/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg040/125_125.jpg" width="125" height="125" alt="魔王の始め方" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/lp/game/otogir/index001_html/=/navi=none/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_olg039/125_125.jpg" width="125" height="125" alt="オトギフロンティアR" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/pr/dc/pcgame/001/=/af=hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_pcgame151/125_125.jpg" width="125" height="125" alt="ダイレクト特集ページ用バナー（ダウンロード版）" border="0"></a>',
+            '<a href="http://dlsoft.dmm.co.jp/subsc/hgn-001" target="_blank"><img data-normal="http://pics.dmm.com/af/a_pcgame222/125_125.jpg" width="125" height="125" alt="DMM GAMES 遊び放題" border="0"></a>',
+            '<a href="http://dlsoft.dmm.co.jp/subsc/hgn-001" target="_blank"><img data-normal="http://pics.dmm.com/af/a_pcgame223/125_125.jpg" width="125" height="125" alt="DMM GAMES 遊び放題（戦国ランス版）" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/mono/doujin/=/_jloff=1/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/doj_e/125_125.jpg" width="125" height="125" alt="同人通販" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/mono/book/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_mono_book001/125_125.jpg" width="125" height="125" alt="アダルトブック通販" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b289amris00632/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book029/125_125.jpg" width="125" height="125" alt="ヴァージンツィート　ダウンロード販売" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=dmmmg_0466/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book020/125_125.jpg" width="125" height="125" alt="ロードオブワルキューレ　ダウンロード販売" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b289amris00786/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book035/125_125.jpg" width="125" height="125" alt="ビッチが集まるテーマパーク！水龍敬ランド～ JKもビッチ！OLもビッチ！！主婦もビッチ！！！～" border="0"></a>',
+            '<a href="http://www.dmm.co.jp/dc/book/-/detail/=/cid=b195asrd00518/hgn-001" target="_blank"><img data-normal="https://pics.dmm.com/af/a_digi_book031/125_125.jpg" width="125" height="125" alt="バレたら終わり！私は親友の弟と交尾しちゃっている" border="0"></a>',
+        ];
     } else {
         // 728x90
         $largeLinks = [

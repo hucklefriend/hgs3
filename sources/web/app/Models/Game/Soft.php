@@ -98,14 +98,14 @@ SQL;
         // 発売日を過ぎているか
         $data['released'] = false;
         $today = date('Ymd');
+        $canAdult = Auth::check() && Auth::user()->isAdult();
         foreach ($data['packages'] as $pkg) {
             if ($pkg->release_int <= $today) {
                 $data['released'] = true;
-                break;
             }
 
             // アダルトゲームがあれば、広告も変える
-            if ($pkg->is_adult == 1 && Auth::check() && Auth::user()->isAdult()) {
+            if ($pkg->is_adult == 1 && $canAdult) {
                 enable_adult_sponsor();
             }
         }
