@@ -393,6 +393,13 @@ function small_image_url($package, $withNoImage = false)
     return $imageUrl;
 }
 
+function medium_image($package)
+{
+    $url = medium_image_url($package, true);
+
+    return new \Illuminate\Support\HtmlString(sprintf('<img data-normal="%s">', e($url)));
+}
+
 /**
  * 中→大→小パッケージを優先して取得
  *
@@ -403,6 +410,9 @@ function small_image_url($package, $withNoImage = false)
 function medium_image_url($package, $withNoImage = false)
 {
     $noImageUrl = $withNoImage ? url('img/pkg_no_img_m.png') : '';
+    if ($package == null) {
+        return $noImageUrl;
+    }
 
     if ($package->is_adult) {
         if (!\Illuminate\Support\Facades\Auth::check()) {

@@ -11,7 +11,7 @@
                             <div class="review-list-package-image mr-2">@include ('game.common.packageImage', ['imageUrl' => small_image_url($draft->soft->getImagePackage())])</div>
                             <div>
                                 <div class="d-flex">
-                                    <div class="review-list-point mr-1">{{ \Hgs3\Constants\Review\Fear::$face[$draft->fear] }}</div>
+                                    <div class="review-list-point mr-1">{{ \Hgs3\Constants\Review\Fear::$face[$draft->fear] }}{{ \Hgs3\Constants\Review\Fear::$acronym[$review->fear] }}</div>
                                     <div class="review-list-point mr-2">{{ $draft->calcPoint() }}</div>
                                     @if($draft->is_spoiler == 1)
                                         <div>
