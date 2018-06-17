@@ -31,7 +31,7 @@
             <button type="button" class="btn btn-light" id="select_handle_soft">選択する</button>
         @endif
     </div>
-    <div id="selected_soft" class="d-flex flex-wrap"></div>
+    <div id="selected_soft" class="d-flex flex-wrap mt-3"></div>
     <input type="hidden" name="handle_soft" value="{{ old('handle_soft', $site->handle_soft) }}" id="handle_soft">
 </div>
 <div class="form-help">

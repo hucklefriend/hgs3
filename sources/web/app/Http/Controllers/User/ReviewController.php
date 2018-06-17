@@ -73,6 +73,7 @@ class ReviewController extends Controller
         return view('user.review.input', [
             'soft'     => $soft,
             'packages' => $soft->getPackages(),
+            'platforms' => Orm\GamePlatform::getAcronymHash(),
             'draft'    => $draft,
         ]);
     }

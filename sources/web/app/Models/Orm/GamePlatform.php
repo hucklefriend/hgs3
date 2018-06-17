@@ -80,4 +80,22 @@ SQL;
             'packages' => $data
         ];
     }
+
+    /**
+     * 略称のハッシュを取得
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public static function getAcronymHash(array $ids = array())
+    {
+        $tbl = DB::table('game_platforms')
+            ->select(['id', 'acronym']);
+
+        if (!empty($ids)) {
+            $tbl->whereIn('id', $ids);
+        }
+
+        return $tbl->get()->pluck('acronym', 'id')->toArray();
+    }
 }

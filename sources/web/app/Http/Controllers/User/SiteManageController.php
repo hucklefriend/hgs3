@@ -47,8 +47,10 @@ class SiteManageController extends Controller
 
         disable_footer_sponsored();
 
+        $favoriteHash = User\FavoriteSoft::getHash(Auth::id());
+
         return view('user.siteManage.add', [
-            'softs'      => Orm\GameSoft::getPhoneticTypeHash(),
+            'softs'      => Orm\GameSoft::getPhoneticTypeHash($favoriteHash),
             'site'       => new Orm\Site([
                 'main_contents_id' => MainContents::WALKTHROUGH,
                 'rate'               => Rate::ALL,

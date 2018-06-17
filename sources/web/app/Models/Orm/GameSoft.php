@@ -35,10 +35,10 @@ class GameSoft extends \Eloquent
     /**
      * よみがた単位でハッシュを取得
      *
-     * @param array $ids
+     * @param array $favoriteHash
      * @return mixed
      */
-    public static function getPhoneticTypeHash()
+    public static function getPhoneticTypeHash(array $favoriteHash)
     {
         $data = self::select(['id', 'name', 'phonetic_type'])
             ->orderBy('phonetic_order')
@@ -48,6 +48,10 @@ class GameSoft extends \Eloquent
 
         foreach ($data as $game) {
             $result[intval($game->phonetic_type)][] = $game;
+
+            if (isset($favoriteHash[$game->id])) {
+                $result[100][] = $game;
+            }
         }
         unset($data);
 

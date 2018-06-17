@@ -13,10 +13,11 @@
                     <a class="btn btn-light soft_tab" href="#" data-target="yagyo" id="handle_softs_tab_yagyo">や</a>
                     <a class="btn btn-light soft_tab" href="#" data-target="ragyo" id="handle_softs_tab_ragyo">ら</a>
                     <a class="btn btn-light soft_tab" href="#" data-target="wagyo" id="handle_softs_tab_wagyo">わ</a>
+                    <a class="btn btn-light soft_tab" href="#" data-target="favgyo" id="handle_softs_tab_favgyo"><span class="favorite-icon"><i class="fas fa-star"></i></span></a>
                 </div>
 
                 @php
-                    $phonetics = ['', 'a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa'];
+                    $phonetics = ['', 'a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa', 'fav'];
                 @endphp
 
                 <div class="py-3 handle-game-select-area">
@@ -26,10 +27,11 @@
                                 @if (isset($softs[$phonicType]))
                                     @foreach ($softs[$phonicType] as $soft)
                                 <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
-                                    <div class="btn-group-toggle my-1" data-toggle="buttons">
-                                        <label class="btn btn-light text-center w-100">
-                                            <input type="checkbox" class="handle_soft_check hide-check" name="handle_soft[]" value="{{ $soft->id }}" id="handle_soft_check_{{ $soft->id }}" autocomplete="off">
-                                            <span>{{ $soft->name }}</span>
+                                    <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                        <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                            <input type="checkbox" class="handle_soft_check custom-control-input" name="handle_soft[]" value="{{ $soft->id }}" id="handle_soft_check_{{ $soft->id }}" autocomplete="off">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">{{ $soft->name }}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -38,6 +40,23 @@
                             </div>
                         </div>
                     @endfor
+                    <div id="handle_softs_favgyo" class="handle_soft_tab">
+                        <div class="row">
+                            @if (isset($softs[100]))
+                                @foreach ($softs[100] as $soft)
+                                    <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
+                                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                                <input type="checkbox" class="handle_soft_check_fav custom-control-input" value="{{ $soft->id }}" id="handle_soft_check_fav_{{ $soft->id }}" autocomplete="off">
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description">{{ $soft->name }}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -94,6 +113,12 @@
                     let item = $('#handle_soft_check_' + currentValue);
                     item.prop('checked', true);
                     item.parent().addClass('active');
+
+                    let itemFav = $('#handle_soft_check_fav_' + currentValue);
+                    if (itemFav.length > 0) {
+                        itemFav.prop('checked', true);
+                        itemFav.parent().addClass('active');
+                    }
                 });
             }
 
@@ -133,7 +158,7 @@
             let html = '';
             let val = '';
             $('.handle_soft_check:checked').each(function (){
-                let softName = $(this).next('span').text();
+                let softName = $(this).next('span').next('span').text();
 
                 if (softName.length > 0) {
                     html += '<span class="site-selected-game border rounded">' + softName + '</span>';
@@ -151,8 +176,35 @@
 
         $('.handle_soft_check').on('change', function (){
             let item = $(this);
+            let fav = $('#handle_soft_check_fav_' + item.val());
+
             if (item.prop('checked')) {
-                item.parent().removeClass('focus');
+                //item.parent().removeClass('active');
+                if (fav.length > 0) {
+                    fav.prop('checked', true);
+                    fav.parent().addClass('active');
+                }
+            } else {
+                if (fav.length > 0) {
+                    fav.prop('checked', false);
+                    fav.parent().removeClass('active');
+                }
+            }
+        });
+
+        $('.handle_soft_check_fav').on('change', function (){
+            let fav = $(this);
+            let item = $('#handle_soft_check_' + fav.val());
+            if (fav.prop('checked')) {
+                if (item.length > 0) {
+                    item.prop('checked', true);
+                    item.parent().addClass('active');
+                }
+            } else {
+                if (item.length > 0) {
+                    item.prop('checked', false);
+                    item.parent().removeClass('active');
+                }
             }
         });
     });

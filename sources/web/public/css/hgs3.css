@@ -404,7 +404,8 @@ button.btn:hover {
 }
 
 .site-selected-game {
-    margin: 5px;
+    margin-right: 10px;
+    margin-bottom: 5px;
     padding: 4px;
     font-size: 0.8rem;
 }
