@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title'){{ $soft->name }}をお気に入り登録しているユーザー@endsection
-@section('global_back_link'){{ \Hgs3\Http\GlobalBack::gameFavoriteUserList($soft) }}@endsection
+@section('title')お気に入り登録できませんでした。@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::maxFavoriteSoft($soft) }}@endsection
 
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>お気に入り登録できませんでした。</h1>
+            <h1>{{ $soft->name }}をお気に入り登録できませんでした。</h1>
         </header>
 
         <p>

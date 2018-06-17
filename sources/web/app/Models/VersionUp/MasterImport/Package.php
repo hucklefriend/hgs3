@@ -287,7 +287,7 @@ class Package extends MasterImportAbstract
             ->update(['is_adult' => 1]);
 
         DB::table('game_packages')
-            ->whereIn('id', [719, 720, 564, 565, 740, 853])
+            ->whereIn('id', [719, 720, 564, 565, 740, 853, 582, 583])
             ->update(['is_adult' => 2]);
 
         DB::table('game_packages')

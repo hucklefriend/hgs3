@@ -139,7 +139,7 @@ Route::group(['middleware' => ['auth']], function () {
     // お気に入りゲーム
     Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->name('お気に入りゲーム登録処理');
     Route::delete('/user/favorite_soft', 'User\FavoriteSoftController@remove')->name('お気に入りゲーム削除処理');
-    Route::get('/user/favorite_soft/max', 'User\FavoriteSoftController@max')->name('お気に入りゲームMAX');
+    Route::get('/user/favorite_soft/max/{soft}', 'User\FavoriteSoftController@max')->name('お気に入りゲームMAX');
 
     Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add')->name('お気に入りサイト登録処理');
     Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove')->name('お気に入りサイト削除処理');
