@@ -551,3 +551,20 @@ function enable_adult_sponsor()
 {
     \Illuminate\Support\Facades\View::share('adultSponsor', true);
 }
+
+/**
+ * 中→大→小パッケージを優先して取得
+ *
+ * @param $user
+ * @param bool $withNoImage
+ * @return string
+ */
+function user_icon_url($user, $withNoImage = false)
+{
+    $noImageUrl = $withNoImage ? url('img/user-no-img.svg') : '';
+    if ($user->icon_upload_flag == 0) {
+        return $noImageUrl;
+    }
+
+    return url('img/user_icon/' . $user->icon_file_name);
+}

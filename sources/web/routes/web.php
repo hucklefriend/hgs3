@@ -106,8 +106,20 @@ Route::group(['middleware' => ['auth']], function () {
 
     // ユーザー設定
     Route::get('/user/setting', 'User\SettingController@index')->name('ユーザー設定');
+
+    // ユーザー設定：公開範囲
+    Route::get('/user/setting/profile_open', 'User\Setting\ProfileController@openSetting')->name('プロフィール公開範囲設定');
+    Route::patch('/user/setting/profile_open', 'User\Setting\ProfileController@saveOpenSetting')->name('プロフィール公開範囲設定保存');
+
+    // ユーザー設定：プロフィール
     Route::get('/user/setting/profile', 'User\SettingController@profile')->name('プロフィール編集');
     Route::patch('/user/setting/profile', 'User\SettingController@updateProfile')->name('プロフィール編集実行');
+
+    // ユーザー設定：年齢制限
+    Route::get('/user/setting/rate', 'User\Setting\ProfileController@rate')->name('R-18表示設定');
+    Route::patch('/user/setting/rate', 'User\Setting\ProfileController@saveRate')->name('R-18表示設定保存');
+
+    // ユーザー設定：外部サイト認証設定
     Route::get('/user/setting/sns', 'User\SettingController@sns')->name('SNS認証設定');
     Route::patch('/user/setting/sns/{sa}/open', 'User\SettingController@updateSnsOpen')->name('SNS公開設定処理');
     Route::delete('/user/setting/sns/{sa}', 'User\SettingController@deleteSns')->name('SNS認証解除');

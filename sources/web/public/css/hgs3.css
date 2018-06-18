@@ -1208,6 +1208,12 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 }
 
 
+.user-card img {
+    max-width: 3rem;
+    max-height: 3rem;
+    margin-right: 4px;
+}
+
 
 
 /* SM */

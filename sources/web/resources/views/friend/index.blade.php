@@ -12,13 +12,13 @@
         <div class="row">
             @foreach ($users as $user)
             <div class="col-12 col-md-6 col-xl-5">
-                <div class="card">
+                <div class="card user-card">
                     <div class="card-body">
-                        <div>
-                            {{ $user->name }}
+                        <div class="mb-2 lead">
+                            <img src="{{ user_icon_url($user, true) }}">{{ $user->name }}
                         </div>
                         @if (!empty($user->profile))
-                        <p>{!! nl2br(e(str_limit($user->profile, 200))) !!}</p>
+                        <p><small>{!! nl2br(e(str_limit($user->profile, 200))) !!}</small></p>
                         @endif
                         <div>
 

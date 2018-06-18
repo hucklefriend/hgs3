@@ -10,159 +10,163 @@
         </header>
 
         <div class="row">
-            <div class="col-sm-6 mb-5">
+            <div class="col-6 col-md-3 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">プロフィール</h4>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">公開範囲</h5>
+                            <div>
+                                <a href="{{ route('プロフィール公開範囲設定') }}"><i class="fas fa-edit"></i>編集</a>
+                            </div>
+                        </div>
 
-                        <div>
-                            <a href="{{ route('プロフィール編集') }}" class="btn btn btn-light border-0 d-block pt-2 pb-2">
-                                <div class="d-flex justify-content-between">
-                                    <div class="align-self-start text-left pr-3">
-                                        <div>{{ $user->name }}さん</div>
-                                        <div class="force-break"><small>{{ str_limit($user->profile, 100) }}</small></div>
-                                        <div>
-                                            <small>
-                                                @if ($user->adult == 0)
-                                                    18歳未満
-                                                @else
-                                                    18歳以上
-                                                @endif
-                                            </small>
-                                        </div>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="fas fa-angle-right"></i>
-                                    </div>
-                                </div>
-                            </a>
+                        @if ($user->profile_open_flag == 0)
+                            <p class="mb-0">公開しない</p>
+                        @elseif ($user->profile_open_flag == 1)
+                            <p class="mb-0">メンバーのみ</p>
+                        @elseif ($user->profile_open_flag == 2)
+                            <p class="mb-0">全員に</p>
+                        @endif
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">年齢制限</h5>
+                            <div>
+                                <a href="{{ route('R-18表示設定') }}"><i class="fas fa-edit"></i>変更</a>
+                            </div>
+                        </div>
+
+                        @if ($user->isAdult())
+                            <p class="mb-0">👌表示する</p>
+                        @else
+                            <p class="mb-0">🔞表示しない</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">アイコン</h5>
+                            <div>
+                                <a href="{{ route('アイコン変更') }}"><i class="fas fa-edit"></i>編集</a>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <img src="{{ user_icon_url($user, true) }}" style="max-width: 5rem;max-height: 5rem;">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 mb-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">アイコン</h4>
-
-                        <div>
-                            <a href="{{ route('アイコン変更') }}" class="btn btn btn-light border-0 d-block pt-2 pb-2">
-                                <div class="d-flex justify-content-between">
-                                    <div class="pr-3">
-                                        @include('user.common.icon', ['isLarge' => true, 'u' => $user])
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="fas fa-angle-right"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-6 col-md-3 mb-4 d-none">
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6 mb-5">
+            <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">外部サイト連携</h4>
-
-                        <div>
-                            <a href="{{ route('SNS認証設定') }}" class="btn btn btn-light border-0 d-block mb-2 pt-2 pb-2">
-                                <div class="d-flex justify-content-between">
-                                    <div class="pr-3">
-                                        <div>
-                                            @if ($snsAccounts->isEmpty())
-                                                未設定
-                                            @else
-                                                連携中&nbsp;
-                                                @foreach ($snsAccounts as $sns)
-                                                    {{ \Hgs3\Constants\SocialSite::getIcon($sns->social_site_id) }}
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="fas fa-angle-right"></i>
-                                    </div>
-                                </div>
-                            </a>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">プロフィール</h5>
+                            <div>
+                                <a href="{{ route('プロフィール編集') }}"><i class="fas fa-edit"></i>編集</a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 mb-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">メール認証</h4>
 
-                        <div>
-                            @if ($user->isRegisteredMailAuth())
-                                <a href="{{ route('メールアドレス変更') }}" class="btn btn-sm btn-outline-dark border-0 d-block mb-2 pt-2 pb-2">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <i class="far fa-envelope"></i>&nbsp;{{ $user->email }}
-                                        </div>
-                                        <div class="align-self-center">
-                                            <i class="fas fa-angle-right"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                        </div>
-                        <div>
-                                <a href="{{ route('パスワード変更') }}" class="btn btn-sm btn-outline-dark border-0 d-block pt-2 pb-2">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <i class="fas fa-key"></i>&nbsp;(パスワードは表示できません)
-                                        </div>
-                                        <div class="align-self-center">
-                                            <i class="fas fa-angle-right"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                                @if ($snsAccounts->isNotEmpty())
-                                    <div class="mt-3">
-                                        <form method="POST" action="{{ route('メール認証設定削除') }}" onsubmit="return confirm('メール認証設定を削除します。')">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                            <button class="btn btn-sm btn-danger">削除</button>
-                                        </form>
-                                    </div>
+                        <table>
+                            <tr>
+                                <th class="p-2">名前</th>
+                                <td>{{ $user->name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="p-2">自己紹介</th>
+                                @if (strlen($user->profile) == 0)
+                                <td class="text-muted">自己紹介を書いていません。</td>
+                                @else
+                                <td>{!! nl2br(e($user->profile)) !!}</td>
                                 @endif
-                            @else
-                                <a href="{{ route('メール認証設定') }}" class="btn btn-sm btn-outline-dark border-0 d-block pt-2 pb-2">
-                                    <div class="d-flex justify-content-between">
-                                        <div>未設定</div>
-                                        <div class="align-self-center">
-                                            <i class="fas fa-angle-right"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            @endif
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        <div class="col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title">外部サイト連携</h5>
+                        <div>
+                            <a href="{{ route('SNS認証設定') }}"><i class="fas fa-edit"></i>編集</a>
                         </div>
+                    </div>
+
+                    <div>
+                        @if ($snsAccounts->isEmpty())
+                            連携している外部サイトはありません。
+                        @else
+                            連携中&nbsp;
+                            @foreach ($snsAccounts as $sns)
+                                {{ \Hgs3\Constants\SocialSite::getIcon($sns->social_site_id) }}
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
+            <div class="col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
 
-        <div class="row">
-            <div class="col-sm-6 mb-5">
+                        @if (!$user->isRegisteredMailAuth())
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">メール認証</h5>
+                            <div>
+                                <a href="{{ route('メール認証設定') }}"><i class="far fa-envelope"></i><i class="fas fa-key"></i>設定</a>
+                            </div>
+                        </div>
+                        @else
+                            <h5 class="card-title">メール認証</h5>
+                        @endif
+
+
+                        @if ($user->isRegisteredMailAuth())
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="force-break align-self-center"><i class="far fa-envelope"></i>&nbsp;{{ $user->email }}</div>
+                            <div>
+                                <a href="{{ route('メールアドレス変更') }}" class="btn btn-light btn--icon"><i class="fas fa-pencil-alt"></i></a>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="force-break align-self-center"><i class="fas fa-key"></i>&nbsp;(パスワードは表示できません)</div>
+                            <div>
+                                <a href="{{ route('パスワード変更') }}" class="btn btn-light btn--icon"><i class="fas fa-pencil-alt"></i></a>
+                            </div>
+                        </div>
+                            @if ($snsAccounts->isNotEmpty())
+                                <div class="mt-3">
+                                    <form method="POST" action="{{ route('メール認証設定削除') }}" onsubmit="return confirm('メール認証設定を削除します。')">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <button class="btn btn-sm btn-danger">削除</button>
+                                    </form>
+                                </div>
+                            @endif
+                        @else
+                            <p class="mb-0">設定していません。</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 mb-4">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">退会</h4>
-                        <div>
-                            <a href="{{ route('退会') }}" class="btn btn-sm btn-danger border-0 d-block mb-2 pt-2 pb-2">
-                                <div class="d-flex justify-content-between">
-                                    <div class="pr-3">
-                                        こちらへ
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="fas fa-angle-right"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <div class="text-center"><a href="{{ route('退会') }}" class="btn btn-sm btn-danger">退会はこちらへ</a></div>
                     </div>
                 </div>
             </div>
