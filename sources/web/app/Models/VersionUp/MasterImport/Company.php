@@ -89,7 +89,7 @@ class Company extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180630()
+    private static function manual20180604()
     {
         DB::table('game_companies')
             ->whereIn('id', [24, 55, 154, 63, 138, 26, 74, 155, 89, 122])

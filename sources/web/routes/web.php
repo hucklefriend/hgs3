@@ -235,5 +235,8 @@ Route::get('/about', 'TopController@about')->name('当サイトについて');
 Route::get('/privacy', 'TopController@privacy')->name('プライバシーポリシー');
 Route::get('/hgs', 'TopController@hgs')->name('HGSユーザーへ');
 
+// フレンド
+Route::get('friend', 'Friend\FriendController@index')->name('フレンド');
+
 
 Route::get('/test', 'TopController@test');

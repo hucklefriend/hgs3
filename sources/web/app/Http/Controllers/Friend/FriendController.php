@@ -3,14 +3,11 @@
  * Friendコントローラ
  */
 
-namespace Hgs3\Http\Controllers\Review;
+namespace Hgs3\Http\Controllers\Friend;
 
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Models\Review;
-use Hgs3\Models\Orm;
-use Hgs3\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
+use Hgs3\Models\Friend;
+
 
 class FriendController extends Controller
 {
@@ -19,7 +16,9 @@ class FriendController extends Controller
      */
     public function index()
     {
-        return view('friend.index');
+        return view('friend.index', [
+            'users' => Friend::getList()
+        ]);
     }
 
 }

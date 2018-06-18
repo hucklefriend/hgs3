@@ -91,7 +91,7 @@ class Soft extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180630()
+    private static function manual20180604()
     {
         DB::table('game_softs')
             ->whereIn('id', [343, 199, 210, 340, 318, 341, 206, 201, 347, 211,198, 338, 51, 212, 218, 216, 219,

@@ -278,7 +278,7 @@ class Package extends MasterImportAbstract
         }
     }
 
-    private static function manual20180630()
+    private static function manual20180604()
     {
         DB::table('game_packages')
             ->whereIn('id', [721, 726, 727, 729, 747, 743, 744, 745, 746, 823, 748, 749, 750, 751, 158,
