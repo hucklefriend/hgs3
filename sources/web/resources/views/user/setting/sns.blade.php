@@ -32,9 +32,7 @@
                         @isset($snsAccountHash[\Hgs3\Constants\SocialSite::TWITTER])
                             @php $sns = $snsAccountHash[\Hgs3\Constants\SocialSite::TWITTER]; @endphp
                         <div>
-                            <p>
-                                アカウント <a href="{{ $sns->getUrl() }}" target="_blank">{{ $sns->nickname }}</a>
-                            </p>
+                            <p>アカウント <a href="{{ $sns->getUrl() }}" target="_blank">{{ $sns->nickname }}</a></p>
                             <form method="POST" action="{{ route('SNS公開設定処理', ['sa' => $sns->id]) }}" class="sns-open-form">
                                 {{ csrf_field() }}
                                 {{ method_field('PATCH') }}

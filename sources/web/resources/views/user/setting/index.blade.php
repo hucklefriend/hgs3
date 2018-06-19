@@ -25,11 +25,10 @@
                         @elseif ($user->profile_open_flag == 1)
                             <p class="mb-0">メンバーのみ</p>
                         @elseif ($user->profile_open_flag == 2)
-                            <p class="mb-0">全員に</p>
+                            <p class="mb-0">誰にでも</p>
                         @endif
                     </div>
                 </div>
-
 
                 <div class="card">
                     <div class="card-body">
@@ -61,6 +60,23 @@
                         <div class="text-center">
                             <img src="{{ user_icon_url($user, true) }}" style="max-width: 5rem;max-height: 5rem;">
                         </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">足あと</h5>
+                            <div>
+                                <a href="{{ route('足あと設定') }}"><i class="fas fa-edit"></i>変更</a>
+                            </div>
+                        </div>
+
+                        @if ($user->footprint == 1)
+                            <p class="mb-0">残す</p>
+                        @else
+                            <p class="mb-0">残さない</p>
+                        @endif
                     </div>
                 </div>
             </div>

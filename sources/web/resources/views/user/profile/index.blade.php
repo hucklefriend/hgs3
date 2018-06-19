@@ -98,7 +98,7 @@
                     swiper = new Swiper('#profile_slide_menu', {
                         slidesPerView: 'auto',
                         initialSlide: startIndex,
-                        spaceBetween: 30,
+                        spaceBetween: 0,
                         centeredSlides: true,
                         scrollbar: {
                             el: '.swiper-scrollbar',

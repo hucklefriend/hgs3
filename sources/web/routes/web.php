@@ -143,18 +143,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/user/setting/icon_image', 'User\Setting\IconController@updateIconImage')->name('アイコン画像変更処理');
     Route::delete('/user/setting/icon', 'User\Setting\IconController@deleteIcon')->name('アイコン削除');
 
-    // プロフィール
-    Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');
-    Route::get('/user/profile/{showId}/timeline/mypage', 'User\ProfileController@moreTimelineMyPage')->name('タイムライン追加取得');
-    Route::get('/user/profile/{showId}/{show}', 'User\ProfileController@index')->name('プロフィール2');
+    // ユーザー設定足あと
+    Route::get('/user/setting/footprint', 'User\Setting\ProfileController@footprint')->name('足あと設定');
+    Route::patch('/user/setting/footprint', 'User\Setting\ProfileController@saveFootprint')->name('足あと設定保存');
 
-    // お気に入りゲーム
+    // お気に入りゲーム登録・削除
     Route::post('/user/favorite_soft', 'User\FavoriteSoftController@add')->name('お気に入りゲーム登録処理');
     Route::delete('/user/favorite_soft', 'User\FavoriteSoftController@remove')->name('お気に入りゲーム削除処理');
     Route::get('/user/favorite_soft/max/{soft}', 'User\FavoriteSoftController@max')->name('お気に入りゲームMAX');
 
+    // お気に入りサイト登録・削除
     Route::post('/user/favorite_site/{site}', 'User\FavoriteSiteController@add')->name('お気に入りサイト登録処理');
     Route::delete('/user/favorite_site/{site}', 'User\FavoriteSiteController@remove')->name('お気に入りサイト削除処理');
+
+    // フォロー登録・削除
     Route::post('/user/follow', 'User\FollowController@add')->name('フォロー登録');
     Route::delete('/user/follow', 'User\FollowController@remove')->name('フォロー解除');
 
@@ -248,7 +250,11 @@ Route::get('/privacy', 'TopController@privacy')->name('プライバシーポリ�
 Route::get('/hgs', 'TopController@hgs')->name('HGSユーザーへ');
 
 // フレンド
-Route::get('friend', 'Friend\FriendController@index')->name('フレンド');
+Route::get('/friend', 'Friend\FriendController@index')->name('フレンド');
 
+// プロフィール
+Route::get('/user/profile/{showId}', 'User\ProfileController@index')->name('プロフィール');
+Route::get('/user/profile/{showId}/timeline/mypage', 'User\ProfileController@moreTimelineMyPage')->name('タイムライン追加取得');
+Route::get('/user/profile/{showId}/{show}', 'User\ProfileController@index')->name('プロフィール2');
 
 Route::get('/test', 'TopController@test');

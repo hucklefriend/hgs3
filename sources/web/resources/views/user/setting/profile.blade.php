@@ -35,7 +35,7 @@
                 </small>
             </p>
             <div class="form-group text-center text-md-left">
-                <button class="btn btn-info">プロフィール更新</button>
+                <button class="btn btn-info">保存</button>
             </div>
         </form>
     </div>

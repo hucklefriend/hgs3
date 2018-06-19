@@ -21,6 +21,7 @@ use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
 use Hgs3\Models\User;
 use Hgs3\Models\Site;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -100,6 +101,37 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $user->adult = $request->get('is_adult', 0);
+
+        $user->save();
+
+        return redirect()->route('ユーザー設定');
+    }
+
+    /**
+     * 足あと設定
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function footprint()
+    {
+        return view('user.setting.footprint', ['user' => Auth::user()]);
+    }
+
+    /**
+     * 足あと設定保存
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveFootprint(Request $request)
+    {
+        $flag = $request->get('flag', 0);
+        if ($flag != 1) {
+            $flag = 0;
+        }
+
+        $user = Auth::user();
+        $user->footprint = $flag;
 
         $user->save();
 
