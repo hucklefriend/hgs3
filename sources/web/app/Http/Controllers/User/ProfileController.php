@@ -46,6 +46,31 @@ class ProfileController extends Controller
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
 
+        $open = true;
+        $openMenu = true;
+        if (!$data['isMyself']) {
+            if ($user->open_profile_flag == 0) {
+                $open = false;
+                $openMenu = false;
+            } else if ($user->open_profile_flag == 1) {
+                if ($show == 'site' || $show == 'review') {
+                    $open = true;
+                } else {
+                    $open = false;
+                }
+                $openMenu = Auth::check();
+            } else {
+                $open = true;
+                $openMenu = true;
+            }
+        }
+
+        if ($open == false) {
+            $show = 'review';
+        }
+
+        $data['open'] = $openMenu;
+
         switch ($show) {
             case 'follow':{
                 $title = 'フォロー';

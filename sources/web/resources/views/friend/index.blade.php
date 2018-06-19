@@ -11,22 +11,26 @@
 
         <div class="row">
             @foreach ($users as $user)
+                @php $attributes = $user->getAttributes(); @endphp
             <div class="col-12 col-md-6 col-xl-5">
                 <div class="card user-card">
                     <div class="card-body">
-                        <div class="mb-2 lead">
+                        <div class="mb-3 lead">
                             <img src="{{ user_icon_url($user, true) }}">{{ $user->name }}
                         </div>
+                        @if (!empty($attributes))
+                        <div class="my-2">
+                            @foreach ($attributes as $attr)
+                                <div class="user-attribute">{{ \Hgs3\Constants\User\Attribute::$text[$attr] }}</div>
+                            @endforeach
+                        </div>
+                        @endif
                         @if (!empty($user->profile))
                         <p><small>{!! nl2br(e(str_limit($user->profile, 200))) !!}</small></p>
                         @endif
-                        <div>
-
-                        </div>
-
 
                         <div class="text-right">
-                            <a href="#" class="and-more">プロフィールを見る<i class="fas fa-angle-right"></i></a>
+                            <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}" class="and-more">プロフィールを見る<i class="fas fa-angle-right"></i></a>
                         </div>
                     </div>
                 </div>

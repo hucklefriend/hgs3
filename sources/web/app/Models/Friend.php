@@ -15,7 +15,7 @@ class Friend
 {
     public static function getList()
     {
-        return DB::table('users')
+        return User::whereIn('open_profile_flag', [1, 2])
             ->orderBy('last_login_at', 'DESC')
             ->paginate(20);
     }

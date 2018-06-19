@@ -155,9 +155,12 @@
                 <div class="card-body">
                     <h4 class="card-title">お気に入り <small>{{ number_format($favoriteNum) }}人</small></h4>
                     <div class="card-text">
-                        @if ($favoriteNum == 0)
+                        @if ($favoriteNum == 0 || empty($favorites))
+                            @if ($favoriteNum == 0)
                             <p>お気に入りに登録しているユーザーはいません。</p>
-
+                            @else
+                            <p>プロフィールを公開しているユーザーはいません。</p>
+                            @endif
                             @if (Auth::check())
                                 <div class="mt-4">
                                     @if ($isFavorite)

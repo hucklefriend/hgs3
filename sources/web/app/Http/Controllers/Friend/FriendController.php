@@ -15,6 +15,7 @@ class FriendController extends Controller
      */
     public function index()
     {
+
         return view('friend.index', [
             'users' => Friend::getList()
         ]);

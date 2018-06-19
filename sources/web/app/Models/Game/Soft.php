@@ -6,8 +6,6 @@
 namespace Hgs3\Models\Game;
 
 use Hgs3\Models\Orm;
-use Hgs3\Models\Review\Impression;
-use Hgs3\Models\Timeline;
 use Hgs3\Models\User;
 use Hgs3\Models\User\FavoriteSoft;
 use Illuminate\Support\Facades\Auth;
@@ -138,7 +136,6 @@ SQL;
             $data['reviewPointRank'] = $pointRanking->rank ?? '-';
         }
 
-
         // お気に入り登録ユーザー
         $data['favorites'] = self::getFavoriteUser($soft->id);
         $data['favoriteNum'] = Orm\UserFavoriteSoft::where('soft_id', $soft->id)->count(['user_id']);
@@ -253,10 +250,29 @@ SQL;
      */
     private static function getFavoriteUser($softId)
     {
-        return Orm\UserFavoriteSoft::where('soft_id', $softId)
-            ->orderBy('id', 'DESC')
-            ->take(20)
-            ->get();
+        $sql =<<< SQL
+SELECT users.id, users.name, users.show_id, users.icon_upload_flag
+  , users.icon_file_name, users.icon_round_type
+FROM (
+    SELECT user_id
+    FROM user_favorite_softs
+    WHERE soft_id = :soft_id
+    ORDER BY id DESC
+) fav INNER JOIN users on fav.user_id = users.id
+WHERE users.open_profile_flag
+SQL;
+
+        if (Auth::check()) {
+            // 誰でももしくはメンバーのみ
+            $sql .= 'IN (1, 2)';
+        } else {
+            // 誰でもに公開している場合のみ
+            $sql .= '= 2';
+        }
+
+        $sql .= PHP_EOL . 'LIMIT 20';
+
+        return DB::select($sql, ['soft_id' => $softId]);
     }
 
     /**

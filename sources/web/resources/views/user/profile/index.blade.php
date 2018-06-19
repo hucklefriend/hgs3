@@ -46,6 +46,7 @@
 
         <div class="swiper-container mb-3 hidden-sm-up" id="profile_slide_menu">
             <div class="swiper-wrapper">
+                @if ($open)
                 <div class="swiper-slide">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="@if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
                 </div>
@@ -61,6 +62,7 @@
                 <div class="swiper-slide">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="@if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム</a>
                 </div>
+                @endif
                 <div class="swiper-slide">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="@if($show == 'review') active @endif" aria-expanded="true">レビュー</a>
                 </div>
@@ -72,9 +74,11 @@
                 <div class="swiper-slide">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="@if($show == 'site') active @endif" aria-expanded="true">サイト</a>
                 </div>
+                @if ($open)
                 <div class="swiper-slide">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="@if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト</a>
                 </div>
+                @endif
                 @if ($isMyself)
                 <div class="swiper-slide">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}" class="@if($show == 'good_site') active @endif" aria-expanded="true">いいねしたサイト</a>
@@ -114,19 +118,22 @@
         <div class="d-flex flex-row">
             <div class="p-2 hidden-xs-down" style="width: 300px;">
                 <div class="nav flex-column nav-pills">
+                    @if ($open)
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'profile']) }}" class="nav-link @if($show == 'profile') active @endif" aria-expanded="true">プロフィール</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'timeline']) }}" class="nav-link @if($show == 'timeline') active @endif" aria-expanded="true">タイムライン</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follow']) }}" class="nav-link @if($show == 'follow') active @endif" aria-expanded="true">フォロー {{ $followNum }}人</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'follower']) }}" class="nav-link @if($show == 'follower') active @endif" aria-expanded="true">フォロワー {{ $followerNum }}人</a>
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_soft']) }}" class="nav-link @if($show == 'favorite_soft') active @endif" aria-expanded="true">お気に入りゲーム {{ $favoriteSoftNum }}個</a>
+                    @endif
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review']) }}" class="nav-link @if($show == 'review') active @endif" aria-expanded="true">レビュー {{ $reviewNum }}件</a>
 
                     @if ($isMyself)
                         <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'review_draft']) }}" class="nav-link @if($show == 'review_draft') active @endif" aria-expanded="true">レビューの下書き {{ $reviewDraftNum }}件</a>
                     @endif
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'site']) }}" class="nav-link @if($show == 'site') active @endif" aria-expanded="true">サイト {{ $siteNum }}件</a>
+                    @if ($open)
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'favorite_site']) }}" class="nav-link @if($show == 'favorite_site') active @endif" aria-expanded="true">お気に入りサイト {{ $favoriteSiteNum }}件</a>
-
+                    @endif
                     @if ($isMyself)
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}" class="nav-link @if($show == 'good_site') active @endif" aria-expanded="true">いいねしたサイト {{ $goodSiteNum }}件</a>
                     @endif
