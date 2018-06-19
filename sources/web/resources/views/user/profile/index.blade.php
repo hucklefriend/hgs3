@@ -102,8 +102,9 @@
                         centeredSlides: true,
                         scrollbar: {
                             el: '.swiper-scrollbar',
-                            hide: true
+                            hide: false
                         },
+                        freeMode: true,
                     });
                 });
             </script>

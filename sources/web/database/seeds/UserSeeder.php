@@ -7,7 +7,7 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
+     * @throws Exception
      */
     public function run()
     {
@@ -15,6 +15,9 @@ class UserSeeder extends Seeder
 
         $maxId = \Hgs3\Models\User::query()
                 ->max('id') + 1;
+
+        $attrNum = count(\Hgs3\Constants\User\Attribute::$text);
+        $attrMst = array_keys(\Hgs3\Constants\User\Attribute::$text);
 
         for ($i = 0; $i < $num; $i++) {
             $user = \Hgs3\Models\User::register([
@@ -32,6 +35,15 @@ class UserSeeder extends Seeder
                 $user->icon_upload_flag = 1;
                 $user->save();
             }
+
+            $an = intval(rand(0, $attrNum / 2));
+            $attr = [];
+            for ($j = 0; $j < $an; $j++) {
+                $attrId = $attrMst[rand(0, 9)];
+                $attr[$attrId] = $attrId;
+            }
+
+            $user->saveWithAttribute($attr);
         }
     }
 

@@ -8,7 +8,6 @@ namespace Hgs3\Http\Controllers\Friend;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Friend;
 
-
 class FriendController extends Controller
 {
     /**
@@ -20,5 +19,4 @@ class FriendController extends Controller
             'users' => Friend::getList()
         ]);
     }
-
 }
