@@ -368,4 +368,61 @@ class User extends Authenticatable
     {
         return $this->adult == 1;
     }
+
+    /**
+     * 属性と共に保存
+     *
+     * @param array $attribute
+     * @throws \Exception
+     */
+    public function saveWithAttribute(array $attribute)
+    {
+        DB::beginTransaction();
+        try {
+            $this->save();
+            self::saveAttribute($this->id, $attribute);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Hgs3\Log::exceptionError($e);
+        }
+    }
+
+    public static function saveAttribute($userId, $attribute)
+    {
+        DB::table('user_attributes')
+            ->where('user_id', $userId)
+            ->delete();
+
+        if (!empty($attribute)) {
+            $data = [];
+            foreach ($attribute as $attributeId) {
+                $data[] = [
+                    'user_id'    => $userId,
+                    'attribute'  => $attributeId,
+                    'created_at' => DB::raw('CURRENT_TIMESTAMP'),
+                    'updated_at' => DB::raw('CURRENT_TIMESTAMP')
+                ];
+            }
+
+            DB::table('user_attributes')
+                ->insert($data);
+        }
+    }
+
+    /**
+     * 属性を取得
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return DB::table('user_attributes')
+            ->select('attribute')
+            ->where('user_id', $this->id)
+            ->get()
+            ->pluck('attribute', 'attribute')
+            ->toArray();
+    }
 }

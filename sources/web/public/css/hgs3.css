@@ -1214,6 +1214,15 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     margin-right: 4px;
 }
 
+.user-attribute {
+    display: inline-block;
+    padding: 3px 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: solid 1px white;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
 
 
 /* SM */

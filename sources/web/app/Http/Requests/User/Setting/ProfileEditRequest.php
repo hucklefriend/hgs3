@@ -4,7 +4,7 @@
  */
 
 
-namespace Hgs3\Http\Requests\User\Profile;
+namespace Hgs3\Http\Requests\User\Setting;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -28,8 +28,9 @@ class ProfileEditRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'    => 'required|max:50',
-            'profile' => 'max:500',
+            'name'      => 'required|max:50',
+            'attribute' => 'array|nullable',
+            'profile'   => 'max:500',
         ];
     }
 }

@@ -80,9 +80,44 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-3 mb-4 d-none">
-            </div>
             <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">プロフィール</h5>
+                            <div>
+                                <a href="{{ route('プロフィール編集') }}"><i class="fas fa-edit"></i>編集</a>
+                            </div>
+                        </div>
+
+                        <table>
+                            <tr>
+                                <th class="p-2">名前</th>
+                                <td>{{ $user->name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="p-2">属性</th>
+                                <td>
+                                    @empty($attributes)
+                                        <p class="text-muted mb-0">属性を設定していません。</p>
+                                    @else
+                                        @foreach ($attributes as $attr)
+                                            <div class="user-attribute">{{ \Hgs3\Constants\User\Attribute::$text[$attr] }}</div>
+                                        @endforeach
+                                    @endempty
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="p-2">自己紹介</th>
+                                @if (strlen($user->profile) == 0)
+                                    <td class="text-muted">自己紹介を書いていません。</td>
+                                @else
+                                    <td>{!! nl2br(e($user->profile)) !!}</td>
+                                @endif
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">

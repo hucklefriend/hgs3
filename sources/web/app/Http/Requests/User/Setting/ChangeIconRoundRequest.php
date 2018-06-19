@@ -3,7 +3,7 @@
  * アイコン丸み変更リクエスト
  */
 
-namespace Hgs3\Http\Requests\User\Profile;
+namespace Hgs3\Http\Requests\User\Setting;
 
 use Hgs3\Constants\IconRoundType;
 use Illuminate\Foundation\Http\FormRequest;

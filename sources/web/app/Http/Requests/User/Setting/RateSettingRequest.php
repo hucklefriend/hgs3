@@ -4,7 +4,7 @@
  */
 
 
-namespace Hgs3\Http\Requests\User\Profile;
+namespace Hgs3\Http\Requests\User\Setting;
 
 use Illuminate\Foundation\Http\FormRequest;
 

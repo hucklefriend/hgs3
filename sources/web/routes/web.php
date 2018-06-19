@@ -112,8 +112,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/user/setting/profile_open', 'User\Setting\ProfileController@saveOpenSetting')->name('プロフィール公開範囲設定保存');
 
     // ユーザー設定：プロフィール
-    Route::get('/user/setting/profile', 'User\SettingController@profile')->name('プロフィール編集');
-    Route::patch('/user/setting/profile', 'User\SettingController@updateProfile')->name('プロフィール編集実行');
+    Route::get('/user/setting/profile', 'User\Setting\ProfileController@edit')->name('プロフィール編集');
+    Route::patch('/user/setting/profile', 'User\Setting\ProfileController@save')->name('プロフィール編集実行');
 
     // ユーザー設定：年齢制限
     Route::get('/user/setting/rate', 'User\Setting\ProfileController@rate')->name('R-18表示設定');
