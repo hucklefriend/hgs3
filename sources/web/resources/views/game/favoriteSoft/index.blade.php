@@ -22,12 +22,9 @@
 
                             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                                 <div class="contacts__item">
+                                    @if (is_open_profile($u))
                                     <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}" class="contacts__img">
-                                        @if ($u->icon_upload_flag == 1)
-                                            <img data-normal="{{ url('img/user_icon/' . $u->icon_file_name) }}" class="{{ \Hgs3\Constants\IconRoundType::getClass($u->icon_round_type) }}">
-                                        @else
-                                            <img data-normal="{{ url('img/user-no-img.svg') }}" class="rounded-0">
-                                        @endif
+                                        {{ user_icon($u, true) }}
                                     </a>
 
                                     <div>
@@ -36,6 +33,14 @@
                                             <span style="font-size: 1rem;">{{ follow_status_icon($followStatus, $favoriteUser->user_id) }}</span>
                                         </p>
                                     </div>
+                                    @else
+                                        <span class="contacts__img">
+                                            {{ user_icon(null, true) }}
+                                        </span>
+                                        <div>
+                                            <p class="text-muted">(非公開)</p>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 

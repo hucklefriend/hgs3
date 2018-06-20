@@ -9,6 +9,15 @@
             <h1>フレンド</h1>
         </header>
 
+        @if ($users->isEmpty())
+            <p>
+                プロフィール公開しているユーザーがいません。<br>
+                ログインしてください。
+            </p>
+            <div>
+                <a href="{{ route('ログイン') }}" class="and-more">ログイン <i class="fas fa-angle-right"></i></a>
+            </div>
+        @else
         <div class="row">
             @foreach ($users as $user)
                 @php $attributes = $user->getAttributes(); @endphp
@@ -39,6 +48,7 @@
         </div>
 
         @include('common.pager', ['pager' => $users])
+        @endif
     </div>
 @endsection
 

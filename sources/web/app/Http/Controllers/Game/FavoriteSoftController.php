@@ -8,6 +8,7 @@ namespace Hgs3\Http\Controllers\Game;
 use Hgs3\Models\Orm;
 use Hgs3\Models\User;
 use Hgs3\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 

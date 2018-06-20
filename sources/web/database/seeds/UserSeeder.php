@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $num = 100;
+        $num = 1;
 
         $maxId = \Hgs3\Models\User::query()
                 ->max('id') + 1;

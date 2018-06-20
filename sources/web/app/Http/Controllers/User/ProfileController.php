@@ -53,10 +53,10 @@ class ProfileController extends Controller
                 $open = false;
                 $openMenu = false;
             } else if ($user->open_profile_flag == 1) {
-                if ($show == 'site' || $show == 'review') {
+                if (Auth::check()) {
                     $open = true;
                 } else {
-                    $open = false;
+                    $open = ($show == 'site' || $show == 'review');
                 }
                 $openMenu = Auth::check();
             } else {

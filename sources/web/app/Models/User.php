@@ -67,7 +67,7 @@ class User extends Authenticatable
         }
 
         $data = DB::table('users')
-            ->select(['id', 'name', 'icon_upload_flag', 'show_id', 'icon_round_type', 'icon_file_name'])
+            ->select(['id', 'name', 'icon_upload_flag', 'show_id', 'icon_round_type', 'icon_file_name', 'open_profile_flag'])
             ->whereIn('id', $userIds)
             ->get();
 

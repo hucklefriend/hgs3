@@ -178,74 +178,33 @@
             </div>
             <script>
                 let swiperNewGame = null;
-                let slidesPerView = 3;
                 $(function(){
-                    @if (!\Illuminate\Support\Facades\Auth::check())
-                    let windowWidth = $(window).width();
-                    if (windowWidth < 768) {
-                        slidesPerView = 3;
-                    } else if (windowWidth < 992) {
-                        slidesPerView = 5;
-                    } else if (windowWidth < 1120) {
-                        slidesPerView = 6;
-                    } else {
-                        slidesPerView = 8;
-                    }
-
-                    initNewGameSwiper(slidesPerView);
-
-                    $(window).on('resize', function (){
-                        let windowWidth = $(window).width();
-                        if (windowWidth < 768) {
-                            if (slidesPerView == 3) {
-                                return;
-                            }
-                            slidesPerView = 3;
-                        } else if (windowWidth < 992) {
-                            if (slidesPerView == 5) {
-                                return;
-                            }
-                            slidesPerView = 5;
-                        } else if (windowWidth < 1120) {
-                            if (slidesPerView == 6) {
-                                return;
-                            }
-
-                            slidesPerView = 6;
-                        } else {
-                            if (slidesPerView == 8) {
-                                return;
-                            }
-
-                            slidesPerView = 8;
-                        }
-
-                        initNewGameSwiper(slidesPerView);
-                    });
-
-                    @endif
-
-                    initNewGameSwiper(slidesPerView);
-                });
-
-                function initNewGameSwiper(num)
-                {
-                    if (swiperNewGame != null) {
-                        swiperNewGame.destroy(true, true);
-                    }
-
                     swiperNewGame = new Swiper('#new_game', {
                         navigation: {
                             nextEl: '.swiper-button-next',
                             prevEl: '.swiper-button-prev',
                         },
-                        slidesPerView: num,
                         spaceBetween: 20,
                         loop: true,
                         freeMode: true,
+                        @if (!\Illuminate\Support\Facades\Auth::check())
+                        slidesPerView: 8,
+                        breakpoints: {
+                            1120: {
+                                slidesPerView: 6
+                            },
+                            992: {
+                                slidesPerView: 5
+                            },
+                            768: {
+                                slidesPerView: 3
+                            }
+                        }
+                        @else
+                        slidesPerView: 3
+                        @endif
                     });
-                }
-
+                });
             </script>
         </div>
 
@@ -284,8 +243,11 @@
                         <p>
                             同じホラーゲームが好きな人をお探しですか？<br>
                             {{ $userNum }}人のユーザーが参加しています。<br>
-                            好きなゲームが近い人を探す機能は、近々実装を開始します。
+                            お気に入りゲームが同じユーザーを探してみましょう。
                         </p>
+                        <div class="tags__body">
+                            <a href="{{ route('フレンド') }}">&gt;&gt; フレンド &lt;&lt;</a>
+                        </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
                         <div class="top-item-title">Sites</div>

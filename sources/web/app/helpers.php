@@ -562,9 +562,37 @@ function enable_adult_sponsor()
 function user_icon_url($user, $withNoImage = false)
 {
     $noImageUrl = $withNoImage ? url('img/user-no-img.svg') : '';
+    if ($user == null) {
+        return $noImageUrl;
+    }
     if ($user->icon_upload_flag == 0) {
         return $noImageUrl;
     }
 
     return url('img/user_icon/' . $user->icon_file_name);
 }
+
+function user_icon($user, $withNoImage = false)
+{
+    $url = user_icon_url($user, $withNoImage);
+    if (empty($url)) {
+        return '';
+    }
+
+    $html = sprintf('<img data-normal="%s" class="%s">', e($url),
+        \Hgs3\Constants\IconRoundType::getClass($user->icon_round_type ?? \Hgs3\Constants\IconRoundType::NONE));
+
+    return new \Illuminate\Support\HtmlString($html);
+}
+
+function is_open_profile($user)
+{
+    if ($user->open_profile_flag == 0) {
+        return false;
+    } else if ($user->open_profile_flag == 1 && !\Illuminate\Support\Facades\Auth::check()) {
+        return false;
+    }
+
+    return true;
+}
+

@@ -1224,6 +1224,10 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     font-size: 0.8rem;
 }
 
+.contacts__img>img {
+    border-radius: 0;
+}
+
 
 /* SM */
 @media (min-width: 576px) {

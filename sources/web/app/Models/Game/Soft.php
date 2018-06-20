@@ -251,7 +251,7 @@ SQL;
     private static function getFavoriteUser($softId)
     {
         $sql =<<< SQL
-SELECT users.id, users.name, users.show_id, users.icon_upload_flag
+SELECT users.id AS user_id, users.name, users.show_id, users.icon_upload_flag
   , users.icon_file_name, users.icon_round_type
 FROM (
     SELECT user_id
@@ -264,10 +264,10 @@ SQL;
 
         if (Auth::check()) {
             // 誰でももしくはメンバーのみ
-            $sql .= 'IN (1, 2)';
+            $sql .= ' IN (1, 2)';
         } else {
             // 誰でもに公開している場合のみ
-            $sql .= '= 2';
+            $sql .= ' = 2';
         }
 
         $sql .= PHP_EOL . 'LIMIT 20';
