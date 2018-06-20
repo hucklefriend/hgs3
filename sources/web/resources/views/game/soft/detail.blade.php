@@ -21,16 +21,16 @@
                         @endif
                         <div class="ml-2">
                             @if (!empty($soft->introduction))
-
-                                <blockquote class="blockquote soft-blockquote">
-                                    <p class="mb-0">{!! nl2br(e($soft->introduction)) !!}</p>
-                                    @if (!empty($soft->introduction_from))
-                                    <div class="text-right mt-2">
-                                        <footer class="blockquote-footer">{!! $soft->introduction_from !!}</footer>
-                                    </div>
-                                    @endif
-                                </blockquote>
-
+                                <div>
+                                    <blockquote class="blockquote soft-blockquote d-inline-block">
+                                        <p class="mb-0">{!! nl2br(e($soft->introduction)) !!}</p>
+                                        @if (!empty($soft->introduction_from))
+                                        <div class="text-right mt-2">
+                                            <footer class="blockquote-footer">{!! $soft->introduction_from !!}</footer>
+                                        </div>
+                                        @endif
+                                    </blockquote>
+                                </div>
                             @endif
 
                             @if ($officialSites->isNotEmpty())
@@ -229,7 +229,7 @@
                                         <form action="{{ route('お気に入りゲーム登録処理') }}" method="POST">
                                             {{ csrf_field() }}
                                             <input type="hidden" value="{{ $soft->id }}" name="soft_id">
-                                            <button class="btn btn-favorite"><i class="far fa-star"></i> 登録</button>
+                                            <button class="btn btn-favorite"><i class="far fa-star"></i></button>
                                         </form>
                                     @endif
                                 </div>
