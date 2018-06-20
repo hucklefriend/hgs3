@@ -9,8 +9,10 @@ use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\User\Setting\ProfileEditRequest;
 use Hgs3\Http\Requests\User\Setting\ProfileOpenSettingRequest;
 use Hgs3\Http\Requests\User\Setting\RateSettingRequest;
+use Hgs3\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -32,10 +34,9 @@ class ProfileController extends Controller
      */
     public function saveOpenSetting(ProfileOpenSettingRequest $request)
     {
-        $user = Auth::user();
-        $user->open_profile_flag = $request->get('flag', 1);
-
-        $user->save();
+        DB::table('users')
+            ->where('id', Auth::id())
+            ->update(['open_profile_flag' => $request->get('flag', 1)]);
 
         return redirect()->route('ユーザー設定');
     }
@@ -62,12 +63,15 @@ class ProfileController extends Controller
      */
     public function save(ProfileEditRequest $request)
     {
-        $user = Auth::user();
-        $user->name = $request->get('name', '');
-        $user->profile = cut_new_line($request->get('profile', ''));
-        $attribute = $request->get('attribute', []);
+        DB::table('users')
+            ->where('id', Auth::id())
+            ->update([
+                'name' => $request->get('name', ''),
+                'profile' => cut_new_line($request->get('profile', ''))
+            ]);
 
-        $user->saveWithAttribute($attribute);
+        $attribute = $request->get('attribute', []);
+        User::saveAttribute(Auth::id(), $attribute);
 
         return redirect()->route('ユーザー設定');
     }
@@ -90,10 +94,9 @@ class ProfileController extends Controller
      */
     public function saveRate(RateSettingRequest $request)
     {
-        $user = Auth::user();
-        $user->adult = $request->get('is_adult', 0);
-
-        $user->save();
+        DB::table('users')
+            ->where('id', Auth::id())
+            ->update(['adult' => $request->get('adult', 0)]);
 
         return redirect()->route('ユーザー設定');
     }
@@ -121,10 +124,11 @@ class ProfileController extends Controller
             $flag = 0;
         }
 
-        $user = Auth::user();
-        $user->footprint = $flag;
-
-        $user->save();
+        DB::table('users')
+            ->where('id', Auth::id())
+            ->update([
+                'footprint' => $flag
+            ]);
 
         return redirect()->route('ユーザー設定');
     }

@@ -18,17 +18,17 @@
                     <label for="profile" class="hgn-label"><i class="fas fa-check"></i> 公開範囲設定</label>
                 </div>
                 <label class="custom-control custom-radio mb-2">
-                    <input type="radio" class="custom-control-input" name="flag" id="flag0" value="0"{{ checked(old('flag', $user->profile_open_flag), 0) }}>
+                    <input type="radio" class="custom-control-input" name="flag" id="flag0" value="0"{{ checked(old('flag', $user->open_profile_flag), 0) }}>
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">非公開</span>
                 </label>
                 <label class="custom-control custom-radio mb-2">
-                    <input type="radio" class="custom-control-input" name="flag" id="flag1" value="1"{{ checked(old('flag', $user->profile_open_flag), 1) }}>
+                    <input type="radio" class="custom-control-input" name="flag" id="flag1" value="1"{{ checked(old('flag', $user->open_profile_flag), 1) }}>
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">当サイトメンバーのみ</span>
                 </label>
                 <label class="custom-control custom-radio mb-2">
-                    <input type="radio" class="custom-control-input" name="flag" id="flag2" value="2"{{ checked(old('flag', $user->profile_open_flag), 2) }}>
+                    <input type="radio" class="custom-control-input" name="flag" id="flag2" value="2"{{ checked(old('flag', $user->open_profile_flag), 2) }}>
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">誰にでも</span>
                 </label>

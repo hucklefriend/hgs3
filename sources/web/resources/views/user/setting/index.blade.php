@@ -20,11 +20,11 @@
                             </div>
                         </div>
 
-                        @if ($user->profile_open_flag == 0)
+                        @if ($user->open_profile_flag == 0)
                             <p class="mb-0">公開しない</p>
-                        @elseif ($user->profile_open_flag == 1)
+                        @elseif ($user->open_profile_flag == 1)
                             <p class="mb-0">メンバーのみ</p>
-                        @elseif ($user->profile_open_flag == 2)
+                        @elseif ($user->open_profile_flag == 2)
                             <p class="mb-0">誰にでも</p>
                         @endif
                     </div>

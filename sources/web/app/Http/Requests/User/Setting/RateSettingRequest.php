@@ -28,7 +28,7 @@ class RateSettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'is_adult' => 'required|boolean'
+            'adult' => 'nullable|boolean'
         ];
     }
 }
