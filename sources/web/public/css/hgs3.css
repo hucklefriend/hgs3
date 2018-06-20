@@ -926,17 +926,10 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     color: yellow;
 }
 
-.btn-favorite2:after {
-    content: "済み";
-}
 
 .btn-favorite2:hover {
     background-color: rgba(255, 255, 255, 0.125);
     color: grey;
-}
-
-.btn-favorite2:hover:after {
-    content: "解除";
 }
 
 .btn-good {
@@ -973,6 +966,10 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 
 .and-more:hover {
     background-color: rgba(255, 255, 255, 0.2);
+}
+
+.and-more-sm {
+    padding: .4rem .6rem;
 }
 
 .list-review-point {
@@ -1226,6 +1223,30 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 
 .contacts__img>img {
     border-radius: 0;
+}
+
+.badge-official-site {
+    margin-bottom: .5rem;
+    margin-right: .5rem;
+    display: inline-block;
+    padding: .4rem .55rem;
+    font-size: 85%;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    vertical-align: baseline;
+    padding-right: .6em;
+    padding-left: .6em;
+    border-radius: 10rem;
+    white-space: nowrap;
+    color: #111;
+    background-color: #fff;
+}
+
+.badge-official-site:hover {
+    color: #111;
+    text-decoration: none;
+    background-color: #e6e6e6;
 }
 
 

@@ -21,7 +21,7 @@
                         @endif
                         <div class="ml-2">
                             @if (!empty($soft->introduction))
-                            <div>
+
                                 <blockquote class="blockquote soft-blockquote">
                                     <p class="mb-0">{!! nl2br(e($soft->introduction)) !!}</p>
                                     @if (!empty($soft->introduction_from))
@@ -30,7 +30,7 @@
                                     </div>
                                     @endif
                                 </blockquote>
-                            </div>
+
                             @endif
 
                             @if ($officialSites->isNotEmpty())
@@ -40,8 +40,28 @@
                                 </div>
                                 <div>
                                 @foreach ($officialSites as $officialSite)
-                                    <a href="{{ $officialSite->url }}" target="_blank" class="mr-2 mb-2 badge badge-pill badge-secondary"><small>{{ $officialSite->title }}</small> <i class="fas fa-sign-out-alt"></i></a>
+                                    <a href="{{ $officialSite->url }}" target="_blank" class="badge-official-site"><small>{!! $officialSite->title !!}</small> <i class="fas fa-sign-out-alt"></i></a>
                                 @endforeach
+                                    @if ($officialSites->count() > 3)
+                                        <button class="btn btn-sm btn-light" id="official-open"><small><i class="fas fa-chevron-right"></i></small></button>
+                                        <button class="btn btn-sm btn-light" style="display:none;" id="official-close"><small><i class="fas fa-chevron-left"></i></small></button>
+
+                                        <script>
+                                            $(function () {
+                                                $('.badge-official-site:nth-child(n + 4)').hide();
+                                                $('#official-open').click(function (){
+                                                    $(this).hide();
+                                                    $('#official-close').show();
+                                                    $('.badge-official-site:nth-child(n + 4)').show();
+                                                });
+                                                $('#official-close').click(function (){
+                                                    $(this).hide();
+                                                    $('#official-open').show();
+                                                    $('.badge-official-site:nth-child(n + 4)').hide();
+                                                });
+                                            });
+                                        </script>
+                                    @endif
                                 </div>
                             </div>
                             @endif

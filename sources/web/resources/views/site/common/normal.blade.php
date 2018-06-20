@@ -15,16 +15,10 @@
     <div>
     @php $listBannerUrl = list_banner($s); @endphp
     @if (empty($listBannerUrl))
-        <div class="no-banner-site-name">
-            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
-        </div>
+        <div class="no-banner-site-name">{{ $s->name }}</div>
     @else
-        <div>
-            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="site_name">{{ $s->name }}</a>
-        </div>
-        <div class="list-site-banner-outline">
-            <a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img data-normal="{{ $listBannerUrl }}" class="img-responsive"></a>
-        </div>
+        <div>{{ $s->name }}</div>
+        <div class="list-site-banner-outline"><img data-normal="{{ $listBannerUrl }}" class="img-responsive"></div>
     @endif
     </div>
 
@@ -52,5 +46,8 @@
             <span class="d-inline-block"><i class="fas fa-redo-alt"></i> {{ format_date($s->updated_timestamp) }}</span>
         @endif
     </div>
-    <div class="mt-3 text-center"><a href="{{ route('サイト遷移', ['site' => $s->id]) }}" class="badge badge-pill badge-secondary" target="_blank">サイトへ行く <i class="fas fa-sign-out-alt"></i></a></div>
+    <div class="mt-3 text-right">
+        <a href="{{ route('サイト遷移', ['site' => $s->id]) }}" class="badge badge-pill badge-secondary" target="_blank">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
+        <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="and-more ml-4">詳しい情報を見る <i class="fas fa-angle-right"></i></a>
+    </div>
 </div>
