@@ -170,7 +170,10 @@
 
     $large = $largeLinks[rand(0, count($largeLinks) - 1)];
     $medium = $mediumLinks[rand(0, count($mediumLinks) - 1)];
-    $small1 = $smallLinks[rand(0, count($smallLinks) - 1)];
+    $smallIdx = rand(0, count($smallLinks) - 1);
+    $small1 = $smallLinks[$smallIdx];
+    unset($smallLinks[$smallIdx]);
+    $smallLinks = array_values($smallLinks);
     $small2 = $smallLinks[rand(0, count($smallLinks) - 1)];
 @endphp
 
