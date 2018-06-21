@@ -25,6 +25,24 @@
                     @include('user.common.icon', ['u' => $user])
                     <span class="align-middle">{{ $user->name }}さん</span>
                 </h1>
+                @if ($followStatus != 0)
+                <div class="mt-2">
+                    @if ($followStatus == 2)
+                        <form method="POST" action="{{ route('フォロー登録') }}">
+                            {{ csrf_field() }}
+                            <button class="btn btn-sm"><small>フォローする</small></button>
+                            <input type="hidden" name="follow_user_id" value="{{ $user->show_id }}">
+                        </form>
+                    @elseif ($followStatus == 1)
+                        <form method="POST" action="{{ route('フォロー解除') }}" onsubmit="return confirm('{{ $user->name }}さんのフォローを解除します。');">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button class="btn btn-sm btn-danger"><small>フォロー解除</small></button>
+                            <input type="hidden" name="follow_user_id" value="{{ $user->show_id }}">
+                        </form>
+                    @endif
+                </div>
+                @endif
             </header>
         @endif
 

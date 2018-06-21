@@ -5,6 +5,7 @@
 
 namespace Hgs3\Http\Controllers\User;
 
+use Hgs3\Log;
 use Hgs3\Models\User\Follow;
 use Hgs3\Models\User;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class FollowController extends Controller
     public function add(Request $request)
     {
         $followUserId = $request->get('follow_user_id');
-        $followUser = User::find($followUserId);
+        $followUser = User::findByShowId($followUserId);
         if ($followUser) {
             Follow::add(Auth::user(), $followUser, 0);
         }
@@ -41,7 +42,9 @@ class FollowController extends Controller
     public function remove(Request $request)
     {
         $followUserId = $request->get('follow_user_id');
-        $followUser = User::find($followUserId);
+        $followUser = User::findByShowId($followUserId);
+        Log::info($followUser->show_id);
+
         if ($followUser) {
             Follow::remove(Auth::user(), $followUser);
         }

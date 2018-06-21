@@ -10,7 +10,7 @@
                             <div class="d-flex justify-content-between card-title-flex">
                                 <h5 class="card-title">新着情報</h5>
                                 <div class="card-title-link">
-                                    <a href="{{ route('新着情報') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
+                                    <a href="{{ route('新着情報') }}" class="badge badge-pill show-all"><small>すべて見る <i class="fas fa-angle-right"></i></small></a>
                                 </div>
                             </div>
                             @if ($newInfoNum > 1)

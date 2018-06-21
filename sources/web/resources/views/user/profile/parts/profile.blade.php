@@ -1,5 +1,20 @@
 <div class="card">
     <div class="card-body">
+        <h4 class="card-title">属性</h4>
+
+        @if (empty($attributes))
+            <p class="text-muted">属性を設定していません。</p>
+        @else
+            <div>
+                @foreach ($attributes as $attr)
+                    <div class="user-attribute">{{ \Hgs3\Constants\User\Attribute::$text[$attr] }}</div>
+                @endforeach
+            </div>
+        @endif
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
         <h4 class="card-title">自己紹介</h4>
 
         @if (empty($user->profile))

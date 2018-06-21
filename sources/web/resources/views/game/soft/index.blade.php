@@ -52,25 +52,21 @@
                         <div class="row">
                         @if (isset($list[$p[1]]))
                             @foreach ($list[$p[1]] as $soft)
-                                <div class="package-card col-xl-3 col-lg-4 col-sm-6 col-12">
-                                    <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}" style="width: 100%;display: table;">
-                                        <div style="display: table-row;">
-                                            <div class="package-card-image">
-                                                @php $imageUrl = small_image_url($soft); @endphp
-                                                @if (empty($imageUrl))
-                                                    <i class="far fa-image"></i>
-                                                @else
-                                                    <img data-url="{{ $imageUrl }}" class="img-responsive lazy-img-load">
-                                                @endif
-                                            </div>
-                                            <div class="package-card-name">
+                                <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
+                                    <div class="package-card">
+                                        <div>
+                                            <div><img data-url="{{ small_image_url($soft, true) }}" class="lazy-img-load"></div>
+                                            <div>
                                                 <small>{{ $soft->name }}</small>
                                                 @isset($favoriteSofts[$soft->id])
-                                                    <span class="favorite-icon"><i class="fas fa-star"></i></span>
+                                                    <small><span class="favorite-icon"><i class="fas fa-star"></i></span></small>
                                                 @endisset
                                             </div>
+                                            <div>
+                                                <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
+                                            </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                             @endforeach
                         @endif

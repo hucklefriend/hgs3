@@ -118,31 +118,6 @@
                         </table>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title">プロフィール</h5>
-                            <div>
-                                <a href="{{ route('プロフィール編集') }}"><i class="fas fa-edit"></i>編集</a>
-                            </div>
-                        </div>
-
-                        <table>
-                            <tr>
-                                <th class="p-2">名前</th>
-                                <td>{{ $user->name }}</td>
-                            </tr>
-                            <tr>
-                                <th class="p-2">自己紹介</th>
-                                @if (strlen($user->profile) == 0)
-                                <td class="text-muted">自己紹介を書いていません。</td>
-                                @else
-                                <td>{!! nl2br(e($user->profile)) !!}</td>
-                                @endif
-                            </tr>
-                        </table>
-                    </div>
-                </div>
             </div>
 
         <div class="col-sm-6 mb-4">

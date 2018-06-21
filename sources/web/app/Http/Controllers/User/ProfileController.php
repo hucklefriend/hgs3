@@ -5,13 +5,8 @@
 
 namespace Hgs3\Http\Controllers\User;
 
-use Hgs3\Constants\IconRoundType;
 use Hgs3\Constants\PageId;
 use Hgs3\Http\Controllers\Controller;
-use Hgs3\Http\Requests\User\Profile\ChangeIconImageRequest;
-use Hgs3\Http\Requests\User\Profile\ChangeIconRoundRequest;
-use Hgs3\Http\Requests\User\Profile\ConfigRequest;
-use Hgs3\Http\Requests\User\Profile\EditRequest;
 use Hgs3\Models\Account\SocialSite;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Review;
@@ -45,7 +40,12 @@ class ProfileController extends Controller
 
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
+        $data['followStatus'] = 0;
+        if (!$data['isMyself'] && Auth::check()) {
+            $data['followStatus'] = Follow::isFollow(Auth::id(), $user->id) ? 1 : 2;
+        }
 
+        // プロフィールの公開具合によってメニューを変化させる
         $open = true;
         $openMenu = true;
         if (!$data['isMyself']) {
@@ -166,6 +166,7 @@ class ProfileController extends Controller
                 $show = 'profile';
                 $title = 'プロフィール';
                 $data['parts'] = [
+                    'attributes'  => $user->getAttributes(),
                     'snsAccounts' => SocialSite::getAccounts($user, true)
                 ];
                 $data['pageId'] = $data['isMyself'] ? PageId::USER_PROFILE : PageId::FRIEND_PROFILE;
