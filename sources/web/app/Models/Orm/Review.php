@@ -242,4 +242,11 @@ class Review extends \Eloquent
         return GamePackage::whereIn('id', $arr)
             ->get();
     }
+
+    public function countUp()
+    {
+        DB::table('reviews')
+            ->where('id', $this->id)
+            ->update(['access_count' => DB::raw('access_count + 1')]);
+    }
 }

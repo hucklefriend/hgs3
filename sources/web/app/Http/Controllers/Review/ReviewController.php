@@ -86,6 +86,8 @@ class ReviewController extends Controller
             $impression = Review\Impression::get(Auth::id(), $review->id);
         }
 
+        $review->countUp();
+
         return view('review.detail', [
             'soft'       => $soft,
             'packages'   => $review->getPackages(),
