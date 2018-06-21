@@ -383,7 +383,7 @@ return [
 
 
     ['soft_id' => '82','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01230.html','priority' => '2'],
-    ['soft_id' => '82','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0082npjj00455_000000000000000001.html','priority' => ''],
+    ['soft_id' => '82','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0082npjj00455_000000000000000001.html','priority' => '3'],
 
 
     ['soft_id' => '79','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps20385.html','priority' => '3'],
