@@ -86,6 +86,9 @@
                         <a href="{{ route('レビュートップ') }}">レビュー</a>
                     </li>
                     <li class="hidden-xs-down">
+                        <a href="{{ route('フレンド') }}">フレンド</a>
+                    </li>
+                    <li class="hidden-xs-down">
                         <a href="{{ route('サイトトップ') }}">サイト</a>
                     </li>
                     @if (is_admin())
@@ -110,6 +113,7 @@
                         <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-112px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
                             <a href="{{ route('ゲーム一覧') }}" class="dropdown-item">ゲーム</a>
                             <a href="{{ route('レビュートップ') }}" class="dropdown-item">レビュー</a>
+                            <a href="{{ route('フレンド') }}" class="dropdown-item">フレンド</a>
                             <a href="{{ route('サイトトップ') }}" class="dropdown-item">サイト</a>
                             @if (Auth::check())
                                 @if (is_admin())
