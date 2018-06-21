@@ -10,7 +10,7 @@
                             <div class="d-flex justify-content-between card-title-flex">
                                 <h5 class="card-title">新着情報</h5>
                                 <div class="card-title-link">
-                                    <a href="{{ route('新着情報') }}" class="badge badge-pill show-all"><small>すべて見る <i class="fas fa-angle-right"></i></small></a>
+                                    <a href="{{ route('新着情報') }}" class="and-more and-more-sm"><small>すべて見る <i class="fas fa-angle-right"></i></small></a>
                                 </div>
                             </div>
                             @if ($newInfoNum > 1)
@@ -211,7 +211,7 @@
         <div class="card card-hgn">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
+                    <div class="col-12 col-sm-6 top-item text-center">
                         <div class="top-item-title">Games</div>
                         <p>
                             どんなホラーゲームがあるかお探しですか？<br>
@@ -222,7 +222,7 @@
                             <a href="{{ route('ゲーム一覧') }}">&gt;&gt; ゲーム一覧 &lt;&lt;</a>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
+                    <div class="col-12 col-sm-6 top-item text-center">
                         <div class="top-item-title">Reviews</div>
                         <p>
                             ホラーゲームの評判をお探しですか？<br>
@@ -238,7 +238,7 @@
                             <a href="{{ route('レビュートップ') }}">&gt;&gt; レビュー &lt;&lt;</a>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
+                    <div class="col-12 col-sm-6 top-item text-center">
                         <div class="top-item-title">Friends</div>
                         <p>
                             同じホラーゲームが好きな人をお探しですか？<br>
@@ -249,7 +249,7 @@
                             <a href="{{ route('フレンド') }}">&gt;&gt; フレンド &lt;&lt;</a>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item text-center">
+                    <div class="col-12 col-sm-6 top-item text-center">
                         <div class="top-item-title">Sites</div>
                         <p>
                             ホラーゲームを扱っているサイトをお探しですか？<br>
@@ -259,20 +259,6 @@
                         <div class="tags__body">
                             <a href="{{ route('サイトトップ') }}">&gt;&gt; サイト &lt;&lt;</a>
                         </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item d-none">
-                        <div class="top-item-title">Secondary Creations</div>
-                        <p>
-                            ホラーゲームの二次創作物をお探しですか？<br>
-                            イラストや小説などを紹介できる機能はいずれ実装したいと考えております。
-                        </p>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 top-item d-none">
-                        <div class="top-item-title">Game Creations</div>
-                        <p>
-                            ご自身でホラーゲームを作られていますか？<br>
-                            当サイトのカテゴリとして登録できる機能はいずれ実装したいと考えております。
-                        </p>
                     </div>
                 </div>
             </div>

@@ -49,7 +49,7 @@
             <section id="{{ $p[0] }}gyo" @if ($defaultPhoneticType != $p[1]) style="display:none;" @endif>
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
+                        <div class="row game-list">
                         @if (isset($list[$p[1]]))
                             @foreach ($list[$p[1]] as $soft)
                                 <div class="col-xl-3 col-lg-4 col-sm-6 col-12">

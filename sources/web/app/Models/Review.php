@@ -537,11 +537,12 @@ SQL;
         $sql =<<< SQL
 SELECT `id`, `name`, `original_package_id`
 FROM game_softs
-WHERE id NOT IN (SELECT soft_id FROM review_totals) 
+WHERE id NOT IN (SELECT soft_id FROM review_totals)
+  AND first_release_int <= :first_release_int 
 ORDER BY rand()
 SQL;
 
-        $softs = DB::select($sql);
+        $softs = DB::select($sql, ['first_release_int' => date('Ymd')]);
 
         if (count($softs) < 20) {
             $getNum = 20 - count($softs);

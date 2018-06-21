@@ -37,7 +37,7 @@
                         <form method="POST" action="{{ route('フォロー解除') }}" onsubmit="return confirm('{{ $user->name }}さんのフォローを解除します。');">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button class="btn btn-sm btn-danger"><small>フォロー解除</small></button>
+                            <button class="btn btn-sm btn-warning"><small>フォロー解除</small></button>
                             <input type="hidden" name="follow_user_id" value="{{ $user->show_id }}">
                         </form>
                     @endif

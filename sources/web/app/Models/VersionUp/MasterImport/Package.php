@@ -315,6 +315,30 @@ class Package extends MasterImportAbstract
         DB::table('game_package_links')
             ->whereIn('package_id', [547])
             ->delete();
+
+        DB::table('game_package_links')
+            ->where('package_id', 852)
+            ->update(['soft_id' => 235]);
+
+        DB::table('game_packages')
+            ->where('id', 137)
+            ->update(['name' => '夜想曲2 PS one Books']);
+
+        $intro =<<< INTRO
+コノ女、嘘ニ憑カレ、真ヲ突ク。
+
+都市伝説――
+それは、口承される噂話のうち、現代発祥のもので、根拠が曖昧・不明であるもの。
+ここに、またひとつ。
+恐怖に彩られた蟲惑敵な都市伝説が生まれようとしていた。
+INTRO;
+        DB::table('game_softs')
+            ->where('id', 313)
+            ->update(['introduction' => $intro]);
+
+        DB::table('game_official_sites')
+            ->where('url', 'http://game.intergrow.jp/layersoffear/')
+            ->delete();
     }
 
     private static function deleteShop($pkgId, $shopId)
@@ -402,5 +426,22 @@ SQL;
 
             unset($shopImages);
         }
+    }
+
+    public static function updateFirstReleaseInt()
+    {
+        $sql =<<< SQL
+UPDATE game_softs, 
+(
+	SELECT lnk.soft_id, MIN(pkg.release_int) AS first_release_int
+	FROM (SELECT id, release_int FROM game_packages) pkg
+		INNER JOIN game_package_links lnk ON pkg.id = lnk.package_id
+	GROUP BY lnk.soft_id
+) data
+SET game_softs.first_release_int = data.first_release_int
+WHERE game_softs.id = data.soft_id
+SQL;
+
+        DB::update($sql);
     }
 }

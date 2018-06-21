@@ -46,29 +46,16 @@
                 <div class="card card-hgn">
                     <div class="card-body">
                         <h5 class="card-title">レビュー書いてみませんか？</h5>
-                        <p class="card-subtitle">レビューの少ないゲーム達です。点数だけでも付けてみませんか？</p>
+                        <p class="card-subtitle mb-3">レビューの少ないゲーム達です。点数だけでも付けてみませんか？</p>
 
                         @foreach ($wantToWrite as $soft)
-                            <div class="d-flex justify-content-between mb-4">
-                                <div class="package-card">
-                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="align-self-center">
-                                        <div style="display: table-row;">
-                                            <div class="package-card-image">
-                                                @include ('game.common.packageImage', ['imageUrl' => small_image_url($soft->package)])
-                                            </div>
-                                            <div class="package-card-name">
-                                                <small>{{ $soft->name }}</small>
-                                                @isset($favoriteSofts[$soft->id])
-                                                    <span class="favorite-icon"><i class="fas fa-star"></i></span>
-                                                @endisset
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="align-self-center">
-                                    <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-pencil-alt"></i></a>
-                                </div>
+                        <div class="package-card mb-4">
+                            <div>
+                                <div>{{ small_image($soft->package) }}</div>
+                                <div><small>{{ $soft->name }}</small></div>
+                                <div><a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-pencil-alt"></i></a></div>
                             </div>
+                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -87,7 +74,7 @@
                             <p class="mb-0">レビューが投稿されていません。</p>
                         @else
                         @foreach ($fearRanking as $fear)
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between mb-4">
                                 <div class="d-flex">
                                     <div class="align-self-center mr-2 nowrap">
                                         <p class="mb-2 text-center">{{ $loop->index + 1 }}位</p>
@@ -127,7 +114,7 @@
                             <p class="mb-0">レビューが投稿されていません。</p>
                         @else
                         @foreach ($pointRanking as $point)
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between mb-4">
                                 <div class="d-flex">
                                     <div class="align-self-center mr-2 nowrap">
                                         <p class="mb-2 text-center">{{ $loop->index + 1 }}位</p>

@@ -50,7 +50,7 @@ class Master
         echo 'import official site.' . PHP_EOL;
         MasterImport\OfficialSite::import($date);
 
-        echo 'update sort order.'.PHP_EOL;
+        echo 'update sort order.' . PHP_EOL;
         \Hgs3\Models\Orm\GameSoft::updateSortOrder();
 
         echo 'update original package id.' . PHP_EOL;
@@ -59,8 +59,11 @@ class Master
         echo 'update game_package_shops release_int'. PHP_EOL;
         MasterImport\Package::updateShopReleaseInt();
 
-        echo 'update shop image'. PHP_EOL;
+        echo 'update shop image' . PHP_EOL;
         MasterImport\Package::updateShopImage();
+
+        echo 'update soft first release int' . PHP_EOL;
+        MasterImport\Package::updateFirstReleaseInt();
     }
 
     public static function importSql($date)
