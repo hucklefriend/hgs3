@@ -337,8 +337,14 @@ INTRO;
             ->update(['introduction' => $intro]);
 
         DB::table('game_official_sites')
-            ->where('url', 'http://game.intergrow.jp/layersoffear/')
-            ->delete();
+            ->whereIn('url', [
+                'http://game.intergrow.jp/layersoffear/',
+                'http://www.gae.co.jp/arc/1493',
+            ])->delete();
+
+        DB::table('game_packages')
+            ->whereIn('id', [579])
+            ->update(['is_adult' => 0]);
     }
 
     private static function deleteShop($pkgId, $shopId)

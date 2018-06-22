@@ -1,1 +1,0 @@
-UPDATE game_softs SET introduction_from = REPLACE(introduction_from, '</a>',' <i class="fas fa-sign-out-alt"></i></a>');

@@ -3,7 +3,7 @@ return [
     ['soft_id' => '371','title' => '公式サイト','url' => 'http://no-good.jp/','priority' => '1'],
     ['soft_id' => '194','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/uljm05413.html','priority' => '2'],
 
-    ['soft_id' => '41','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/uljm05413.html','priority' => '1'],
+    ['soft_id' => '41','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm62254.html','priority' => '1'],
 
     ['soft_id' => '195','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps00404.html','priority' => '1'],
     ['soft_id' => '195','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0502npjj00077_000000000000000001.html','priority' => '2'],
@@ -34,8 +34,8 @@ return [
     ['soft_id' => '369','title' => '公式サイト','url' => 'https://nippon1.jp/consumer/nightmare/','priority' => '2'],
     ['soft_id' => '369','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/closed-nightmare-ps4/','priority' => '2'],
 
-    ['soft_id' => '47','title' => '<i class="fab fa-playstation"></i>公式(PS)','url' => 'http://www.jp.playstation.com/software/title/slps00917.html','priority' => '1'],
-    ['soft_id' => '47','title' => '<i class="fab fa-playstation"></i>公式(PS DL)','url' => 'http://www.jp.playstation.com/software/title/jp0202npjj00613_000000000000000001.html','priority' => '2'],
+    ['soft_id' => '47','title' => '<i class="fab fa-playstation"></i>公式(PS)','url' => 'http://www.jp.playstation.com/software/title/slps00917.html','priority' => '2'],
+    ['soft_id' => '47','title' => '<i class="fab fa-playstation"></i>公式(PS DL)','url' => 'http://www.jp.playstation.com/software/title/jp0202npjj00613_000000000000000001.html','priority' => '3'],
 
 
     ['soft_id' => '48','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps00657.html','priority' => '1'],
@@ -45,7 +45,7 @@ return [
     ['soft_id' => '49','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01290.html','priority' => '1'],
     ['soft_id' => '49','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0202npjj00649_000000000000000001.html','priority' => '2'],
 
-    ['soft_id' => '50','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01290.html','priority' => '1'],
+    ['soft_id' => '50','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65221.html','priority' => '1'],
 
     ['soft_id' => '272','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps00644.html','priority' => '1'],
     ['soft_id' => '193','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps25131.html','priority' => '1'],
@@ -70,7 +70,7 @@ return [
     ['soft_id' => '274','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0262npjb00615_00hddbootpb0000001.html','priority' => '3'],
     ['soft_id' => '274','title' => '<i class="fab fa-playstation"></i>公式(PS4)','url' => 'https://www.jp.playstation.com/games/psycho-break-ps4/','priority' => '4'],
 
-    ['soft_id' => '274','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/psychobreak-2-ps4/','priority' => '2'],
+    ['soft_id' => '275','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/psychobreak-2-ps4/','priority' => '2'],
 
     ['soft_id' => '52','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/scps15053.html','priority' => '2'],
     ['soft_id' => '52','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/scps19305.html','priority' => '3'],
@@ -82,8 +82,8 @@ return [
     ['soft_id' => '53','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/scps19326.html','priority' => '3'],
 
     ['soft_id' => '54','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/bcjs30020.html','priority' => '2'],
-    ['soft_id' => '54','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/scps19305.html','priority' => '3'],
-    ['soft_id' => '54','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/bcjs70006.html','priority' => '4'],
+    ['soft_id' => '54','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/bcjs70006.html','priority' => '3'],
+    ['soft_id' => '54','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp9000npja00028_00sirenntfull00000.html','priority' => '4'],
 
     ['soft_id' => '109','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm86192.html','priority' => '2'],
     ['soft_id' => '109','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slpm87029.html','priority' => '3'],
@@ -95,7 +95,7 @@ return [
 
 
     ['soft_id' => '110','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65051.html','priority' => '4'],
-    ['soft_id' => '110','title' => '<i class="fab fa-playstation"></i>公式(最期の詩)','url' => 'http://www.jp.playstation.com/software/title/slpm65051.html','priority' => '5'],
+    ['soft_id' => '110','title' => '<i class="fab fa-playstation"></i>公式(最期の詩)','url' => 'http://www.jp.playstation.com/software/title/slpm65098.html','priority' => '5'],
     ['soft_id' => '110','title' => '<i class="fab fa-playstation"></i>公式(最期の詩廉価)','url' => 'http://www.jp.playstation.com/software/title/slpm65341.html','priority' => '6'],
     ['soft_id' => '110','title' => '<i class="fab fa-playstation"></i>公式(HD)','url' => 'http://www.jp.playstation.com/software/title/bljm60425.html','priority' => '7'],
 
@@ -133,7 +133,7 @@ return [
     ['soft_id' => '129','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps20456.html','priority' => '2'],
     ['soft_id' => '141','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps20488.html','priority' => '2'],
     ['soft_id' => '180','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps25581.html','priority' => '2'],
-    ['soft_id' => '269','title' => '任天堂紹介サイト','url' => 'https://www.nintendo.co.jp/titles/50010000011886','priority' => '2'],
+    ['soft_id' => '97','title' => '任天堂紹介サイト','url' => 'https://www.nintendo.co.jp/titles/50010000011886','priority' => '2'],
     ['soft_id' => '269','title' => '任天堂紹介サイト','url' => 'https://www.nintendo.co.jp/ds/software/yzuj/index.html','priority' => '2'],
     ['soft_id' => '55','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65040.html','priority' => '2'],
 
@@ -219,8 +219,8 @@ return [
 
     ['soft_id' => '304','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/the-town-of-light-ps4/','priority' => '4'],
 
-    ['soft_id' => '304','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps02180.html','priority' => '2'],
-    ['soft_id' => '304','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjj00009_000000000000000001.html','priority' => '3'],
+    ['soft_id' => '117','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps02180.html','priority' => '2'],
+    ['soft_id' => '117','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjj00009_000000000000000001.html','priority' => '3'],
 
     ['soft_id' => '186','title' => '任天堂公式','url' => 'https://www.nintendo.co.jp/wii/software/rzjj/index.html','priority' => '2'],
 
@@ -255,7 +255,7 @@ return [
     ['soft_id' => '93','title' => '任天堂公式','url' => 'https://www.nintendo.co.jp/ds/software/yfqj/index.html','priority' => '2'],
     ['soft_id' => '94','title' => '任天堂公式','url' => 'https://www.nintendo.co.jp/ds/software/b74j/index.html','priority' => '2'],
 
-    ['soft_id' => '221','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps02850.html','priority' => '1'],
+    ['soft_id' => '221','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm87027.html','priority' => '1'],
 
     ['soft_id' => '138','title' => '任天堂公式','url' => 'https://www.nintendo.co.jp/wii/software/rn9j/index.html','priority' => '1'],
 
@@ -270,12 +270,10 @@ return [
 
     ['soft_id' => '29','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65480.html','priority' => '1'],
 
-
     ['soft_id' => '69','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01001.html','priority' => '1'],
     ['soft_id' => '69','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps91076.html','priority' => '2'],
 
     ['soft_id' => '290','title' => '公式サイト','url' => 'http://zzyzx.jp/dream/hp/prod/','priority' => '1'],
-
 
     ['soft_id' => '76','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps00152.html','priority' => '1'],
     ['soft_id' => '76','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0031npjj00019_000000000000000001.html','priority' => '2'],
@@ -298,7 +296,6 @@ return [
 
     ['soft_id' => '121','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01878.html','priority' => '1'],
 
-
     ['soft_id' => '123','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm62245.html','priority' => '3'],
     ['soft_id' => '123','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slpm62419.html','priority' => '4'],
 
@@ -311,8 +308,7 @@ return [
 
     ['soft_id' => '312','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/little-nightmares-ps4/','priority' => '2'],
     ['soft_id' => '312','title' => '<i class="fab fa-playstation"></i>公式(DX PS4)','url' => 'https://www.jp.playstation.com/games/little-nightmares-deluxe-edition-ps4/','priority' => '3'],
-    ['soft_id' => '312','title' => '<i class="fab fa-playstation"></i>公式(DX SW)','url' => 'https://ec.nintendo.com/JP/ja/titles/70010000000758','priority' => '4'],
-
+    ['soft_id' => '312','title' => '任天堂公式(DX SW)','url' => 'https://ec.nintendo.com/JP/ja/titles/70010000000758','priority' => '4'],
 
     ['soft_id' => '316','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm86274.html','priority' => '1'],
     ['soft_id' => '316','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps91453.html','priority' => '2'],
@@ -328,16 +324,13 @@ return [
     ['soft_id' => '271','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/whiteday-gakko-toiu-nano-meikyu-ps4/','priority' => '2'],
     ['soft_id' => '284','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/kholat-ps4/','priority' => '2'],
 
-
     ['soft_id' => '172','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps02714.html','priority' => '1'],
     ['soft_id' => '172','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps03159.html','priority' => '2'],
 
     ['soft_id' => '74','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01129.html','priority' => '1'],
 
-
     ['soft_id' => '235','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/bljm60349.html','priority' => '2'],
     ['soft_id' => '235','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/bljm61168.html','priority' => '3'],
-
 
     ['soft_id' => '132','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/bljm60160.html','priority' => '2'],
 
@@ -347,7 +340,6 @@ return [
     ['soft_id' => '363','title' => '任天堂公式','url' => 'https://www.nintendo.co.jp/titles/50010000041036','priority' => '4'],
     ['soft_id' => '363','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/vljm35409.html','priority' => '5'],
     ['soft_id' => '363','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0746pcsg00961_00fatamorg00000000.html','priority' => '6'],
-
 
     ['soft_id' => '364','title' => '公式サイト','url' => 'http://novect.net/FD/','priority' => '1'],
     ['soft_id' => '364','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/vljm35409.html','priority' => '2'],
@@ -369,10 +361,9 @@ return [
     ['soft_id' => '345','title' => '<i class="fab fa-playstation"></i>公式(Vita)','url' => 'http://www.jp.playstation.com/software/title/vljm35179.html','priority' => '2'],
     ['soft_id' => '345','title' => '<i class="fab fa-playstation"></i>公式(Vita DL)','url' => 'http://www.jp.playstation.com/software/title/jp0394pcsg00517_00higurashi0000000.html','priority' => '3'],
 
-
     ['soft_id' => '82','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/uljs00013.html','priority' => '2'],
     ['soft_id' => '311','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/here-they-lie-ps4/','priority' => '2'],
-    ['soft_id' => '21','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/bljm60060.html','priority' => '2'],
+    ['soft_id' => '21','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/bljm60060.html','priority' => '3'],
     ['soft_id' => '170','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65272.html','priority' => '2'],
     ['soft_id' => '73','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/scps15046.html','priority' => '1'],
 
@@ -381,24 +372,24 @@ return [
     ['soft_id' => '153','title' => '<i class="fab fa-playstation"></i>公式(再廉価)','url' => 'http://www.jp.playstation.com/software/title/slps91479.html','priority' => '6'],
     ['soft_id' => '153','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0082npjj00456_000000000000000001.html','priority' => '7'],
 
-
-    ['soft_id' => '82','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01230.html','priority' => '2'],
-    ['soft_id' => '82','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0082npjj00455_000000000000000001.html','priority' => '3'],
-
+    ['soft_id' => '152','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01230.html','priority' => '2'],
+    ['soft_id' => '152','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0082npjj00455_000000000000000001.html','priority' => '3'],
 
     ['soft_id' => '79','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps20385.html','priority' => '3'],
-    ['soft_id' => '79','title' => '<i class="fab fa-playstation"></i>公式(初回)','url' => 'http://www.jp.playstation.com/software/title/slps02480.html','priority' => '4'],
+    ['soft_id' => '79','title' => '<i class="fab fa-playstation"></i>公式(初回)','url' => 'http://www.jp.playstation.com/software/title/slps20384.html','priority' => '4'],
     ['soft_id' => '79','title' => '<i class="fab fa-playstation"></i>公式(PSP)','url' => 'http://www.jp.playstation.com/software/title/uljs00035.html','priority' => '5'],
     ['soft_id' => '79','title' => '<i class="fab fa-playstation"></i>公式(PS2廉価)','url' => 'http://www.jp.playstation.com/software/title/slps20422.html','priority' => '6'],
     ['soft_id' => '79','title' => '<i class="fab fa-playstation"></i>公式(PSP廉価)','url' => 'http://www.jp.playstation.com/software/title/uljs00110.html','priority' => '7'],
     ['soft_id' => '79','title' => '<i class="fab fa-playstation"></i>公式(PSP DL)','url' => 'http://www.jp.playstation.com/software/title/jp0404npjh50001_000000000000000000.html','priority' => '8'],
-
+    ['soft_id' => '79','title' => '任天堂公式(DS)','url' => 'https://www.nintendo.co.jp/ds/software/c4ij/','priority' => '9'],
 
     ['soft_id' => '80','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps20501.html','priority' => '3'],
     ['soft_id' => '80','title' => '<i class="fab fa-playstation"></i>公式(PSP)','url' => 'http://www.jp.playstation.com/software/title/uljs00149.html','priority' => '4'],
     ['soft_id' => '80','title' => '<i class="fab fa-playstation"></i>公式(PS2廉価)','url' => 'http://www.jp.playstation.com/software/title/slps20508.html','priority' => '5'],
     ['soft_id' => '80','title' => '<i class="fab fa-playstation"></i>公式(PSP廉価)','url' => 'http://www.jp.playstation.com/software/title/uljs00208.html','priority' => '6'],
     ['soft_id' => '80','title' => '<i class="fab fa-playstation"></i>公式(PSP DL)','url' => 'http://www.jp.playstation.com/software/title/jp0404npjh50002_000000000000000000.html','priority' => '7'],
+    ['soft_id' => '80','title' => '任天堂公式(DS)','url' => 'https://www.nintendo.co.jp/ds/software/c42j/','priority' => '8'],
+
 
     ['soft_id' => '81','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/uljs00204.html','priority' => '3'],
     ['soft_id' => '81','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/uljs00320.html','priority' => '4'],
@@ -406,13 +397,13 @@ return [
 
     ['soft_id' => '301','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/pineview-drive-ps4/','priority' => '2'],
 
-    ['soft_id' => '282','title' => '任天堂公式(3DS)','url' => 'https://www.nintendo.co.jp/titles/50010000008447','priority' => '5'],
-    ['soft_id' => '282','title' => '任天堂公式(WiiU)','url' => 'https://www.nintendo.co.jp/titles/20010000000983','priority' => '6'],
+    ['soft_id' => '248','title' => '任天堂公式(3DS)','url' => 'https://www.nintendo.co.jp/titles/50010000008447','priority' => '5'],
+    ['soft_id' => '248','title' => '任天堂公式(WiiU)','url' => 'https://www.nintendo.co.jp/titles/20010000000983','priority' => '6'],
     ['soft_id' => '248','title' => '<i class="fab fa-playstation"></i>公式(PS3)','url' => 'http://www.jp.playstation.com/software/title/bljm60518.html','priority' => '7'],
     ['soft_id' => '248','title' => '<i class="fab fa-playstation"></i>公式(PS3廉価)','url' => 'http://www.jp.playstation.com/software/title/bljm55071.html','priority' => '8'],
     ['soft_id' => '248','title' => '<i class="fab fa-playstation"></i>公式(PS3 DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjb00310_00hddbootbhrue0001.html','priority' => '9'],
     ['soft_id' => '248','title' => '<i class="fab fa-playstation"></i>公式(PS4)','url' => 'https://www.jp.playstation.com/games/biohazard-revelations-unveiled-edition-ps4/','priority' => '10'],
-    ['soft_id' => '282','title' => '任天堂公式(SW)','url' => 'https://ec.nintendo.com/JP/ja/titles/70010000001423','priority' => '11'],
+    ['soft_id' => '248','title' => '任天堂公式(SW)','url' => 'https://ec.nintendo.com/JP/ja/titles/70010000001423','priority' => '11'],
 
     ['soft_id' => '282','title' => '<i class="fab fa-playstation"></i>公式(PS3)','url' => 'http://www.jp.playstation.com/software/title/bljm61199.html','priority' => '5'],
     ['soft_id' => '282','title' => '<i class="fab fa-playstation"></i>公式(Vita)','url' => 'http://www.jp.playstation.com/software/title/vljm35216.html','priority' => '6'],
@@ -452,36 +443,32 @@ return [
     ['soft_id' => '8','title' => '<i class="fab fa-playstation"></i>公式(DS)','url' => 'http://www.jp.playstation.com/software/title/slps01510.html','priority' => '6'],
     ['soft_id' => '8','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjj00129_000000000000000001.html','priority' => '7'],
 
-
     ['soft_id' => '9','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps02300.html','priority' => '5'],
     ['soft_id' => '9','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slpm87224.html','priority' => '6'],
     ['soft_id' => '9','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjj00239_000000000000000001.html','priority' => '7'],
 
     ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65022.html','priority' => '5'],
     ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(P)','url' => 'http://www.jp.playstation.com/software/title/slpm66520.html','priority' => '6'],
-    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps02300.html','priority' => '7'],
+    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slpm65357.html','priority' => '7'],
     ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(再廉価)','url' => 'http://www.jp.playstation.com/software/title/slpm55143.html','priority' => '8'],
-    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjd00001_000000000000000000.html','priority' => '9'],
-    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(HD DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjb00135_00content0000dlpkg.html','priority' => '10'],
-    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(RS)','url' => 'http://www.jp.playstation.com/software/title/bljm60372.html','priority' => '11'],
-    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(RS再廉価)','url' => 'http://www.jp.playstation.com/software/title/bljm55068.html','priority' => '12'],
+    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(VP)','url' => 'http://www.jp.playstation.com/software/title/cpcs01052.html','priority' => '9'],
+    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjd00001_000000000000000000.html','priority' => '10'],
+    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(HD DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjb00135_00content0000dlpkg.html','priority' => '11'],
+    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(RS)','url' => 'http://www.jp.playstation.com/software/title/bljm60372.html','priority' => '12'],
     ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(RS廉価)','url' => 'http://www.jp.playstation.com/software/title/bljm55048.html','priority' => '13'],
-    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(5RS)','url' => 'http://www.jp.playstation.com/software/title/cpcs01075.html','priority' => '14'],
-    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(VP)','url' => 'http://www.jp.playstation.com/software/title/cpcs01052.html','priority' => '15'],
+    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(RS再廉価)','url' => 'http://www.jp.playstation.com/software/title/bljm55068.html','priority' => '14'],
+    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(5RS)','url' => 'http://www.jp.playstation.com/software/title/cpcs01075.html','priority' => '15'],
 
-
-
-    ['soft_id' => '11','title' => '任天堂公式(Wii)','url' => 'http://www.jp.playstation.com/software/title/bljm61211.html','priority' => '5'],
+    ['soft_id' => '11','title' => '任天堂公式(Wii)','url' => 'https://www.nintendo.co.jp/wii/software/re4j/index.html','priority' => '5'],
     ['soft_id' => '11','title' => '<i class="fab fa-playstation"></i>公式(PS3)','url' => 'http://www.jp.playstation.com/software/title/bljm61211.html','priority' => '6'],
     ['soft_id' => '11','title' => '<i class="fab fa-playstation"></i>公式(PS3廉価DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjb00653_00bhrhdhg000000001.html','priority' => '7'],
     ['soft_id' => '11','title' => '<i class="fab fa-playstation"></i>公式(PS3廉価)','url' => 'http://www.jp.playstation.com/software/title/bljm55085.html','priority' => '8'],
     ['soft_id' => '11','title' => '<i class="fab fa-playstation"></i>公式(PS3 CP)','url' => 'http://www.jp.playstation.com/software/title/cpcs01102.html','priority' => '9'],
     ['soft_id' => '11','title' => '<i class="fab fa-playstation"></i>公式(PS4)','url' => 'https://www.jp.playstation.com/games/biohazard-hd-remaster-ps4/','priority' => '10'],
     ['soft_id' => '11','title' => '<i class="fab fa-playstation"></i>公式(PS4 OC)','url' => 'https://www.jp.playstation.com/games/biohazard-origins-collection-ps4/','priority' => '11'],
-    ['soft_id' => '10','title' => '<i class="fab fa-playstation"></i>公式(PS4 VP)','url' => 'https://www.jp.playstation.com/games/biohazard-value-pack-ps4/','priority' => '12'],
+    ['soft_id' => '11','title' => '<i class="fab fa-playstation"></i>公式(PS4 VP)','url' => 'https://www.jp.playstation.com/games/biohazard-value-pack-ps4/','priority' => '12'],
 
-
-    ['soft_id' => '12','title' => '任天堂公式(Wii)','url' => 'http://www.jp.playstation.com/software/title/bljm61211.html','priority' => '5'],
+    ['soft_id' => '12','title' => '任天堂公式(Wii)','url' => 'https://www.nintendo.co.jp/wii/software/rbhj/','priority' => '5'],
     ['soft_id' => '12','title' => '<i class="fab fa-playstation"></i>公式(PS3)','url' => 'http://www.jp.playstation.com/software/title/bljm61272.html','priority' => '6'],
     ['soft_id' => '12','title' => '<i class="fab fa-playstation"></i>公式(PS3 DL)','url' => 'http://www.jp.playstation.com/software/title/jp0102npjb00726_00bh0hd00000000001.html','priority' => '7'],
     ['soft_id' => '12','title' => '<i class="fab fa-playstation"></i>公式(PS4)','url' => 'https://www.jp.playstation.com/games/biohazard-0-hd-remaster-ps4/','priority' => '8'],
@@ -499,7 +486,6 @@ return [
     ['soft_id' => '14','title' => '<i class="fab fa-playstation"></i>公式(5RS)','url' => 'http://www.jp.playstation.com/software/title/cpcs01075.html','priority' => '13'],
     ['soft_id' => '14','title' => '<i class="fab fa-playstation"></i>公式(PS4)','url' => 'https://www.jp.playstation.com/games/biohazard-4-ps4/','priority' => '14'],
     ['soft_id' => '14','title' => '<i class="fab fa-playstation"></i>公式(PS4 VP)','url' => 'https://www.jp.playstation.com/games/biohazard-value-pack-ps4/','priority' => '15'],
-
 
     ['soft_id' => '18','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/bljm90001.html','priority' => '5'],
     ['soft_id' => '18','title' => '<i class="fab fa-playstation"></i>公式(AE)','url' => 'http://www.jp.playstation.com/software/title/bljm60199.html','priority' => '6'],
@@ -523,4 +509,39 @@ return [
     ['soft_id' => '265','title' => '<i class="fab fa-playstation"></i>公式(GE)','url' => 'https://www.jp.playstation.com/games/biohazard-7-resident-evil-gold-edition-ps4/','priority' => '7'],
     ['soft_id' => '265','title' => '<i class="fab fa-playstation"></i>公式(GEグロ)','url' => 'https://www.jp.playstation.com/games/biohazard-7-resident-evil-gold-edition-grotesque-ver-ps4/','priority' => '8'],
     ['soft_id' => '265','title' => '任天堂公式','url' => 'https://ec.nintendo.com/JP/ja/titles/70010000008161','priority' => '9'],
+
+
+    ['soft_id' => '370','title' => '公式サイト','url' => 'https://www.nintendo.co.jp/3ds/aggj/','priority' => '1'],
+
+    ['soft_id' => '95','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm66193.html','priority' => '1'],
+
+    ['soft_id' => '267','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/emily-wants-to-play-ps4/','priority' => '3'],
+
+    ['soft_id' => '34','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01087.html','priority' => '1'],
+    ['soft_id' => '34','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps91096.html','priority' => '2'],
+
+    ['soft_id' => '159','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps03235.html','priority' => '1'],
+    ['soft_id' => '159','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps91521.html','priority' => '2'],
+
+    ['soft_id' => '160','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps03272.html','priority' => '1'],
+    ['soft_id' => '160','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps91522.html','priority' => '2'],
+
+    ['soft_id' => '161','title' => '任天堂公式(WiiU)','url' => 'https://www.nintendo.co.jp/titles/20010000005427','priority' => '1'],
+
+    ['soft_id' => '162','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01645.html','priority' => '1'],
+    ['soft_id' => '162','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps91225.html','priority' => '2'],
+    ['soft_id' => '162','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0365npjj00602_00000000000000000.html','priority' => '3'],
+
+    ['soft_id' => '42','title' => '任天堂公式(WiiU)','url' => 'https://www.nintendo.co.jp/titles/20010000007727','priority' => '1'],
+    ['soft_id' => '163','title' => '任天堂公式(WiiU)','url' => 'https://www.nintendo.co.jp/titles/20010000001706','priority' => '1'],
+
+    ['soft_id' => '295','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/crystal-rift-ps4/','priority' => '1'],
+    ['soft_id' => '47','title' => '任天堂公式(WiiU)','url' => 'https://www.nintendo.co.jp/titles/20010000002905','priority' => '1'],
+
+    ['soft_id' => '322','title' => '<i class="fab fa-playstation"></i>公式(Vita)','url' => 'http://www.jp.playstation.com/software/title/jp0116pcsg00345_00konouta000000000.html','priority' => '1'],
+
+    ['soft_id' => '56','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01671.html','priority' => '1'],
+    ['soft_id' => '56','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps02916.html','priority' => '2'],
+
+    ['soft_id' => '296','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/daylight-ps4/','priority' => '2'],
 ];
