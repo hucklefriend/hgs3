@@ -6,6 +6,9 @@
             @foreach ($reviews as $review)
                 @include('review.common.normal', ['review' => $review])
             @endforeach
+
+
+
             @include('common.pager', ['pager' => $reviews])
         @endif
     </div>

@@ -8,17 +8,19 @@
     @isset($sites[$fs->site_id])
         @php $s = $sites[$fs->site_id]; $u = $users[$s->user_id]; @endphp
     <div class="mb-5">
-        <div class="mb-2">
-            いいねした日 {{ format_date(strtotime($fs->good_at)) }}
+        <div class="site-list-prepend">
+            <div>
+                <i class="fas fa-thumbs-up"></i>いいねした日 {{ format_date(strtotime($fs->good_at)) }}
+            </div>
+            <div>
+                <form method="POST" action="{{ route('サイトいいねキャンセル', ['site' => $s->id]) }}" onsubmit="return confirm('{{ $s->name }}へのいいねを取り消します。');">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <button class="btn btn-outline-danger btn-sm"><small><i class="fas fa-thumbs-up"></i>取り消し</small></button>
+                </form>
+            </div>
         </div>
-
-        @include('site.common.minimal', ['s' => $s])
-        <div class="d-flex align-content-start flex-wrap site-info mt-1">
-            <div class="mr-2"><i class="far fa-user"></i> <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}">{{ $u->name }}</a></div>
-            @if ($s->updated_timestamp > 0)
-                <div><i class="fas fa-redo-alt"></i> {{ format_date($s->updated_timestamp) }}</div>
-            @endif
-        </div>
+        @include('site.common.normal', ['s' => $s, 'u' => $users[$s->user_id]])
     </div>
     @endisset
 @endforeach

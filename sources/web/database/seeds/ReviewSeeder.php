@@ -20,7 +20,7 @@ class ReviewSeeder extends Seeder
         foreach ($users as $user) {
             if ($user->id == 0) continue;
 
-            $num = rand(2, 10);
+            $num = rand(2, 30);
             $written = [];
 
             for ($i = 0; $i < $num; $i++) {
@@ -41,7 +41,9 @@ class ReviewSeeder extends Seeder
                     continue;
                 }
 
-                \Hgs3\Models\Review::open($s, $draft);
+                if (rand(1, 2) == 1) {
+                    \Hgs3\Models\Review::open($s, $draft);
+                }
             }
         }
     }

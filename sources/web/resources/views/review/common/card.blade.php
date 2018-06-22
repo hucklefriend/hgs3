@@ -4,7 +4,7 @@
             <div class="review-list-fear">{{ \Hgs3\Constants\Review\Fear::$data[$review->fear] }}</div>
 
             @isset($review->soft)
-            <div class="review-list-title"><a href="{{ route('レビュー', ['review' => $review->id]) }}">{{ $review->soft->name }}</a></div>
+            <div class="review-list-title">{{ $review->soft->name }}</div>
             @endif
             <div class="d-flex justify-content-between">
                 <div class="d-flex">

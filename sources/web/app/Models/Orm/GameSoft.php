@@ -178,4 +178,14 @@ SQL;
         return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
             ->get();
     }
+
+    /**
+     * 発売済みか？
+     *
+     * @return bool
+     */
+    public function isReleased()
+    {
+        return $this->first_release_int <= date('Ymd');
+    }
 }
