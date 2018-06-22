@@ -491,6 +491,25 @@ class GlobalBack
     }
 
     /**
+     * レビュー入力確認
+     *
+     * @param Orm\GameSoft $soft
+     * @return string
+     */
+    public static function reviewConfirm(Orm\GameSoft $soft)
+    {
+        $before = self::beforeHas([PageId::USER_REVIEW_DRAFT]);
+
+        self::push(PageId::REVIEW_CONFIRM, $soft->id);
+
+        if ($before === false) {
+            return self::route('レビュー入力', ['soft' => $soft->id]);
+        } else {
+            return $before[1];
+        }
+    }
+
+    /**
      * レビューについて
      *
      * @return string

@@ -37,12 +37,3 @@
     </form>
 @endsection
 
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム会社一覧') }}">ゲーム会社一覧</a></li>
-            <li class="breadcrumb-item active" aria-current="page">新規登録</li>
-        </ol>
-    </nav>
-@endsection

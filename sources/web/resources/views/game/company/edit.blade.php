@@ -35,14 +35,3 @@
         <button type="submit" class="btn btn-primary">編集</button>
     </form>
 @endsection
-
-@section('breadcrumb')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-footer">
-            <li class="breadcrumb-item"><a href="{{ route('トップ') }}">トップ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム会社一覧') }}">ゲーム会社一覧</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('ゲーム会社詳細', ['c' => $company->id]) }}">詳細</a></li>
-            <li class="breadcrumb-item active" aria-current="page">編集</li>
-        </ol>
-    </nav>
-@endsection

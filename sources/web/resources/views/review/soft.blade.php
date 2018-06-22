@@ -18,7 +18,11 @@
                                 {{ \Hgs3\Constants\Review\Fear::$data[intval(round($total->fear))] }}
                             </div>
                             <div class="d-flex">
-                                <div class="review-point">
+                                <div class="review-point review-point-acronym">
+                                    {{ \Hgs3\Constants\Review\Fear::$face[$total->fear] }}<br>
+                                    {{ \Hgs3\Constants\Review\Fear::$acronym[$total->fear] }}<br>
+                                </div>
+                                <div class="review-point review-point-point">
                                     {{ round($total->point) }}pt
                                 </div>
 

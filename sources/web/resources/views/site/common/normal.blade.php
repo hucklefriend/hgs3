@@ -47,7 +47,7 @@
         @endif
     </div>
     <div class="mt-3 text-right">
-        <a href="{{ route('サイト遷移', ['site' => $s->id]) }}" class="badge badge-pill badge-secondary" target="_blank">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
-        <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="and-more ml-4">詳しい情報を見る <i class="fas fa-angle-right"></i></a>
+        <a href="{{ route('サイト遷移', ['site' => $s->id]) }}" class="badge badge-pill badge-secondary mb-4" target="_blank">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
+        <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="and-more ml-4">詳しい紹介を見る <i class="fas fa-angle-right"></i></a>
     </div>
 </div>

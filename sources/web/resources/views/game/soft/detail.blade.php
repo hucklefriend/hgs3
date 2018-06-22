@@ -38,7 +38,7 @@
                                 <div style="width: 30px;" class="text-center">
                                     <i class="fas fa-info-circle"></i>
                                 </div>
-                                <div>
+                                <div class="d-flex flex-wrap" style="min-width: 0;">
                                 @foreach ($officialSites as $officialSite)
                                     <a href="{{ $officialSite->url }}" target="_blank" class="badge-official-site"><small>{!! $officialSite->title !!}</small> <i class="fas fa-sign-out-alt"></i></a>
                                 @endforeach
@@ -65,7 +65,6 @@
                                 </div>
                             </div>
                             @endif
-
                         </div>
                     </div>
                 </div>
@@ -274,11 +273,9 @@
                         @endauth
                     @else
                         <div>
-                            <div class="d-inline-block">
-                                <div class="review-list-fear mb-0">
-                                    {{ \Hgs3\Constants\Review\Fear::$data[intval(round($reviewTotal->fear, 0))] }}
-                                </div>
-                                <p class="text-right"><small>―との評判です。</small></p>
+                            <p class="mb-0">みんなの怖さの評判は・・・</p>
+                            <div class="review-list-fear mt-2 mb-0">
+                                {{ \Hgs3\Constants\Review\Fear::$data[intval(round($reviewTotal->fear, 0))] }}
                             </div>
                         </div>
 
@@ -357,7 +354,7 @@
         <div class="card card-hgn">
             <div class="card-body">
                 <h5 class="card-title">同じシリーズのゲーム</h5>
-                <div class="package-list">
+                <div class="row game-list">
                     @foreach ($seriesSofts as $seriesSoft)
                         @include('game.common.packageCard', ['soft' => $seriesSoft, 'favorites' => $favoriteHash])
                     @endforeach

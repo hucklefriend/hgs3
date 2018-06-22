@@ -8,73 +8,14 @@ code {
     word-break: break-all;
 }
 
-.review-title {
-    word-break: break-all;
-}
-
 .break-word {
     word-break: break-all;
-}
-
-.review-game-title {
-    font-size: 1.2rem;
 }
 
 .card-title-sub {
     margin-left: 10px;
     font-size: 0.8rem;
     color: lightgray;
-}
-
-a:link .no-image-text-inner,
-a:visited .no-image-text-inner,
-a:hover .no-image-text-inner,
-a:active .no-image-text-inner {
-    color: black;
-    text-decoration: none !important;
-}
-
-@media (min-width: 320px) {
-    .no-image-text-inner {
-        font-size: 1rem;
-    }
-}
-
-.sns-link-outline {
-    padding: 5px 10px;
-}
-
-.sns-link {
-    /*border: 2px solid black;*/
-    border-radius: 5px;
-    padding: 10px 5px;
-    color: white;
-}
-
-.sns-link:hover, .sns-link:active, .sns-link:focus {
-    color: white;
-}
-
-.sns-link-twitter {
-    background-color: #00aced;
-}
-.sns-link-facebook {
-    background-color: #305097;
-}
-.sns-link-google {
-    background-color: #db4a39;
-}
-.sns-link-instagram {
-    background-color: #3f729b;
-}
-.sns-link-mixi {
-    background-color: #d1ad59;
-}
-.sns-link-line {
-    background-color: #00c300;
-}
-.sns-link-github {
-    background-color: #4183c4;
 }
 
 .color-mail, .color-mail:hover, .color-mail:visited {
@@ -105,34 +46,6 @@ a:active .no-image-text-inner {
 
 .no-border td, .no-border li {
     border:none;
-}
-
-.package-select-item {
-    width: 100px;
-    margin-right: 5px;
-    padding: 5px 3px;
-}
-
-.package-select-item input[type=radio] {
-    display: none;
-}
-
-.package-select-item label {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.package-select-item.selected {
-    border: solid 1px blue;
-    border-radius: 5px;
-    padding: 4px 3px;
-}
-
-.profile-text {
-    margin-top: 1rem;
-    overflow-y: scroll;
-    max-height: 7.5rem;
 }
 
 .user-icon {
@@ -176,31 +89,8 @@ a:active .no-image-text-inner {
     font-size: 1.1rem;
 }
 
-.site-badge-item {
-    font-size: 0.5rem;
-    border: solid 1px #00c300;
-}
-
 .list-site-banner-outline img {
     max-width: 100%;
-}
-
-.detail-site-banner-outline {
-
-}
-
-.detail-site-banner-outline img {
-    max-width: 100%;
-}
-
-.table-clickable-row tr:hover {
-    cursor: pointer;
-}
-
-.breadcrumb-footer {
-    padding: unset;
-    margin: unset;
-    background-color: transparent;
 }
 
 .pagination {
@@ -572,6 +462,17 @@ html.is-fixed body {
     min-width: 70px;
     height: 70px;
     border-radius: 5px;
+    margin-right: 5px;
+}
+
+.review-point.review-point-acronym {
+    padding-top: 5px;
+    line-height: 30px;
+
+}
+
+.review-point.review-point-point {
+    line-height: 70px;
 }
 
 .review-list-title {
@@ -601,10 +502,6 @@ html.is-fixed body {
 
 .review-list-package-image.medium_image img {
     max-height: 4.5rem;
-}
-
-.review-list-user-name {
-
 }
 
 .review-list-fear {
@@ -697,25 +594,20 @@ body {
     padding: 1.4rem 0.8rem;
 }
 
-.breadcrumb-item+.breadcrumb-item::before {
-    color: #868e96;
-    content: ">" !important;
-}
-
 body, main {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-a, .tags__body>a {
+a, .tags__body>a, a.btn--icon {
     color:#a4d0ff;
     transition: all 300ms 0s ease;
 }
 
-a:hover, .tags__body>a:hover {
+a:hover, .tags__body>a:hover, a.btn--icon:hover {
     color:white;
-    text-decoration:none
+    text-decoration:none;
 }
 
 .footer {
@@ -740,9 +632,6 @@ a:hover, .tags__body>a:hover {
     height: 80%;
 }
 
-.cursor-pointer:hover {
-    cursor: pointer;
-}
 button, input, select, textarea {
     font-family : inherit;
     font-size   : 100%;
@@ -978,12 +867,7 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     border-radius: 3px;
 }
 
-.package-image-review {
-    text-align: center;
-    width: 40px;
-}
-
-.review-text {
+.long-text, .review-text {
     line-height: 200%;
 }
 
@@ -1186,14 +1070,9 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     vertical-align: middle;
 }
 
-.footer .link {
-
-}
-
 .custom-radio:hover {
     cursor: pointer;
 }
-
 
 .user-card img {
     max-width: 3rem;
@@ -1239,7 +1118,6 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     background-color: #e6e6e6;
 }
 
-
 .site-list-prepend {
     padding: 15px 20px 5px 20px;
     background-color: rgba(0, 0, 0, 0.2);
@@ -1255,8 +1133,6 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-
-
 .favorite-soft-list .package-card > div > div:nth-child(1) {
     width: 4rem;
     text-align: center;
@@ -1271,9 +1147,6 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     padding: 15px 10px;
     background-color: rgba(0, 0, 0, 0.2);
 }
-
-
-
 
 /* SM */
 @media (min-width: 576px) {

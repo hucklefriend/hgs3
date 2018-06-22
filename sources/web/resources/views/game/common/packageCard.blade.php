@@ -4,26 +4,20 @@ if (isset($toPackage) && $toPackage) {
 } else {
     $url = route('ゲーム詳細', ['game' => $soft->id]);
 }
-
-$imageUrl = small_image_url($soft);
-
 @endphp
-<div class="package-card col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
-    <a href="{{ $url }}" style="width: 100%;display: table;">
-        <div style="display: table-row;">
-            <div class="package-card-image">
-                @if (empty($imageUrl))
-                    <i class="far fa-image"></i>
-                @else
-                    <img data-normal="{{ $imageUrl }}" class="img-responsive">
-                @endif
-            </div>
-            <div class="package-card-name">
+<div class="col-xl-3 col-lg-4 col-sm-6 col-12">
+    <div class="package-card">
+        <div>
+            <div><img data-normal="{{ small_image_url($soft, true) }}"></div>
+            <div>
                 <small>{{ $soft->name }}</small>
-                @isset($favorites[$soft->id])
-                    <span class="favorite-icon"><i class="fas fa-star"></i></span>
+                @isset($favoriteSofts[$soft->id])
+                    <small><span class="favorite-icon"><i class="fas fa-star"></i></span></small>
                 @endisset
             </div>
+            <div>
+                <a href="{{ $url }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
+            </div>
         </div>
-    </a>
+    </div>
 </div>

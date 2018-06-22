@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')レビュー投稿@endsection
-@section('global_back_link'){{ route('レビュー入力', ['soft' => $soft->id]) }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::reviewConfirm($soft) }}@endsection
 
 @section('content')
 
