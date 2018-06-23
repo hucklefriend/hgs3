@@ -8,8 +8,9 @@
         <header class="content__title">
             <h1 class="mb-2">{{ $soft->name }}</h1>
             <div class="d-flex flex-wrap">
-                <p class="mb-0 mr-3"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">{{ $user->name }}さん</a>のレビュー</p>
-                <p class="mb-0">{{ format_date(strtotime($review->post_at)) }} 投稿</p>
+                <p class="mb-0 mr-4"><a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}">{{ $user->name }}さん</a>のレビュー</p>
+                <p class="mb-0 mr-4">{{ format_date(strtotime($review->post_at)) }} 投稿</p>
+                <p class="mb-0">👀 {{ number_format($review->access_count) }}</p>
             </div>
         </header>
 

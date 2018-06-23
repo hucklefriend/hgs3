@@ -518,13 +518,13 @@ return [
     ['soft_id' => '267','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/emily-wants-to-play-ps4/','priority' => '3'],
 
     ['soft_id' => '34','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps01087.html','priority' => '1'],
-    ['soft_id' => '34','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps91096.html','priority' => '2'],
+    ['soft_id' => '34','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps91096.html','priority' => '2'],
 
     ['soft_id' => '159','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps03235.html','priority' => '1'],
-    ['soft_id' => '159','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps91521.html','priority' => '2'],
+    ['soft_id' => '159','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps91521.html','priority' => '2'],
 
     ['soft_id' => '160','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps03272.html','priority' => '1'],
-    ['soft_id' => '160','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps91522.html','priority' => '2'],
+    ['soft_id' => '160','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps91522.html','priority' => '2'],
 
     ['soft_id' => '161','title' => '任天堂公式(WiiU)','url' => 'https://www.nintendo.co.jp/titles/20010000005427','priority' => '1'],
 

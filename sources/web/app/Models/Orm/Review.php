@@ -243,10 +243,15 @@ class Review extends \Eloquent
             ->get();
     }
 
+    /**
+     * カウントアップする
+     */
     public function countUp()
     {
         DB::table('reviews')
             ->where('id', $this->id)
             ->update(['access_count' => DB::raw('access_count + 1')]);
+
+        $this->access_count++;
     }
 }

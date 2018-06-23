@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $num = 1;
+        $num = 30;
 
         $maxId = \Hgs3\Models\User::query()
                 ->max('id') + 1;
@@ -21,9 +21,13 @@ class UserSeeder extends Seeder
 
         for ($i = 0; $i < $num; $i++) {
             $user = \Hgs3\Models\User::register([
-                'name'    => self::getSampleName() . ' ' . ++$maxId . '号',
-                'profile' => self::getSampleProfile()
+                'name'    => self::getSampleName() . ' ' . $maxId . '号',
+                'profile' => self::getSampleProfile(),
+                'email'    => 'test' . $maxId . '@horrorgame.net',
+                'password' => 'test3210',
             ]);
+
+            $maxId++;
 
             if (rand(0, 10) >= 2) {
                 $fileName = self::getSampleIconFile();

@@ -150,8 +150,10 @@ class Review
         if (!empty($review->url)) {
             // 管理人のタイムラインに流す
             $admin = User::getAdmin();
-            Timeline\ToMe::addReviewUrlApproveText($admin, $review);
-
+            if ($admin != null) {
+                Timeline\ToMe::addReviewUrlApproveText($admin, $review);
+            }
+            
             // 管理人にメール送信
             if (env('APP_ENV') == 'production') {
                 Mail::to(env('ADMIN_MAIL'))

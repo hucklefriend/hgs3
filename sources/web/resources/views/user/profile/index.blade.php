@@ -9,9 +9,9 @@
         @if ($isMyself)
             <div class="d-sm-flex">
                 <header class="content__title">
-                    <h1>
-                        @include('user.common.icon', ['u' => $user])
-                        <span class="align-middle">{{ $user->name }}さん</span>
+                    <h1 class="d-flex">
+                        <img src="{{ user_icon_url($user, true) }}" class="profile-top-img">
+                        <p class="d-inline-block">{{ $user->name }}</p>
                     </h1>
                 </header>
                 <div class="ml-auto text-right hidden-xs-down">

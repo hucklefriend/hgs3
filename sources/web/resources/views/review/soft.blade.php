@@ -14,9 +14,6 @@
                 <div class="card card-hgn">
                     <div class="card-body">
                         @if ($total !== null)
-                            <div class="review-list-fear">
-                                {{ \Hgs3\Constants\Review\Fear::$data[intval(round($total->fear))] }}
-                            </div>
                             <div class="d-flex">
                                 <div class="review-point review-point-acronym">
                                     {{ \Hgs3\Constants\Review\Fear::$face[intval(round($total->fear))] }}<br>

@@ -24,8 +24,9 @@
             <div class="col-12 col-md-6 col-xl-5">
                 <div class="card user-card">
                     <div class="card-body">
-                        <div class="mb-3 lead">
-                            <img src="{{ user_icon_url($user, true) }}">{{ $user->name }}
+                        <div class="mb-3 d-flex">
+                            <img src="{{ user_icon_url($user, true) }}">
+                            <p class="d-inline-block lead">{{ $user->name }}</p>
                         </div>
                         @if (!empty($attributes))
                         <div class="my-2">

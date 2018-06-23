@@ -26,7 +26,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/layzr.js/2.2.2/layzr.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/js/swiper.min.js"></script>
-        <script src="{{ url('/js/fontawesome-all.min.js') }}" defer></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
         <script src="{{ url('vendors/bower_components/popper.js/dist/umd/popper.min.js') }}"></script>
         <script src="{{ url('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <script src="{{ url('/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>

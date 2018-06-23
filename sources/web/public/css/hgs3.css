@@ -561,6 +561,7 @@ html.is-fixed body {
     display: table-cell;
     vertical-align: top;
     width: 35px;
+    padding-right: 5px;
 }
 
 .review-playing-package-image img {
@@ -1146,6 +1147,11 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 .review-list-item {
     padding: 15px 10px;
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.profile-top-img {
+    max-width: 3rem;
+    max-height: 3rem;
 }
 
 /* SM */
