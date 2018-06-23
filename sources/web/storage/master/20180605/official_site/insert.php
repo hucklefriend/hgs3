@@ -544,4 +544,19 @@ return [
     ['soft_id' => '56','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps02916.html','priority' => '2'],
 
     ['soft_id' => '296','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/daylight-ps4/','priority' => '2'],
+
+    ['soft_id' => '256','title' => '<i class="fab fa-playstation"></i>公式(PS3)','url' => 'http://www.jp.playstation.com/software/title/bljs10148.html','priority' => '4'],
+    ['soft_id' => '256','title' => '<i class="fab fa-playstation"></i>公式(ZoY)','url' => 'http://www.jp.playstation.com/software/title/bljs10198.html','priority' => '5'],
+    ['soft_id' => '256','title' => '<i class="fab fa-playstation"></i>公式(DZP)','url' => 'http://www.jp.playstation.com/software/title/bljs10280.html','priority' => '6'],
+    ['soft_id' => '256','title' => '<i class="fab fa-playstation"></i>公式(DZP DL)','url' => 'http://www.jp.playstation.com/software/title/jp0365npjb00630_00deadislandpack00.html','priority' => '4'],
+    ['soft_id' => '256','title' => '<i class="fab fa-playstation"></i>公式(PS3)','url' => 'https://www.jp.playstation.com/games/dead-island-definitive-collection-ps4/','priority' => '7'],
+
+    ['soft_id' => '277','title' => '<i class="fab fa-playstation"></i>公式(PS3)','url' => 'http://www.jp.playstation.com/software/title/bljs10228.html','priority' => '4'],
+    ['soft_id' => '277','title' => '<i class="fab fa-playstation"></i>公式(PS4)','url' => 'https://www.jp.playstation.com/games/dead-island-definitive-collection-ps4/','priority' => '5'],
+
+    ['soft_id' => '362','title' => '公式サイト','url' => 'http://www.square-enix.co.jp/smart/774/jp/','priority' => '1'],
+
+
+    ['soft_id' => '372','title' => '公式サイト','url' => 'http://www.capcom.co.jp/biohazard2/','priority' => '1'],
+    ['soft_id' => '372','title' => '公式ポータルサイト','url' => 'http://www.capcom.co.jp/game/biohazard/','priority' => '2'],
 ];

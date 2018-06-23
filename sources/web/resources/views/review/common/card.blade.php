@@ -1,4 +1,4 @@
-<div class="col-12 col-md-6 col-lx-4">
+<div class="col-12 col-sm-6 col-lx-4">
     <div class="card">
         <div class="card-body">
             <div class="review-list-fear">{{ \Hgs3\Constants\Review\Fear::$data[$review->fear] }}</div>

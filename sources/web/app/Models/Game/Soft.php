@@ -94,17 +94,16 @@ SQL;
         }
 
         // 発売日を過ぎているか
-        $data['released'] = false;
         $today = date('Ymd');
+        $data['released'] = $soft->first_release_int <= $today;
         $canAdult = Auth::check() && Auth::user()->isAdult();
-        foreach ($data['packages'] as $pkg) {
-            if ($pkg->release_int <= $today) {
-                $data['released'] = true;
-            }
-
-            // アダルトゲームがあれば、広告も変える
-            if ($pkg->is_adult == 1 && $canAdult) {
-                enable_adult_sponsor();
+        if ($canAdult) {
+            foreach ($data['packages'] as $pkg) {
+                // アダルトゲームがあれば、広告も変える
+                if ($pkg->is_adult == 1) {
+                    enable_adult_sponsor();
+                    break;
+                }
             }
         }
 
