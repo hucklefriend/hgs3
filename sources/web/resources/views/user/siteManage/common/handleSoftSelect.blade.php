@@ -93,7 +93,7 @@
             let softs = handleSofts.split(',');
             let html = '';
             softs.forEach(function (currentValue, index, array){
-                let softName = $('#handle_soft_check_' + currentValue).next('span').text();
+                let softName = $('#handle_soft_check_' + currentValue).next('span').next('span').text();
                 if (softName.length > 0) {
                     html += '<span class="site-selected-game border rounded">' + softName + '</span>';
                 }

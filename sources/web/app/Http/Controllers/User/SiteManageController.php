@@ -337,8 +337,13 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
+        // 申請中はダメ
+        if ($site->approval_status == ApprovalStatus::WAIT) {
+            return redirect()->route('サイト詳細', ['site' => $site->id]);
+        }
+
         return view('user.siteManage.edit', [
-            'softs' => Orm\GameSoft::getPhoneticTypeHash(),
+            'softs' => Orm\GameSoft::getPhoneticTypeHash(User\FavoriteSoft::getHash(Auth::id())),
             'site'  => $site,
             'listBannerUploadFlag'   => old('list_banner_edit', 0),
             'detailBannerUploadFlag' => old('detail_banner_edit', 0)
@@ -358,6 +363,11 @@ class SiteManageController extends Controller
         // 本人しか更新できない
         if ($site->user_id != Auth::id()) {
             return $this->forbidden(['site_id' => $site->id]);
+        }
+
+        // 申請中はダメ
+        if ($site->approval_status == ApprovalStatus::WAIT) {
+            return redirect()->route('サイト詳細', ['site' => $site->id]);
         }
 
         $this->setRequestData($site, $request);

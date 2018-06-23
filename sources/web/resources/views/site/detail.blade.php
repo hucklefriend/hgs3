@@ -11,7 +11,7 @@
         <div class="alert alert-warning alert-warning-hgn" role="alert">
             承認待ち状態です。<br>
             登録ユーザーさんと管理人以外には表示されません。<br>
-            また、判定結果が出るまでは内容を変更することもできませんので、そのままお待ちください。
+            また、結果が出るまでは内容の修正もできませんので、そのままお待ちください。
             @if (is_admin())
                 <div class="text-right">
                     <a href="{{ route('サイト判定', ['site' => $site->id]) }}">ジャッジしにいく</a>
@@ -58,7 +58,7 @@
                     @endif
                 </div>
                 @endif
-                @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::WAIT || $site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
+                @if ($site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::DRAFT || $site->approval_status == \Hgs3\Constants\Site\ApprovalStatus::REJECT)
                     <div class="d-flex flex-wrap justify-content-between mt-4">
                         <form method="POST" action="{{ route('サイト登録申請', ['site' => $site->id]) }}" onsubmit="return confirm('登録申請を行います。よろしいですね？')" style="margin: 5px 0;">
                             {{ csrf_field() }}

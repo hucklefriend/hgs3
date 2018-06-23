@@ -75,4 +75,33 @@ class AccessCount
 
         return $data;
     }
+
+    /**
+     * 指定日のアクセス数を取得
+     * (指定がなければ今現在)
+     *
+     * @param Orm\Site $site
+     * @param null $date
+     * @return mixed|\stdClass
+     */
+    public static function getDaily(Orm\Site $site, $date = null)
+    {
+        if ($date = null) {
+            $date = date('Ymd');
+        }
+
+        $data = DB::table('site_daily_accesses')
+            ->where('site_id', $site->id)
+            ->where('date', $date)
+            ->get()
+            ->first();
+
+        if ($data == null) {
+            $data = new \stdClass();
+            $data->in_count = 0;
+            $data->out_count = 0;
+        }
+
+        return $data;
+    }
 }

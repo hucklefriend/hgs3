@@ -33,7 +33,7 @@
             <div class="col-6 col-sm-3">
                 <div class="quick-stats__item">
                     <div class="quick-stats__info">
-                        <h2>XXX</h2>
+                        <h2>{{ number_format($dailyAccess->out_count) }}</h2>
                         <small>今日のOUT数</small>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             <div class="col-6 col-sm-3">
                 <div class="quick-stats__item">
                     <div class="quick-stats__info">
-                        <h2>XXX</h2>
+                        <h2>{{ number_format($dailyAccess->out_count) }}</h2>
                         <small>今日のIN数</small>
                     </div>
                 </div>
@@ -52,7 +52,9 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">直近の足跡</h5>
-
+                @empty($nearlyFootprints)
+                    足跡はありません。
+                @else
                 <table class="table table-no-border" style="width: auto !important;">
                 @foreach ($nearlyFootprints as $footprint)
                     <tr>
@@ -68,23 +70,27 @@
                     </tr>
                 @endforeach
                 </table>
-                <div class="mt-3 text-right">
-                    <a href="{{ route('サイト足跡', ['site' => $site->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                </div>
+                @endif
             </div>
         </div>
 
 
         <div class="card">
             <div class="card-body">
-                <div class="text-center">
-                    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $prev->format('Y-m') }}" class="btn btn-sm btn-outline-secondary mr-3"><i class="fas fa-chevron-left"></i></a>
-                    <label for="ym" style="font-size: 1.5rem;">{{ $date->format('Y年n月') }}</label>
-                    <span class="date">
+                <div class="d-flex justify-content-around">
+                    <div>
+                        <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $prev->format('Y-m') }}" class="btn btn-light btn--icon"><i class="fas fa-chevron-left"></i></a>
+                    </div>
+                    <div>
+                        <label for="ym" style="font-size: 1.5rem;">{{ $date->format('Y年n月') }}</label>
+                        <span class="date">
                         <input type="hidden" name="ym_tmp" id="ym_tmp" readonly class="form-control-plaintext" value="{{ $date->format('Y-m') }}" style="width: 5px;visibility: hidden;">
-                        <button class="btn btn-light btn--icon" type="button" id="month_picker"><i class="far fa-calendar-alt"></i></button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button" id="month_picker"><i class="far fa-calendar-alt"></i></button>
                     </span>
-                    <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $next->format('Y-m') }}" class="btn btn-sm btn-outline-secondary ml-3"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    <div>
+                        <a href="{{ route('サイトアクセスログ', ['site' => $site->id]) }}?ym={{ $next->format('Y-m') }}" class="btn btn-light btn--icon"><i class="fas fa-chevron-right"></i></a>
+                    </div>
                 </div>
 
                 <div class="mt-3">

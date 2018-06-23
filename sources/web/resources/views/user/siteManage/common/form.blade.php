@@ -32,7 +32,14 @@
         @endif
     </div>
     <div id="selected_soft" class="d-flex flex-wrap mt-3"></div>
-    <input type="hidden" name="handle_soft" value="{{ old('handle_soft', $site->handle_soft) }}" id="handle_soft">
+    @php
+    $handleSoft = old('handle_soft', $site->handle_soft);
+    if (is_array($handleSoft)) {
+        $handleSoft = implode(',', $handleSoft);
+    }
+
+    @endphp
+    <input type="hidden" name="handle_soft" value="{{ $handleSoft }}" id="handle_soft">
 </div>
 <div class="form-help">
     @if ($errors->has('handle_soft'))

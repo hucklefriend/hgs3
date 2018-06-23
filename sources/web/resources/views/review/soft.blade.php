@@ -19,8 +19,8 @@
                             </div>
                             <div class="d-flex">
                                 <div class="review-point review-point-acronym">
-                                    {{ \Hgs3\Constants\Review\Fear::$face[$total->fear] }}<br>
-                                    {{ \Hgs3\Constants\Review\Fear::$acronym[$total->fear] }}<br>
+                                    {{ \Hgs3\Constants\Review\Fear::$face[intval(round($total->fear))] }}<br>
+                                    {{ \Hgs3\Constants\Review\Fear::$acronym[intval(round($total->fear))] }}<br>
                                 </div>
                                 <div class="review-point review-point-point">
                                     {{ round($total->point) }}pt

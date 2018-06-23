@@ -14,7 +14,7 @@
             {{ $msg }}<br>
         @endforeach
 
-        <form method="POST" enctype="multipart/form-data" action="{{ route('サイト編集処理', ['site' => $site->id]) }}">
+        <form method="POST" enctype="multipart/form-data" action="{{ route('サイト編集処理', ['site' => $site->id]) }}" autocomplete="off">
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
 

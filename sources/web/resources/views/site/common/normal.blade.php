@@ -15,10 +15,10 @@
     <div>
     @php $listBannerUrl = list_banner($s); @endphp
     @if (empty($listBannerUrl))
-        <div class="no-banner-site-name">{{ $s->name }}</div>
+            <div class="no-banner-site-name"><a href="{{ route('サイト詳細', ['site' => $s->id]) }}">{{ $s->name }}</a></div>
     @else
         <div>{{ $s->name }}</div>
-        <div class="list-site-banner-outline"><img data-normal="{{ $listBannerUrl }}" class="img-responsive"></div>
+            <div class="list-site-banner-outline"><a href="{{ route('サイト詳細', ['site' => $s->id]) }}"><img data-normal="{{ $listBannerUrl }}" class="img-responsive"></a></div>
     @endif
     </div>
 
@@ -48,6 +48,6 @@
     </div>
     <div class="mt-3 text-right">
         <a href="{{ route('サイト遷移', ['site' => $s->id]) }}" class="badge badge-pill badge-secondary mb-4" target="_blank">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
-        <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="and-more ml-4">詳しい紹介を見る <i class="fas fa-angle-right"></i></a>
+        <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="and-more ml-4">詳細を見る <i class="fas fa-angle-right"></i></a>
     </div>
 </div>

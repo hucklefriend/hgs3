@@ -55,6 +55,7 @@ class SiteAccessController extends Controller
             'prev'             => $prev,
             'next'             => $next,
             'accesses'         => Site\AccessCount::getMonthly($site, $date),
+            'dailyAccess'      => Site\AccessCount::getDaily($site),
             'nearlyFootprints' => $nearlyFootprints,
             'footprintUsers'   => User::getHash(array_pluck($nearlyFootprints, 'user_id')),
             'useDatePicker'    => true

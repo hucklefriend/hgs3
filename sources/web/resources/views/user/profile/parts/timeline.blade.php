@@ -15,7 +15,7 @@
         @endif
 @if ($hasNext)
         <div class="text-center">
-            <button type="button" class="btn btn-outline-light" id="more_btn">さらに読み込む</button>
+            <a href="#" class="and-more and-more-sm" id="more_btn">さらに読み込む</a>
         </div>
 @endif
     </div>
@@ -25,9 +25,8 @@
     let nowLoading = false;
 
     $(function (){
-
-
-        $('#more_btn').click(function (){
+        $('#more_btn').click(function (e){
+            e.preventDefault();
             if (nowLoading) {
                 return false;
             }

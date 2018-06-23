@@ -657,6 +657,7 @@ SQL;
             Timeline\ToMe::addSiteUpdatedText($user, $site);
             Timeline\FavoriteSite::addUpdateSiteText($site);
             Timeline\Site::addUpdateText($site);
+            Timeline\NewInformation::addUpdateSiteText($site);
         }
 
         return true;
