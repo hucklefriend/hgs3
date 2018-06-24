@@ -22,11 +22,7 @@
     @endif
     </div>
 
-    @if (!isset($hidePresentation) || !$hidePresentation)
-        <div class="site-presentation mt-2">{{ e(str_limit($s->presentation, Hgs3\Constants\Site::LIST_PRESENTATION_LENGTH)) }}</div>
-    @endif
-
-    <div class="d-flex flex-wrap site-badge my-3">
+    <div class="d-flex flex-wrap site-badge my-2">
         <span class="tag simple">{{ \Hgs3\Constants\Site\MainContents::getText($s->main_contents_id) }}</span>
         @if ($s->rate > 0)
             <span class="tag simple">{{ \Hgs3\Constants\Site\Rate::getText($s->rate) }}</span>
@@ -36,16 +32,30 @@
         @endif
     </div>
 
+    @if (!isset($hidePresentation) || !$hidePresentation)
+        <div class="site-presentation mt-2">{{ e(str_limit($s->presentation, Hgs3\Constants\Site::LIST_PRESENTATION_LENGTH)) }}</div>
+    @endif
+
+    @if ($s->latest_update_history_date != null)
+        <div class="my-3 d-flex">
+            <div>
+                <div class="badge badge-info"><small>{{ format_date2(strtotime($s->latest_update_history_date)) }}更新</small></div>
+            </div>
+            <p>{{ $s->latest_update_history }}</p>
+        </div>
+    @endif
+
     <div class="site-info">
         @if (!isset($noUser) || !$noUser)
-        <span class="d-inline-block"><i class="far fa-user"></i> <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}" class="one-line user-name-link">{{ $u->name }}</a></span>
+        <span class="d-inline-block mr-2"><i class="far fa-user"></i> <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}" class="one-line user-name-link">{{ $u->name }}</a></span>
         @endif
-        <span class="d-inline-block"><span class="good-icon2"><i class="far fa-thumbs-up"></i></span> {{ number_format($s->good_num) }}</span>
-        <span class="d-inline-block"><i class="fas fa-paw"></i> {{ number_format($s->out_count) }}</span>
+        <span class="d-inline-block mr-2"><span class="good-icon2"><i class="fas fa-thumbs-up"></i> {{ number_format($s->good_num) }}</span>
+        <span class="d-inline-block mr-2"><i class="fas fa-paw"></i> {{ number_format($s->out_count) }}</span>
         @if ($s->updated_timestamp > 0)
             <span class="d-inline-block"><i class="fas fa-redo-alt"></i> {{ format_date($s->updated_timestamp) }}</span>
         @endif
     </div>
+
     <div class="mt-3 text-right">
         <a href="{{ route('サイト遷移', ['site' => $s->id]) }}" class="badge badge-pill badge-secondary mb-4" target="_blank">サイトに行く <i class="fas fa-sign-out-alt"></i></a>
         <a href="{{ route('サイト詳細', ['site' => $s->id]) }}" class="and-more ml-4">詳細を見る <i class="fas fa-angle-right"></i></a>

@@ -143,13 +143,13 @@ class SiteController extends Controller
     public function updateHistory(Orm\Site $site)
     {
         $updateHistories = Orm\SiteUpdateHistory::where('site_id', $site->id)
-            ->where('site_updated_at', '<=', DB::raw('CURDATE()'))
             ->orderBy('site_updated_at', 'DESC')
             ->paginate(10);
 
         return view('site.updateHistory', [
             'site'            => $site,
-            'updateHistories' => $updateHistories
+            'updateHistories' => $updateHistories,
+            'isWebmaster' => $site->id == Auth::id()
         ]);
     }
 

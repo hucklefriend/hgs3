@@ -47,21 +47,6 @@
                 @endif
             </div>
         </div>
-
-        <div class="card card-hgn mt-5">
-            <div class="card-body">
-                <p>読んだユーザーが受けた印象</p>
-                <div class="d-flex justify-content-between">
-                    <div class="align-self-center">
-                        <span class="p-2">🤔 {{ $review->fmfm_num }}</span>
-                        <span class="p-2">😒 {{ $review->n_num }}</span>
-                    </div>
-                    <div class="text-right">
-                        <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="col-sm-6 col-md-7 col-lg-8">
@@ -187,38 +172,6 @@
                 {!! nl2br(e($review->general_comment)) !!}
             @endempty
         </p>
-    </div>
-</div>
-
-<div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="help" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header mb-0">
-                <h5 class="modal-title" id="fmfm">🤔 ふむふむ</h5>
-            </div>
-            <div class="modal-body py-2">
-                <p>どちらかというと好印象</p>
-                <ul>
-                    <li>文章がまとまっていて、読みやすい</li>
-                    <li>書いてある意見に同意できる</li>
-                    <li>意見には同意できないけど、レビューとしてよく書けている</li>
-                </ul>
-            </div>
-            <div class="modal-header mb-0">
-                <h5 class="modal-title" id="n-">😒 んー…</h5>
-            </div>
-            <div class="modal-body py-2">
-                <p>どちらかというと悪印象</p>
-                <ul>
-                    <li>文章が読みにくい</li>
-                    <li>書いてある意見に納得いかない</li>
-                    <li>レビューになってない</li>
-                </ul>
-            </div>
-            <div class="text-center mb-5">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-            </div>
-        </div>
     </div>
 </div>
 

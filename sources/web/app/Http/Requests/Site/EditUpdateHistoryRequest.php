@@ -7,7 +7,7 @@ namespace Hgs3\Http\Requests\Site;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateHistoryRequest extends FormRequest
+class EditUpdateHistoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,7 @@ class UpdateHistoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'site_updated_at' => 'required|date|before:tomorrow',
-            'detail'          => 'required|max:200',
+            'detail' => 'required|max:200',
         ];
     }
 }

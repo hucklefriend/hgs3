@@ -1154,6 +1154,15 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
     max-height: 3rem;
 }
 
+.site-list-update-history > div {
+    badkground-color: rgba(255, 255, 255, 0.1)
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+
 /* SM */
 @media (min-width: 576px) {
     .card-body {

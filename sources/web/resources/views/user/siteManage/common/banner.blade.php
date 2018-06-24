@@ -5,7 +5,7 @@
             <a class="nav-link active" data-toggle="tab" href="#list_banner" role="tab">一覧用</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#detail_banner" role="tab">詳細用</a>
+            <a class="nav-link" data-toggle="tab" href="#detail_banner" role="tab">紹介画像</a>
         </li>
     </ul>
 
@@ -139,12 +139,12 @@
         <div class="tab-pane fade" id="detail_banner" role="tabpanel">
             <div class="form-group">
                 <div>
-                    <label for="detail_banner_upload_flag" class="hgn-label"><i class="far fa-image"></i> 詳細用バナー</label>
+                    <label for="detail_banner_upload_flag" class="hgn-label"><i class="far fa-image"></i> 紹介画像</label>
                 </div>
             </div>
             <div class="form-help">
                 <p>
-                    このサイト専用の詳細ページで表示されるバナーです。<br>
+                    紹介ページで表示される画像です。<br>
                     画像はレスポンシブルに拡縮します。<br>
                     一覧用バナーのようにトリムはしていません
                 </p>
@@ -161,7 +161,7 @@
                     <label class="custom-control custom-radio mb-3">
                         <input type="radio" class="custom-control-input" name="detail_banner_upload_flag" id="detail_banner_upload_flag_0" value="0"{{ checked($detailBannerUploadFlag, 0) }}>
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">バナーなしでいい</span>
+                        <span class="custom-control-description">バナーなし</span>
                     </label>
 
                     <label class="custom-control custom-radio mb-3">

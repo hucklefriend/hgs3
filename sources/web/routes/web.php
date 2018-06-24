@@ -89,9 +89,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/user/site_manage/{site}', 'User\SiteManageController@delete')->name('サイト削除');
     Route::get('/user/site_manage/update_history/add/{site}', 'User\SiteManageController@addUpdateHistory')->name('サイト更新履歴登録');
     Route::post('/user/site_manage/update_history/add/{site}', 'User\SiteManageController@insertUpdateHistory')->name('サイト更新履歴登録処理');
-    Route::get('/user/site_manage/update_history/edit/{siteHistory}', 'User\SiteManageController@editUpdateHistory')->name('サイト更新履歴編集');
-    Route::patch('/user/site_manage/update_history/edit/{siteHistory}', 'User\SiteManageController@updateUpdateHistory')->name('サイト更新履歴編集処理');
-    Route::delete('/user/site_manage/update_history/delete/{siteHistory}', 'User\SiteManageController@deleteUpdateHistory')->name('サイト更新履歴削除処理');
+    Route::get('/user/site_manage/update_history/edit/{siteUpdateHistory}', 'User\SiteManageController@editUpdateHistory')->name('サイト更新履歴編集');
+    Route::patch('/user/site_manage/update_history/edit/{siteUpdateHistory}', 'User\SiteManageController@updateUpdateHistory')->name('サイト更新履歴編集処理');
+    Route::delete('/user/site_manage/update_history/delete/{siteUpdateHistory}', 'User\SiteManageController@deleteUpdateHistory')->name('サイト更新履歴削除処理');
 
     Route::get('/user/site/access/{site}', 'User\SiteAccessController@index')->name('サイトアクセスログ');
     Route::get('/user/site/access/{site}/daily-footprint/{date}', 'User\SiteAccessController@dailyFootprint')->name('サイト日別足跡');

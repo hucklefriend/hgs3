@@ -639,8 +639,22 @@ SQL;
                 'detail'          => $siteUpdateHistory->detail
             ]);
 
+            $history = DB::table('site_update_histories')
+                ->where('site_id', $site->id)
+                ->orderBy('site_updated_at', 'DESC')
+                ->limit(1)
+                ->get()
+                ->first();
+
+            // 今登録したのだから、必ず1個はあるはず
+            $site->latest_update_history = $history->detail;
+            $site->latest_update_history_date = $history->site_updated_at;
             $site->updated_timestamp = time();
             $site->save();
+
+            if ($addTimeline) {
+                UpdateArrival::add($site->id);                  // 更新サイト
+            }
 
             DB::commit();
         } catch (\Exception $e) {

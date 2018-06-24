@@ -12,6 +12,7 @@ use Hgs3\Constants\Site\MainContents;
 use Hgs3\Constants\Site\Rate;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Http\Requests\Site\UpdateHistoryRequest;
+use Hgs3\Http\Requests\Site\EditUpdateHistoryRequest;
 use Hgs3\Http\Requests\User\SiteManage;
 use Hgs3\Log;
 use Hgs3\Models\Site;
@@ -502,7 +503,7 @@ class SiteManageController extends Controller
     }
 
     /**
-     * サイト更新履歴の更新処理
+     * サイト更新履歴の更新
      *
      * @param Orm\SiteUpdateHistory $siteUpdateHistory
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -519,8 +520,7 @@ class SiteManageController extends Controller
             return $this->forbidden(['site_id' => $site->id]);
         }
 
-        return view('user.siteManage.updateHistory', [
-            'isEdit'        => true,
+        return view('user.siteManage.updateHistoryEdit', [
             'site'          => $site,
             'updateHistory' => $siteUpdateHistory
         ]);
@@ -529,12 +529,12 @@ class SiteManageController extends Controller
     /**
      * サイト更新履歴の更新処理
      *
-     * @param UpdateHistoryRequest $request
+     * @param EditUpdateHistoryRequest $request
      * @param Orm\SiteUpdateHistory $siteUpdateHistory
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function updateUpdateHistory(UpdateHistoryRequest $request, Orm\SiteUpdateHistory $siteUpdateHistory)
+    public function updateUpdateHistory(EditUpdateHistoryRequest $request, Orm\SiteUpdateHistory $siteUpdateHistory)
     {
         $site = Orm\Site::find($siteUpdateHistory->site_id);
         if ($site == null) {
@@ -545,6 +545,8 @@ class SiteManageController extends Controller
         if ($site->user_id != Auth::id()) {
             return $this->forbidden(['site_id' => $site->id]);
         }
+
+        $siteUpdateHistory->detail = $request->get('detail');
 
         Site::saveUpdateHistory($site, $siteUpdateHistory, false);
 

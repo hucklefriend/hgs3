@@ -254,18 +254,16 @@
                             <p class="card-text">レビューはありません。</p>
                         @endauth
                     @else
-                        <div>
-                            <p class="mb-0">みんなの怖さの評判は・・・</p>
-                            <div class="review-list-fear mt-2 mb-0">
-                                {{ \Hgs3\Constants\Review\Fear::$data[intval(round($reviewTotal->fear, 0))] }}
-                            </div>
-                        </div>
 
                         <table class="review-total-table">
                             <tr class="title">
-                                <td rowspan="4">
+                                <td rowspan="5">
                                     <small>み<br>ん<br>な<br>の<br>評<br>価</small>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th>{{ \Hgs3\Constants\Review\Fear::$face[intval(round($reviewTotal->fear, 0))] }}</th>
+                                <td>{{ mb_substr(\Hgs3\Constants\Review\Fear::$data[intval(round($reviewTotal->fear, 0))], 1) }}</td>
                             </tr>
                             <tr>
                                 <th>{{ round($reviewTotal->point, 0) }}pt</th>

@@ -17,21 +17,17 @@
 
         <div class="card">
             <div class="card-body">
-                <form method="POST" autocomplete="off">
+                <form method="POST" autocomplete="off" action="{{ route('サイト更新履歴編集処理', ['siteUpdateHistory' => $updateHistory->id]) }}">
                     {{ csrf_field() }}
-
-                    @if ($isEdit)
-                        {{ method_field('PATCH') }}
-                    @else
-                    @endif
+                    {{ method_field('PATCH') }}
 
                     <div class="form-group">
                         <label for="site_updated_at" class="hgn-label"><i class="far fa-calendar-alt"></i> 更新日</label>
-                        <input type="date" class="form-control{{ invalid($errors, 'site_updated_at') }}" id="site_updated_at" name="site_updated_at" value="{{ old('site_updated_at', $updateHistory->site_updated_at) }}" max="{{ date('Y-m-d') }}">
+                        <input type="date" class="form-control{{ invalid($errors, 'site_updated_at') }}" id="site_updated_at" name="site_updated_at" value="{{ old('site_updated_at', $updateHistory->site_updated_at) }}" max="{{ date('Y-m-d') }}" disabled>
                         <i class="form-group__bar"></i>
                     </div>
                     <div class="form-help">
-                        @include('common.error', ['formName' => 'site_updated_at'])
+                        <p class="help-block"><small>更新日は変更できません</small></p>
                     </div>
 
                     <div class="form-group">
