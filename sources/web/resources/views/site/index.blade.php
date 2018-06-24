@@ -120,36 +120,6 @@
 
                     <div class="form-group">
                         <div>
-                            <label for="gender" class="hgn-label"><i class="fas fa-check"></i> 性別傾向を絞る</label>
-                        </div>
-                        <div class="d-flex">
-                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::NONE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::NONE }}" autocomplete="off">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">傾向なし</span>
-                                </label>
-                            </div>
-                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::MALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::MALE }}" autocomplete="off">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">男性向け</span>
-                                </label>
-                            </div>
-                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::FEMALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::FEMALE }}" autocomplete="off">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">女性向け</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-help"></div>
-
-                    <div class="form-group">
-                        <div>
                             <label for="rate" class="hgn-label"><i class="fas fa-check"></i> 対象年齢を絞る</label>
                         </div>
                         <div class="d-flex">
@@ -172,6 +142,36 @@
                                     <input type="checkbox" class="custom-control-input" id="rate_18" name="r[]" value="18" autocomplete="off">
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description">R-18</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-help"></div>
+
+                    <div class="form-group">
+                        <div>
+                            <label for="gender" class="hgn-label"><i class="fas fa-check"></i> 性別傾向を絞る</label>
+                        </div>
+                        <div class="d-flex">
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::NONE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::NONE }}" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">傾向なし</span>
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::MALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::MALE }}" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">男性向け</span>
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                    <input type="checkbox" class="custom-control-input" id="gender_{{ \Hgs3\Constants\Site\Gender::FEMALE }}" name="g[]" value="{{ \Hgs3\Constants\Site\Gender::FEMALE }}" autocomplete="off">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">女性向け</span>
                                 </label>
                             </div>
                         </div>
