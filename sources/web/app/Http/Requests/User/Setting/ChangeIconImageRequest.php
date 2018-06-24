@@ -28,7 +28,7 @@ class ChangeIconImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'icon'            => 'required|file|image',
+            'icon'            => 'required|file|image|max:512',
             'icon_round_type' => 'required|in:' . IconRoundType::getValidationIn(),
         ];
     }

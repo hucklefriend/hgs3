@@ -10,7 +10,7 @@
         </header>
 
         <p>
-            アイコン画像に使える形式はjpg/gif/png/svg/bmp、容量は200KBまでです。<br>
+            アイコン画像に使える形式はjpg/gif/png/svg/bmp、容量は500KBまでです。<br>
             辺の短い方に合わせて、正方形で表示されます。
         </p>
 
@@ -93,11 +93,11 @@
                 }
 
                 // 容量のチェック
-                if (file.size > 204800) {
+                if (file.size > 1024*512) {
                     // クリア
                     $(this).val('');
                     userIcon.attr('src', '');
-                    $('#alert_msg').text('容量が200KBを超えています。');
+                    $('#alert_msg').text('容量が50KBを超えています。');
                     $('#alert_msg').show();
                     $('#select_message').show();
                     $('#round_area').hide();
