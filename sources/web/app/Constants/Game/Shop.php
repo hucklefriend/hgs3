@@ -14,6 +14,7 @@ class Shop
     const NINTENDO_STORE = 14;
     const NINTENDO_E_SHOP = 15;
     const DMM_GAMES = 16;
+    const EGG = 17;
     const APP_STORE = 31;
     const GOOGLE_PLAY = 32;
     const SQM = 33;
@@ -30,6 +31,7 @@ class Shop
         self::NINTENDO_STORE     => 'My Nintendo Store',
         self::NINTENDO_E_SHOP    => 'Nintendo eShop',
         self::DMM_GAMES          => 'DMM GAMES',
+        self::EGG                => 'EGG',
         self::APP_STORE          => 'App Store',
         self::GOOGLE_PLAY        => 'Google Play',
         self::SQM                => 'スクエニマーケット',

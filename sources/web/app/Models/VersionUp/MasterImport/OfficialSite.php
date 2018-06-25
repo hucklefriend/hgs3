@@ -83,15 +83,20 @@ class OfficialSite extends MasterImportAbstract
     /**
      * 手動設定
      */
-    private static function manual20180519()
+    private static function manual20180606()
     {
         DB::table('game_official_sites')
-            ->where('soft_id', 282)
-            ->where('url', 'http://www.capcom.co.jp/bhrev_ue/')
+            ->where('soft_id', 41)
+            ->where('url', 'http://www.jp.playstation.com/software/title/uljm05413.html')
+            ->delete();
+        DB::table('game_official_sites')
+            ->where('soft_id', 50)
+            ->where('url', 'http://www.jp.playstation.com/software/title/slps01290.html')
+            ->delete();
+        DB::table('game_official_sites')
+            ->where('soft_id', 54)
+            ->where('url', 'http://www.jp.playstation.com/software/title/scps19305.html')
             ->delete();
 
-        DB::table('game_official_sites')
-            ->where('soft_id', 331)
-            ->delete();
     }
 }

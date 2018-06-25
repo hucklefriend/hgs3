@@ -355,20 +355,7 @@ INTRO;
             ->delete();
     }
 
-    private static function packageShopCombine($fromPkgId, $toPackageId, $shopId)
-    {
-        DB::table('game_package_shops')
-            ->where('package_id', $fromPkgId)
-            ->where('shop_id', $shopId)
-            ->update(['package_id' => $toPackageId]);
 
-        DB::table('game_packages')
-            ->where('id', $fromPkgId)
-            ->delete();
-        DB::table('game_package_links')
-            ->where('package_id', $fromPkgId)
-            ->delete();
-    }
 
 
 

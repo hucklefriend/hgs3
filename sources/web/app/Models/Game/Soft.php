@@ -215,7 +215,7 @@ SQL;
         $packageIdsComma = implode(',', $packageIds);
 
         $sql =<<< SQL
-SELECT pkg.*, plt.acronym AS platform_name, com.name AS company_name
+SELECT pkg.*, plt.name AS platform_name, com.name AS company_name
 FROM (
   SELECT id, `name`, platform_id, release_at, company_id, medium_image_url, small_image_url, large_image_url, is_adult, release_int, url
   FROM game_packages
