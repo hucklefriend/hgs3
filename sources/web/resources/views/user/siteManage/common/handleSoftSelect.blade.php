@@ -28,7 +28,7 @@
                                     @foreach ($softs[$phonicType] as $soft)
                                 <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
                                     <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                                        <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                        <label class="custom-control custom-checkbox text-left btn hgn-check-btn w-100">
                                             <input type="checkbox" class="handle_soft_check custom-control-input" name="handle_soft[]" value="{{ $soft->id }}" id="handle_soft_check_{{ $soft->id }}" autocomplete="off">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">{{ $soft->name }}</span>
@@ -46,7 +46,7 @@
                                 @foreach ($softs[100] as $soft)
                                     <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
                                         <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
-                                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn w-100">
                                                 <input type="checkbox" class="handle_soft_check_fav custom-control-input" value="{{ $soft->id }}" id="handle_soft_check_fav_{{ $soft->id }}" autocomplete="off">
                                                 <span class="custom-control-indicator"></span>
                                                 <span class="custom-control-description">{{ $soft->name }}</span>
