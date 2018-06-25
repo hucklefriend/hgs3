@@ -20,7 +20,7 @@ return [
     ['soft_id' => '47','title' => '任天堂公式(WiiU VC)','url' => 'https://www.nintendo.co.jp/titles/20010000002905','priority' => '2'],
     ['soft_id' => '47','title' => '<i class="fab fa-playstation"></i>公式(PS)','url' => 'http://www.jp.playstation.com/software/title/slps00917.html','priority' => '5'],
     ['soft_id' => '47','title' => '<i class="fab fa-playstation"></i>公式(PS DL)','url' => 'http://www.jp.playstation.com/software/title/jp0202npjj00613_000000000000000001.html','priority' => '6'],
-
+    ['soft_id' => '257','title' => '任天堂公式','url' => 'https://www.nintendo.co.jp/titles/50010000008401','priority' => '2'],
 
     ['soft_id' => '166','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps00505.html','priority' => '1'],
     ['soft_id' => '166','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps02811.html','priority'=> '2'],

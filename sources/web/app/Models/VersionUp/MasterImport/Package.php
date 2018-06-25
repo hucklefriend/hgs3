@@ -347,6 +347,14 @@ INTRO;
             ->update(['is_adult' => 0]);
     }
 
+
+    private static function manual20180606()
+    {
+        DB::table('game_packages')
+            ->whereIn('id', [635])
+            ->update(['is_adult' => 0]);
+    }
+
     private static function deleteShop($pkgId, $shopId)
     {
         DB::table('game_package_shops')
