@@ -39,27 +39,27 @@
                         @auth
                             <div class="row">
                                 @if ($impression != 1)
-                                <form method="POST" action="{{ route('ふむふむ', ['review' => $review->id]) }}" class="col-5 mb-3">
+                                <form method="POST" action="{{ route('ふむふむ', ['review' => $review->id]) }}" class="col-4 col-sm-5 mb-3">
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
                                     <button class="btn btn-light btn-block">🤔<span class="hidden-xs-down"> ふむふむ</span></button>
                                 </form>
                                 @endif
                                 @if ($impression != 2)
-                                <form method="POST" action="{{ route('んー…', ['review' => $review->id]) }}" class="col-5 mb-3">
+                                <form method="POST" action="{{ route('んー…', ['review' => $review->id]) }}" class="col-4 col-sm-5 mb-3">
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
                                     <button class="btn btn-light btn-block">😒<span class="hidden-xs-down"> んー…</span></button>
                                 </form>
                                 @endif
                                 @if ($impression != 0)
-                                <form method="POST" action="{{ route('レビュー印象取り消し', ['review' => $review->id]) }}" class="col-5 mb-3">
+                                <form method="POST" action="{{ route('レビュー印象取り消し', ['review' => $review->id]) }}" class="col-4 col-sm-5 mb-3">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-light btn-block">取り消し</button>
                                 </form>
                                 @endif
-                                <div class="col-2 text-right">
+                                <div class="col-4 col-sm-2 text-right">
                                     <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
                                 </div>
                             </div>

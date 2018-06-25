@@ -133,7 +133,6 @@
                         <span><i class="fas fa-redo-alt"></i> {{ format_date($site->updated_timestamp) }}</span>
                     @endif
                 </div>
-                <div class="mt-2"><a href="{{ $site->url }}" target="_blank"><small>{{ $site->url }}</small></a></div>
             </div>
         </div>
         <div class="tab-pane fade" id="detail_banner" role="tabpanel">
@@ -240,9 +239,6 @@
                                     <span class="tag simple">{{ \Hgs3\Constants\Site\Gender::getText($site->gender) }}</span>
                                 @endif
                             </div>
-                            <p class="card-text">
-                                <a href="{{ route('サイト遷移', ['site' => $site->id]) }}" target="_blank">{{ $site->url }}</a>
-                            </p>
                             <div class="d-flex align-content-start flex-wrap site-info">
                                 <span><i class="far fa-user"></i> {{ $user->name }}</span>
                                 <span><span class="favorite-icon"><i class="fas fa-star"></i></span> XXX</span>

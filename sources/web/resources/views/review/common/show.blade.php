@@ -77,7 +77,7 @@
 @if ($review->is_spoiler == 1)
     <div class="alert alert-danger mb-5" role="alert">
         <h4 class="alert-heading">ネタバレ注意！</h4>
-        <p class="mb-0">これより下にはネタバレを含む内容が記載されていますので、閲覧にはご注意ください。</p>
+        <p class="mb-0">これより下にはネタバレを含む内容が記載されています。ご注意ください。</p>
     </div>
 @endif
 
