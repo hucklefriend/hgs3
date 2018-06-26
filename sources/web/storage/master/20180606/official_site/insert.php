@@ -25,4 +25,9 @@ return [
 
     ['soft_id' => '166','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps00505.html','priority' => '1'],
     ['soft_id' => '166','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps02811.html','priority'=> '2'],
+
+
+    ['soft_id' => '211','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm66231.html','priority' => '5'],
+    ['soft_id' => '211','title' => '<i class="fab fa-playstation"></i>公式(初回)','url' => 'http://www.jp.playstation.com/software/title/slpm66230.html','priority' => '6'],
+    ['soft_id' => '211','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slpm66586.html','priority' => '7'],
 ];

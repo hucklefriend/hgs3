@@ -45,7 +45,7 @@
         </div>
     @endif
 
-    <div class="site-info">
+    <div class="site-info mt-3">
         @if (!isset($noUser) || !$noUser)
         <span class="d-inline-block mr-2"><i class="far fa-user"></i> <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}" class="one-line user-name-link">{{ $u->name }}</a></span>
         @endif

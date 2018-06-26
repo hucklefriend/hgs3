@@ -341,7 +341,7 @@
         </div>
     @endif
 
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mt-5">
         <a href="{{ route('ゲーム詳細', ['soft' => $prevGame->id]) }}" class="and-more">
             <i class="fas fa-angle-left"></i>
             前のゲーム

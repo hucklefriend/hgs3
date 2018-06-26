@@ -217,10 +217,10 @@
                 },
             });
 
-            setSiteSwipeHeight();
-            $(window).resize(function() {
-                setSiteSwipeHeight();
-            });
+//            setSiteSwipeHeight();
+//            $(window).resize(function() {
+//                setSiteSwipeHeight();
+//            });
         });
 
 
