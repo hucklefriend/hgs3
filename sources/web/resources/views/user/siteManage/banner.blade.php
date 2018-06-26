@@ -32,7 +32,7 @@
                 <div class="form-group text-center text-md-left mt-4">
                     <p>下書き保存して・・・</p>
                     <button class="btn btn-primary mr-3" name="go_to_r18" value="0">確認画面へ</button>
-                    <button class="btn btn-danger" name="go_to_r18" value="1">R-18用バナー設定画面へ</button>
+                    <button class="btn btn-info" name="go_to_r18" value="1">R-18用バナー設定画面へ</button>
                 </div>
             @else
             <div class="form-group text-center text-md-left mt-4">

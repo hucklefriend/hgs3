@@ -7,6 +7,7 @@ namespace Hgs3\Models;
 
 use Hgs3\Constants\Site\ApprovalStatus;
 use Hgs3\Constants\Site\OpenType;
+use Hgs3\Constants\Site\Rate;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Site\Footprint;
 use Hgs3\Models\Site\NewArrival;
@@ -81,6 +82,13 @@ class Site
                 ->get()
                 ->pluck('soft_id', 'soft_id')
                 ->toArray();
+        }
+
+        if ($site->rate != Rate::R18) {
+            $site->detail_banner_upload_flag_r18 = 0;
+            $site->detail_banner_url_r18 = '';
+            $site->list_banner_upload_flag_r18 = 0;
+            $site->list_banner_url_r18 = '';
         }
 
         DB::beginTransaction();

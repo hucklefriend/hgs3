@@ -112,7 +112,7 @@
                     <form action="{{ route('レビュー削除', ['review' => $review->id]) }}" method="POST" onsubmit="return confirm('このレビューを削除してよろしいですか？')">
                         {{ method_field('DELETE') }}
                         {{ csrf_field() }}
-                        <button class="btn btn-danger">削除する</button>
+                        <button class="btn btn-outline-danger">削除する</button>
                     </form>
                 </div>
             </div>

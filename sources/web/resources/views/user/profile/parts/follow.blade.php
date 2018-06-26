@@ -36,7 +36,7 @@
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <input type="hidden" name="follow_user_id" value="{{ $u->show_id }}">
-                            <button class="btn btn-warning btn-sm">フォロー解除</button>
+                            <button class="btn btn-outline-danger btn-sm">フォロー解除</button>
                         </form>
                     @endif
                 </div>

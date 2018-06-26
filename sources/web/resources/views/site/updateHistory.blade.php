@@ -26,7 +26,7 @@
                             <form method="POST" action="{{ route('サイト更新履歴削除処理', ['siteUpdateHistory' => $updateHistory->id]) }}" class="align-self-center" onsubmit="return confirm('{{ $date }}の更新履歴を削除します。');">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
-                                <button class="btn btn-danger btn-sm"><small><i class="fas fa-eraser"></i> 削除</small></button>
+                                <button class="btn btn-outline-danger btn-sm"><small><i class="fas fa-eraser"></i> 削除</small></button>
                             </form>
                         </div>
                     </div>

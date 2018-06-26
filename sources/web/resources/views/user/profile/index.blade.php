@@ -121,7 +121,6 @@
                         slidesPerView: 'auto',
                         initialSlide: startIndex,
                         spaceBetween: 0,
-                        centeredSlides: true,
                         scrollbar: {
                             el: '.swiper-scrollbar',
                             hide: false

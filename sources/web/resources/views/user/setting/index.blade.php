@@ -177,7 +177,7 @@
                                     <form method="POST" action="{{ route('メール認証設定削除') }}" onsubmit="return confirm('メール認証設定を削除します。')">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <button class="btn btn-sm btn-danger">削除</button>
+                                        <button class="btn btn-sm btn-outline-danger">削除</button>
                                     </form>
                                 </div>
                             @endif

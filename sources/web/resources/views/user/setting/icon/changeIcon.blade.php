@@ -20,7 +20,7 @@
             <form method="POST" action="{{ route('アイコン削除') }}" onsubmit="return confirm('デフォルトのアイコンに戻します。いいですか？');">
                 {{ method_field('DELETE') }}
                 {{ csrf_field() }}
-                <button class="btn btn-warning">アイコンを削除して、初期状態に戻す</button>
+                <button class="btn btn-outline-danger">アイコンを削除して、初期状態に戻す</button>
             </form>
         </div>
     </div>

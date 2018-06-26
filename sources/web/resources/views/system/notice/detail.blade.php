@@ -21,7 +21,7 @@
                     <form action="{{ route('お知らせ削除', ['notice' => $notice->id]) }}" onsubmit="return confirm('削除してよろしいですか？');" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                        <button class="btn btn-sm btn-danger" type="submit">削除</button>
+                        <button class="btn btn-sm btn-outline-danger" type="submit">削除</button>
                     </form>
                 </div>
             @endif

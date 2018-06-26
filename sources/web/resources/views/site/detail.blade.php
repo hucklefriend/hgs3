@@ -70,7 +70,7 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
-                                <button class="btn btn-danger btn-sm"><i class="fas fa-eraser"></i>&nbsp;サイトを削除</button>
+                                <button class="btn btn-outline-danger btn-sm"><i class="fas fa-eraser"></i>&nbsp;サイトを削除</button>
                             </form>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
 
-                            <button class="btn btn-danger btn-sm"><i class="fas fa-eraser"></i>&nbsp;サイトを削除</button>
+                            <button class="btn btn-outline-danger btn-sm"><i class="fas fa-eraser"></i>&nbsp;サイトを削除</button>
                         </form>
                     </div>
                 @endif

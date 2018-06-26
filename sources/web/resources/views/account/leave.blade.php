@@ -24,7 +24,7 @@
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <div class="text-center">
-                        <button type="submit" class="btn btn-danger">退会する</button>
+                        <button type="submit" class="btn btn-outline-danger">退会する</button>
                     </div>
                 </form>
             </div>

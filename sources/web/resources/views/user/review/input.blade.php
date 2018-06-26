@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title'){{ $soft->name }}のレビュー投稿@endsection
-@section('global_back_link'){{ route('プロフィール2', ['showId' => Auth::user()->show_id, 'show' => 'review']) }}@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::reviewInput($soft) }}@endsection
 
 @section('content')
 
@@ -11,7 +11,7 @@
             <p>レビュー投稿</p>
         </header>
 
-        <div class="@if ($draft->isDefault) mb-5 @endif alert alert-warning alert-warning-hgn" style="border: none;">
+        <div class="@if ($draft->isDefault) mb-5 @endif alert alert-warning alert-warning-hgn border-0">
             入力される前に、<a href="{{ route('レビューについて') }}">レビューについて</a>を一度お読みください。
         </div>
 
