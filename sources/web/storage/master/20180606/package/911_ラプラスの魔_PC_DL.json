@@ -1,0 +1,12 @@
+{
+  "id": 911,
+  "platform": "PC",
+  "company": "ハミングバード",
+  "name": "ラプラスの魔 DL版(PC-8801)",
+  "release_int": 20140805,
+  "release_at": "2014年8月5日",
+  "soft_id": [349],
+  "shop": {
+    "EGG": "https://www.amusement-center.com/project/egg/cgi/ecatalog-detail.cgi?contcode=7&product_id=1188"
+  }
+}

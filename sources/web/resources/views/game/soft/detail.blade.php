@@ -70,7 +70,7 @@
                     @if (Auth::check())
                         <div class="mt-2">
                             @if ($isFavorite)
-                                <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入り解除していいですか？');">
+                                <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入りを取り消していいですか？');">
                                     {{ csrf_field() }}
                                     <input type="hidden" value="{{ $soft->id }}" name="soft_id">
                                     {{ method_field('DELETE') }}

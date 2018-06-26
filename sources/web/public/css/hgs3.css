@@ -794,14 +794,13 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 }
 .btn-favorite:hover {
     background-color: rgba(255, 255, 255, 0.2);
-    color: yellow;
+    color: gold;
 }
 
 .btn-favorite2 {
     background-color: rgba(255, 255, 255, 0.2);
-    color: yellow;
+    color: gold;
 }
-
 
 .btn-favorite2:hover {
     background-color: rgba(255, 255, 255, 0.125);
