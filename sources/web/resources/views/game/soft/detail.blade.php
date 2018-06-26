@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     @if (Auth::check())
-                        <div class="mt-2">
+                        <div class="mt-2 mt-sm-4 text-center text-sm-left">
                             @if ($isFavorite)
                                 <form action="{{ route('お気に入りゲーム削除処理') }}" method="POST" onsubmit="return confirm('お気に入りを取り消していいですか？');">
                                     {{ csrf_field() }}
@@ -214,10 +214,8 @@
                                 @endforeach
                             </div>
 
-                        <div class="d-flex justify-content-between flex-wrap mt-4">
-                            <div class="text-right">
-                                <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
-                            </div>
+                        <div class="text-right mt-4">
+                            <a href="{{ route('お気に入りゲーム登録ユーザー一覧', ['soft' => $soft->id]) }}" class="and-more">すべて見る <i class="fas fa-angle-right"></i></a>
                         </div>
                         @endif
                     </div>

@@ -49,22 +49,6 @@
                         @endif
                     </div>
                 </div>
-
-
-                <div class="card card-hgn mt-5">
-                    <div class="card-body">
-                        <p>読んだユーザーが受けた印象</p>
-                        <div class="d-flex justify-content-between">
-                            <div class="align-self-center">
-                                <span class="p-2">🤔 0</span>
-                                <span class="p-2">😒 0</span>
-                            </div>
-                            <div class="text-right">
-                                <button class="btn btn-light btn--icon" data-toggle="modal" data-target="#help"><i class="fas fa-question"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="col-sm-6 col-md-7 col-lg-8">
@@ -101,7 +85,7 @@
         @if ($draft->is_spoiler == 1)
             <div class="alert alert-danger mb-5" role="alert">
                 <h4 class="alert-heading">ネタバレ注意！</h4>
-                <p class="mb-0">これより下にはネタバレを含む内容が記載されていますので、閲覧にはご注意ください。</p>
+                <p class="mb-0">これより下にはネタバレを含む内容が記載されています。ご注意ください。</p>
             </div>
         @endif
 

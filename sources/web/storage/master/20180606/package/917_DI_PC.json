@@ -1,0 +1,12 @@
+{
+  "id": 917,
+  "platform": "PC",
+  "company": "Deep Silver",
+  "name": "Dead Island Definitive Edition",
+  "release_int": 20160531,
+  "release_at": "2016年5月31日",
+  "soft_id": [256],
+  "shop": {
+    "Steam": "https://store.steampowered.com/app/383150/Dead_Island_Definitive_Edition/"
+  }
+}

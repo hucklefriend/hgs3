@@ -109,7 +109,7 @@
                         <span class="site_name">{{ $site->name }}</span>
                     </div>
                     <div class="list-site-banner-outline list_banner_exist">
-                        <span><img src="{{ $site->list_banner_url }}" class="img-responsive" id="list_banner_img"></span>
+                        <span><img src="{{ $listBannerUrl }}" class="img-responsive" id="list_banner_img"></span>
                     </div>
                 </div>
 
@@ -226,7 +226,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card card-hgn">
-                        <img class="card-img-top" src="{{ $site->detail_banner_url }}" id="detail_banner_img">
+                        <img class="card-img-top" src="{{ $detailBannerUrl }}" id="detail_banner_img">
 
                         <div class="card-body">
                             <h4 class="card-title">{{ $site->name }}</h4>
@@ -257,11 +257,11 @@
     </div>
 </div>
 <script>
-    let originalListBannerUrl = '{{ $site->list_banner_url }}';
+    let originalListBannerUrl = '{{ $listBannerUrl }}';
     let listBannerUrl = '';
     let listBannerUploadImg = '';
 
-    let originalDetailBannerUrl = '{{ $site->detail_banner_url }}';
+    let originalDetailBannerUrl = '{{ $detailBannerUrl }}';
     let detailBannerUrl = '';
     let detailBannerUploadImg = '';
 
