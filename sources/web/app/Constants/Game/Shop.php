@@ -15,6 +15,7 @@ class Shop
     const NINTENDO_E_SHOP = 15;
     const DMM_GAMES = 16;
     const EGG = 17;
+    const XBOX_STORE = 18;
     const APP_STORE = 31;
     const GOOGLE_PLAY = 32;
     const SQM = 33;
@@ -32,6 +33,7 @@ class Shop
         self::NINTENDO_E_SHOP    => 'Nintendo eShop',
         self::DMM_GAMES          => 'DMM GAMES',
         self::EGG                => 'EGG',
+        self::XBOX_STORE         => 'XBOX ストア',
         self::APP_STORE          => 'App Store',
         self::GOOGLE_PLAY        => 'Google Play',
         self::SQM                => 'スクエニマーケット',
@@ -101,6 +103,9 @@ class Shop
             case self::NINTENDO_STORE:
             case self::NINTENDO_E_SHOP:
                 $mark = '<i class="fab fa-nintendo-switch"></i>';
+                break;
+            case self::XBOX_STORE:
+                $mark = '<i class="fab fa-xbox"></i';
                 break;
         }
 

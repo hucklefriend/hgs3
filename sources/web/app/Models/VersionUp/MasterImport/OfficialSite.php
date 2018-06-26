@@ -97,6 +97,10 @@ class OfficialSite extends MasterImportAbstract
             ->where('soft_id', 54)
             ->where('url', 'http://www.jp.playstation.com/software/title/scps19305.html')
             ->delete();
+        DB::table('game_official_sites')
+            ->where('soft_id', 82)
+            ->whereIn('url', ['http://www.jp.playstation.com/software/title/slps01230.html', 'http://www.jp.playstation.com/software/title/jp0082npjj00455_000000000000000001.html'])
+            ->delete();
 
     }
 }

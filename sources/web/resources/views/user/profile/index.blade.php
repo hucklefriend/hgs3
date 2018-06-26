@@ -30,14 +30,14 @@
                     @if ($followStatus == 2)
                         <form method="POST" action="{{ route('フォロー登録') }}">
                             {{ csrf_field() }}
-                            <button class="btn btn-sm"><small>フォローする</small></button>
+                            <button class="btn btn-sm btn-outline-info"><small>フォローする</small></button>
                             <input type="hidden" name="follow_user_id" value="{{ $user->show_id }}">
                         </form>
                     @elseif ($followStatus == 1)
                         <form method="POST" action="{{ route('フォロー解除') }}" onsubmit="return confirm('{{ $user->name }}さんのフォローを解除します。');">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button class="btn btn-sm btn-warning"><small>フォロー解除</small></button>
+                            <button class="btn btn-sm btn-outline-warning"><small>フォロー解除</small></button>
                             <input type="hidden" name="follow_user_id" value="{{ $user->show_id }}">
                         </form>
                     @endif

@@ -1,8 +1,9 @@
 <?php
 return [
+/*
     ['soft_id' => '187','title' => '<i class="fab fa-xbox"></i>公式','url' => 'https://marketplace.xbox.com/ja-JP/Product/Alan-Wake/66acd000-77fe-1000-9115-d8024d530805','priority' => '2'],
     ['soft_id' => '103','title' => '<i class="fab fa-xbox"></i>公式','url' => 'https://marketplace.xbox.com/ja-JP/Product/Alice-Madness-Returns/66acd000-77fe-1000-9115-d80245410916','priority' => '4'],
-
+*/
     ['soft_id' => '27','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps02167.html','priority' => '2'],
     ['soft_id' => '27','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps91425.html','priority'=> '3'],
     ['soft_id' => '27','title' => '<i class="fab fa-playstation"></i>公式(DL)','url' => 'http://www.jp.playstation.com/software/title/jp0506npjj00096_000000000000000001.html','priority'=> '4'],
