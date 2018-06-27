@@ -124,6 +124,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/user/setting/sns/{sa}/open', 'User\SettingController@updateSnsOpen')->name('SNS公開設定処理');
     Route::delete('/user/setting/sns/{sa}', 'User\SettingController@deleteSns')->name('SNS認証解除');
 
+    // ユーザー設定：pixiv
+    Route::post('/user/setting/sns/pixiv', 'User\SettingController@savePixiv')->name('pixiv保存');
+
     // ユーザー設定：メール認証
     Route::get('/user/setting/mail_auth', 'User\Setting\MailAuthController@register')->name('メール認証設定');
     Route::post('/user/setting/mail_auth', 'User\Setting\MailAuthController@sendAuthMail')->name('メール認証仮登録メール送信');

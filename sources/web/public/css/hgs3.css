@@ -43,6 +43,13 @@ code {
 .color-github, .color-github:hover, .color-github:visited {
     color: whitesmoke;
 }
+.color-pixiv, .color-pixiv:hover, .color-pixiv:visited {
+    color: #009cff;
+}
+
+.btn-outline-secondary.active {
+    color: black;
+}
 
 .no-border td, .no-border li {
     border:none;
@@ -55,7 +62,6 @@ code {
     width: 1.5rem;
     height: 1.5rem;
     background-size: cover;
-
 }
 
 .user-icon-default {

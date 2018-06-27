@@ -37,4 +37,27 @@ class SocialSite
         return $sa->orderBy('social_site_id')
             ->get();
     }
+
+    /**
+     * O/Rマッパーを探すか作成
+     *
+     * @param $socialSiteId
+     * @param $userId
+     * @return Orm\SocialAccount|mixed
+     */
+    public static function findOrNew($socialSiteId, $userId)
+    {
+        $orm = Orm\SocialAccount::where('user_id', $userId)
+            ->where('social_site_id', $socialSiteId)
+            ->get()
+            ->first();
+
+        if ($orm == null) {
+            $orm = new Orm\SocialAccount();
+            $orm->user_id = $userId;
+            $orm->social_site_id = $socialSiteId;
+        }
+
+        return $orm ?? new Orm\SocialAccount();
+    }
 }

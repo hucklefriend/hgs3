@@ -35,16 +35,10 @@
             <div>
             @foreach ($snsAccounts as $sns)
                 <div>
-                    <a href="{{ $sns->getUrl() }}" class="btn btn-outline-dark border-0 d-block">
-                        <div class="d-flex justify-content-between">
-                            <div class="align-self-center">
-                                {{ \Hgs3\Constants\SocialSite::getIcon($sns->social_site_id) }}
-                                {{ $sns->name }}
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-angle-right"></i>
-                            </div>
-                        </div>
+                    <a href="{{ $sns->getUrl() }}" class="badge badge-pill badge-secondary" target="_blank">
+                        {{ \Hgs3\Constants\SocialSite::getIcon($sns->social_site_id) }}
+                        {{ $sns->name }}
+                        <i class="fas fa-sign-out-alt"></i>
                     </a>
                 </div>
             @endforeach

@@ -6,6 +6,7 @@
 namespace Hgs3\Http\Controllers\User;
 
 use Hgs3\Http\Controllers\Controller;
+use Hgs3\Http\Requests\User\Setting\SavePixivRequest;
 use Hgs3\Http\Requests\User\Setting\SnsOpenRequest;
 use Hgs3\Models\Account\SocialSite;
 use Hgs3\Models\Orm;
@@ -87,6 +88,26 @@ class SettingController extends Controller
         }
 
         $sa->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * ピクシブを保存
+     *
+     * @param SavePixivRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function savePixiv(SavePixivRequest $request)
+    {
+        $url = $request->get('pixiv_url');
+        // IDを抜き出す
+        $pixivUserId = intval(substr($url, strlen('https://www.pixiv.net/member.php?id=')));
+
+        $account = SocialSite::findOrNew(\Hgs3\Constants\SocialSite::PIXIV, Auth::id());
+        $account->social_user_id = $pixivUserId;
+        $account->url = $url;
+        $account->save();
 
         return redirect()->back();
     }

@@ -87,6 +87,7 @@ class SocialAccount extends \Eloquent
             case SocialSite::FACEBOOK:
             case SocialSite::GITHUB:
             case SocialSite::GOOGLE_PLUS:
+            case SocialSite::PIXIV:
                 $url = $this->url;
                 break;
         }

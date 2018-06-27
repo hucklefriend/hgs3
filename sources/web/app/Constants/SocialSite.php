@@ -14,6 +14,7 @@ class SocialSite
     const FACEBOOK = 2;
     const GOOGLE_PLUS = 3;
     const GITHUB = 4;
+    const PIXIV = 5;
 
     /**
      * アイコン用タグを取得
@@ -40,6 +41,9 @@ class SocialSite
                 break;
             case self::GITHUB:
                 $tag = '<span class="color-github"><i class="fab fa-github"></i></span>';
+                break;
+            case self::PIXIV:
+                $tag = '<span class="color-pixiv">pixiv</span>';
                 break;
         }
 
