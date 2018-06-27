@@ -4,4 +4,6 @@ return [
 
     ['soft_id' => '373','title' => '公式サイト','url' => 'http://jp.console.oasgames.com/game/DYING:%20Reborn','priority' => '1'],
     ['soft_id' => '373','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/dying-reborn-ps4/','priority' => '2'],
+
+    ['soft_id' => '13','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65428.html','priority' => '5'],
 ];
