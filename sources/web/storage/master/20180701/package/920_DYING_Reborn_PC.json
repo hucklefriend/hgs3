@@ -1,0 +1,14 @@
+{
+  "id": 920,
+  "platform": "PC",
+  "company": "Oasis Games",
+  "name": "DYING: Reborn",
+  "acronym": "PC版",
+  "release_int": 20180111,
+  "release_at": "2018年1月11日",
+  "soft_id": [373],
+  "shop": {
+    "Steam": "https://store.steampowered.com/app/699700/DYING_Reborn/",
+    "DMM.com": "oasgames_0001"
+  }
+}
