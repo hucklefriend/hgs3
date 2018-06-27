@@ -6,4 +6,7 @@ return [
     ['soft_id' => '373','title' => '<i class="fab fa-playstation"></i>公式','url' => 'https://www.jp.playstation.com/games/dying-reborn-ps4/','priority' => '2'],
 
     ['soft_id' => '13','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65428.html','priority' => '5'],
+
+    // http://f13game.com/
+    // http://7gof.tokyo/friday-the-13th/
 ];
