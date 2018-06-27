@@ -85,14 +85,12 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-self-center">
                                         <div class="package-card">
-                                            <a href="{{ route('ソフト別レビュー一覧', ['soft' => $fear->soft_id]) }}" class="align-self-center">
-                                                <div style="display: table-row;">
-                                                    <div class="package-card-image">
-                                                        @include ('game.common.packageImage', ['imageUrl' => small_image_url($fear)])
-                                                    </div>
-                                                    <div class="package-card-name"><small>{{ $fear->name }}</small></div>
+                                            <div style="display: table-row;">
+                                                <div class="package-card-image">
+                                                    @include ('game.common.packageImage', ['imageUrl' => small_image_url($fear)])
                                                 </div>
-                                            </a>
+                                                <div class="package-card-name"><small>{{ $fear->name }}</small></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -124,14 +122,12 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-self-center">
                                         <div class="package-card">
-                                            <a href="{{ route('ソフト別レビュー一覧', ['soft' => $point->soft_id]) }}" class="align-self-center">
-                                                <div style="display: table-row;">
-                                                    <div class="package-card-image">
-                                                        @include ('game.common.packageImage', ['imageUrl' => small_image_url($point)])
-                                                    </div>
-                                                    <div class="package-card-name"><small>{{ $point->name }}</small></div>
+                                            <div style="display: table-row;">
+                                                <div class="package-card-image">
+                                                    @include ('game.common.packageImage', ['imageUrl' => small_image_url($point)])
                                                 </div>
-                                            </a>
+                                                <div class="package-card-name"><small>{{ $point->name }}</small></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
