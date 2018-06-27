@@ -213,13 +213,13 @@ class Package extends MasterImportAbstract
             $data = $p;
             unset($data['id']);
             $pkg->update($data);
-
-            $links = Orm\GamePackageLink::where('package_id', $data['id'])
+/*
+            $links = Orm\GamePackageLink::where('package_id', $pkg->id)
                 ->get();
             foreach ($links as $link) {
                 $updated[$link->soft_id] = $link->soft_id;
             }
-
+*/
             unset($data);
             unset($pkg);
         }

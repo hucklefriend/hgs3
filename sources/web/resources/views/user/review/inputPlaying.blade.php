@@ -27,7 +27,7 @@
                             <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
                                 <input type="checkbox" class="custom-control-input" id="pkg_{{ $pkg->id }}" name="package_id[]" value="{{ $pkg->id }}" autocomplete="off">
                                 <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">{{ $pkg->name }}</span>
+                                <span class="custom-control-description">{{ $pkg->acronym }}</span>
                             </label>
                         </div>
                     @endforeach
