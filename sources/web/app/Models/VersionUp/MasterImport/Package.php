@@ -353,6 +353,9 @@ INTRO;
         DB::table('game_packages')
             ->whereIn('id', [635])
             ->update(['is_adult' => 0]);
+        DB::table('game_packages')
+            ->whereIn('id', [852])
+            ->update(['is_adult' => 2]);
     }
 
     private static function deleteShop($pkgId, $shopId)

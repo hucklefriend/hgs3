@@ -25,4 +25,6 @@ return [
 
     ['soft_id' => '166','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slps00505.html','priority' => '1'],
     ['soft_id' => '166','title' => '<i class="fab fa-playstation"></i>公式(廉価)','url' => 'http://www.jp.playstation.com/software/title/slps02811.html','priority'=> '2'],
+
+    ['soft_id' => '13','title' => '<i class="fab fa-playstation"></i>公式','url' => 'http://www.jp.playstation.com/software/title/slpm65428.html','priority' => '5'],
 ];
