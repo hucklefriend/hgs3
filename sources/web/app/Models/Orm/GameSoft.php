@@ -176,6 +176,7 @@ SQL;
         }
 
         return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
+            ->where('release_int', '<=', date('Ymd'))
             ->orderBy('release_int')
             ->get();
     }

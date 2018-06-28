@@ -109,6 +109,10 @@ class Package extends MasterImportAbstract
             $package->name = $data->name;
         }
 
+        if (isset($data->acronym)) {
+            $package->acronym = $data->acronym;
+        }
+
         if (isset($data->release_int)) {
             $package->release_int = $data->release_int;
         }
@@ -120,6 +124,7 @@ class Package extends MasterImportAbstract
         if (isset($data->company) && isset($companies[$data->company])) {
             $package->company_id = $companies[$data->company] ?? null;
         }
+
 
         if (isset($data->platform) && isset($platforms[$data->platform])) {
             $package->platform_id = $platforms[$data->platform] ?? 0;
@@ -209,6 +214,10 @@ class Package extends MasterImportAbstract
         $packages = include($path);
         foreach ($packages as $p) {
             $pkg = Orm\GamePackage::find($p['id']);
+            if ($pkg == null) {
+                continue;
+            }
+
 
             $data = $p;
             unset($data['id']);
@@ -359,6 +368,26 @@ INTRO;
         DB::table('game_packages')
             ->whereIn('id', [12, 13, 276, 278, 277, 436, 435])
             ->delete();
+    }
+
+    private static function manual20180607()
+    {
+        DB::table('game_packages')
+            ->whereIn('id', [509, 501])
+            ->delete();
+
+        DB::table('game_package_links')
+            ->where('soft_id', 161)
+            ->where('package_id', 872)
+            ->delete();
+        DB::table('game_package_links')
+            ->where('package_id', 885)
+            ->where('soft_id', 356)
+            ->delete();
+    }
+
+    private static function manual20180701()
+    {
     }
 
     private static function deleteShop($pkgId, $shopId)

@@ -29,7 +29,8 @@
                 <label for="pkg" class="hgn-label"><i class="fas fa-check"></i> プレイしたパッケージ</label>
                 <span class="badge badge-secondary ml-2">必須</span>
                 <p class="text-muted mb-2">
-                    プレイしたパッケージを選択してください。
+                    プレイしたパッケージを選択してください。<br>
+                    分からなければ、近そうなものを選びましょう。
                 </p>
 
                 <div class="d-flex flex-wrap">

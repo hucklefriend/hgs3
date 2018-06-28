@@ -74,6 +74,12 @@ class Shop extends MasterImportAbstract
         self::packageShopCombine(498, 497, \Hgs3\Constants\Game\Shop::PLAY_STATION_STORE);
     }
 
+    private static function manual20180607()
+    {
+        self::packageShopCombine(558, 557, \Hgs3\Constants\Game\Shop::PLAY_STATION_STORE);
+        self::packageShopCombine(560, 559, \Hgs3\Constants\Game\Shop::PLAY_STATION_STORE);
+    }
+
     private static function packageShopCombine($fromPkgId, $toPackageId, $shopId)
     {
         DB::table('game_package_shops')
