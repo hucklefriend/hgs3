@@ -13,7 +13,8 @@
             <div class="card-body">
                 <h4 class="card-title">{{ env('APP_NAME') }}とは</h4>
                 <p>
-                    ホラーゲームのポータルサイトとして、ホラーゲームファン同士のつながりを作るサイトとなるべく開発を進めています。
+                    ホラーゲームのポータルサイトとして、ホラーゲームファン同士のつながりを作るサイトとなるべく開発を進めています。<br>
+                    個人運営ですので、いろいろと不備があると思いますが、温かい目で見守っていただければ幸いです。
                 </p>
                 <p>
                     ユーザー登録して頂くと、ゲームのお気に入りを登録したり、ゲームのレビューを書いたり、ご自身のサイトを登録して紹介することができます。<br>
@@ -22,7 +23,7 @@
                 <p>
                     外部のサイトの機能を活用する方針なので、外部サイトでできることは外部サイトにお任せしようと思います。<br>
                     例えば、当サイトにはユーザー同士のメッセージ交換機能はありません。<br>
-                    同じホラーゲームが好きなユーザーを見かけたので交流したいなという場合は、{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitterや{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}facebookなどで行って頂ければと思います。
+                    ユーザー同士で交流したいなという場合は、{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitterや{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}facebookなどで行って頂ければと思います。
                 </p>
             </div>
         </div>
