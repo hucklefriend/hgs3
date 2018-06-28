@@ -479,7 +479,7 @@ class GlobalBack
      */
     public static function reviewInput(Orm\GameSoft $soft)
     {
-        $before = self::beforeHas([PageId::REVIEW_BY_SOFT, PageId::REVIEW_CONFIRM, PageId::USER_REVIEW_DRAFT]);
+        $before = self::beforeHas([PageId::REVIEW_BY_SOFT, PageId::REVIEW_CONFIRM, PageId::USER_REVIEW_DRAFT, PageId::GAME_DETAIL]);
 
         self::push(PageId::REVIEW_INPUT, $soft->id);
 
