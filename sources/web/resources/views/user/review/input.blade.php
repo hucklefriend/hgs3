@@ -174,7 +174,7 @@
 
             <div class="form-group">
                 <div class="d-flex">
-                    <div class="review-point" id="total_point"></div>
+                    <div class="review-point review-point-point" id="total_point"></div>
 
                     <table class="review-point-table">
                         <tr>
@@ -192,6 +192,7 @@
                     </table>
                 </div>
             </div>
+
             <div class="form-group p-4 mt-2" style="background-color: rgba(0, 0, 0, 0.2);">
                 <p class="text-muted">
                     点数に関わる項目があるのはここまでです。<br>
@@ -487,7 +488,7 @@
             let badNum = $('.bad_tag:checked').length;
             let veryBadNum = $('.very_bad_tag:checked').length;
 
-            $('#total_point').text(fear + goodNum + veryGoodNum - badNum - veryBadNum);
+            $('#total_point').text((fear + goodNum + veryGoodNum - badNum - veryBadNum) + 'pt');
             $('#total_fear').text(fear);
             $('#total_good').text((goodNum + veryGoodNum) * {{ \Hgs3\Constants\Review\Tag::POINT_RATE }});
             $('#total_bad').text((badNum + veryBadNum) * {{ \Hgs3\Constants\Review\Tag::POINT_RATE }});

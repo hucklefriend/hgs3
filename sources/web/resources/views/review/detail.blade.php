@@ -97,9 +97,7 @@
                                 </div>
                         @else
                             <p>印象を投稿するにはログインしてください。</p>
-                            <div class="text-right mt-2">
-                                <a href="{{ route('ログイン') }}" class="and-more">ログイン</a>
-                            </div>
+                            <a href="{{ route('ログイン') }}" class="and-more">ログイン <i class="fas fa-angle-right"></i></a>
                         @endauth
                     </div>
                 </div>

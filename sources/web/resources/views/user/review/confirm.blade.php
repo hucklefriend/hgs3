@@ -16,7 +16,11 @@
                 <div class="card card-hgn">
                     <div class="card-body">
                         <div class="d-flex">
-                            <div class="review-point">
+                            <div class="review-point review-point-acronym">
+                                {{ \Hgs3\Constants\Review\Fear::$face[$draft->fear] }}<br>
+                                <small>{{ \Hgs3\Constants\Review\Fear::$acronym[$draft->fear] }}</small>
+                            </div>
+                            <div class="review-point review-point-point">
                                 {{ $draft->calcPoint() }}
                             </div>
 
