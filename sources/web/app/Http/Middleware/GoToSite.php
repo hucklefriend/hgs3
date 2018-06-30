@@ -35,10 +35,8 @@ class GoToSite
      */
     public function terminate($request, $response)
     {
-        Log::debug('test');
-
         // 足跡を追加
-        if ($request->site != null && $request->site->approval_status == ApprovalStatus::OK) {
+        if (isset($request->site->approval_status) && $request->site->approval_status == ApprovalStatus::OK) {
             if (Auth::check()) {
                 // 足跡を残す設定かどうか
                 if (Auth::user()->footprint == 1) {

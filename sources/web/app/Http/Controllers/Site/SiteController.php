@@ -157,11 +157,16 @@ class SiteController extends Controller
      * 詳細表示
      *
      * @param Request $request
-     * @param Orm\Site $site
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detail(Request $request, Orm\Site $site)
+    public function detail(Request $request, $site)
     {
+        $siteId = intval($site);
+        $site = Orm\Site::find($siteId);
+        if ($site == null) {
+            return view('site.gone');
+        }
+
         $isWebMaster = $site->user_id == Auth::id();
 
         // アクセスできるか
