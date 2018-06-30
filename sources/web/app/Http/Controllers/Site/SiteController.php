@@ -171,10 +171,12 @@ class SiteController extends Controller
             }
         }
 
+        $isLogin = Auth::check();
+
         $data = ['site' => $site];
 
         $data['favoriteNum'] = $site->getFavoriteNum();
-        $data['handleSofts'] = Site::getSoftWithOriginalPackage($site->id);
+        $data['handleSofts'] = Site::getSoftWithOriginalPackage($site->id, !$isLogin);
 
         // 更新履歴
         $data['updateHistories'] = Orm\SiteUpdateHistory::where('site_id', $site->id)
@@ -182,7 +184,6 @@ class SiteController extends Controller
             ->take(3)
             ->get();
 
-        $isLogin = Auth::check();
         $data['isFavorite'] = false;
         $data['isGood'] = false;
         if ($isLogin) {

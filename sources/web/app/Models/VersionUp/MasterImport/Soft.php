@@ -99,4 +99,13 @@ class Soft extends MasterImportAbstract
                 224, 213, 225, 226, 207])
             ->update(['introduction_from_adult' => 1]);
     }
+
+    public static function manual20180701()
+    {
+        DB::table('game_softs')
+            ->whereIn('id', [343, 199, 210, 340, 318, 341, 206, 201, 347, 198, 338, 51, 212, 218, 216, 219,
+                339, 324, 227, 215, 228, 208, 204, 325, 205, 326, 298, 297, 358, 203, 330, 329, 209, 200, 223, 321, 222,
+                224, 213, 225, 226, 207, 358])
+            ->update(['adult_only_flag' => 1]);
+    }
 }

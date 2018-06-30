@@ -18,10 +18,16 @@ class Soft
      * 一覧用データ取得
      *
      * @param array $favoriteHash
+     * @param bool $isGuest
      * @return array
      */
-    public static function getList(array $favoriteHash)
+    public static function getList(array $favoriteHash, $isGuest)
     {
+        $appendQuery = '';
+        if ($isGuest) {
+            $appendQuery = 'WHERE adult_only_flag = 0' . PHP_EOL;
+        }
+
         $sql =<<< SQL
 SELECT
   s.id
@@ -33,6 +39,7 @@ SELECT
 FROM
   game_softs s
   LEFT OUTER JOIN game_packages p ON s.original_package_id = p.id
+{$appendQuery}
 ORDER BY
   phonetic_type
   , phonetic_order
@@ -214,12 +221,17 @@ SQL;
 
         $packageIdsComma = implode(',', $packageIds);
 
+        $appendQuery = '';
+        if (!Auth::check()) {
+            $appendQuery = 'AND is_adult <> 1' . PHP_EOL;
+        }
+
         $sql =<<< SQL
 SELECT pkg.*, plt.name AS platform_name, com.name AS company_name
 FROM (
   SELECT id, `name`, platform_id, release_at, company_id, medium_image_url, small_image_url, large_image_url, is_adult, release_int, url
   FROM game_packages
-  WHERE id IN ({$packageIdsComma})
+  WHERE id IN ({$packageIdsComma}) {$appendQuery}
 ) pkg
   LEFT OUTER JOIN game_platforms plt ON pkg.platform_id = plt.id
   LEFT OUTER JOIN game_companies com ON pkg.company_id = com.id
@@ -451,11 +463,9 @@ SQL;
     private static function getNextGame(Orm\GameSoft $soft, $maxPhoneticOrder)
     {
         if ($soft->phonetic_order == $maxPhoneticOrder) {
-            return Orm\GameSoft::where('phonetic_order', 1)
-                ->first();
+            return Orm\GameSoft::where('phonetic_order', 1)->first();
         } else {
-            return Orm\GameSoft::where('phonetic_order', $soft->phonetic_order + 1)
-                ->first();
+            return Orm\GameSoft::where('phonetic_order', $soft->phonetic_order + 1)->first();
         }
     }
 

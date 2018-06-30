@@ -422,9 +422,10 @@ SQL;
      * オリジナルパッケージ情報付きでソフトデータを取得
      *
      * @param int $siteId
+     * @param bool $isGuest
      * @return array
      */
-    public static function getSoftWithOriginalPackage($siteId)
+    public static function getSoftWithOriginalPackage($siteId, $isGuest)
     {
         $softIds = self::getHandleSoftIds($siteId);
         if (empty($softIds)) {
@@ -432,11 +433,15 @@ SQL;
         }
 
         $softIdsComma = implode(',', $softIds);
+        $appendQuery = '';
+        if ($isGuest) {
+            $appendQuery = ' AND adult_only_flag = 0' . PHP_EOL;
+        }
 
         $sql =<<< SQL
 SELECT soft.id, soft.name, package.small_image_url, package.medium_image_url, package.large_image_url, package.is_adult
 FROM (
-SELECT * FROM game_softs WHERE id IN ({$softIdsComma})
+SELECT * FROM game_softs WHERE id IN ({$softIdsComma}) {$appendQuery}
 ) soft LEFT OUTER JOIN game_packages AS package ON soft.original_package_id = package.id
 SQL;
 

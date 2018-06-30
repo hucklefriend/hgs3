@@ -25,13 +25,15 @@ class SoftController extends Controller
     public function index()
     {
         $favoriteHash = [];
+        $isGuest = true;
         if (Auth::check()) {
             $favoriteHash = FavoriteSoft::getHash(Auth::id());
+            $isGuest = false;
         }
 
         return view('game.soft.index', [
             'phoneticList'        => PhoneticType::getId2CharData(),
-            'list'                => Soft::getList($favoriteHash),
+            'list'                => Soft::getList($favoriteHash, $isGuest),
             'favoriteHash'        => $favoriteHash,
             'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ'))
         ]);

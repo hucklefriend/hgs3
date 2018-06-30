@@ -21,9 +21,9 @@
                     また、攻略日記を書いたり、好きなゲームが近い人を探したり、二次創作・同人活動の紹介などといった機能を今後作っていきたいと考えています。
                 </p>
                 <p>
-                    外部のサイトの機能を活用する方針なので、外部サイトでできることは外部サイトにお任せしようと思います。<br>
+                    外部サービスの機能を活用する方針なので、外部サービスでできることはそちらにお任せしようと思います。<br>
                     例えば、当サイトにはユーザー同士のメッセージ交換機能はありません。<br>
-                    ユーザー同士で交流したいなという場合は、{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitterや{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}facebookなどで行って頂ければと思います。
+                    ユーザー同士で交流したいなという場合は、{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitterや{{ sns_icon(\Hgs3\Constants\SocialSite::FACEBOOK) }}facebookなどで行って頂ければと思います。<br>
                 </p>
             </div>
         </div>
