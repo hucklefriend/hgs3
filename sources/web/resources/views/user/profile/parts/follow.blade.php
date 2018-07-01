@@ -4,48 +4,32 @@
 @if ($follows->count() == 0)
         <div>フォローはいません。</div>
 @endif
-        <div class="contacts row">
+        <div class="row">
             @foreach ($follows as $f)
                 @isset($users[$f->follow_user_id])
                     @php $u = $users[$f->follow_user_id]; @endphp
 
-            <div class="col-xl-2 col-lg-3 col-sm-6 col-6">
-                <div class="contacts__item">
-                    <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}" class="contacts__img">
-                        @if ($u->icon_upload_flag == 1)
-                            <img data-normal="{{ url('img/user_icon/' . $u->icon_file_name) }}" class="{{ \Hgs3\Constants\IconRoundType::getClass($u->icon_round_type) }}">
-                        @else
-                            <img data-normal="{{ url('img/user-no-img.svg') }}" class="rounded-0">
-                        @endif
-                    </a>
-
-                    <div>
-                        <p>
-                        {{ $u->name }}
-                        @isset($mutualFollower[$f->follow_user_id])
-                            <span class="mutual-follow-icon ml-2"><small><i class="far fa-handshake"></i></small></span>
-                        @endisset
-                        </p>
-                        <div>
-                            <small>{{ format_date($f->follow_timestamp) }}</small>
+                    <div class="col-xl-4 col-lg-6 col-12">
+                        @if ($isMyself)
+                        <div class="site-list-prepend">
+                            <div class="align-self-center"><small>{{ format_date($f->follow_timestamp) }} フォロー</small></div>
+                            <div class="align-self-center">
+                                <form method="POST" action="{{ route('フォロー解除') }}" class="mt-3" onsubmit="return confirm('{{ $u->name }}さんのフォローを解除します。')">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <input type="hidden" name="follow_user_id" value="{{ $u->show_id }}">
+                                    <button class="btn btn-outline-danger btn-sm">解除</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                        @endif
 
-                    @if ($isMyself)
-                        <form method="POST" action="{{ route('フォロー解除') }}" class="mt-3">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <input type="hidden" name="follow_user_id" value="{{ $u->show_id }}">
-                            <button class="btn btn-outline-danger btn-sm">フォロー解除</button>
-                        </form>
-                    @endif
-                </div>
-            </div>
+                        @include ('friend.common.parts', ['user' => $u, 'attributes' => $u->getAttributes(), 'mutual' => $mutualFollower])
+                    </div>
 
                 @endisset
             @endforeach
         </div>
-
 
         @include('common.pager', ['pager' => $follows])
     </div>

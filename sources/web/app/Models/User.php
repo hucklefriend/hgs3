@@ -66,9 +66,7 @@ class User extends Authenticatable
             return [];
         }
 
-        $data = DB::table('users')
-            ->select(['id', 'name', 'icon_upload_flag', 'show_id', 'icon_round_type', 'icon_file_name', 'open_profile_flag'])
-            ->whereIn('id', $userIds)
+        $data = self::whereIn('id', $userIds)
             ->get();
 
         $hash = [];

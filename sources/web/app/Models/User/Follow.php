@@ -55,7 +55,7 @@ class Follow
         ])
             ->where('user_id', $userId)
             ->orderBy('created_at', 'DESC')
-            ->paginate(30);
+            ->paginate(12);
     }
 
     /**
@@ -132,7 +132,7 @@ class Follow
         $sql =<<< SQL
 INSERT IGNORE INTO user_follows
 (user_id, category, follow_user_id, created_at, updated_at)
-VALUES (?, ?, ?, NOW(), NOW())
+VALUES (?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 SQL;
         DB::insert($sql, [$user->id, $followCategory, $followUser->id]);
 
