@@ -10,3 +10,6 @@ Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4");
 Illuminate\Pagination\AbstractPaginator::defaultSimpleView("pagination::simple-bootstrap-4");
 
 $pager->links('vendor.pagination.simple-bootstrap-4')
+
+
+※ページャービューはLaravel 5.6でデフォルトがbootstrap4になっている

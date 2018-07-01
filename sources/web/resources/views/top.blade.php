@@ -172,21 +172,20 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="swiper-button-next swiper-button-next-hgn"></div>
-                    <div class="swiper-button-prev swiper-button-prev-hgn"></div>
+                    <div class="swiper-scrollbar"></div>
                 </div>
             </div>
             <script>
                 let swiperNewGame = null;
                 $(function(){
                     swiperNewGame = new Swiper('#new_game', {
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
                         spaceBetween: 20,
                         loop: true,
                         freeMode: true,
+                        scrollbar: {
+                            el: '.swiper-scrollbar',
+                            hide: false
+                        },
                         @if (!\Illuminate\Support\Facades\Auth::check())
                         slidesPerView: 8,
                         breakpoints: {
