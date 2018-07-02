@@ -25,7 +25,7 @@ class SettingController extends Controller
 
         return view('user.setting.index', [
             'user'        => $user,
-            'attributes'  => $user->getAttributes(),
+            'attributes'  => $user->getUserAttributes(),
             'snsAccounts' => SocialSite::getAccounts($user)
         ]);
     }

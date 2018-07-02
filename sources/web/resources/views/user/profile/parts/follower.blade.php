@@ -11,7 +11,7 @@
     @isset($users[$follower->user_id])
         @php $u = $users[$follower->user_id]; @endphp
             <div class="col-xl-4 col-lg-6 col-12">
-                @include ('friend.common.parts', ['user' => $u, 'attributes' => $u->getAttributes(), 'mutual' => $mutualFollow])
+                @include ('friend.common.parts', ['user' => $u, 'attributes' => $u->getUserAttributes(), 'mutual' => $mutualFollow])
             </div>
     @endisset
 @endforeach

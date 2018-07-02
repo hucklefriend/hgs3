@@ -20,7 +20,7 @@
         @else
         <div class="row">
             @foreach ($users as $user)
-                @php $attributes = $user->getAttributes(); @endphp
+                @php $attributes = $user->getUserAttributes(); @endphp
                 <div class="col-12 col-md-6 col-xl-5">
                     @include ('friend.common.parts', ['user' => $user, 'attributes' => $attributes, 'mutual' => []])
                 </div>

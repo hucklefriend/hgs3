@@ -20,7 +20,7 @@
                         @isset($users[$favoriteUser->user_id])
                             @php $u = $users[$favoriteUser->user_id]; @endphp
                             <div class="col-12 col-md-6 col-xl-5">
-                                @include ('friend.common.parts', ['user' => $u, 'attributes' => $u->getAttributes(), 'mutual' => []])
+                                @include ('friend.common.parts', ['user' => $u, 'attributes' => $u->getUserAttributes(), 'mutual' => []])
                             </div>
                         @endisset
                     @endforeach

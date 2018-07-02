@@ -24,7 +24,7 @@
                         </div>
                         @endif
 
-                        @include ('friend.common.parts', ['user' => $u, 'attributes' => $u->getAttributes(), 'mutual' => $mutualFollower])
+                        @include ('friend.common.parts', ['user' => $u, 'attributes' => $u->getUserAttributes(), 'mutual' => $mutualFollower])
                     </div>
 
                 @endisset

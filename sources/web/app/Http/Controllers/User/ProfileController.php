@@ -183,7 +183,7 @@ class ProfileController extends Controller
                 $show = 'profile';
                 $title = 'プロフィール';
                 $data['parts'] = [
-                    'attributes'  => $user->getAttributes(),
+                    'attributes'  => $user->getUserAttributes(),
                     'snsAccounts' => SocialSite::getAccounts($user, true)
                 ];
                 $data['pageId'] = $data['isMyself'] ? PageId::USER_PROFILE : PageId::FRIEND_PROFILE;

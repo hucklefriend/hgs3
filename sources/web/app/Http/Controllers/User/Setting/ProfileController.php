@@ -50,7 +50,7 @@ class ProfileController extends Controller
     {
         return view('user.setting.profile', [
             'user'       => Auth::user(),
-            'attributes' => old('attribute', Auth::user()->getAttributes())
+            'attributes' => old('attribute', Auth::user()->getUserAttributes())
         ]);
     }
 
