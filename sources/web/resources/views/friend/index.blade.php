@@ -6,8 +6,41 @@
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>フレンド</h1>
+            <h1>フレンド探し</h1>
         </header>
+
+        <div class="card card-hgn">
+            <div class="card-body">
+                <h2 class="card-title mb-0">検索フォーム <button id="search_form_open" class="btn btn-sm btn-secondary">open</button></h2>
+                <div id="search" style="display:none;">
+                    <form class="mt-3">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let searchArea = null;
+            let searchFormOpenBtn = null;
+
+            $(function (){
+                searchArea = $('#search');
+                searchFormOpenBtn = $('#search_form_open');
+
+                searchFormOpenBtn.click(function (){
+                    if (searchArea.css('display') == 'none') {
+                        searchFormOpenBtn.text('close');
+                    } else {
+                        searchFormOpenBtn.text('open');
+                    }
+
+                    searchArea.slideToggle(300);
+                });
+            });
+        </script>
+
+
 
         @if ($users->isEmpty())
             <p>
