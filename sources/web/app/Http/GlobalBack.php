@@ -27,7 +27,9 @@ class GlobalBack
         PageId::USER_PROFILE,
         PageId::USER_REVIEW,
         PageId::USER_REVIEW_DRAFT,
-        PageId::USER_SITE
+        PageId::USER_SITE,
+        PageId::USER_MESSAGE,
+        PageId::USER_MESSAGE_SENT
     ];
 
     const FRIEND_PAGE_GROUP = [
@@ -629,6 +631,42 @@ class GlobalBack
 
         if ($before === false) {
             return self::route('ゲーム詳細', ['soft' => $soft->id]);
+        } else {
+            return $before[1];
+        }
+    }
+
+    /**
+     * メッセージ入力
+     *
+     * @return string
+     */
+    public static function messageWrite()
+    {
+        $before = self::beforeHas([PageId::MESSAGE_SHOW, PageId::USER_MESSAGE, PageId::USER_MESSAGE_SENT]);
+
+        self::push(PageId::MESSAGE_WRITE);
+
+        if ($before === false) {
+            return self::route('プロフィール2', ['showId' => Auth::user()->show_id, 'show' => 'message']);
+        } else {
+            return $before[1];
+        }
+    }
+
+    /**
+     * メッセージ表示
+     *
+     * @return string
+     */
+    public static function messageShow()
+    {
+        $before = self::beforeHas([PageId::USER_MESSAGE, PageId::USER_MESSAGE_SENT]);
+
+        self::push(PageId::MESSAGE_SHOW);
+
+        if ($before === false) {
+            return self::route('プロフィール2', ['showId' => Auth::user()->show_id, 'show' => 'message']);
         } else {
             return $before[1];
         }

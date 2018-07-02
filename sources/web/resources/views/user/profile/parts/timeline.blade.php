@@ -9,7 +9,11 @@
                     {{ format_date($tl['time']) }}<br>
                     {!!  $tl['text'] !!}
                 </p>
+                @if (!$loop->last)
                 <hr>
+                @elseif ($hasNext)
+                <hr>
+                @endif
             @endforeach
         </div>
         @endif

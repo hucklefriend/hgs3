@@ -27,7 +27,8 @@ class Profile
             'siteNum'         => Orm\Site::getNumByUser($userId),
             'favoriteSoftNum' => Orm\UserFavoriteSoft::getNumByUser($userId),
             'favoriteSiteNum' => Orm\UserFavoriteSite::getNumByUser($userId),
-            'goodSiteNum'     => Orm\SiteGoodHistory::getNumByUser($userId)
+            'goodSiteNum'     => Orm\SiteGoodHistory::getNumByUser($userId),
+            'messageNum'      => Orm\Message::getNumByUser($userId)
         ];
     }
 
@@ -61,10 +62,6 @@ class Profile
 
         // いいねしたレビュー
         $data['goodReviews'] = self::getGoodReviews($userId);
-
-        // 遊んだゲーム
-        $data['playedSofts'] = self::getPlayedSofts($userId);
-
 
         // ゲームマスター
         $data['softs'] = self::getSoftMaster($data);
@@ -178,29 +175,6 @@ class Profile
         return $result;
     }
 
-    private static function getCommunities($userId)
-    {
-        // ゲームコミュニティのみ取得
-
-
-    }
-
-    /**
-     * 遊んだゲーム
-     *
-     * @param $userId
-     * @return \Illuminate\Support\Collection
-     */
-    private static function getPlayedSofts($userId)
-    {
-        return DB::table('user_played_softs')
-            ->select(['game_id', 'comment'])
-            ->where('user_id', $userId)
-            ->orderBy('id', 'DESC')
-            ->take(5)
-            ->get();
-    }
-
     /**
      * 必要なゲームマスターを取得
      *
@@ -212,9 +186,7 @@ class Profile
         $softIds = array_merge(
             array_pluck($data['favoriteSofts']->toArray(), 'soft_id'),
             array_pluck($data['reviews']->toArray(), 'soft_id'),
-            array_pluck(array_pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'soft_id'),
-            $data['communities'],
-            array_pluck($data['playedSofts']->toArray(), 'soft_id')
+            array_pluck(array_pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'soft_id')
         );
 
         return Orm\GameSoft::getNameHash($softIds);
@@ -237,8 +209,29 @@ class Profile
         return User::getNameHash($userIds);
     }
 
-    public static function changeMail()
+    /**
+     * 受信メッセージ
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getMessage($userId)
     {
+        return Orm\Message::where('to_user_id', $userId)
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
+    }
 
+    /**
+     * 送信済みメッセージ
+     *
+     * @param $userId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getSentMessage($userId)
+    {
+        return Orm\Message::where('from_user_id', $userId)
+            ->orderBy('id', 'DESC')
+            ->paginate(20);
     }
 }

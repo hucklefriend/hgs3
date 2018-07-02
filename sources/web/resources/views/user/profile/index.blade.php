@@ -9,9 +9,9 @@
         @if ($isMyself)
             <div class="d-sm-flex">
                 <header class="content__title">
-                    <h1 class="d-flex">
-                        <img src="{{ user_icon_url($user, true) }}" class="profile-top-img">
-                        <p class="d-inline-block">{{ $user->name }}</p>
+                    <h1>
+                        @include('user.common.icon', ['u' => $user])
+                        <span class="align-middle">{{ $user->name }}さん</span>
                     </h1>
                 </header>
                 <div class="ml-auto text-right hidden-xs-down">
@@ -101,6 +101,9 @@
                 <div class="swiper-slide">
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}" class="@if($show == 'good_site') active @endif" aria-expanded="true">いいねしたサイト</a>
                 </div>
+                <div class="swiper-slide">
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'message']) }}" class="@if($show == 'message') active @endif" aria-expanded="true">システムメッセージ</a>
+                </div>
                 @endif
             </div>
             <div class="swiper-scrollbar"></div>
@@ -153,6 +156,7 @@
                     @endif
                     @if ($isMyself)
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}" class="nav-link @if($show == 'good_site') active @endif" aria-expanded="true">いいねしたサイト {{ $goodSiteNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'message']) }}" class="nav-link @if($show == 'good_site') active @endif" aria-expanded="true">システムメッセージ {{ $messageNum }}件</a>
                     @endif
                 </div>
             </div>

@@ -15,6 +15,7 @@ use Hgs3\Models\User\Follow;
 use Hgs3\Models\User\Profile;
 use Hgs3\Models\User;
 use Hgs3\Models\Site;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -115,8 +116,10 @@ class ProfileController extends Controller
                 break;
             case 'review_draft': {
                 $title = 'レビュー下書き';
+                $drafts = $data['isMyself'] ? Review::getProfileDraftList($user) : [];
+
                 $data['parts'] = [
-                    'drafts' => Review::getProfileDraftList($user),
+                    'drafts' => $drafts,
                 ];
                 $data['pageId'] = PageId::USER_REVIEW_DRAFT;
             }
@@ -144,7 +147,7 @@ class ProfileController extends Controller
                 break;
             case 'good_site': {
                 $title = 'いいねしたサイト';
-                $goodSites = Site\Good::getList($user);
+                $goodSites = $data['isMyself'] ? Site\Good::getList($user) : [];
                 $sites = Orm\Site::getHash(page_pluck($goodSites, 'site_id'));
 
                 $data['parts'] = [
@@ -157,8 +160,22 @@ class ProfileController extends Controller
                 break;
             case 'timeline': {
                 $title = 'タイムライン';
-                $data['parts'] = Timeline\MyPage::getTimeline($data['isMyself'], Auth::id(), time(), 20);
+                $data['parts'] = Timeline\MyPage::getTimeline($data['isMyself'], $user->id, time(), 20);
                 $data['pageId'] = $data['isMyself'] ? PageId::USER_TIMELINE : PageId::FRIEND_TIMELINE;
+            }
+                break;
+            case 'message': {
+                $title = 'メッセージ';
+                $messages = $data['isMyself'] ? Profile::getMessage($user->id) : new Collection();
+                $data['parts'] = ['messages' => $messages];
+                $data['pageId'] = PageId::USER_MESSAGE;
+            }
+                break;
+            case 'message_sent': {
+                $title = '送信済みメッセージ';
+                $messages = $data['isMyself'] ? Profile::getSentMessage($user->id) : new Collection();
+                $data['parts'] = ['messages' => $messages];
+                $data['pageId'] = PageId::USER_MESSAGE_SENT;
             }
                 break;
             case 'profile':

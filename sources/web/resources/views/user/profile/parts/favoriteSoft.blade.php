@@ -1,8 +1,8 @@
 <p class="text-muted"><small>※お気に入りに登録できるゲームは最大{{ \Hgs3\Constants\User\FavoriteSoft::MAX }}個です。</small></p>
 <div class="card">
     <div class="card-body">
-        @if ($favoriteSofts->count() <= 0)
-            <div>お気に入りゲームはありません。</div>
+        @if ($favoriteSofts->isEmpty())
+        <p>お気に入りゲームはありません。</p>
         @else
         <div class="row">
         @foreach ($favoriteSofts as $fg)

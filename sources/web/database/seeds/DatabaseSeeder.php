@@ -12,7 +12,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            //GameMasterSeeder::class,
             UserSeeder::class,
             FollowSeeder::class,
             SiteSeeder::class,
@@ -21,7 +20,8 @@ class DatabaseSeeder extends Seeder
             SiteGoodSeeder::class,
             FavoriteGameSeeder::class,
             FavoriteSiteSeeder::class,
-            ReviewSeeder::class
+            ReviewSeeder::class,
+            SystemMessageSeeder::class
         ]);
     }
 }

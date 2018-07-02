@@ -1,10 +1,13 @@
 @extends('layouts.app')
 
-@section('title')お知らせ詳細@endsection
+@section('title')お知らせ@endsection
 @section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('お知らせ') }}@endsection
 
 @section('content')
     <div class="content__inner">
+        <header class="content__title">
+            <h1>お知らせ</h1>
+        </header>
 
         <div class="card">
             <div class="card-body">

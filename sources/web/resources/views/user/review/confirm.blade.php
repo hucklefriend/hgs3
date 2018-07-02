@@ -240,17 +240,18 @@
             </div>
         </div>
 
+        <p>ネタバレの有無は大丈夫ですか？</p>
         @if ($draft->is_spoiler == 1)
             <form method="POST" action="{{ route('レビューネタバレなしだった', ['soft' => $soft->id]) }}">
                 {{ csrf_field() }}
                 {{ method_field('PATCH') }}
-                <button class="btn btn-light">読み直したらネタバレはなかったのでなしにする</button>
+                <button class="btn btn-light"><i class="fas fa-exclamation"></i> ネタバレはなかったのでなしにする</button>
             </form>
         @else
             <form method="POST" action="{{ route('レビューネタバレありだった', ['soft' => $soft->id]) }}">
                 {{ csrf_field() }}
                 {{ method_field('PATCH') }}
-                <button class="btn btn-light">読み直したらネタバレがあったのでありにする</button>
+                <button class="btn btn-light"><i class="fas fa-exclamation"></i> ネタバレがあったのでありにする</button>
             </form>
         @endif
 
@@ -262,7 +263,7 @@
 
         <div class="row mt-5">
             <div class="col-6 text-center">
-                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-light">修正する</a>
+                <a href="{{ route('レビュー入力', ['soft' => $soft->id]) }}" class="btn btn-light"><i class="fas fa-pen"></i> 修正する</a>
             </div>
             <div class="col-6">
                 <form method="POST" action="{{ route('レビュー公開', ['soft' => $soft->id]) }}" autocomplete="off" class="text-center" onsubmit="return confirm('このレビューを公開します。\nよろしいですね？');">

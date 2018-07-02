@@ -82,6 +82,8 @@ class PageId
     const USER_SITE = 947;
     const USER_FAVORITE_SITE = 948;
     const USER_GOOD_SITE = 949;
+    const USER_MESSAGE = 950;
+    const USER_MESSAGE_SENT = 951;
 
     const FRIEND_TIMELINE = 960;
     const FRIEND_PROFILE = 961;
@@ -102,6 +104,8 @@ class PageId
     const PASSWORD_CHANGE = 985;
     const PASSWORD_CHANGE_COMPLETE = 987;
     const LEAVE = 1000;
+    const MESSAGE_WRITE = 1001;
+    const MESSAGE_SHOW = 1002;
 
     const ADMIN_MENU = 1100;
 }

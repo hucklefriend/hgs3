@@ -48,6 +48,13 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::patch('/admin/review/url/ng', 'Review\ApprovalController@ng')->name('レビューURL NG');
 
     Route::get('/admin/hgs2site', 'AdminController@hgs2SiteChecker');
+
+    // 管理人メッセージ
+    Route::get('/admin/message/write/{user}/{resId}', 'User\MessageController@adminInput')->name('管理人メッセージ入力');
+    Route::post('/admin/message/write/{user}', 'User\MessageController@adminWrite')->name('管理人メッセージ送信');
+
+    // ユーザー管理
+    //Route::get('/admin/user')->name('ユーザー管理');
 });
 
 
@@ -166,6 +173,11 @@ Route::group(['middleware' => ['auth']], function () {
     // 退会処理
     Route::get('/user/leave', 'Account\LeaveController@index')->name('退会');
     Route::delete('/user/leave', 'Account\LeaveController@leave')->name('退会処理');
+
+    // メッセージ
+    Route::get('/user/message/{message}', 'User\MessageController@show')->name('メッセージ表示');
+    Route::get('/user/message/write/{resId}', 'User\MessageController@input')->name('メッセージ入力');
+    Route::post('/user/message/write', 'User\MessageController@write')->name('メッセージ送信');
 });
 
 // トップ
