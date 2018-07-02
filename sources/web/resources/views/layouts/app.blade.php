@@ -79,6 +79,12 @@
                 </div>
 
                 <ul class="top-nav">
+                    @if (has_new_message())
+                    <li>
+                        <a href="{{ route('プロフィール2', ['showId' => \Illuminate\Support\Facades\Auth::user()->show_id, 'show' => 'message']) }}" class="top-nav__notify"><i class="far fa-envelope"></i></a>
+                    </li>
+                    @endif
+
                     <li class="hidden-xs-down">
                         <a href="{{ route('ゲーム一覧') }}">ゲーム</a>
                     </li>

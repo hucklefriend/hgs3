@@ -596,3 +596,23 @@ function is_open_profile($user)
     return true;
 }
 
+/**
+ * メッセージがあるかどうか
+ *
+ * @return bool
+ */
+function has_new_message()
+{
+    // ミドルウェアでやろうとしたけど、beforeだと認証されておらず、
+    // afterだとview生成後なのでhelperで対応
+
+    if (Auth::check()) {
+        $messageNum = \Hgs3\Models\Orm\Message::where('to_user_id', Auth::id())
+            ->where('is_read', 0)
+            ->count();
+
+        return $messageNum > 0;
+    } else {
+        return false;
+    }
+}

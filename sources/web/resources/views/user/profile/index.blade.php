@@ -5,7 +5,6 @@
 
 @section('content')
     <div class="content__inner">
-
         @if ($isMyself)
             <div class="d-sm-flex">
                 <header class="content__title">
@@ -192,4 +191,14 @@
         });
     </script>
 
+
+    @if (is_admin())
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">管理人用メニュー</h4>
+
+                <a href="{{ route('管理人メッセージ入力', ['user' => $user->id, 'redId' => 0]) }}" class="and-more mb-4 mr-4">メッセージを送る</a>
+            </div>
+        </div>
+    @endif
 @endsection
