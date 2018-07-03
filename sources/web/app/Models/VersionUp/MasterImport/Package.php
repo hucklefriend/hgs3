@@ -427,7 +427,7 @@ SQL;
 
         foreach ($packages as $pkg) {
             $shopImages = Orm\GamePackageShop::where('package_id', $pkg->id)
-                ->whereIn('shop_id', [Shop::AMAZON, Shop::DMM, Shop::DMM_R18])
+                ->whereIn('shop_id', [Shop::AMAZON, Shop::DMM, Shop::DMM_R18, Shop::APP_STORE])
                 ->get();
 
             if ($shopImages->isNotEmpty()) {
@@ -449,6 +449,13 @@ SQL;
                         $pkg->small_image_url = $shopImages[$i]->small_image_url;
                         $pkg->medium_image_url = $shopImages[$i]->medium_image_url;
                         $pkg->large_image_url = $shopImages[$i]->large_image_url;
+                    } else if ($shopImages[$i]->shop_id == Shop::APP_STORE) {
+                        if ($shopImages[$i]->small_image_url != null) {
+                            $pkg->shop_id = $shopImages[$i]->shop_id;
+                            $pkg->small_image_url = $shopImages[$i]->small_image_url;
+                            $pkg->medium_image_url = $shopImages[$i]->medium_image_url;
+                            $pkg->large_image_url = $shopImages[$i]->large_image_url;
+                        }
                     }
                 }
             } else {
