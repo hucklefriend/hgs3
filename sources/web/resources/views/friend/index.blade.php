@@ -9,12 +9,29 @@
             <h1>フレンド探し</h1>
         </header>
 
-        <div class="card card-hgn d-none">
+        <div class="card card-hgn">
             <div class="card-body">
                 <h2 class="card-title mb-0">検索フォーム <button id="search_form_open" class="btn btn-sm btn-secondary">open</button></h2>
                 <div id="search" style="display:none;">
                     <form class="mt-3">
-
+                        <form method="GET" action="{{ route('フレンド') }}">
+                            <div class="form-group">
+                                <div>
+                                    <label for="attribute" class="hgn-label"><i class="fas fa-check"></i> 属性</label>
+                                </div>
+                                <div class="d-flex flex-wrap">
+                                    @foreach (\Hgs3\Constants\User\Attribute::$text as $attrId => $attrName)
+                                        <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
+                                            <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
+                                                <input type="checkbox" class="custom-control-input" id="attr_{{ $attrId }}" name="attr[]" value="{{ $attrId }}" autocomplete="off"{{ checked(in_array($attrId, []), true) }}>
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description">{{ $attrName }}</span>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="form-help"></div>
                     </form>
                 </div>
             </div>
@@ -27,7 +44,7 @@
             $(function (){
                 searchArea = $('#search');
                 searchFormOpenBtn = $('#search_form_open');
-
+[]
                 searchFormOpenBtn.click(function (){
                     if (searchArea.css('display') == 'none') {
                         searchFormOpenBtn.text('close');
