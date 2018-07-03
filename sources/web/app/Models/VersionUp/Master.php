@@ -50,6 +50,9 @@ class Master
         echo 'import official site.' . PHP_EOL;
         MasterImport\OfficialSite::import($date);
 
+        echo 'import sample image.' . PHP_EOL;
+        MasterImport\OfficialSite::import($date);
+
         echo 'update sort order.' . PHP_EOL;
         \Hgs3\Models\Orm\GameSoft::updateSortOrder();
 
