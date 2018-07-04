@@ -26,7 +26,7 @@
                         <div id="tag-list">
                             <div class="d-flex flex-wrap mb-2">
                                 @foreach (\Hgs3\Constants\Review\Tag::$tags as $tagId => $tagName)
-                                    <span class="review-tag" id="tag_{{ $tagId }}">
+                                    <span class="tag simple mr-2 mb-2" id="tag_{{ $tagId }}">
                                         {{ $tagName }}
                                         <span class="review-tag-very" id="very_tag_{{ $tagId }}"><i class="far fa-thumbs-down"></i></span>
                                     </span>
