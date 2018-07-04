@@ -37,7 +37,7 @@
     @endif
 
     @if ($s->latest_update_history_date != null)
-        <div class="my-3 d-flex">
+        <div class="mt-3 d-flex">
             <div>
                 <div class="badge badge-info"><small>{{ format_date2(strtotime($s->latest_update_history_date)) }}更新</small></div>
             </div>
@@ -45,7 +45,7 @@
         </div>
     @endif
 
-    <div class="site-info">
+    <div class="site-info mt-3">
         @if (!isset($noUser) || !$noUser)
         <span class="d-inline-block mr-2"><i class="far fa-user"></i> <a href="{{ route('プロフィール', ['showId' => $u->show_id]) }}" class="one-line user-name-link">{{ $u->name }}</a></span>
         @endif
