@@ -182,7 +182,7 @@
                 $('#no-tag-text').hide();
 
                 $('#tag-list').show();
-                $('.review-tag').hide();
+                $('.tag').hide();
 
                 goodTags.each(function () {
                     $('#tag_' + $(this).val()).show();

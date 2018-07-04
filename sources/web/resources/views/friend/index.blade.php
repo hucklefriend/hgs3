@@ -9,7 +9,7 @@
             <h1>フレンド探し</h1>
         </header>
 
-        <div class="card card-hgn">
+        <div class="card card-hgn d-none">
             <div class="card-body">
                 <h2 class="card-title mb-0">検索フォーム <button id="search_form_open" class="btn btn-sm btn-secondary">open</button></h2>
                 <div id="search" style="display:none;">
