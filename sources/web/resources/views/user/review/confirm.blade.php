@@ -102,14 +102,11 @@
                     </div>
                 </div>
 
-
-                <p class="mb-0 review-text">
-                    @empty($draft->fear_comment)
-                        怖さに関するコメントはありません。
-                    @else
+                @if(!empty($draft->fear_comment))
+                    <p class="mb-0 review-text mt-4">
                         {!! nl2br(e($draft->fear_comment)) !!}
-                    @endempty
-                </p>
+                    </p>
+                @endif
             </div>
         </div>
 
@@ -125,9 +122,9 @@
                 </div>
 
                 @empty($draft->getGoodTags())
-                    <p>良い点はありません。</p>
+                    <p class="text-muted mb-0">良い点はありません。</p>
                 @else
-                    <div class="d-flex flex-wrap mb-2">
+                    <div class="d-flex flex-wrap">
                         @foreach ($draft->getGoodTags() as $tagId)
                             <span class="tag simple mr-2 mb-2">
                             {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
@@ -142,13 +139,11 @@
                     </div>
                 @endempty
 
-                <p class="mb-0 mt-3 review-text">
-                    @empty($draft->good_comment)
-                        良い点に関するコメントはありません。
-                    @else
+                @if(!empty($draft->good_comment))
+                    <p class="mb-0 review-text mt-4">
                         {!! nl2br(e($draft->good_comment)) !!}
-                    @endempty
-                </p>
+                    </p>
+                @endif
             </div>
         </div>
 
@@ -163,15 +158,16 @@
                     </div>
                 </div>
                 @empty($draft->getBadTags())
-                    <p>悪い点はありません。</p>
+                    <p class="text-muted mb-0">悪い点はありません。</p>
                 @else
-                    <div class="d-flex flex-wrap mb-2">
+                    <div class="d-flex flex-wrap">
                         @foreach ($draft->getBadTags() as $tagId)
-                            <span class="tag simple mr-2 mb-2">{{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
+                            <span class="tag simple mr-2 mb-2">
+                        {{ \Hgs3\Constants\Review\Tag::getName($tagId) }}
                                 @if ($draft->isVeryBad($tagId))
                                     <i class="far fa-thumbs-down"></i>
                                 @endif
-                            </span>
+                    </span>
                         @endforeach
                     </div>
                     <div>
@@ -179,13 +175,11 @@
                     </div>
                 @endempty
 
-                <p class="mb-0 mt-3 review-text">
-                    @empty($draft->bad_comment)
-                        悪い点に関するコメントはありません。
-                    @else
+                @if(!empty($draft->bad_comment))
+                    <p class="mb-0 review-text mt-4">
                         {!! nl2br(e($draft->bad_comment)) !!}
-                    @endempty
-                </p>
+                    </p>
+                @endif
             </div>
         </div>
 

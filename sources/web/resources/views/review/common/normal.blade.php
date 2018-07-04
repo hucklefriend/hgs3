@@ -15,9 +15,7 @@
             </div>
         </div>
         <div class="align-self-center">
-            <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-outline-dark border-0 d-block">
-                <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
-            </a>
+            <a href="{{ route('レビュー', ['review' => $review->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
         </div>
     </div>
 </div>

@@ -59,7 +59,7 @@
                             <h5 class="card-title">お知らせ</h5>
 
                             <div class="card-title-link">
-                                <a href="{{ route('お知らせ') }}" class="badge badge-pill show-all"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
+                                <a href="{{ route('お知らせ') }}" class="and-more and-more-sm"><small>すべて見る</small> <i class="fas fa-angle-right"></i></a>
                             </div>
                         </div>
                         @foreach ($notices as $notice)

@@ -85,13 +85,11 @@
         <div class="card-body">
             <h5 class="card-title">怖さ：{{ Hgs3\Constants\Review\Fear::$data[$review->fear] }}</h5>
 
-            <p class="mb-0 review-text">
-                @empty($review->fear_comment)
-                    怖さに関するコメントはありません。
-                @else
+            @if(!empty($review->fear_comment))
+                <p class="mb-0 review-text mt-4">
                     {!! nl2br(e($review->fear_comment)) !!}
-                @endempty
-            </p>
+                </p>
+            @endif
         </div>
     </div>
 
@@ -102,7 +100,7 @@
             </h5>
 
             @empty($review->getGoodTags())
-                <p>良い点はありません。</p>
+                <p class="text-muted mb-0">良い点はありません。</p>
             @else
                 <div class="d-flex flex-wrap">
                     @foreach ($review->getGoodTags() as $tagId)
@@ -119,13 +117,11 @@
                 </div>
             @endempty
 
-            <p class="mb-0 review-text mt-4">
-                @empty($review->good_comment)
-                    良い点に関するコメントはありません。
-                @else
+            @if(!empty($review->good_comment))
+                <p class="mb-0 review-text mt-4">
                     {!! nl2br(e($review->good_comment)) !!}
-                @endempty
-            </p>
+                </p>
+            @endif
         </div>
     </div>
 
@@ -135,7 +131,7 @@
                 <i class="far fa-thumbs-down"></i> 悪い点：-{{ (count($review->getBadTags()) + count($review->getVeryBadTags())) * \Hgs3\Constants\Review\Tag::POINT_RATE }}pt
             </h5>
                 @empty($review->getBadTags())
-                    <p>悪い点はありません。</p>
+                    <p class="text-muted mb-0">悪い点はありません。</p>
                 @else
                 <div class="d-flex flex-wrap">
                     @foreach ($review->getBadTags() as $tagId)
@@ -152,26 +148,23 @@
                 </div>
                 @endempty
 
+            @if(!empty($review->bad_comment))
             <p class="mb-0 review-text mt-4">
-                @empty($review->bad_comment)
-                    悪い点に関するコメントはありません。
-                @else
-                    {!! nl2br(e($review->bad_comment)) !!}
-                @endempty
+                {!! nl2br(e($review->bad_comment)) !!}
             </p>
+            @endif
         </div>
     </div>
 
 <div class="card card-hgn">
     <div class="card-body">
         <h5 class="card-title">総合評価</h5>
-        <p class="mb-0 review-text">
-            @empty($review->general_comment)
-                総合評価はありません。
-            @else
-                {!! nl2br(e($review->general_comment)) !!}
-            @endempty
-        </p>
+
+        @empty($review->general_comment)
+            <p class=" mb-0 text-muted">総合評価はありません。</p>
+        @else
+            <p class="mb-0 review-text">{!! nl2br(e($review->general_comment)) !!}</p>
+        @endempty
     </div>
 </div>
 
