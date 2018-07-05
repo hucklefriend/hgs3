@@ -15,6 +15,19 @@ function toggleButton(check, on)
     }
 }
 
+/**
+ * チェックがついているトグルボタンのactiveを設定
+ */
+function setToggleButtonActive(selector)
+{
+    $(selector).each(function (){
+        let check = $(this);
+        if (check.prop('checked')) {
+            $(check.parent().get(0)).addClass('active');
+        }
+    });
+}
+
 
 // 以下から拝借
 // https://qiita.com/kuro123/items/b009e65cfac5eb1bb502

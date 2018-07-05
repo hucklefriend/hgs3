@@ -72,6 +72,7 @@ class ProfileController extends Controller
 
         $attribute = $request->get('attribute', []);
         User::saveAttribute(Auth::id(), $attribute);
+        User\SearchIndex::save(Auth::user());
 
         return redirect()->route('ユーザー設定');
     }

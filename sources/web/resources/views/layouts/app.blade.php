@@ -19,8 +19,10 @@
         <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
         @if (env('APP_ENV') != 'production')
             <link rel="stylesheet" href="{{ url('css/hgs3.css') }}?ver={{ time() }}">
+            <script src="{{ url('/js/common.js') }}?ver={{ time() }}"></script>
         @else
             <link rel="stylesheet" href="{{ url('css/hgs3.css') }}?ver={{ env('SYSTEM_VERSION') }}">
+            <script src="{{ url('/js/common.js') }}?ver={{ env('SYSTEM_VERSION') }}"></script>
         @endif
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/layzr.js/2.2.2/layzr.min.js"></script>
@@ -34,7 +36,7 @@
         <script src="{{ url('vendors/bower_components/autosize/dist/autosize.min.js') }}"></script>
         <script src="{{ url('vendors/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
         <script src="{{ url('/js/super_admin.min.js') }}"></script>
-        <script src="{{ url('/js/common.js') }}"></script>
+
         <script src="{{ url('/js/ticker.js') }}"></script>
 
         @yield('head_append')

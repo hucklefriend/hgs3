@@ -173,7 +173,6 @@
 
         function showTag()
         {
-
             let goodTags = $('.good_tag:checked');
             if (goodTags.length == 0) {
                 $('#no-tag-text').show();

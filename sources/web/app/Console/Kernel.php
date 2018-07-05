@@ -38,6 +38,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('master:affiliate')
             ->dailyAt('04:00');
+
+        /*$schedule->command('user:search_index')
+            ->dailyAt('04:00');*/
     }
 
     /**

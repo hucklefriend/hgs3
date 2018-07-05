@@ -155,7 +155,7 @@
                     @endif
                     @if ($isMyself)
                     <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'good_site']) }}" class="nav-link @if($show == 'good_site') active @endif" aria-expanded="true">いいねしたサイト {{ $goodSiteNum }}件</a>
-                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'message']) }}" class="nav-link @if($show == 'good_site') active @endif" aria-expanded="true">システムメッセージ {{ $messageNum }}件</a>
+                    <a href="{{ route('プロフィール2', ['showId' => $user->show_id, 'show' => 'message']) }}" class="nav-link @if($show == 'message') active @endif" aria-expanded="true">システムメッセージ {{ $messageNum }}件</a>
                     @endif
                 </div>
             </div>
@@ -169,13 +169,8 @@
                 <hr>
                 <div>
                     <div class="d-flex align-content-around">
-                        <div>
-                            <a href="{{ route('ユーザー設定') }}" class="btn"><i class="fas fa-cog"></i> 設定</a>
-                        </div>
-                        <div class="ml-auto text-right">
-                            <a href="{{ route('ログアウト') }}" class="btn btn-outline-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a>
-                        </div>
-
+                        <div><a href="{{ route('ユーザー設定') }}" class="btn"><i class="fas fa-cog"></i> 設定</a></div>
+                        <div class="ml-auto text-right"><a href="{{ route('ログアウト') }}" class="btn btn-outline-warning" onclick="return confirm('ログアウトしていいですか？');">ログアウト</a></div>
                     </div>
                 </div>
             </div>

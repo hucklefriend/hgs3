@@ -19,6 +19,13 @@
         @if (!empty($user->profile))
             <p><small>{!! nl2br(e(str_limit($user->profile, 200))) !!}</small></p>
         @endif
+        @if ($sns->isNotEmpty())
+            <div class="my-2">
+                @foreach ($sns as $socialSite)
+                    <a href="{{ $socialSite->getUrl() }}" class="mr-2 mb-2">{{ \Hgs3\Constants\SocialSite::getIconAndName($socialSite->social_site_id) }} <i class="fas fa-sign-out-alt"></i></a>
+                @endforeach
+            </div>
+        @endif
 
         <div class="text-right">
             <a href="{{ route('プロフィール', ['showId' => $user->show_id]) }}" class="and-more">プロフィールを見る <i class="fas fa-angle-right"></i></a>

@@ -19,7 +19,8 @@ class Collection
      */
     private function __construct()
     {
-        $client = new \MongoDB\Client("mongodb://localhost:27017");
+        $host = env('MONGO_HOST') . ':' . env('MONGO_PORT');
+        $client = new \MongoDB\Client($host);
         if (env('APP_ENV') == 'staging') {
             self::$db = $client->hgs3_stg;
         } else {
@@ -46,9 +47,10 @@ class Collection
      */
     public static function create()
     {
-        // TODO .envに書く
-        $client = new \MongoDB\Client("mongodb://localhost:27017");
-        $dbName = env('APP_ENV') == 'staging' ? 'hgs3_stg' : 'hgs3';
+        $host = env('MONGO_HOST') . ':' . env('MONGO_PORT');
+
+        $client = new \MongoDB\Client($host);
+        $dbName = env('MONGO_NAME');
 
         echo 'drop hgs3'.PHP_EOL;
         $client->dropDatabase($dbName);

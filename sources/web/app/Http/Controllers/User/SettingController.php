@@ -10,6 +10,7 @@ use Hgs3\Http\Requests\User\Setting\SavePixivRequest;
 use Hgs3\Http\Requests\User\Setting\SnsOpenRequest;
 use Hgs3\Models\Account\SocialSite;
 use Hgs3\Models\Orm;
+use Hgs3\Models\User\SearchIndex;
 use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
@@ -63,6 +64,8 @@ class SettingController extends Controller
         $sa->open_flag = $request->get('open_flag');
         $sa->save();
 
+        SearchIndex::save(Auth::user());
+
         return redirect()->back();
     }
 
@@ -88,6 +91,7 @@ class SettingController extends Controller
         }
 
         $sa->delete();
+        SearchIndex::save(Auth::user());
 
         return redirect()->back();
     }
