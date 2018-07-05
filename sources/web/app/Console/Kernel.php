@@ -22,7 +22,8 @@ class Kernel extends ConsoleKernel
         Commands\Master\UpdateShopImage::class,
         Commands\Sitemap::class,
         Commands\ReviewTotal::class,
-        Commands\TranslateHgs::class
+        Commands\TranslateHgs::class,
+        Commands\UserSearchIndex::class
     ];
 
     /**
@@ -38,9 +39,6 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('master:affiliate')
             ->dailyAt('04:00');
-
-        /*$schedule->command('user:search_index')
-            ->dailyAt('04:00');*/
     }
 
     /**

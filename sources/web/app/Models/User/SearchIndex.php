@@ -16,8 +16,9 @@ class SearchIndex
      * 保存
      *
      * @param User $user
+     * @param int|null $time
      */
-    public static function save(User $user)
+    public static function save(User $user, $time = null)
     {
         $db = self::getDB();
 
@@ -35,7 +36,7 @@ class SearchIndex
                 'open_profile_flag' => $user->open_profile_flag,
                 'attribute' => $attr,
                 'sns'       => $sns,
-                'time'      => time()
+                'time'      => $time ?? time()
             ],
             ['upsert' => true]
         );

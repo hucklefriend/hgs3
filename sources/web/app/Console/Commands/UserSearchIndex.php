@@ -2,6 +2,7 @@
 
 namespace Hgs3\Console\Commands;
 
+use Hgs3\Models\User;
 use Illuminate\Console\Command;
 
 class UserSearchIndex extends Command
@@ -38,6 +39,9 @@ class UserSearchIndex extends Command
      */
     public function handle()
     {
-        \Hgs3\Models\Review\Total::total();
+        $users = User::all();
+        foreach ($users as $user) {
+            User\SearchIndex::save($user, strtotime($user->created_at));
+        }
     }
 }
