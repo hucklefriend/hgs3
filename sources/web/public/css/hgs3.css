@@ -1159,7 +1159,7 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 }
 
 .site-list-update-history > div {
-    badkground-color: rgba(255, 255, 255, 0.1)
+    background-color: rgba(255, 255, 255, 0.1)
 }
 
 .modal {
@@ -1170,6 +1170,15 @@ input[type=text], input[type=number],input[type=url],input[type=password],input[
 
 }
 
+.lg-actions .lg-prev:after {
+    content: "←" !important;
+}
+.lg-actions .lg-next:before {
+    content: "→" !important;
+}
+#lg-share {
+    display:none !important;
+}
 
 /* SM */
 @media (min-width: 576px) {
