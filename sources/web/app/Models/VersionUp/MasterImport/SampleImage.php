@@ -41,14 +41,13 @@ class SampleImage extends MasterImportAbstract
                 }
 
                 foreach ($data as $row) {
-                    $img = new Orm\GameSampleImage($row);
-                    $img->soft_id = $row['soft_id'];
-                    $img->no = $row['no'];
+                    $img = new Orm\GameSoftSampleImage($row);
                     $img->package_id = $row['package_id'];
+                    $img->no = $row['no'];
                     $img->shop_id = $row['shop_id'];
                     $img->small_image_url = $row['small_image_url'];
                     $img->large_image_url = $row['large_image_url'];
-                    $img->save2();
+                    $img->upsert();
                 }
             }
         }
