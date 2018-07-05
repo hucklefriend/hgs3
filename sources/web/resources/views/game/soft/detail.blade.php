@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head_append')
+    <link rel="stylesheet" href="{{ url('vendors/bower_components/lightgallery/dist/css/lightgallery.min.css') }}">
+@endsection
+
 @section('title'){{ $soft->name }}@endsection
 @section('global_back_link'){{ \Hgs3\Http\GlobalBack::softDetail($soft) }}@endsection
 
@@ -10,10 +14,10 @@
     </header>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12 @if($images->isNotEmpty()) col-sm-6 @endif ">
             <div class="card card-hgn">
                 <div class="card-body">
-                    <div class="d-flex flex-column flex-sm-row">
+                    <div class="d-flex flex-column @if($images->isEmpty()) flex-sm-row @endif ">
                         @if ($hasOriginalPackageImage)
                             <div class="text-center mb-3">
                                 @include('game.common.packageImage', ['imageUrl' => medium_image_url($originalPackage)])
@@ -88,6 +92,26 @@
                 </div>
             </div>
         </div>
+
+        @if($images->isNotEmpty())
+            <div class="col-12 col-sm-6">
+                <div class="card card-hgn">
+                    <div class="card-body">
+                        <div class="row lightbox photos game-sample-image">
+                        @foreach ($images as $img)
+                            <a href="{{ $img->large_image_url }}" class="col-lg-1 col-sm-2 col-2">
+                                <div class="lightbox__item photos__item">
+                                    <img data-normal="{{ $img->small_image_url }}" alt="">
+                                </div>
+                            </a>
+                        @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="{{ url('vendors/bower_components/lightgallery/dist/js/lightgallery-all.min.js') }}"></script>
+        @endif
     </div>
 
     <div class="row">

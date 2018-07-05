@@ -16,7 +16,7 @@ class GameSampleImage extends \Eloquent
     public function save2()
     {
         $sql =<<< SQL
-INSERT INTO game_sample_images (soft_id, `no`, package_id, shop_id, small_image_url, large_image_url, created_at, updated_at)
+INSERT INTO game_soft_sample_images (soft_id, `no`, package_id, shop_id, small_image_url, large_image_url, created_at, updated_at)
 VALUES (:soft_id, :no, :package_id, :shop_id, :small_image_url, :large_image_url, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON DUPLICATE KEY UPDATE
   package_id = VALUES(package_id)
@@ -27,11 +27,11 @@ ON DUPLICATE KEY UPDATE
 SQL;
 
         DB::insert($sql, [
-            'soft_id'  => $this->soft_id,
-            'no'    => $this->no,
-            'package_id'    => $this->package_id,
-            'shop_id'    => $this->shop_id,
-            'small_image_url'      => $this->small_image_url,
+            'soft_id'         => $this->soft_id,
+            'no'              => $this->no,
+            'package_id'      => $this->package_id,
+            'shop_id'         => $this->shop_id,
+            'small_image_url' => $this->small_image_url,
             'large_image_url' => $this->large_image_url
         ]);
     }

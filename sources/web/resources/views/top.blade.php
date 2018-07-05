@@ -69,13 +69,10 @@
                                     <p class="mb-0 force-break">{{ $notice->title }}</p>
                                 </div>
                                 <div class="align-self-center">
-                                    <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-dark border-0 d-block">
-                                        <button class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></button>
-                                    </a>
+                                    <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
                 </div>
                 @endif

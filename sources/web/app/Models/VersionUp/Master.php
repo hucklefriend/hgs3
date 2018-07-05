@@ -51,7 +51,7 @@ class Master
         MasterImport\OfficialSite::import($date);
 
         echo 'import sample image.' . PHP_EOL;
-        MasterImport\OfficialSite::import($date);
+        MasterImport\SampleImage::import($date);
 
         echo 'update sort order.' . PHP_EOL;
         \Hgs3\Models\Orm\GameSoft::updateSortOrder();
@@ -67,33 +67,5 @@ class Master
 
         echo 'update original package id.' . PHP_EOL;
         \Hgs3\Models\Game\Soft::updateOriginalPackageId(false);
-    }
-
-    public static function importSql($date)
-    {
-        GameCompany::truncate();
-        GameOfficialSite::truncate();
-        GamePackage::truncate();
-        GamePackageLink::truncate();
-        GamePackageShop::truncate();
-        GamePlatform::truncate();
-        GameSeries::truncate();
-        GameSoft::truncate();
-
-        $path = storage_path('master/all/' . $date . '.sql');
-        if (File::isFile($path)) {
-            $dbUser = env('DB_USERNAME');
-            $dbPass = env('DB_PASSWORD');
-            $dbName = env('DB_DATABASE');
-
-            $command = 'mysql -u ' . $dbUser;
-            if (!empty($dbPass)) {
-                $command .= ' -p ' . $dbPass;
-            }
-            $command .= ' ' . $dbName . ' < ' . escapeshellarg($path);
-            exec($command);
-
-            //DB::statement(File::get($path));
-        }
     }
 }

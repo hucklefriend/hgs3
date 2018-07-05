@@ -90,6 +90,10 @@ SQL;
             $data['series'] = null;
         }
 
+        // サンプル画像
+        $data['images'] = self::getSampleImages($soft, []);
+
+
         // パッケージ情報
         $data['packages'] = self::getPackages($soft->id);
         $data['packageNum'] = count($data['packages']);
@@ -480,5 +484,20 @@ SQL;
             ->select([DB::raw('COUNT(id) AS num')])
             ->get()
             ->first()->num;
+    }
+
+    /**
+     * サンプル画像を取得
+     *
+     * @param Orm\GameSoft $soft
+     * @param $packages
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getSampleImages(Orm\GameSoft $soft, $packages)
+    {
+        return DB::table('game_soft_sample_images')
+            ->where('soft_id', $soft->id)
+            ->orderBy('no')
+            ->get();
     }
 }
