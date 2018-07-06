@@ -21,7 +21,6 @@
         if (!empty($favoriteHash)) {
             $phonetics[] = ['fav', 100, 'fav'];
         }
-
     @endphp
     <div class="content__inner">
         <header class="content__title">
