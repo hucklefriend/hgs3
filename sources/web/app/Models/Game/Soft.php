@@ -90,10 +90,6 @@ SQL;
             $data['series'] = null;
         }
 
-        // サンプル画像
-        $data['images'] = self::getSampleImages($soft, []);
-
-
         // パッケージ情報
         $data['packages'] = self::getPackages($soft->id);
         $data['packageNum'] = count($data['packages']);
@@ -104,19 +100,26 @@ SQL;
             $data['hasOriginalPackageImage'] = false;
         }
 
+
         // 発売日を過ぎているか
         $today = date('Ymd');
         $data['released'] = $soft->first_release_int <= $today;
         $canAdult = Auth::check() && Auth::user()->isAdult();
-        if ($canAdult) {
-            foreach ($data['packages'] as $pkg) {
-                // アダルトゲームがあれば、広告も変える
-                if ($pkg->is_adult == 1) {
-                    enable_adult_sponsor();
-                    break;
+        $sampleImagePackages = [];
+        foreach ($data['packages'] as $pkg) {
+            if ($pkg->is_adult == 1) {
+                if ($canAdult) {
+                    enable_adult_sponsor(); // アダルトゲームがあれば、広告も変える
+
+                    $sampleImagePackages[] = $pkg->id;
                 }
+            } else {
+                $sampleImagePackages[] = $pkg->id;
             }
         }
+
+        // サンプル画像
+        $data['images'] = self::getSampleImages($sampleImagePackages, []);
 
         // プラットフォームリスト
         $platforms = [];
@@ -489,14 +492,13 @@ SQL;
     /**
      * サンプル画像を取得
      *
-     * @param Orm\GameSoft $soft
-     * @param $packages
+     * @param array $packageIds
      * @return \Illuminate\Support\Collection
      */
-    public static function getSampleImages(Orm\GameSoft $soft, $packages)
+    public static function getSampleImages(array $packageIds)
     {
         return DB::table('game_soft_sample_images')
-            ->where('soft_id', $soft->id)
+            ->whereIn('package_id', $packageIds)
             ->orderBy('no')
             ->get();
     }

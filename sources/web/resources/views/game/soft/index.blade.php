@@ -57,7 +57,7 @@
                                         <div>
                                             <div><img data-url="{{ small_image_url($soft, true) }}" class="lazy-img-load"></div>
                                             <div>
-                                                <small>{{ $soft->name }}</small>
+                                                {{ $soft->name }}
                                                 @isset($favoriteSofts[$soft->id])
                                                     <small><span class="favorite-icon"><i class="fas fa-star"></i></span></small>
                                                 @endisset

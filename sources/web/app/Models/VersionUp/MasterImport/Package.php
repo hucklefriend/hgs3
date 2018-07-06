@@ -236,138 +236,6 @@ class Package extends MasterImportAbstract
         return $updated;
     }
 
-    /**
-     * 手動設定
-     */
-    private static function manual20180603()
-    {
-        DB::table('game_softs')
-            ->whereIn('id', [242, 243])
-            ->delete();
-        DB::table('game_package_links')
-            ->whereIn('soft_id', [242, 243])
-            ->delete();
-        DB::table('game_package_links')
-            ->where('soft_id', 207)
-            ->whereIn('package_id', [816, 819])
-            ->delete();
-
-        DB::table('game_packages')
-            ->whereIn('id', [725, 665, 723, 722, 724, 572])
-            ->update(['is_adult' => 1]);
-
-        DB::table('game_packages')
-            ->whereIn('id', [238, 587, 575, 574, 573, 576, 577, 578, 834, 833])
-            ->update(['is_adult' => 2]);
-
-        DB::table('game_packages')
-            ->whereIn('id', [517, 500])
-            ->delete();
-        DB::table('game_package_shops')
-            ->whereIn('package_id', [517, 500])
-            ->delete();
-        DB::table('game_package_links')
-            ->whereIn('package_id', [517, 500])
-            ->delete();
-
-        DB::table('game_series')
-            ->whereIn('id', [18])
-            ->delete();
-
-        $deleteShops = [
-            [620, Shop::DMM],
-            [648, Shop::DMM],
-            [647, Shop::DMM],
-            [688, Shop::DMM],
-        ];
-        foreach ($deleteShops as $deleteShop) {
-            self::deleteShop($deleteShop[0], $deleteShop[1]);
-        }
-    }
-
-    private static function manual20180604()
-    {
-        DB::table('game_packages')
-            ->whereIn('id', [721, 726, 727, 729, 747, 743, 744, 745, 746, 823, 748, 749, 750, 751, 158,
-                757, 756, 755, 752, 753, 754, 758, 759, 760, 761, 762, 763, 765, 764, 766, 767, 768, 769, 770,
-                771, 640, 639, 772, 773, 803, 802, 829, 809, 811, 812, 816, 815, 814, 819, 818, 817])
-            ->update(['is_adult' => 1]);
-
-        DB::table('game_packages')
-            ->whereIn('id', [719, 720, 564, 565, 740, 853, 582, 583])
-            ->update(['is_adult' => 2]);
-
-        DB::table('game_packages')
-            ->whereIn('id', [841])
-            ->update(['company_id' => 140]);
-
-        DB::table('game_packages')
-            ->where('company_id', 122)
-            ->update(['company_id' => 151]);
-
-    }
-
-    private static function manual20180605()
-    {
-        DB::table('game_package_links')
-            ->where('package_id', 547)
-            ->update(['package_id' => 540]);
-
-        DB::table('game_packages')
-            ->whereIn('id', [547])
-            ->delete();
-        DB::table('game_package_shops')
-            ->whereIn('package_id', [547])
-            ->delete();
-        DB::table('game_package_links')
-            ->whereIn('package_id', [547])
-            ->delete();
-
-        DB::table('game_package_links')
-            ->where('package_id', 852)
-            ->update(['soft_id' => 235]);
-
-        DB::table('game_packages')
-            ->where('id', 137)
-            ->update(['name' => '夜想曲2 PS one Books']);
-
-        $intro =<<< INTRO
-コノ女、嘘ニ憑カレ、真ヲ突ク。
-
-都市伝説――
-それは、口承される噂話のうち、現代発祥のもので、根拠が曖昧・不明であるもの。
-ここに、またひとつ。
-恐怖に彩られた蟲惑敵な都市伝説が生まれようとしていた。
-INTRO;
-        DB::table('game_softs')
-            ->where('id', 313)
-            ->update(['introduction' => $intro]);
-
-        DB::table('game_official_sites')
-            ->whereIn('url', [
-                'http://game.intergrow.jp/layersoffear/',
-                'http://www.gae.co.jp/arc/1493',
-            ])->delete();
-
-        DB::table('game_packages')
-            ->whereIn('id', [579])
-            ->update(['is_adult' => 0]);
-    }
-
-    private static function manual20180606()
-    {
-        DB::table('game_packages')
-            ->whereIn('id', [635])
-            ->update(['is_adult' => 0]);
-        DB::table('game_packages')
-            ->whereIn('id', [852])
-            ->update(['is_adult' => 2]);
-
-        DB::table('game_packages')
-            ->whereIn('id', [12, 13, 276, 278, 277, 436, 435])
-            ->delete();
-    }
-
     private static function manual20180607()
     {
         DB::table('game_packages')
@@ -384,8 +252,21 @@ INTRO;
             ->delete();
     }
 
-    private static function manual20180701()
+    private static function manual20180707()
     {
+        $sql =<<< SQL
+SELECT * FROM game_package_shops
+WHERE package_id IN (SELECT id FROM game_packages WHERE acronym LIKE '%DL%')
+  AND shop_id = 44
+  AND param1 IS NOT NULL
+SQL;
+
+        $data = DB::select($sql);
+
+        foreach ($data as $shop) {
+            \Hgs3\Models\Game\Package::saveImageByDmm($shop->package_id, $shop->param1, 44);
+        }
+
     }
 
     private static function deleteShop($pkgId, $shopId)

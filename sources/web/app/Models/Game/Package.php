@@ -216,12 +216,11 @@ SQL;
     /**
      * DMMからデータを保存
      *
-     * @param $softId
      * @param $packageId
      * @param $cid
      * @param $shopId
      */
-    public static function saveImageByDmm($softId, $packageId, $cid, $shopId)
+    public static function saveImageByDmm($packageId, $cid, $shopId)
     {
         $shop = $shopId == Shop::DMM_R18 ? 'DMM.R18' : 'DMM.com';
         $item = Dmm::getItem($cid, $shop);
@@ -244,14 +243,14 @@ SQL;
             if (isset($item->result->items[0]->sampleImageURL->sample_s->image)) {
                 $no = 1;
                 foreach ($item->result->items[0]->sampleImageURL->sample_s->image as $sampleImage) {
-                    $orm = new Orm\GameSoftSampleImage();
-                    $img->soft_id = $softId;
+                    $img = new Orm\GameSoftSampleImage();
                     $img->no = $no;
                     $img->package_id = $packageId;
                     $img->shop_id = $shopId;
                     $img->small_image_url = $sampleImage;
                     $img->large_image_url = str_replace_last('js', 'jp', $sampleImage);
                     $img->upsert();
+                    unset($img);
 
                     $no++;
                 }
