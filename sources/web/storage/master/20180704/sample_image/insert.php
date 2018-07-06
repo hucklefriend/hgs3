@@ -1,0 +1,10 @@
+<?php
+return [
+    ['package_id' => 925, 'no' => 1, 'shop_id' => 31, 'small_image_url' => 'https://is2-ssl.mzstatic.com/image/thumb/Purple118/v4/cc/b7/26/ccb72628-2b49-3ea6-e539-a6858d9959df/source/406x228bb.jpg', 'large_image_url' => 'https://is4-ssl.mzstatic.com/image/thumb/Purple118/v4/28/c3/ec/28c3ec53-fb96-81e9-0de8-1b41a026c054/source/552x414bb.jpg'],
+    ['package_id' => 925, 'no' => 2, 'shop_id' => 31, 'small_image_url' => 'https://is2-ssl.mzstatic.com/image/thumb/Purple118/v4/c7/bf/6d/c7bf6d00-8315-b99b-4f07-12cb178af3ff/source/406x228bb.jpg', 'large_image_url' => 'https://is5-ssl.mzstatic.com/image/thumb/Purple128/v4/c5/74/18/c57418e0-a08f-a663-ac9c-ff7d1658aa17/source/552x414bb.jpg'],
+    ['package_id' => 925, 'no' => 3, 'shop_id' => 31, 'small_image_url' => 'https://is5-ssl.mzstatic.com/image/thumb/Purple118/v4/fa/3f/a2/fa3fa22e-eb2a-5ad9-db2e-d0b79402db5e/source/406x228bb.jpg', 'large_image_url' => 'https://is2-ssl.mzstatic.com/image/thumb/Purple128/v4/51/3a/9a/513a9a36-96a3-eba0-9e7f-734431d7ffb3/source/552x414bb.jpg'],
+    ['package_id' => 925, 'no' => 4, 'shop_id' => 31, 'small_image_url' => 'https://is5-ssl.mzstatic.com/image/thumb/Purple118/v4/e9/0e/f2/e90ef2d9-c1bf-954f-aedf-108462506145/source/406x228bb.jpg', 'large_image_url' => 'https://is5-ssl.mzstatic.com/image/thumb/Purple128/v4/53/eb/0b/53eb0ba9-d341-9bb7-d770-7e20becd80ff/source/552x414bb.jpg'],
+    ['package_id' => 925, 'no' => 5, 'shop_id' => 31, 'small_image_url' => 'https://is1-ssl.mzstatic.com/image/thumb/Purple118/v4/c9/e8/aa/c9e8aa9b-345d-7d27-b8bc-2eb8858f6ccb/source/406x228bb.jpg', 'large_image_url' => 'https://is5-ssl.mzstatic.com/image/thumb/Purple128/v4/ed/0b/48/ed0b48e9-40d2-e0f8-b428-139466dff961/source/552x414bb.jpg'],
+
+    //['no' => 5, 'package_id' => 919, 'shop_id' => 31, 'small_image_url' => '', 'large_image_url' => ''],
+];

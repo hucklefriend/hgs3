@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         @foreach ($notices as $notice)
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between mb-3">
                                 <div class="text-left force-break">
                                     <small>{{ format_date($notice->open_at_ts) }}</small><br>
                                     <p class="mb-0 force-break">{{ $notice->title }}</p>
