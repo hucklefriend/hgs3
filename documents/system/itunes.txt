@@ -1,7 +1,7 @@
 手動でやる
 
-https://itunes.apple.com/search?term=emily-wants-to-play&country=jp&entity=software
-
+https://itunes.apple.com/search?term=adv-%E3%83%AC%E3%82%A4%E3%82%B8%E3%83%B3%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97&country=jp&entity=software
+https://itunes.apple.com/search?term=adv-%E3%83%AC%E3%82%A4%E3%82%B8%E3%83%B3%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97-%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0%E3%82%BB%E3%83%83%E3%83%88&country=jp&entity=software
 
 https://itunes.apple.com/search?term=identity-v&country=jp&entity=software
 

@@ -1,0 +1,13 @@
+{
+  "id": 928,
+  "platform": "PS4",
+  "company": "ケムコ",
+  "name": "レイジングループ",
+  "acronym": "PS4 パッケージ版",
+  "release_int": 20180125,
+  "release_at": "2018年1月25日",
+  "soft_id": [376],
+  "shop": {
+    "amazon": "B076RN49M8"
+  }
+}

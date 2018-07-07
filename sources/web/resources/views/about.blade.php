@@ -83,5 +83,26 @@
                 </p>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">その他</h4>
+
+                <p>
+                    デザインテンプレートはこちらで購入したものを使っています。<br>
+                    <a href="https://wrapbootstrap.com/" target="_blank">WrapBootstrap <i class="fas fa-sign-out-alt"></i></a>
+                </p>
+
+                <p>
+                    バナー画像はこちらで購入したものを使っています。<br>
+                    <a href="https://rfclipart.com/" target="_blank">RF CLIPART <i class="fas fa-sign-out-alt"></i></a>
+                </p>
+
+                <p>
+                    こちらの画像をサイト内で利用しています。<br>
+                    <a href="http://icooon-mono.com/" target="_blank">ICOON MONO <i class="fas fa-sign-out-alt"></i></a>
+                </p>
+            </div>
+        </div>
     </div>
 @endsection

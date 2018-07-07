@@ -267,6 +267,23 @@ SQL;
             \Hgs3\Models\Game\Package::saveImageByDmm($shop->package_id, $shop->param1, 44);
         }
 
+
+        DB::table('game_packages')
+            ->whereIn('id', [765, 764])
+            ->update(['company_id' => 75]);
+
+        DB::table('game_packages')
+            ->whereIn('id', [910, 911, 912, 913])
+            ->update(['company_id' => 181]);
+
+        DB::table('game_packages')
+            ->whereIn('id', [877, 878])
+            ->update(['company_id' => 151]);
+
+        DB::table('game_packages')
+            ->whereIn('id', [812, 754, 746])
+            ->update(['company_id' => 168]);
+
     }
 
     private static function deleteShop($pkgId, $shopId)

@@ -42,7 +42,7 @@ class ApprovalController extends Controller
 
         return view('site.approval.judge', [
             'site'        => $site,
-            'handleSofts' => Site::getSoftWithOriginalPackage($site->id),
+            'handleSofts' => Site::getSoftWithOriginalPackage($site->id, false),
             'webMaster'   => User::find($site->user_id),
             'isWebMaster' => false,
             'isFavorite'  => false,
