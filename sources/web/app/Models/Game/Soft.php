@@ -28,7 +28,7 @@ class Soft
             $appendQuery = 'WHERE adult_only_flag = 0' . PHP_EOL;
         }
 
-        $sql =<<< SQL
+        $sql = <<< SQL
 SELECT
   s.id
   , s.name
@@ -191,7 +191,7 @@ SQL;
      */
     private static function getSameSeries($softId, $seriesId)
     {
-        $sql =<<< SQL
+        $sql = <<< SQL
 SELECT soft.id, soft.name, package.small_image_url, package.medium_image_url, package.large_image_url, package.is_adult
 FROM
   (
@@ -233,7 +233,7 @@ SQL;
             $appendQuery = 'AND is_adult <> 1' . PHP_EOL;
         }
 
-        $sql =<<< SQL
+        $sql = <<< SQL
 SELECT pkg.*, plt.name AS platform_name, com.name AS company_name
 FROM (
   SELECT id, `name`, platform_id, release_at, company_id, medium_image_url, small_image_url, large_image_url, is_adult, release_int, url
@@ -268,7 +268,7 @@ SQL;
      */
     private static function getFavoriteUser($softId)
     {
-        $sql =<<< SQL
+        $sql = <<< SQL
 SELECT users.id AS user_id, users.name, users.show_id, users.icon_upload_flag
   , users.icon_file_name, users.icon_round_type
 FROM (
@@ -326,7 +326,7 @@ SQL;
      */
     private static function getPlayedUsers($softId)
     {
-        $sql =<<< SQL
+        $sql = <<< SQL
 SELECT users.id, users.name, users.show_id
 FROM (
   SELECT user_id FROM user_played_softs WHERE soft_id = ? ORDER BY id LIMIT 5
@@ -344,7 +344,7 @@ SQL;
      * @return bool
      * @throws \Exception
      */
-    public static  function save(Orm\GameSoft $soft, $isWriteTimeine)
+    public static function save(Orm\GameSoft $soft, $isWriteTimeine)
     {
         $isNew = $soft->id === null;
 
@@ -501,5 +501,25 @@ SQL;
             ->whereIn('package_id', $packageIds)
             ->orderBy('no')
             ->get();
+    }
+
+    /**
+     * 一覧用データ取得
+     *
+     * @param bool $isGuest
+     * @return array
+     */
+    public static function getListForSearch($isGuest)
+    {
+        $appendQuery = '';
+
+        $query = DB::table('game_softs')
+            ->select(['id', 'name', 'phonetic']);
+
+        if ($isGuest) {
+            $query->where('adult_only_flag', 0);
+        }
+
+        return $query->get()->toJson();
     }
 }

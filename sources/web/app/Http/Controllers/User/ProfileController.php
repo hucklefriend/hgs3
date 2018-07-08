@@ -41,10 +41,6 @@ class ProfileController extends Controller
 
         $data['user'] = $user;
         $data['isMyself'] = Auth::id() == $user->id;
-        if ($data['isMyself']) {
-            $show = 'timeline';
-        }
-
 
         $data['followStatus'] = 0;
         if (!$data['isMyself'] && Auth::check()) {

@@ -35,6 +35,7 @@ class SoftController extends Controller
             'phoneticList'        => PhoneticType::getId2CharData(),
             'list'                => Soft::getList($favoriteHash, $isGuest),
             'favoriteHash'        => $favoriteHash,
+            'jsonList'              => Soft::getListForSearch($isGuest),
             'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ'))
         ]);
     }
