@@ -23,7 +23,8 @@ class Kernel extends ConsoleKernel
         Commands\Sitemap::class,
         Commands\ReviewTotal::class,
         Commands\TranslateHgs::class,
-        Commands\UserSearchIndex::class
+        Commands\UserSearchIndex::class,
+        Commands\Master\UpdateGameSoftList::class
     ];
 
     /**

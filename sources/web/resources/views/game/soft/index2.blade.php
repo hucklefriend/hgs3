@@ -37,7 +37,7 @@
             <div class="card-body">
                 <h4 class="card-title mb-0">絞り込み<button id="search_form_open" class="ml-3 btn btn-sm btn-secondary">open ▼</button></h4>
                 <div id="search" style="display:none;">
-                    <form method="GET" action="{{ route('ゲーム一覧') }}" class="mt-4" autocomplete="off">
+                    <form method="GET" action="#" class="mt-4" autocomplete="off" onsubmit="return false;">
                         <div class="form-group">
                             <label for="name" class="hgn-label"><i class="fas fa-edit"></i> ゲームタイトル</label>
                             <input type="text" class="form-control" id="name" name="name" value="">
@@ -93,7 +93,9 @@
                         </div>
                         <div class="form-help">
                             <p class="text-muted">
-                                <small>Nintendo Switchは家庭用据え置き機です。</small>
+                                <small>
+                                    Nintendo Switchは家庭用据え置き機です。
+                                </small>
                             </p>
                         </div>
 
@@ -137,9 +139,13 @@
                                 </small>
                             </p>
                             <p class="text-muted">
-                                <small>制限のあるパッケージとないパッケージが両方発売されている場合は、 いずれにチェックを入れても検索結果に出てきます。</small>
+                                <small>
+                                    制限のあるパッケージとないパッケージが両方発売されている場合は、 いずれにチェックを入れても検索結果に出てきます。
+                                </small>
                             </p>
                         </div>
+
+
 
                         <div class="form-group" style="max-width: 400px;">
                             <div>
@@ -225,25 +231,44 @@
 
                 setToggleButtonActive('.custom-control-input');
 
+                $('#search_btn').click(function (){
+                    let word = $('#name').val();
+                    if (word.length == 0) {
+                        $('.card-item').show();
+                    } else {
+                        $('.card-item').hide();
+                        let reg = new RegExp(word);
+
+                        master.forEach(function (element){
+                            if (element.name.match(reg)) {
+                                $('#c' + element.id).show();
+                            } else if (element.phonetic.match(reg)) {
+                                $('#c' + element.id).show();
+                            }
+                        });
+                    }
+                });
+
                 $('#reset_btn').click(function (){
                     $('.card-item').show();
                 });
             });
         </script>
 
+
         <div class="d-flex flex-wrap" id="game_tab">
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[0][1]) active @elseif(!isset($list[$phonetics[0][1]])) disable @endif " href="#" data-target="agyo" id="tab_agyo">あ</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[1][1]) active @elseif(!isset($list[$phonetics[1][1]])) disable @endif " href="#" data-target="kagyo" id="tab_kagyo">か</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[2][1]) active @elseif(!isset($list[$phonetics[2][1]])) disable @endif " href="#" data-target="sagyo" id="tab_sagyo">さ</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[3][1]) active @elseif(!isset($list[$phonetics[3][1]])) disable @endif " href="#" data-target="tagyo" id="tab_tagyo">た</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[4][1]) active @elseif(!isset($list[$phonetics[4][1]])) disable @endif " href="#" data-target="nagyo" id="tab_nagyo">な</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[5][1]) active @elseif(!isset($list[$phonetics[5][1]])) disable @endif " href="#" data-target="hagyo" id="tab_hagyo">は</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[6][1]) active @elseif(!isset($list[$phonetics[6][1]])) disable @endif " href="#" data-target="magyo" id="tab_magyo">ま</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[7][1]) active @elseif(!isset($list[$phonetics[7][1]])) disable @endif " href="#" data-target="yagyo" id="tab_yagyo">や</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[8][1]) active @elseif(!isset($list[$phonetics[8][1]])) disable @endif " href="#" data-target="ragyo" id="tab_ragyo">ら</a>
-            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[9][1]) active @elseif(!isset($list[$phonetics[9][1]])) disable @endif " href="#" data-target="wagyo" id="tab_wagyo">わ</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[0][1]) active @endif " href="#" data-target="agyo" id="tab_agyo">あ</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[1][1]) active @endif " href="#" data-target="kagyo" id="tab_kagyo">か</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[2][1]) active @endif " href="#" data-target="sagyo" id="tab_sagyo">さ</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[3][1]) active @endif " href="#" data-target="tagyo" id="tab_tagyo">た</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[4][1]) active @endif " href="#" data-target="nagyo" id="tab_nagyo">な</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[5][1]) active @endif " href="#" data-target="hagyo" id="tab_hagyo">は</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[6][1]) active @endif " href="#" data-target="magyo" id="tab_magyo">ま</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[7][1]) active @endif " href="#" data-target="yagyo" id="tab_yagyo">や</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[8][1]) active @endif " href="#" data-target="ragyo" id="tab_ragyo">ら</a>
+            <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[9][1]) active @endif " href="#" data-target="wagyo" id="tab_wagyo">わ</a>
             @if (!empty($favoriteHash))
-                <a class="btn btn-light game_tab @if(!isset($list[100])) disable @endif " href="#" data-target="favgyo" id="tab_favgyo"><span class="favorite-icon"><i class="fas fa-star"></i></span></a>
+                <a class="btn btn-light game_tab @if($defaultPhoneticType == 100) active @endif " href="#" data-target="favgyo" id="tab_favgyo"><span class="favorite-icon"><i class="fas fa-star"></i></span></a>
             @endif
         </div>
 
@@ -255,7 +280,7 @@
                         <div class="row game-list">
                         @if (isset($list[$p[1]]))
                             @foreach ($list[$p[1]] as $soft)
-                                <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
+                                <div class="col-xl-3 col-lg-4 col-sm-6 col-12 card-item" id="c{{ $soft->id }}">
                                     <div class="package-card">
                                         <div>
                                             <div><img data-url="{{ small_image_url($soft, true) }}" class="lazy-img-load"></div>

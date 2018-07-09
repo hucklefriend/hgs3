@@ -84,6 +84,11 @@ class SearchIndex
         return new LengthAwarePaginator($items, $dataNum, $num, $page, ['path' => request()->url()]);
     }
 
+    /**
+     * MongoDBのCollectionを取得
+     *
+     * @return \MongoDB\Collection
+     */
     private static function getDB()
     {
         return Collection::getInstance()->getDatabase()->user_search_index;

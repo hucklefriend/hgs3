@@ -511,7 +511,7 @@ SQL;
      */
     public static function getListForSearch($isGuest)
     {
-        $appendQuery = '';
+        // TODO このデータはMongoDBに移してそっちでやる
 
         $query = DB::table('game_softs')
             ->select(['id', 'name', 'phonetic']);

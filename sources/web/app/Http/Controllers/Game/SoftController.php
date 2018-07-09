@@ -6,37 +6,56 @@
 namespace Hgs3\Http\Controllers\Game;
 
 use Hgs3\Constants\PhoneticType;
-use Hgs3\Http\Requests\Game\GameSoftRequest;
+use Hgs3\Models\Game\SoftList;
 use Hgs3\Models\Orm;
 use Hgs3\Http\Controllers\Controller;
 use Hgs3\Models\Game\Soft;
 use Hgs3\Models\Review;
 use Hgs3\Models\User\FavoriteSoft;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 class SoftController extends Controller
 {
     /**
      * 一覧ページ
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $favoriteHash = [];
         $isGuest = true;
+        $imageType = 1;
         if (Auth::check()) {
             $favoriteHash = FavoriteSoft::getHash(Auth::id());
             $isGuest = false;
+            $imageType = Auth::user()->adult == 1 ? 3 : 2;
+        }
+
+        $name = $request->query('search_name', null);
+        $platforms = $request->query('platform');
+        $rate = $request->query('rate');
+        $startYear = $request->query('search_name', null);
+        $endYear = $request->query('search_name', null);
+
+        $data = SoftList::search($isGuest, $name, $platforms, $rate, $startYear, $endYear);
+        $list = [];
+        foreach ($data as $row) {
+            $list[$row['phonetic_type']][] = $row;
+
+            if (isset($favoriteHash[$row['id']])) {
+                $list[100][] = $row;
+            }
         }
 
         return view('game.soft.index', [
             'phoneticList'        => PhoneticType::getId2CharData(),
-            'list'                => Soft::getList($favoriteHash, $isGuest),
+            'list'                => $list,//Soft::getList($favoriteHash, $isGuest),
             'favoriteHash'        => $favoriteHash,
-            'jsonList'              => Soft::getListForSearch($isGuest),
-            'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ'))
+            'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ')),
+            'imageFile'           => 'image' . $imageType,
         ]);
     }
 

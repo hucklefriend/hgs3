@@ -10,6 +10,23 @@
         <title>{{ env('APP_NAME') }} (RC)</title>
         @endif
 
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/layzr.js/2.2.2/layzr.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/js/swiper.min.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+        <script src="{{ url('vendors/bower_components/popper.js/dist/umd/popper.min.js') }}"></script>
+        <script src="{{ url('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ url('/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
+        <script src="{{ url('/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js') }}"></script>
+        <script src="{{ url('vendors/bower_components/autosize/dist/autosize.min.js') }}"></script>
+        <script src="{{ url('vendors/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+        <script src="{{ url('/js/super_admin.min.js') }}"></script>
+        <script src="{{ url('/js/ticker.js') }}"></script>
+
+        @yield('head_append')
+
         <link rel="stylesheet" href="{{ url('vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/animate.css/animate.min.css') }}">
         <link rel="stylesheet" href="{{ url('vendors/bower_components/select2/dist/css/select2.min.css') }}">
@@ -24,22 +41,6 @@
             <link rel="stylesheet" href="{{ url('css/hgs3.css') }}?ver={{ env('SYSTEM_VERSION') }}">
             <script src="{{ url('/js/common.js') }}?ver={{ env('SYSTEM_VERSION') }}"></script>
         @endif
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/layzr.js/2.2.2/layzr.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.6/js/swiper.min.js"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
-        <script src="{{ url('vendors/bower_components/popper.js/dist/umd/popper.min.js') }}"></script>
-        <script src="{{ url('/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-        <script src="{{ url('/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
-        <script src="{{ url('/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js') }}"></script>
-        <script src="{{ url('vendors/bower_components/autosize/dist/autosize.min.js') }}"></script>
-        <script src="{{ url('vendors/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
-        <script src="{{ url('/js/super_admin.min.js') }}"></script>
-
-        <script src="{{ url('/js/ticker.js') }}"></script>
-
-        @yield('head_append')
 
         @if (env('APP_ENV') == 'production')
         <!-- Global site tag (gtag.js) - Google Analytics -->
