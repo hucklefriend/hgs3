@@ -56,35 +56,35 @@
                             <div class="d-flex flex-wrap">
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" value="1">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="1">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">家庭用据え置き機</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" value="2">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="2">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">家庭用携帯機</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" value="3">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="3">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">PC</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" value="4">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="4">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">スマホ・タブレット・携帯電話</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" value="5">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="5">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">その他(DVD-PG等)</span>
                                     </label>
@@ -140,61 +140,6 @@
                                 <small>制限のあるパッケージとないパッケージが両方発売されている場合は、いずれにチェックを入れても検索結果に出てきます。</small>
                             </p>
                         </div>
-
-                        <div class="form-group" style="max-width: 400px;">
-                            <div>
-                                <label for="platform" class="hgn-label"><i class="fas fa-edit"></i> 発売年</label>
-                            </div>
-                            <div>
-                                <div id="year-slider"></div>
-
-                                <div class="d-flex">
-                                    <div class="form-group" style="width: 80px;">
-                                        <input type="text" class="form-control" id="year-slider-start" maxlength="4">
-                                        <i class="form-group__bar"></i>
-                                    </div>
-                                    <div class="align-self-center mr-1">年 ～ </div>
-                                    <div class="form-group" style="width: 80px;">
-                                        <input type="text" class="form-control" id="year-slider-end" maxlength="4">
-                                        <i class="form-group__bar"></i>
-                                    </div>
-                                    <div class="align-self-center">年</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-help">
-                            <p class="text-muted">
-                                <small>
-                                    パッケージ単位での発売年です。<br>
-                                    2000年に初版、2001年に廉価版が発売されていた場合、2000と2001の両方で表示されます。
-                                </small>
-                            </p>
-                        </div>
-
-                        <script>
-                            let sliderRange = document.getElementById ('year-slider');
-                            let sliderRangeUpper = document.getElementById('year-slider-start');
-                            let sliderRangeLower = document.getElementById('year-slider-end');
-                            let sliderRangeInputs = [sliderRangeUpper, sliderRangeLower];
-
-                            noUiSlider.create(sliderRange, {
-                                start: [1980, {{ date('Y') }}],
-                                connect: true,
-                                range: {
-                                    'min': 1980,
-                                    'max': {{ date('Y') }}
-                                },
-                                step: 1,
-                                format: wNumb({
-                                    decimals: 0
-                                }),
-                            });
-
-                            sliderRange.noUiSlider.on('update', function( values, handle ) {
-                                sliderRangeInputs[handle].value = values[handle];
-                            });
-                        </script>
-
                         <div class="text-right">
                             <button class="btn btn-secondary mr-3" type="reset" id="reset_btn">リセット</button>
                             <button class="btn btn-secondary" type="submit" id="search_btn">絞り込み</button>

@@ -42,7 +42,6 @@ class SoftList
 
             $packages = self::getLinkedPackages($s->id);
             $platforms = [0];
-            $releaseYears = [0];
             $rate = [];
             $image1 = null;     // ゲストユーザー用画像
             $image2 = null;     // ユーザーでR-18不可用画像
@@ -60,9 +59,6 @@ class SoftList
                 } else {
                     $platforms[5] = 5;
                 }
-
-                $year = intval(substr($pkg->release_int, 0, 4));
-                $releaseYears[$year] = $year;
 
                 $isAdult = intval($pkg->is_adult);
                 $rate[$isAdult] = $isAdult;
@@ -96,8 +92,7 @@ class SoftList
             $doc['image3'] = $image3 ?? url('img/pkg_no_img_s.png');
 
             $doc['platform'] = array_values($platforms);
-            $doc['year'] = array_values($releaseYears);
-            $doc['rate'] = $rate;
+            $doc['rate'] = array_values($rate);
 
             $col->insertOne($doc);
 
@@ -135,7 +130,7 @@ SQL;
         return Collection::getInstance()->getDatabase()->game_soft_list;
     }
 
-    public static function search($isGuest, $name, $platforms, $rate, $startYear, $endYear)
+    public static function search($isGuest, $name, $platforms, $rate)
     {
         $filter = [];
 
@@ -170,21 +165,6 @@ SQL;
         if (!empty($rate)) {
             array_walk($rate, function (&$item, $key) {$item = intval($item);});
             $filter['rate'] = ['$elemMatch' => ['$in' => $rate]];
-        }
-
-        // 発売年で検索
-        if ($startYear != null && $endYear != null) {
-            if ($startYear < 1980) {
-                $startYear = 1980;
-            }
-            if ($endYear > date('Y')) {
-                $endYear = intval(date('Y'));
-            }
-            if ($startYear > $endYear) {
-                $startYear = $endYear;
-            }
-
-            $filter['year'] = ['$elemMatch' => ['$gte' => $startYear, '$lte' => $endYear]];
         }
 
         $options = ['sort'  => ['sort' => 1]];

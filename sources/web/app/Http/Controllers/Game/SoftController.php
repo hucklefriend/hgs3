@@ -37,10 +37,8 @@ class SoftController extends Controller
         $name = $request->query('name', null);
         $platforms = $request->query('platform');
         $rate = $request->query('rate');
-        $startYear = $request->query('search_name', null);
-        $endYear = $request->query('search_name', null);
 
-        $data = SoftList::search($isGuest, $name, $platforms, $rate, $startYear, $endYear);
+        $data = SoftList::search($isGuest, $name, $platforms, $rate);
         $list = [];
         foreach ($data as $row) {
             $list[$row['phonetic_type']][] = $row;
@@ -56,6 +54,9 @@ class SoftController extends Controller
             'favoriteHash'        => $favoriteHash,
             'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ')),
             'imageFile'           => 'image' . $imageType,
+            'name' => $name,
+            'platforms' => $platforms,
+            'rate' => $rate
         ]);
     }
 
