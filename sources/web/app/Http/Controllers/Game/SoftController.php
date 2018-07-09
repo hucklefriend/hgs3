@@ -40,11 +40,22 @@ class SoftController extends Controller
 
         $data = SoftList::search($isGuest, $name, $platforms, $rate);
         $list = [];
+        $hasData = [];
         foreach ($data as $row) {
             $list[$row['phonetic_type']][] = $row;
+            $hasData[$row['phonetic_type']] = true;
 
             if (isset($favoriteHash[$row['id']])) {
                 $list[100][] = $row;
+            }
+        }
+
+        // 初期表示
+        $defaultPhoneticType = session('soft_phonetic_type', PhoneticType::getType('あ'));
+        if (!isset($hasData[$defaultPhoneticType])) {
+            foreach ($hasData as $key => $value) {
+                $defaultPhoneticType = $key;
+                break;
             }
         }
 
@@ -52,11 +63,11 @@ class SoftController extends Controller
             'phoneticList'        => PhoneticType::getId2CharData(),
             'list'                => $list,//Soft::getList($favoriteHash, $isGuest),
             'favoriteHash'        => $favoriteHash,
-            'defaultPhoneticType' => session('soft_phonetic_type', PhoneticType::getType('あ')),
+            'defaultPhoneticType' => $defaultPhoneticType,
             'imageFile'           => 'image' . $imageType,
-            'name' => $name,
-            'platforms' => $platforms,
-            'rate' => $rate
+            'name'                => $name,
+            'platforms'           => $platforms,
+            'rate'                => $rate
         ]);
     }
 

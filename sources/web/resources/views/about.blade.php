@@ -76,10 +76,9 @@
                     PHPのフレームワークにはLaravelを採用しています。
                 </p>
                 <p>
-                    バグの報告やご要望などありましたら、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter <i class="fas fa-sign-out-alt"></i></a>でご連絡をお願い致します。<br>
+                    バグの報告やご要望などありましたら、サイト内の「システムメッセージ」機能か、<a href="https://twitter.com/huckle_friend" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitter <i class="fas fa-sign-out-alt"></i></a>でご連絡をお願い致します。<br>
                     <a href="https://github.com/hucklefriend/hgs3/issues" target="_blank">{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubのIssues <i class="fas fa-sign-out-alt"></i></a>にIssueを登録して頂いても大丈夫です。<br>
-                    スパムメールがいっぱい来るようになったので、メールでのやりとりには対応しておりません。<br>
-                    当サイト内で、連絡できる機能を今後用意するつもりなので、{{ sns_icon(\Hgs3\Constants\SocialSite::TWITTER) }}Twitterも{{ sns_icon(\Hgs3\Constants\SocialSite::GITHUB) }}GitHubもやっとらんという方はしばしお待ちください。
+                    スパムメールがいっぱい来るようになったので、メールでのやりとりには対応しておりません。
                 </p>
             </div>
         </div>
@@ -87,17 +86,14 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">その他</h4>
-
                 <p>
                     デザインテンプレートはこちらで購入したものを使っています。<br>
                     <a href="https://wrapbootstrap.com/" target="_blank">WrapBootstrap <i class="fas fa-sign-out-alt"></i></a>
                 </p>
-
                 <p>
                     バナー画像はこちらで購入したものを使っています。<br>
                     <a href="https://rfclipart.com/" target="_blank">RF CLIPART <i class="fas fa-sign-out-alt"></i></a>
                 </p>
-
                 <p>
                     こちらの画像をサイト内で利用しています。<br>
                     <a href="http://icooon-mono.com/" target="_blank">ICOON MONO <i class="fas fa-sign-out-alt"></i></a>

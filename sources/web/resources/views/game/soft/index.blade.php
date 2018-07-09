@@ -35,7 +35,7 @@
 
         <div class="card card-hgn mb-5">
             <div class="card-body">
-                <h4 class="card-title mb-0">絞り込み<button id="search_form_open" class="ml-3 btn btn-sm btn-secondary">open ▼</button></h4>
+                <h4 class="card-title mb-0">検索<button id="search_form_open" class="ml-3 btn btn-sm btn-secondary">open ▼</button></h4>
                 <div id="search" style="display:none;">
                     <form method="GET" action="{{ route('ゲーム一覧') }}" class="mt-4" autocomplete="off">
                         <div class="form-group">
@@ -141,7 +141,7 @@
                             </p>
                         </div>
                         <div class="text-right">
-                            <button class="btn btn-secondary" type="submit" id="search_btn">絞り込み</button>
+                            <button class="btn btn-secondary" type="submit" id="search_btn">検索</button>
                         </div>
                     </form>
                 </div>
@@ -174,6 +174,13 @@
             });
         </script>
 
+        @if (empty($list))
+            <div class="card card-hgn mb-5">
+                <div class="card-body">
+                    <p class="mb-0">ゲームソフトが見つかりませんでした。<br>検索条件を変えて、再度検索してみてください。</p>
+                </div>
+            </div>
+        @else
         <div class="d-flex flex-wrap" id="game_tab">
             <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[0][1]) active @elseif(!isset($list[$phonetics[0][1]])) disable @endif " href="#" data-target="agyo" id="tab_agyo">あ</a>
             <a class="btn btn-light game_tab @if($defaultPhoneticType == $phonetics[1][1]) active @elseif(!isset($list[$phonetics[1][1]])) disable @endif " href="#" data-target="kagyo" id="tab_kagyo">か</a>
@@ -244,47 +251,51 @@
             </section>
         @endforeach
         </div>
-    </div>
-    <script>
-        let loaded = {};
 
-        $(function (){
-            $('.game_tab').click(function (e){
-                e.preventDefault();
 
-                $('#' + $('#game_tab .active').data('target')).hide();
-                $('#game_tab .active').removeClass('active');
+            <script>
+                let loaded = {};
 
-                $('#' + $(this).data('target')).show();
-                $(this).addClass('active');
+                $(function (){
+                    $('.game_tab').click(function (e){
+                        e.preventDefault();
 
-                showPackageImage();
+                        $('#' + $('#game_tab .active').data('target')).hide();
+                        $('#game_tab .active').removeClass('active');
 
-                return false;
-            });
+                        $('#' + $(this).data('target')).show();
+                        $(this).addClass('active');
 
-            showPackageImage();
-        });
+                        showPackageImage();
 
-        function changeTab(phoneticType)
-        {
-            $("html,body").animate({scrollTop:0});
-            $('#tab_' + phoneticType + 'gyo').click();
-        }
+                        return false;
+                    });
 
-        function showPackageImage()
-        {
-            let target = $('#game_tab .active').data('target');
-
-            if (loaded[target] == undefined) {
-                $('#' + target + ' img.lazy-img-load').each(function (){
-                    let e = $(this);
-                    e.attr('src', e.data('url'));
+                    showPackageImage();
                 });
 
-                loaded[target] = true;
-            }
-        }
+                function changeTab(phoneticType)
+                {
+                    $("html,body").animate({scrollTop:0});
+                    $('#tab_' + phoneticType + 'gyo').click();
+                }
 
-    </script>
+                function showPackageImage()
+                {
+                    let target = $('#game_tab .active').data('target');
+
+                    if (loaded[target] == undefined) {
+                        $('#' + target + ' img.lazy-img-load').each(function (){
+                            let e = $(this);
+                            e.attr('src', e.data('url'));
+                        });
+
+                        loaded[target] = true;
+                    }
+                }
+
+            </script>
+
+        @endif
+    </div>
 @endsection

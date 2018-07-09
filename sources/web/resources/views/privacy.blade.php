@@ -93,9 +93,10 @@
                     <li class="mb-2"><a href="https://affiliate.amazon.co.jp/" target="_blank">Amazon.co.jpアソシエイト <i class="fas fa-sign-out-alt"></i></a></li>
                     <li class="mb-2">
                         <a href="https://affiliate.dmm.com/" target="_blank">DMM アフィリエイト <i class="fas fa-sign-out-alt"></i></a>
-                        <a href="https://affiliate.dmm.com/api/" target="_blank" class="ml-1"><img src="https://pics.dmm.com/af/web_service/com_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.com" /></a>
-                        <a href="https://affiliate.dmm.com/api/" target="_blank" class="ml-1"><img src="https://pics.dmm.com/af/web_service/r18_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.R18" /></a>
+                        <a href="https://affiliate.dmm.com/api/" target="_blank" class="ml-1"><img src="https://pics.dmm.com/af/web_service/com_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.com"></a>
+                        <a href="https://affiliate.dmm.com/api/" target="_blank" class="ml-1"><img src="https://pics.dmm.com/af/web_service/r18_135_17.gif" width="135" height="17" alt="WEB SERVICE BY DMM.R18"></a>
                     </li>
+                    <li class="mb-2"><a href="https://www.apple.com/jp/itunes/affiliates/" target="_blank">iTunes アフィリエイトプログラム <i class="fas fa-sign-out-alt"></i></a></li>
                 </ul>
             </div>
         </div>
