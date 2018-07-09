@@ -40,7 +40,7 @@
                     <form method="GET" action="{{ route('ゲーム一覧') }}" class="mt-4" autocomplete="off">
                         <div class="form-group">
                             <label for="name" class="hgn-label"><i class="fas fa-edit"></i> ゲームタイトル</label>
-                            <input type="text" class="form-control" id="name" name="name" value="">
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $name }}">
                             <i class="form-group__bar"></i>
                         </div>
                         <div class="form-help">
@@ -56,35 +56,35 @@
                             <div class="d-flex flex-wrap">
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="1">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="1"{{ checked(in_array(1, $platforms), true) }}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">家庭用据え置き機</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="2">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="2"{{ checked(in_array(2, $platforms), true) }}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">家庭用携帯機</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="3">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="3"{{ checked(in_array(3, $platforms), true) }}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">PC</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="4">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="4"{{ checked(in_array(4, $platforms), true) }}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">スマホ・タブレット・携帯電話</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="5">
+                                        <input type="checkbox" class="custom-control-input" id="platform" name="platform[]" value="5"{{ checked(in_array(5, $platforms), true) }}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">その他(DVD-PG等)</span>
                                     </label>
@@ -104,14 +104,14 @@
                             <div class="d-flex flex-wrap">
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="rate" name="rate[]" value="0">
+                                        <input type="checkbox" class="custom-control-input" id="rate" name="rate[]" value="0"{{ checked(in_array(0, $rate), true) }}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">なし</span>
                                     </label>
                                 </div>
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="rate" name="rate[]" value="2">
+                                        <input type="checkbox" class="custom-control-input" id="rate" name="rate[]" value="2"{{ checked(in_array(2, $rate), true) }}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">18禁(コンシューマ)</span>
                                     </label>
@@ -119,7 +119,7 @@
                                 @if (\Illuminate\Support\Facades\Auth::check())
                                 <div class="btn-group-toggle my-2 mr-2" data-toggle="buttons">
                                     <label class="custom-control custom-checkbox text-left btn hgn-check-btn">
-                                        <input type="checkbox" class="custom-control-input" id="rate" name="rate[]" value="1">
+                                        <input type="checkbox" class="custom-control-input" id="rate" name="rate[]" value="1"{{ checked(in_array(1, $rate), true) }}>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">18禁(エロゲ)</span>
                                     </label>
@@ -141,7 +141,6 @@
                             </p>
                         </div>
                         <div class="text-right">
-                            <button class="btn btn-secondary mr-3" type="reset" id="reset_btn">リセット</button>
                             <button class="btn btn-secondary" type="submit" id="search_btn">絞り込み</button>
                         </div>
                     </form>

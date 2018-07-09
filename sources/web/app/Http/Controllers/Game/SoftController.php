@@ -35,8 +35,8 @@ class SoftController extends Controller
         }
 
         $name = $request->query('name', null);
-        $platforms = $request->query('platform');
-        $rate = $request->query('rate');
+        $platforms = $request->query('platform', []);
+        $rate = $request->query('rate', []);
 
         $data = SoftList::search($isGuest, $name, $platforms, $rate);
         $list = [];
