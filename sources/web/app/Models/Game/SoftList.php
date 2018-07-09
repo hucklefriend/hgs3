@@ -8,6 +8,7 @@ namespace Hgs3\Models\Game;
 use Hgs3\Models\MongoDB\Collection;
 use Hgs3\Models\Orm;
 use Illuminate\Support\Facades\DB;
+use MongoDB\BSON\Regex;
 
 
 class SoftList
@@ -32,7 +33,7 @@ class SoftList
 
             $doc['id'] = intval($s->id);
             $doc['name'] = $s->name;
-            $doc['search_name'] = $s->name . ' ' . $s->acronym; // 検索用、ひらがなも一緒に探すので、スペースで繋げたものを入れちゃう
+            $doc['search_name'] = $s->name . ' ' . $s->phonetic; // 検索用、ひらがなも一緒に探すので、スペースで繋げたものを入れちゃう
             $doc['phonetic_type'] = intval($s->phonetic_type);
             $doc['sort'] = intval($s->phonetic_order);
             $doc['adult_only_flag'] = intval($s->adult_only_flag);
@@ -43,9 +44,9 @@ class SoftList
             $platforms = [0];
             $releaseYears = [0];
             $rate = [];
-            $image1 = url('img/pkg_no_img_s.png');     // ゲストユーザー用画像
-            $image2 = url('img/pkg_no_img_s.png');     // ユーザーでR-18不可用画像
-            $image3 = url('img/pkg_no_img_s.png');     // ユーザーでR-18可用画像
+            $image1 = null;     // ゲストユーザー用画像
+            $image2 = null;     // ユーザーでR-18不可用画像
+            $image3 = null;     // ユーザーでR-18可用画像
 
             foreach ($packages as $pkg) {
                 if (in_array($pkg->platform_id, $platforms1)) {
@@ -90,9 +91,9 @@ class SoftList
                 }
             }
 
-            $doc['image1'] = $image1;
-            $doc['image2'] = $image2;
-            $doc['image3'] = $image3;
+            $doc['image1'] = $image1 ?? url('img/pkg_no_img_s.png');
+            $doc['image2'] = $image2 ?? url('img/pkg_no_img_s.png');
+            $doc['image3'] = $image3 ?? url('img/pkg_no_img_s.png');
 
             $doc['platform'] = array_values($platforms);
             $doc['year'] = array_values($releaseYears);
@@ -152,8 +153,11 @@ SQL;
                 $names[] = $nn;
             }
         }
+
+        \ChromePhp::info($names);
         if (!empty($names)) {
-            $filter['search_name'] = '/' . implode('|', $names) . '/';
+            $regex = new Regex( implode('|', $names));
+            $filter['search_name'] = $regex;
         }
 
         // プラットフォームで検索

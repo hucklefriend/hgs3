@@ -137,7 +137,7 @@
                                 </small>
                             </p>
                             <p class="text-muted">
-                                <small>制限のあるパッケージとないパッケージが両方発売されている場合は、 いずれにチェックを入れても検索結果に出てきます。</small>
+                                <small>制限のあるパッケージとないパッケージが両方発売されている場合は、いずれにチェックを入れても検索結果に出てきます。</small>
                             </p>
                         </div>
 
@@ -197,7 +197,7 @@
 
                         <div class="text-right">
                             <button class="btn btn-secondary mr-3" type="reset" id="reset_btn">リセット</button>
-                            <button class="btn btn-secondary" type="button" id="search_btn">絞り込み</button>
+                            <button class="btn btn-secondary" type="submit" id="search_btn">絞り込み</button>
                         </div>
                     </form>
                 </div>
@@ -207,7 +207,6 @@
         <script>
             let searchArea = null;
             let searchFormOpenBtn = null;
-            let master = {!! $jsonList !!};
 
             $(function (){
                 searchArea = $('#search');
@@ -258,15 +257,15 @@
                                 <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
                                     <div class="package-card">
                                         <div>
-                                            <div><img data-url="{{ small_image_url($soft, true) }}" class="lazy-img-load"></div>
+                                            <div><img data-url="{{ $soft[$imageFile] }}" class="lazy-img-load"></div>
                                             <div>
-                                                {{ $soft->name }}
-                                                @isset($favoriteSofts[$soft->id])
+                                                {{ $soft['name'] }}
+                                                @isset($favoriteSofts[$soft['id']])
                                                     <small><span class="favorite-icon"><i class="fas fa-star"></i></span></small>
                                                 @endisset
                                             </div>
                                             <div>
-                                                <a href="{{ route('ゲーム詳細', ['game' => $soft->id]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
+                                                <a href="{{ route('ゲーム詳細', ['game' => $soft['id']]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
                                             </div>
                                         </div>
                                     </div>

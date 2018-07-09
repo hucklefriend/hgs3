@@ -34,7 +34,7 @@ class SoftController extends Controller
             $imageType = Auth::user()->adult == 1 ? 3 : 2;
         }
 
-        $name = $request->query('search_name', null);
+        $name = $request->query('name', null);
         $platforms = $request->query('platform');
         $rate = $request->query('rate');
         $startYear = $request->query('search_name', null);

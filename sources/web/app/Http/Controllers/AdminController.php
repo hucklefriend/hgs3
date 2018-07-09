@@ -24,7 +24,6 @@ class AdminController extends Controller
         ]);
     }
 
-
     public function hgs2SiteChecker()
     {
         $sites = DB::table('hgs2.hgs_u_site')
