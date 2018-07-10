@@ -47,6 +47,7 @@ class SoftController extends Controller
 
             if (isset($favoriteHash[$row['id']])) {
                 $list[100][] = $row;
+                $hasData[100] = true;
             }
         }
 
@@ -59,6 +60,17 @@ class SoftController extends Controller
             }
         }
 
+        $phonetics = [];
+        foreach (PhoneticType::getId2CharData() as $phoneticType => $char) {
+            if (isset($hasData[$phoneticType])) {
+                $phonetics[] = [PhoneticType::getAlphabet($phoneticType), $phoneticType, $char];
+            }
+        }
+
+        if (isset($hasData[100])) {
+            $phonetics[] = ['fav', 100, '<span class="favorite-icon"><i class="fas fa-star"></i></span>'];
+        }
+
         return view('game.soft.index', [
             'phoneticList'        => PhoneticType::getId2CharData(),
             'list'                => $list,//Soft::getList($favoriteHash, $isGuest),
@@ -67,7 +79,8 @@ class SoftController extends Controller
             'imageFile'           => 'image' . $imageType,
             'name'                => $name,
             'platforms'           => $platforms,
-            'rate'                => $rate
+            'rate'                => $rate,
+            'phonetics'           => $phonetics
         ]);
     }
 

@@ -45,6 +45,24 @@ class PhoneticType
     ];
 
     /**
+     * ID => alphabet
+     *
+     * @var array
+     */
+    private static $id2Alphabet = [
+        1  => 'a',
+        2  => 'ka',
+        3  => 'sa',
+        4  => 'ta',
+        5  => 'na',
+        6  => 'ha',
+        7  => 'ma',
+        8  => 'ya',
+        9  => 'ra',
+        10 => 'wa',
+    ];
+
+    /**
      * ID => charの配列を取得
      *
      * @return array
@@ -84,6 +102,17 @@ class PhoneticType
     public static function getChar($type)
     {
         return self::$id2Char[$type];
+    }
+
+    /**
+     * アルファベットを取得
+     *
+     * @param $type
+     * @return mixed
+     */
+    public static function getAlphabet($type)
+    {
+        return self::$id2Alphabet[$type];
     }
 
     /**
