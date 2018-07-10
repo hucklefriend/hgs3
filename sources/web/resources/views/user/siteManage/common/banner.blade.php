@@ -35,7 +35,7 @@
                     <label class="custom-control custom-radio mb-3">
                         <input type="radio" class="custom-control-input" name="list_banner_upload_flag" id="list_banner_upload_flag_0" value="0"{{ checked($listBannerUploadFlag, 0) }}>
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">バナーなしでいい</span>
+                        <span class="custom-control-description">バナーなし</span>
                     </label>
 
                     <label class="custom-control custom-radio mb-3">
@@ -226,7 +226,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card card-hgn">
-                        <img class="card-img-top" src="{{ $detailBannerUrl }}" id="detail_banner_img">
+                        <img class="card-img-top detail_banner_exist" src="{{ $detailBannerUrl }}" id="detail_banner_img">
 
                         <div class="card-body">
                             <h4 class="card-title">{{ $site->name }}</h4>
@@ -358,7 +358,8 @@
                 $('#' + target + '_banner_none_area').hide();
                 $('#' + target + '_banner_link_area').show();
                 $('#' + target + '_banner_upload_area').hide();
-                $('#' + target + '_banner_img').attr('src', listBannerUrl);
+
+                $('#' + target + '_banner_img').attr('src', target == 'list' ? listBannerUrl : detailBannerUrl);
                 break;
             case 2:
                 $('.' + target + '_banner_none').hide();
@@ -366,7 +367,8 @@
                 $('#' + target + '_banner_none_area').hide();
                 $('#' + target + '_banner_link_area').hide();
                 $('#' + target + '_banner_upload_area').show();
-                $('#' + target + '_banner_img').attr('src', listBannerUploadImg);
+
+                $('#' + target + '_banner_img').attr('src', target == 'list' ? listBannerUploadImg : detailBannerUploadImg);
                 break;
             case 3: {
                 $('#' + target + '_banner_none_area').show();

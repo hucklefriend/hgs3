@@ -36,7 +36,6 @@ class SoftList
             $doc['search_name'] = $s->name . ' ' . $s->phonetic; // 検索用、ひらがなも一緒に探すので、スペースで繋げたものを入れちゃう
             $doc['phonetic_type'] = intval($s->phonetic_type);
             $doc['sort'] = intval($s->phonetic_order);
-            $doc['adult_only_flag'] = intval($s->adult_only_flag);
             $doc['series_id'] = intval($s->series_id);
             $doc['order_in_series'] = intval($s->order_in_series);
 
@@ -46,6 +45,7 @@ class SoftList
             $image1 = null;     // ゲストユーザー用画像
             $image2 = null;     // ユーザーでR-18不可用画像
             $image3 = null;     // ユーザーでR-18可用画像
+            $noImageUrl = url('img/pkg_no_img_s.png');
 
             foreach ($packages as $pkg) {
                 if (in_array($pkg->platform_id, $platforms1)) {
@@ -73,13 +73,9 @@ class SoftList
                     if ($image3 == null) {
                         $image3 = $pkg->small_image_url;
                     }
-                } else if ($isAdult == 1) {
-                    if ($image3 == null) {
-                        $image3 = $pkg->small_image_url;
-                    }
-                } else if ($isAdult == 2) {
+                } else {
                     if ($image2 == null) {
-                        $image2 = $pkg->small_image_url;
+                        $image2 = null;// TODO R-18ですよー画像
                     }
                     if ($image3 == null) {
                         $image3 = $pkg->small_image_url;
@@ -87,9 +83,9 @@ class SoftList
                 }
             }
 
-            $doc['image1'] = $image1 ?? url('img/pkg_no_img_s.png');
-            $doc['image2'] = $image2 ?? url('img/pkg_no_img_s.png');
-            $doc['image3'] = $image3 ?? url('img/pkg_no_img_s.png');
+            $doc['image1'] = $image1 ?? $noImageUrl;
+            $doc['image2'] = $image2 ?? $noImageUrl;
+            $doc['image3'] = $image3 ?? $noImageUrl;
 
             $doc['platform'] = array_values($platforms);
             $doc['rate'] = array_values($rate);
@@ -130,13 +126,18 @@ SQL;
         return Collection::getInstance()->getDatabase()->game_soft_list;
     }
 
+    /**
+     * 一覧用の検索
+     *
+     * @param $isGuest
+     * @param $name
+     * @param $platforms
+     * @param $rate
+     * @return array
+     */
     public static function search($isGuest, $name, $platforms, $rate)
     {
         $filter = [];
-
-        if ($isGuest) {
-            $filter['adult_only_flag'] = 0;
-        }
 
         // 名前で検索(スペースは分けて)
         $n = explode(' 　', preg_quote($name));
@@ -149,7 +150,6 @@ SQL;
             }
         }
 
-        \ChromePhp::info($names);
         if (!empty($names)) {
             $regex = new Regex( implode('|', $names));
             $filter['search_name'] = $regex;
@@ -165,6 +165,8 @@ SQL;
         if (!empty($rate)) {
             array_walk($rate, function (&$item, $key) {$item = intval($item);});
             $filter['rate'] = ['$elemMatch' => ['$in' => $rate]];
+        } else if ($isGuest) {
+            $filter['rate'] = ['$elemMatch' => ['$in' =>[0, 2]]];
         }
 
         $options = ['sort'  => ['sort' => 1]];
