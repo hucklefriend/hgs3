@@ -1,0 +1,44 @@
+2018.7.14 更新手順
+
+
+○メンテモードにする
+php artisan down
+
+○DBをバックアップする
+mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs2 > hgs2_20180714.sql
+mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs3 > hgs3_20180714.sql
+
+tar -zcvf hgs2_20180714.tar.gz hgs2_20180714.sql
+tar -zcvf hgs3_20180714.tar.gz hgs3_20180714.sql
+
+sudo mongodump -d hgs3 -o ./
+
+
+○let's encryptの延長スクリプトを実行する
+
+sudo systemctl stop apache2
+sudo /opt/letsencrypt/certbot-auto renew
+sudo systemctl start apache2
+
+
+○Ubuntuアップデート
+sudo apt update
+sudo apt upgrade
+
+
+○ソースをアップする
+
+
+○DBマイグレーション
+php aritsan migrate
+
+○マスターインポート
+php artisan master:import 20180714
+
+
+○メンテモードをあける
+php artisan up
+
+○動作チェック
+
+○お知らせを登録する

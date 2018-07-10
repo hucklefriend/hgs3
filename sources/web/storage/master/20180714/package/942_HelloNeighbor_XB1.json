@@ -1,0 +1,13 @@
+{
+  "id": 942,
+  "platform": "XB1",
+  "company": "tinyBuild",
+  "name": "Hello Neighbor",
+  "acronym": "XB1版",
+  "release_int": 20171208,
+  "release_at": "2017年12月8日",
+  "soft_id": [380],
+  "shop": {
+    "Microsoftストア": "https://www.microsoft.com/ja-jp/p/hello-neighbor/9nddh3r9df40/"
+  }
+}

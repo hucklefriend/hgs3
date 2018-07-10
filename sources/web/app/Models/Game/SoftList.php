@@ -46,6 +46,7 @@ class SoftList
             $image2 = null;     // ユーザーでR-18不可用画像
             $image3 = null;     // ユーザーでR-18可用画像
             $noImageUrl = url('img/pkg_no_img_s.png');
+            $r18ImageUrl = url('img/pkg_r18_img_s.png');
 
             foreach ($packages as $pkg) {
                 if (in_array($pkg->platform_id, $platforms1)) {
@@ -75,7 +76,7 @@ class SoftList
                     }
                 } else {
                     if ($image2 == null) {
-                        $image2 = null;// TODO R-18ですよー画像
+                        $image2 = $r18ImageUrl;
                     }
                     if ($image3 == null) {
                         $image3 = $pkg->small_image_url;

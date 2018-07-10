@@ -1,0 +1,13 @@
+{
+  "id": 937,
+  "platform": "PS4",
+  "company": "桜花一門",
+  "name": "CHAINMAN",
+  "acronym": "PS4版",
+  "release_int": 20171215,
+  "release_at": "2017年12月15日",
+  "soft_id": [377],
+  "shop": {
+    "PlayStation Store": "https://store.playstation.com/ja-jp/product/JP2436-CUSA09339_00-CHAINMAN20170815"
+  }
+}

@@ -236,20 +236,11 @@ class Package extends MasterImportAbstract
         return $updated;
     }
 
-    private static function manual20180607()
+    private static function manual20180714()
     {
         DB::table('game_packages')
-            ->whereIn('id', [509, 501])
-            ->delete();
-
-        DB::table('game_package_links')
-            ->where('soft_id', 161)
-            ->where('package_id', 872)
-            ->delete();
-        DB::table('game_package_links')
-            ->where('package_id', 885)
-            ->where('soft_id', 356)
-            ->delete();
+            ->whereIn('id', [916])
+            ->update(['is_adult' => 2]);
     }
 
     private static function manual20180707()

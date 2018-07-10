@@ -1,0 +1,13 @@
+{
+  "id": 935,
+  "platform": "Android",
+  "company": "Net Ease",
+  "name": "Identity V",
+  "acronym": "Android版",
+  "release_int": 20180711,
+  "release_at": "2018年7月11日",
+  "soft_id": [375],
+  "shop": {
+    "Google Play": ""
+  }
+}

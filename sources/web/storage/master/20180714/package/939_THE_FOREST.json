@@ -1,0 +1,13 @@
+{
+  "id": 939,
+  "platform": "PC",
+  "company": "Endnight Games",
+  "name": "THE FOREST",
+  "acronym": "PC版",
+  "release_int": 20180501,
+  "release_at": "2018年5月1日",
+  "soft_id": [379],
+  "shop": {
+    "Steam": "https://store.steampowered.com/app/242760/The_Forest/"
+  }
+}
