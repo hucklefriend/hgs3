@@ -201,6 +201,7 @@ button.btn:hover {
 
 .package-card > div > div:nth-child(1) {
     width: 3rem;
+    text-align: center;
 }
 
 .package-card > div > div:nth-child(1) img {
