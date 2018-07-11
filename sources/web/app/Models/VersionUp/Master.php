@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\VersionUp;
 
+use Hgs3\Models\Game\SoftList;
 use Hgs3\Models\Orm\GameCompany;
 use Hgs3\Models\Orm\GameOfficialSite;
 use Hgs3\Models\Orm\GamePackage;
@@ -67,5 +68,8 @@ class Master
 
         echo 'update original package id.' . PHP_EOL;
         \Hgs3\Models\Game\Soft::updateOriginalPackageId(false);
+
+        echo 'generate mongodb soft list' . PHP_EOL;
+        SoftList::generate();
     }
 }
