@@ -1,0 +1,14 @@
+{
+  "id": 948,
+  "platform": "PS4",
+  "company": "Krillbite",
+  "name": "Among the Sleep",
+  "acronym": "PS4版",
+  "release_int": 20151210,
+  "release_at": "2015年12月10日(海外)",
+  "soft_id": [382],
+  "shop": {
+    "amazon": "B01IPARS7Y",
+    "PlayStation Store": "https://store.playstation.com/en-us/product/UP1623-CUSA05251_00-AMONGTHESLEEP101"
+  }
+}

@@ -255,13 +255,10 @@ php artisan down
 php artisan up
 
 
-・GitHubとつながらなくなった
-TLSの最新版じゃないとダメになったよう
-GitForWindowsを最新版に更新して、PhpStormのGitの設定でSSH executableをNativeにするとつながった
-
-
 
 ○サーバー移転などでLet's encryptを移す場合
 
 https://blog.fileshelfplus.com/vps/280
+
+
 

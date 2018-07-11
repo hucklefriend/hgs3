@@ -1,0 +1,15 @@
+{
+  "id": 946,
+  "platform": "PC",
+  "company": "PLAYISM",
+  "name": "YUMENIKKI-DREAM DIARY-",
+  "acronym": "通常版",
+  "release_int": 20180223,
+  "release_at": "2018年2月23日",
+  "soft_id": [381],
+  "shop": {
+    "amazon": "B07BQY71WC",
+    "Steam": "https://store.steampowered.com/app/774811/YUMENIKKI_DREAM_DIARY/",
+    "DMM.com": "playism_0003"
+  }
+}

@@ -28,6 +28,9 @@ sudo apt upgrade
 
 ○ソースをアップする
 
+.envの書き換え
+SESSION_DRIVER=memcached
+
 
 ○DBマイグレーション
 php aritsan migrate

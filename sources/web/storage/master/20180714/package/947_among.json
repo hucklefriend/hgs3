@@ -1,0 +1,14 @@
+{
+  "id": 947,
+  "platform": "PC",
+  "company": "Krillbite",
+  "name": "Among the Sleep",
+  "acronym": "PC版",
+  "release_int": 20140529,
+  "release_at": "2014年5月29日",
+  "soft_id": [382],
+  "shop": {
+    "amazon": "B071ZQGQXX",
+    "Steam": "https://store.steampowered.com/app/250620/Among_the_Sleep__Enhanced_Edition/"
+  }
+}
