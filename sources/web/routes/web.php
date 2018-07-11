@@ -1,19 +1,10 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
+
+    Route::get('/top2', 'TopController@index2')->name('トップ2');
+
     // 管理メニュー
     Route::get('/admin', 'AdminController@index')->name('管理メニュー');
 
