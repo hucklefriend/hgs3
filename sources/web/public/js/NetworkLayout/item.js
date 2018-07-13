@@ -1,4 +1,4 @@
-class NetworkMenuItem
+class NetworkItem
 {
     constructor(id, relations, options)
     {
@@ -37,7 +37,7 @@ class NetworkMenuItem
         this.dom.style.left = left + 'px';
         this.dom.style.top = top + 'px';
         this.center.x = left + (this.dom.offsetWidth / 2);
-        this.center.y = top + (this.dom.offsetTop / 2);
+        this.center.y = top + (this.dom.offsetHeight / 2);
     }
 
     setPosCenter()
@@ -50,56 +50,18 @@ class NetworkMenuItem
         this.center.y = window.innerHeight / 2;
     }
 
-    drawRelationLine()
+    drawRelationLine(layout)
     {
+        this.relations.forEach((target) => {
+            let item = layout.getItem(target);
 
-    }
-}
+            layout.context.beginPath();
 
-class NetworkMenu
-{
-    constructor()
-    {
-        this.networkCanvas = document.querySelector('#network');
-        this.context = this.networkCanvas.getContext('2d');
-        this.items = [];
+            layout.context.moveTo(this.center.x, this.center.y);
+            layout.context.lineTo(item.center.x, item.center.y);
 
-        this.networkCanvas.width = window.innerWidth;
-        this.networkCanvas.height = window.innerHeight;
-
-        window.onresize = ()=>{
-            this.changeWindowSize();
-            this.draw();
-        };
-    }
-
-    addItem(id, relations, options)
-    {
-        this.items[id] = new NetworkMenuItem(id, relations, options)
-    }
-
-    changeWindowSize()
-    {
-        this.networkCanvas.width = window.innerWidth;
-        this.networkCanvas.height = window.innerHeight;
-    }
-
-    draw()
-    {
-        // ”z’uŠm’è
-        Object.keys(this.items).forEach((key) => {
-            console.debug(key);
-            this.items[key].setPosition();
+            layout.context.closePath();
+            layout.context.stroke();
         });
-
-        // ŠÖŒW‚É‡‚í‚¹‚Äƒ‰ƒCƒ“‚ð•`‚­
-        Object.keys(this.items).forEach((key) => {
-            this.items[key].drawRelationLine();
-        });
-    }
-
-    start()
-    {
-        this.draw();
     }
 }

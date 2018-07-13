@@ -4,18 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>{{ env('APP_NAME') }} (RC)</title>
+    <title>{{ env('APP_NAME') }} 真トップ</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{{ url('/js/super_admin.min.js') }}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
-    <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url('css/super_admin.min.css') }}">
-    @if (env('APP_ENV') != 'production')
-        <link rel="stylesheet" href="{{ url('css/top.css') }}?ver={{ time() }}">
-    @else
-        <link rel="stylesheet" href="{{ url('css/top.css') }}?ver={{ env('SYSTEM_VERSION') }}">
-    @endif
+    <link rel="stylesheet" href="{{ url('css/top.css') }}?ver={{ time() }}">
+    <script src="{{ url('/js/NetworkLayout/layout.js') }}?ver={{ time() }}"></script>
+    <script src="{{ url('/js/NetworkLayout/item.js') }}?ver={{ time() }}"></script>
 
     @if (env('APP_ENV') == 'production')
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -30,16 +25,30 @@
     @endif
 </head>
 <body>
-<main class="main">
+<main>
+    <canvas id="network"></canvas>
+
+    <div class="network-item" id="title">ホラーゲーム<br>ネットワーク</div>
+    <div class="network-item" id="link1">新着情報</div>
+    <div class="network-item" id="link2">お知らせ</div>
+    <div class="network-item" id="link3">Games</div>
+    <div class="network-item" id="link4">Reviews</div>
+    <div class="network-item" id="link5">Friends</div>
+    <div class="network-item" id="link6">Sites</div>
 </main>
 
-@if (env('APP_ENV') != 'production')
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-@else
-    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
-@endif
+<div id="canvas-cover"></div>
+<script>
+    let layout = new NetworkLayout();
+    layout.addItem('title', [], {position: 'center'});
+    layout.addItem('link1', ['title']);
+    layout.addItem('link2', ['title']);
+    layout.addItem('link3', ['title']);
+    layout.addItem('link4', ['title']);
+    layout.addItem('link5', ['title']);
+    layout.addItem('link6', ['title']);
+
+    layout.start();
+</script>
 </body>
 </html>
-

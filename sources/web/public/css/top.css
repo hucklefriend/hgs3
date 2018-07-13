@@ -4,6 +4,45 @@ body {
     background-color: #0A101E;
 }
 
+body, .tooltip, .swal2-modal, button, input, select, textarea {
+    color: white;
+    font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "メイリオ", sans-serif;
+    font-weight: 500;
+}
+
+main {
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+#network {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.network-item {
+    position: absolute;
+    background-color: gray;
+    left: 10px;
+    border: solid 3px white;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 100;
+    text-align: center;
+}
+
+
+#canvas-cover {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
 /* SM */
 @media (min-width: 576px) {
 }
