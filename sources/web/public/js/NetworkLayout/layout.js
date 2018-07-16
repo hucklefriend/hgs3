@@ -1,27 +1,44 @@
 class NetworkLayout
 {
-    constructor()
+    constructor(data)
     {
+        this.area = document.getElementById('network-layout');
         this.networkCanvas = document.getElementById('network');
         this.context = this.networkCanvas.getContext('2d');
         this.networkCover = document.getElementById('canvas-cover');
+        this.main = document.getElementById('main');
+        this.mainItem = null;
         this.items = [];
+        this.background = new NetworkBackground();
 
-        this.networkCanvas.width = this.networkCover.width = window.innerWidth;
-        this.networkCanvas.height = this.networkCover.height = window.innerHeight;
+        this.changeWindowSize();
 
-        window.onresize = ()=>{
-            this.changeWindowSize();
-            this.draw();
-        };
-
-
-        // �w�i�p�̓_�̐���
+        this.load(data);
     }
 
-    addItem(id, relations, options)
+    load(data)
     {
-        this.items[id] = new NetworkItem(id, relations, options)
+        if (data.hasOwnProperty('main')) {
+            this.mainItemId = data.main.id;
+            this.items[this.mainItemId] = new NetworkItem(this, data.main);
+            this.items[this.mainItemId].isMain = true;
+        }
+
+        if (data.hasOwnProperty('children')) {
+            data.children.forEach((element)=>{
+                this.items[element.id] = new NetworkItem(this, element, this.items[this.mainItemId]);
+            });
+        }
+    }
+
+    width()
+    {
+        return this.area.offsetWidth;
+    }
+
+    height()
+    {
+        return this.area.offsetHeight;
     }
 
     getItem(id)
@@ -31,38 +48,114 @@ class NetworkLayout
 
     changeWindowSize()
     {
-        this.networkCanvas.width = this.networkCover.width = window.innerWidth;
-        this.networkCanvas.height = this.networkCover.height = window.innerHeight;
+        this.area.style.height = window.innerHeight + 'px';
 
-        // ��ʂ̑傫���ɍ��킹�āA�`�悷��_�̗ʂ𒲐�
+        let w = this.area.offsetWidth;
+        let h = this.area.offsetHeight;
+
+        this.networkCanvas.width = this.networkCover.width = w;
+        this.networkCanvas.height = this.networkCover.height = h;
+
+        // 画面の大きさに合わせて、描画する点の量を調整
     }
 
     draw()
     {
-
-        // �w�i�̕`��
-
-
-
-        // �z�u�m��
+        // 配置確定
+        // TODO これは更新処理に書くべきで、描画メソッドでやるべきではない
         Object.keys(this.items).forEach((key) => {
             this.items[key].setPosition();
         });
 
+        // 背景の描画
+        this.background.draw();
+
+        this.context.clearRect(0, 0, this.networkCanvas.width, this.networkCanvas.height);
+
         this.context.save();
 
-        // �֌W�ɍ��킹�ă��C����`��
-        this.context.strokeStyle = '#666';
-        this.context.lineWidth = 3;
+        this.context.strokeStyle = 'rgba(60, 90, 180, 0.7)';
+        this.context.lineWidth = 2;
+
+        // 孫から背景への線を描画
         Object.keys(this.items).forEach((key) => {
-            this.items[key].drawRelationLine(this);
+            this.items[key].drawChildToBackgroundBallLine(this.context);
+        });
+
+        this.context.restore();
+
+
+        this.context.save();
+
+        // メインから子へのラインを描画
+        this.context.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        this.context.lineWidth = 3;
+
+        let main = this.getMainItem();
+
+        Object.keys(this.items).forEach((key) => {
+            this.items[key].draw(this.context);
         });
 
         this.context.restore();
     }
 
-    start()
+    getMainItem()
     {
+        return this.items[this.mainItemId];
+    }
+
+    start() {
+        window.onresize = () => {
+            this.changeWindowSize();
+            this.background.changeWindowSize();
+            this.draw();
+        };
+
+        this.main.onscroll = () => {
+            this.draw();
+            this.networkCanvas.style.top = -(this.main.scrollTop / 8) + 'px';
+            this.background.canvas.style.top = -(this.main.scrollTop / 15) + 'px';
+        };
+
+        let links = document.getElementsByClassName('network-layout-link');
+        for (let i = 0; i < links.length; i++) {
+            links[i].onclick = (e, f, g) => {
+                e.preventDefault();
+
+                this.openMainWindow();
+
+                return false;
+            };
+        }
+
+        document.getElementById('close-main').onclick = (e) => {
+            this.closeMainWindow(e);
+        };
+
+
         this.draw();
+    }
+
+
+    openMainWindow()
+    {
+        let items = document.getElementsByClassName('network-item');
+        for (let i = 0; i < items.length; i++) {
+            items[i].classList.add('closed');
+        }
+
+        this.main.classList.remove('closed');
+    }
+
+    closeMainWindow(e)
+    {
+        let items = document.getElementsByClassName('network-item');
+        for (let i = 0; i < items.length; i++) {
+            items[i].classList.remove('closed');
+        }
+
+        this.main.classList.add('closed');
+
     }
 }

@@ -6,33 +6,82 @@ body {
 
 body, .tooltip, .swal2-modal, button, input, select, textarea {
     color: white;
+    font-size: 0.9rem;
     font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "メイリオ", sans-serif;
     font-weight: 500;
 }
 
+a {
+    color:#a4d0ff;
+    transition: all 300ms 0s ease;
+}
+
+a:hover {
+    color:white;
+    text-decoration:none;
+}
+
 main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 20;
+    transition: opacity 0.5s linear, z-index 1s linear;
+}
+
+main.closed {
+    opacity: 0;
+    z-index: 0;
+}
+
+#network-layout {
     position: relative;
+    min-width: 320px;
+    max-width: 1200px;
+    min-height: 568px;
+    margin-left: auto;
+    margin-right: auto;
+    background: radial-gradient(#0A103E, #0A101E, #0A101E);
+    z-index: 2;
+}
+
+#network-background {
+    position: absolute;
     left: 0;
     top: 0;
+    z-index: 3;
 }
 
 #network {
     position: absolute;
     left: 0;
     top: 0;
+    z-index: 1;
 }
 
 .network-item {
     position: absolute;
-    background-color: gray;
-    left: 10px;
-    border: solid 3px white;
-    border-radius: 10px;
-    padding: 10px;
-    z-index: 100;
+    padding: 5px 10px;
     text-align: center;
+    border-radius: 3px;
+    background-color: black;/* rgb(10, 16, 62); */
+    border: solid 2px white;
+    z-index: 10;
+    transition: all 0.3s ease-out;
+    /*background-color: rgba(10, 16, 20, 0.7);*/
+    /*background: radial-gradient(closest-side circle at center,#FFFFFF, rgba(60, 86, 182, 0.7), rgba(10, 16, 62, 0.1));*/
+    /*background: radial-gradient(closest-side circle at center,white, rgba(255, 25, 0, 0.8), rgba(0, 0, 0, 0.2)); */
 }
 
+.network-item.closed {
+    background-color: white;
+    transform: scale(0.1, 0.1);
+}
 
 #canvas-cover {
     position: fixed;
@@ -40,24 +89,49 @@ main {
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: -100;
 }
 
-/* SM */
+#main-content {
+    position: fixed;
+    padding: 10px;
+    background-color: rgba(0, 0, 20, 0.7);
+    width: 100%;
+    overflow-y: scroll;
+}
+
+h1 {
+    font-size: 1.2rem;
+    padding: 10px 0;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.network-layout-link {
+}
+
+
 @media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
 }
-
-
-/* MD */
 @media (min-width: 768px) {
+    .container {
+        max-width: 700px;
+    }
 }
-
-
-/* LG */
 @media (min-width: 992px) {
+    .container {
+        max-width: 900px;
+    }
+}
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1000px;
+    }
 }
 
-/* XL */
-@media (min-width: 1200px) {
-}
 
