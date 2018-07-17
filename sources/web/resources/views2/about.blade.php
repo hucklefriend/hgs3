@@ -1,54 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>{{ env('APP_NAME') }} 真トップ</title>
+@extends('layouts.app')
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url('css/top.css') }}?ver={{ time() }}">
+@section('title')当サイトについて@endsection
+@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('トップ') }}@endsection
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
-    <script src="{{ url('/js/NetworkLayout/layout.js') }}?ver={{ time() }}"></script>
-    <script src="{{ url('/js/NetworkLayout/item.js') }}?ver={{ time() }}"></script>
-    <script src="{{ url('/js/NetworkLayout/childball.js') }}?ver={{ time() }}"></script>
-    <script src="{{ url('/js/NetworkLayout/background.js') }}?ver={{ time() }}"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
-
-
-
-
-    @if (env('APP_ENV') == 'production')
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114831632-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'UA-114831632-1');
-        </script>
-    @endif
-</head>
-<body>
-<div id="network-layout">
-    <canvas id="network-background"></canvas>
-    <canvas id="network"></canvas>
-
-    <div class="network-item" id="title">ホラーゲーム<br>ネットワーク</div>
-    <div class="network-item" id="new-info">新着情報</div>
-    <div class="network-item" id="notice">お知らせ</div>
-    <div class="network-item" id="game">ゲーム</div>
-    <div class="network-item" id="user">ユーザー</div>
-    <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-layout-link" data-parent-id="about">当サイトについて</a></div>
-    <div class="network-item" id="privacy-policy">プライバシー<br>ポリシー</div>
-    <div class="network-item" id="site-map">サイトマップ</div>
-</div>
-
-<main id="main" class="closed">
+@section('content')
     <section class="container">
-
         <div class="text-right"><button id="close-main" class="btn btn-secondary">×</button></div>
         <h1>当サイトについて</h1>
 
@@ -126,91 +82,4 @@
             <a href="http://icooon-mono.com/" target="_blank">ICOON MONO <i class="fas fa-sign-out-alt"></i></a>
         </p>
     </section>
-</main>
-<div id="canvas-cover"></div>
-<script>
-    let network = {
-        main: {
-            id: 'title',
-            position: 'center',
-            childNum: 4
-        },
-        children: [
-            {
-                id: 'new-info',
-                position: {
-                    offset: {
-                        x: -100,
-                        y: -200
-                    }
-                },
-                childNum: 0
-            },
-            {
-                id: 'notice',
-                position: {
-                    offset: {
-                        x: 100,
-                        y: 100
-                    }
-                },
-                childNum: 0
-            },
-            {
-                id: 'game',
-                position: {
-                    offset: {
-                        x: 100,
-                        y: -130
-                    }
-                },
-                childNum: 3
-            },
-            {
-                id: 'user',
-                position: {
-                    offset: {
-                        x: -80,
-                        y: -100
-                    }
-                },
-                childNum: 2
-            },
-            {
-                id: 'about',
-                position: {
-                    offset: {
-                        x: 50,
-                        y: -210
-                    }
-                },
-                childNum: 0
-            },
-            {
-                id: 'privacy-policy',
-                position: {
-                    offset: {
-                        x: 70,
-                        y: 200
-                    }
-                },
-                childNum: 0
-            },
-            {
-                id: 'site-map',
-                position: {
-                    offset: {
-                        x: -70,
-                        y: 120
-                    }
-                },
-                childNum: 0
-            },
-        ]
-    };
-
-    let layout = new NetworkLayout(network);
-    layout.start();
-</script>
-</body>
-</html>
+@endsection

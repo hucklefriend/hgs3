@@ -1,0 +1,80 @@
+{
+  "main": {
+    "id": "title",
+    "position": "center",
+    "childNum": 4
+  },
+  "children": [
+    {
+      "id": "new-info",
+      "position": {
+        "offset": {
+          "x": -100,
+          "y": -200
+        }
+      },
+      "childNum": 0
+    },
+    {
+      "id": "notice",
+      "position": {
+        "offset": {
+          "x": 100,
+          "y": 100
+        }
+      },
+      "childNum": 0
+    },
+    {
+      "id": "game",
+      "position": {
+        "offset": {
+          "x": 100,
+          "y": -130
+        }
+      },
+      "childNum": 3
+    },
+    {
+      "id": "user",
+      "position": {
+        "offset": {
+          "x": -80,
+          "y": -100
+        }
+      },
+      "childNum": 2
+    },
+    {
+      "id": "about",
+      "position": {
+        "offset": {
+          "x": 50,
+          "y": -210
+        }
+      },
+      "childNum": 0
+
+    },
+    {
+      "id": "privacy-policy",
+      "position": {
+        "offset": {
+          "x": 70,
+          "y": 200
+        }
+      },
+      "childNum": 0
+    },
+    {
+      "id": "site-map",
+      "position": {
+        "offset": {
+          "x": -70,
+          "y": 120
+        }
+      },
+      "childNum": 0
+    }
+  ]
+}

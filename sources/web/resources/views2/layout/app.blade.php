@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>{{ env('APP_NAME') }} 真トップ</title>
+    @if (View::hasSection('title'))
+        <title>@yield('title') | {{ env('APP_NAME') }} (RC)</title>
+    @else
+        <title>{{ env('APP_NAME') }} (RC)</title>
+    @endif
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url('css/top.css') }}?ver={{ time() }}">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
+    <link rel="stylesheet" href="{{ url('css/top.css') }}?ver={{ time() }}">
     <script src="{{ url('/js/NetworkLayout/layout.js') }}?ver={{ time() }}"></script>
     <script src="{{ url('/js/NetworkLayout/item.js') }}?ver={{ time() }}"></script>
     <script src="{{ url('/js/NetworkLayout/childball.js') }}?ver={{ time() }}"></script>
     <script src="{{ url('/js/NetworkLayout/background.js') }}?ver={{ time() }}"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
-
-
-
 
     @if (env('APP_ENV') == 'production')
         <!-- Global site tag (gtag.js) - Google Analytics -->
