@@ -74,8 +74,8 @@ class NetworkLayout
 
         this.context.save();
 
-        this.context.strokeStyle = 'rgba(60, 90, 180, 0.7)';
-        this.context.lineWidth = 2;
+        this.context.strokeStyle = 'rgba(60, 90, 180, 0.5)';
+        this.context.lineWidth = 1;
 
         // 孫から背景への線を描画
         Object.keys(this.items).forEach((key) => {
@@ -87,12 +87,7 @@ class NetworkLayout
 
         this.context.save();
 
-        // メインから子へのラインを描画
-        this.context.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-        this.context.lineWidth = 3;
-
-        let main = this.getMainItem();
-
+        // アイテムを描画
         Object.keys(this.items).forEach((key) => {
             this.items[key].draw(this.context);
         });
@@ -105,7 +100,8 @@ class NetworkLayout
         return this.items[this.mainItemId];
     }
 
-    start() {
+    start()
+    {
         window.onresize = () => {
             this.changeWindowSize();
             this.background.changeWindowSize();
@@ -120,10 +116,10 @@ class NetworkLayout
 
         let links = document.getElementsByClassName('network-layout-link');
         for (let i = 0; i < links.length; i++) {
-            links[i].onclick = (e, f, g) => {
+            links[i].onclick = (e) => {
                 e.preventDefault();
 
-                this.openMainWindow();
+                this.openMainWindow(e.target.dataset.parentId);
 
                 return false;
             };
@@ -133,16 +129,20 @@ class NetworkLayout
             this.closeMainWindow(e);
         };
 
-
         this.draw();
     }
 
 
-    openMainWindow()
+    openMainWindow(parentId)
     {
+        // TODO 取り直さなくても、メンバ変数にnetwork-item持ってる
         let items = document.getElementsByClassName('network-item');
         for (let i = 0; i < items.length; i++) {
-            items[i].classList.add('closed');
+            if (items[i].id === parentId) {
+                items[i].classList.add('opened');
+            } else {
+                items[i].classList.add('closed');
+            }
         }
 
         this.main.classList.remove('closed');
@@ -150,12 +150,13 @@ class NetworkLayout
 
     closeMainWindow(e)
     {
+        // TODO 取り直さなくても、メンバ変数にnetwork-item持ってる
         let items = document.getElementsByClassName('network-item');
         for (let i = 0; i < items.length; i++) {
             items[i].classList.remove('closed');
+            items[i].classList.remove('opened');
         }
 
         this.main.classList.add('closed');
-
     }
 }

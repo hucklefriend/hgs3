@@ -37,7 +37,7 @@
     <div class="network-item" id="notice">お知らせ</div>
     <div class="network-item" id="game">ゲーム</div>
     <div class="network-item" id="user">ユーザー</div>
-    <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-layout-link">当サイトについて</a></div>
+    <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-layout-link" data-parent-id="about">当サイトについて</a></div>
     <div class="network-item" id="privacy-policy">プライバシー<br>ポリシー</div>
     <div class="network-item" id="site-map">サイトマップ</div>
 </div>

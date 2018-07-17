@@ -32,6 +32,7 @@ main {
     background-color: rgba(0,0,0,0.4);
     z-index: 20;
     transition: opacity 0.5s linear, z-index 1s linear;
+    -webkit-overflow-scrolling: touch;
 }
 
 main.closed {
@@ -47,21 +48,21 @@ main.closed {
     margin-left: auto;
     margin-right: auto;
     background: radial-gradient(#0A103E, #0A101E, #0A101E);
-    z-index: 2;
+    z-index: 3;
 }
 
 #network-background {
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 3;
+    z-index: 1;
 }
 
 #network {
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 1;
+    z-index: 2;
 }
 
 .network-item {
@@ -73,14 +74,19 @@ main.closed {
     border: solid 2px white;
     z-index: 10;
     transition: all 0.3s ease-out;
-    /*background-color: rgba(10, 16, 20, 0.7);*/
-    /*background: radial-gradient(closest-side circle at center,#FFFFFF, rgba(60, 86, 182, 0.7), rgba(10, 16, 62, 0.1));*/
-    /*background: radial-gradient(closest-side circle at center,white, rgba(255, 25, 0, 0.8), rgba(0, 0, 0, 0.2)); */
 }
 
 .network-item.closed {
-    background-color: white;
-    transform: scale(0.1, 0.1);
+    transform: scale(0, 0);
+}
+
+.network-item.opened {
+    text-align: left;
+    opacity: 0;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 #canvas-cover {

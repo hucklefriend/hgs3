@@ -69,6 +69,12 @@ class NetworkItem
                 this.childBalls.push(new NetworkChildBall(layout, this, positions[i]));
             }
         }
+
+        // 幅と高さを設定
+
+        let size = this.dom.getBoundingClientRect();
+        this.dom.style.width = size.width + 'px';
+        this.dom.style.height = size.height + 'px';
     }
 
     setPosRandom()
@@ -144,43 +150,60 @@ class NetworkItem
 
     draw(ctx)
     {
-        if (this.isMain) {
-            return;
+        if (!this.isMain) {
+
+            // メインから子へのラインを描画
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.lineWidth = 3;
+
+            // 親から自分への線を引く
+            ctx.beginPath();
+
+            ctx.moveTo(this.parent.position.x, this.parent.position.y);
+            ctx.lineTo(this.position.x, this.position.y);
+
+            ctx.closePath();
+            ctx.stroke();
+
+            if (this.childBalls.length > 0) {
+                ctx.save();
+
+                ctx.strokeStyle = '#444';
+                ctx.lineWidth = 2;
+
+                // 自分から子への線を引く
+                this.childBalls.forEach((childBall)=>{
+                    let x = this.position.x + childBall.offset.x;
+                    let y = this.position.y + childBall.offset.y;
+
+                    ctx.beginPath();
+
+                    ctx.moveTo(this.position.x, this.position.y);
+                    ctx.lineTo(x, y);
+
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    childBall.draw(ctx, x, y);
+                });
+
+                ctx.restore();
+            }
         }
 
-        // 親から自分への線を引く
+        // 自分のボールを描く
+        let grad = ctx.createRadialGradient(this.position.x, this.position.y, 5, this.position.x, this.position.y, 10);
+
+        grad.addColorStop(0,'white');
+        grad.addColorStop(0.5,'rgba(255, 255, 255, 0.7)');
+        grad.addColorStop(0.7,'rgba(255, 255, 255, 0.1)');
+        grad.addColorStop(1,'rgba(50, 100, 170, 0)');
+
+        ctx.fillStyle = grad;
+
         ctx.beginPath();
-
-        ctx.moveTo(this.parent.position.x, this.parent.position.y);
-        ctx.lineTo(this.position.x, this.position.y);
-
-        ctx.closePath();
-        ctx.stroke();
-
-        if (this.childBalls.length > 0) {
-            ctx.save();
-
-            ctx.strokeStyle = '#444';
-            ctx.lineWidth = 2;
-
-            // 自分から子への線を引く
-            this.childBalls.forEach((childBall)=>{
-                let x = this.position.x + childBall.offset.x;
-                let y = this.position.y + childBall.offset.y;
-
-                ctx.beginPath();
-
-                ctx.moveTo(this.position.x, this.position.y);
-                ctx.lineTo(x, y);
-
-                ctx.closePath();
-                ctx.stroke();
-
-                childBall.draw(ctx, x, y);
-            });
-
-            ctx.restore();
-        }
+        ctx.arc(this.position.x, this.position.y, 10, 0, Math.PI * 2, true);
+        ctx.fill();
     }
 
     drawChildToBackgroundBallLine(ctx)
