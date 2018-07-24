@@ -10,13 +10,12 @@
     <link rel="stylesheet" href="{{ url('css/top.css') }}?ver={{ time() }}">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
-    <script src="{{ url('/js/NetworkLayout/layout.js') }}?ver={{ time() }}"></script>
-    <script src="{{ url('/js/NetworkLayout/item.js') }}?ver={{ time() }}"></script>
-    <script src="{{ url('/js/NetworkLayout/childball.js') }}?ver={{ time() }}"></script>
-    <script src="{{ url('/js/NetworkLayout/background.js') }}?ver={{ time() }}"></script>
+    <script src="{{ url('/js/network/layout.js') }}?ver={{ time() }}"></script>
+    <script src="{{ url('/js/network/item.js') }}?ver={{ time() }}"></script>
+    <script src="{{ url('/js/network/childball.js') }}?ver={{ time() }}"></script>
+    <script src="{{ url('/js/network/image.js') }}?ver={{ time() }}"></script>
+    <script src="{{ url('/js/network/background.js') }}?ver={{ time() }}"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
-
-
 
 
     @if (env('APP_ENV') == 'production')
@@ -32,19 +31,6 @@
     @endif
 </head>
 <body>
-<div id="network-layout">
-    <canvas id="network-background"></canvas>
-    <canvas id="network"></canvas>
-
-    <div class="network-item" id="title">ホラーゲーム<br>ネットワーク</div>
-    <div class="network-item" id="new-info">新着情報</div>
-    <div class="network-item" id="notice">お知らせ</div>
-    <div class="network-item" id="game">ゲーム</div>
-    <div class="network-item" id="user">ユーザー</div>
-    <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-layout-link" data-parent-id="about">当サイトについて</a></div>
-    <div class="network-item" id="privacy-policy">プライバシー<br>ポリシー</div>
-    <div class="network-item" id="site-map">サイトマップ</div>
-</div>
 
 <main id="main" class="closed">
     <section class="container">
@@ -127,7 +113,25 @@
         </p>
     </section>
 </main>
-<div id="canvas-cover"></div>
+
+<div id="network-background">
+    <canvas id="network-background-canvas" width="1000px" height="1000px"></canvas>
+    <canvas id="network-image-canvas" width="1000px" height="1000px"></canvas>
+</div>
+
+<div id="network-items">
+    <div class="network-item" id="title">ホラーゲーム<br>ネットワーク</div>
+    <div class="network-item" id="new-info">新着情報</div>
+    <div class="network-item" id="notice">お知らせ</div>
+    <div class="network-item" id="game">ゲーム</div>
+    <div class="network-item" id="user">ユーザー</div>
+    <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-layout-link" data-parent-id="about">当サイトについて</a></div>
+    <div class="network-item" id="privacy-policy">プライバシー<br>ポリシー</div>
+    <div class="network-item" id="site-map">サイトマップ</div>
+</div>
+
+<div id="canvas-cover" style="display:none;"></div>
+
 <script>
     let network = {
         main: {

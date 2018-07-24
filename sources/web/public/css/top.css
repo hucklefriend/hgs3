@@ -1,7 +1,12 @@
 @charset "UTF-8";
 
+html {
+    overscroll-behavior: none;
+}
+
 body {
     background-color: #0A101E;
+    position: absolute;
 }
 
 body, .tooltip, .swal2-modal, button, input, select, textarea {
@@ -22,47 +27,50 @@ a:hover {
 }
 
 main {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0,0,0,0.4);
-    z-index: 20;
+    z-index: 100;
     transition: opacity 0.5s linear, z-index 1s linear;
     -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
 }
 
 main.closed {
     opacity: 0;
     z-index: 0;
-}
-
-#network-layout {
-    position: relative;
-    min-width: 320px;
-    max-width: 1200px;
-    min-height: 568px;
-    margin-left: auto;
-    margin-right: auto;
-    background: radial-gradient(#0A103E, #0A101E, #0A101E);
-    z-index: 3;
+    display: none;
 }
 
 #network-background {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    z-index: 1;
+    z-index: -100;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(#0A103E, #0A101E, #0A101E);
 }
 
-#network {
+#network-background-canvas, #network-image-canvas {
     position: absolute;
+}
+
+
+#network-items {
+    position: fixed;
     left: 0;
     top: 0;
-    z-index: 2;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+#network-items.closed {
+    z-index: -1;
 }
 
 .network-item {
@@ -87,15 +95,6 @@ main.closed {
     top: 0 !important;
     width: 100% !important;
     height: 100% !important;
-}
-
-#canvas-cover {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -100;
 }
 
 #main-content {

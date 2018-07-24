@@ -22,7 +22,7 @@ class NetworkChildBall
     {
         let grad = ctx.createRadialGradient(x, y, 2, x, y, 15);
 
-        grad.addColorStop(0,'#8fb8e0');
+        grad.addColorStop(0,'white');
         grad.addColorStop(1,'rgba(50, 100, 170, 0)');
 
         ctx.fillStyle = grad;

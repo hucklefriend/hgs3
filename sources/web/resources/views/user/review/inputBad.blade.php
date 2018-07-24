@@ -175,16 +175,12 @@
         function showTag()
         {
             let badTags = $('.bad_tag:checked');
-            console.debug(badTags);
 
 
             if (badTags.length == 0) {
                 $('#no-tag-text').show();
                 $('#tag-list').hide();
-
-                console.debug('nothing');
             } else {
-                console.debug('exist');
                 $('#no-tag-text').hide();
 
                 $('#tag-list').show();

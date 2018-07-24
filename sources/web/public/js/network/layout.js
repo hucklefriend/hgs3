@@ -1,15 +1,22 @@
+const BACKGROUND_WIDTH = 1000;
+const BACKGROUND_HEIGHT = 1000;
+const BACKGROUND_CENTER_X = 500;
+const BACKGROUND_CENTER_Y = 500;
+
 class NetworkLayout
 {
     constructor(data)
     {
-        this.area = document.getElementById('network-layout');
-        this.networkCanvas = document.getElementById('network');
-        this.context = this.networkCanvas.getContext('2d');
-        this.networkCover = document.getElementById('canvas-cover');
+        //this.networkCover = document.getElementById('canvas-cover');
         this.main = document.getElementById('main');
         this.mainItem = null;
+        this.itemArea = document.getElementById('network-items');
         this.items = [];
+
+        this.backgroundArea = document.getElementById('network-background');
+        this.image = new NetworkImage();
         this.background = new NetworkBackground();
+        this.backgroundOffset = {left: 0, top: 0};
 
         this.changeWindowSize();
 
@@ -33,12 +40,12 @@ class NetworkLayout
 
     width()
     {
-        return this.area.offsetWidth;
+        return window.innerWidth;
     }
 
     height()
     {
-        return this.area.offsetHeight;
+        return window.innerHeight;
     }
 
     getItem(id)
@@ -48,51 +55,17 @@ class NetworkLayout
 
     changeWindowSize()
     {
-        this.area.style.height = window.innerHeight + 'px';
+        this.backgroundArea.style.width = window.innerWidth + 'px';
+        this.backgroundArea.style.height = window.innerHeight + 'px';
 
-        let w = this.area.offsetWidth;
-        let h = this.area.offsetHeight;
+        this.backgroundOffset.left = (window.innerWidth - BACKGROUND_WIDTH) / 2;
+        this.backgroundOffset.top = (window.innerHeight - BACKGROUND_HEIGHT) / 2;
+        let left = this.backgroundOffset.left + 'px';
+        let top = this.backgroundOffset.top + 'px';
+        this.image.changeWindowSize(left, top);
+        this.background.changeWindowSize(left, top);
 
-        this.networkCanvas.width = this.networkCover.width = w;
-        this.networkCanvas.height = this.networkCover.height = h;
-
-        // 画面の大きさに合わせて、描画する点の量を調整
-    }
-
-    draw()
-    {
-        // 配置確定
-        // TODO これは更新処理に書くべきで、描画メソッドでやるべきではない
-        Object.keys(this.items).forEach((key) => {
-            this.items[key].setPosition();
-        });
-
-        // 背景の描画
-        this.background.draw();
-
-        this.context.clearRect(0, 0, this.networkCanvas.width, this.networkCanvas.height);
-
-        this.context.save();
-
-        this.context.strokeStyle = 'rgba(60, 90, 180, 0.5)';
-        this.context.lineWidth = 1;
-
-        // 孫から背景への線を描画
-        Object.keys(this.items).forEach((key) => {
-            this.items[key].drawChildToBackgroundBallLine(this.context);
-        });
-
-        this.context.restore();
-
-
-        this.context.save();
-
-        // アイテムを描画
-        Object.keys(this.items).forEach((key) => {
-            this.items[key].draw(this.context);
-        });
-
-        this.context.restore();
+        this.updateItemPosition();
     }
 
     getMainItem()
@@ -104,14 +77,14 @@ class NetworkLayout
     {
         window.onresize = () => {
             this.changeWindowSize();
-            this.background.changeWindowSize();
-            this.draw();
+            this.draw(false);
         };
 
         this.main.onscroll = () => {
-            this.draw();
-            this.networkCanvas.style.top = -(this.main.scrollTop / 8) + 'px';
-            this.background.canvas.style.top = -(this.main.scrollTop / 15) + 'px';
+            this.image.scroll(this.main.scrollTop, this.backgroundOffset.top);
+            this.background.scroll(this.main.scrollTop, this.backgroundOffset.top);
+
+            this.draw(true);
         };
 
         let links = document.getElementsByClassName('network-layout-link');
@@ -129,8 +102,16 @@ class NetworkLayout
             this.closeMainWindow(e);
         };
 
-        this.draw();
+        this.draw(false);
     }
+
+    updateItemPosition()
+    {
+        Object.keys(this.items).forEach((key) => {
+            this.items[key].setPosition();
+        });
+    }
+
 
 
     openMainWindow(parentId)
@@ -146,11 +127,14 @@ class NetworkLayout
         }
 
         this.main.classList.remove('closed');
+        this.itemArea.classList.add('closed');
+
     }
 
     closeMainWindow(e)
     {
         // TODO 取り直さなくても、メンバ変数にnetwork-item持ってる
+
         let items = document.getElementsByClassName('network-item');
         for (let i = 0; i < items.length; i++) {
             items[i].classList.remove('closed');
@@ -158,5 +142,15 @@ class NetworkLayout
         }
 
         this.main.classList.add('closed');
+        this.itemArea.classList.remove('closed');
+    }
+
+    draw(onlyImage)
+    {
+        if (!onlyImage) {
+            this.background.draw();
+        }
+
+        this.image.draw(this.items);
     }
 }

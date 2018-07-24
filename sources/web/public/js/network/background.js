@@ -1,33 +1,48 @@
+/**
+ * 奥にあるネットワークイメージ
+ */
 class NetworkBackground
 {
+    /**
+     * コンストラクタ
+     */
     constructor()
     {
-        this.area = document.getElementById('network-layout');
-        this.canvas = document.getElementById('network-background');
+        this.canvas = document.getElementById('network-background-canvas');
         this.context = this.canvas.getContext('2d');
         this.balls = [];
-
-        this.changeWindowSize();
 
         // 背景用の点の生成
         this.generate();
     }
 
-    changeWindowSize()
+    /**
+     * ウィンドウサイズ変更イベント
+     *
+     * @param left
+     * @param top
+     */
+    changeWindowSize(left, top)
     {
-        this.area.style.height = window.innerHeight + 'px';
-        this.canvas.width = this.area.offsetWidth;
-        this.canvas.height = this.area.offsetHeight;
+        this.canvas.style.left = left;
+        this.canvas.style.top = top;
     }
 
+    scroll(mainScroll, top)
+    {
+        this.canvas.style.top = top - (mainScroll / 15) + 'px';
+    }
+
+    /**
+     * 描画
+     */
     draw()
     {
-
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // 背景の描画
-        let centerX = this.area.offsetWidth / 2;
-        let centerY = this.area.offsetHeight / 2;
+        let centerX = 500;
+        let centerY = 500;
 
         this.context.save();
 
@@ -38,7 +53,7 @@ class NetworkBackground
             let x = centerX + ball.x;
             let y = centerY + ball.y;
 
-            let grad = this.context.createRadialGradient(x, y, 2, x, y, 20);
+            let grad = this.context.createRadialGradient(x, y, 2, x, y, 10);
 
             grad.addColorStop(0,'rgba(77, 80, 192,0.7)');
             grad.addColorStop(0.5,'rgba(60, 90, 180,0.1)');
@@ -64,7 +79,9 @@ class NetworkBackground
         this.context.restore();
     }
 
-
+    /**
+     * ランダムでボールを生成
+     */
     generate()
     {
         // 中央に偏るように、全体を配置
@@ -83,8 +100,8 @@ class NetworkBackground
                 x = Math.random() * 700 - 350;
                 y = Math.random() * 700 - 350;
             } else {
-                x = Math.random() * 1000 - 500;
-                y = Math.random() * 1200 - 600;
+                x = Math.random() * 980 - 440;
+                y = Math.random() * 980 - 440;
             }
 
             let relations = [];

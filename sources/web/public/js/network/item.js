@@ -87,8 +87,8 @@ class NetworkItem
         let left = Math.floor(Math.random()*(maxLeft - minLeft) + minLeft);
         let top = Math.floor(Math.random()*(maxTop - minTop) + minTop);
 
-        this.dom.style.left = left + 'px';
-        this.dom.style.top = top + 'px';
+        this.dom.style.left = (left + this.layout.backgroundOffset.left) + 'px';
+        this.dom.style.top = (top + this.layout.backgroundOffset.top) + 'px';
         this.position.x = left + (this.dom.offsetWidth / 2);
         this.position.y = top + (this.dom.offsetHeight / 2);
     }
@@ -100,44 +100,42 @@ class NetworkItem
             y = minTop;
         }
 
-        this.dom.style.left = (x - (this.dom.offsetWidth / 2)) + 'px';
-        this.dom.style.top = (y - (this.dom.offsetHeight / 2)) + 'px';
+        this.dom.style.left = (x - (this.dom.offsetWidth / 2) + this.layout.backgroundOffset.left) + 'px';
+        this.dom.style.top = (y - (this.dom.offsetHeight / 2) + this.layout.backgroundOffset.top) + 'px';
         this.position.x = x;
         this.position.y = y;
     }
 
     setPosCenter()
     {
-        let x = this.layout.width() / 2;
-        let y = this.layout.height() / 2;
-        this.setPos(x, y);
+        this.setPos(BACKGROUND_CENTER_X, BACKGROUND_CENTER_Y);
     }
 
     setPosLeftTop()
     {
-        let x = this.layout.width() / 6;
-        let y = this.layout.height() / 6 - 100;
+        let x = BACKGROUND_WIDTH / 6;
+        let y = BACKGROUND_HEIGHT / 6 - 100;
         this.setPos(x, y);
     }
 
     setPosRightTop()
     {
-        let x = this.layout.width() / 6 * 5;
-        let y = this.layout.height() / 6 - 100;
+        let x = BACKGROUND_WIDTH / 6 * 5;
+        let y = BACKGROUND_HEIGHT / 6 - 100;
         this.setPos(x, y);
     }
 
     setPosLeftBottom()
     {
-        let x = this.layout.width() / 6;
-        let y = this.layout.height() / 6 * 5 - 100;
+        let x = BACKGROUND_WIDTH / 6;
+        let y = BACKGROUND_HEIGHT / 6 * 5 - 100;
         this.setPos(x, y);
     }
 
     setPosRightBottom()
     {
-        let x = (this.layout.width() / 6 * 5);
-        let y = this.layout.height() / 6 * 5 - 100;
+        let x = (BACKGROUND_WIDTH / 6 * 5);
+        let y = BACKGROUND_HEIGHT / 6 * 5 - 100;
         this.setPos(x, y);
     }
 
@@ -151,7 +149,6 @@ class NetworkItem
     draw(ctx)
     {
         if (!this.isMain) {
-
             // メインから子へのラインを描画
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
             ctx.lineWidth = 3;
@@ -214,11 +211,9 @@ class NetworkItem
 
         let x = 0;
         let y = 0;
-        let centerX = this.layout.area.offsetWidth / 2;
-        let centerY = this.layout.area.offsetHeight / 2;
         let scrollOffset = 0;
-        if (this.layout.networkCanvas.style.top && this.layout.background.canvas.style.top) {
-            scrollOffset = (parseInt(this.layout.networkCanvas.style.top) - parseInt(this.layout.background.canvas.style.top));
+        if (this.layout.image.canvas.style.top && this.layout.background.canvas.style.top) {
+            scrollOffset = (parseInt(this.layout.image.canvas.style.top) - parseInt(this.layout.background.canvas.style.top));
         }
 
         this.childBalls.forEach((child)=>{
@@ -229,7 +224,7 @@ class NetworkItem
                 ctx.beginPath();
 
                 ctx.moveTo(x, y);
-                ctx.lineTo(centerX + this.layout.background.balls[idx].x, centerY + this.layout.background.balls[idx].y - scrollOffset);
+                ctx.lineTo(BACKGROUND_CENTER_X + this.layout.background.balls[idx].x, BACKGROUND_CENTER_Y + this.layout.background.balls[idx].y - scrollOffset);
 
                 ctx.closePath();
                 ctx.stroke();
