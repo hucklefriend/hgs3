@@ -176,7 +176,6 @@
         {
             let badTags = $('.bad_tag:checked');
 
-
             if (badTags.length == 0) {
                 $('#no-tag-text').show();
                 $('#tag-list').hide();

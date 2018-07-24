@@ -112,19 +112,15 @@ class NetworkLayout
         });
     }
 
-
-
     openMainWindow(parentId)
     {
-        // TODO 取り直さなくても、メンバ変数にnetwork-item持ってる
-        let items = document.getElementsByClassName('network-item');
-        for (let i = 0; i < items.length; i++) {
-            if (items[i].id === parentId) {
-                items[i].classList.add('opened');
+        Object.keys(this.items).forEach((key) => {
+            if (this.items[key].dom.id === parentId) {
+                this.items[key].open();
             } else {
-                items[i].classList.add('closed');
+                this.items[key].dom.classList.add('closed');
             }
-        }
+        });
 
         this.main.classList.remove('closed');
         this.itemArea.classList.add('closed');
@@ -133,13 +129,11 @@ class NetworkLayout
 
     closeMainWindow(e)
     {
-        // TODO 取り直さなくても、メンバ変数にnetwork-item持ってる
-
-        let items = document.getElementsByClassName('network-item');
-        for (let i = 0; i < items.length; i++) {
-            items[i].classList.remove('closed');
-            items[i].classList.remove('opened');
-        }
+        Object.keys(this.items).forEach((key) => {
+            this.items[key].appear();
+            //this.items[key].dom.classList.remove('closed');
+            //this.items[key].dom.classList.remove('opened');
+        });
 
         this.main.classList.add('closed');
         this.itemArea.classList.remove('closed');

@@ -31,7 +31,7 @@ main {
     height: 100vh;
     background-color: rgba(0,0,0,0.4);
     z-index: 100;
-    transition: opacity 0.5s linear, z-index 1s linear;
+    transition: opacity 0.5s linear;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
 }
@@ -39,7 +39,6 @@ main {
 main.closed {
     opacity: 0;
     z-index: 0;
-    display: none;
 }
 
 #network-background {
@@ -91,8 +90,6 @@ main.closed {
 .network-item.opened {
     text-align: left;
     opacity: 0;
-    left: 0 !important;
-    top: 0 !important;
     width: 100% !important;
     height: 100% !important;
 }
