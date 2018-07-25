@@ -7,7 +7,6 @@ class NetworkLayout
 {
     constructor(data)
     {
-        //this.networkCover = document.getElementById('canvas-cover');
         this.main = document.getElementById('main');
         this.mainItem = null;
         this.itemArea = document.getElementById('network-items');
@@ -138,7 +137,7 @@ class NetworkLayout
             if (this.items[key].dom.id === parentId) {
                 this.items[key].open();
             } else {
-                this.items[key].dom.classList.add('closed');
+                this.items[key].close();
             }
         });
 
@@ -166,21 +165,63 @@ class NetworkLayout
         this.image.draw(this.items);
     }
 
-    changeMain(parentId)
+    changeMain(id)
     {
         // 古いアイテムを退避
         this.oldItems = this.items;
 
+        // 新しくメインになるアイテム
+        let newMain = this.items[id];
+        newMain.changePosition(newMain.data.mainMode);
+
+        this.items = {};
+        this.items[id] = newMain;
+        this.items[id].isMain = true;
+        this.items[id].parent = null;
+
+        // 今メインのやつ
+        this.items[this.mainItemId] = this.oldItems[this.mainItemId];
+        this.items[this.mainItemId].parent = newMain;
+        this.items[this.mainItemId].changePosition(newMain.data.mainMode.parent);
+        this.items[this.mainItemId].isMain = false;
+
+
         // 消えるやつの選定
-        Object.keys(this.items).forEach((key) => {
-            if (this.items[key].dom.id === parentId) {
-                this.items[key].open();
+        Object.keys(this.oldItems).forEach((key) => {
+            if (this.oldItems[key].dom.id === id) {
+                // 新しくメインになるやつ
+            } else if (this.oldItems[key].dom.id === this.mainItemId) {
+                // 今メインのやつ
             } else {
-                this.items[key].dom.classList.add('closed');
+                // 消えゆくやつ
+                this.oldItems[key].close();
             }
         });
 
+        Object.keys(this.items).forEach((key) => {
+            this.items[key].setPosition();
+        });
 
+        // 新しい要素の追加
+        newMain.data.mainMode.children.forEach((newItem)=>{
+            this.itemArea.insertAdjacentHTML('beforeend', newItem.dom);
+            this.items[newItem.id] = new NetworkItem(this, newItem, newMain);
+            //this.items[newItem.id].appear();
+        });
+
+
+        setTimeout(()=>{
+            Object.keys(this.oldItems).forEach((key) => {
+                if (!this.items.hasOwnProperty(key)) {
+                    this.oldItems[key].dispose();
+                    delete this.oldItems[key];
+                }
+            });
+
+            this.oldItems = null;
+        }, 500);
+
+        return;
 
         // 移動アニメーション
         window.requestAnimationFrame((time)=>{

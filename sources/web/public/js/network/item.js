@@ -1,7 +1,9 @@
+
 class NetworkItem
 {
     constructor(layout, data, parent)
     {
+        this.data = data;
         this.layout = layout;
         this.dom = document.getElementById(data.id);
         this.name = data.id;
@@ -17,6 +19,38 @@ class NetworkItem
         this.dom.style.width = this.originalSize.width + 'px';
         this.dom.style.height = this.originalSize.height + 'px';
 
+        this.changePosition(data);
+
+        // 子の位置決めのため、ここで位置確定
+        this.setPosition();
+
+        if (data.hasOwnProperty('childNum')) {
+            // なるべく重ならないようにちらばらせたい
+            // 大まかな位置を決める
+            let positions = [
+                {x: -50, y: -50}, {x: 0, y: -50}, {x: 50, y: -50},
+                {x: -50, y: 0}, {x: 0, y: 0}, {x: 50, y: 0},
+                {x: -50, y: 50}, {x: 0, y: 50}, {x: 50, y: 50},
+            ];
+
+            let i = 0;
+
+            // シャッフル
+            for(i = positions.length - 1; i > 0; i--){
+                let r = Math.floor(Math.random() * (i + 1));
+                let tmp = positions[i];
+                positions[i] = positions[r];
+                positions[r] = tmp;
+            }
+
+            for (i = 0; i < data.childNum; i++) {
+                this.childBalls.push(new NetworkChildBall(layout, this, positions[i]));
+            }
+        }
+    }
+
+    changePosition(data)
+    {
         if (data.hasOwnProperty('position')) {
             if (data.position.hasOwnProperty('offset')) {
                 if (!this.parent) {
@@ -48,34 +82,8 @@ class NetworkItem
         } else {
             this.setPosition = ()=> {this.setPosRandom()};
         }
-
-        // 子の位置決めのため、ここで位置確定
-        this.setPosition();
-
-        if (data.hasOwnProperty('childNum')) {
-            // なるべく重ならないようにちらばらせたい
-            // 大まかな位置を決める
-            let positions = [
-                {x: -50, y: -50}, {x: 0, y: -50}, {x: 50, y: -50},
-                {x: -50, y: 0}, {x: 0, y: 0}, {x: 50, y: 0},
-                {x: -50, y: 50}, {x: 0, y: 50}, {x: 50, y: 50},
-            ];
-
-            let i = 0;
-
-            // シャッフル
-            for(i = positions.length - 1; i > 0; i--){
-                let r = Math.floor(Math.random() * (i + 1));
-                let tmp = positions[i];
-                positions[i] = positions[r];
-                positions[r] = tmp;
-            }
-
-            for (i = 0; i < data.childNum; i++) {
-                this.childBalls.push(new NetworkChildBall(layout, this, positions[i]));
-            }
-        }
     }
+
 
     setPosRandom()
     {
@@ -184,6 +192,11 @@ class NetworkItem
         this.dom.classList.add('opened');
     }
 
+    close()
+    {
+        this.dom.classList.add('closed');
+    }
+
     appear()
     {
         this.dom.classList.remove('closed');
@@ -216,5 +229,6 @@ class NetworkItem
         this.isMain = null;
         this.childBalls = null;
         this.originalSize = null;
+        this.data = null;
     }
 }

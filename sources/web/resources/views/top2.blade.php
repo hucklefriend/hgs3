@@ -123,7 +123,7 @@
     <div class="network-item" id="title">ホラーゲーム<br>ネットワーク</div>
     <div class="network-item" id="new-info">新着情報</div>
     <div class="network-item" id="notice">お知らせ</div>
-    <div class="network-item" id="game"><a href="{{ route('ゲーム一覧') }}" class="network-change-main">ゲーム</a></div>
+    <div class="network-item" id="game"><a href="{{ route('ゲーム一覧') }}" class="network-change-main" data-parent-id="game">ゲーム</a></div>
     <div class="network-item" id="user">ユーザー</div>
     <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-open-main" data-parent-id="about">当サイトについて</a></div>
     <div class="network-item" id="privacy-policy">プライバシー<br>ポリシー</div>
@@ -171,9 +171,13 @@
                 childNum: 4,
                 mainMode: {
                     position: 'center',
-                    parentPosition:  {
-                        x: -150,
-                        y: -200
+                    parent:  {
+                        position: {
+                            offset: {
+                                x: -150,
+                                y: -200
+                            }
+                        }
                     },
                     children: [
                         {
