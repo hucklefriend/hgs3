@@ -123,9 +123,9 @@
     <div class="network-item" id="title">ホラーゲーム<br>ネットワーク</div>
     <div class="network-item" id="new-info">新着情報</div>
     <div class="network-item" id="notice">お知らせ</div>
-    <div class="network-item" id="game">ゲーム</div>
+    <div class="network-item" id="game"><a href="{{ route('ゲーム一覧') }}" class="network-change-main">ゲーム</a></div>
     <div class="network-item" id="user">ユーザー</div>
-    <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-layout-link" data-parent-id="about">当サイトについて</a></div>
+    <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-open-main" data-parent-id="about">当サイトについて</a></div>
     <div class="network-item" id="privacy-policy">プライバシー<br>ポリシー</div>
     <div class="network-item" id="site-map">サイトマップ</div>
 </div>
@@ -168,7 +168,56 @@
                         y: -130
                     }
                 },
-                childNum: 3
+                childNum: 4,
+                mainMode: {
+                    position: 'center',
+                    parentPosition:  {
+                        x: -150,
+                        y: -200
+                    },
+                    children: [
+                        {
+                            id: 'game-list-phonetic',
+                            position: {
+                                offset: {
+                                    x: 100,
+                                    y: 100
+                                }
+                            },
+                            dom: "<div class=\"network-item\" id=\"game-list-phonetic\">名称順</div>"
+                        },
+                        {
+                            id: 'game-list-release',
+                            position: {
+                                offset: {
+                                    x: -100,
+                                    y: 100
+                                }
+                            },
+                            dom: "<div class=\"network-item\" id=\"game-list-release\">発売日順</div>"
+                        },
+                        {
+                            id: 'platform-list',
+                            position: {
+                                offset: {
+                                    x: 100,
+                                    y: -100
+                                }
+                            },
+                            dom: "<div class=\"network-item\" id=\"platform-list\">プラットフォーム一覧</div>"
+                        },
+                        {
+                            id: 'company-list',
+                            position: {
+                                offset: {
+                                    x: -100,
+                                    y: -100
+                                }
+                            },
+                            dom: "<div class=\"network-item\" id=\"company-list\">メーカー一覧</div>"
+                        }
+                    ]
+                }
             },
             {
                 id: 'user',

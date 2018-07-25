@@ -12,11 +12,15 @@ class NetworkLayout
         this.mainItem = null;
         this.itemArea = document.getElementById('network-items');
         this.items = [];
+        this.oldItems = null;
 
         this.backgroundArea = document.getElementById('network-background');
         this.image = new NetworkImage();
         this.background = new NetworkBackground();
         this.backgroundOffset = {left: 0, top: 0};
+
+        this.openMainLiks = null;
+        this.changeNetworkLiks = null;
 
         this.changeWindowSize();
 
@@ -87,9 +91,20 @@ class NetworkLayout
             this.draw(true);
         };
 
-        let links = document.getElementsByClassName('network-layout-link');
-        for (let i = 0; i < links.length; i++) {
-            links[i].onclick = (e) => {
+        document.getElementById('close-main').onclick = (e) => {
+            this.closeMainWindow(e);
+        };
+
+        this.setLink();
+
+        this.draw(false);
+    }
+
+    setLink()
+    {
+        this.openMainLiks = document.getElementsByClassName('network-open-main');
+        for (let i = 0; i < this.openMainLiks.length; i++) {
+            this.openMainLiks[i].onclick = (e) => {
                 e.preventDefault();
 
                 this.openMainWindow(e.target.dataset.parentId);
@@ -98,11 +113,16 @@ class NetworkLayout
             };
         }
 
-        document.getElementById('close-main').onclick = (e) => {
-            this.closeMainWindow(e);
-        };
+        this.changeNetworkLiks = document.getElementsByClassName('network-change-main');
+        for (let i = 0; i < this.changeNetworkLiks.length; i++) {
+            this.changeNetworkLiks[i].onclick = (e) => {
+                e.preventDefault();
 
-        this.draw(false);
+                this.changeMain(e.target.dataset.parentId);
+
+                return false;
+            };
+        }
     }
 
     updateItemPosition()
@@ -144,5 +164,77 @@ class NetworkLayout
         }
 
         this.image.draw(this.items);
+    }
+
+    changeMain(parentId)
+    {
+        // 古いアイテムを退避
+        this.oldItems = this.items;
+
+        // 消えるやつの選定
+        Object.keys(this.items).forEach((key) => {
+            if (this.items[key].dom.id === parentId) {
+                this.items[key].open();
+            } else {
+                this.items[key].dom.classList.add('closed');
+            }
+        });
+
+
+
+        // 移動アニメーション
+        window.requestAnimationFrame((time)=>{
+            console.debug(time);
+
+            /*if (this.changeMainAnimation(time)) {
+                oldItems = null;
+            }*/
+        });
+
+
+        // 表示ページのデータを取得
+    }
+
+
+    changeMainAnimation(time)
+    {
+        console.debug(time);
+
+        // 親は指定位置に移動
+
+
+        // 自分を指定位置に移動
+
+
+        // 消えるアイテム
+
+
+        // 増えるアイテム
+
+
+        // 孫を子に
+
+
+        // 消える子を親の周りに
+
+
+        // 関係のない孫を消す
+
+
+        if (parseInt(Math.random() * 2) === 0) {
+            window.requestAnimationFrame((time)=>{
+                if (this.changeMainAnimation(time)) {
+                    oldItems = null;
+                }
+            });
+        } else {
+            // アニメーションが終わったらアイテムを削除
+            Object.keys(this.oldItems).forEach((key)=>{
+                this.oldItems[key].remove();
+                delete this.oldItems[key];
+            });
+
+            this.oldItems = null;
+        }
     }
 }

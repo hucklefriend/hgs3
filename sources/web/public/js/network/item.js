@@ -10,6 +10,7 @@ class NetworkItem
         this.offset = {x: 0, y: 0};
         this.isMain = false;
         this.childBalls = [];
+        this.animation = null;
 
         // 幅と高さを設定
         this.originalSize = this.dom.getBoundingClientRect();
@@ -189,5 +190,31 @@ class NetworkItem
         this.dom.classList.remove('opened');
 
         this.setPosition();
+    }
+
+
+
+    destroyAnimation()
+    {
+
+    }
+
+    dispose()
+    {
+        for (let i = 0; i < this.childBalls.length; i++) {
+            this.childBalls[i].dispose();
+            delete this.childBalls[i];
+        }
+        this.dom.parentNode.removeChild(this.dom);
+
+        this.layout = null;
+        this.dom = null;
+        this.name = null;
+        this.position = null;
+        this.parent = null;
+        this.offset = null;
+        this.isMain = null;
+        this.childBalls = null;
+        this.originalSize = null;
     }
 }

@@ -18,6 +18,13 @@ class NetworkChildBall
         }
     }
 
+    dispose()
+    {
+        this.parent = null;
+        this.offset = null;
+        this.backgroundChildren = null;
+    }
+
     draw(ctx, x, y)
     {
         let grad = ctx.createRadialGradient(x, y, 2, x, y, 15);
