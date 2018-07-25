@@ -131,8 +131,6 @@ class NetworkLayout
     {
         Object.keys(this.items).forEach((key) => {
             this.items[key].appear();
-            //this.items[key].dom.classList.remove('closed');
-            //this.items[key].dom.classList.remove('opened');
         });
 
         this.main.classList.add('closed');

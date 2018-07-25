@@ -11,6 +11,11 @@ class NetworkItem
         this.isMain = false;
         this.childBalls = [];
 
+        // 幅と高さを設定
+        this.originalSize = this.dom.getBoundingClientRect();
+        this.dom.style.width = this.originalSize.width + 'px';
+        this.dom.style.height = this.originalSize.height + 'px';
+
         if (data.hasOwnProperty('position')) {
             if (data.position.hasOwnProperty('offset')) {
                 if (!this.parent) {
@@ -69,12 +74,6 @@ class NetworkItem
                 this.childBalls.push(new NetworkChildBall(layout, this, positions[i]));
             }
         }
-
-        // 幅と高さを設定
-
-        let size = this.dom.getBoundingClientRect();
-        this.dom.style.width = size.width + 'px';
-        this.dom.style.height = size.height + 'px';
     }
 
     setPosRandom()
@@ -84,24 +83,24 @@ class NetworkItem
         let minTop = 0;
         let maxTop = this.layout.height() - minTop;
 
-        let left = Math.floor(Math.random()*(maxLeft - minLeft) + minLeft);
-        let top = Math.floor(Math.random()*(maxTop - minTop) + minTop);
+        let left = Math.floor(Math.random() * (maxLeft - minLeft) + minLeft);
+        let top = Math.floor(Math.random() * (maxTop - minTop) + minTop);
 
         this.dom.style.left = (left + this.layout.backgroundOffset.left) + 'px';
         this.dom.style.top = (top + this.layout.backgroundOffset.top) + 'px';
-        this.position.x = left + (this.dom.offsetWidth / 2);
-        this.position.y = top + (this.dom.offsetHeight / 2);
+        this.position.x = left + (this.originalSize.width / 2);
+        this.position.y = top + (this.originalSize.height / 2);
     }
 
     setPos(x, y)
     {
-        let minTop = (this.dom.offsetHeight / 2) + 20;
+        let minTop = (this.originalSize.height / 2) + 20;
         if (y < minTop) {
             y = minTop;
         }
 
-        this.dom.style.left = (x - (this.dom.offsetWidth / 2) + this.layout.backgroundOffset.left) + 'px';
-        this.dom.style.top = (y - (this.dom.offsetHeight / 2) + this.layout.backgroundOffset.top) + 'px';
+        this.dom.style.left = (x - (this.originalSize.width / 2) + this.layout.backgroundOffset.left) + 'px';
+        this.dom.style.top = (y - (this.originalSize.height / 2) + this.layout.backgroundOffset.top) + 'px';
         this.position.x = x;
         this.position.y = y;
     }
@@ -143,6 +142,7 @@ class NetworkItem
     {
         let x = this.parent.position.x + this.offset.x;
         let y = this.parent.position.y + this.offset.y;
+
         this.setPos(x, y);
     }
 
@@ -185,9 +185,9 @@ class NetworkItem
 
     appear()
     {
-        this.setPosition();
-
         this.dom.classList.remove('closed');
         this.dom.classList.remove('opened');
+
+        this.setPosition();
     }
 }
