@@ -9,9 +9,11 @@ class NetworkLayout
     {
         this.main = document.getElementById('main');
         this.mainItem = null;
+        this.mainItemId = null;
         this.itemArea = document.getElementById('network-items');
         this.items = [];
         this.oldItems = null;
+        this.oldMainItemId = null;
 
         this.backgroundArea = document.getElementById('network-background');
         this.image = new NetworkImage();
@@ -20,6 +22,7 @@ class NetworkLayout
 
         this.openMainLiks = null;
         this.changeNetworkLiks = null;
+        this.animationStartTime = null;
 
         this.changeWindowSize();
 
@@ -97,6 +100,9 @@ class NetworkLayout
         this.setLink();
 
         this.draw(false);
+        Object.keys(this.items).forEach((key) => {
+            this.items[key].appear();       // appearで出現させる
+        });
     }
 
     setLink()
@@ -169,9 +175,12 @@ class NetworkLayout
     {
         // 古いアイテムを退避
         this.oldItems = this.items;
+        this.oldMainItemId = this.mainItemId;
+        this.mainItemId = id;
 
         // 新しくメインになるアイテム
         let newMain = this.items[id];
+        newMain.animationStatus = {from: {x: newMain.position.x, y: newMain.position.y}};
         newMain.changePosition(newMain.data.mainMode);
 
         this.items = {};
@@ -179,38 +188,88 @@ class NetworkLayout
         this.items[id].isMain = true;
         this.items[id].parent = null;
 
-        // 今メインのやつ
-        this.items[this.mainItemId] = this.oldItems[this.mainItemId];
-        this.items[this.mainItemId].parent = newMain;
-        this.items[this.mainItemId].changePosition(newMain.data.mainMode.parent);
-        this.items[this.mainItemId].isMain = false;
+        // 旧メイン
+        let oldMain = this.oldItems[this.oldMainItemId];
+        this.items[this.oldMainItemId] = oldMain;
+        oldMain.animationStatus = {from: {x: oldMain.position.x, y: oldMain.position.y}};
+        oldMain.parent = newMain;
+        oldMain.changePosition(newMain.data.mainMode.parent);
+        oldMain.isMain = false;
 
+        // 旧メインの子は最小化して位置替え
+        oldMain.setChildPosition(oldMain.childBalls.length - 1);
 
-        // 消えるやつの選定
-        Object.keys(this.oldItems).forEach((key) => {
-            if (this.oldItems[key].dom.id === id) {
-                // 新しくメインになるやつ
-            } else if (this.oldItems[key].dom.id === this.mainItemId) {
-                // 今メインのやつ
-            } else {
-                // 消えゆくやつ
-                this.oldItems[key].close();
-            }
-        });
-
+        // 配置確定(この時点でCSSのアニメーションで新旧メインのみ動き始める)
         Object.keys(this.items).forEach((key) => {
             this.items[key].setPosition();
         });
 
+        // 旧メインの子の処理
+        let idx = 0;
+        Object.keys(this.oldItems).forEach((key) => {
+            if (this.oldItems[key].dom.id !== id && this.oldItems[key].dom.id !== this.oldMainItemId) {
+                this.oldItems[key].disappear();
+
+                // 新しい位置に移動
+                oldMain.childBalls[idx].animation = {
+                    from: {
+                        x: this.oldItems[key].position.x,
+                        y: this.oldItems[key].position.y
+                    },
+                    to: {
+                        x: oldMain.position.x + oldMain.childBalls[idx].offset.x,
+                        y: oldMain.position.y + oldMain.childBalls[idx].offset.y
+                    },
+                    item: this.oldItems[key]
+                };
+
+                idx++;
+            }
+        });
+
         // 新しい要素の追加
+        idx = 0;
         newMain.data.mainMode.children.forEach((newItem)=>{
             this.itemArea.insertAdjacentHTML('beforeend', newItem.dom);
             this.items[newItem.id] = new NetworkItem(this, newItem, newMain);
-            //this.items[newItem.id].appear();
+            this.items[newItem.id].setPosition();
+            this.items[newItem.id].moving();
+
+            newMain.childBalls[idx].animation = {
+                from: {
+                    x: newMain.animationStatus.from.x + newMain.childBalls[idx].offset.x,
+                    y: newMain.animationStatus.from.y + newMain.childBalls[idx].offset.y
+                },
+                to: {
+                    x: this.items[newItem.id].position.x,
+                    y: this.items[newItem.id].position.y
+                },
+                item: this.items[newItem.id]
+            };
+
+            idx++;
         });
 
+        // 移動アニメーション
+        this.animationStartTime = null;
+        window.requestAnimationFrame((time)=>{this.changeMainAnimation(time);});
 
-        setTimeout(()=>{
+        // 表示ページのデータを取得
+    }
+
+
+    changeMainAnimation(time)
+    {
+        if (this.animationStartTime == null) {
+            this.animationStartTime = time;
+        }
+
+        let animationTime = time - this.animationStartTime;
+        this.image.changeAnimation(animationTime, this.oldItems, this.items, this.items[this.mainItemId], this.items[this.oldMainItemId]);
+
+        if (animationTime <= 500) {
+            window.requestAnimationFrame((time)=>{this.changeMainAnimation(time);});
+        } else {
             Object.keys(this.oldItems).forEach((key) => {
                 if (!this.items.hasOwnProperty(key)) {
                     this.oldItems[key].dispose();
@@ -219,63 +278,9 @@ class NetworkLayout
             });
 
             this.oldItems = null;
-        }, 500);
+            this.oldMainItemId = null;
 
-        return;
-
-        // 移動アニメーション
-        window.requestAnimationFrame((time)=>{
-            console.debug(time);
-
-            /*if (this.changeMainAnimation(time)) {
-                oldItems = null;
-            }*/
-        });
-
-
-        // 表示ページのデータを取得
-    }
-
-
-    changeMainAnimation(time)
-    {
-        console.debug(time);
-
-        // 親は指定位置に移動
-
-
-        // 自分を指定位置に移動
-
-
-        // 消えるアイテム
-
-
-        // 増えるアイテム
-
-
-        // 孫を子に
-
-
-        // 消える子を親の周りに
-
-
-        // 関係のない孫を消す
-
-
-        if (parseInt(Math.random() * 2) === 0) {
-            window.requestAnimationFrame((time)=>{
-                if (this.changeMainAnimation(time)) {
-                    oldItems = null;
-                }
-            });
-        } else {
-            // アニメーションが終わったらアイテムを削除
-            Object.keys(this.oldItems).forEach((key)=>{
-                this.oldItems[key].remove();
-                delete this.oldItems[key];
-            });
-
-            this.oldItems = null;
+            this.draw(true);
         }
     }
 }

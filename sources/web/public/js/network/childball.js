@@ -4,6 +4,7 @@ class NetworkChildBall
     {
         this.parent = parent;
         this.offset = {x: 0, y: 0};
+        this.animation = null;
 
         this.offset.x = position.x + (Math.random() * 15);
         this.offset.y = position.y + (Math.random() * 15);

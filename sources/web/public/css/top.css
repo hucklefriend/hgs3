@@ -80,8 +80,52 @@ main.closed {
     background-color: black;/* rgb(10, 16, 62); */
     border: solid 2px white;
     z-index: 10;
-    transition: all 0.3s ease-out;
+    visibility: hidden;
 }
+
+.network-item.active {
+    visibility: visible;
+    animation-duration: 0.5s;
+    animation-name: appear;
+    transition: all 0.5s ease-out;
+}
+
+.network-item.moving {
+    visibility: visible;
+    animation-duration: 0.5s;
+    animation-name: appear;
+}
+
+.network-item.moved {
+    transition: all 0.5s ease-out;
+}
+
+@keyframes appear {
+    from {
+        transform: scale(0, 0);
+    }
+
+    to {
+        transform: scale(1, 1);
+    }
+}
+
+.network-item.disposing {
+    visibility: visible;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-name: disappear;
+}
+
+@keyframes disappear {
+     from {
+         transform: scale(1, 1);
+     }
+
+     to {
+         transform: scale(0, 0);
+     }
+ }
 
 .network-item.closed {
     transform: scale(0, 0);

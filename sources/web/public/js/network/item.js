@@ -12,12 +12,12 @@ class NetworkItem
         this.offset = {x: 0, y: 0};
         this.isMain = false;
         this.childBalls = [];
-        this.animation = null;
+        this.animationStatus = null;
 
         // 幅と高さを設定
         this.originalSize = this.dom.getBoundingClientRect();
-        this.dom.style.width = this.originalSize.width + 'px';
-        this.dom.style.height = this.originalSize.height + 'px';
+        /*this.dom.style.width = this.originalSize.width + 'px';
+        this.dom.style.height = this.originalSize.height + 'px';*/
 
         this.changePosition(data);
 
@@ -25,27 +25,7 @@ class NetworkItem
         this.setPosition();
 
         if (data.hasOwnProperty('childNum')) {
-            // なるべく重ならないようにちらばらせたい
-            // 大まかな位置を決める
-            let positions = [
-                {x: -50, y: -50}, {x: 0, y: -50}, {x: 50, y: -50},
-                {x: -50, y: 0}, {x: 0, y: 0}, {x: 50, y: 0},
-                {x: -50, y: 50}, {x: 0, y: 50}, {x: 50, y: 50},
-            ];
-
-            let i = 0;
-
-            // シャッフル
-            for(i = positions.length - 1; i > 0; i--){
-                let r = Math.floor(Math.random() * (i + 1));
-                let tmp = positions[i];
-                positions[i] = positions[r];
-                positions[r] = tmp;
-            }
-
-            for (i = 0; i < data.childNum; i++) {
-                this.childBalls.push(new NetworkChildBall(layout, this, positions[i]));
-            }
+            this.setChildPosition(data.childNum);
         }
     }
 
@@ -84,6 +64,36 @@ class NetworkItem
         }
     }
 
+    setChildPosition(childNum)
+    {
+        this.childBalls = [];
+
+        if (childNum <= 0) {
+            return;
+        }
+
+        // なるべく重ならないようにちらばらせたい
+        // 大まかな位置を決める
+        let positions = [
+            {x: -50, y: -50}, {x: 0, y: -50}, {x: 50, y: -50},
+            {x: -50, y: 0}, {x: 0, y: 0}, {x: 50, y: 0},
+            {x: -50, y: 50}, {x: 0, y: 50}, {x: 50, y: 50},
+        ];
+
+        let i = 0;
+
+        // シャッフル
+        for(i = positions.length - 1; i > 0; i--){
+            let r = Math.floor(Math.random() * (i + 1));
+            let tmp = positions[i];
+            positions[i] = positions[r];
+            positions[r] = tmp;
+        }
+
+        for (i = 0; i < childNum; i++) {
+            this.childBalls.push(new NetworkChildBall(this.layout, this, positions[i % (positions.length - 1)]));
+        }
+    }
 
     setPosRandom()
     {
@@ -199,17 +209,22 @@ class NetworkItem
 
     appear()
     {
+        this.dom.classList.add('active');
         this.dom.classList.remove('closed');
         this.dom.classList.remove('opened');
 
         this.setPosition();
     }
 
-
-
-    destroyAnimation()
+    disappear()
     {
+        this.dom.classList.remove('active');
+        this.dom.classList.add('disposing');
+    }
 
+    moving()
+    {
+        this.dom.classList.add('moving');
     }
 
     dispose()
