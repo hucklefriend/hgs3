@@ -46,7 +46,12 @@
 <script src="{{ url('/js/network/background.js') }}?ver={{ time() }}"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
 
-@yield('layout-json')
+<script>
+    let network = {{ json_encode($networkLayout) }};
+
+    let layout = new NetworkLayout(network);
+    layout.start();
+</script>
 
 @if (env('APP_ENV') == 'production')
     <!-- Global site tag (gtag.js) - Google Analytics -->

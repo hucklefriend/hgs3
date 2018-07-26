@@ -13,3 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/test', 'TopController@test2');
