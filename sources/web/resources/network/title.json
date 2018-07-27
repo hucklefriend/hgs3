@@ -1,8 +1,7 @@
 {
   "main": {
     "id": "title",
-    "position": "center",
-    "childNum": 4
+    "position": "center"
   },
   "children": [
     {
@@ -12,8 +11,7 @@
           "x": -100,
           "y": -200
         }
-      },
-      "childNum": 0
+      }
     },
     {
       "id": "notice",
@@ -22,8 +20,7 @@
           "x": 100,
           "y": 100
         }
-      },
-      "childNum": 0
+      }
     },
     {
       "id": "game",
@@ -32,8 +29,7 @@
           "x": 100,
           "y": -130
         }
-      },
-      "childNum": 3
+      }
     },
     {
       "id": "user",
@@ -42,8 +38,7 @@
           "x": -80,
           "y": -100
         }
-      },
-      "childNum": 2
+      }
     },
     {
       "id": "about",
@@ -52,9 +47,7 @@
           "x": 50,
           "y": -210
         }
-      },
-      "childNum": 0
-
+      }
     },
     {
       "id": "privacy-policy",
@@ -63,8 +56,7 @@
           "x": 70,
           "y": 200
         }
-      },
-      "childNum": 0
+      }
     },
     {
       "id": "site-map",
@@ -73,8 +65,7 @@
           "x": -70,
           "y": 120
         }
-      },
-      "childNum": 0
+      }
     }
   ]
 }

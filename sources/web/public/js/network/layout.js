@@ -7,7 +7,10 @@ class NetworkLayout
 {
     constructor(data)
     {
+        console.debug(data);
+
         this.main = document.getElementById('main');
+        this.content = document.getElementById('content');
         this.mainItem = null;
         this.mainItemId = null;
         this.itemArea = document.getElementById('network-items');
@@ -33,12 +36,14 @@ class NetworkLayout
     {
         if (data.hasOwnProperty('main')) {
             this.mainItemId = data.main.id;
+            this.itemArea.insertAdjacentHTML('beforeend', data.main.dom);
             this.items[this.mainItemId] = new NetworkItem(this, data.main);
             this.items[this.mainItemId].isMain = true;
         }
 
         if (data.hasOwnProperty('children')) {
-            data.children.forEach((element)=>{
+            data.children.forEach((element) => {
+                this.itemArea.insertAdjacentHTML('beforeend', element.dom);
                 this.items[element.id] = new NetworkItem(this, element, this.items[this.mainItemId]);
             });
         }
@@ -112,7 +117,7 @@ class NetworkLayout
             this.openMainLiks[i].onclick = (e) => {
                 e.preventDefault();
 
-                this.openMainWindow(e.target.dataset.parentId);
+                this.openMainWindow(e.target, e.target.dataset.parentId);
 
                 return false;
             };
@@ -137,8 +142,19 @@ class NetworkLayout
         });
     }
 
-    openMainWindow(parentId)
+    openMainWindow(target, parentId)
     {
+        let url = target.getAttribute('href');
+
+        window.superagent.get(url)
+            .end((err, res) => {
+                this.content.innerHTML = res.text;
+                console.log(res.text);//レスポンス
+                //レスポンスがJSONの場合
+                console.log(res.body);//ここにparse済みのオブジェクトが入る
+            });
+
+
         Object.keys(this.items).forEach((key) => {
             if (this.items[key].dom.id === parentId) {
                 this.items[key].open();
@@ -149,7 +165,6 @@ class NetworkLayout
 
         this.main.classList.remove('closed');
         this.itemArea.classList.add('closed');
-
     }
 
     closeMainWindow(e)
@@ -181,7 +196,7 @@ class NetworkLayout
         // 新しくメインになるアイテム
         let newMain = this.items[id];
         newMain.animationStatus = {from: {x: newMain.position.x, y: newMain.position.y}};
-        newMain.changePosition(newMain.data.mainMode);
+        newMain.changePosition(newMain.data.mainMode.main);
 
         this.items = {};
         this.items[id] = newMain;
@@ -193,7 +208,7 @@ class NetworkLayout
         this.items[this.oldMainItemId] = oldMain;
         oldMain.animationStatus = {from: {x: oldMain.position.x, y: oldMain.position.y}};
         oldMain.parent = newMain;
-        oldMain.changePosition(newMain.data.mainMode.parent);
+        oldMain.changePosition(newMain.getChildData(this.oldMainItemId));
         oldMain.isMain = false;
 
         // 旧メインの子は最小化して位置替え
@@ -230,24 +245,27 @@ class NetworkLayout
         // 新しい要素の追加
         idx = 0;
         newMain.data.mainMode.children.forEach((newItem)=>{
-            this.itemArea.insertAdjacentHTML('beforeend', newItem.dom);
-            this.items[newItem.id] = new NetworkItem(this, newItem, newMain);
-            this.items[newItem.id].setPosition();
-            this.items[newItem.id].moving();
+            if (newItem.id !== this.oldMainItemId) {
+                console.debug(newItem.id);
+                this.itemArea.insertAdjacentHTML('beforeend', newItem.dom);
+                this.items[newItem.id] = new NetworkItem(this, newItem, newMain);
+                this.items[newItem.id].setPosition();
+                this.items[newItem.id].moving();
 
-            newMain.childBalls[idx].animation = {
-                from: {
-                    x: newMain.animationStatus.from.x + newMain.childBalls[idx].offset.x,
-                    y: newMain.animationStatus.from.y + newMain.childBalls[idx].offset.y
-                },
-                to: {
-                    x: this.items[newItem.id].position.x,
-                    y: this.items[newItem.id].position.y
-                },
-                item: this.items[newItem.id]
-            };
+                newMain.childBalls[idx].animation = {
+                    from: {
+                        x: newMain.animationStatus.from.x + newMain.childBalls[idx].offset.x,
+                        y: newMain.animationStatus.from.y + newMain.childBalls[idx].offset.y
+                    },
+                    to: {
+                        x: this.items[newItem.id].position.x,
+                        y: this.items[newItem.id].position.y
+                    },
+                    item: this.items[newItem.id]
+                };
 
-            idx++;
+                idx++;
+            }
         });
 
         // 移動アニメーション
@@ -256,7 +274,6 @@ class NetworkLayout
 
         // 表示ページのデータを取得
     }
-
 
     changeMainAnimation(time)
     {

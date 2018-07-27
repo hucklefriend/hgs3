@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgs3\Http\Controllers\NetworkLayout;
+namespace Hgs3\Http\Controllers\Content;
 
 use Hgs3\Log;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -21,24 +21,21 @@ class Controller extends BaseController
     {
         $app = app();
         // 読み込み元のフォルダを指定
-        $paths = [base_path('resources/views2')];
+        $paths = [base_path('resources/views2/content')];
 
         // 新しい設定を適用
         $finder = new FileViewFinder($app['files'], $paths);
         View::setFinder($finder);
     }
 
-    protected function result($title, $network)
+    protected function result()
     {
-        $data = [
-            'title'   => $title,
-            'network' => $network
-        ];
+        $this->setViewPath();
 
         if (request()->ajax()) {
-            return \Response::json($data);
+            return \Response::json(['html' => view('about')->render()]);
         } else {
-            return view('layout.network', $data);
+            return view('about');
         }
     }
 

@@ -2,8 +2,14 @@
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
+    // 新しいレイアウトのテスト用
+    Route::get('/n', 'NetworkLayout\TopController@index')->name('トップ2');
+    Route::get('/n/about', 'Content\TopController@about')->name('テスト2');
+    //Route::get('/top2', 'TopController@index2')->name('トップ2');
 
-    Route::get('/top2', 'TopController@index2')->name('トップ2');
+
+
+
 
     // 管理メニュー
     Route::get('/admin', 'AdminController@index')->name('管理メニュー');

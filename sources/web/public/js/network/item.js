@@ -246,4 +246,15 @@ class NetworkItem
         this.originalSize = null;
         this.data = null;
     }
+
+    getChildData(id)
+    {
+        for (let i = 0; i < this.data.mainMode.children.length; i++) {
+            if (this.data.mainMode.children[i].id == id) {
+                return this.data.mainMode.children[i];
+            }
+        }
+
+        return null;
+    }
 }

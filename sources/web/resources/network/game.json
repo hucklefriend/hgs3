@@ -1,0 +1,53 @@
+{
+  "main": {
+    "id": "game",
+    "position": "center"
+  },
+  "children": [
+    {
+      "id": "title",
+      "position": {
+        "offset": {
+          "x": -200,
+          "y": -200
+        }
+      }
+    },
+    {
+      "id": "game-list-phonetic",
+      "position": {
+        "offset": {
+          "x": -100,
+          "y": -200
+        }
+      }
+    },
+    {
+      "id": "game-list-release",
+      "position": {
+        "offset": {
+          "x": 100,
+          "y": 100
+        }
+      }
+    },
+    {
+      "id": "platform-list",
+      "position": {
+        "offset": {
+          "x": 100,
+          "y": -130
+        }
+      }
+    },
+    {
+      "id": "company-list",
+      "position": {
+        "offset": {
+          "x": -80,
+          "y": -100
+        }
+      }
+    }
+  ]
+}

@@ -9,6 +9,7 @@ use Hgs3\Constants\PageId;
 use Hgs3\Http\GlobalBack;
 use Hgs3\Models\Game\Package;
 use Hgs3\Models\Game\Soft;
+use Hgs3\Models\NetworkLayout;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Review;
 use Hgs3\Models\Site;
@@ -18,6 +19,8 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
+use Illuminate\View\FileViewFinder;
 
 class TopController extends Controller
 {
@@ -144,6 +147,14 @@ class TopController extends Controller
 
     public function test2()
     {
-        return Response::json(['test' => 1]);
+        $app = app();
+        // 読み込み元のフォルダを指定
+        $paths = [base_path('resources/views2')];
+
+        // 新しい設定を適用
+        $finder = new FileViewFinder($app['files'], $paths);
+        View::setFinder($finder);
+
+        return Response::json(NetworkLayout::load('title'));
     }
 }

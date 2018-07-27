@@ -3,13 +3,12 @@
  * トップページコントローラー
  */
 
-namespace Hgs3\Http\Controllers\NetworkLayout;
+namespace Hgs3\Http\Controllers\Content;
 
 use Hgs3\Constants\PageId;
 use Hgs3\Http\GlobalBack;
 use Hgs3\Models\Game\Package;
 use Hgs3\Models\Game\Soft;
-use Hgs3\Models\NetworkLayout;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Review;
 use Hgs3\Models\Site;
@@ -33,10 +32,6 @@ class TopController extends Controller
 
         GlobalBack::clear();
 
-        $network = NetworkLayout::load('title');
-
-        return $this->result('', $network);
-/*
         $notices = Orm\SystemNotice::select(['id', 'title', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
             ->where('top_start_at', '<=', DB::raw('NOW()'))
             ->where('top_end_at', '>=', DB::raw('NOW()'))
@@ -55,7 +50,6 @@ class TopController extends Controller
             'userNum'    => User::getNum(),
             'newGames'   => Package::getNewGame()
         ]);
-*/
     }
 
     /**
@@ -93,9 +87,9 @@ class TopController extends Controller
      */
     public function about()
     {
-        $this->setViewPath();
 
-        return view('about');
+        return $this->result('about');
+
     }
 
     /**

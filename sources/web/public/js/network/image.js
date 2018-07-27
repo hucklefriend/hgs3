@@ -274,10 +274,12 @@ class NetworkImage
         this.context.closePath();
         this.context.stroke();
 
-        if (newMain.childBalls.length > 0) {
+        if (newMain.childBalls.length > 1) {
 
             // 自分から子への線を引く
-            newMain.childBalls.forEach((childBall)=>{
+            for (let i = 0; i < newMain.childBalls.length - 2; i++) {
+                let childBall = newMain.childBalls[i];
+
                 // 現在地の計算
                 let x = childBall.animation.from.x - ((childBall.animation.from.x - childBall.animation.to.x) * rate);
                 let y = childBall.animation.from.y - ((childBall.animation.from.y - childBall.animation.to.y) * rate);
@@ -292,8 +294,7 @@ class NetworkImage
 
                 childBall.draw(this.context, x, y);
                 childBall.animation.item.setPos(x, y);
-            });
-
+            }
         }
 
         this.context.restore();
