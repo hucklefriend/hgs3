@@ -87,9 +87,7 @@ class TopController extends Controller
      */
     public function about()
     {
-
-        return $this->result('about');
-
+        return $this->result('title', '当サイトについて', 'about');
     }
 
     /**

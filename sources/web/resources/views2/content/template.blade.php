@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>{{ env('APP_NAME') }} トップ</title>
+    @if (strlen($title) > 0)
+    <title>{{ $title }} | {{ env('APP_NAME') }}</title>
+    @else
+    <title>{{ env('APP_NAME') }}</title>
+    @endif
 
     {{-- <link rel="preload" as="style" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous" onload="this.rel='stylesheet'"> --}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -12,10 +16,10 @@
 </head>
 <body>
 
-<main id="main" class="closed">
+<main id="main">
     <section class="container">
         <div class="text-right"><button id="close-main" class="btn btn-secondary">×</button></div>
-        <div id="content"></div>
+        <div id="content">@include('content.' . $viewFileName, $viewData ?? [])</div>
     </section>
 </main>
 
@@ -24,19 +28,8 @@
     <canvas id="network-image-canvas" width="1000px" height="1000px"></canvas>
 </div>
 
-<div id="network-items">
-    <div class="network-item" id="title">ホラーゲーム<br>ネットワーク</div>
-    <div class="network-item" id="new-info">新着情報</div>
-    <div class="network-item" id="notice">お知らせ</div>
-    <div class="network-item" id="game"><a href="{{ route('ゲーム一覧') }}" class="network-change-main" data-parent-id="game">ゲーム</a></div>
-    <div class="network-item" id="user">ユーザー</div>
-    <div class="network-item" id="about"><a href="{{ route('当サイトについて') }}" class="network-open-main" data-parent-id="about">当サイトについて</a></div>
-    <div class="network-item" id="privacy-policy">プライバシー<br>ポリシー</div>
-    <div class="network-item" id="site-map">サイトマップ</div>
-</div>
-
+<div id="network-items"></div>
 <div id="canvas-cover" style="display:none;"></div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
 <script src="{{ url('/js/network/layout.js') }}?ver={{ time() }}"></script>
@@ -45,8 +38,10 @@
 <script src="{{ url('/js/network/image.js') }}?ver={{ time() }}"></script>
 <script src="{{ url('/js/network/background.js') }}?ver={{ time() }}"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
-
-@yield('layout-json')
+<script>
+    let layout = new NetworkLayout({!! json_encode($network) !!});
+    layout.startContent();
+</script>
 
 @if (env('APP_ENV') == 'production')
     <!-- Global site tag (gtag.js) - Google Analytics -->

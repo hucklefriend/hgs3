@@ -86,6 +86,20 @@ class NetworkLayout
 
     start()
     {
+        this.startCommon();
+        Object.keys(this.items).forEach((key) => {
+            this.items[key].appear();       // appearで出現させる
+        });
+    }
+
+    startContent()
+    {
+        this.startCommon();
+        this.itemArea.classList.add('closed');
+    }
+
+    startCommon()
+    {
         window.onresize = () => {
             this.changeWindowSize();
             this.draw(false);
@@ -103,11 +117,7 @@ class NetworkLayout
         };
 
         this.setLink();
-
         this.draw(false);
-        Object.keys(this.items).forEach((key) => {
-            this.items[key].appear();       // appearで出現させる
-        });
     }
 
     setLink()
@@ -146,12 +156,12 @@ class NetworkLayout
     {
         let url = target.getAttribute('href');
 
-        window.superagent.get(url)
+        window.superagent
+            .get(url)
+            .set('X-Requested-With', 'XMLHttpRequest')
             .end((err, res) => {
-                this.content.innerHTML = res.text;
-                console.log(res.text);//レスポンス
-                //レスポンスがJSONの場合
-                console.log(res.body);//ここにparse済みのオブジェクトが入る
+                console.debug(res);
+                this.content.innerHTML = res.body.html;
             });
 
 

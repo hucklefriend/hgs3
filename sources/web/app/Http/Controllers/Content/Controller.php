@@ -3,6 +3,7 @@
 namespace Hgs3\Http\Controllers\Content;
 
 use Hgs3\Log;
+use Hgs3\Models\NetworkLayout;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -21,21 +22,29 @@ class Controller extends BaseController
     {
         $app = app();
         // 読み込み元のフォルダを指定
-        $paths = [base_path('resources/views2/content')];
+        $paths = [base_path('resources/views2')];
 
         // 新しい設定を適用
         $finder = new FileViewFinder($app['files'], $paths);
         View::setFinder($finder);
     }
 
-    protected function result()
+    protected function result($networkId, $title, $viewFileName, $viewData = [])
     {
         $this->setViewPath();
 
         if (request()->ajax()) {
-            return \Response::json(['html' => view('about')->render()]);
+            return \Response::json([
+                'title' => $title,
+                'html'  => view('content.' . $viewFileName)->render()
+            ]);
         } else {
-            return view('about');
+            return view('content.template',[
+                'title'        => $title,
+                'viewFileName' => $viewFileName,
+                'viewData'     => $viewData,
+                'network'      => NetworkLayout::load($networkId)
+            ]);
         }
     }
 
