@@ -16,8 +16,9 @@ class NetworkItem
 
         // 幅と高さを設定
         this.originalSize = this.dom.getBoundingClientRect();
-        /*this.dom.style.width = this.originalSize.width + 'px';
-        this.dom.style.height = this.originalSize.height + 'px';*/
+        // 幅と高さをセットしておかないと、拡大縮小アニメーションができない
+        this.dom.style.width = this.originalSize.width + 'px';
+        this.dom.style.height = this.originalSize.height + 'px';
 
         this.changePosition(data);
 

@@ -20,6 +20,18 @@ class NetworkImage
         this.canvas.style.top = top - (mainScroll / 8) + 'px';
     }
 
+    goTop(time, top)
+    {
+        if (time > 500) {
+            this.canvas.style.top = top + 'px';
+        } else {
+            let now = parseInt(this.canvas.style.top);
+            let distance = (now - top) * (time / 500);
+
+            this.canvas.style.top = (now - distance) + 'px';
+        }
+    }
+
     draw(items)
     {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);

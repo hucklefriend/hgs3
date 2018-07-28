@@ -31,6 +31,19 @@ class NetworkBackground
     scroll(mainScroll, top)
     {
         this.canvas.style.top = top - (mainScroll / 15) + 'px';
+        console.debug(this.canvas.style.top);
+    }
+
+    goTop(time, top)
+    {
+        if (time > 500) {
+            this.canvas.style.top = top + 'px';
+        } else {
+            let now = parseInt(this.canvas.style.top);
+            let distance = (now - top) * (time / 500);
+
+            this.canvas.style.top = (now - distance) + 'px';
+        }
     }
 
     /**

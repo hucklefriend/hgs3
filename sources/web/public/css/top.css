@@ -57,6 +57,7 @@ main.closed {
 }
 
 
+
 #network-items {
     position: fixed;
     left: 0;
@@ -125,7 +126,7 @@ main.closed {
      to {
          transform: scale(0, 0);
      }
- }
+}
 
 .network-item.closed {
     transform: scale(0, 0);
@@ -133,9 +134,47 @@ main.closed {
 
 .network-item.opened {
     text-align: left;
+    left: 0;
+    top: 0;
     opacity: 0;
     width: 100% !important;
     height: 100% !important;
+    /*
+    animation-duration: 2.5s;
+    animation-name: network-item-open;
+    animation-fill-mode: forwards;
+    */
+}
+
+@keyframes network-item-open {
+    from {
+    }
+
+    to {
+        opacity: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+.network-item.closing {
+    animation-name: network-item-closing;
+}
+
+@keyframes network-item-closing {
+    from {
+        text-align: left;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    to {
+        text-align: center;
+        opacity: 1;
+        width: auto;
+        height: auto;
+    }
 }
 
 #main-content {

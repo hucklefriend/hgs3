@@ -18,8 +18,8 @@
 
 <main id="main" class="closed">
     <section class="container">
-        <div class="text-right"><button id="close-main" class="btn btn-secondary">×</button></div>
         <div id="content"></div>
+        <div class="text-right"><button id="close-main" class="btn btn-secondary">×</button></div>
     </section>
 </main>
 

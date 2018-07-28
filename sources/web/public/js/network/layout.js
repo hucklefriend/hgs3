@@ -148,7 +148,9 @@ class NetworkLayout
     updateItemPosition()
     {
         Object.keys(this.items).forEach((key) => {
-            this.items[key].setPosition();
+            if (!this.items[key].classList.contains('opened')) {
+                this.items[key].setPosition();
+            }
         });
     }
 
@@ -163,7 +165,6 @@ class NetworkLayout
                 console.debug(res);
                 this.content.innerHTML = res.body.html;
             });
-
 
         Object.keys(this.items).forEach((key) => {
             if (this.items[key].dom.id === parentId) {
@@ -185,7 +186,33 @@ class NetworkLayout
 
         this.main.classList.add('closed');
         this.itemArea.classList.remove('closed');
+
+        // 背景を戻すアニメーション
+        this.animationStartTime = null;
+        window.requestAnimationFrame((time)=>{this.imageGoTopAnimation(time);});
     }
+
+    imageGoTopAnimation(time)
+    {
+        if (this.animationStartTime == null) {
+            this.animationStartTime = time;
+        }
+
+        let animationTime = time - this.animationStartTime;
+        this.background.goTop(animationTime, this.backgroundOffset.top);
+        this.image.goTop(animationTime, this.backgroundOffset.top);
+
+        this.draw(true);
+
+        if (animationTime <= 500) {
+            window.requestAnimationFrame((time)=>{this.imageGoTopAnimation(time);});
+        } else {
+            this.main.scrollTop = 0;
+            // TODO scrollイベントが走らないか要確認
+        }
+    }
+
+
 
     draw(onlyImage)
     {
@@ -281,8 +308,6 @@ class NetworkLayout
         // 移動アニメーション
         this.animationStartTime = null;
         window.requestAnimationFrame((time)=>{this.changeMainAnimation(time);});
-
-        // 表示ページのデータを取得
     }
 
     changeMainAnimation(time)
