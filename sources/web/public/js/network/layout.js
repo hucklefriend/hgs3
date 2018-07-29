@@ -39,6 +39,7 @@ class NetworkLayout
             this.itemArea.insertAdjacentHTML('beforeend', data.main.dom);
             this.items[this.mainItemId] = new NetworkItem(this, data.main);
             this.items[this.mainItemId].isMain = true;
+            this.items[this.mainItemId].dom.classList.add('main');
         }
 
         if (data.hasOwnProperty('children')) {
@@ -190,6 +191,11 @@ class NetworkLayout
         // 背景を戻すアニメーション
         this.animationStartTime = null;
         window.requestAnimationFrame((time)=>{this.imageGoTopAnimation(time);});
+
+        // メインウィンドウの内容を消しておく
+        setTimeout(()=>{
+            this.content.innerHTML = '';
+        }, 500);
     }
 
     imageGoTopAnimation(time)
@@ -239,6 +245,7 @@ class NetworkLayout
         this.items[id] = newMain;
         this.items[id].isMain = true;
         this.items[id].parent = null;
+        newMain.dom.classList.add('main');
 
         // 旧メイン
         let oldMain = this.oldItems[this.oldMainItemId];
@@ -247,6 +254,7 @@ class NetworkLayout
         oldMain.parent = newMain;
         oldMain.changePosition(newMain.getChildData(this.oldMainItemId));
         oldMain.isMain = false;
+        oldMain.dom.classList.remove('main');
 
         // 旧メインの子は最小化して位置替え
         oldMain.setChildPosition(oldMain.childBalls.length - 1);
@@ -308,6 +316,7 @@ class NetworkLayout
         // 移動アニメーション
         this.animationStartTime = null;
         window.requestAnimationFrame((time)=>{this.changeMainAnimation(time);});
+
     }
 
     changeMainAnimation(time)

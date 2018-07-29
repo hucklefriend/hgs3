@@ -263,6 +263,9 @@ Route::get('/user/profile/{showId}/{show}', 'User\ProfileController@index')->nam
 Route::get('/test', 'TopController@test');
 
 // 新しいレイアウトのテスト用
-Route::get('/n', 'NetworkLayout\TopController@index')->name('トップ2');
-Route::get('/content/about', 'Content\TopController@about')->name('テスト2');
+Route::get('/n', 'NetworkLayout\TopController@index')->name('n.トップ');
+Route::get('/content/about', 'Content\TopController@about')->name('c.当サイトについて');
+Route::get('/content/privacy', 'Content\TopController@privacy')->name('c.プライバシーポリシー');
+Route::get('/content/sitemap', 'Content\TopController@sitemap')->name('c.サイトマップ');
+Route::get('/content/hgs', 'Content\TopController@hgs')->name('c.HGSユーザーへ');
 
