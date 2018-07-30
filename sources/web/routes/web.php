@@ -264,6 +264,8 @@ Route::get('/test', 'TopController@test');
 
 // 新しいレイアウトのテスト用
 Route::get('/n', 'NetworkLayout\TopController@index')->name('n.トップ');
+Route::get('/network/game', 'NetworkLayout\GameController@index')->name('n.ゲーム');
+
 Route::get('/content/about', 'Content\TopController@about')->name('c.当サイトについて');
 Route::get('/content/privacy', 'Content\TopController@privacy')->name('c.プライバシーポリシー');
 Route::get('/content/sitemap', 'Content\TopController@sitemap')->name('c.サイトマップ');

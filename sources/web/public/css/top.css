@@ -86,18 +86,14 @@ main.closed {
 
 .network-item.active {
     visibility: visible;
-    animation-duration: 0.5s;
-    animation-name: appear;
-    transition: all 0.5s ease-out;
 }
 
 .network-item.moving {
-    visibility: visible;
     animation-duration: 0.5s;
     animation-name: appear;
 }
 
-.network-item.moved {
+.network-item.stay {
     transition: all 0.5s ease-out;
 }
 

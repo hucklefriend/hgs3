@@ -139,7 +139,7 @@ class NetworkLayout
             this.changeNetworkLiks[i].onclick = (e) => {
                 e.preventDefault();
 
-                this.changeMain(e.target.dataset.parentId);
+                this.changeMain(e.target.getAttribute('href'), e.target.dataset.parentId);
 
                 return false;
             };
@@ -149,7 +149,7 @@ class NetworkLayout
     updateItemPosition()
     {
         Object.keys(this.items).forEach((key) => {
-            if (!this.items[key].classList.contains('opened')) {
+            if (!this.items[key].dom.classList.contains('opened')) {
                 this.items[key].setPosition();
             }
         });
@@ -163,7 +163,6 @@ class NetworkLayout
             .get(url)
             .set('X-Requested-With', 'XMLHttpRequest')
             .end((err, res) => {
-                console.debug(res);
                 this.content.innerHTML = res.body.html;
             });
 
@@ -229,7 +228,7 @@ class NetworkLayout
         this.image.draw(this.items);
     }
 
-    changeMain(id)
+    changeMain(url, id)
     {
         // 古いアイテムを退避
         this.oldItems = this.items;
@@ -257,7 +256,7 @@ class NetworkLayout
         oldMain.dom.classList.remove('main');
 
         // 旧メインの子は最小化して位置替え
-        oldMain.setChildPosition(oldMain.childBalls.length - 1);
+        oldMain.setChildPosition(oldMain.childBalls.length);
 
         // 配置確定(この時点でCSSのアニメーションで新旧メインのみ動き始める)
         Object.keys(this.items).forEach((key) => {
@@ -267,7 +266,18 @@ class NetworkLayout
         // 旧メインの子の処理
         let idx = 0;
         Object.keys(this.oldItems).forEach((key) => {
-            if (this.oldItems[key].dom.id !== id && this.oldItems[key].dom.id !== this.oldMainItemId) {
+            if (this.oldItems[key].dom.id === this.oldMainItemId) {
+                // 新しい位置に移動
+                oldMain.childBalls[idx].animation = {
+                    from: oldMain.animationStatus.from,
+                    to: {
+                        x: oldMain.position.x + oldMain.childBalls[idx].offset.x,
+                        y: oldMain.position.y + oldMain.childBalls[idx].offset.y
+                    },
+                    item: this.oldItems[key]
+                };
+                idx++;
+            } else if (this.oldItems[key].dom.id !== id && this.oldItems[key].dom.id !== this.oldMainItemId) {
                 this.oldItems[key].disappear();
 
                 // 新しい位置に移動
@@ -291,7 +301,6 @@ class NetworkLayout
         idx = 0;
         newMain.data.mainMode.children.forEach((newItem)=>{
             if (newItem.id !== this.oldMainItemId) {
-                console.debug(newItem.id);
                 this.itemArea.insertAdjacentHTML('beforeend', newItem.dom);
                 this.items[newItem.id] = new NetworkItem(this, newItem, newMain);
                 this.items[newItem.id].setPosition();
@@ -313,11 +322,29 @@ class NetworkLayout
             }
         });
 
+        // 遷移先の情報を取得
+        this.updateItems(url);
+
         // 移動アニメーション
         this.animationStartTime = null;
         window.requestAnimationFrame((time)=>{this.changeMainAnimation(time);});
 
+        this.setLink();
     }
+
+    updateItems(url)
+    {
+        window.superagent
+            .get(url)
+            .set('X-Requested-With', 'XMLHttpRequest')
+            .end((err, res) => {
+                res.body.network.children.forEach((element)=>{
+                    this.items[element.id].data = element;
+                });
+            });
+    }
+
+
 
     changeMainAnimation(time)
     {
@@ -326,7 +353,8 @@ class NetworkLayout
         }
 
         let animationTime = time - this.animationStartTime;
-        this.image.changeAnimation(animationTime, this.oldItems, this.items, this.items[this.mainItemId], this.items[this.oldMainItemId]);
+        this.image.changeAnimation(animationTime, this.oldItems, this.items,
+            this.items[this.mainItemId], this.items[this.oldMainItemId], this.backgroundOffset);
 
         if (animationTime <= 500) {
             window.requestAnimationFrame((time)=>{this.changeMainAnimation(time);});

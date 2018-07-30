@@ -114,11 +114,6 @@ class NetworkItem
 
     setPos(x, y)
     {
-        let minTop = (this.originalSize.height / 2) + 20;
-        if (y < minTop) {
-            y = minTop;
-        }
-
         this.dom.style.left = (x - (this.originalSize.width / 2) + this.layout.backgroundOffset.left) + 'px';
         this.dom.style.top = (y - (this.originalSize.height / 2) + this.layout.backgroundOffset.top) + 'px';
         this.position.x = x;
@@ -164,6 +159,13 @@ class NetworkItem
         let y = this.parent.position.y + this.offset.y;
 
         this.setPos(x, y);
+    }
+
+
+    move(x, y)
+    {
+        this.dom.style.left = (x - (this.originalSize.width / 2) + this.layout.backgroundOffset.left) + 'px';
+        this.dom.style.top = (y - (this.originalSize.height / 2) + this.layout.backgroundOffset.top) + 'px';
     }
 
 
@@ -225,6 +227,7 @@ class NetworkItem
 
     moving()
     {
+        this.dom.classList.add('active');
         this.dom.classList.add('moving');
     }
 

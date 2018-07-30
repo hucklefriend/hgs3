@@ -110,7 +110,7 @@ class NetworkImage
         this.context.restore();
     }
 
-    changeAnimation(time, oldItems, items, mainItem, oldMainItem)
+    changeAnimation(time, oldItems, items, mainItem, oldMainItem, backgroundOffset)
     {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -121,10 +121,10 @@ class NetworkImage
             this.changeAnimationVanish(time, oldItems);
 
             // 元メインの移動
-            let oldMainPos = this.changeAnimationOldMain(time, 500, oldMainItem);
+            let oldMainPos = this.changeAnimationOldMain(time, 500, oldMainItem, backgroundOffset);
 
             // 新メインの移動
-            this.changeAnimationNewMain(time, 500, mainItem, oldMainPos);
+            this.changeAnimationNewMain(time, 500, mainItem, oldMainPos, backgroundOffset);
 
             oldMainPos = null;
         } else {
@@ -216,7 +216,7 @@ class NetworkImage
         // たぶんウィンドウで隠れるので、ボールはもう描画しない
     }
 
-    changeAnimationOldMain(time, animTime, oldMain)
+    changeAnimationOldMain(time, animTime, oldMain, backgroundOffset)
     {
         let rate = time / animTime;
         let itemX = oldMain.animationStatus.from.x - ((oldMain.animationStatus.from.x - oldMain.position.x) * rate);
@@ -266,11 +266,13 @@ class NetworkImage
         return {x: itemX, y: itemY};
     }
 
-    changeAnimationNewMain(time, animTime, newMain, oldMainPos)
+    changeAnimationNewMain(time, animTime, newMain, oldMainPos, backgroundOffset)
     {
         let rate = time / animTime;
         let itemX = newMain.animationStatus.from.x - ((newMain.animationStatus.from.x - newMain.position.x) * rate);
         let itemY = newMain.animationStatus.from.y - ((newMain.animationStatus.from.y - newMain.position.y) * rate);
+
+        newMain.move(itemX, itemY);
 
         this.context.save();
 
