@@ -222,6 +222,7 @@ class NetworkImage
         let itemX = oldMain.animationStatus.from.x - ((oldMain.animationStatus.from.x - oldMain.position.x) * rate);
         let itemY = oldMain.animationStatus.from.y - ((oldMain.animationStatus.from.y - oldMain.position.y) * rate);
 
+        oldMain.move(itemX, itemY);
 /*
         let grad = this.context.createRadialGradient(x, y, 5, x, y, 10);
 
@@ -257,7 +258,6 @@ class NetworkImage
                 this.context.stroke();
 
                 childBall.draw(this.context, x, y);
-                childBall.animation.item.setPos(x, y);
             });
 
             this.context.restore();
@@ -307,7 +307,6 @@ class NetworkImage
                 this.context.stroke();
 
                 childBall.draw(this.context, x, y);
-                childBall.animation.item.setPos(x, y);
             }
         }
 
