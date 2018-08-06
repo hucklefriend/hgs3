@@ -16,19 +16,19 @@
 </head>
 <body>
 
-<main id="main">
+<main id="main" style="display:none;">
     <section class="container">
         <div class="text-right"><button id="close-main" class="btn btn-secondary">×</button></div>
         <div id="content">@include('content.' . $viewFileName, $viewData ?? [])</div>
     </section>
 </main>
 
-<div id="network-background">
+<div id="network-background" style="display:none;">
     <canvas id="network-background-canvas" width="1000px" height="1000px"></canvas>
     <canvas id="network-image-canvas" width="1000px" height="1000px"></canvas>
 </div>
 
-<div id="network-items"></div>
+<div id="network-items" style="display:none;"></div>
 <div id="canvas-cover" style="display:none;"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
