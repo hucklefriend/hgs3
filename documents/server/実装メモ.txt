@@ -13,3 +13,38 @@ $pager->links('vendor.pagination.simple-bootstrap-4')
 
 
 ※ページャービューはLaravel 5.6でデフォルトがbootstrap4になっている
+
+
+
+
+
+○IDEヘルパー
+
+{
+    "require": {
+        // ↓下記を追加↓
+        "barryvdh/laravel-ide-helper": "1.*"
+    },
+}
+
+
+composer update
+
+
+app/config/app.php
+'providers' => array(
+    // ↓ 下記を追記 ↓
+    'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+),
+
+php artisan ide-helper:generate
+
+{
+    "scripts":{
+            "post-update-cmd":[
+            // ↓ 下記を追記 ↓
+                    "php artisan ide-helper:generate",
+                    "php artisan optimize",
+            ]
+    },
+}

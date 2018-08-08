@@ -7,6 +7,8 @@ html {
 body {
     background-color: #0A101E;
     position: absolute;
+    width: 1000px;
+    height: 1000px;
 }
 
 body, .tooltip, .swal2-modal, button, input, select, textarea {
@@ -34,7 +36,7 @@ main {
     transition: opacity 0.5s linear;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
-    padding-bottom: 40px;
+    padding-bottom: 44px;
 }
 
 main.closed {
@@ -44,13 +46,12 @@ main.closed {
 }
 
 #network-background {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     z-index: -100;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+    width: 100%;
+    height: 100%;
     background: radial-gradient(#0A103E, #0A101E, #0A101E);
 }
 
@@ -61,14 +62,11 @@ main.closed {
 
 
 #network-items {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: scroll;
+    width: 100%;
+    height: 100%;
 }
 
 

@@ -67,17 +67,19 @@ class NetworkLayout
 
     changeWindowSize()
     {
+        /*
         this.backgroundArea.style.width = window.innerWidth + 'px';
         this.backgroundArea.style.height = window.innerHeight + 'px';
+        */
 
         this.backgroundOffset.left = (window.innerWidth - BACKGROUND_WIDTH) / 2;
         this.backgroundOffset.top = (window.innerHeight - BACKGROUND_HEIGHT) / 2;
         let left = this.backgroundOffset.left + 'px';
         let top = this.backgroundOffset.top + 'px';
-        this.image.changeWindowSize(left, top);
-        this.background.changeWindowSize(left, top);
+        //this.image.changeWindowSize(left, top);
+        //this.background.changeWindowSize(left, top);
 
-        this.updateItemPosition();
+        //this.updateItemPosition();
     }
 
     getMainItem()
