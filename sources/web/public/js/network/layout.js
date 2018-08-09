@@ -30,6 +30,8 @@ class NetworkLayout
         this.changeWindowSize();
 
         this.load(data);
+
+        this.setInitialScroll();
     }
 
     load(data)
@@ -71,15 +73,31 @@ class NetworkLayout
         this.backgroundArea.style.width = window.innerWidth + 'px';
         this.backgroundArea.style.height = window.innerHeight + 'px';
         */
-
+        /*
         this.backgroundOffset.left = (window.innerWidth - BACKGROUND_WIDTH) / 2;
         this.backgroundOffset.top = (window.innerHeight - BACKGROUND_HEIGHT) / 2;
         let left = this.backgroundOffset.left + 'px';
-        let top = this.backgroundOffset.top + 'px';
+        let top = this.backgroundOffset.top + 'px';*/
         //this.image.changeWindowSize(left, top);
         //this.background.changeWindowSize(left, top);
 
         //this.updateItemPosition();
+    }
+
+    setInitialScroll()
+    {
+        let scrollX = 0, scrollY = 0;
+
+        // スクロール位置の調整
+        if (window.innerWidth < BACKGROUND_WIDTH) {
+            scrollX = (BACKGROUND_WIDTH - window.innerWidth) / 2;
+        }
+
+        if (window.innerHeight < BACKGROUND_HEIGHT) {
+            scrollY = (BACKGROUND_HEIGHT - window.innerHeight) / 2;
+        }
+
+        window.scrollTo(scrollX, scrollY);
     }
 
     getMainItem()

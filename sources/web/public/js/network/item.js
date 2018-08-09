@@ -114,8 +114,8 @@ class NetworkItem
 
     setPos(x, y)
     {
-        this.dom.style.left = (x - (this.originalSize.width / 2) + this.layout.backgroundOffset.left) + 'px';
-        this.dom.style.top = (y - (this.originalSize.height / 2) + this.layout.backgroundOffset.top) + 'px';
+        this.dom.style.left = (x - (this.originalSize.width / 2) /*+ this.layout.backgroundOffset.left*/) + 'px';
+        this.dom.style.top = (y - (this.originalSize.height / 2) /*+ this.layout.backgroundOffset.top*/) + 'px';
         this.position.x = x;
         this.position.y = y;
     }
