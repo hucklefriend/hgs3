@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
-html {
+html, body {
+    height: 100%;
 }
 
 body {
@@ -25,7 +26,26 @@ a:hover {
     text-decoration:none;
 }
 
+
+#network-area {
+    width: 100vw;
+    height: 100vh;
+    overflow: scroll;
+    position: relative;
+    left: 0;
+    top: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+#network-area.mainMode {
+    pointer-events: none;
+}
+
+
 main {
+    position: fixed;
+    left: 0;
+    top: 0;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0,0,0,0.4);
@@ -33,22 +53,22 @@ main {
     transition: opacity 0.5s linear;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
-    padding-bottom: 44px;
+    padding-bottom: 100px;
 }
 
 main.closed {
     opacity: 0;
-    z-index: 0;
-    height: 70vh;
+    z-index: -100;
+    height: 50vh;
 }
 
 #network-background {
-    position: absolute;
+    position: relative;
     left: 0;
     top: 0;
     z-index: -100;
-    width: 100%;
-    height: 100%;
+    width: 1000px;
+    height: 1000px;
     background: radial-gradient(#0A103E, #0A101E, #0A101E);
 }
 

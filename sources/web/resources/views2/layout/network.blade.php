@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.3">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     @if (strlen($title) > 0)
     <title>{{ $title }} | {{ env('APP_NAME') }}</title>
     @else
@@ -15,20 +15,24 @@
 </head>
 <body>
 
+    <div id="network-area">
+        <div id="network-background">
+            <canvas id="network-background-canvas" width="1000px" height="1000px"></canvas>
+            <canvas id="network-image-canvas" width="1000px" height="1000px"></canvas>
+        </div>
+
+        <div id="network-items"></div>
+        <div id="canvas-cover" style="display:none;"></div>
+    </div>
+
+
+
     <main id="main" class="closed">
         <section class="container">
             <div id="content"></div>
             <div class="text-right"><button id="close-main" class="btn btn-secondary">×</button></div>
         </section>
     </main>
-
-    <div id="network-background">
-        <canvas id="network-background-canvas" width="1000px" height="1000px"></canvas>
-        <canvas id="network-image-canvas" width="1000px" height="1000px"></canvas>
-    </div>
-
-    <div id="network-items"></div>
-    <div id="canvas-cover" style="display:none;"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
     <script src="{{ url('/js/network/layout.js') }}?ver={{ time() }}"></script>

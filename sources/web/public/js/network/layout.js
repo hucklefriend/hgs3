@@ -97,7 +97,10 @@ class NetworkLayout
             scrollY = (BACKGROUND_HEIGHT - window.innerHeight) / 2;
         }
 
-        window.scrollTo(scrollX, scrollY);
+        console.debug(window.innerWidth, window.innerheight);
+        console.debug(scrollX, scrollY);
+
+        document.getElementById('network-area').scrollTo(scrollX, scrollY);
     }
 
     getMainItem()
@@ -196,6 +199,8 @@ class NetworkLayout
 
         this.main.classList.remove('closed');
         this.itemArea.classList.add('closed');
+
+        document.getElementById('network-area').classList.add('mainMode');
     }
 
     closeMainWindow(e)
@@ -206,10 +211,12 @@ class NetworkLayout
 
         this.main.classList.add('closed');
         this.itemArea.classList.remove('closed');
+        document.getElementById('network-area').classList.remove('mainMode');
 
         // 背景を戻すアニメーション
         this.animationStartTime = null;
         window.requestAnimationFrame((time)=>{this.imageGoTopAnimation(time);});
+
 
         // メインウィンドウの内容を消しておく
         setTimeout(()=>{
