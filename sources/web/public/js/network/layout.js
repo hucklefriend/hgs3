@@ -12,6 +12,7 @@ class NetworkLayout
         this.contentArea = document.getElementById('content-area');
         this.mainItem = null;
         this.mainItemId = null;
+        this.networkArea = document.getElementById('network-area');
         this.itemArea = document.getElementById('network-items');
         this.items = [];
         this.oldItems = null;
@@ -184,6 +185,8 @@ class NetworkLayout
         let url = target.getAttribute('href');
         this.mainLoading.classList.remove('d-none');
         this.contentArea.classList.add('hide');
+        this.networkArea.classList.add('mainMode');
+
 
         window.superagent
             .get(url)
@@ -221,6 +224,8 @@ class NetworkLayout
         // 背景を戻すアニメーション
         this.animationStartTime = null;
         window.requestAnimationFrame((time)=>{this.imageGoTopAnimation(time);});
+
+        this.networkArea.classList.remove('mainMode');
 
 
         // メインウィンドウの内容を消しておく

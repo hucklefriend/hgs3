@@ -1,0 +1,53 @@
+{
+  "main": {
+    "id": "game-list-phonetic",
+    "position": "center"
+  },
+  "children": [
+    {
+      "id": "game",
+      "position": {
+        "offset": {
+          "x": -200,
+          "y": -200
+        }
+      }
+    },
+    {
+      "id": "game-list-phonetic-a",
+      "position": {
+        "offset": {
+          "x": -100,
+          "y": -200
+        }
+      }
+    },
+    {
+      "id": "game-list-phonetic-ka",
+      "position": {
+        "offset": {
+          "x": 100,
+          "y": 100
+        }
+      }
+    },
+    {
+      "id": "game-list-phonetic-sa",
+      "position": {
+        "offset": {
+          "x": 100,
+          "y": -130
+        }
+      }
+    },
+    {
+      "id": "company-list",
+      "position": {
+        "offset": {
+          "x": -80,
+          "y": -100
+        }
+      }
+    }
+  ]
+}
