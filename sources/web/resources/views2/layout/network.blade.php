@@ -25,12 +25,16 @@
         <div id="canvas-cover" style="display:none;"></div>
     </div>
 
-
-
     <main id="main" class="closed">
         <section class="container">
-            <div id="content"></div>
-            <div class="text-right"><button id="close-main" class="btn btn-secondary">×</button></div>
+            <div id="content-loading" class="text-center"><img src="{{ url('img/loading.gif') }}"></div>
+
+            <div id="content-area">
+                <div id="content"></div>
+                <div class="content-footer">
+                    <div class="text-center"><button id="close-main" class="btn btn-secondary">閉じる</button></div>
+                </div>
+            </div>
         </section>
     </main>
 

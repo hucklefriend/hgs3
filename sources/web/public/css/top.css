@@ -247,3 +247,21 @@ footer {
 .list-group-item {
     background-color: unset;
 }
+
+
+#content-loading {
+    margin-top: 200px;
+}
+
+#content-area.hide {
+    display: none;
+}
+
+#content {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#content-footer {
+
+}

@@ -25,3 +25,5 @@
 <ul class="list-group no-border">
     <li class="list-group-item"><a href="https://github.com/hucklefriend/hgs3" target="_blank">GitHubのリポジトリ <i class="fas fa-sign-out-alt"></i></a></li>
 </ul>
+
+

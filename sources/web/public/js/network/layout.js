@@ -7,10 +7,9 @@ class NetworkLayout
 {
     constructor(data)
     {
-        console.debug(data);
-
         this.main = document.getElementById('main');
         this.content = document.getElementById('content');
+        this.contentArea = document.getElementById('content-area');
         this.mainItem = null;
         this.mainItemId = null;
         this.itemArea = document.getElementById('network-items');
@@ -26,6 +25,8 @@ class NetworkLayout
         this.openMainLiks = null;
         this.changeNetworkLiks = null;
         this.animationStartTime = null;
+
+        this.mainLoading = document.getElementById('content-loading');
 
         this.changeWindowSize();
 
@@ -181,12 +182,16 @@ class NetworkLayout
     openMainWindow(target, parentId)
     {
         let url = target.getAttribute('href');
+        this.mainLoading.classList.remove('d-none');
+        this.contentArea.classList.add('hide');
 
         window.superagent
             .get(url)
             .set('X-Requested-With', 'XMLHttpRequest')
             .end((err, res) => {
+                this.mainLoading.classList.add('d-none');
                 this.content.innerHTML = res.body.html;
+                this.contentArea.classList.remove('hide');
             });
 
         Object.keys(this.items).forEach((key) => {
@@ -243,8 +248,6 @@ class NetworkLayout
             // TODO scrollイベントが走らないか要確認
         }
     }
-
-
 
     draw(onlyImage)
     {
