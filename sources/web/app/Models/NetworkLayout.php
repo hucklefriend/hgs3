@@ -46,12 +46,15 @@ class NetworkLayout
         $json->main->childNum = isset($json->children) ? count($json->children) : 0;
 
         // DOMを取得
-        $json->main->dom = self::renderItem($json->main->id);
+        $json->main->dom = self::renderItem($json->main->view);
+
+        unset($json->main->view);
 
         if (isset($json->children)) {
             // 子の処理
             foreach ($json->children as &$child) {
-                $child->dom = self::renderItem($child->id);
+                $child->dom = self::renderItem($child->view);
+                unset($child->view);
 
                 if ($isLoadChild) {
                     // 自分がメインになった時用のデータを取得
@@ -70,8 +73,21 @@ class NetworkLayout
         return $json;
     }
 
-    private static function renderItem($id)
+    private static function renderItem($id, $viewData = [])
     {
         return view('network-item/' . $id)->render();
+    }
+
+    public static function appendChild(&$json, $view, $viewData, $id, $position, $childNum, $mainMode)
+    {
+        $child = new \stdClass();
+
+        $child->dom = self::renderItem($view, $viewData);
+        $child->id = $id;
+        $child->position = $position;
+        $child->childNum = $childNum;
+        $child->mainMode = $mainMode;
+
+        $json->children[] = $child;
     }
 }

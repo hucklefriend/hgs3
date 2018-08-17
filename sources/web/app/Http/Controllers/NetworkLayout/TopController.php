@@ -36,25 +36,5 @@ class TopController extends Controller
         $network = NetworkLayout::load('title');
 
         return $this->result('', $network);
-/*
-        $notices = Orm\SystemNotice::select(['id', 'title', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
-            ->where('top_start_at', '<=', DB::raw('NOW()'))
-            ->where('top_end_at', '>=', DB::raw('NOW()'))
-            ->orderBy('open_at', 'DESC')
-            ->get();
-
-        $newInfo = NewInformation::get(time(), 10);
-
-        return view('top', [
-            'newInfo'    => $newInfo,
-            'newInfoNum' => count($newInfo),
-            'notices'    => $notices,
-            'softNum'    => Soft::getNum(),
-            'reviewNum'  => Review::getNum(),
-            'siteNum'    => Site::getNum(),
-            'userNum'    => User::getNum(),
-            'newGames'   => Package::getNewGame()
-        ]);
-*/
     }
 }

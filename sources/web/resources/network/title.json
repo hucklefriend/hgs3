@@ -1,11 +1,13 @@
 {
   "main": {
     "id": "title",
+    "view": "title",
     "position": "center"
   },
   "children": [
     {
       "id": "new-info",
+      "view": "new-info",
       "position": {
         "offset": {
           "x": -100,
@@ -15,6 +17,7 @@
     },
     {
       "id": "notice",
+      "view": "notice",
       "position": {
         "offset": {
           "x": 100,
@@ -24,6 +27,7 @@
     },
     {
       "id": "game",
+      "view": "game",
       "position": {
         "offset": {
           "x": 100,
@@ -33,6 +37,7 @@
     },
     {
       "id": "user",
+      "view": "user",
       "position": {
         "offset": {
           "x": -80,
@@ -42,6 +47,7 @@
     },
     {
       "id": "about",
+      "view": "about",
       "position": {
         "offset": {
           "x": 50,
@@ -51,6 +57,7 @@
     },
     {
       "id": "privacy-policy",
+      "view": "privacy-policy",
       "position": {
         "offset": {
           "x": 70,
@@ -60,6 +67,7 @@
     },
     {
       "id": "site-map",
+      "view": "site-map",
       "position": {
         "offset": {
           "x": -70,

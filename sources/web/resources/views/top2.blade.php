@@ -114,7 +114,7 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
-<script src="{{ url('/js/network/layout.js') }}?ver={{ time() }}"></script>
+<script src="{{ url('/js/network/network.js') }}?ver={{ time() }}"></script>
 <script src="{{ url('/js/network/item.js') }}?ver={{ time() }}"></script>
 <script src="{{ url('/js/network/childball.js') }}?ver={{ time() }}"></script>
 <script src="{{ url('/js/network/image.js') }}?ver={{ time() }}"></script>

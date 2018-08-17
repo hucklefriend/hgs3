@@ -1,24 +1,18 @@
 
 class NetworkItem
 {
-    constructor(manager)
+    constructor(layout, data, parent)
     {
-        this.manager = manager;
-        this.data = null;
-        this.dom = null;
-        this.id = null;
-        this.position = {x: 0, y: 0};
-        this.parent = null;
-        this.offset = {x: 0, y: 0};
-        this.animationStatus = null;
-        this.children = [];
-
-        this.originalSize = null;
-    }
-
-    load(data)
-    {
+        this.data = data;
+        this.layout = layout;
         this.dom = document.getElementById(data.id);
+        this.name = data.id;
+        this.position = {x: 0, y: 0};
+        this.parent = parent;
+        this.offset = {x: 0, y: 0};
+        this.isMain = false;
+        this.childBalls = [];
+        this.animationStatus = null;
 
         // 幅と高さを設定
         this.originalSize = this.dom.getBoundingClientRect();
@@ -26,70 +20,18 @@ class NetworkItem
         this.dom.style.width = this.originalSize.width + 'px';
         this.dom.style.height = this.originalSize.height + 'px';
 
-
-
         this.changePosition(data);
 
         // 子の位置決めのため、ここで位置確定
         this.setPosition();
 
-        if (data.hasOwnProperty('children')) {
+        if (data.hasOwnProperty('childNum')) {
             this.setChildPosition(data.childNum);
         }
     }
 
-    appear(animationTime, progress)
+    changePosition(data)
     {
-
-    }
-
-    disappear(animationTime, progress)
-    {
-
-    }
-
-    open()
-    {
-
-    }
-
-    close()
-    {
-
-    }
-
-    dispose()
-    {
-        this.manager = null;
-        this.data = null;
-        this.dom = null;
-        this.id = null;
-        this.position = null;
-        this.parent = null;
-        this.offset = null;
-        this.animationStatus = null;
-        this.originalSize = null;
-        this.children = null;
-    }
-
-
-    draw()
-    {
-        // 親からの線は親が引いてくれる
-
-        // 自分の球を描画
-
-        // 自分から子への線を引く
-    }
-
-
-    setupPosition(target, offset)
-    {
-        // 配置は以下の2種類で設定できる
-        // 中央からのオフセット位置
-        // 特定のアイテムからのオフセット位置
-
-
         if (data.hasOwnProperty('position')) {
             if (data.position.hasOwnProperty('offset')) {
                 if (!this.parent) {
@@ -125,6 +67,7 @@ class NetworkItem
 
     setChildPosition(childNum)
     {
+        this.childBalls = [];
 
         if (childNum <= 0) {
             return;
@@ -147,6 +90,10 @@ class NetworkItem
             positions[i] = positions[r];
             positions[r] = tmp;
         }
+
+        for (i = 0; i < childNum; i++) {
+            this.childBalls.push(new NetworkChildBall(this.layout, this, positions[i % (positions.length - 1)]));
+        }
     }
 
     setPosRandom()
@@ -167,8 +114,8 @@ class NetworkItem
 
     setPos(x, y)
     {
-        this.dom.style.left = (x - (this.originalSize.width / 2)) + 'px';
-        this.dom.style.top = (y - (this.originalSize.height / 2)) + 'px';
+        this.dom.style.left = (x - (this.originalSize.width / 2) /*+ this.layout.backgroundOffset.left*/) + 'px';
+        this.dom.style.top = (y - (this.originalSize.height / 2) /*+ this.layout.backgroundOffset.top*/) + 'px';
         this.position.x = x;
         this.position.y = y;
     }
@@ -212,5 +159,106 @@ class NetworkItem
         let y = this.parent.position.y + this.offset.y;
 
         this.setPos(x, y);
+    }
+
+
+    move(x, y)
+    {
+        this.dom.style.left = (x - (this.originalSize.width / 2) + this.layout.backgroundOffset.left) + 'px';
+        this.dom.style.top = (y - (this.originalSize.height / 2) + this.layout.backgroundOffset.top) + 'px';
+    }
+
+
+    drawChildToBackgroundBallLine(ctx)
+    {
+        if (this.isMain) {
+            return;
+        }
+
+        let x = 0;
+        let y = 0;
+        let scrollOffset = 0;
+        if (this.layout.image.canvas.style.top && this.layout.background.canvas.style.top) {
+            scrollOffset = (parseInt(this.layout.image.canvas.style.top) - parseInt(this.layout.background.canvas.style.top));
+        }
+
+        this.childBalls.forEach((child)=>{
+            x = this.position.x + child.offset.x;
+            y = this.position.y + child.offset.y;
+
+            child.backgroundChildren.forEach((idx)=>{
+                ctx.beginPath();
+
+                ctx.moveTo(x, y);
+                ctx.lineTo(BACKGROUND_CENTER_X + this.layout.background.balls[idx].x, BACKGROUND_CENTER_Y + this.layout.background.balls[idx].y - scrollOffset);
+
+                ctx.closePath();
+                ctx.stroke();
+            });
+        });
+    }
+
+    open()
+    {
+        this.dom.style.left = 0;
+        this.dom.style.top = 0;
+        this.dom.classList.add('opened');
+    }
+
+    close()
+    {
+        this.dom.classList.add('closed');
+    }
+
+    appear()
+    {
+        this.dom.classList.add('active');
+        this.dom.classList.remove('closed');
+        this.dom.classList.remove('opened');
+
+        this.setPosition();
+    }
+
+    disappear()
+    {
+        this.dom.classList.remove('active');
+        this.dom.classList.add('disposing');
+    }
+
+    moving()
+    {
+        this.dom.classList.add('active');
+        this.dom.classList.add('moving');
+    }
+
+    dispose()
+    {
+        for (let i = 0; i < this.childBalls.length; i++) {
+            this.childBalls[i].dispose();
+            delete this.childBalls[i];
+        }
+        this.dom.parentNode.removeChild(this.dom);
+
+        this.layout = null;
+        this.dom = null;
+        this.name = null;
+        this.position = null;
+        this.parent = null;
+        this.offset = null;
+        this.isMain = null;
+        this.childBalls = null;
+        this.originalSize = null;
+        this.data = null;
+    }
+
+    getChildData(id)
+    {
+        for (let i = 0; i < this.data.mainMode.children.length; i++) {
+            if (this.data.mainMode.children[i].id == id) {
+                return this.data.mainMode.children[i];
+            }
+        }
+
+        return null;
     }
 }

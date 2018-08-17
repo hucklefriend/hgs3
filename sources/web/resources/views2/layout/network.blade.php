@@ -39,9 +39,9 @@
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.3/superagent.min.js"></script>
-    <script src="{{ url('/js/network/layout.js') }}?ver={{ time() }}"></script>
+    <script src="{{ url('/js/network/network.js') }}?ver={{ time() }}"></script>
+    <script src="{{ url('/js/network/itemManager.js') }}?ver={{ time() }}"></script>
     <script src="{{ url('/js/network/item.js') }}?ver={{ time() }}"></script>
-    <script src="{{ url('/js/network/childball.js') }}?ver={{ time() }}"></script>
     <script src="{{ url('/js/network/image.js') }}?ver={{ time() }}"></script>
     <script src="{{ url('/js/network/background.js') }}?ver={{ time() }}"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>

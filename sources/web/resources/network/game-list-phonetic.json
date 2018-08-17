@@ -1,11 +1,13 @@
 {
   "main": {
     "id": "game-list-phonetic",
+    "view": "game-list-phonetic",
     "position": "center"
   },
   "children": [
     {
       "id": "game",
+      "view": "game",
       "position": {
         "offset": {
           "x": -200,
@@ -14,34 +16,28 @@
       }
     },
     {
-      "id": "game-list-phonetic-a",
+      "id": "game-phonetic-list",
+      "view": "game.",
       "position": {
         "offset": {
-          "x": -100,
+          "x": -200,
           "y": -200
         }
       }
     },
     {
-      "id": "game-list-phonetic-ka",
+      "id": "game",
+      "view": "game",
       "position": {
         "offset": {
-          "x": 100,
-          "y": 100
-        }
-      }
-    },
-    {
-      "id": "game-list-phonetic-sa",
-      "position": {
-        "offset": {
-          "x": 100,
-          "y": -130
+          "x": -200,
+          "y": -200
         }
       }
     },
     {
       "id": "company-list",
+      "view": "company-list",
       "position": {
         "offset": {
           "x": -80,

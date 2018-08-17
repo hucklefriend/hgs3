@@ -1,11 +1,13 @@
 {
   "main": {
     "id": "game",
+    "view": "game",
     "position": "center"
   },
   "children": [
     {
       "id": "title",
+      "view": "title",
       "position": {
         "offset": {
           "x": -200,
@@ -14,25 +16,8 @@
       }
     },
     {
-      "id": "game-list-phonetic",
-      "position": {
-        "offset": {
-          "x": -100,
-          "y": -200
-        }
-      }
-    },
-    {
-      "id": "game-list-release",
-      "position": {
-        "offset": {
-          "x": 100,
-          "y": 100
-        }
-      }
-    },
-    {
       "id": "platform-list",
+      "view": "platform-list",
       "position": {
         "offset": {
           "x": 100,
@@ -42,6 +27,7 @@
     },
     {
       "id": "company-list",
+      "view": "company-list",
       "position": {
         "offset": {
           "x": -80,

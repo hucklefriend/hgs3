@@ -43,7 +43,7 @@ class NetworkImage
 
         // 孫から背景への線を描画
         Object.keys(items).forEach((key) => {
-            //items[key].drawChildToBackgroundBallLine(this.context);
+            items[key].drawChildToBackgroundBallLine(this.context);
         });
 
         this.context.restore();
@@ -65,7 +65,7 @@ class NetworkImage
 
                 this.context.closePath();
                 this.context.stroke();
-/*
+
                 if (items[key].childBalls.length > 0) {
                     this.context.save();
 
@@ -89,7 +89,7 @@ class NetworkImage
                     });
 
                     this.context.restore();
-                }*/
+                }
             }
 
             // 自分のボールを描く

@@ -35,6 +35,26 @@ class GameController extends Controller
 
         $network = NetworkLayout::load('game');
 
+
+        //NetworkLayout::appendChild($network);
+
+
+
         return $this->result('ゲーム', $network);
+    }
+
+    public function phoneticList()
+    {
+
+    }
+
+    public function releaseList()
+    {
+
+    }
+
+    public function detail(Orm\GameSoft $soft)
+    {
+
     }
 }
