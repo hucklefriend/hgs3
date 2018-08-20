@@ -8,14 +8,8 @@ class Network
         this.main = document.getElementById('main');
         this.content = document.getElementById('content');
         this.contentArea = document.getElementById('content-area');
-        this.mainItem = null;
-        this.mainItemId = null;
         this.networkArea = document.getElementById('network-area');
         this.itemArea = document.getElementById('network-items');
-
-        this.items = [];
-        this.oldItems = null;
-        this.oldMainItemId = null;
 
         this.activeItemManager = new NetworkItemManager(this, data);      // 今表示されているアイテムのマネージャー
         this.nextItemManager = null;        // 次に表示されるアイテムのマネージャー
@@ -26,40 +20,18 @@ class Network
         this.backgroundOffset = {left: 0, top: 0};
 
         this.openMainLiks = null;
-        this.changeNetworkLiks = null;
+        this.changeNetworkLinks = null;
         this.animationStartTime = null;
 
         this.mainLoading = document.getElementById('content-loading');
 
-        this.changeWindowSize();
+        this.setInitialScroll();
 
-        //this.setInitialScroll();
-
-
-        console.debug(data);
-
-        // TODO コンストラクタでやらない
         this.activeItemManager.load();
     }
 
-    changeWindowSize()
-    {
-        /*
-        this.backgroundArea.style.width = window.innerWidth + 'px';
-        this.backgroundArea.style.height = window.innerHeight + 'px';
-        */
-        /*
-        this.backgroundOffset.left = (window.innerWidth - BACKGROUND_WIDTH) / 2;
-        this.backgroundOffset.top = (window.innerHeight - BACKGROUND_HEIGHT) / 2;
-        let left = this.backgroundOffset.left + 'px';
-        let top = this.backgroundOffset.top + 'px';*/
-        //this.image.changeWindowSize(left, top);
-        //this.background.changeWindowSize(left, top);
 
-        //this.updateItemPosition();
-    }
-
-    static setInitialScroll()
+    setInitialScroll()
     {
         let scrollX = 0, scrollY = 0;
 
@@ -79,6 +51,7 @@ class Network
     start()
     {
         this.startCommon();
+        this.activeItemManager.appear();
 
         /*Object.keys(this.items).forEach((key) => {
             this.items[key].appear();       // appearで出現させる
@@ -93,13 +66,6 @@ class Network
 
     startCommon()
     {
-/*
-        window.onresize = () => {
-            this.changeWindowSize();
-            this.draw(false);
-        };
-*/
-
         this.main.onscroll = () => {
             this.image.scroll(this.main.scrollTop, this.backgroundOffset.top);
             this.background.scroll(this.main.scrollTop, this.backgroundOffset.top);
@@ -111,8 +77,10 @@ class Network
             this.closeMainWindow(e);
         };
 
+        console.debug('aaaa');
+
         this.setLink();
-        this.draw(false);
+        this.draw(true);
     }
 
     setLink()

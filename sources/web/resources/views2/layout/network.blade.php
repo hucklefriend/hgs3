@@ -22,7 +22,6 @@
         </div>
 
         <div id="network-items"></div>
-        <div id="canvas-cover" style="display:none;"></div>
     </div>
 
     <main id="main" class="closed">
@@ -49,7 +48,7 @@
 
     <script>
         let network = new Network({!! json_encode($network) !!});
-        //network.start();
+        network.start();
     </script>
 
 @if (env('APP_ENV') == 'production')
