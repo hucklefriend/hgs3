@@ -3,6 +3,8 @@
 namespace Hgs3\Http\Controllers\NetworkLayout;
 
 use Hgs3\Log;
+use Hgs3\Network\Network;
+use Hgs3\Network\Item;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,6 +15,19 @@ use Illuminate\View\FileViewFinder;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @var Network
+     */
+    protected $network;
+
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        $this->network = new Network();
+    }
 
     /**
      * 一時的な措置
@@ -28,11 +43,11 @@ class Controller extends BaseController
         View::setFinder($finder);
     }
 
-    protected function result($title, $network)
+    protected function result($title)
     {
         $data = [
             'title'   => $title,
-            'network' => $network
+            'network' => $this->network->toArray()
         ];
 
         if (request()->ajax()) {

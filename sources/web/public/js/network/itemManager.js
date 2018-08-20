@@ -6,9 +6,8 @@ class NetworkItemManager
         this.network = network;
         this.data = data;
         this.items = [];        // 全アイテム
-        this.activeGeneration = [];     // 世代別に並べた時の現役世代のみここに
+        this.activeGeneration = [];     // 世代別に並べた時の現役世代のみ
 
-        this.data = null;
         this.ready = false;
     }
 
@@ -16,15 +15,16 @@ class NetworkItemManager
     {
         this.data.forEach((itemData)=>{
             // HTML追加
-            this.network.networkArea.appendChild(itemData.dom);
+            this.network.networkArea.insertAdjacentHTML('beforeend', itemData.dom);
 
-            let item = new NetworkItem(this);
-            item.load(itemData);
-            this.items[item.id] = item;
+            // インスタンスだけ先に作る
+            this.items[itemData.id] = new NetworkItem(this);
         });
 
-        // 世代設定のためもっかいループ
+        // もっかいループ
         this.data.forEach((itemData)=>{
+            this.items[itemData.id].load(itemData);
+
             if (itemData.hasOwnProperty('parentId')) {
                 // 誰かの子なので親にリンク
                 this.items[itemData.id].children.push(this.items[itemData.parentId]);
@@ -34,6 +34,7 @@ class NetworkItemManager
             }
         });
 
+        // 準備完了
         this.ready = true;
     }
 

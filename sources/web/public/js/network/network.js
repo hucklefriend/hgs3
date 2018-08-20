@@ -1,7 +1,5 @@
 const BACKGROUND_WIDTH = 1000;
 const BACKGROUND_HEIGHT = 1000;
-const BACKGROUND_CENTER_X = 500;
-const BACKGROUND_CENTER_Y = 500;
 
 class Network
 {
@@ -19,11 +17,8 @@ class Network
         this.oldItems = null;
         this.oldMainItemId = null;
 
-
-
-        this.activeItemManager = null;      // 今表示されているアイテムのマネージャー
+        this.activeItemManager = new NetworkItemManager(this, data);      // 今表示されているアイテムのマネージャー
         this.nextItemManager = null;        // 次に表示されるアイテムのマネージャー
-
 
         this.backgroundArea = document.getElementById('network-background');
         this.image = new NetworkImage();
@@ -38,27 +33,13 @@ class Network
 
         this.changeWindowSize();
 
-        this.load(data);
+        //this.setInitialScroll();
 
-        this.setInitialScroll();
-    }
 
-    load(data)
-    {
-        if (data.hasOwnProperty('main')) {
-            this.mainItemId = data.main.id;
-            this.itemArea.insertAdjacentHTML('beforeend', data.main.dom);
-            this.items[this.mainItemId] = new NetworkItem(this, data.main);
-            this.items[this.mainItemId].isMain = true;
-            this.items[this.mainItemId].dom.classList.add('main');
-        }
+        console.debug(data);
 
-        if (data.hasOwnProperty('children')) {
-            data.children.forEach((element) => {
-                this.itemArea.insertAdjacentHTML('beforeend', element.dom);
-                this.items[element.id] = new NetworkItem(this, element, this.items[this.mainItemId]);
-            });
-        }
+        // TODO コンストラクタでやらない
+        this.activeItemManager.load();
     }
 
     changeWindowSize()
@@ -91,16 +72,17 @@ class Network
             scrollY = (BACKGROUND_HEIGHT - window.innerHeight) / 2;
         }
 
-        document.getElementById('network-area').scrollTo(scrollX, scrollY);
+        this.networkArea.scrollTo(scrollX, scrollY);
     }
 
 
     start()
     {
         this.startCommon();
-        Object.keys(this.items).forEach((key) => {
+
+        /*Object.keys(this.items).forEach((key) => {
             this.items[key].appear();       // appearで出現させる
-        });
+        });*/
     }
 
     startContent()
@@ -111,10 +93,12 @@ class Network
 
     startCommon()
     {
+/*
         window.onresize = () => {
             this.changeWindowSize();
             this.draw(false);
         };
+*/
 
         this.main.onscroll = () => {
             this.image.scroll(this.main.scrollTop, this.backgroundOffset.top);
@@ -171,7 +155,6 @@ class Network
         this.mainLoading.classList.remove('d-none');
         this.contentArea.classList.add('hide');
         this.networkArea.classList.add('mainMode');
-
 
         window.superagent
             .get(url)

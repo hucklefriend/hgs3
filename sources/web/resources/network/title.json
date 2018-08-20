@@ -1,79 +1,97 @@
-{
-  "main": {
+[
+  {
     "id": "title",
     "view": "title",
-    "position": "center"
-  },
-  "children": [
-    {
-      "id": "new-info",
-      "view": "new-info",
+    "position": {
+      "type": "fixed",
       "position": {
-        "offset": {
-          "x": -100,
-          "y": -200
-        }
-      }
-    },
-    {
-      "id": "notice",
-      "view": "notice",
-      "position": {
-        "offset": {
-          "x": 100,
-          "y": 100
-        }
-      }
-    },
-    {
-      "id": "game",
-      "view": "game",
-      "position": {
-        "offset": {
-          "x": 100,
-          "y": -130
-        }
-      }
-    },
-    {
-      "id": "user",
-      "view": "user",
-      "position": {
-        "offset": {
-          "x": -80,
-          "y": -100
-        }
-      }
-    },
-    {
-      "id": "about",
-      "view": "about",
-      "position": {
-        "offset": {
-          "x": 50,
-          "y": -210
-        }
-      }
-    },
-    {
-      "id": "privacy-policy",
-      "view": "privacy-policy",
-      "position": {
-        "offset": {
-          "x": 70,
-          "y": 200
-        }
-      }
-    },
-    {
-      "id": "site-map",
-      "view": "site-map",
-      "position": {
-        "offset": {
-          "x": -70,
-          "y": 120
-        }
+        "x": 500,
+        "y": 500
       }
     }
-  ]
-}
+  },
+  {
+    "id": "new-info",
+    "view": "new-info",
+    "parentId": "title",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": -100,
+        "y": -200
+      }
+    }
+  },
+  {
+    "id": "notice",
+    "view": "notice",
+    "parentId": "title",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": 100,
+        "y": 100
+      }
+    }
+  },
+  {
+    "id": "game",
+    "view": "game",
+    "parentId": "title",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": 100,
+        "y": -130
+      }
+    }
+  },
+  {
+    "id": "user",
+    "view": "user",
+    "parentId": "title",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": -80,
+        "y": -100
+      }
+    }
+  },
+  {
+    "id": "about",
+    "view": "about",
+    "parentId": "title",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": 50,
+        "y": -210
+      }
+    }
+  },
+  {
+    "id": "privacy-policy",
+    "view": "privacy-policy",
+    "parentId": "title",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": 70,
+        "y": 200
+      }
+    }
+  },
+  {
+    "id": "site-map",
+    "view": "site-map",
+    "parentId": "title",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": -70,
+        "y": 120
+      }
+    }
+  }
+]
