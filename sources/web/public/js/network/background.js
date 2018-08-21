@@ -31,7 +31,6 @@ class NetworkBackground
     scroll(mainScroll, top)
     {
         this.canvas.style.top = top - (mainScroll / 15) + 'px';
-        console.debug(this.canvas.style.top);
     }
 
     goTop(time, top)
@@ -51,8 +50,6 @@ class NetworkBackground
      */
     draw()
     {
-
-        console.debug('aaa');
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // 背景の描画

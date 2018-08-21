@@ -52,10 +52,6 @@ class Network
     {
         this.startCommon();
         this.activeItemManager.appear();
-
-        /*Object.keys(this.items).forEach((key) => {
-            this.items[key].appear();       // appearで出現させる
-        });*/
     }
 
     startContent()
@@ -77,10 +73,8 @@ class Network
             this.closeMainWindow(e);
         };
 
-        console.debug('aaaa');
-
         this.setLink();
-        this.draw(true);
+        this.draw(false);
     }
 
     setLink()
@@ -96,9 +90,9 @@ class Network
             };
         }
 
-        this.changeNetworkLiks = document.getElementsByClassName('network-change-main');
-        for (let i = 0; i < this.changeNetworkLiks.length; i++) {
-            this.changeNetworkLiks[i].onclick = (e) => {
+        this.changeNetworkLinks = document.getElementsByClassName('network-change-main');
+        for (let i = 0; i < this.changeNetworkLinks.length; i++) {
+            this.changeNetworkLinks[i].onclick = (e) => {
                 e.preventDefault();
 
                 this.changeMain(e.target.getAttribute('href'), e.target.dataset.parentId);
@@ -163,7 +157,6 @@ class Network
 
         this.networkArea.classList.remove('mainMode');
 
-
         // メインウィンドウの内容を消しておく
         setTimeout(()=>{
             this.content.innerHTML = '';
@@ -196,7 +189,7 @@ class Network
             this.background.draw();
         }
 
-        this.image.draw(this.items);
+        this.image.draw(this.activeItemManager);
     }
 
     changeMain(url, id)

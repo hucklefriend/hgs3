@@ -5,7 +5,7 @@ class NetworkItemManager
     {
         this.network = network;
         this.data = data;
-        this.items = [];        // 全アイテム
+        this.items = {};        // 全アイテム
         this.activeGeneration = [];     // 世代別に並べた時の現役世代のみ
 
         this.ready = false;
@@ -13,6 +13,9 @@ class NetworkItemManager
 
     load()
     {
+        console.debug(this.data);
+
+
         this.data.forEach((itemData)=>{
             // HTML追加
             this.network.networkArea.insertAdjacentHTML('beforeend', itemData.dom);
@@ -25,9 +28,9 @@ class NetworkItemManager
         this.data.forEach((itemData)=>{
             this.items[itemData.id].load(itemData);
 
-            if (itemData.hasOwnProperty('parentId')) {
+            if (itemData.hasOwnProperty('parentId') && itemData.parentId !== null) {
                 // 誰かの子なので親にリンク
-                this.items[itemData.id].children.push(this.items[itemData.parentId]);
+                this.items[itemData.parentId].children.push(this.items[itemData.id]);
             } else {
                 // 現役世代
                 this.activeGeneration.push(this.getItem(itemData.id));

@@ -11,6 +11,7 @@ class NetworkItem
         this.position = {x: 0, y: 0};
         this.animationStatus = null;
         this.children = [];
+        this.backgroundBalls = [];
 
         this.originalSize = null;
     }
@@ -69,6 +70,7 @@ class NetworkItem
         this.animationStatus = null;
         this.originalSize = null;
         this.children = null;
+        this.backgroundBalls = null;
     }
 
 
