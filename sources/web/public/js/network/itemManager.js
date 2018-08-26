@@ -8,6 +8,7 @@ class NetworkItemManager
         this.items = {};        // 全アイテム
         this.activeGeneration = [];     // 世代別に並べた時の現役世代のみ
 
+        this.mainItemId = '';
         this.ready = false;
     }
 
@@ -18,7 +19,7 @@ class NetworkItemManager
 
         this.data.forEach((itemData)=>{
             // HTML追加
-            this.network.networkArea.insertAdjacentHTML('beforeend', itemData.dom);
+            this.network.itemArea.insertAdjacentHTML('beforeend', itemData.dom);
 
             // インスタンスだけ先に作る
             this.items[itemData.id] = new NetworkItem(this);
@@ -47,6 +48,53 @@ class NetworkItemManager
             this.items[key].appear();
         });
     }
+
+    disappear()
+    {
+        Object.keys(this.items).forEach((key) => {
+            this.items[key].disappear();
+        });
+    }
+
+    startMainMode(mainItemId)
+    {
+        this.mainItemId = mainItemId;
+
+        // メインになるアイテム以外を消す
+        Object.keys(this.items).forEach((key) => {
+            if (key !== mainItemId) {
+                this.items[key].disappear();
+            } else {
+                this.items[key].openMain();
+            }
+        });
+    }
+
+    endMainMode()
+    {
+        Object.keys(this.items).forEach((key) => {
+            if (key !== this.mainItemId) {
+                this.items[key].appear();
+            } else {
+                this.items[key].closeMain();
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     appearAnimation(animationTime)
     {

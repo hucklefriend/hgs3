@@ -30,6 +30,10 @@ class NetworkItem
         this.dom.style.width = this.originalSize.width + 'px';
         this.dom.style.height = this.originalSize.height + 'px';
 
+
+        // ここでclosedをセットしないと、幅と高さが取れない
+        this.dom.classList.add('closed');
+
         this.setupPosition(data.position);
 
         // とりあえずここで配置設定
@@ -37,15 +41,47 @@ class NetworkItem
         this.setPosition();
     }
 
-    appear(animationTime, progress)
+    appear()
     {
+        this.dom.classList.remove('closed');
+        this.dom.classList.add('active');
+        this.dom.classList.add('appear');
+
+        // 1秒後にappearとclosedを消去しとく
+        setTimeout(()=>{
+            this.dom.classList.remove('appear');
+        }, 1000);
+    }
+
+    disappear()
+    {
+        this.dom.classList.add('disappear');
+
+        // 1秒後にappearとclosedを消去しとく
+        setTimeout(()=>{
+            this.dom.classList.add('closed');
+            this.dom.classList.remove('disappear');
+        }, 1000);
 
     }
 
-    disappear(animationTime, progress)
+    openMain()
     {
-
+        this.dom.classList.add('openMain');
     }
+
+    closeMain()
+    {
+        this.dom.classList.remove('closed');
+        this.dom.classList.add('closeMain');
+
+        setTimeout(()=>{
+            this.dom.classList.remove('openMain');
+            this.dom.classList.remove('closeMain');
+        }, 1000);
+    }
+
+
 
     open()
     {

@@ -127,25 +127,18 @@ class Network
                 this.contentArea.classList.remove('hide');
             });
 
-        Object.keys(this.items).forEach((key) => {
-            if (this.items[key].dom.id === parentId) {
-                this.items[key].open();
-            } else {
-                this.items[key].close();
-            }
-        });
-
         this.main.classList.remove('closed');
-        this.itemArea.classList.add('closed');
+        //this.itemArea.classList.add('closed');
+
+        this.activeItemManager.startMainMode(parentId);
+
 
         document.getElementById('network-area').classList.add('mainMode');
     }
 
     closeMainWindow(e)
     {
-        Object.keys(this.items).forEach((key) => {
-            this.items[key].appear();
-        });
+        this.activeItemManager.endMainMode();
 
         this.main.classList.add('closed');
         this.itemArea.classList.remove('closed');
