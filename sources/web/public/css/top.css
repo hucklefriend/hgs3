@@ -187,7 +187,21 @@ main.closed {
     }
 }
 
+.fade-out {
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+    animation-name: fadeOutAnimation;
+}
 
+@keyframes fadeOutAnimation {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
 
 
 

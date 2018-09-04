@@ -28,6 +28,8 @@ class Network
         this.setInitialScroll();
 
         this.activeItemManager.load();
+
+        this.isChanging = false;
     }
 
 
@@ -186,6 +188,95 @@ class Network
     }
 
     changeMain(url, id)
+    {
+        if (this.isChanging) {
+            // 別の遷移処理稼働中なら遷移させない
+            return;
+        }
+        this.isChanging = true;
+
+        this.nextItemManager = null;
+
+        // 新しいアイテムを取得
+        this.getNewItems(url);
+
+        // 古いアイテムを消す
+        this.disappear();
+
+        //this.waitNewItems();
+    }
+
+    getNewItems(url)
+    {
+        window.superagent
+            .get(url)
+            .set('X-Requested-With', 'XMLHttpRequest')
+            .end((err, res) => {
+                // TODO エラー処理
+                this.nextItemManager = new NetworkItemManager(this, res.body.network);
+            });
+    }
+
+    disappear()
+    {
+        // アイテムの消去はCSSアニメーションで
+        this.activeItemManager.disappear();
+
+        // 線と球も単純にCSSでcanvasタグ自体をフェードアウトさせる
+        this.image.canvas.classList.add('fade-out');
+
+        setTimeout(()=>{
+            // canvasを綺麗にしてから、fade-outを戻せばOK
+            this.image.clearRect();
+            this.image.canvas.classList.remove('fade-out');
+
+            // 内部的に消す
+            this.activeItemManager.dispose();
+            this.activeItemManager = null;
+        }, 500);
+    }
+
+
+    waitNewItems()
+    {
+        if (this.nextItemManager === null || this.activeItemManager !== null) {
+            // 取得中のはずなのでもう少し待って再度呼び出し
+            setTimeout(()=>{this.showNewItems();}, 300);
+            return;
+        } else if (this.nextItemManager === false){
+            // エラー
+            alert('データの取得に失敗しました。1度リロードしてください。');
+            //location.reload(true);
+            return;
+        } else {
+            this.showNewItems();
+        }
+    }
+
+    showNewItems()
+    {
+        // TODO PUSH STATE
+
+        this.activeItemManager = this.nextItemManager;
+        this.nextItemManager = null;
+
+        this.activeItemManager.load();
+        this.activeItemManager.appear();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    __changeMain(url, id)
     {
         // 古いアイテムを退避
         this.oldItems = this.items;
@@ -380,36 +471,6 @@ class Network
 
         let animationTime = time - this.animationStartTime;
         this.nextItemManager.appearAnimation(animationTime);
-        if (animationTime <= 1000) {
-            this.activeItemManager.disappearAnimation(animationTime);
-            window.requestAnimationFrame((time)=>{this.disappearAnimation(time);});
-        } else {
-            // 次のネットワークが用意できている？
-            if (this.nextItemManager !== null && this.nextItemManager.ready) {
-                this.activeItemManager.dispose();
-                this.activeItemManager = this.nextItemManager;
-                this.nextItemManager = null;
-
-                // 次のネットワークを出現させる
-                this.animationStartTime = null;
-                window.requestAnimationFrame((time)=>{this.appearAnimation(time);});
-            }
-        }
-    }
-
-    disappear()
-    {
-        this.animationStartTime = null;
-        window.requestAnimationFrame((time)=>{this.disappearAnimation(time);});
-    }
-
-    disappearAnimation(time)
-    {
-        if (this.animationStartTime == null) {
-            this.animationStartTime = time;
-        }
-
-        let animationTime = time - this.animationStartTime;
         if (animationTime <= 1000) {
             this.activeItemManager.disappearAnimation(animationTime);
             window.requestAnimationFrame((time)=>{this.disappearAnimation(time);});

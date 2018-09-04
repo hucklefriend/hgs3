@@ -129,7 +129,7 @@ class NetworkItemManager
 
     dispose()
     {
-        this.dom.parentNode.removeChild(this.dom);      // HTML上から削除
+        //this.dom.parentNode.removeChild(this.dom);      // HTML上から削除
 
         this.layout = null;
 

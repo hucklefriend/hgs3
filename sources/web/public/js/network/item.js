@@ -50,7 +50,7 @@ class NetworkItem
         // 1秒後にappearとclosedを消去しとく
         setTimeout(()=>{
             this.dom.classList.remove('appear');
-        }, 1000);
+        }, 500);
     }
 
     disappear()
@@ -61,7 +61,7 @@ class NetworkItem
         setTimeout(()=>{
             this.dom.classList.add('closed');
             this.dom.classList.remove('disappear');
-        }, 1000);
+        }, 500);
 
     }
 
@@ -78,7 +78,7 @@ class NetworkItem
         setTimeout(()=>{
             this.dom.classList.remove('openMain');
             this.dom.classList.remove('closeMain');
-        }, 1000);
+        }, 500);
     }
 
 
@@ -95,6 +95,8 @@ class NetworkItem
 
     dispose()
     {
+        this.dom.parentNode.removeChild(this.dom);      // HTML上から削除
+
         this.manager = null;
         this.data = null;
         this.dom = null;
