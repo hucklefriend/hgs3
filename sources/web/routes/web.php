@@ -263,9 +263,9 @@ Route::get('/user/profile/{showId}/{show}', 'User\ProfileController@index')->nam
 Route::get('/test', 'TopController@test');
 
 // 新しいレイアウトのテスト用
-Route::get('/n', 'NetworkLayout\TopController@index')->name('n.トップ');
-Route::get('/network/game', 'NetworkLayout\GameController@index')->name('n.ゲーム');
-Route::get('/network/game/detail/{game}', 'NetworkLayout\GameController@detail')->name('n.ゲーム詳細');
+Route::get('/n', 'Network\TopController@index')->name('n.トップ');
+Route::get('/network/game', 'Network\GameController@index')->name('n.ゲーム');
+Route::get('/network/game/detail/{game}', 'Network\GameController@detail')->name('n.ゲーム詳細');
 
 Route::get('/content/about', 'Content\TopController@about')->name('c.当サイトについて');
 Route::get('/content/privacy', 'Content\TopController@privacy')->name('c.プライバシーポリシー');

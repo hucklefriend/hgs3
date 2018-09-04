@@ -1,6 +1,6 @@
 <?php
 
-namespace Hgs3\Http\Controllers\NetworkLayout;
+namespace Hgs3\Http\Controllers\Network;
 
 use Hgs3\Log;
 use Hgs3\Network\Network;

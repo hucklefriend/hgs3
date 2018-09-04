@@ -3,7 +3,7 @@
  * トップページコントローラー
  */
 
-namespace Hgs3\Http\Controllers\NetworkLayout;
+namespace Hgs3\Http\Controllers\Network;
 
 class TopController extends Controller
 {

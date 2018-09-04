@@ -3,7 +3,7 @@
  * ゲームコントローラー
  */
 
-namespace Hgs3\Http\Controllers\NetworkLayout;
+namespace Hgs3\Http\Controllers\Network;
 
 use Hgs3\Constants\PageId;
 use Hgs3\Http\GlobalBack;
@@ -31,16 +31,9 @@ class GameController extends Controller
     {
         $this->setViewPath();
 
-        GlobalBack::clear();
+        $this->network->load('game');
 
-        $network = NetworkLayout::load('game');
-
-
-        //NetworkLayout::appendChild($network);
-
-
-
-        return $this->result('ゲーム', $network);
+        return $this->result('ゲーム');
     }
 
     public function phoneticList()

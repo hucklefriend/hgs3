@@ -14,9 +14,6 @@ class NetworkItemManager
 
     load()
     {
-        console.debug(this.data);
-
-
         this.data.forEach((itemData)=>{
             // HTML追加
             this.network.itemArea.insertAdjacentHTML('beforeend', itemData.dom);
@@ -38,12 +35,15 @@ class NetworkItemManager
             }
         });
 
+
         // 準備完了
         this.ready = true;
     }
 
     appear()
     {
+        console.debug(this.items);
+
         Object.keys(this.items).forEach((key) => {
             this.items[key].appear();
         });

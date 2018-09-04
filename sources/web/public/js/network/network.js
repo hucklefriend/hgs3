@@ -30,6 +30,25 @@ class Network
         this.activeItemManager.load();
 
         this.isChanging = false;
+        this.newNetworkingLoading = 0;
+
+        this.changeWindow();
+        window.addEventListener('resize', ()=>{ this.changeWindow(); });
+
+    }
+
+    changeWindow()
+    {
+        if (window.innerWidth > BACKGROUND_WIDTH) {
+            let left = (window.innerWidth - BACKGROUND_WIDTH) / 2;
+            this.backgroundArea.style.left = this.itemArea.style.left = left + 'px';
+        } else {
+            this.backgroundArea.style.left = this.itemArea.style.left = 0;
+        }
+
+        if (window.innerHeight > BACKGROUND_HEIGHT) {
+
+        }
     }
 
 
@@ -102,15 +121,6 @@ class Network
                 return false;
             };
         }
-    }
-
-    updateItemPosition()
-    {
-        Object.keys(this.items).forEach((key) => {
-            if (!this.items[key].dom.classList.contains('opened')) {
-                this.items[key].setPosition();
-            }
-        });
     }
 
     openMainWindow(target, parentId)
@@ -194,31 +204,14 @@ class Network
             return;
         }
         this.isChanging = true;
+        this.newNetworkingLoading = 0;
 
         this.nextItemManager = null;
 
         // 新しいアイテムを取得
         this.getNewItems(url);
 
-        // 古いアイテムを消す
-        this.disappear();
 
-        //this.waitNewItems();
-    }
-
-    getNewItems(url)
-    {
-        window.superagent
-            .get(url)
-            .set('X-Requested-With', 'XMLHttpRequest')
-            .end((err, res) => {
-                // TODO エラー処理
-                this.nextItemManager = new NetworkItemManager(this, res.body.network);
-            });
-    }
-
-    disappear()
-    {
         // アイテムの消去はCSSアニメーションで
         this.activeItemManager.disappear();
 
@@ -233,258 +226,52 @@ class Network
             // 内部的に消す
             this.activeItemManager.dispose();
             this.activeItemManager = null;
+            this.newNetworkingLoading++;
+            this.waitNewItems();
         }, 500);
+
     }
 
+    getNewItems(url)
+    {
+        window.superagent
+            .get(url)
+            .set('X-Requested-With', 'XMLHttpRequest')
+            .end((err, res) => {
+                console.debug(res.body);
+                // TODO エラー処理
+                this.nextItemManager = new NetworkItemManager(this, res.body.network);
+                this.newNetworkingLoading++;
+            });
+    }
+
+    disappear()
+    {
+    }
 
     waitNewItems()
     {
-        if (this.nextItemManager === null || this.activeItemManager !== null) {
+        if (this.newNetworkingLoading === 2) {
+            this.showNewItems();
+        } else {
             // 取得中のはずなのでもう少し待って再度呼び出し
             setTimeout(()=>{this.showNewItems();}, 300);
-            return;
-        } else if (this.nextItemManager === false){
-            // エラー
-            alert('データの取得に失敗しました。1度リロードしてください。');
-            //location.reload(true);
-            return;
-        } else {
-            this.showNewItems();
         }
     }
 
     showNewItems()
     {
         // TODO PUSH STATE
+        this.nextItemManager.load();
+        this.nextItemManager.appear();
+        this.setLink();
 
         this.activeItemManager = this.nextItemManager;
         this.nextItemManager = null;
 
-        this.activeItemManager.load();
-        this.activeItemManager.appear();
-    }
+        this.draw(true);
 
 
-
-
-
-
-
-
-
-
-
-
-
-    __changeMain(url, id)
-    {
-        // 古いアイテムを退避
-        this.oldItems = this.items;
-        this.oldMainItemId = this.mainItemId;
-        this.mainItemId = id;
-
-        // 新しくメインになるアイテム
-        let newMain = this.items[id];
-        newMain.animationStatus = {from: {x: newMain.position.x, y: newMain.position.y}};
-        newMain.changePosition(newMain.data.mainMode.main);
-
-        this.items = {};
-        this.items[id] = newMain;
-        this.items[id].isMain = true;
-        this.items[id].parent = null;
-        newMain.dom.classList.add('main');
-
-        // 旧メイン
-        let oldMain = this.oldItems[this.oldMainItemId];
-        this.items[this.oldMainItemId] = oldMain;
-        oldMain.animationStatus = {from: {x: oldMain.position.x, y: oldMain.position.y}};
-        oldMain.parent = newMain;
-        oldMain.changePosition(newMain.getChildData(this.oldMainItemId));
-        oldMain.isMain = false;
-        oldMain.dom.classList.remove('main');
-
-        // 旧メインの子は最小化して位置替え
-        oldMain.setChildPosition(oldMain.childBalls.length);
-
-        // 配置確定(この時点でCSSのアニメーションで新旧メインのみ動き始める)
-        Object.keys(this.items).forEach((key) => {
-            this.items[key].setPosition();
-        });
-
-        // 旧メインの子の処理
-        let idx = 0;
-        Object.keys(this.oldItems).forEach((key) => {
-            if (this.oldItems[key].dom.id === this.oldMainItemId) {
-                // 新しい位置に移動
-                oldMain.childBalls[idx].animation = {
-                    from: oldMain.animationStatus.from,
-                    to: {
-                        x: oldMain.position.x + oldMain.childBalls[idx].offset.x,
-                        y: oldMain.position.y + oldMain.childBalls[idx].offset.y
-                    },
-                    item: this.oldItems[key]
-                };
-                idx++;
-            } else if (this.oldItems[key].dom.id !== id && this.oldItems[key].dom.id !== this.oldMainItemId) {
-                this.oldItems[key].disappear();
-
-                // 新しい位置に移動
-                oldMain.childBalls[idx].animation = {
-                    from: {
-                        x: this.oldItems[key].position.x,
-                        y: this.oldItems[key].position.y
-                    },
-                    to: {
-                        x: oldMain.position.x + oldMain.childBalls[idx].offset.x,
-                        y: oldMain.position.y + oldMain.childBalls[idx].offset.y
-                    },
-                    item: this.oldItems[key]
-                };
-
-                idx++;
-            }
-        });
-
-        // 新しい要素の追加
-        idx = 0;
-        newMain.data.mainMode.children.forEach((newItem)=>{
-            if (newItem.id !== this.oldMainItemId) {
-                this.itemArea.insertAdjacentHTML('beforeend', newItem.dom);
-                this.items[newItem.id] = new NetworkItem(this, newItem, newMain);
-                this.items[newItem.id].setPosition();
-                this.items[newItem.id].moving();
-
-                newMain.childBalls[idx].animation = {
-                    from: {
-                        x: newMain.animationStatus.from.x + newMain.childBalls[idx].offset.x,
-                        y: newMain.animationStatus.from.y + newMain.childBalls[idx].offset.y
-                    },
-                    to: {
-                        x: this.items[newItem.id].position.x,
-                        y: this.items[newItem.id].position.y
-                    },
-                    item: this.items[newItem.id]
-                };
-
-                idx++;
-            }
-        });
-
-        // 遷移先の情報を取得
-        this.updateItems(url);
-
-        // 移動アニメーション
-        this.animationStartTime = null;
-        window.requestAnimationFrame((time)=>{this.changeMainAnimation(time);});
-
-        this.setLink();
-    }
-
-    updateItems(url)
-    {
-        window.superagent
-            .get(url)
-            .set('X-Requested-With', 'XMLHttpRequest')
-            .end((err, res) => {
-                res.body.network.children.forEach((element)=>{
-                    this.items[element.id].data = element;
-                });
-            });
-    }
-
-
-
-    changeMainAnimation(time)
-    {
-        if (this.animationStartTime == null) {
-            this.animationStartTime = time;
-        }
-
-        let animationTime = time - this.animationStartTime;
-        this.image.changeAnimation(animationTime, this.oldItems, this.items,
-            this.items[this.mainItemId], this.items[this.oldMainItemId], this.backgroundOffset);
-
-        if (animationTime <= 500) {
-            window.requestAnimationFrame((time)=>{this.changeMainAnimation(time);});
-        } else {
-            Object.keys(this.oldItems).forEach((key) => {
-                if (!this.items.hasOwnProperty(key)) {
-                    this.oldItems[key].dispose();
-                    delete this.oldItems[key];
-                }
-            });
-
-            this.oldItems = null;
-            this.oldMainItemId = null;
-
-            this.draw(true);
-        }
-    }
-
-
-
-
-    changeNetwork(url)
-    {
-        // 新しいネットワークの情報を取得
-        window.superagent
-            .get(url)
-            .set('X-Requested-With', 'XMLHttpRequest')
-            .end((err, res) => {
-                // TODO エラーチェック
-
-
-                this.nextItemManager = new NetworkItemManager(this, res.body.network);
-
-                // タイトルを変える
-
-                // URLを変える
-
-
-                this.appear();      // 次を出現させる
-            });
-
-
-        // 今出ているものを消す
-        this.disappear();
-    }
-
-
-
-
-    appear()
-    {
-        // このタイミングでアイテム読み込み
-        // DOMをHTML上に配置もこの中でやる
-        this.activeItemManager.load(this.networkArea);
-
-
-        this.animationStartTime = null;
-        window.requestAnimationFrame((time)=>{this.appearAnimation(time);});
-    }
-
-    appearAnimation(time)
-    {
-        if (this.animationStartTime == null) {
-            this.animationStartTime = time;
-        }
-
-        let animationTime = time - this.animationStartTime;
-        this.nextItemManager.appearAnimation(animationTime);
-        if (animationTime <= 1000) {
-            this.activeItemManager.disappearAnimation(animationTime);
-            window.requestAnimationFrame((time)=>{this.disappearAnimation(time);});
-        } else {
-            // 次のネットワークが用意できている？
-            if (this.nextItemManager !== null && this.nextItemManager.ready) {
-                this.activeItemManager.dispose();
-                this.activeItemManager = this.nextItemManager;
-                this.nextItemManager = null;
-
-                // 次のネットワークを出現させる
-                this.animationStartTime = null;
-                window.requestAnimationFrame((time)=>{this.appearAnimation(time);});
-            }
-        }
+        this.isChanging = false;
     }
 }

@@ -1,39 +1,49 @@
-{
-  "main": {
+[
+  {
     "id": "game",
-    "view": "game",
-    "position": "center"
-  },
-  "children": [
-    {
-      "id": "title",
-      "view": "title",
+    "view": "game.game",
+    "position": {
+      "type": "fixed",
       "position": {
-        "offset": {
-          "x": -200,
-          "y": -200
-        }
-      }
-    },
-    {
-      "id": "platform-list",
-      "view": "platform-list",
-      "position": {
-        "offset": {
-          "x": 100,
-          "y": -130
-        }
-      }
-    },
-    {
-      "id": "company-list",
-      "view": "company-list",
-      "position": {
-        "offset": {
-          "x": -80,
-          "y": -100
-        }
+        "x": 500,
+        "y": 500
       }
     }
-  ]
-}
+  },
+  {
+    "id": "top",
+    "parentId": "game",
+    "view": "game.top",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": -200,
+        "y": -200
+      }
+    }
+  },
+  {
+    "id": "platform-list",
+    "parentId": "game",
+    "view": "game.platform-list",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": 100,
+        "y": -130
+      }
+    }
+  },
+  {
+    "id": "company-list",
+    "parentId": "game",
+    "view": "game.company-list",
+    "position": {
+      "type": "parent",
+      "offset": {
+        "x": -80,
+        "y": -100
+      }
+    }
+  }
+]

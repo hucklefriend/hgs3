@@ -20,6 +20,7 @@ class NetworkItem
     {
         this.id = data.id;
         this.dom = document.getElementById(data.id);
+
         if (data.hasOwnProperty('parentId')) {
             this.parent = this.manager.getItem(data.parentId);
         }
@@ -29,7 +30,6 @@ class NetworkItem
         // 幅と高さをセットしておかないと、拡大縮小アニメーションができない
         this.dom.style.width = this.originalSize.width + 'px';
         this.dom.style.height = this.originalSize.height + 'px';
-
 
         // ここでclosedをセットしないと、幅と高さが取れない
         this.dom.classList.add('closed');
@@ -95,6 +95,7 @@ class NetworkItem
 
     dispose()
     {
+        console.debug('dispose: ' + this.id)
         this.dom.parentNode.removeChild(this.dom);      // HTML上から削除
 
         this.manager = null;

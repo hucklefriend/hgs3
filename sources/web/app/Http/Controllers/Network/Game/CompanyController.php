@@ -3,7 +3,7 @@
  * ゲームコントローラー
  */
 
-namespace Hgs3\Http\Controllers\NetworkLayout\Game;
+namespace Hgs3\Http\Controllers\Network\Game;
 
 use Hgs3\Http\Controllers\NetworkLayout\Controller;
 use Hgs3\Http\GlobalBack;
