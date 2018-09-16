@@ -95,7 +95,6 @@ class NetworkItem
 
     dispose()
     {
-        console.debug('dispose: ' + this.id)
         this.dom.parentNode.removeChild(this.dom);      // HTML上から削除
 
         this.manager = null;

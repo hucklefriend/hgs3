@@ -90,11 +90,11 @@ class NetworkImage
                         grad.addColorStop(0,'white');
                         grad.addColorStop(1,'rgba(50, 100, 170, 0)');
 
-                        ctx.fillStyle = grad;
+                        this.context.fillStyle = grad;
 
-                        ctx.beginPath();
-                        ctx.arc(x, y, 5, 0, Math.PI * 2, true);
-                        ctx.fill();
+                        this.context.beginPath();
+                        this.context.arc(gradItem.position.x, gradItem.position.y, 5, 0, Math.PI * 2, true);
+                        this.context.fill();
                     }
                 } else {
                     // 孫いない

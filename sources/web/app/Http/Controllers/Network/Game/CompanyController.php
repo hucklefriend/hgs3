@@ -5,32 +5,52 @@
 
 namespace Hgs3\Http\Controllers\Network\Game;
 
-use Hgs3\Http\Controllers\NetworkLayout\Controller;
+use Hgs3\Http\Controllers\Network\Controller;
 use Hgs3\Http\GlobalBack;
 use Hgs3\Models\NetworkLayout;
 use Hgs3\Models\Orm;
+use Hgs3\Network;
 
 class CompanyController extends Controller
 {
     /**
-     * トップページ
+     * ゲーム会社一覧
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @throws \Exception
      */
     public function index()
     {
         $this->setViewPath();
 
-        GlobalBack::clear();
+        $this->network->load('game-company');
 
-        $network = NetworkLayout::load('game');
+        $data = Orm\GameCompany::orderBy('phonetic')
+            ->paginate(20);
 
+        $index = 0;
+        foreach ($data->items() as $company) {
+            $x = $index % 4;
+            $y = intval($index / 4) + 1;
+
+            $item = new Network\Item();
+
+            $item->id = 'company_' . $company->id;
+            $item->parentId = 'company-list';
+            $item->view = 'game.company.company';
+            $item->viewData = ['company' => $company];
+            $item->setPositionParentOffset($x * 150, $y * 60);
+
+
+            $this->network->addItem($item);
+            $index++;
+        }
 
         //NetworkLayout::appendChild($network);
 
 
 
-        return $this->result('ゲーム', $network);
+        return $this->result('ゲーム会社');
     }
 
     public function detail(Orm\GameCompany $company)

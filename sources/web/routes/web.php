@@ -265,6 +265,8 @@ Route::get('/test', 'TopController@test');
 // 新しいレイアウトのテスト用
 Route::get('/n', 'Network\TopController@index')->name('n.トップ');
 Route::get('/network/game', 'Network\GameController@index')->name('n.ゲーム');
+Route::get('/network/game/company', 'Network\Game\CompanyController@index')->name('n.ゲーム会社');
+Route::get('/network/game/company/{company}', 'Network\Game\CompanyController@detail')->name('n.ゲーム会社詳細');
 Route::get('/network/game/detail/{game}', 'Network\GameController@detail')->name('n.ゲーム詳細');
 
 Route::get('/content/about', 'Content\TopController@about')->name('c.当サイトについて');
