@@ -46,6 +46,8 @@ class Soft extends MasterImportAbstract
                     $data
                 );
 
+                $orm->id = $data['id'];
+
                 if ($isNew) {
                     NewInformation::addNewGameText($orm);
                 } else {
