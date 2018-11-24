@@ -26,12 +26,12 @@ class CompanyController extends Controller
         $this->network->load('game-company');
 
         $data = Orm\GameCompany::orderBy('phonetic')
-            ->paginate(20);
+            ->paginate(100);
 
         $index = 0;
         foreach ($data->items() as $company) {
-            $x = $index % 4;
-            $y = intval($index / 4) + 1;
+            $x = $index % 6;
+            $y = intval($index / 6) + 1;
 
             $item = new Network\Item();
 
@@ -39,7 +39,7 @@ class CompanyController extends Controller
             $item->parentId = 'company-list';
             $item->view = 'game.company.company';
             $item->viewData = ['company' => $company];
-            $item->setPositionParentOffset($x * 150, $y * 60);
+            $item->setPositionParentOffset($x * 150 - 200, $y * 60);
 
 
             $this->network->addItem($item);
