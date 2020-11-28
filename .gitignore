@@ -1,1 +1,16 @@
 /.idea
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
+.env
+/public/css/super_admin.min.css
+/public/img/bg
+/public/js/inc
+/public/vendors
+/public/phpmyadmin
