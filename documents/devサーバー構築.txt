@@ -129,7 +129,7 @@ SSLCertificateFile      /etc/letsencrypt/live/dev.horrorgame.net/cert.pem
 SSLCertificateKeyFile   /etc/letsencrypt/live/dev.horrorgame.net/privkey.pem
 SSLCertificateChainFile /etc/letsencrypt/live/dev.horrorgame.net/chain.pem
 
-sudo certbot renew --post-hook "systemctl restart httpd & systemctl restart vsftpd"
+sudo certbot renew --webroot -w /var/www/wordpress --post-hook "systemctl restart apache2"
 
 
 
@@ -158,5 +158,22 @@ sudo apt purge nodejs npm
 
 sudo apt install php7.4-mysqli
 
-CREATE USER hgs;
-GRANT ALL ON *.* TO hgs;
+
+
+〇ヘッドレスクローム
+
+$ sudo apt-get update
+$ sudo apt-get install -y libappindicator1 fonts-liberation
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+google-chrome --disable-setuid-sandbox --no-sandbox --headless --disable-gpu --dump-dom https://www.chromestatus.com/
+
+
+$ sudo apt install python3-selenium
+
+wget https://moji.or.jp/wp-content/ipafont/IPAexfont/IPAexfont00401.zip
+unzip IPAexfont00401.zip -d ~/.fonts/
+fc-cache -fv
+
+
+

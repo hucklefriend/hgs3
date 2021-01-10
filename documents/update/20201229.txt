@@ -1,0 +1,86 @@
+2021.12.29 更新手順
+
+
+○メンテモードにする
+php artisan down
+
+○DBをバックアップする
+
+mkdir backup_20201229
+
+cd backup_20201229
+
+mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs2 > hgs2_20201229.sql
+mysqldump -u root -p --single-transaction --master-data=2 --flush-logs hgs3 > hgs3_20201229.sql
+
+tar -zcvf hgs2_20201229.tar.gz hgs2_20201229.sql
+tar -zcvf hgs3_20201229.tar.gz hgs3_20201229.sql
+
+mkdir mongo
+
+sudo mongodump -d hgs3 -o ./mongo
+
+
+○let's encrypt
+
+cd /etc
+sudo zip -r letsencrypt.zip letsencrypt
+
+〇ソースコード一式
+
+主にpublic以下が目的
+
+cd /var
+
+sudo zip -r www.zip www
+
+〇apache設定
+
+cd /etc
+
+sudo zip -r apache2.zip apache2
+
+
+
+○Ubuntuアップデート
+sudo apt update
+sudo apt upgrade
+
+sudo apt do-release-upgrade
+
+
+○DB復元
+
+mysql -u root -p hgs3 < hgs3_20201229.sql
+
+
+○let's encrypt復元
+
+sudo -i
+
+cd /etc
+unzip letsencrypt.zip
+
+cd /etc/letsencrypt/live/horrogame.net
+ln -s ../../archive/horrogame.net/cert3.pem cert.pem
+ln -s ../../archive/horrogame.net/chain3.pem chain.pem
+ln -s ../../archive/horrogame.net/fullchain3.pem fullchain.pem
+ln -s ../../archive/horrogame.net/privkey3.pem privkey.pem
+
+cd /etc/letsencrypt/live/pure-soul.love
+ln -s ../../archive/pure-soul.love/cert3.pem cert.pem
+ln -s ../../archive/pure-soul.love/chain3.pem chain.pem
+ln -s ../../archive/pure-soul.love/fullchain3.pem fullchain.pem
+ln -s ../../archive/pure-soul.love/privkey3.pem privkey.pem
+
+
+exit (root抜ける)
+
+certbot renew
+
+○メンテモードをあける
+php artisan up
+
+○動作チェック
+
+○お知らせを登録する
