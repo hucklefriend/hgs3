@@ -83,7 +83,7 @@ https://downloads.mariadb.org/mariadb/repositories/#distro=Ubuntu&distro_release
 
 sudo mysql_secure_installation
 
-sudo systemctl enable apache2
+sudo systemctl enable mysql
 
 remove anonymous users y
 Dissallow root login remotely? y
@@ -108,7 +108,7 @@ sudo systemctl enable mongod
 
 
 〇PHP用コンポーネント
-sudo apt install php7.4-mongodb php7.4-redis php7.4-dom php7.4-mysqli
+sudo apt install php7.4-mongodb php7.4-redis
 
 
 
@@ -145,12 +145,76 @@ wp-config.phpの設定
 define('FS_METHOD','direct');
 
 
+sudo apt install curl zip unzip imagemagick
+sudo apt install php7.4-curl php7.4-dom php7.4-gd php7.4-imagick php7.4-imagick php7.4-zip
+
+
+
+
+
+
+
+
+
+
+
+〇SSHの設定
+
+バックアップ
+
+sudo cp sshd_config sshd_config.bak
+
+変数
+
+sudo vi sshd_config
+
+-#Port 22
++Port XXXXX
+
+
+
+
 
 〇nodejs
 sudo apt install nodejs npm
 sudo npm install -g n
 sudo n stable
 sudo apt purge nodejs npm
+
+
+
+
+MariaDB10.5インストール
+
+公式サイトを参考にインストールを行いました。
+
+sudo apt-get install software-properties-common
+sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.5/ubuntu focal main'
+sudo apt update
+sudo apt install mariadb-server
+
+インストールはできたので、初期設定を行いました。
+
+sudo mysql_secure_installation
+
+いくつか質問されますが、聞かれることは簡単なことなので割愛します。こういう時にだいたいお世話になるServer Worldさんに記載がありますのでリンク貼っておきますね(;^_^A
+mysql_secure_installationはいつの頃からかUnix Socket認証ってやつになってまして、サーバーのroot権限で実行することでmysqlのrootとして実行できるようになってました。ちょっと前にこれを知らなくて悩まされた記憶があります。
+
+そして自動起動設定を行って完了です。
+
+sudo systemctl enable mariadb
+
+
+
+
+
+
+
+
+
+
+〇wordpress
 
 
 
