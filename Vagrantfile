@@ -68,8 +68,10 @@ Vagrant.configure("2") do |config|
     apt-get update
     apt-get install -y docker-ce
     usermod -aG docker huckle
+    apt-get install python3 python3-pip
+    pip3 install docker-compose
   SHELL
 
 
-  # config.ssh.username = "huckle"
+  #config.ssh.username = "huckle"
 end
