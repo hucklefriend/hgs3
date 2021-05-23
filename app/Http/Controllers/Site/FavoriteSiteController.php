@@ -25,7 +25,7 @@ class FavoriteSiteController extends Controller
         return view('site.favorite.index')->with([
             'site'  => $site,
             'pager' => $pager,
-            'users' => User::getNameHash(array_pluck($pager->items(), 'user_id'))
+            'users' => User::getNameHash(\Illuminate\Support\Arr::pluck($pager->items(), 'user_id'))
         ]);
     }
 }

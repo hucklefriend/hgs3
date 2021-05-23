@@ -34,8 +34,8 @@ class SiteController extends Controller
         $updateArrivals = Site\UpdateArrival::get(5);
 
         $webmasterIds = array_merge(
-            array_pluck($newArrivals, 'user_id'),
-            array_pluck($updateArrivals, 'user_id')
+            \Illuminate\Support\Arr::pluck($newArrivals, 'user_id'),
+            \Illuminate\Support\Arr::pluck($updateArrivals, 'user_id')
         );
 
         return view('site.index', [
@@ -91,7 +91,7 @@ class SiteController extends Controller
     {
         $newArrivals = Site\NewArrival::getPage(10);
         $sites = Orm\Site::getHash(page_pluck($newArrivals, 'site_id'));
-        $users = User::getHash(array_pluck($sites, 'user_id'));
+        $users = User::getHash(\Illuminate\Support\Arr::pluck($sites, 'user_id'));
 
         return view('site.newArrival', [
             'newArrivals' => $newArrivals,
@@ -110,7 +110,7 @@ class SiteController extends Controller
     {
         $updateArrivals = Site\UpdateArrival::getPage(10);
         $sites = Orm\Site::getHash(page_pluck($updateArrivals, 'site_id'));
-        $users = User::getHash(array_pluck($sites, 'user_id'));
+        $users = User::getHash(\Illuminate\Support\Arr::pluck($sites, 'user_id'));
 
         return view('site.updateArrival', [
             'updateArrivals' => $updateArrivals,

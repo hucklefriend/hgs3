@@ -154,7 +154,7 @@ SQL;
         $data['favoriteNum'] = Orm\UserFavoriteSoft::where('soft_id', $soft->id)->count(['user_id']);
         $data['followStatus'] = [];
         if (!empty($data['favorite']) && Auth::check()) {
-            $data['followStatus'] = User\Follow::getFollowStatus(Auth::id(), array_pluck($data['favorite'], 'user_id'));
+            $data['followStatus'] = User\Follow::getFollowStatus(Auth::id(), \Illuminate\Support\Arr::pluck($data['favorite'], 'user_id'));
         }
 
         // サイト
@@ -171,7 +171,7 @@ SQL;
         }
 
         $data['users'] = User::getHash(array_merge(
-            array_pluck($data['favorites'], 'user_id')
+            \Illuminate\Support\Arr::pluck($data['favorites'], 'user_id')
         ));
 
         // 前後のゲーム

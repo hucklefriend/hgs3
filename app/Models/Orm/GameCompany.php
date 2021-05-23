@@ -56,7 +56,7 @@ SQL;
             return ['soft' => [], 'packages' => []];
         }
 
-        $soft_ids = array_pluck($packages, 'soft_id');
+        $soft_ids = \Illuminate\Support\Arr::pluck($packages, 'soft_id');
         $soft = DB::query()->select(['id', 'name'])
             ->from('game_softs')
             ->whereIn('id', $soft_ids)

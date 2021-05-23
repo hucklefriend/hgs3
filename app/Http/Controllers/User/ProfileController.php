@@ -141,7 +141,7 @@ class ProfileController extends Controller
                 $data['parts'] = [
                     'favoriteSites' => $favoriteSites,
                     'sites'         => $sites,
-                    'users'         => User::getHash(array_pluck($sites, 'user_id'))
+                    'users'         => User::getHash(\Illuminate\Support\Arr::pluck($sites, 'user_id'))
                 ];
                 $data['pageId'] = $data['isMyself'] ? PageId::USER_FAVORITE_SITE : PageId::FRIEND_FAVORITE_SITE;
             }
@@ -154,7 +154,7 @@ class ProfileController extends Controller
                 $data['parts'] = [
                     'goodSites' => $goodSites,
                     'sites'     => $sites,
-                    'users'     => User::getHash(array_pluck($sites, 'user_id'))
+                    'users'     => User::getHash(\Illuminate\Support\Arr::pluck($sites, 'user_id'))
                 ];
                 $data['pageId'] = PageId::USER_GOOD_SITE;
             }

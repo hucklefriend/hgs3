@@ -118,7 +118,7 @@ SQL;
 
         $handleGames = DB::select($sqlHandleGame, [$hgsSite->id]);     // 取扱いゲーム
         if (!empty($handleGames)) {
-            $handleGames = array_pluck($handleGames, 'soft_id');
+            $handleGames = \Illuminate\Support\Arr::pluck($handleGames, 'soft_id');
         }
 
         $site = new Orm\Site;

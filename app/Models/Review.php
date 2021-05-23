@@ -198,7 +198,7 @@ SQL;
             return $data;
         }
 
-        $softIds = array_pluck($data->items(), 'soft_id');
+        $softIds = \Illuminate\Support\Arr::pluck($data->items(), 'soft_id');
         $soft = Orm\GameSoft::getHash($softIds);
         foreach ($data->items() as &$review) {
             $review->soft = $soft[$review->soft_id];
@@ -518,8 +518,8 @@ SQL;
             return $reviews;
         }
 
-        $softs = Orm\GameSoft::getHash(array_pluck($reviews, 'soft_id'));
-        $users = User::getHash(array_pluck($reviews, 'user_id'));
+        $softs = Orm\GameSoft::getHash(\Illuminate\Support\Arr::pluck($reviews, 'soft_id'));
+        $users = User::getHash(\Illuminate\Support\Arr::pluck($reviews, 'user_id'));
 
         foreach ($reviews as &$review) {
             $review->soft = $softs[$review->soft_id];
@@ -554,14 +554,14 @@ SQL;
 
             $appendSofts = DB::table('game_softs')
                 ->select(['id', 'name', 'original_package_id'])
-                ->whereIn('id', array_pluck($appendSoftIds, 'soft_id'))
+                ->whereIn('id', \Illuminate\Support\Arr::pluck($appendSoftIds, 'soft_id'))
                 ->get()
                 ->toArray();
 
             $softs = array_merge($softs, $appendSofts);
         }
 
-        $packages = Orm\GamePackage::getHash(array_pluck($softs, 'original_package_id'));
+        $packages = Orm\GamePackage::getHash(\Illuminate\Support\Arr::pluck($softs, 'original_package_id'));
         foreach ($softs as &$soft) {
             $soft->package = $packages[$soft->original_package_id] ?? null;
         }

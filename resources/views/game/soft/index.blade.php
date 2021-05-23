@@ -188,7 +188,7 @@
                                                 @endisset
                                             </div>
                                             <div>
-                                                <a href="{{ route('ゲーム詳細', ['game' => $soft['id']]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
+                                                <a href="{{ route('ゲーム詳細', ['soft' => $soft['id']]) }}" class="btn btn-light btn--icon"><i class="fas fa-angle-right"></i></a>
                                             </div>
                                         </div>
                                     </div>

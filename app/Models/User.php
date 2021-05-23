@@ -88,7 +88,7 @@ class User extends Authenticatable
      */
     public static function getNameHashByPager(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager, $key = 'user_id')
     {
-        return self::getNameHash(array_pluck($pager->items(), $key));
+        return self::getNameHash(\Illuminate\Support\Arr::pluck($pager->items(), $key));
     }
 
     /**

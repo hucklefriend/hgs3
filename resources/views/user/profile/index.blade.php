@@ -160,7 +160,7 @@
                 </div>
             </div>
             <div style="width: 100%;">
-                @include('user.profile.parts.' . camel_case($show), $parts)
+                @include('user.profile.parts.' . Illuminate\Support\Str::camel($show), $parts)
             </div>
         </div>
 

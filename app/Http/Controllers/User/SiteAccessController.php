@@ -57,7 +57,7 @@ class SiteAccessController extends Controller
             'accesses'         => Site\AccessCount::getMonthly($site, $date),
             'dailyAccess'      => Site\AccessCount::getDaily($site),
             'nearlyFootprints' => $nearlyFootprints,
-            'footprintUsers'   => User::getHash(array_pluck($nearlyFootprints, 'user_id')),
+            'footprintUsers'   => User::getHash(\Illuminate\Support\Arr::pluck($nearlyFootprints, 'user_id')),
             'useDatePicker'    => true
         ]);
     }
@@ -89,7 +89,7 @@ class SiteAccessController extends Controller
             'site'       => $site,
             'pager'      => $pager,
             'footprints' => $footprints,
-            'users'      => User::getHash(array_pluck($footprints, 'user_id'))
+            'users'      => User::getHash(\Illuminate\Support\Arr::pluck($footprints, 'user_id'))
         ]);
     }
 
@@ -129,7 +129,7 @@ class SiteAccessController extends Controller
             'pager'      => $pager,
             'footprints' => $footprints,
             'ym'         => $date->format('Ym'),
-            'users'      => User::getHash(array_pluck($footprints, 'user_id'))
+            'users'      => User::getHash(\Illuminate\Support\Arr::pluck($footprints, 'user_id'))
         ]);
     }
 }

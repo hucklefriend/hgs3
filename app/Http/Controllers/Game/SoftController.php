@@ -87,10 +87,10 @@ class SoftController extends Controller
     /**
      * 詳細ページ
      *
-     * @param Orm\GameSoft $soft
+     * @param ?Orm\GameSoft $soft
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detail(Orm\GameSoft $soft)
+    public function detail(?Orm\GameSoft $soft = null)
     {
         session(['soft_phonetic_type' => $soft->phonetic_type]);
 

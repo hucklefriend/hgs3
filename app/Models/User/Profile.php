@@ -135,7 +135,7 @@ class Profile
             return $result;
         }
 
-        $reviews = Orm\Review::whereIn('id', array_pluck($result['order']->toArray(), 'review_id'))->get();
+        $reviews = Orm\Review::whereIn('id', \Illuminate\Support\Arr::pluck($result['order']->toArray(), 'review_id'))->get();
         foreach ($reviews as $r) {
             $result['reviews'][$r->id] = $r;
         }
@@ -184,9 +184,9 @@ class Profile
     private static function getSoftMaster(array $data)
     {
         $softIds = array_merge(
-            array_pluck($data['favoriteSofts']->toArray(), 'soft_id'),
-            array_pluck($data['reviews']->toArray(), 'soft_id'),
-            array_pluck(array_pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'soft_id')
+            \Illuminate\Support\Arr::pluck($data['favoriteSofts']->toArray(), 'soft_id'),
+            \Illuminate\Support\Arr::pluck($data['reviews']->toArray(), 'soft_id'),
+            \Illuminate\Support\Arr::pluck(\Illuminate\Support\Arr::pluck($data['goodReviews']['order']->toArray(), 'review_id'), 'soft_id')
         );
 
         return Orm\GameSoft::getNameHash($softIds);
@@ -201,9 +201,9 @@ class Profile
     private static function getUserMaster(array $data)
     {
         $userIds = array_merge(
-            array_pluck($data['favoriteSites']['sites'], 'user_id'),
-            array_pluck($data['reviews']->toArray(), 'user_id'),
-            array_pluck($data['goodReviews']['reviews'], 'user_id')
+            \Illuminate\Support\Arr::pluck($data['favoriteSites']['sites'], 'user_id'),
+            \Illuminate\Support\Arr::pluck($data['reviews']->toArray(), 'user_id'),
+            \Illuminate\Support\Arr::pluck($data['goodReviews']['reviews'], 'user_id')
         );
 
         return User::getNameHash($userIds);
