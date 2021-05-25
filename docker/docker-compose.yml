@@ -1,0 +1,79 @@
+version: "3.8"
+
+services:
+  hgs_web:
+    build: web
+    container_name: hgs_web
+    volumes:
+      - /var/hgs:/var/hgs
+    restart: always
+    depends_on:
+      - hgs_db
+      - hgs_memcached
+      - hgs_redis
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - hgs_net
+
+  hgs_db:
+    image: mariadb:10.5.9
+    container_name: hgs_db
+    volumes:
+      - hgs_db_vol:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: hgs
+      MYSQL_PASSWORD: hgshgs
+      MYSQL_DATABASE: hgs3
+    ports:
+      - 3306:3306
+    networks:
+      - hgs_net
+
+  hgs_memcached:
+    image: memcached:1.6.9
+    container_name: hgs_memcached
+    restart: always
+    networks:
+      - hgs_net
+
+  hgs_redis:
+    image: redis:6.2.3
+    container_name: hgs_redis
+    restart: always
+    networks:
+      - hgs_net
+
+  hgs_mongo:
+    image: mongo:4.4.6-bionic
+    container_name: hgs_mongodb
+    restart: always
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: hgs
+#      MONGO_INITDB_ROOT_PASSWORD: hgshgs
+    networks:
+      - hgs_net
+
+  hgs_mongo_express:
+    image: mongo-express
+    container_name: hgs_mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: hgs
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: hgshgs
+    networks:
+      - hgs_net
+
+volumes:
+  hgs_db_vol:
+  hgs_mongo_vol:
+  hgs_redis_vol:
+
+networks:
+  hgs_net:
