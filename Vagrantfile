@@ -19,10 +19,11 @@ Vagrant.configure("2") do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
   config.vm.network "forwarded_port", guest: 80, host: 80
+  config.vm.network "forwarded_port", guest: 443, host: 443
   config.vm.network "forwarded_port", guest: 3306, host: 3306
 
 
-  # Create a private network, which allows host-only access to the machine
+  # Create a private network, which allows host-#only access to the machine
   # using a specific IP.
   config.vm.network "private_network", ip: "192.168.33.10"
 
@@ -70,4 +71,7 @@ Vagrant.configure("2") do |config|
     pip3 install docker-compose
   SHELL
 
+  config.vm.provision "shell",
+    run: "always",
+    inline: "make -C /var/hgs/docker up"
 end

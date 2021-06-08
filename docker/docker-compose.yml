@@ -1,9 +1,27 @@
 version: "3.8"
 
 services:
+  https-portal:
+    container_name: https_portal
+    image: steveltn/https-portal:1
+    ports:
+#      - 80:80
+      - 443:443
+    environment:
+      STAGE: local
+      DOMAINS: 'local.horrorgame.net -> http://hgs_web:80'
+    restart: always
+    volumes:
+      - https-portal-data:/var/lib/https-portal
+    depends_on:
+      - hgs_web
+    networks:
+      - hgs_net
+
   hgs_web:
     build: web
     container_name: hgs_web
+    hostname: hgs_web
     volumes:
       - /var/hgs:/var/hgs
     restart: always
@@ -13,9 +31,14 @@ services:
       - hgs_redis
     ports:
       - 80:80
-      - 443:443
+#      - 443:443
     networks:
       - hgs_net
+    logging:
+      driver: json-file
+      options:
+        max-file: '1'
+        max-size: 3m
 
   hgs_db:
     image: mariadb:10.5.9
@@ -70,10 +93,24 @@ services:
     networks:
       - hgs_net
 
+  hgs_nodejs:
+    build: nodejs
+    container_name: hgs_nodejs
+    hostname: hgs_nodejs
+    volumes:
+      - /var/hgs:/var/hgs
+    restart: always
+    depends_on:
+      - hgs_web
+    networks:
+      - hgs_net
+
+
 volumes:
   hgs_db_vol:
   hgs_mongo_vol:
   hgs_redis_vol:
+  https-portal-data:
 
 networks:
   hgs_net:
