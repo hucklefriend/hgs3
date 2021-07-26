@@ -93,19 +93,6 @@ services:
     networks:
       - hgs_net
 
-  hgs_nodejs:
-    build: nodejs
-    container_name: hgs_nodejs
-    hostname: hgs_nodejs
-    volumes:
-      - /var/hgs:/var/hgs
-    restart: always
-    depends_on:
-      - hgs_web
-    networks:
-      - hgs_net
-
-
 volumes:
   hgs_db_vol:
   hgs_mongo_vol:

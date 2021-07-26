@@ -1,6 +1,7 @@
 <?php
 use Hgs3\Http\Controllers;
 
+Route::get('/haribote/{page}', function ($page) {return view('haribote.' . $page);});
 
 // 管理者のみ
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
