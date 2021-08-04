@@ -50,11 +50,13 @@ footer {
 
 .node-ball {
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: radial-gradient(rgb(0,200,0), rgba(0,200,0, 0.7), rgba(0,200,0, 0.1));
-  box-shadow: 0 0 5px rgb(0,200,0);
+  //background: radial-gradient(rgb(0,200,0), rgba(0,200,0, 0.7), rgba(0,200,0, 0.1));
+
+  background-color: #00CC00;
+  box-shadow:     0 0 10px 5px #00CC00;
 }
 
 main {
@@ -92,13 +94,12 @@ main {
 
   .back-line {
     display: inline-block;
-    width: 2px;
+    width: 1px;
     height: 60px;
     position: relative;
     left: 6px;
     top: 14px;
-    background-color: #00FF00;
-    filter: blur(2px);
+    background-color: #00CC00;
   }
 
   .node-ball-cntr {
@@ -120,8 +121,8 @@ main {
   .node-ball {
     @extend .node-ball;
 
-    width: 25px;
-    height: 25px;
+    width: 14px;
+    height: 14px;
     margin-top: 13px;
   }
 
@@ -137,12 +138,16 @@ main {
     display: inline-block;
     width: 2px;
     height: 50%;
-    mix-blend-mode: color-burn;
+    //mix-blend-mode: color-burn;
     position: relative;
     left: 12px;
     top: 50%;
-    background-color: #00FF00;
+    //background-color: #00FF00;
     filter: blur(2px);
+    overflow: visible;
+
+    background-color: #00FF00;
+    box-shadow:     0 0 10px 3px #00FF00;
   }
 
   .sub-menu {

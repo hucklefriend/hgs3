@@ -7,11 +7,11 @@
     <base href="/haribote/">
     <title>{{ env('APP_NAME') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
-<div id="app">
+<div id="example">
 </div>
 
+<script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

@@ -13,8 +13,8 @@ const tailwindcss = require('tailwindcss');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .react()
-    .sass('resources/sass/app.scss', 'public/css')
+    .react();
+    //.sass('resources/sass/app.scss', 'public/css')
 mix.js('resources/js/network/*.js', 'public/js/network.js')
     .sass('resources/sass/network.scss', 'public/css')
     .options({
