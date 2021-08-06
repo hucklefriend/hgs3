@@ -7,8 +7,8 @@
     <base href="/haribote/">
     <title>{{ env('APP_NAME') }}</title>
 
-    <link rel="stylesheet" href="{{ url('css/network.css') }}?{{ time() }}">
-    <script src="{{ url('js/network.js') }}?{{ time() }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/network.css') }}?{{ time() }}">
+    <script src="{{ asset('js/network.js') }}?{{ time() }}"></script>
     <script
             src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
             integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
