@@ -255,10 +255,10 @@ SQL;
         $data['access'] = self::getAccessRanking();
 
         $userIds = array_merge(
-            array_pluck($data['newArrivals'],'user_id'),
-            array_pluck($data['updated'], 'user_id'),
-            array_pluck($data['good'], 'user_id'),
-            array_pluck($data['access'], 'user_id')
+            \Illuminate\Support\Arr::pluck($data['newArrivals'],'user_id'),
+            \Illuminate\Support\Arr::pluck($data['updated'], 'user_id'),
+            \Illuminate\Support\Arr::pluck($data['good'], 'user_id'),
+            \Illuminate\Support\Arr::pluck($data['access'], 'user_id')
         );
 
         $data['users'] = User::getHash($userIds);
@@ -384,7 +384,7 @@ SQL;
         $data['sites'] = [];
         if (!empty($data['pager'])) {
             $data['sites'] = Orm\Site::getHash(page_pluck($data['pager'], 'site_id'));
-            $data['users'] = User::getHash(array_pluck($data['sites'], 'user_id'));
+            $data['users'] = User::getHash(\Illuminate\Support\Arr::pluck($data['sites'], 'user_id'));
         }
 
         if ($soft !== null) {

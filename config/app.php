@@ -162,7 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
+        //Laravel\Socialite\SocialiteServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -179,9 +179,9 @@ return [
         Hgs3\Providers\RouteServiceProvider::class,
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
+        //Collective\Html\HtmlServiceProvider::class,
         //Jenssegers\Mongodb\MongodbServiceProvider::class,
-        Jenssegers\Agent\AgentServiceProvider::class,
+        //Jenssegers\Agent\AgentServiceProvider::class,
     ],
 
     /*
@@ -230,10 +230,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'Agent' => Jenssegers\Agent\Facades\Agent::class,
+//        'Form' => Collective\Html\FormFacade::class,
+//        'Html' => Collective\Html\HtmlFacade::class,
+//        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+//        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
 

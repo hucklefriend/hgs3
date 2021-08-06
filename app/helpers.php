@@ -17,7 +17,9 @@ function company_select($companyId, $withEmpty, $params = [])
         $data[0] = '';
     }
 
-    $data += array_pluck($companies, 'name', 'id');
+
+
+    $data += \Illuminate\Support\Arr::pluck($companies, 'name', 'id');
     unset($companies);
 
     return Form::select(
@@ -93,7 +95,7 @@ function platform_select($platformId, $params = [])
 {
     return Form::select(
         $params['name'] ?? 'platform_id',
-        array_pluck(\Hgs3\Models\Orm\GamePlatform::all(['id', 'name']), 'name', 'id'),
+        \Illuminate\Support\Arr::pluck(\Hgs3\Models\Orm\GamePlatform::all(['id', 'name']), 'name', 'id'),
         $platformId,
         [
             'class' => 'form-control',

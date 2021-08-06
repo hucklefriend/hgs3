@@ -19,10 +19,11 @@ Vagrant.configure("2") do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
   config.vm.network "forwarded_port", guest: 80, host: 80
+  config.vm.network "forwarded_port", guest: 443, host: 443
   config.vm.network "forwarded_port", guest: 3306, host: 3306
 
 
-  # Create a private network, which allows host-only access to the machine
+  # Create a private network, which allows host-#only access to the machine
   # using a specific IP.
   config.vm.network "private_network", ip: "192.168.33.10"
 
@@ -46,8 +47,8 @@ Vagrant.configure("2") do |config|
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-     vb.memory = "1024"
-     vb.cpus = 2
+     vb.memory = "4096"
+     vb.cpus = 3
   end
   #
   # View the documentation for the provider you are using for more
@@ -59,17 +60,18 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get upgrade
-    adduser huckle
-    gpasswd -a huckle sudo
 
     apt-get install -y apt-transport-https ca-certificates curl software-properties-common git
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     apt-get update
     apt-get install -y docker-ce
-    usermod -aG docker huckle
+    usermod -aG docker vagrant
+    apt-get install -y python3 python3-pip
+    pip3 install docker-compose
   SHELL
 
-
-  # config.ssh.username = "huckle"
+  config.vm.provision "shell",
+    run: "always",
+    inline: "make -C /var/hgs/docker up"
 end

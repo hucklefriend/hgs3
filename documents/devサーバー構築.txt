@@ -219,3 +219,21 @@ sudo systemctl enable mariadb
 
 
 
+
+sudo apt install php7.4-mysqli
+
+CREATE USER hgs;
+GRANT ALL ON *.* TO hgs;
+
+
+
+
+
+
+
+●npm
+
+vagrantでメモリ1GBだと足りなくてnpm installがkillされる
+node.jsはdockerじゃなくてもいいかも。
+
+npm install --no-bin-links
