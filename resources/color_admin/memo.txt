@@ -1,0 +1,11 @@
+color adminのテンプレートをここに置く
+
+color_admin_v5.0
+└admin
+　└src
+　　┠html
+　　┠html-startup
+　　┠js
+　　└scss
+
+gulpfile.jsやpackage.jsonを誤って上書きしないように注意

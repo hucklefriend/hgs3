@@ -237,3 +237,18 @@ vagrantでメモリ1GBだと足りなくてnpm installがkillされる
 node.jsはdockerじゃなくてもいいかも。
 
 npm install --no-bin-links
+
+
+
+
+
+
+●vagrantたちあがらない問題発生
+
+vboxsf is not available とか言われた時は、ホストで次を実行
+
+$ sudo vagrant plugin install vagrant-vbguest
+$ vagrant vbguest --status
+
+vagrant haltしてからもう一回vagrant upするといける
+バージョン違いで起きるらしい。

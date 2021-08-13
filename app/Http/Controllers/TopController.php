@@ -139,22 +139,4 @@ class TopController extends Controller
     {
         return view('hgs');
     }
-
-    public function test()
-    {
-        return '';
-    }
-
-    public function test2()
-    {
-        $app = app();
-        // 読み込み元のフォルダを指定
-        $paths = [base_path('resources/views2')];
-
-        // 新しい設定を適用
-        $finder = new FileViewFinder($app['files'], $paths);
-        View::setFinder($finder);
-
-        return Response::json(NetworkLayout::load('title'));
-    }
 }
