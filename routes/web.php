@@ -3,19 +3,26 @@ use Hgs3\Http\Controllers;
 
 Route::get('/haribote/{page}', function ($page) {return view('haribote.' . $page);});
 
-// 管理者のみ
-Route::group(['middleware' => ['auth', 'can:admin']], function () {
-    // 管理メニュー
-    Route::get('/admin', [Controllers\AdminController::class, 'index'])->name('管理メニュー');
+// 管理用
+Route::group(['prefix' => 'management'/*, 'middleware' => ['auth', 'can:admin']*/], function () {
+    // 管理
+    Route::get('/', [Controllers\Management\ManagementController::class, 'index'])->name('管理');
 
-    // お知らせ
-    Route::get('/system/notice/add', [Controllers\System\NoticeController::class, 'System\NoticeController@add'])->name('お知らせ登録');
-    Route::post('/system/notice/add', [Controllers\System\NoticeController::class, 'insert'])->name('お知らせ登録処理');
-    Route::get('/system/notice/edit/{notice}', [Controllers\System\NoticeController::class, 'edit'])->name('お知らせ編集');
-    Route::patch('/system/notice/edit/{notice}', [Controllers\System\NoticeController::class, 'update'])->name('お知らせ編集処理');
-    Route::delete('/system/notice/{notice}', [Controllers\System\NoticeController::class, 'delete'])->name('お知らせ削除');
-    Route::get('/system/notice/future', [Controllers\System\NoticeController::class, 'future'])->name('未来のお知らせ');
-    Route::get('/system/notice/past', [Controllers\System\NoticeController::class, 'past'])->name('過去のお知らせ');
+    // システム関係
+    Route::group(['prefix' => 'system'], function () {
+
+        // お知らせ
+        Route::group(['prefix' => 'notice'], function () {
+            Route::get('/', [Controllers\Management\System\NoticeController::class, 'index'])->name('管理-システム-お知らせ');
+            Route::get('add', [Controllers\Management\System\NoticeController::class, 'add'])->name('管理-システム-お知らせ登録');
+            Route::post('add', [Controllers\Management\System\NoticeController::class, 'insert'])->name('管理-システム-お知らせ登録処理');
+            Route::get('edit/{notice}', [Controllers\Management\System\NoticeController::class, 'edit'])->name('管理-システム-お知らせ編集');
+            Route::patch('edit/{notice}', [Controllers\Management\System\NoticeController::class, 'update'])->name('管理-システム-お知らせ編集処理');
+            Route::delete('{notice}', [Controllers\Management\System\NoticeController::class, 'delete'])->name('管理-システム-お知らせ削除');
+            Route::get('future', [Controllers\Management\System\NoticeController::class, 'future'])->name('管理-システム-未来のお知らせ');
+            Route::get('past', [Controllers\Management\System\NoticeController::class, 'past'])->name('管理-システム-過去のお知らせ');
+        });
+    });
 
     // 不正レビュー
     //Route::get('/admin/injustice_review', [InjusticeReviewController, 'Admin\InjusticeReviewController@index']);
@@ -38,7 +45,7 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::patch('/admin/review/url/ok', [Controllers\Site\ApprovalController::class, 'ok'])->name('レビューURL OK');
     Route::patch('/admin/review/url/ng', [Controllers\Site\ApprovalController::class, 'ng'])->name('レビューURL NG');
 
-    Route::get('/admin/hgs2site', [Controllers\AdminController::class, 'hgs2SiteChecker']);
+    Route::get('/admin/hgs2site', [Controllers\ManagementController::class, 'hgs2SiteChecker']);
 
     // 管理人メッセージ
     //Route::get('/admin/message/write/{user}/{resId}', 'User\MessageController@adminInput')->name('管理人メッセージ入力');

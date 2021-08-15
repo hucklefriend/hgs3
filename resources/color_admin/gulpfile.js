@@ -13,6 +13,12 @@ var merge       = require('merge-stream');
 var fileinclude = require('gulp-file-include');
 var distPath    = '../../public';
 
+// 01. font-fontawesome
+gulp.task('font-fontawesome', function() {
+	return gulp.src(['node_modules/@fortawesome/fontawesome-free/webfonts/*'])
+		.pipe(gulp.dest(distPath + '/admin/webfonts/'));
+});
+
 // 02. font-bootstrap
 gulp.task('font-bootstrap', function() {
 	return gulp.src(['node_modules/bootstrap-icons/font/fonts/*'])
@@ -59,7 +65,7 @@ gulp.task('js-app', function(){
 // 07. plugins
 gulp.task('plugins', function() {
 	var pluginFiles = [
-  	//'node_modules/@fortawesome/*',
+  	'node_modules/@fortawesome/*',
   	'node_modules/perfect-scrollbar/*',
   	'node_modules/animate.css/*',
   	'node_modules/pace-js/*',
@@ -197,12 +203,12 @@ gulp.task('plugins', function() {
 		'https://unpkg.com/ionicons@4.2.6/dist/fonts/ionicons.ttf',
 		'https://unpkg.com/ionicons@4.2.6/dist/fonts/ionicons.svg'
 	]).pipe(gulp.dest(distPath + '/admin/plugins/ionicons/fonts'));
-	// download([
-	// 	'http://lab.xero.nu/bootstrap_calendar/lib/css/bootstrap_calendar.css'
-	// ]).pipe(gulp.dest(distPath + '/admin/plugins/bootstrap-calendar/css/'));
-	// download([
-	// 	'http://lab.xero.nu/bootstrap_calendar/lib/js/bootstrap_calendar.min.js'
-	// ]).pipe(gulp.dest(distPath + '/admin/plugins/bootstrap-calendar/js/'));
+	download([
+		'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-calendar/0.2.5/css/calendar.min.css'
+	]).pipe(gulp.dest(distPath + '/admin/plugins/bootstrap-calendar/css/'));
+	download([
+		'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-calendar/0.2.5/js/calendar.min.js'
+	]).pipe(gulp.dest(distPath + '/admin/plugins/bootstrap-calendar/js/'));
 	download([
 		'https://jvectormap.com/js/jquery-jvectormap-world-mill.js'
 	]).pipe(gulp.dest(distPath + '/admin/plugins/jvectormap-next/'));
@@ -268,6 +274,7 @@ gulp.task('css-transparent-image', function(){
 
 // 51. transparent
 gulp.task('transparent', gulp.series(gulp.parallel([
+	'font-fontawesome',
 	'font-bootstrap',
 	'js-vendor', 
 	'js-app',

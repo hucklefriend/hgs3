@@ -3,25 +3,23 @@
  * 管理コントローラー
  */
 
-namespace Hgs3\Http\Controllers;
+namespace Hgs3\Http\Controllers\Management;
 
 use Hgs3\Models\Orm;
 use Hgs3\Models\Site;
 use Illuminate\Support\Facades\DB;
+use Hgs3\Http\Controllers\AbstractManagementController;
 
-class AdminController extends Controller
+class ManagementController extends AbstractManagementController
 {
     /**
-     * 管理メニュー
+     * 管理
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return view('admin', [
-            'approvalWaitNum' => Site\Approval::getWaitNum(),
-            'reviewUrlWaitNum' => Orm\ReviewWaitUrl::all()->count(),
-        ]);
+        return view('management/index');
     }
 
     public function hgs2SiteChecker()
@@ -30,6 +28,6 @@ class AdminController extends Controller
             ->orderBy('id')
             ->get();
 
-        return view('admin.hgs2SiteChecker', ['sites' => $sites]);
+        return view('management.hgs2SiteChecker', ['sites' => $sites]);
     }
 }

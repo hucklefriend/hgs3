@@ -19,3 +19,4 @@ npm-debug.log
 /storage/logs/*.log
 /storage/framework/views/*
 /.phpunit.result.cache
+/public/tmp
