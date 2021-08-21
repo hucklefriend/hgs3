@@ -80,11 +80,11 @@ return [
 
         'mongodb' => [
             'driver'   => 'mongodb',
-            'host'     => 'localhost',
-            'port'     => 27017,
-            // 'username' => 'username',
-            // 'password' => 'password',
-            'database' => 'test',
+            'host'     => env('MONGO_HOST', 'localhost'),
+            'port'     => env('MONGO_PORT', 27017),
+            'database' => env('MONGO_NAME', 'mongo_database'),
+            'username' => env('MONGO_USERNAME', ''),
+            'password' => env('MONGO_PASSWORD', ''),
             'options' => [
                 // 'db' => 'admin' // sets the authentication database required by mongo 3
             ],

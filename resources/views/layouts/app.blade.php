@@ -100,7 +100,7 @@
                     </li>
                     @if (is_admin())
                         <li class="hidden-xs-down">
-                            <a href="{{ route('管理メニュー') }}">管理</a>
+                            <a href="{{ route('管理') }}">管理</a>
                         </li>
                     @endif
 
@@ -124,7 +124,7 @@
                             <a href="{{ route('サイトトップ') }}" class="dropdown-item">サイト</a>
                             @if (Auth::check())
                                 @if (is_admin())
-                                    <a href="{{ route('管理メニュー') }}" class="dropdown-item">管理メニュー</a>
+                                    <a href="{{ route('管理') }}" class="dropdown-item">管理</a>
                                 @endif
                             <a href="{{ route('マイページ') }}" class="dropdown-item">マイページ</a>
                             @else

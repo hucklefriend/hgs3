@@ -75,19 +75,28 @@ services:
     image: mongo:4.4.6-bionic
     container_name: hgs_mongodb
     restart: always
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: hgs
-#      MONGO_INITDB_ROOT_PASSWORD: hgshgs
+    environment:
+ #     MONGO_INITDB_ROOT_USERNAME: hgs
+ #     MONGO_INITDB_ROOT_PASSWORD: hgshgs
+      MONGO_INITDB_DATABASE: hgs
+      TZ: Asia/Tokyo
     networks:
       - hgs_net
+    ports:
+      - 27017:27017
+    volumes:
+      - hgs_mongo_vol:/data/db
+      - hgs_mongo_config_vol:/data/configdb
+      - /var/hgs/docker/mongo_backup:/tmp/backup
 
   hgs_mongo_express:
     image: mongo-express
-    container_name: hgs_mongo-express
+    container_name: hgs_mongo_express
     restart: always
     ports:
-      - 8082:8082
-#    environment:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: hgs_mongodb
 #      ME_CONFIG_MONGODB_ADMINUSERNAME: hgs
 #      ME_CONFIG_MONGODB_ADMINPASSWORD: hgshgs
     networks:
@@ -96,6 +105,7 @@ services:
 volumes:
   hgs_db_vol:
   hgs_mongo_vol:
+  hgs_mongo_config_vol:
   hgs_redis_vol:
   https-portal-data:
 

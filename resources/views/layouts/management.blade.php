@@ -74,23 +74,6 @@
     <div id="sidebar" class="app-sidebar">
         <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
             <div class="menu">
-                <div class="menu-profile">
-                    <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile" data-target="#appSidebarProfileMenu">
-                        <div class="menu-profile-cover with-shadow"></div>
-                        <div class="menu-profile-image menu-profile-image-icon bg-gray-900 text-gray-600">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <div class="menu-profile-info">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    Sean Ngu
-                                </div>
-                                <div class="menu-caret ms-auto"></div>
-                            </div>
-                            <small>Front end developer</small>
-                        </div>
-                    </a>
-                </div>
                 <div id="appSidebarProfileMenu" class="collapse">
                     <div class="menu-item pt-5px">
                         <a href="javascript:;" class="menu-link">
@@ -183,7 +166,13 @@
     <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top" data-toggle="scroll-to-top"><i class="fa fa-angle-up"></i></a>
 </div>
 <script src="{{ asset('admin/js/vendor.min.js') }}"></script>
+<script src="{{ asset('admin/plugins/autosize/dist/autosize.min.js') }}"></script>
 <script src="{{ asset('admin/js/app.min.js') }}"></script>
 <script src="{{ asset('admin/js/transparent.min.js') }}"></script>
+<script>
+    $(()=>{
+        autosize($('.textarea-autosize'));
+    });
+</script>
 </body>
 </html>

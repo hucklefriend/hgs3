@@ -618,3 +618,34 @@ function has_new_message()
         return false;
     }
 }
+
+/**
+ * 管理系画面の日付フォーマット
+ *
+ * @param DateTime|null $dt
+ * @param string $default
+ * @return string
+ */
+function dt_fmt_mng(?\DateTime $dt, string $default = '') : string
+{
+    if ($dt === null) {
+        return $default;
+    }
+
+    return $dt->format('Y.m.d H:i');
+}
+
+/**
+ * DateTimeから、datetime-local用のテキスト生成
+ *
+ * @param DateTime|null $dt
+ * @return string
+ */
+function dt_2_dtl(?\DateTime $dt) : string
+{
+    if ($dt === null) {
+        return '';
+    }
+
+    return $dt->format('Y-m-d') . 'T' . $dt->format('H:i:s');
+}

@@ -175,7 +175,8 @@ gulp.task('plugins', function() {
 		'node_modules/swiper/*',
 		'node_modules/switchery/dist/*',
 		'node_modules/lightbox2/dist/**',
-		'node_modules/@highlightjs/**'
+		'node_modules/@highlightjs/**',
+		'node_modules/autosize/dist/**'
 	];
 	
 	download([

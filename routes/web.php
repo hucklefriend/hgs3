@@ -4,20 +4,21 @@ use Hgs3\Http\Controllers;
 Route::get('/haribote/{page}', function ($page) {return view('haribote.' . $page);});
 
 // 管理用
-Route::group(['prefix' => 'management'/*, 'middleware' => ['auth', 'can:admin']*/], function () {
+Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin']], function () {
     // 管理
     Route::get('/', [Controllers\Management\ManagementController::class, 'index'])->name('管理');
 
-    // システム関係
+    // システム
     Route::group(['prefix' => 'system'], function () {
 
         // お知らせ
         Route::group(['prefix' => 'notice'], function () {
             Route::get('/', [Controllers\Management\System\NoticeController::class, 'index'])->name('管理-システム-お知らせ');
             Route::get('add', [Controllers\Management\System\NoticeController::class, 'add'])->name('管理-システム-お知らせ登録');
-            Route::post('add', [Controllers\Management\System\NoticeController::class, 'insert'])->name('管理-システム-お知らせ登録処理');
-            Route::get('edit/{notice}', [Controllers\Management\System\NoticeController::class, 'edit'])->name('管理-システム-お知らせ編集');
-            Route::patch('edit/{notice}', [Controllers\Management\System\NoticeController::class, 'update'])->name('管理-システム-お知らせ編集処理');
+            Route::post('add', [Controllers\Management\System\NoticeController::class, 'store'])->name('管理-システム-お知らせ登録処理');
+            Route::get('{notice}/edit', [Controllers\Management\System\NoticeController::class, 'edit'])->name('管理-システム-お知らせ編集');
+            Route::put('{notice}/edit', [Controllers\Management\System\NoticeController::class, 'update'])->name('管理-システム-お知らせ編集処理');
+            Route::get('{notice}', [Controllers\Management\System\NoticeController::class, 'detail'])->name('管理-システム-お知らせ詳細');
             Route::delete('{notice}', [Controllers\Management\System\NoticeController::class, 'delete'])->name('管理-システム-お知らせ削除');
             Route::get('future', [Controllers\Management\System\NoticeController::class, 'future'])->name('管理-システム-未来のお知らせ');
             Route::get('past', [Controllers\Management\System\NoticeController::class, 'past'])->name('管理-システム-過去のお知らせ');

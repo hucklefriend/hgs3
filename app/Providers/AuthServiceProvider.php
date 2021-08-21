@@ -25,14 +25,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-//        // 'admin'ゲートを定義
-//        Gate::define('admin', function ($user) {
-//            return ($user->role >= \Hgs3\Constants\UserRole::ADMIN);
-//        });
-//
-//        // 'editor'ゲートを定義
-//        Gate::define('editor', function ($user) {
-//            return ($user->role >= \Hgs3\Constants\UserRole::EDITOR);
-//        });
+        // 'admin'ゲートを定義
+        Gate::define('admin', function ($user) {
+            return ($user->role >= \Hgs3\Constants\UserRole::ADMIN);
+        });
+
+        // 'editor'ゲートを定義
+        Gate::define('editor', function ($user) {
+            return ($user->role >= \Hgs3\Constants\UserRole::EDITOR);
+        });
     }
 }

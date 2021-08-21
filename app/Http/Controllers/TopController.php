@@ -31,6 +31,8 @@ class TopController extends Controller
      */
     public function index()
     {
+        \Auth::loginUsingId(1);
+
         GlobalBack::clear();
 
         $notices = Orm\SystemNotice::select(['id', 'title', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])

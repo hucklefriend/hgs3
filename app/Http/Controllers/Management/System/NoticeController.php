@@ -30,39 +30,6 @@ class NoticeController extends AbstractManagementController
         ]);
     }
 
-    /**
-     * 未来
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function future()
-    {
-        $notices = Orm\SystemNotice::select(['id', 'title', 'message', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
-            ->whereRaw('open_at > NOW()')
-            ->orderBy('open_at', 'DESC')
-            ->paginate(20);
-
-        return view('system.notice.future', [
-            'notices' => $notices
-        ]);
-    }
-
-    /**
-     * 過去(公開終了)
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function past()
-    {
-        $notices = Orm\SystemNotice::select(['id', 'title', 'message', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
-            ->whereRaw('close_at < NOW()')
-            ->orderBy('open_at', 'DESC')
-            ->paginate(20);
-
-        return view('system.notice.future', [
-            'notices' => $notices
-        ]);
-    }
 
     /**
      * 詳細
@@ -72,7 +39,7 @@ class NoticeController extends AbstractManagementController
      */
     public function detail(Orm\SystemNotice $notice)
     {
-        return view('system.notice.detail', [
+        return view('management.system.notice.detail', [
             'notice' => $notice
         ]);
     }
@@ -84,7 +51,7 @@ class NoticeController extends AbstractManagementController
      */
     public function add()
     {
-        return view('system.notice.add');
+        return view('management.system.notice.add');
     }
 
     /**
@@ -93,12 +60,12 @@ class NoticeController extends AbstractManagementController
      * @param NoticeRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function insert(NoticeRequest $request)
+    public function store(NoticeRequest $request)
     {
         $notice = new Orm\SystemNotice();
         $notice->title = $request->input('title');
         $notice->message = $request->input('message');
-        $notice->type = $request->input('type');
+        $notice->type = $request->input('type', 0);
         $notice->open_at = $request->input('open_at');
         $notice->close_at = $request->input('close_at');
         $notice->top_start_at = $request->input('top_start_at');
@@ -106,7 +73,7 @@ class NoticeController extends AbstractManagementController
 
         $notice->save();
 
-        return redirect()->route('お知らせ');
+        return redirect()->route('管理-システム-お知らせ');
     }
 
     /**
@@ -122,7 +89,7 @@ class NoticeController extends AbstractManagementController
         $notice->top_start_at = format_date_local($notice->top_start_at);
         $notice->top_end_at = format_date_local($notice->top_end_at);
 
-        return view('system.notice.edit', [
+        return view('management.system.notice.edit', [
             'notice' => $notice
         ]);
     }
@@ -138,7 +105,7 @@ class NoticeController extends AbstractManagementController
     {
         $notice->title = $request->input('title');
         $notice->message = $request->input('message');
-        $notice->type = $request->input('type');
+        $notice->type = $request->input('type', 0);
         $notice->open_at = $request->input('open_at');
         $notice->close_at = $request->input('close_at');
         $notice->top_start_at = $request->input('top_start_at');
@@ -146,7 +113,7 @@ class NoticeController extends AbstractManagementController
 
         $notice->save();
 
-        return redirect()->route('お知らせ内容', ['notice' => $notice->id]);
+        return redirect()->route('管理-システム-お知らせ詳細', $notice);
     }
 
     /**
@@ -160,6 +127,6 @@ class NoticeController extends AbstractManagementController
     {
         $notice->delete();
 
-        return redirect()->route('お知らせ');
+        return redirect()->route('管理-システム-お知らせ');
     }
 }
