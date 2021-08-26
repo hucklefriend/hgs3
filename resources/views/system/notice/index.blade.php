@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title')お知らせ一覧@endsection
-@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('トップ') }}@endsection
+@section('title', 'お知らせ一覧')
+@section('global_back_link', \Hgs3\Http\GlobalBack::clearAndRoute('トップ'))
 
 @section('content')
     <div class="content__inner">
@@ -9,21 +9,13 @@
             <h1>お知らせ一覧</h1>
         </header>
 
-        @if (is_admin())
-            <div>
-                <a href="{{ route('お知らせ登録') }}">新規登録</a> |
-                <a href="{{ route('未来のお知らせ') }}">未来のお知らせ</a> |
-                <a href="{{ route('過去のお知らせ') }}">過去のお知らせ</a>
-            </div>
-        @endif
-
         @foreach ($notices as $notice)
             <div class="my-3 card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="force-break mr-2 text-left">
                             <h4 class="card-title">{{ $notice->title }}</h4>
-                            <div>{!! str_limit(strip_tags($notice->message), 100)  !!}</div>
+                            <div>{!! strip_tags($notice->message)  !!}</div>
                             <div><small>{{ $notice->open_at_str }}</small></div>
                         </div>
                         <div class="align-self-center">

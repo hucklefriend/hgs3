@@ -195,8 +195,8 @@ Route::post('/auth/password_reset', [Controllers\Account\ForgotController::class
 Route::get('/auth/password_reset_complete', [Controllers\Account\ForgotController::class, 'complete'])->name('パスワード再設定完了');
 
 // お知らせ
-Route::get('/notice', [Controllers\System\NoticeController::class, 'System\NoticeController@index'])->name('お知らせ');
-Route::get('/notice/{notice}', [Controllers\System\NoticeController::class, 'System\NoticeController@detail'])->name('お知らせ内容');
+Route::get('/notice', [Controllers\System\NoticeController::class, 'index'])->name('お知らせ');
+Route::get('/notice/{notice}', [Controllers\System\NoticeController::class, 'detail'])->name('お知らせ内容');
 
 // アカウント作成
 Route::get('/account/signup', [Controllers\Account\SignUpController::class, 'index'])->name('ユーザー登録');
