@@ -5,6 +5,8 @@
 
 namespace Hgs3\Models\Orm;
 
+use Illuminate\Support\Facades\DB;
+
 class SystemNotice extends AbstractOrm
 {
     /**
@@ -97,5 +99,32 @@ class SystemNotice extends AbstractOrm
     public function isClosed(\DateTime $dateTime) : bool
     {
         return $this->getCloseAt() < $dateTime;
+    }
+
+    /**
+     * トップページ用のデータを取得
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getTopPageData() : \Illuminate\Support\Collection
+    {
+        return self::select(['id', 'title', DB::raw('UNIX_TIMESTAMP(open_at) AS open_at_ts')])
+            ->whereRaw('top_start_at <= NOW()')
+            ->whereRaw('top_end_at >= NOW()')
+            ->orderBy('top_start_at', 'DESC')
+            ->get();
+    }
+
+    /**
+     * お知らせ一覧用の一覧データを取得
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function getNoticeIndexPageData() : \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return self::whereRaw('open_at <= NOW()')
+            ->whereRaw('close_at >= NOW()')
+            ->orderBy('open_at', 'DESC')
+            ->paginate(20);
     }
 }

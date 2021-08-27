@@ -16,3 +16,6 @@ install:
 
 down:
 	docker-compose down
+
+test:
+	docker-compose exec hgs_web php artisan test

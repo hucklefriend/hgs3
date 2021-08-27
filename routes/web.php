@@ -183,6 +183,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 // トップ
 Route::get('/', [Controllers\TopController::class, 'index'])->name('トップ');
+Route::get('/logout', [Controllers\TopController::class, 'indexLogout'])->name('login');
 
 // 認証
 Route::get('/auth/login', [Controllers\Account\LoginController::class, 'login'])->name('ログイン');

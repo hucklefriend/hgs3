@@ -315,11 +315,19 @@ function page_pluck(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager
 /**
  * 日付変換
  *
- * @param $unix_timestamp
- * @return false|string
+ * @param int|string|DateTime $date
+ * @return string
  */
-function format_date($timestamp)
+function format_date(int|string|\DateTime $date) : string
 {
+    if ($date instanceof \DateTime) {
+        $timestamp = $date->format('U');
+    } else if (is_int($date) || is_numeric($date)) {
+        $timestamp = $date;
+    } else {
+        return '';
+    }
+
     if ($GLOBALS['today_start_timestamp'] <= $timestamp && $timestamp <= $GLOBALS['today_end_timestamp']) {
         return date('今日 H:i', $timestamp);
     } else if ($GLOBALS['yesterday_start_timestamp'] <= $timestamp && $timestamp <= $GLOBALS['yesterday_end_timestamp']) {

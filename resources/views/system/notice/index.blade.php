@@ -16,7 +16,7 @@
                         <div class="force-break mr-2 text-left">
                             <h4 class="card-title">{{ $notice->title }}</h4>
                             <div>{!! strip_tags($notice->message)  !!}</div>
-                            <div><small>{{ $notice->open_at_str }}</small></div>
+                            <div><small>{{ format_date($notice->getOpenAt()) }}</small></div>
                         </div>
                         <div class="align-self-center">
                             <a href="{{ route('お知らせ内容', ['notice' => $notice->id]) }}" class="btn btn-outline-dark border-0 d-block">
