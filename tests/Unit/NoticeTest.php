@@ -148,6 +148,7 @@ class NoticeTest extends TestCase
         foreach ($notices as $notice) {
             $notice->delete();
             $this->assertDeleted($notice);
+            break;
         }
     }
 }

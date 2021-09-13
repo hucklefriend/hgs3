@@ -16,7 +16,8 @@ class NoticeTest extends TestCase
     public function test_登録()
     {
         // トップページが表示される
-
+        $response = $this->get('/');
+        $response->assertStatus(200);
 
         // トップページのお知らせ一覧には何も出てない
 

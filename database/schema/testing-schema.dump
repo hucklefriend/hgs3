@@ -1,0 +1,1111 @@
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+DROP TABLE IF EXISTS `diaries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `diaries` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '攻略日記ID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `package_id` int(10) unsigned NOT NULL COMMENT 'パッケージID',
+  `play_at` date NOT NULL COMMENT '遊んだ日',
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `diaries_user_id_index` (`user_id`),
+  KEY `diaries_package_id_index` (`package_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `diary_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `diary_comments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '攻略日記コメントID',
+  `diary_id` int(10) unsigned NOT NULL COMMENT '日記ID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `diary_comments_diary_id_index` (`diary_id`),
+  KEY `diary_comments_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_companies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_companies` (
+  `id` int(10) unsigned NOT NULL COMMENT 'ゲーム会社ID',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ゲーム会社名',
+  `acronym` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '略称',
+  `phonetic` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ゲーム会社名のよみがな',
+  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'サイトのURL',
+  `wikipedia` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'WikipediaのURL',
+  `is_adult_url` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'アダルトサイトフラグ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `game_companies_phonetic_index` (`phonetic`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_official_sites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_official_sites` (
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ソフトID',
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'タイトル',
+  `url` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'URL',
+  `priority` tinyint(3) unsigned NOT NULL COMMENT '優先度',
+  `is_adult` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'アダルトサイトフラグ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`soft_id`,`url`),
+  KEY `game_official_sites_soft_id_priority_index` (`soft_id`,`priority`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_package_links`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_package_links` (
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `package_id` int(10) unsigned NOT NULL COMMENT 'パッケージID',
+  `sort_order` bigint(20) unsigned NOT NULL COMMENT '表示順',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`soft_id`,`package_id`),
+  KEY `game_package_links_soft_id_sort_order_index` (`soft_id`,`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_package_shops`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_package_shops` (
+  `package_id` int(10) unsigned NOT NULL COMMENT 'ゲームパッケージID',
+  `shop_id` int(10) unsigned NOT NULL COMMENT 'ショップID',
+  `shop_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ショップ販売ページのURL',
+  `small_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '小画像URL',
+  `medium_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '中画像URL',
+  `large_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '大画像URL',
+  `release_int` bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '発売日(数値)',
+  `is_adult` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'アダルトゲームかどうか',
+  `param1` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター1',
+  `param2` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター2',
+  `param3` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター3',
+  `param4` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター4',
+  `param5` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター5',
+  `param6` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター6',
+  `param7` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター7',
+  `param8` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター8',
+  `param9` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター9',
+  `param10` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パラメーター10',
+  `updated_timestamp` bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT 'データ更新日時',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`package_id`,`shop_id`),
+  KEY `game_package_shops_shop_id_index` (`shop_id`),
+  KEY `game_package_shops_updated_timestamp_index` (`updated_timestamp`),
+  KEY `game_package_shops_shop_id_release_int_index` (`shop_id`,`release_int`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_packages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_packages` (
+  `id` int(10) unsigned NOT NULL COMMENT 'ゲームパッケージID',
+  `platform_id` int(10) unsigned NOT NULL COMMENT 'プラットフォームID',
+  `company_id` int(10) unsigned DEFAULT NULL COMMENT 'ゲーム会社ID',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'パッケージ名称',
+  `acronym` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '略称',
+  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公式サイトURL',
+  `release_int` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '発売日(数値)',
+  `release_at` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '発売日',
+  `is_adult` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'R-18か',
+  `shop_id` int(10) unsigned DEFAULT NULL COMMENT '画像のショップID',
+  `small_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '小画像URL',
+  `small_image_width` smallint(5) unsigned DEFAULT NULL COMMENT '小画像の幅',
+  `small_image_height` smallint(5) unsigned DEFAULT NULL COMMENT '小画像の高さ',
+  `medium_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '中画像URL',
+  `medium_image_width` smallint(5) unsigned DEFAULT NULL COMMENT '中画像の幅',
+  `medium_image_height` smallint(5) unsigned DEFAULT NULL COMMENT '中画像の高さ',
+  `large_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '大画像URL',
+  `large_image_width` smallint(5) unsigned DEFAULT NULL COMMENT '大画像の幅',
+  `large_image_height` smallint(5) unsigned DEFAULT NULL COMMENT '大画像の高さ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `game_packages_platform_id_index` (`platform_id`),
+  KEY `game_packages_company_id_index` (`company_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_platforms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_platforms` (
+  `id` int(10) unsigned NOT NULL COMMENT 'プラットフォームID',
+  `company_id` int(10) unsigned DEFAULT NULL COMMENT 'ゲーム会社ID',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'プラットフォーム名',
+  `acronym` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '略称',
+  `sort_order` int(10) unsigned NOT NULL COMMENT '表示順',
+  `url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公式サイトURL',
+  `wikipedia` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Wikipedia URL',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `game_platforms_company_id_index` (`company_id`),
+  KEY `game_platforms_sort_order_index` (`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_series`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_series` (
+  `id` int(10) unsigned NOT NULL COMMENT 'シリーズID',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'シリーズ名称',
+  `phonetic` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'シリーズ名称のよみがな',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_soft_sample_images`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_soft_sample_images` (
+  `package_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'パッケージID',
+  `no` int(10) unsigned NOT NULL COMMENT '画像番号',
+  `shop_id` int(10) unsigned NOT NULL COMMENT 'ショップID',
+  `small_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '小イメージURL',
+  `large_image_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '大イメージURL',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`package_id`,`no`),
+  KEY `game_soft_sample_images_package_id_shop_id_index` (`package_id`,`shop_id`),
+  KEY `game_soft_sample_images_package_id_index` (`package_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_softs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_softs` (
+  `id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+  `phonetic` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'よみがな',
+  `phonetic2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'よみがな2(ソート用)',
+  `phonetic_type` tinyint(3) unsigned NOT NULL COMMENT 'よみがな区分',
+  `phonetic_order` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'よみがなでの表示順',
+  `genre` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ジャンル',
+  `series_id` int(10) unsigned DEFAULT NULL COMMENT 'シリーズID',
+  `order_in_series` int(10) unsigned DEFAULT NULL COMMENT 'シリーズ内での表示順',
+  `original_package_id` int(10) unsigned DEFAULT NULL COMMENT '原点のパッケージID',
+  `introduction` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '説明文',
+  `introduction_from` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '説明文引用元',
+  `introduction_from_adult` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'アダルトサイトフラグ',
+  `first_release_int` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '最初の発売日',
+  `adult_only_flag` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'アダルトオンリーか',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `game_softs_series_id_index` (`series_id`),
+  KEY `game_softs_phonetic_order_index` (`phonetic_order`),
+  KEY `game_softs_first_release_int_index` (`first_release_int`),
+  KEY `game_softs_adult_only_flag_index` (`adult_only_flag`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `ignore_provisional_registrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ignore_provisional_registrations` (
+  `email_hash` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メールアドレスのハッシュ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email_hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `messages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'メッセージID',
+  `res_id` int(10) unsigned DEFAULT NULL COMMENT 'レス元のメッセージID',
+  `from_user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `to_user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メッセージ',
+  `is_read` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT '既読フラグ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `messages_from_user_id_index` (`from_user_id`),
+  KEY `messages_to_user_id_is_read_index` (`to_user_id`,`is_read`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `new_informations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `new_informations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '新着情報ID',
+  `text_type` int(10) unsigned NOT NULL COMMENT 'テキスト種類',
+  `user_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'ユーザーID',
+  `soft_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'ゲームソフトID',
+  `site_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'サイトID',
+  `review_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'レビューID',
+  `open_at` datetime NOT NULL COMMENT '公開日時',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `password_resets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `password_resets` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `token` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'パスワード再発行時のトークン',
+  `limit_at` datetime NOT NULL COMMENT 'パスワード再発行時の有効期限',
+  `ignore` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT '無視フラグ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `password_resets_token_unique` (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_disable_terms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_disable_terms` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ソフトID',
+  `start_date` date NOT NULL COMMENT '無効化開始日時',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`soft_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_draft_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_draft_tags` (
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `tag` int(10) unsigned NOT NULL COMMENT 'タグ',
+  `point` tinyint(4) NOT NULL COMMENT 'ポイント',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`soft_id`,`user_id`,`tag`,`point`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_drafts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_drafts` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `package_id` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'パッケージID',
+  `fear` tinyint(3) unsigned NOT NULL COMMENT '怖さ',
+  `fear_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '怖さコメント',
+  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'URL',
+  `progress` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ゲームの進行状態',
+  `good_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '良い点',
+  `bad_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '悪い点',
+  `general_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '総合評価',
+  `is_spoiler` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'ネタバレ有無',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`soft_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_fear_rankings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_fear_rankings` (
+  `rank` int(10) unsigned NOT NULL COMMENT '順位',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームID',
+  `fear` smallint(6) NOT NULL COMMENT '怖さ',
+  `fear_face` tinyint(4) NOT NULL COMMENT '顔',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`soft_id`),
+  UNIQUE KEY `review_fear_rankings_rank_soft_id_unique` (`rank`,`soft_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_fraud_report_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_fraud_report_comments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '不正レビュー報告コメントID',
+  `review_fraud_report_id` int(10) unsigned NOT NULL COMMENT '不正レビュー報告ID',
+  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'ユーザーID',
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'コメント',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `review_fraud_report_comments_review_fraud_report_id_index` (`review_fraud_report_id`),
+  KEY `review_fraud_report_comments_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_fraud_report_histories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_fraud_report_histories` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '不正レビュー報告履歴ID',
+  `status` tinyint(3) unsigned NOT NULL COMMENT '対応状況',
+  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'ユーザーID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `review_fraud_report_histories_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_fraud_reports`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_fraud_reports` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '不正レビュー報告ID',
+  `review_id` int(10) unsigned NOT NULL COMMENT 'レビューID',
+  `user_id` int(10) unsigned DEFAULT NULL COMMENT 'ユーザーID',
+  `types` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '種類',
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'コメント',
+  `status` tinyint(3) unsigned NOT NULL COMMENT '対応状況',
+  `stop_comment` tinyint(3) unsigned NOT NULL COMMENT 'コメント停止フラグ',
+  `ip_address` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'IPアドレス',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `review_fraud_reports_review_id_index` (`review_id`),
+  KEY `review_fraud_reports_user_id_index` (`user_id`),
+  KEY `review_fraud_reports_status_index` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_impression_histories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_impression_histories` (
+  `review_id` int(10) unsigned NOT NULL COMMENT 'レビューID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `fmfm_or_n` tinyint(4) NOT NULL COMMENT 'どっちにしたか',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`review_id`,`user_id`),
+  KEY `review_impression_histories_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_point_rankings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_point_rankings` (
+  `rank` int(10) unsigned NOT NULL COMMENT '順位',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームID',
+  `point` smallint(6) NOT NULL COMMENT '怖さ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`soft_id`),
+  UNIQUE KEY `review_point_rankings_rank_soft_id_unique` (`rank`,`soft_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_tags` (
+  `review_id` int(10) unsigned NOT NULL COMMENT 'レビューID',
+  `tag` int(10) unsigned NOT NULL COMMENT 'タグ',
+  `point` tinyint(4) NOT NULL COMMENT 'ポイント',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`review_id`,`tag`,`point`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_total_flags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_total_flags` (
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `total_flag` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT '集計実行フラグ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`soft_id`),
+  KEY `review_total_flags_total_flag_index` (`total_flag`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_totals`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_totals` (
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `fear` double(8,2) NOT NULL COMMENT '怖さ',
+  `good_tag_num` double(8,2) NOT NULL COMMENT '良いタグ数',
+  `very_good_tag_num` double(8,2) NOT NULL COMMENT '特に良いタグ数',
+  `bad_tag_num` double(8,2) NOT NULL COMMENT '悪いタグ数',
+  `very_bad_tag_num` double(8,2) NOT NULL COMMENT '特に悪いタグ数',
+  `point` double(8,2) NOT NULL COMMENT 'ポイント',
+  `review_num` int(10) unsigned NOT NULL COMMENT 'レビュー数',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`soft_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `review_wait_urls`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_wait_urls` (
+  `review_id` int(10) unsigned NOT NULL COMMENT 'レビューID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`review_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `reviews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reviews` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'レビューID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `package_id` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'パッケージID',
+  `fear` tinyint(3) unsigned NOT NULL COMMENT '怖さ',
+  `fear_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '怖さコメント',
+  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'URL',
+  `enable_url` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'URLが有効か',
+  `progress` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ゲームの進行状態',
+  `good_tag_num` tinyint(3) unsigned NOT NULL COMMENT '良いタグ数',
+  `very_good_tag_num` tinyint(3) unsigned NOT NULL COMMENT '特に良いタグ数',
+  `good_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '良い点',
+  `bad_tag_num` tinyint(3) unsigned NOT NULL COMMENT '悪いタグ数',
+  `very_bad_tag_num` tinyint(3) unsigned NOT NULL COMMENT '特に悪いタグ数',
+  `bad_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '悪い点',
+  `general_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '総合評価',
+  `is_spoiler` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'ネタバレ有無',
+  `point` int(11) NOT NULL COMMENT 'ポイント',
+  `sort_order` int(11) NOT NULL DEFAULT 0 COMMENT 'ソート順',
+  `post_at` datetime NOT NULL COMMENT '投稿日時',
+  `fmfm_num` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'ふむふむ',
+  `n_num` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'んー…',
+  `access_count` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'アクセス数',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT '表示ステータス',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reviews_soft_id_user_id_unique` (`soft_id`,`user_id`),
+  KEY `reviews_soft_id_status_index` (`soft_id`,`status`),
+  KEY `reviews_user_id_status_index` (`user_id`,`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_access_rankings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_access_rankings` (
+  `rank` int(10) unsigned NOT NULL COMMENT '順位',
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `out_count` int(10) unsigned NOT NULL COMMENT 'アクセス数',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`),
+  UNIQUE KEY `site_access_rankings_rank_site_id_unique` (`rank`,`site_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_daily_accesses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_daily_accesses` (
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `date` int(10) unsigned NOT NULL COMMENT 'アクセス日',
+  `in_count` int(10) unsigned NOT NULL COMMENT 'INカウント',
+  `out_count` int(10) unsigned NOT NULL COMMENT 'OUTカウント',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`,`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_good_histories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_good_histories` (
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `good_at` datetime NOT NULL COMMENT 'いいねした日時',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`,`user_id`),
+  KEY `site_good_histories_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_good_rankings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_good_rankings` (
+  `rank` int(10) unsigned NOT NULL COMMENT '順位',
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `good_num` int(10) unsigned NOT NULL COMMENT 'いいね数',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`),
+  UNIQUE KEY `site_good_rankings_rank_site_id_unique` (`rank`,`site_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_goods`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_goods` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`site_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_handle_softs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_handle_softs` (
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`,`soft_id`),
+  KEY `site_handle_softs_soft_id_index` (`soft_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_latest_access_rankings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_latest_access_rankings` (
+  `rank` int(10) unsigned NOT NULL COMMENT '順位',
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `out_count` int(10) unsigned NOT NULL COMMENT 'アクセス数',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`),
+  UNIQUE KEY `site_latest_access_rankings_rank_site_id_unique` (`rank`,`site_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_latest_good_rankings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_latest_good_rankings` (
+  `rank` int(10) unsigned NOT NULL COMMENT '順位',
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `good_num` int(10) unsigned NOT NULL COMMENT 'いいね数',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`),
+  UNIQUE KEY `site_latest_good_rankings_rank_site_id_unique` (`rank`,`site_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_new_arrivals`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_new_arrivals` (
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `registered_timestamp` bigint(20) unsigned NOT NULL COMMENT '登録日時タイムスタンプ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`),
+  KEY `site_new_arrivals_registered_timestamp_index` (`registered_timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_search_indices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_search_indices` (
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `open_type` tinyint(3) unsigned NOT NULL COMMENT '公開範囲',
+  `main_contents_id` tinyint(3) unsigned NOT NULL COMMENT 'メインコンテンツ',
+  `gender` tinyint(3) unsigned NOT NULL COMMENT '対象性別',
+  `rate` tinyint(3) unsigned NOT NULL COMMENT '年齢',
+  `updated_timestamp` bigint(20) unsigned NOT NULL COMMENT '更新日時タイムスタンプ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`,`soft_id`),
+  KEY `site_search_indices_open_type_soft_id_index` (`open_type`,`soft_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_systems`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_systems` (
+  `id` int(10) unsigned NOT NULL COMMENT 'ID',
+  `ranking_collect_at` datetime NOT NULL COMMENT 'ランキング集計日時',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_update_arrivals`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_update_arrivals` (
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `updated_timestamp` bigint(20) unsigned NOT NULL COMMENT '更新日時タイムスタンプ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`site_id`),
+  KEY `site_update_arrivals_updated_timestamp_index` (`updated_timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `site_update_histories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_update_histories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'サイト更新ID',
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `site_updated_at` date NOT NULL COMMENT 'サイトの更新日時',
+  `detail` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '詳細',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `site_update_histories_site_id_site_updated_at_unique` (`site_id`,`site_updated_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `sites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sites` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'サイトID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'サイト名',
+  `url` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'URL',
+  `list_banner_upload_flag` tinyint(3) unsigned DEFAULT NULL COMMENT '一覧用バナーアップロードフラグ',
+  `list_banner_url` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '一覧用バナーURL',
+  `detail_banner_upload_flag` tinyint(3) unsigned DEFAULT NULL COMMENT '詳細用バナーアップロードフラグ',
+  `detail_banner_url` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '詳細用バナーURL',
+  `list_banner_upload_flag_r18` tinyint(3) unsigned DEFAULT NULL COMMENT '一覧用バナーアップロードフラグ(R-18)',
+  `list_banner_url_r18` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '一覧用バナーURL(R-18)',
+  `detail_banner_upload_flag_r18` tinyint(3) unsigned DEFAULT NULL COMMENT '詳細用バナーアップロードフラグ(R-18)',
+  `detail_banner_url_r18` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '詳細用バナーURL(R-18)',
+  `presentation` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '紹介文',
+  `handle_soft` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '取扱ソフト',
+  `rate` tinyint(3) unsigned NOT NULL COMMENT '対象年齢',
+  `gender` tinyint(3) unsigned NOT NULL COMMENT '対象性別',
+  `main_contents_id` smallint(5) unsigned NOT NULL COMMENT 'メインコンテンツ',
+  `open_type` tinyint(3) unsigned NOT NULL COMMENT '公開範囲',
+  `latest_update_history_date` date DEFAULT NULL COMMENT '直近の更新履歴日時',
+  `latest_update_history` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '直近の更新履歴',
+  `in_count` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'INカウント',
+  `out_count` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'OUTカウント',
+  `good_num` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'いいね数',
+  `max_good_num` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '最高いいね数',
+  `bad_num` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'BAD数',
+  `approval_status` tinyint(3) unsigned NOT NULL COMMENT '承認ステータス',
+  `reject_reason` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'リジェクト理由',
+  `registered_timestamp` bigint(20) unsigned NOT NULL COMMENT '登録日時タイムスタンプ',
+  `updated_timestamp` bigint(20) unsigned NOT NULL COMMENT '最終更新タイムスタンプ',
+  `hgs2_site_id` int(10) unsigned DEFAULT NULL COMMENT 'HGS2のサイトID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sites_user_id_index` (`user_id`),
+  KEY `sites_approval_status_index` (`approval_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `social_accounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `social_accounts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ソーシャルアカウントID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `social_user_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ソーシャルサイト側のユーザーID',
+  `token` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'アクセストークン',
+  `token_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'シークレットアクセストークン',
+  `social_site_id` smallint(5) unsigned NOT NULL COMMENT 'ソーシャルサイトの種別',
+  `name` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ソーシャルサイトの名前',
+  `nickname` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ソーシャルサイトのニックネーム',
+  `open_flag` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT '公開フラグ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'プロフィールURL',
+  PRIMARY KEY (`id`),
+  KEY `social_accounts_user_id_social_site_id_index` (`user_id`,`social_site_id`),
+  KEY `social_accounts_social_user_id_index` (`social_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `system_notices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `system_notices` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'タイトル',
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容',
+  `type` tinyint(3) unsigned NOT NULL COMMENT '種別',
+  `open_at` datetime NOT NULL COMMENT '公開日時',
+  `close_at` datetime NOT NULL DEFAULT '2100-12-31 23:59:59' COMMENT '公開終了日時',
+  `top_end_at` datetime DEFAULT NULL COMMENT 'トップページ表示終了日',
+  `top_start_at` datetime DEFAULT NULL COMMENT 'トップページ表示開始日',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `system_notices_open_at_close_at_index` (`open_at`,`close_at`),
+  KEY `system_notices_top_start_at_top_end_at_index` (`top_start_at`,`top_end_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `used_show_ids`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `used_show_ids` (
+  `show_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '表示用ID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  UNIQUE KEY `used_show_ids_show_id_unique` (`show_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_attributes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_attributes` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ソフトID',
+  `attribute` tinyint(3) unsigned NOT NULL COMMENT '属性',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`attribute`),
+  KEY `user_attributes_attribute_user_id_index` (`attribute`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_blocks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_blocks` (
+  `user_id` int(11) NOT NULL COMMENT 'ユーザーID',
+  `block_user_id` int(11) NOT NULL COMMENT 'ブロック対象ユーザーID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_change_emails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_change_emails` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `type` tinyint(3) unsigned NOT NULL COMMENT '変更区分',
+  `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メールアドレス',
+  `password` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パスワード',
+  `token` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'メールアドレス変更時のトークン',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_change_emails_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_communities`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_communities` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ユーザーコミュニティID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID(作成者)',
+  `access` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'アクセス区分',
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'コミュニティ名',
+  `profile` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'コミュニティ紹介文',
+  `user_num` int(10) unsigned NOT NULL COMMENT 'ユーザー数',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_communities_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_community_members`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_community_members` (
+  `user_community_id` int(10) unsigned NOT NULL COMMENT 'ユーザーコミュニティID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `join_at` datetime NOT NULL COMMENT '参加日時',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_community_id`,`user_id`),
+  KEY `user_community_members_user_community_id_join_at_index` (`user_community_id`,`join_at`),
+  KEY `user_community_members_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_community_topic_responses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_community_topic_responses` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ユーザーコミュニティトピックスレスID',
+  `user_community_topic_id` int(10) unsigned NOT NULL COMMENT 'ユーザーコミュニティトピックスID',
+  `user_community_topic_response_id` int(10) unsigned DEFAULT NULL COMMENT 'レスID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '本文',
+  `write_at` datetime NOT NULL COMMENT '書き込み日時',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_community_topic_responses_user_community_topic_id_index` (`user_community_topic_id`),
+  KEY `user_community_topic_responses_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_community_topics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_community_topics` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ユーザーコミュニティトピックスID',
+  `user_community_id` int(10) unsigned NOT NULL COMMENT 'ユーザーコミュニティID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `title` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'タイトル',
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '本文',
+  `write_at` datetime NOT NULL COMMENT '書き込み日時',
+  `response_at` datetime NOT NULL COMMENT '一番最新のレスがあった日時',
+  `response_num` int(10) unsigned NOT NULL COMMENT 'レス数',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_community_topics_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_emails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_emails` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メールアドレス',
+  `token` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パスワード再発行時のトークン',
+  `limit_date` datetime DEFAULT NULL COMMENT 'パスワード再発行時の有効期限',
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'パスワード',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_emails_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_favorite_sites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_favorite_sites` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'お気に入りサイトID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `site_id` int(10) unsigned NOT NULL COMMENT 'サイトID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_favorite_sites_user_id_index` (`user_id`),
+  KEY `user_favorite_sites_site_id_index` (`site_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_favorite_softs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_favorite_softs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'お気に入りゲームID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `rank` int(10) unsigned DEFAULT NULL COMMENT '順位',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_favorite_softs_user_id_soft_id_unique` (`user_id`,`soft_id`),
+  KEY `user_favorite_softs_user_id_rank_index` (`user_id`,`rank`),
+  KEY `user_favorite_softs_soft_id_id_index` (`soft_id`,`id`),
+  KEY `user_favorite_softs_soft_id_index` (`soft_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_follows`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_follows` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `category` smallint(5) unsigned NOT NULL DEFAULT 0 COMMENT 'フォローカテゴリ',
+  `follow_user_id` int(10) unsigned NOT NULL COMMENT 'フォロー対象ユーザーID',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`category`,`follow_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_own_packages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_own_packages` (
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `package_id` int(10) unsigned NOT NULL COMMENT 'パッケージID',
+  `buy_at` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '買った日',
+  `clear_at` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'クリアした日',
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'コメント',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`package_id`),
+  KEY `user_own_packages_package_id_index` (`package_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_played_softs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_played_softs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '遊んだゲームID',
+  `user_id` int(10) unsigned NOT NULL COMMENT 'ユーザーID',
+  `soft_id` int(10) unsigned NOT NULL COMMENT 'ゲームソフトID',
+  `comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'コメント',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_played_softs_user_id_soft_id_unique` (`user_id`,`soft_id`),
+  KEY `user_played_softs_user_id_index` (`user_id`),
+  KEY `user_played_softs_soft_id_index` (`soft_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_provisional_registrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_provisional_registrations` (
+  `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メールアドレス',
+  `token` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'トークン',
+  `limit_at` datetime NOT NULL COMMENT '有効期限',
+  `user_data` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ユーザー情報',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `user_provisional_registrations_token_unique` (`token`),
+  KEY `user_provisional_registrations_limit_at_index` (`limit_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ユーザーID',
+  `show_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '表示用ID',
+  `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ユーザー名',
+  `role` smallint(5) unsigned NOT NULL DEFAULT 1 COMMENT 'ロール',
+  `adult` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT '18歳以上',
+  `profile` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '自己紹介',
+  `point` int(10) unsigned NOT NULL DEFAULT 0 COMMENT 'ポイント',
+  `last_login_at` datetime DEFAULT NULL COMMENT '最終ログイン日時',
+  `sign_up_at` datetime DEFAULT NULL COMMENT '登録日時',
+  `hgs12_user` tinyint(4) NOT NULL DEFAULT 0 COMMENT '旧HGSユーザーフラグ',
+  `email` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'メールアドレス',
+  `password` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パスワード',
+  `remember_token` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '再アクセストークン',
+  `icon_upload_flag` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'アイコンアップロード済みフラグ',
+  `icon_file_name` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'アイコンファイル名',
+  `icon_round_type` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'アイコンの丸み種別',
+  `footprint` tinyint(3) unsigned NOT NULL DEFAULT 1 COMMENT 'サイトへの足跡を残すフラグ',
+  `open_profile_flag` tinyint(3) unsigned NOT NULL DEFAULT 1 COMMENT 'タイムライン公開フラグ',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_show_id_unique` (`show_id`),
+  KEY `users_name_index` (`name`),
+  KEY `users_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+INSERT INTO `migrations` VALUES (1,'2017_05_25_000000_create_diaries_table',1);
+INSERT INTO `migrations` VALUES (2,'2017_05_25_000000_create_diary_comments_table',1);
+INSERT INTO `migrations` VALUES (3,'2017_05_25_000000_create_game_communities_table',1);
+INSERT INTO `migrations` VALUES (4,'2017_05_25_000000_create_game_community_members_table',1);
+INSERT INTO `migrations` VALUES (5,'2017_05_25_000000_create_game_community_topic_responses_table',1);
+INSERT INTO `migrations` VALUES (6,'2017_05_25_000000_create_game_community_topics_table',1);
+INSERT INTO `migrations` VALUES (7,'2017_05_25_000000_create_game_companies_table',1);
+INSERT INTO `migrations` VALUES (8,'2017_05_25_000000_create_game_package_links_table',1);
+INSERT INTO `migrations` VALUES (9,'2017_05_25_000000_create_game_package_shops_table',1);
+INSERT INTO `migrations` VALUES (10,'2017_05_25_000000_create_game_packages_table',1);
+INSERT INTO `migrations` VALUES (11,'2017_05_25_000000_create_game_platforms_table',1);
+INSERT INTO `migrations` VALUES (12,'2017_05_25_000000_create_game_series_table',1);
+INSERT INTO `migrations` VALUES (13,'2017_05_25_000000_create_game_softs_table',1);
+INSERT INTO `migrations` VALUES (14,'2017_05_25_000000_create_ignore_provisional_registrations_table',1);
+INSERT INTO `migrations` VALUES (15,'2017_05_25_000000_create_new_informations_table',1);
+INSERT INTO `migrations` VALUES (16,'2017_05_25_000000_create_password_resets_table',1);
+INSERT INTO `migrations` VALUES (17,'2017_05_25_000000_create_review_drafts_table',1);
+INSERT INTO `migrations` VALUES (18,'2017_05_25_000000_create_review_fraud_report_comments_table',1);
+INSERT INTO `migrations` VALUES (19,'2017_05_25_000000_create_review_fraud_report_histories_table',1);
+INSERT INTO `migrations` VALUES (20,'2017_05_25_000000_create_review_fraud_reports_table',1);
+INSERT INTO `migrations` VALUES (21,'2017_05_25_000000_create_review_good_histories_table',1);
+INSERT INTO `migrations` VALUES (22,'2017_05_25_000000_create_review_totals_table',1);
+INSERT INTO `migrations` VALUES (23,'2017_05_25_000000_create_reviews_table',1);
+INSERT INTO `migrations` VALUES (24,'2017_05_25_000000_create_site_access_rankings_table',1);
+INSERT INTO `migrations` VALUES (25,'2017_05_25_000000_create_site_daily_accesses_table',1);
+INSERT INTO `migrations` VALUES (26,'2017_05_25_000000_create_site_good_histories_table',1);
+INSERT INTO `migrations` VALUES (27,'2017_05_25_000000_create_site_good_rankings_table',1);
+INSERT INTO `migrations` VALUES (28,'2017_05_25_000000_create_site_goods_table',1);
+INSERT INTO `migrations` VALUES (29,'2017_05_25_000000_create_site_handle_softs_table',1);
+INSERT INTO `migrations` VALUES (30,'2017_05_25_000000_create_site_latest_access_rankings_table',1);
+INSERT INTO `migrations` VALUES (31,'2017_05_25_000000_create_site_latest_good_rankings_table',1);
+INSERT INTO `migrations` VALUES (32,'2017_05_25_000000_create_site_new_arrivals_table',1);
+INSERT INTO `migrations` VALUES (33,'2017_05_25_000000_create_site_search_indices_table',1);
+INSERT INTO `migrations` VALUES (34,'2017_05_25_000000_create_site_systems_table',1);
+INSERT INTO `migrations` VALUES (35,'2017_05_25_000000_create_site_update_histories_table',1);
+INSERT INTO `migrations` VALUES (36,'2017_05_25_000000_create_sites_table',1);
+INSERT INTO `migrations` VALUES (37,'2017_05_25_000000_create_social_accounts_table',1);
+INSERT INTO `migrations` VALUES (38,'2017_05_25_000000_create_system_notices_table',1);
+INSERT INTO `migrations` VALUES (39,'2017_05_25_000000_create_system_update_histories_table',1);
+INSERT INTO `migrations` VALUES (40,'2017_05_25_000000_create_used_show_ids_table',1);
+INSERT INTO `migrations` VALUES (41,'2017_05_25_000000_create_user_blocks_table',1);
+INSERT INTO `migrations` VALUES (42,'2017_05_25_000000_create_user_change_emails_table',1);
+INSERT INTO `migrations` VALUES (43,'2017_05_25_000000_create_user_communities_table',1);
+INSERT INTO `migrations` VALUES (44,'2017_05_25_000000_create_user_community_members_table',1);
+INSERT INTO `migrations` VALUES (45,'2017_05_25_000000_create_user_community_topic_responses_table',1);
+INSERT INTO `migrations` VALUES (46,'2017_05_25_000000_create_user_community_topics_table',1);
+INSERT INTO `migrations` VALUES (47,'2017_05_25_000000_create_user_emails_table',1);
+INSERT INTO `migrations` VALUES (48,'2017_05_25_000000_create_user_favorite_sites_table',1);
+INSERT INTO `migrations` VALUES (49,'2017_05_25_000000_create_user_favorite_softs_table',1);
+INSERT INTO `migrations` VALUES (50,'2017_05_25_000000_create_user_follows_table',1);
+INSERT INTO `migrations` VALUES (51,'2017_05_25_000000_create_user_own_packages_table',1);
+INSERT INTO `migrations` VALUES (52,'2017_05_25_000000_create_user_played_softs_table',1);
+INSERT INTO `migrations` VALUES (53,'2017_05_25_000000_create_user_provisional_registrations_table',1);
+INSERT INTO `migrations` VALUES (54,'2017_05_25_000000_create_users_table2',1);
+INSERT INTO `migrations` VALUES (55,'2018_02_13_000000_change_icon_users_table',1);
+INSERT INTO `migrations` VALUES (56,'2018_02_14_000000_add_index_game_softs_table',1);
+INSERT INTO `migrations` VALUES (57,'2018_02_14_000000_create_site_update_arrivals_table',1);
+INSERT INTO `migrations` VALUES (58,'2018_02_15_000000_add_hgs2_site_id',1);
+INSERT INTO `migrations` VALUES (59,'2018_02_17_000000_add_phonetic2_column',1);
+INSERT INTO `migrations` VALUES (60,'2018_02_20_000000_add_social_column',1);
+INSERT INTO `migrations` VALUES (61,'2018_02_28_000000_drop_system_update_histories',2);
+INSERT INTO `migrations` VALUES (62,'2018_03_01_000000_create_game_official_sites_table',2);
+INSERT INTO `migrations` VALUES (63,'2018_03_02_000000_update_social_accounts_table',3);
+INSERT INTO `migrations` VALUES (64,'2018_03_06_000000_update_user_action_timeline',3);
+INSERT INTO `migrations` VALUES (65,'2018_03_20_000000_create_user_attributes_table',3);
+INSERT INTO `migrations` VALUES (66,'2018_03_21_000000_add_game_soft_column',4);
+INSERT INTO `migrations` VALUES (67,'2018_03_26_000000_add_package_acronym_column',5);
+INSERT INTO `migrations` VALUES (68,'2018_03_26_000000_create_review_draft_tags_table2',5);
+INSERT INTO `migrations` VALUES (69,'2018_03_26_000000_create_review_drafts_table2',5);
+INSERT INTO `migrations` VALUES (70,'2018_03_26_000000_create_review_tags_table2',5);
+INSERT INTO `migrations` VALUES (71,'2018_03_26_000000_create_review_totals_table2',5);
+INSERT INTO `migrations` VALUES (72,'2018_03_26_000000_create_reviews_table2',5);
+INSERT INTO `migrations` VALUES (73,'2018_03_28_000000_create_review_total_flags_table',5);
+INSERT INTO `migrations` VALUES (74,'2018_04_16_000000_remove_id_master',5);
+INSERT INTO `migrations` VALUES (75,'2018_04_27_000000_update_site_table',5);
+INSERT INTO `migrations` VALUES (76,'2018_05_16_000000_create_review_disable_terms',5);
+INSERT INTO `migrations` VALUES (77,'2018_05_16_000000_create_review_drafts_table3',5);
+INSERT INTO `migrations` VALUES (78,'2018_05_16_000000_create_review_totals_table3',5);
+INSERT INTO `migrations` VALUES (79,'2018_05_16_000000_create_review_wait_urls',5);
+INSERT INTO `migrations` VALUES (80,'2018_05_16_000000_create_reviews_table3',5);
+INSERT INTO `migrations` VALUES (81,'2018_05_18_000000_create_messages_table',5);
+INSERT INTO `migrations` VALUES (82,'2018_05_22_000000_add_game_shop_param',6);
+INSERT INTO `migrations` VALUES (83,'2018_05_22_000000_add_reviews_fmfm',6);
+INSERT INTO `migrations` VALUES (84,'2018_05_22_000000_create_review_impression_histories_table',6);
+INSERT INTO `migrations` VALUES (85,'2018_05_23_000000_add_package_image_shop',6);
+INSERT INTO `migrations` VALUES (86,'2018_05_28_000000_add_pre_register_data',6);
+INSERT INTO `migrations` VALUES (87,'2018_06_01_000000_add_notice_top_show_date',6);
+INSERT INTO `migrations` VALUES (88,'2018_06_01_000000_add_open_timeline_flag',6);
+INSERT INTO `migrations` VALUES (89,'2018_06_02_000000_add_shop_release_date',6);
+INSERT INTO `migrations` VALUES (90,'2018_06_05_000000_add_site_r18_banner',6);
+INSERT INTO `migrations` VALUES (91,'2018_06_10_000000_create_review_fear_rankings_table',6);
+INSERT INTO `migrations` VALUES (92,'2018_06_10_000000_create_review_point_rankings_table',6);
+INSERT INTO `migrations` VALUES (93,'2018_06_16_000000_add_company_is_adult',6);
+INSERT INTO `migrations` VALUES (94,'2018_06_16_000000_add_game_official_site_is_adult',6);
+INSERT INTO `migrations` VALUES (95,'2018_06_16_000000_add_soft_introduction_from_adult',6);
+INSERT INTO `migrations` VALUES (96,'2018_06_18_000000_add_user_open_flag',6);
+INSERT INTO `migrations` VALUES (97,'2018_06_21_000000_add_first_release_date',6);
+INSERT INTO `migrations` VALUES (98,'2018_06_21_000000_add_review_access_count',6);
+INSERT INTO `migrations` VALUES (99,'2018_06_21_000000_create_game_soft_sample_images_table',6);
+INSERT INTO `migrations` VALUES (100,'2018_06_24_000000_add_site_latest_update',6);
+INSERT INTO `migrations` VALUES (101,'2018_06_30_000000_add_soft_adult_only_flag',7);
+INSERT INTO `migrations` VALUES (102,'2018_07_02_000000_add_message_res_id',8);
+INSERT INTO `migrations` VALUES (103,'2018_07_03_000000_create_game_soft_sample_images_table2',9);
+INSERT INTO `migrations` VALUES (104,'2018_07_05_000000_create_game_soft_sample_images_table3',10);
+INSERT INTO `migrations` VALUES (105,'2018_07_05_000000_create_user_search_index_table',10);
+INSERT INTO `migrations` VALUES (106,'2018_07_09_000000_create_game_soft_list_collection',11);
