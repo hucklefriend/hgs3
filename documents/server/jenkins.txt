@@ -1,0 +1,70 @@
+jenkinsさんを入れてみました。
+
+Ubuntu 20.04です。
+
+
+
+
+sudo apt install default-jdk
+
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+
+sudo apt update
+sudo apt install jenkins
+
+
+アクセスしてみる
+
+403 Forbidden.
+
+VPSのパケットフィルタで8080を通してませんでした。
+
+
+
+先にUnlockします
+
+http://dev.horrorgame.net:8080/
+
+
+
+
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+
+sudo a2enmod headers
+
+sudo apt install python3-certbot-apache
+sudo certbot --apache
+
+
+
+
+sudo certbot certonly -d 新しいドメイン --email メールアドレス
+sudo certbot certonly --webroot -w /var/www/html -d dev.horrorgame.net
+
+setsebool -P httpd_can_network_connect on
+
+
+<VirtualHost *:443>
+    ServerName 新しいドメイン
+
+    SSLEngine on
+    SSLCertificateFile      /etc/letsencrypt/live/新しいドメイン/cert.pem
+    SSLCertificateKeyFile   /etc/letsencrypt/live/新しいドメイン/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/新しいドメイン/chain.pem
+
+    ProxyPass / http://localhost:8080/ nocanon
+    ProxyPassReverse / http://localhost:8080/
+    ProxyRequests Off
+    AllowEncodedSlashes NoDecode
+
+    RequestHeader set X-Forwarded-Proto "https"
+    RequestHeader set X-Forwarded-Port "443"
+
+    <Proxy http://localhost:8080*>
+        Order allow,deny
+        Allow from all
+    </Proxy>
+</VirtualHost>

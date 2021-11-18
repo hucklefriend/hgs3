@@ -9,7 +9,7 @@ services:
       - 443:443
     environment:
       STAGE: local
-      DOMAINS: 'local.horrorgame.net -> http://hgs_web:80'
+      DOMAINS: 'hgn.test -> http://hgs_web:80'
     restart: always
     volumes:
       - https-portal-data:/var/lib/https-portal
@@ -22,6 +22,20 @@ services:
     build: web
     container_name: hgs_web
     hostname: hgs_web
+    ports:
+      - 80:80
+    volumes:
+      - /var/hgs:/var/hgs
+    restart: always
+    depends_on:
+      - hgs_app
+    networks:
+      - hgs_net
+
+  hgs_app:
+    build: app
+    container_name: hgs_app
+    hostname: hgs_app
     volumes:
       - /var/hgs:/var/hgs
     restart: always
@@ -30,15 +44,9 @@ services:
       - hgs_memcached
       - hgs_redis
     ports:
-      - 80:80
-#      - 443:443
+      - "9000:9000"
     networks:
       - hgs_net
-    logging:
-      driver: json-file
-      options:
-        max-file: '1'
-        max-size: 3m
 
   hgs_db:
     image: mariadb:10.5.9
@@ -53,7 +61,7 @@ services:
       MYSQL_PASSWORD: hgshgs
       MYSQL_DATABASE: hgs3
     ports:
-      - 3306:3306
+      - "3306:3306"
     networks:
       - hgs_net
 
@@ -83,7 +91,7 @@ services:
     networks:
       - hgs_net
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - hgs_mongo_vol:/data/db
       - hgs_mongo_config_vol:/data/configdb
@@ -94,7 +102,7 @@ services:
     container_name: hgs_mongo_express
     restart: always
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_SERVER: hgs_mongodb
 #      ME_CONFIG_MONGODB_ADMINUSERNAME: hgs
@@ -111,3 +119,4 @@ volumes:
 
 networks:
   hgs_net:
+
