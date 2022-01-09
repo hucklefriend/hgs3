@@ -23,7 +23,7 @@ services:
     container_name: hgs_web
     hostname: hgs_web
     ports:
-      - 80:80
+      - "80:80"
     volumes:
       - /var/hgs:/var/hgs
     restart: always

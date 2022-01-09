@@ -119,7 +119,7 @@
                     </div>
                 </div>
 
-                <div class="menu-item has-sub">
+                <div class="menu-item has-sub @if ($menuCategory1 === 'マスター') active @endif">
                     <a href="javascript:;" class="menu-link">
                         <div class="menu-icon">
                             <i class="fas fa-gamepad"></i>
@@ -128,7 +128,7 @@
                         <div class="menu-caret"></div>
                     </a>
                     <div class="menu-submenu">
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">メーカー</div></a></div>
+                        <div class="menu-item @if ($menuCategory2 === 'メーカー') active @endif"><a href="{{ route('管理-マスター-メーカー') }}" class="menu-link"><div class="menu-text">メーカー</div></a></div>
                         <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">プラットフォーム</div></a></div>
                         <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">ハード</div></a></div>
                         <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">フランチャイズ</div></a></div>

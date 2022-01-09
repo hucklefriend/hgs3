@@ -3,6 +3,7 @@ use Hgs3\Http\Controllers;
 
 Route::get('/haribote/{page}', function ($page) {return view('haribote.' . $page);});
 
+
 // 管理用
 Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin']], function () {
     // 管理
@@ -23,7 +24,30 @@ Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin']], 
             Route::get('future', [Controllers\Management\System\NoticeController::class, 'future'])->name('管理-システム-未来のお知らせ');
             Route::get('past', [Controllers\Management\System\NoticeController::class, 'past'])->name('管理-システム-過去のお知らせ');
         });
+
     });
+
+    // マスター
+    Route::group(['prefix' => 'master'], function () {
+        // メーカー
+        Route::group(['prefix' => 'maker'], function () {
+            Route::get('/', [Controllers\Management\Master\MakerController::class, 'index'])->name('管理-マスター-メーカー');
+            Route::get('add', [Controllers\Management\Master\MakerController::class, 'add'])->name('管理-マスター-メーカー登録');
+            Route::post('add', [Controllers\Management\Master\MakerController::class, 'store'])->name('管理-マスター-メーカー登録処理');
+            Route::get('{maker}/edit', [Controllers\Management\Master\MakerController::class, 'edit'])->name('管理-マスター-メーカー編集');
+            Route::put('{maker}/edit', [Controllers\Management\Master\MakerController::class, 'update'])->name('管理-マスター-メーカー編集処理');
+            Route::get('{maker}', [Controllers\Management\Master\MakerController::class, 'detail'])->name('管理-マスター-メーカー詳細');
+            Route::delete('{maker}', [Controllers\Management\Master\MakerController::class, 'delete'])->name('管理-マスター-メーカー削除');
+        });
+
+        // 開発者
+        Route::group(['prefix' => 'creator'], function () {
+
+        });
+    });
+
+
+
 
     // 不正レビュー
     //Route::get('/admin/injustice_review', [InjusticeReviewController, 'Admin\InjusticeReviewController@index']);
