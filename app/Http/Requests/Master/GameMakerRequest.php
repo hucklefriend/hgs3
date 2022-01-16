@@ -14,7 +14,7 @@ class GameMakerRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,14 +24,13 @@ class GameMakerRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name'      => 'required|max:200',
             'acronym'   => 'required|max:30',
             'phonetic'  => 'required|max:200',
-            'url'       => 'max:512',
-            'wikipedia' => 'max:512',
+            'url'       => 'max:300',
             'is_adult'  => ''
         ];
     }

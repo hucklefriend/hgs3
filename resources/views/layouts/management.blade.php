@@ -15,6 +15,7 @@
     <meta content="Yuki Takeuchi" name="author">
     <link href="{{ asset('admin/css/vendor.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/app.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="app-cover"></div>
@@ -129,12 +130,12 @@
                     </a>
                     <div class="menu-submenu">
                         <div class="menu-item @if ($menuCategory2 === 'メーカー') active @endif"><a href="{{ route('管理-マスター-メーカー') }}" class="menu-link"><div class="menu-text">メーカー</div></a></div>
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">プラットフォーム</div></a></div>
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">ハード</div></a></div>
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">フランチャイズ</div></a></div>
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">シリーズ</div></a></div>
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">ソフト</div></a></div>
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">パッケージ</div></a></div>
+                        <div class="menu-item @if ($menuCategory2 === 'プラットフォーム') active @endif"><a href="{{ route('管理-マスター-プラットフォーム') }}" class="menu-link"><div class="menu-text">プラットフォーム</div></a></div>
+                        <div class="menu-item @if ($menuCategory2 === 'ハード') active @endif"><a href="{{ route('管理-マスター-ハード') }}" class="menu-link"><div class="menu-text">ハード</div></a></div>
+                        <div class="menu-item @if ($menuCategory2 === 'フランチャイズ') active @endif"><a href="{{ route('管理-マスター-フランチャイズ') }}" class="menu-link"><div class="menu-text">フランチャイズ</div></a></div>
+                        <div class="menu-item @if ($menuCategory2 === 'シリーズ') active @endif"><a href="{{ route('管理-マスター-シリーズ') }}" class="menu-link"><div class="menu-text">シリーズ</div></a></div>
+                        <div class="menu-item @if ($menuCategory2 === 'ソフト') active @endif"><a href="{{ route('管理-マスター-ソフト') }}" class="menu-link"><div class="menu-text">ソフト</div></a></div>
+                        <div class="menu-item @if ($menuCategory2 === 'パッケージ') active @endif"><a href="{{ route('管理-マスター-パッケージ') }}" class="menu-link"><div class="menu-text">パッケージ</div></a></div>
                     </div>
                 </div>
 
@@ -167,6 +168,7 @@
 </div>
 <script src="{{ asset('admin/js/vendor.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/autosize/dist/autosize.min.js') }}"></script>
+<script src="{{ asset('admin/plugins/select2/dist/js/select2.min.js') }}"></script>
 <script src="{{ asset('admin/js/app.min.js') }}"></script>
 <script src="{{ asset('admin/js/transparent.min.js') }}"></script>
 <script>
@@ -174,5 +176,6 @@
         autosize($('.textarea-autosize'));
     });
 </script>
+@yield('js')
 </body>
 </html>

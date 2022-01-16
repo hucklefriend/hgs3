@@ -39,10 +39,71 @@ Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin']], 
             Route::get('{maker}', [Controllers\Management\Master\MakerController::class, 'detail'])->name('管理-マスター-メーカー詳細');
             Route::delete('{maker}', [Controllers\Management\Master\MakerController::class, 'delete'])->name('管理-マスター-メーカー削除');
         });
+        
+        // プラットフォーム
+        Route::group(['prefix' => 'platform'], function () {
+            Route::get('/', [Controllers\Management\Master\PlatformController::class, 'index'])->name('管理-マスター-プラットフォーム');
+            Route::get('add', [Controllers\Management\Master\PlatformController::class, 'add'])->name('管理-マスター-プラットフォーム登録');
+            Route::post('add', [Controllers\Management\Master\PlatformController::class, 'store'])->name('管理-マスター-プラットフォーム登録処理');
+            Route::get('{platform}/edit', [Controllers\Management\Master\PlatformController::class, 'edit'])->name('管理-マスター-プラットフォーム編集');
+            Route::put('{platform}/edit', [Controllers\Management\Master\PlatformController::class, 'update'])->name('管理-マスター-プラットフォーム編集処理');
+            Route::get('{platform}', [Controllers\Management\Master\PlatformController::class, 'detail'])->name('管理-マスター-プラットフォーム詳細');
+            Route::delete('{platform}', [Controllers\Management\Master\PlatformController::class, 'delete'])->name('管理-マスター-プラットフォーム削除');
+        });
 
-        // 開発者
-        Route::group(['prefix' => 'creator'], function () {
+        // ハード
+        Route::group(['prefix' => 'hard'], function () {
+            Route::get('/', [Controllers\Management\Master\HardController::class, 'index'])->name('管理-マスター-ハード');
+            Route::get('add', [Controllers\Management\Master\HardController::class, 'add'])->name('管理-マスター-ハード登録');
+            Route::post('add', [Controllers\Management\Master\HardController::class, 'store'])->name('管理-マスター-ハード登録処理');
+            Route::get('{hard}/edit', [Controllers\Management\Master\HardController::class, 'edit'])->name('管理-マスター-ハード編集');
+            Route::put('{hard}/edit', [Controllers\Management\Master\HardController::class, 'update'])->name('管理-マスター-ハード編集処理');
+            Route::get('{hard}', [Controllers\Management\Master\HardController::class, 'detail'])->name('管理-マスター-ハード詳細');
+            Route::delete('{hard}', [Controllers\Management\Master\HardController::class, 'delete'])->name('管理-マスター-ハード削除');
+        });
 
+        // フランチャイズ
+        Route::group(['prefix' => 'franchise'], function () {
+            Route::get('/', [Controllers\Management\Master\FranchiseController::class, 'index'])->name('管理-マスター-フランチャイズ');
+            Route::get('add', [Controllers\Management\Master\FranchiseController::class, 'add'])->name('管理-マスター-フランチャイズ登録');
+            Route::post('add', [Controllers\Management\Master\FranchiseController::class, 'store'])->name('管理-マスター-フランチャイズ登録処理');
+            Route::get('{franchise}/edit', [Controllers\Management\Master\FranchiseController::class, 'edit'])->name('管理-マスター-フランチャイズ編集');
+            Route::put('{franchise}/edit', [Controllers\Management\Master\FranchiseController::class, 'update'])->name('管理-マスター-フランチャイズ編集処理');
+            Route::get('{franchise}', [Controllers\Management\Master\FranchiseController::class, 'detail'])->name('管理-マスター-フランチャイズ詳細');
+            Route::delete('{franchise}', [Controllers\Management\Master\FranchiseController::class, 'delete'])->name('管理-マスター-フランチャイズ削除');
+        });
+
+        // シリーズ
+        Route::group(['prefix' => 'series'], function () {
+            Route::get('/', [Controllers\Management\Master\SeriesController::class, 'index'])->name('管理-マスター-シリーズ');
+            Route::get('add', [Controllers\Management\Master\SeriesController::class, 'add'])->name('管理-マスター-シリーズ登録');
+            Route::post('add', [Controllers\Management\Master\SeriesController::class, 'store'])->name('管理-マスター-シリーズ登録処理');
+            Route::get('{series}/edit', [Controllers\Management\Master\SeriesController::class, 'edit'])->name('管理-マスター-シリーズ編集');
+            Route::put('{series}/edit', [Controllers\Management\Master\SeriesController::class, 'update'])->name('管理-マスター-シリーズ編集処理');
+            Route::get('{series}', [Controllers\Management\Master\SeriesController::class, 'detail'])->name('管理-マスター-シリーズ詳細');
+            Route::delete('{series}', [Controllers\Management\Master\SeriesController::class, 'delete'])->name('管理-マスター-シリーズ削除');
+        });
+
+        // ソフト
+        Route::group(['prefix' => 'soft'], function () {
+            Route::get('/', [Controllers\Management\Master\SoftController::class, 'index'])->name('管理-マスター-ソフト');
+            Route::get('add', [Controllers\Management\Master\SoftController::class, 'add'])->name('管理-マスター-ソフト登録');
+            Route::post('add', [Controllers\Management\Master\SoftController::class, 'store'])->name('管理-マスター-ソフト登録処理');
+            Route::get('{soft}/edit', [Controllers\Management\Master\SoftController::class, 'edit'])->name('管理-マスター-ソフト編集');
+            Route::put('{soft}/edit', [Controllers\Management\Master\SoftController::class, 'update'])->name('管理-マスター-ソフト編集処理');
+            Route::get('{soft}', [Controllers\Management\Master\SoftController::class, 'detail'])->name('管理-マスター-ソフト詳細');
+            Route::delete('{soft}', [Controllers\Management\Master\SoftController::class, 'delete'])->name('管理-マスター-ソフト削除');
+        });
+
+        // パッケージ
+        Route::group(['prefix' => 'package'], function () {
+            Route::get('/', [Controllers\Management\Master\PackageController::class, 'index'])->name('管理-マスター-パッケージ');
+            Route::get('add', [Controllers\Management\Master\PackageController::class, 'add'])->name('管理-マスター-パッケージ登録');
+            Route::post('add', [Controllers\Management\Master\PackageController::class, 'store'])->name('管理-マスター-パッケージ登録処理');
+            Route::get('{package}/edit', [Controllers\Management\Master\PackageController::class, 'edit'])->name('管理-マスター-パッケージ編集');
+            Route::put('{package}/edit', [Controllers\Management\Master\PackageController::class, 'update'])->name('管理-マスター-パッケージ編集処理');
+            Route::get('{package}', [Controllers\Management\Master\PackageController::class, 'detail'])->name('管理-マスター-パッケージ詳細');
+            Route::delete('{package}', [Controllers\Management\Master\PackageController::class, 'delete'])->name('管理-マスター-パッケージ削除');
         });
     });
 

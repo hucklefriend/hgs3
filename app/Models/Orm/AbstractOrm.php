@@ -5,27 +5,29 @@
 
 namespace Hgs3\Models\Orm;
 
+use Carbon\Carbon;
+
 class AbstractOrm extends \Eloquent
 {
     /**
-     * created_atをDateTimeで取得
+     * created_atをCarbonで取得
      *
-     * @return ?\DateTime
+     * @return ?Carbon
      * @throws \Exception
      */
-    public function getCreatedAt() : ?\DateTime
+    public function getCreatedAt(): ?Carbon
     {
-        return $this->created_at === null ? null : new \DateTime($this->created_at);
+        return $this->created_at === null ? null : new Carbon($this->created_at);
     }
 
     /**
-     * updated_atをDateTimeで取得
+     * updated_atをCarbonで取得
      *
-     * @return ?\DateTime
+     * @return ?Carbon
      * @throws \Exception
      */
-    public function getUpdatedAt() : ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
-        return $this->updated_at === null ? null : new \DateTime($this->updated_at);
+        return $this->updated_at === null ? null : new Carbon($this->updated_at);
     }
 }

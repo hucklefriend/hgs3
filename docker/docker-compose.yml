@@ -5,8 +5,8 @@ services:
     container_name: https_portal
     image: steveltn/https-portal:1
     ports:
-#      - 80:80
-      - 443:443
+#      - "80:80"
+      - "443:443"
     environment:
       STAGE: local
       DOMAINS: 'hgn.test -> http://hgs_web:80'

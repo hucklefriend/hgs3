@@ -1,13 +1,13 @@
 <?php
 /**
- * ゲーム追加リクエスト
+ * ゲームぷらっふぉとーむリクエスト
  */
 
-namespace Hgs3\Http\Requests\Game;
+namespace Hgs3\Http\Requests\Master;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GameSoftRequest extends FormRequest
+class GamePlatformRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,11 @@ class GameSoftRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'       => 'required|max:200',
-            'phonetic'   => 'required|max:200',
-            'genre'      => 'max:200'
+            'name'      => 'required|max:200',
+            'acronym'   => 'required|max:30',
+            'phonetic'  => 'required|max:200',
+            'url'       => 'max:300',
+            'is_adult'  => ''
         ];
     }
 }

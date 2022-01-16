@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class GameSoft extends \Eloquent
 {
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * ゲームソフト名のハッシュを取得

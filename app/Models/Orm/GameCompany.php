@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class GameCompany extends \Eloquent
 {
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * id => nameのハッシュを取得

@@ -10,7 +10,7 @@ use Hgs3\Log;
 
 class GamePackage extends \Eloquent
 {
-    protected $guarded = [];
+    protected $guarded = ['id'];
     public $incrementing = false;
 
     /**

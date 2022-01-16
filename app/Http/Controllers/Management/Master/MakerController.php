@@ -6,17 +6,21 @@
 namespace Hgs3\Http\Controllers\Management\Master;
 
 use Hgs3\Http\Controllers\AbstractManagementController;
-use Hgs3\Http\Requests\System\NoticeRequest;
+use Hgs3\Http\Requests\Master\GameMakerRequest;
 use Hgs3\Models\Orm;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class MakerController extends AbstractManagementController
 {
     /**
      * インデックス
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): Application|Factory|View
     {
         $makers = Orm\GameCompany::orderByDesc('id')
             ->paginate(20);
@@ -30,99 +34,79 @@ class MakerController extends AbstractManagementController
     /**
      * 詳細
      *
-     * @param Orm\SystemNotice $notice
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Orm\GameCompany $maker
+     * @return Application|Factory|View
      */
-    public function detail(Orm\SystemNotice $notice)
+    public function detail(Orm\GameCompany $maker): Application|Factory|View
     {
-        return view('management.system.notice.detail', [
-            'notice' => $notice
+        return view('management.master.maker.detail', [
+            'maker' => $maker
         ]);
     }
 
     /**
      * 追加画面
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function add()
+    public function add(): Application|Factory|View
     {
-        return view('management.system.notice.add');
+        return view('management.master.maker.add');
     }
 
     /**
-     * データ追加
+     * 追加処理
      *
-     * @param NoticeRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param GameMakerRequest $request
+     * @return RedirectResponse
      */
-    public function store(NoticeRequest $request)
+    public function store(GameMakerRequest $request): RedirectResponse
     {
-        $notice = new Orm\SystemNotice();
-        $notice->title = $request->input('title');
-        $notice->message = $request->input('message');
-        $notice->type = $request->input('type', 0);
-        $notice->open_at = $request->input('open_at');
-        $notice->close_at = $request->input('close_at');
-        $notice->top_start_at = $request->input('top_start_at');
-        $notice->top_end_at = $request->input('top_end_at');
+        $maker = new Orm\GameCompany();
+        $maker->fill($request->validated());
+        $maker->save();
 
-        $notice->save();
-
-        return redirect()->route('管理-システム-お知らせ');
+        return redirect()->route('管理-マスター-メーカー詳細', $maker);
     }
 
     /**
      * 編集画面
      *
-     * @param Orm\SystemNotice $notice
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Orm\GameCompany $maker
+     * @return Application|Factory|View
      */
-    public function edit(Orm\SystemNotice $notice)
+    public function edit(Orm\GameCompany $maker): Application|Factory|View
     {
-        $notice->open_at = format_date_local($notice->open_at);
-        $notice->close_at = format_date_local($notice->close_at);
-        $notice->top_start_at = format_date_local($notice->top_start_at);
-        $notice->top_end_at = format_date_local($notice->top_end_at);
-
-        return view('management.system.notice.edit', [
-            'notice' => $notice
+        return view('management.master.maker.edit', [
+            'maker' => $maker
         ]);
     }
 
     /**
      * データ更新
      *
-     * @param NoticeRequest $request
-     * @param Orm\SystemNotice $notice
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param GameMakerRequest $request
+     * @param Orm\GameCompany $maker
+     * @return RedirectResponse
      */
-    public function update(NoticeRequest $request, Orm\SystemNotice $notice)
+    public function update(GameMakerRequest $request, Orm\GameCompany $maker): RedirectResponse
     {
-        $notice->title = $request->input('title');
-        $notice->message = $request->input('message');
-        $notice->type = $request->input('type', 0);
-        $notice->open_at = $request->input('open_at');
-        $notice->close_at = $request->input('close_at');
-        $notice->top_start_at = $request->input('top_start_at');
-        $notice->top_end_at = $request->input('top_end_at');
+        $maker->fill($request->validated());
+        $maker->save();
 
-        $notice->save();
-
-        return redirect()->route('管理-システム-お知らせ詳細', $notice);
+        return redirect()->route('管理-マスター-メーカー詳細', $maker);
     }
 
     /**
      * 削除
      *
-     * @param Orm\SystemNotice $notice
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @param Orm\GameCompany $maker
+     * @return RedirectResponse
      */
-    public function delete(Orm\SystemNotice $notice)
+    public function delete(Orm\GameCompany $maker): RedirectResponse
     {
-        $notice->delete();
+        $maker->delete();
 
-        return redirect()->route('管理-システム-お知らせ');
+        return redirect()->route('管理-マスター-メーカー');
     }
 }
