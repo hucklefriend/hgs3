@@ -26,11 +26,11 @@
                     </tr>
                     <tr>
                         <th>名前</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $series->name) }}" required maxlength="100"></td>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $series->name) }}" required maxlength="100" autocomplete="off"></td>
                     </tr>
                     <tr>
                         <th>よみがな</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', $series->phonetic) }}" required maxlength="100"></td>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', $series->phonetic) }}" required maxlength="100" autocomplete="off"></td>
                     </tr>
                     <tr>
                         <th>フランチャイズ</th>

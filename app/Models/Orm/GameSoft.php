@@ -187,9 +187,10 @@ SQL;
     /**
      * パッケージを取得
      *
+     * @param bool $all
      * @return Collection
      */
-    public function getPackages(): Collection
+    public function getPackages(bool $all = false): Collection
     {
         $packageLinks = GamePackageLink::where('soft_id', $this->id)
             ->get();
@@ -197,10 +198,12 @@ SQL;
             return new Collection();
         }
 
-        return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
-            ->where('release_int', '<=', date('Ymd'))
-            ->orderBy('release_int')
-            ->get();
+        $packages = GamePackage::whereIn('id', $packageLinks->pluck('package_id'));
+        if (!$all) {
+            $packages->where('release_int', '<=', date('Ymd'));
+        }
+
+        return $packages->orderBy('release_int')->get();
     }
 
     /**

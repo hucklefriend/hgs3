@@ -13,33 +13,68 @@
         <div class="panel-heading">
             <h4 class="panel-title">新規登録</h4>
         </div>
-        <div class="panel-body">
-            <form method="POST" action="{{ route('管理-マスター-ソフト登録処理') }}">
-                {{ csrf_field() }}
+        <form method="POST" action="{{ route('管理-マスター-ソフト登録処理') }}">
+            {{ csrf_field() }}
 
+            <div class="panel-body">
                 <table class="table">
                     <tr>
                         <th>名前</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', '') }}" required maxlength="100"></td>
-                    </tr>
-                    <tr>
-                        <th>略称</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'acronym') }}" id="acronym" name="acronym" value="{{ old('acronym', '') }}" required maxlength="100"></td>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', '') }}" required maxlength="200" autocomplete="off"></td>
                     </tr>
                     <tr>
                         <th>よみがな</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', '') }}" required maxlength="100"></td>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', '') }}" required maxlength="200" autocomplete="off"></td>
                     </tr>
                     <tr>
-                        <th>公式サイトURL</th>
-                        <td><input type="url" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', '') }}" required maxlength="300"></td>
+                        <th>よみがな(ソート用)</th>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic2') }}" id="phonetic2" name="phonetic2" value="{{ old('phonetic2', '') }}" required maxlength="250" autocomplete="off"></td>
                     </tr>
                     <tr>
-                        <th></th>
-                        <td><button type="submit" class="btn btn-default">更新</button></td>
+                        <th>ジャンル</th>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'genre') }}" id="genre" name="genre" value="{{ old('genre', '') }}" required maxlength="150" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <th>シリーズ</th>
+                        <td>{{ Form::select('series_id', $series, old('series_id', ''), ['class' => 'form-control' . invalid($errors, 'series_id'), 'id' => 'series_id']) }}</td>
+                    </tr>
+                    <tr>
+                        <th>フランチャイズ</th>
+                        <td>{{ Form::select('franchise_id', $franchises, old('franchise_id', ''), ['class' => 'form-control' . invalid($errors, 'franchise_id'), 'id' => 'franchise_id']) }}</td>
+                    </tr>
+                    <tr>
+                        <th>あらすじ</th>
+                        <td><textarea class="form-control{{ invalid($errors, 'introduction') }}" id="introduction" name="introduction" rows="10">{{ old('introduction') }}</textarea></td>
+                    </tr>
+                    <tr>
+                        <th>あらすじの引用元</th>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'introduction_from') }}" id="introduction_from" name="introduction_from" value="{{ old('introduction_from', '') }}" required maxlength="150" autocomplete="off"></td>
                     </tr>
                 </table>
-            </form>
-        </div>
+            </div>
+            <div class="panel-footer text-end">
+                <button type="submit" class="btn btn-default">登録</button>
+            </div>
+        </form>
     </div>
+@endsection
+
+
+@section('js')
+    <script>
+        let series2Franchise = {!! json_encode($series2Franchise) !!};
+
+        $(()=>{
+            $("#franchise_id").select2();
+            $("#series_id").select2();
+
+
+            $("#series_id").change(function (){
+                let seriesId = $(this).val();
+                if (seriesId.length > 0) {
+                    $("#franchise_id").val(series2Franchise[seriesId]);
+                }
+            });
+        });
+    </script>
 @endsection

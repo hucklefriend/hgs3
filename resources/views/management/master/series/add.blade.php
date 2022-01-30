@@ -19,15 +19,15 @@
                 <table class="table">
                     <tr>
                         <th>名前</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', '') }}" required maxlength="100"></td>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', '') }}" required maxlength="100" autocomplete="off"></td>
                     </tr>
                     <tr>
                         <th>略称</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'acronym') }}" id="acronym" name="acronym" value="{{ old('acronym', '') }}" required maxlength="100"></td>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'acronym') }}" id="acronym" name="acronym" value="{{ old('acronym', '') }}" required maxlength="100" autocomplete="off"></td>
                     </tr>
                     <tr>
                         <th>よみがな</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', '') }}" required maxlength="100"></td>
+                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', '') }}" required maxlength="100" autocomplete="off"></td>
                     </tr>
                     <tr>
                         <th>フランチャイズ</th>

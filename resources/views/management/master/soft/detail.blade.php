@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <th>シリーズ</th>
-                    <td>{{ $soft?->series->name }}</td>
+                    <td>{{ $soft?->series->name ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>フランチャイズ</th>

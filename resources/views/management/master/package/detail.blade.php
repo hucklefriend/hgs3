@@ -11,42 +11,48 @@
     <h1 class="page-header">パッケージ詳細</h1>
     <div class="panel panel-inverse">
         <div class="panel-heading">
-            <h4 class="panel-title">{{ $maker->name }}</h4>
+            <h4 class="panel-title">{{ $package->name }}</h4>
         </div>
         <div class="panel-body">
             <div class="text-end">
-                <a href="{{ route('管理-マスター-パッケージ編集', $maker) }}" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                <a href="{{ route('管理-マスター-パッケージ編集', $package) }}" class="btn btn-default"><i class="fas fa-edit"></i></a>
             </div>
             <table class="table">
                 <tr>
                     <th>ID</th>
-                    <td>{{ $maker->id }}</td>
+                    <td>{{ $package->id }}</td>
                 </tr>
                 <tr>
                     <th>名称</th>
-                    <td>{{ $maker->name }}</td>
+                    <td>{{ $package->name }}</td>
                 </tr>
                 <tr>
                     <th>略称</th>
-                    <td>{{ $maker->acronym }}</td>
+                    <td>{{ $package->acronym }}</td>
                 </tr>
                 <tr>
-                    <th>よみがな</th>
-                    <td>{{ $maker->phonetic }}</td>
+                    <th>メーカー</th>
+                    <td>{{ $package->maker->name }}</td>
                 </tr>
                 <tr>
-                    <th>公式サイト</th>
-                    <td>@if (empty($maker->url))-@else <a href="{{ $maker->url }}" target="_blank">{{ $maker->url }}</a> @endif</td>
+                    <th>発売日</th>
+                    <td>{{ $package->release_at }}</td>
                 </tr>
                 <tr>
-                    <th>アダルトサイトフラグ</th>
-                    <td>{{ $maker->is_adult_url }}</td>
+                    <th>ソフト</th>
+                    <td>
+                        <ul>
+                            @foreach ($package->getSofts() as $soft)
+                                <li>{{ $soft->name }}</li>
+                            @endforeach
+                        </ul>
+                    </td>
                 </tr>
             </table>
         </div>
         <div class="panel-footer">
             <div class="text-end">
-                <form method="POST" action="{{ route('管理-マスター-パッケージ削除', $maker) }}" onsubmit="return confirm('削除します');">
+                <form method="POST" action="{{ route('管理-マスター-パッケージ削除', $package) }}" onsubmit="return confirm('削除します');">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger" type="submit"><i class="fas fa-eraser"></i></button>

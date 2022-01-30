@@ -6,12 +6,37 @@
 namespace Hgs3\Models\Orm;
 
 use Hgs3\Constants\Game\Shop;
-use Hgs3\Log;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
 
 class GamePackage extends \Eloquent
 {
     protected $guarded = ['id'];
-    public $incrementing = false;
+
+    /**
+     * ハードに関連しているメーカーを取得
+     *
+     * @return BelongsTo
+     */
+    public function maker(): BelongsTo
+    {
+        return $this->belongsTo(GameCompany::class, 'company_id');
+    }
+
+    /**
+     * ソフトを取得
+     *
+     * @return Collection
+     */
+    public function getSofts(): Collection
+    {
+        $packageLinks = GamePackageLink::where('package_id', $this->id)->get();
+        if ($packageLinks->isEmpty()) {
+            return new Collection();
+        }
+
+        return GameSoft::whereIn('id', $packageLinks->pluck('soft_id'))->get();
+    }
 
     /**
      * データのハッシュを取得
@@ -19,7 +44,7 @@ class GamePackage extends \Eloquent
      * @param array $packageIds
      * @return array
      */
-    public static function getHash(array $packageIds)
+    public static function getHash(array $packageIds): array
     {
         if (empty($packageIds)) {
             return [];
@@ -43,7 +68,7 @@ class GamePackage extends \Eloquent
      *
      * @param array $item
      */
-    public function setImageByAmazon($item)
+    public function setImageByAmazon(array $item)
     {
         if (isset($item['small_image'])) {
             $this->small_image_url     = $item['small_image']['url'] ?? null;

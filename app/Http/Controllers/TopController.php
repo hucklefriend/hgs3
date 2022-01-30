@@ -29,7 +29,7 @@ class TopController extends Controller
     public function index(): Application|Factory|View
     {
         if (app()->isLocal()) {
-            //\Auth::loginUsingId(1);
+            \Auth::loginUsingId(1);
         }
 
         GlobalBack::clear();

@@ -25,7 +25,7 @@
                 <tr>
                     <th>ID</th>
                     <th>タイトル</th>
-                    <th>表示期間</th>
+                    <th>よみがな</th>
                     <td></td>
                 </tr>
                 </thead>
@@ -34,13 +34,12 @@
                     <tr>
                         <td>{{ $soft->id }}</td>
                         <td>{{ $soft->name }}</td>
-                        <td>{{ $soft->acronym }}</td>
+                        <td>{{ $soft->phonetic }}</td>
                         <td class="text-center"><a href="{{ route('管理-マスター-ソフト詳細', $soft) }}">詳細</a></td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-
 
             <div>{{ $softs->links() }}</div>
         </div>
