@@ -14,8 +14,8 @@
         <div class="panel-heading">
             <h4 class="panel-title">{{ $franchise->name }}</h4>
         </div>
-        <div class="panel-body">
-            <form method="POST" action="{{ route('管理-マスター-フランチャイズ編集処理', $franchise) }}">
+        <form method="POST" action="{{ route('管理-マスター-フランチャイズ編集処理', $franchise) }}">
+            <div class="panel-body">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
 
@@ -29,23 +29,14 @@
                         <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $franchise->name) }}" required maxlength="100"></td>
                     </tr>
                     <tr>
-                        <th>略称</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'acronym') }}" id="acronym" name="acronym" value="{{ old('acronym', $franchise->acronym) }}" required maxlength="100"></td>
-                    </tr>
-                    <tr>
                         <th>よみがな</th>
                         <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', $franchise->phonetic) }}" required maxlength="100"></td>
                     </tr>
-                    <tr>
-                        <th>公式サイトURL</th>
-                        <td><input type="url" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $franchise->url) }}" required maxlength="300"></td>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td><button type="submit" class="btn btn-default">更新</button></td>
-                    </tr>
                 </table>
-            </form>
-        </div>
+            </div>
+            <div class="panel-footer text-end">
+                <button type="submit" class="btn btn-default">更新</button>
+            </div>
+        </form>
     </div>
 @endsection

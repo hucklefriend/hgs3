@@ -16,9 +16,10 @@ class GameCompany extends \Eloquent
      * id => nameのハッシュを取得
      *
      * @param array $companyIds
+     * @param array $prepend
      * @return array
      */
-    public static function getNameHash(array $companyIds = [])
+    public static function getNameHash(array $companyIds = [], array $prepend = []): array
     {
         $query = self::select(['id', 'acronym']);
 
@@ -26,9 +27,11 @@ class GameCompany extends \Eloquent
             $query->whereIn('id', $companyIds);
         }
 
-        return $query->get()
+        $data = $query->get()
             ->pluck('acronym', 'id')
             ->toArray();
+
+        return $prepend + $data;
     }
 
     /**

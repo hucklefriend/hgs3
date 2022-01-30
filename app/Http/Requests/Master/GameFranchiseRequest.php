@@ -1,20 +1,20 @@
 <?php
 /**
- * ゲームメーカーリクエスト
+ * ゲームフランチャイズリクエスト
  */
 
 namespace Hgs3\Http\Requests\Master;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GameCompanyRequest extends FormRequest
+class GameFranchiseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,14 +24,11 @@ class GameCompanyRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name'      => 'required|max:100',
-            'acronym'   => 'required|max:100',
-            'phonetic'  => 'required|max:100',
-            'url'       => 'max:512',
-            'wikipedia' => 'max:512'
+            'name'     => 'required|max:200',
+            'phonetic' => 'required|max:200',
         ];
     }
 }

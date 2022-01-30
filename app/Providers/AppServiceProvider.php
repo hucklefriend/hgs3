@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // すべての環境でhttps対応
         URL::forceScheme('https');
+
+        // これもしないとページャーがhttpsにならない
+        $this->app['request']->server->set('HTTPS','on');
     }
 
     /**

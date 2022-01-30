@@ -207,7 +207,7 @@ function checked($val1, $val2)
 function invalid($errors, $formName)
 {
     if ($errors->has($formName)) {
-        return ' is-invalid';
+        return ' is-valid';
     }
 
     return '';

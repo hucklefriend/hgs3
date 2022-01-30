@@ -1,6 +1,6 @@
 <?php
 /**
- * ゲーム追加リクエスト
+ * ゲームハードリクエスト
  */
 
 namespace Hgs3\Http\Requests\Master;

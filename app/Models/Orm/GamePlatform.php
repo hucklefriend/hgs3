@@ -5,6 +5,7 @@
 
 namespace Hgs3\Models\Orm;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class GamePlatform extends \Eloquent
      *
      * @return array
      */
-    public function getSoft()
+    public function getSoft(): array
     {
         $sql =<<< SQL
 SELECT
@@ -87,9 +88,9 @@ SQL;
      * 略称のハッシュを取得
      *
      * @param array $ids
-     * @return mixed
+     * @return array
      */
-    public static function getAcronymHash(array $ids = array())
+    public static function getAcronymHash(array $ids = array()): array
     {
         $tbl = DB::table('game_platforms')
             ->select(['id', 'acronym']);
@@ -99,5 +100,15 @@ SQL;
         }
 
         return $tbl->get()->pluck('acronym', 'id')->toArray();
+    }
+
+    /**
+     * ハードに関連しているメーカーを取得
+     *
+     * @return BelongsTo
+     */
+    public function maker(): BelongsTo
+    {
+        return $this->belongsTo(GameCompany::class, 'company_id');
     }
 }

@@ -22,7 +22,7 @@ class SoftController extends AbstractManagementController
      */
     public function index(): Application|Factory|View
     {
-        $softs = Orm\GameCompany::orderByDesc('id')
+        $softs = Orm\GameSoft::orderByDesc('id')
             ->paginate(20);
 
         return view('management.master.soft.index', [
@@ -34,10 +34,10 @@ class SoftController extends AbstractManagementController
     /**
      * 詳細
      *
-     * @param Orm\GameCompany $soft
+     * @param Orm\GameSoft $soft
      * @return Application|Factory|View
      */
-    public function detail(Orm\GameCompany $soft): Application|Factory|View
+    public function detail(Orm\GameSoft $soft): Application|Factory|View
     {
         return view('management.master.soft.detail', [
             'soft' => $soft
@@ -51,7 +51,15 @@ class SoftController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        return view('management.master.soft.add');
+        $franchises = Orm\GameFranchise::getNameHash();
+        $series = Orm\GameSeries::getNameHash(['' => '']);
+        $series2Franchise = Orm\GameSeries::getFranchiseHash();
+
+        return view('management.master.soft.add', [
+            'franchises' => $franchises,
+            'series' => $series,
+            'series2Franchise' => $series2Franchise
+        ]);
     }
 
     /**
@@ -62,7 +70,7 @@ class SoftController extends AbstractManagementController
      */
     public function store(GameSoftRequest $request): RedirectResponse
     {
-        $soft = new Orm\GameCompany();
+        $soft = new Orm\GameSoft();
         $soft->fill($request->validated());
         $soft->save();
 
@@ -72,13 +80,20 @@ class SoftController extends AbstractManagementController
     /**
      * 編集画面
      *
-     * @param Orm\GameCompany $soft
+     * @param Orm\GameSoft $soft
      * @return Application|Factory|View
      */
-    public function edit(Orm\GameCompany $soft): Application|Factory|View
+    public function edit(Orm\GameSoft $soft): Application|Factory|View
     {
+        $franchises = Orm\GameFranchise::getNameHash();
+        $series = Orm\GameSeries::getNameHash(['' => '']);
+        $series2Franchise = Orm\GameSeries::getFranchiseHash();
+
         return view('management.master.soft.edit', [
-            'soft' => $soft
+            'soft' => $soft,
+            'franchises' => $franchises,
+            'series' => $series,
+            'series2Franchise' => $series2Franchise
         ]);
     }
 
@@ -86,10 +101,10 @@ class SoftController extends AbstractManagementController
      * データ更新
      *
      * @param GameSoftRequest $request
-     * @param Orm\GameCompany $soft
+     * @param Orm\GameSoft $soft
      * @return RedirectResponse
      */
-    public function update(GameSoftRequest $request, Orm\GameCompany $soft): RedirectResponse
+    public function update(GameSoftRequest $request, Orm\GameSoft $soft): RedirectResponse
     {
         $soft->fill($request->validated());
         $soft->save();
@@ -100,10 +115,10 @@ class SoftController extends AbstractManagementController
     /**
      * 削除
      *
-     * @param Orm\GameCompany $soft
+     * @param Orm\GameSoft $soft
      * @return RedirectResponse
      */
-    public function delete(Orm\GameCompany $soft): RedirectResponse
+    public function delete(Orm\GameSoft $soft): RedirectResponse
     {
         $soft->delete();
 

@@ -50,7 +50,7 @@
         </div>
         <div class="panel-footer">
             <div class="text-end">
-                <form method="POST" target="{{ route('管理-システム-お知らせ削除', $notice) }}" onsubmit="return confirm('削除します');">
+                <form method="POST" action="{{ route('管理-システム-お知らせ削除', $notice) }}" onsubmit="return confirm('削除します');">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger" type="submit"><i class="fas fa-eraser"></i></button>

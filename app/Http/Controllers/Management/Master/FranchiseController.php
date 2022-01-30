@@ -22,7 +22,7 @@ class FranchiseController extends AbstractManagementController
      */
     public function index(): Application|Factory|View
     {
-        $franchises = Orm\GameCompany::orderByDesc('id')
+        $franchises = Orm\GameFranchise::orderByDesc('id')
             ->paginate(20);
 
         return view('management.master.franchise.index', [
@@ -30,14 +30,13 @@ class FranchiseController extends AbstractManagementController
         ]);
     }
 
-
     /**
      * 詳細
      *
-     * @param Orm\GameCompany $franchise
+     * @param Orm\GameFranchise $franchise
      * @return Application|Factory|View
      */
-    public function detail(Orm\GameCompany $franchise): Application|Factory|View
+    public function detail(Orm\GameFranchise $franchise): Application|Factory|View
     {
         return view('management.master.franchise.detail', [
             'franchise' => $franchise
@@ -62,7 +61,7 @@ class FranchiseController extends AbstractManagementController
      */
     public function store(GameFranchiseRequest $request): RedirectResponse
     {
-        $franchise = new Orm\GameCompany();
+        $franchise = new Orm\GameFranchise();
         $franchise->fill($request->validated());
         $franchise->save();
 
@@ -72,10 +71,10 @@ class FranchiseController extends AbstractManagementController
     /**
      * 編集画面
      *
-     * @param Orm\GameCompany $franchise
+     * @param Orm\GameFranchise $franchise
      * @return Application|Factory|View
      */
-    public function edit(Orm\GameCompany $franchise): Application|Factory|View
+    public function edit(Orm\GameFranchise $franchise): Application|Factory|View
     {
         return view('management.master.franchise.edit', [
             'franchise' => $franchise
@@ -86,10 +85,10 @@ class FranchiseController extends AbstractManagementController
      * データ更新
      *
      * @param GameFranchiseRequest $request
-     * @param Orm\GameCompany $franchise
+     * @param Orm\GameFranchise $franchise
      * @return RedirectResponse
      */
-    public function update(GameFranchiseRequest $request, Orm\GameCompany $franchise): RedirectResponse
+    public function update(GameFranchiseRequest $request, Orm\GameFranchise $franchise): RedirectResponse
     {
         $franchise->fill($request->validated());
         $franchise->save();
@@ -100,10 +99,10 @@ class FranchiseController extends AbstractManagementController
     /**
      * 削除
      *
-     * @param Orm\GameCompany $franchise
+     * @param Orm\GameFranchise $franchise
      * @return RedirectResponse
      */
-    public function delete(Orm\GameCompany $franchise): RedirectResponse
+    public function delete(Orm\GameFranchise $franchise): RedirectResponse
     {
         $franchise->delete();
 

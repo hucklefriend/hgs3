@@ -14,11 +14,11 @@
         <div class="panel-heading">
             <h4 class="panel-title">{{ $series->name }}</h4>
         </div>
-        <div class="panel-body">
-            <form method="POST" action="{{ route('管理-マスター-シリーズ編集処理', $series) }}">
-                {{ csrf_field() }}
-                {{ method_field('PUT') }}
+        <form method="POST" action="{{ route('管理-マスター-シリーズ編集処理', $series) }}">
+            {{ csrf_field() }}
+            {{ method_field('PUT') }}
 
+            <div class="panel-body">
                 <table class="table">
                     <tr>
                         <th>ID</th>
@@ -29,23 +29,27 @@
                         <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', $series->name) }}" required maxlength="100"></td>
                     </tr>
                     <tr>
-                        <th>略称</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'acronym') }}" id="acronym" name="acronym" value="{{ old('acronym', $series->acronym) }}" required maxlength="100"></td>
-                    </tr>
-                    <tr>
                         <th>よみがな</th>
                         <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', $series->phonetic) }}" required maxlength="100"></td>
                     </tr>
                     <tr>
-                        <th>公式サイトURL</th>
-                        <td><input type="url" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', $series->url) }}" required maxlength="300"></td>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td><button type="submit" class="btn btn-default">更新</button></td>
+                        <th>フランチャイズ</th>
+                        <td>{{ Form::select('franchise_id', $franchises, old('franchise_id', $series->franchise_id), ['class' => 'form-control' . invalid($errors, 'franchise_id'), 'id' => 'franchise_id']) }}</td>
                     </tr>
                 </table>
-            </form>
-        </div>
+            </div>
+            <div class="panel-footer text-end">
+                <button type="submit" class="btn btn-default">更新</button>
+            </div>
+        </form>
     </div>
 @endsection
+
+@section('js')
+    <script>
+        $(()=>{
+            $("#franchise_id").select2();
+        });
+    </script>
+@endsection
+

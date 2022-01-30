@@ -13,10 +13,9 @@
         <div class="panel-heading">
             <h4 class="panel-title">新規登録</h4>
         </div>
-        <div class="panel-body">
-            <form method="POST" action="{{ route('管理-マスター-シリーズ登録処理') }}">
-                {{ csrf_field() }}
-
+        <form method="POST" action="{{ route('管理-マスター-シリーズ登録処理') }}">
+            {{ csrf_field() }}
+            <div class="panel-body">
                 <table class="table">
                     <tr>
                         <th>名前</th>
@@ -31,15 +30,22 @@
                         <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', '') }}" required maxlength="100"></td>
                     </tr>
                     <tr>
-                        <th>公式サイトURL</th>
-                        <td><input type="url" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', '') }}" required maxlength="300"></td>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td><button type="submit" class="btn btn-default">更新</button></td>
+                        <th>フランチャイズ</th>
+                        <td>{{ Form::select('franchise_id', $franchises, old('franchise_id'), ['class' => 'form-control' . invalid($errors, 'franchise_id'), 'id' => 'franchise_id']) }}</td>
                     </tr>
                 </table>
-            </form>
-        </div>
+            </div>
+            <div class="panel-footer text-end">
+                <button type="submit" class="btn btn-default">登録</button>
+            </div>
+        </form>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(()=>{
+            $("#franchise_id").select2();
+        });
+    </script>
 @endsection

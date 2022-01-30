@@ -27,11 +27,10 @@ class GamePlatformRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => 'required|max:200',
-            'acronym'   => 'required|max:30',
-            'phonetic'  => 'required|max:200',
-            'url'       => 'max:300',
-            'is_adult'  => ''
+            'name'       => 'required|max:200',
+            'acronym'    => 'required|max:30',
+            'sort_order' => 'required|integer|min:0|max:99999999',
+            'maker_id'   => 'nullable|exists:game_companies,id'
         ];
     }
 }

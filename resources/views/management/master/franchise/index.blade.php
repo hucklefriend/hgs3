@@ -24,8 +24,7 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>タイトル</th>
-                    <th>表示期間</th>
+                    <th>名称</th>
                     <td></td>
                 </tr>
                 </thead>
@@ -34,13 +33,11 @@
                     <tr>
                         <td>{{ $franchise->id }}</td>
                         <td>{{ $franchise->name }}</td>
-                        <td>{{ $franchise->acronym }}</td>
                         <td class="text-center"><a href="{{ route('管理-マスター-フランチャイズ詳細', $franchise) }}">詳細</a></td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-
 
             <div>{{ $franchises->links() }}</div>
         </div>

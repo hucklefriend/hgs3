@@ -40,8 +40,6 @@
                 @endforeach
                 </tbody>
             </table>
-
-
             <div>{{ $platforms->links() }}</div>
         </div>
     </div>

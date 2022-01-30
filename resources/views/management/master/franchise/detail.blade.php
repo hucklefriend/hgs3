@@ -27,26 +27,14 @@
                     <td>{{ $franchise->name }}</td>
                 </tr>
                 <tr>
-                    <th>略称</th>
-                    <td>{{ $franchise->acronym }}</td>
-                </tr>
-                <tr>
                     <th>よみがな</th>
                     <td>{{ $franchise->phonetic }}</td>
-                </tr>
-                <tr>
-                    <th>公式サイト</th>
-                    <td>@if (empty($franchise->url))-@else <a href="{{ $franchise->url }}" target="_blank">{{ $franchise->url }}</a> @endif</td>
-                </tr>
-                <tr>
-                    <th>アダルトサイトフラグ</th>
-                    <td>{{ $franchise->is_adult_url }}</td>
                 </tr>
             </table>
         </div>
         <div class="panel-footer">
             <div class="text-end">
-                <form method="POST" target="{{ route('管理-マスター-フランチャイズ削除', $franchise) }}" onsubmit="return confirm('削除します');">
+                <form method="POST" action="{{ route('管理-マスター-フランチャイズ削除', $franchise) }}" onsubmit="return confirm('削除します');">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger" type="submit"><i class="fas fa-eraser"></i></button>

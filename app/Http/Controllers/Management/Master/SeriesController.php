@@ -30,7 +30,6 @@ class SeriesController extends AbstractManagementController
         ]);
     }
 
-
     /**
      * 詳細
      *
@@ -51,7 +50,11 @@ class SeriesController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        return view('management.master.series.add');
+        $franchises = Orm\GameFranchise::getNameHash();
+
+        return view('management.master.series.add', [
+            'franchises' => $franchises,
+        ]);
     }
 
     /**
@@ -77,8 +80,13 @@ class SeriesController extends AbstractManagementController
      */
     public function edit(Orm\GameSeries $series): Application|Factory|View
     {
+        $makers = Orm\GameCompany::getNameHash();
+        $franchises = Orm\GameFranchise::getNameHash();
+
         return view('management.master.series.edit', [
-            'series' => $series
+            'series'     => $series,
+            'makers'     => $makers,
+            'franchises' => $franchises,
         ]);
     }
 
@@ -105,7 +113,9 @@ class SeriesController extends AbstractManagementController
      */
     public function delete(Orm\GameSeries $series): RedirectResponse
     {
-        $series->delete();
+        if ($series->softs()->count() == 0) {
+            $series->delete();
+        }
 
         return redirect()->route('管理-マスター-シリーズ');
     }

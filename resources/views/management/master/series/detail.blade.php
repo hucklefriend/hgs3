@@ -27,31 +27,35 @@
                     <td>{{ $series->name }}</td>
                 </tr>
                 <tr>
-                    <th>略称</th>
-                    <td>{{ $series->acronym }}</td>
-                </tr>
-                <tr>
                     <th>よみがな</th>
                     <td>{{ $series->phonetic }}</td>
                 </tr>
                 <tr>
-                    <th>公式サイト</th>
-                    <td>@if (empty($series->url))-@else <a href="{{ $series->url }}" target="_blank">{{ $series->url }}</a> @endif</td>
+                    <th>フランチャイズ</th>
+                    <td>{{ $series->franchise->name }}</td>
                 </tr>
                 <tr>
-                    <th>アダルトサイトフラグ</th>
-                    <td>{{ $series->is_adult_url }}</td>
+                    <th>ソフト</th>
+                    <td>
+                        <ul>
+                        @foreach ($series->softs as $soft)
+                            <li><a href="{{ route('管理-マスター-ソフト詳細', $soft) }}">{{ $soft->name }}</a></li>
+                        @endforeach
+                        </ul>
+                    </td>
                 </tr>
             </table>
         </div>
+        @if ($series->softs->count() == 0)
         <div class="panel-footer">
             <div class="text-end">
-                <form method="POST" target="{{ route('管理-マスター-シリーズ削除', $series) }}" onsubmit="return confirm('削除します');">
+                <form method="POST" action="{{ route('管理-マスター-シリーズ削除', $series) }}" onsubmit="return confirm('削除します');">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger" type="submit"><i class="fas fa-eraser"></i></button>
                 </form>
             </div>
         </div>
+        @endempty
     </div>
 @endsection

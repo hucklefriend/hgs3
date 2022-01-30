@@ -27,11 +27,11 @@ class GameMakerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => 'required|max:200',
-            'acronym'   => 'required|max:30',
-            'phonetic'  => 'required|max:200',
-            'url'       => 'max:300',
-            'is_adult'  => ''
+            'name'      => 'required|max:100',
+            'acronym'   => 'required|max:100',
+            'phonetic'  => 'required|max:100',
+            'url'       => 'max:512',
+            'wikipedia' => 'max:512'
         ];
     }
 }

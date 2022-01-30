@@ -25,7 +25,7 @@
                 <tr>
                     <th>ID</th>
                     <th>タイトル</th>
-                    <th>表示期間</th>
+                    <th>よみがな</th>
                     <td></td>
                 </tr>
                 </thead>
@@ -34,7 +34,7 @@
                     <tr>
                         <td>{{ $series->id }}</td>
                         <td>{{ $series->name }}</td>
-                        <td>{{ $series->acronym }}</td>
+                        <td>{{ $series->phonetic }}</td>
                         <td class="text-center"><a href="{{ route('管理-マスター-シリーズ詳細', $series) }}">詳細</a></td>
                     </tr>
                 @endforeach

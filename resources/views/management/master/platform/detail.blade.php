@@ -31,14 +31,18 @@
                     <td>{{ $platform->acronym }}</td>
                 </tr>
                 <tr>
-                    <th>よみがな</th>
-                    <td>{{ $platform->phonetic }}</td>
+                    <th>メーカー</th>
+                    <td>{{ $platform?->maker->name ?? '' }}</td>
+                </tr>
+                <tr>
+                    <th>表示順</th>
+                    <td>{{ $platform->sort_order }}</td>
                 </tr>
             </table>
         </div>
         <div class="panel-footer">
             <div class="text-end">
-                <form method="POST" target="{{ route('管理-マスター-プラットフォーム削除', $platform) }}" onsubmit="return confirm('削除します');">
+                <form method="POST" action="{{ route('管理-マスター-プラットフォーム削除', $platform) }}" onsubmit="return confirm('削除します');">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <button class="btn btn-danger" type="submit"><i class="fas fa-eraser"></i></button>

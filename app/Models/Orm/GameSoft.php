@@ -6,8 +6,10 @@
 namespace Hgs3\Models\Orm;
 
 use Hgs3\Constants\PhoneticType;
-use Hgs3\Log;
-use Illuminate\Database\Eloquent\Collection;
+use \Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
 class GameSoft extends \Eloquent
@@ -15,12 +17,43 @@ class GameSoft extends \Eloquent
     protected $guarded = ['id'];
 
     /**
+     * フランチャイズを取得
+     *
+     * @return BelongsTo
+     */
+    public function franchise(): BelongsTo
+    {
+        return $this->belongsTo(GameFranchise::class, 'franchise_id');
+    }
+
+    /**
+     * シリーズを取得
+     *
+     * @return BelongsTo
+     */
+    public function series(): BelongsTo
+    {
+        return $this->belongsTo(GameSeries::class, 'series_id');
+    }
+
+    /**
+     * 原点のパッケージを取得
+     * nullがありうる
+     *
+     * @return HasOne
+     */
+    public function originalPackage(): HasOne
+    {
+        return $this->hasOne(GamePackage::class, 'id', 'original_package_id');
+    }
+
+    /**
      * ゲームソフト名のハッシュを取得
      *
      * @param array $ids
-     * @return mixed
+     * @return array
      */
-    public static function getNameHash(array $ids = array())
+    public static function getNameHash(array $ids = array()): array
     {
         $tbl = DB::table('game_softs')
             ->select(['id', 'name']);
@@ -36,9 +69,9 @@ class GameSoft extends \Eloquent
      * よみがた単位でハッシュを取得
      *
      * @param array $favoriteHash
-     * @return mixed
+     * @return array
      */
-    public static function getPhoneticTypeHash(array $favoriteHash)
+    public static function getPhoneticTypeHash(array $favoriteHash): array
     {
         $data = self::select(['id', 'name', 'phonetic_type'])
             ->orderBy('phonetic_order')
@@ -62,9 +95,9 @@ class GameSoft extends \Eloquent
      * データをハッシュで取得
      *
      * @param array $ids
-     * @return mixed
+     * @return array
      */
-    public static function getHash(array $ids = [])
+    public static function getHash(array $ids = []): array
     {
         if (empty($ids)) {
             $data = self::get();
@@ -95,7 +128,7 @@ class GameSoft extends \Eloquent
     /**
      * 表示順を更新
      */
-    public static function updateSortOrder()
+    public static function updateSortOrder(): void
     {
         // SQL文1発でできそうだけど、複雑になるのでループ回して1つずつ更新
         // その後、複雑ではなくなったけど、このままのやりかたで
@@ -133,17 +166,6 @@ SQL;
     }
 
     /**
-     * オリジナルパッケージを取得
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function originalPackage()
-    {
-        return $this->hasOne('Hgs3\Models\Orm\GamePackage', 'id', 'original_package_id')
-            ->first();
-    }
-
-    /**
      * パッケージ画像があるパッケージを取得
      */
     public function getImagePackage()
@@ -165,9 +187,9 @@ SQL;
     /**
      * パッケージを取得
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getPackages()
+    public function getPackages(): Collection
     {
         $packageLinks = GamePackageLink::where('soft_id', $this->id)
             ->get();
@@ -186,7 +208,7 @@ SQL;
      *
      * @return bool
      */
-    public function isReleased()
+    public function isReleased(): bool
     {
         return $this->first_release_int <= date('Ymd');
     }

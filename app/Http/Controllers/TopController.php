@@ -5,34 +5,31 @@
 
 namespace Hgs3\Http\Controllers;
 
-use Hgs3\Constants\PageId;
 use Hgs3\Http\GlobalBack;
 use Hgs3\Models\Game\Package;
 use Hgs3\Models\Game\Soft;
-use Hgs3\Models\NetworkLayout;
 use Hgs3\Models\Orm;
 use Hgs3\Models\Review;
 use Hgs3\Models\Site;
 use Hgs3\Models\Timeline\NewInformation;
 use Hgs3\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\View;
-use Illuminate\View\FileViewFinder;
 
 class TopController extends Controller
 {
     /**
      * トップページ
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): Application|Factory|View
     {
         if (app()->isLocal()) {
-            \Auth::loginUsingId(1);
+            //\Auth::loginUsingId(1);
         }
 
         GlobalBack::clear();
@@ -51,9 +48,9 @@ class TopController extends Controller
     /**
      * 認証切れでログアウトした先（トップページ）
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function indexLogout()
+    public function indexLogout(): Application|Factory|View
     {
         return $this->index();
     }
@@ -61,9 +58,9 @@ class TopController extends Controller
     /**
      * サイトマップ
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function sitemap()
+    public function sitemap(): Application|Factory|View
     {
         return view('sitemap');
     }
@@ -71,9 +68,10 @@ class TopController extends Controller
     /**
      * 新着情報
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @return Application|Factory|View
      */
-    public function newInformation(Request $request)
+    public function newInformation(Request $request): Application|Factory|View
     {
         GlobalBack::newInformation();
 
@@ -89,9 +87,9 @@ class TopController extends Controller
     /**
      * 当サイトについて
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function about()
+    public function about(): Application|Factory|View
     {
         return view('about');
     }
@@ -99,9 +97,9 @@ class TopController extends Controller
     /**
      * プライバシーポリシー
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function privacy()
+    public function privacy(): Application|Factory|View
     {
         return view('privacy');
     }
@@ -109,9 +107,9 @@ class TopController extends Controller
     /**
      * HGSのユーザーさんへ
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function hgs()
+    public function hgs(): Application|Factory|View
     {
         return view('hgs');
     }
