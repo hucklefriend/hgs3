@@ -80,7 +80,7 @@ class SeriesController extends AbstractManagementController
      */
     public function edit(Orm\GameSeries $series): Application|Factory|View
     {
-        $makers = Orm\GameCompany::getNameHash();
+        $makers = Orm\GameMaker::getNameHash();
         $franchises = Orm\GameFranchise::getNameHash();
 
         return view('management.master.series.edit', [

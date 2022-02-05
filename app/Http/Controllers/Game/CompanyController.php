@@ -20,7 +20,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Orm\GameCompany::orderBy('phonetic')
+        $companies = Orm\GameMaker::orderBy('phonetic')
             ->get();
 
         return view('game.company.index', [
@@ -31,10 +31,10 @@ class CompanyController extends Controller
     /**
      * 会社詳細
      *
-     * @param Orm\GameCompany $company
+     * @param Orm\GameMaker $company
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detail(Orm\GameCompany $company)
+    public function detail(Orm\GameMaker $company)
     {
         $data = $company->getSoft();
 
@@ -63,7 +63,7 @@ class CompanyController extends Controller
      */
     public function insert(GameCompanyRequest $request)
     {
-        $company = new Orm\GameCompany;
+        $company = new Orm\GameMaker;
         $company->name = $request->input('name', '');
         $company->phonetic = $request->input('phonetic', '');
         $company->acronym = $request->input('acronym', '');
@@ -78,10 +78,10 @@ class CompanyController extends Controller
     /**
      * 編集画面
      *
-     * @param Orm\GameCompany $company
+     * @param Orm\GameMaker $company
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Orm\GameCompany $company)
+    public function edit(Orm\GameMaker $company)
     {
         return view('game.company.edit', [
             'company' => $company
@@ -92,10 +92,10 @@ class CompanyController extends Controller
      * データ更新
      *
      * @param GameCompanyRequest $request
-     * @param Orm\GameCompany $company
+     * @param Orm\GameMaker $company
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(GameCompanyRequest $request, Orm\GameCompany $company)
+    public function update(GameCompanyRequest $request, Orm\GameMaker $company)
     {
         $company->name = $request->input('name');
         $company->phonetic = $request->input('phonetic');

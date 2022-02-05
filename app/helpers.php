@@ -10,7 +10,7 @@
  */
 function company_select($companyId, $withEmpty, $params = [])
 {
-    $companies = \Hgs3\Models\Orm\GameCompany::all(['id', 'name']);
+    $companies = \Hgs3\Models\Orm\GameMaker::all(['id', 'name']);
 
     $data = [];
     if ($withEmpty) {
@@ -204,10 +204,17 @@ function checked($val1, $val2)
     return '';
 }
 
-function invalid($errors, $formName)
+/**
+ * invalid判定
+ *
+ * @param $errors
+ * @param $formName
+ * @return string
+ */
+function invalid($errors, $formName): string
 {
     if ($errors->has($formName)) {
-        return ' is-valid';
+        return ' is-invalid';
     }
 
     return '';

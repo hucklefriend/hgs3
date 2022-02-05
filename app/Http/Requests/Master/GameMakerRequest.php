@@ -29,9 +29,8 @@ class GameMakerRequest extends FormRequest
         return [
             'name'      => 'required|max:100',
             'acronym'   => 'required|max:100',
-            'phonetic'  => 'required|max:100',
-            'url'       => 'max:512',
-            'wikipedia' => 'max:512'
+            'phonetic'  => 'required|max:100|regex:/^[あ-ん][ぁ-んー0-9]*/',
+            'url'       => 'nullable|max:300',
         ];
     }
 }

@@ -1,6 +1,3 @@
-@php
-    $routeName = \Route::currentRouteName();
-@endphp
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -39,7 +36,7 @@
                     </div>
                 </form>
             </div>
-            <div class="navbar-item dropdown">
+            <div class="navbar-item dropdown d-none">
                 <a href="#" data-bs-toggle="dropdown" class="navbar-link dropdown-toggle icon">
                     <i class="fa fa-bell"></i>
                     <span class="badge">0</span>
@@ -57,7 +54,7 @@
                         <i class="fa fa-user"></i>
                     </div>
                     <span>
-							<span class="d-none d-md-inline">Adam Schwartz</span>
+							<span class="d-none d-md-inline">{{ $user->name }}</span>
 							<b class="caret"></b>
 						</span>
                 </a>
@@ -97,7 +94,7 @@
                     <div class="menu-divider m-0"></div>
                 </div>
                 <div class="menu-header">Navigation</div>
-                <div class="menu-item @if ($menuCategory1 === null) active @endif">
+                <div class="menu-item @if ($menuPath === 'management') active @endif">
                     <a href="{{ route('管理') }}" class="menu-link">
                         <div class="menu-icon">
                             <i class="fa fa-th-large"></i>
@@ -106,7 +103,7 @@
                     </a>
                 </div>
 
-                <div class="menu-item has-sub @if ($menuCategory1 === 'システム') active @endif">
+                <div class="menu-item has-sub @if (str_starts_with($menuPath, 'management/system')) active @endif">
                     <a href="javascript:;" class="menu-link">
                         <div class="menu-icon">
                             <i class="fas fa-server"></i>
@@ -115,12 +112,12 @@
                         <div class="menu-caret"></div>
                     </a>
                     <div class="menu-submenu">
-                        <div class="menu-item @if ($menuCategory2 === 'お知らせ') active @endif"><a href="{{ route('管理-システム-お知らせ') }}" class="menu-link"><div class="menu-text">お知らせ</div></a></div>
-                        <div class="menu-item @if ($menuCategory2 === '新着情報') active @endif"><a href="javascript:;" class="menu-link"><div class="menu-text">新着情報</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/system/notice')) active @endif"><a href="{{ route('管理-システム-お知らせ') }}" class="menu-link"><div class="menu-text">お知らせ</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/system')) active @endif"><a href="javascript:;" class="menu-link"><div class="menu-text">新着情報</div></a></div>
                     </div>
                 </div>
 
-                <div class="menu-item has-sub @if ($menuCategory1 === 'マスター') active @endif">
+                <div class="menu-item has-sub @if (str_starts_with($menuPath, 'management/master')) active @endif">
                     <a href="javascript:;" class="menu-link">
                         <div class="menu-icon">
                             <i class="fas fa-gamepad"></i>
@@ -129,13 +126,13 @@
                         <div class="menu-caret"></div>
                     </a>
                     <div class="menu-submenu">
-                        <div class="menu-item @if ($menuCategory2 === 'メーカー') active @endif"><a href="{{ route('管理-マスター-メーカー') }}" class="menu-link"><div class="menu-text">メーカー</div></a></div>
-                        <div class="menu-item @if ($menuCategory2 === 'プラットフォーム') active @endif"><a href="{{ route('管理-マスター-プラットフォーム') }}" class="menu-link"><div class="menu-text">プラットフォーム</div></a></div>
-                        <div class="menu-item @if ($menuCategory2 === 'ハード') active @endif"><a href="{{ route('管理-マスター-ハード') }}" class="menu-link"><div class="menu-text">ハード</div></a></div>
-                        <div class="menu-item @if ($menuCategory2 === 'フランチャイズ') active @endif"><a href="{{ route('管理-マスター-フランチャイズ') }}" class="menu-link"><div class="menu-text">フランチャイズ</div></a></div>
-                        <div class="menu-item @if ($menuCategory2 === 'シリーズ') active @endif"><a href="{{ route('管理-マスター-シリーズ') }}" class="menu-link"><div class="menu-text">シリーズ</div></a></div>
-                        <div class="menu-item @if ($menuCategory2 === 'ソフト') active @endif"><a href="{{ route('管理-マスター-ソフト') }}" class="menu-link"><div class="menu-text">ソフト</div></a></div>
-                        <div class="menu-item @if ($menuCategory2 === 'パッケージ') active @endif"><a href="{{ route('管理-マスター-パッケージ') }}" class="menu-link"><div class="menu-text">パッケージ</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/maker')) active @endif"><a href="{{ route('管理-マスター-メーカー') }}" class="menu-link"><div class="menu-text">メーカー</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/platform')) active @endif"><a href="{{ route('管理-マスター-プラットフォーム') }}" class="menu-link"><div class="menu-text">プラットフォーム</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/hard')) active @endif"><a href="{{ route('管理-マスター-ハード') }}" class="menu-link"><div class="menu-text">ハード</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/franchise')) active @endif"><a href="{{ route('管理-マスター-フランチャイズ') }}" class="menu-link"><div class="menu-text">フランチャイズ</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/series')) active @endif"><a href="{{ route('管理-マスター-シリーズ') }}" class="menu-link"><div class="menu-text">シリーズ</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/soft')) active @endif"><a href="{{ route('管理-マスター-ソフト') }}" class="menu-link"><div class="menu-text">ソフト</div></a></div>
+                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/package')) active @endif"><a href="{{ route('管理-マスター-パッケージ') }}" class="menu-link"><div class="menu-text">パッケージ</div></a></div>
                     </div>
                 </div>
 

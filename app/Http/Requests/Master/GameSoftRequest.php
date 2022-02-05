@@ -28,8 +28,8 @@ class GameSoftRequest extends FormRequest
     {
         return [
             'name'         => 'required|max:200',
-            'phonetic'     => 'required|max:200',
-            'phonetic2'    => 'required|max:200',
+            'phonetic'     => 'required|max:200|regex:/^[あ-ん][ぁ-んー0-9]*/',
+            'phonetic2'    => 'required|max:200|regex:/^[あ-ん][ぁ-んー0-9]*/',
             'genre'        => 'nullable|max:200',
             'series_id'    => 'nullable|exists:game_series,id',
             'order_in_series' => 'nullable|max:200',

@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <th>公式サイト</th>
-                    <td>@if (empty($maker->url))-@else <a href="{{ $maker->url }}" target="_blank">{{ $maker->url }}</a> @endif</td>
+                    <td>@empty($maker->url)-@else <a href="{{ $maker->url }}" target="_blank">{{ $maker->url }}</a> @endempty</td>
                 </tr>
                 <tr>
                     <th>アダルトサイトフラグ</th>

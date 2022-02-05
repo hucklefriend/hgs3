@@ -3,7 +3,7 @@
 namespace Hgs3\Console\Commands;
 
 use Hgs3\Models\MongoDB\Collection;
-use Hgs3\Models\Orm\GameCompany;
+use Hgs3\Models\Orm\GameMaker;
 use Hgs3\Models\Orm\GamePlatform;
 use Hgs3\Models\Orm\GameSeries;
 use Hgs3\Models\Orm\GameSoft;
@@ -159,7 +159,7 @@ XML;
 
 
 
-        $companies = GameCompany::select(['id'])->get();
+        $companies = GameMaker::select(['id'])->get();
         foreach ($companies as $company) {
             $xml .=<<< XML
     <url>

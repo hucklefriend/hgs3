@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class GamePlatform extends \Eloquent
+class GamePlatform extends AbstractOrm
 {
     protected $guarded = ['id'];
 
@@ -109,6 +109,6 @@ SQL;
      */
     public function maker(): BelongsTo
     {
-        return $this->belongsTo(GameCompany::class, 'company_id');
+        return $this->belongsTo(GameMaker::class, 'maker_id');
     }
 }

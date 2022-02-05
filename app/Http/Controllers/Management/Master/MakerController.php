@@ -22,8 +22,8 @@ class MakerController extends AbstractManagementController
      */
     public function index(): Application|Factory|View
     {
-        $makers = Orm\GameCompany::orderByDesc('id')
-            ->paginate(20);
+        $makers = Orm\GameMaker::orderByDesc('id')
+            ->paginate(self::ITEMS_PER_PAGE);
 
         return view('management.master.maker.index', [
             'makers' => $makers
@@ -34,10 +34,10 @@ class MakerController extends AbstractManagementController
     /**
      * 詳細
      *
-     * @param Orm\GameCompany $maker
+     * @param Orm\GameMaker $maker
      * @return Application|Factory|View
      */
-    public function detail(Orm\GameCompany $maker): Application|Factory|View
+    public function detail(Orm\GameMaker $maker): Application|Factory|View
     {
         return view('management.master.maker.detail', [
             'maker' => $maker
@@ -62,7 +62,7 @@ class MakerController extends AbstractManagementController
      */
     public function store(GameMakerRequest $request): RedirectResponse
     {
-        $maker = new Orm\GameCompany();
+        $maker = new Orm\GameMaker();
         $maker->fill($request->validated());
         $maker->save();
 
@@ -72,10 +72,10 @@ class MakerController extends AbstractManagementController
     /**
      * 編集画面
      *
-     * @param Orm\GameCompany $maker
+     * @param Orm\GameMaker $maker
      * @return Application|Factory|View
      */
-    public function edit(Orm\GameCompany $maker): Application|Factory|View
+    public function edit(Orm\GameMaker $maker): Application|Factory|View
     {
         return view('management.master.maker.edit', [
             'maker' => $maker
@@ -86,10 +86,10 @@ class MakerController extends AbstractManagementController
      * データ更新
      *
      * @param GameMakerRequest $request
-     * @param Orm\GameCompany $maker
+     * @param Orm\GameMaker $maker
      * @return RedirectResponse
      */
-    public function update(GameMakerRequest $request, Orm\GameCompany $maker): RedirectResponse
+    public function update(GameMakerRequest $request, Orm\GameMaker $maker): RedirectResponse
     {
         $maker->fill($request->validated());
         $maker->save();
@@ -100,10 +100,10 @@ class MakerController extends AbstractManagementController
     /**
      * 削除
      *
-     * @param Orm\GameCompany $maker
+     * @param Orm\GameMaker $maker
      * @return RedirectResponse
      */
-    public function delete(Orm\GameCompany $maker): RedirectResponse
+    public function delete(Orm\GameMaker $maker): RedirectResponse
     {
         $maker->delete();
 

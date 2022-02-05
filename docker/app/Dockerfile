@@ -3,8 +3,8 @@ RUN apt-get update
 RUN apt-get install -y libonig-dev zlib1g-dev libpng-dev libxml2-dev libzip-dev libmemcached-dev
 RUN apt-get install -y default-mysql-client
 
-RUN groupadd -g 1000 vagrant && \
-    useradd -m -s /bin/bash -u 1000 -g 1000 vagrant
+RUN groupadd -g 1000 hgs && \
+    useradd -m -s /bin/bash -u 1000 -g 1000 hgs
 
 # extension
 RUN docker-php-ext-install pdo mbstring gd xml zip pdo_mysql

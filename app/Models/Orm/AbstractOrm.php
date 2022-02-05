@@ -30,4 +30,29 @@ class AbstractOrm extends \Eloquent
     {
         return $this->updated_at === null ? null : new Carbon($this->updated_at);
     }
+
+    /**
+     * 指定カラムのハッシュを取得
+     *
+     * @param string $value
+     * @param string $key
+     * @param array $search
+     * @param array $prepend
+     * @param array $append
+     * @return array
+     */
+    public static function getHashBy(string $value, string $key = 'id', array $search = [], array $prepend = [], array $append = []): array
+    {
+        $query = self::select([$key, $value]);
+
+        if (!empty($search)) {
+            $query->whereIn($key, $search);
+        }
+
+        $data = $query->get()
+            ->pluck($value, $key)
+            ->toArray();
+
+        return $prepend + $data + $append;
+    }
 }

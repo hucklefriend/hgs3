@@ -5,6 +5,7 @@
 @section('content')
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">管理</a></li>
+        <li class="breadcrumb-item">マスター</li>
         <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ') }}">パッケージ</a></li>
         <li class="breadcrumb-item active">パッケージ詳細</li>
     </ol>
@@ -41,10 +42,25 @@
                 <tr>
                     <th>ソフト</th>
                     <td>
-                        <ul>
-                            @foreach ($package->getSofts() as $soft)
-                                <li>{{ $soft->name }}</li>
+                        <ul class="list-group">
+                            @foreach ($package->softs() as $soft)
+                                <li class="list-group-item">{{ $soft->name }}</li>
                             @endforeach
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>ショップ</th>
+                    <td>
+                        <ul class="list-group">
+                            @foreach ($package->shops() as $shop)
+                                <li class="list-group-item">
+                                    <a href="{{ route('管理-マスター-パッケージショップ詳細', [$package, $shop]) }}">
+                                        {{ \Hgs3\Enums\Game\Shop::tryFrom($shop->shop_id)->name() }}
+                                    </a>
+                                </li>
+                            @endforeach
+                            <li class="list-group-item"><a href="{{ route('管理-マスター-パッケージショップ追加', $package) }}" class="btn btn-sm btn-default"><i class="fas fa-plus"></i></a></li>
                         </ul>
                     </td>
                 </tr>

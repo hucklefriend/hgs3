@@ -7,7 +7,7 @@ namespace Hgs3\Models\Orm;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class GameHard extends \Eloquent
+class GameHard extends AbstractOrm
 {
     protected $guarded = ['id'];
 
@@ -18,6 +18,6 @@ class GameHard extends \Eloquent
      */
     public function maker(): BelongsTo
     {
-        return $this->belongsTo(GameCompany::class);
+        return $this->belongsTo(GameMaker::class, 'maker_id');
     }
 }

@@ -8,31 +8,9 @@ namespace Hgs3\Models\Orm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class GameCompany extends \Eloquent
+class GameMaker extends AbstractOrm
 {
     protected $guarded = ['id'];
-
-    /**
-     * id => nameのハッシュを取得
-     *
-     * @param array $companyIds
-     * @param array $prepend
-     * @return array
-     */
-    public static function getNameHash(array $companyIds = [], array $prepend = []): array
-    {
-        $query = self::select(['id', 'acronym']);
-
-        if (!empty($companyIds)) {
-            $query->whereIn('id', $companyIds);
-        }
-
-        $data = $query->get()
-            ->pluck('acronym', 'id')
-            ->toArray();
-
-        return $prepend + $data;
-    }
 
     /**
      * ソフト情報を取得

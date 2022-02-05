@@ -19,23 +19,33 @@
                 <table class="table">
                     <tr>
                         <th>名前</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', '') }}" required maxlength="200" autocomplete="off"></td>
+                        <td>
+                            @include ('management.common.form.input', ['name' => 'name', 'options' => ['required', 'maxlength' => 100]])
+                        </td>
                     </tr>
                     <tr>
                         <th>よみがな</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', '') }}" required maxlength="200" autocomplete="off"></td>
+                        <td>
+                            @include ('management.common.form.input', ['name' => 'phonetic', 'options' => ['required', 'maxlength' => 100]])
+                        </td>
                     </tr>
                     <tr>
                         <th>略称</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'acronym') }}" id="acronym" name="acronym" value="{{ old('acronym', '') }}" required maxlength="10" autocomplete="off"></td>
+                        <td>
+                            @include ('management.common.form.input', ['name' => 'acronym', 'options' => ['required', 'maxlength' => 100]])
+                        </td>
                     </tr>
                     <tr>
-                        <th>表示順</th>
-                        <td><input type="number" class="form-control{{ invalid($errors, 'sort_order') }}" id="sort_order" name="sort_order" value="{{ old('sort_order', '0') }}" required min="0" max="99999999"></td>
+                        <th>表示順(発売日の数値)</th>
+                        <td>
+                            @include ('management.common.form.input', ['type' => 'number', 'name' => 'sort_order', 'options' => ['required', 'maxlength' => 100]])
+                        </td>
                     </tr>
                     <tr>
                         <th>メーカー</th>
-                        <td>{{ Form::select('maker_id', $makers, old('maker_id'), ['class' => 'form-control' . invalid($errors, 'maker_id'), 'id' => 'maker_id']) }}</td>
+                        <td>
+                            @include ('management.common.form.select', ['name' => 'maker_id', 'list' => $makers])
+                        </td>
                     </tr>
                 </table>
             </div>

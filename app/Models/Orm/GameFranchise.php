@@ -7,26 +7,9 @@ namespace Hgs3\Models\Orm;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class GameFranchise extends \Eloquent
+class GameFranchise extends AbstractOrm
 {
     protected $guarded = ['id'];
-
-    /**
-     * id => nameのハッシュを取得
-     *
-     * @param array $prepend
-     * @return array
-     */
-    public static function getNameHash(array $prepend = []): array
-    {
-        $query = self::select(['id', 'name']);
-
-        $data = $query->get()
-            ->pluck('name', 'id')
-            ->toArray();
-
-        return $prepend + $data;
-    }
 
     /**
      * シリーズ

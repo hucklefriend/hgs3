@@ -28,7 +28,12 @@
                     </tr>
                     <tr>
                         <th>よみがな(ソート用)</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic2') }}" id="phonetic2" name="phonetic2" value="{{ old('phonetic2', '') }}" required maxlength="250" autocomplete="off"></td>
+                        <td>
+                            <input type="text" class="form-control{{ invalid($errors, 'phonetic2') }}" id="phonetic2" name="phonetic2" value="{{ old('phonetic2', '') }}" required maxlength="250" autocomplete="off">
+                            @if ($errors->has('phonetic2'))
+                            <div class="invalid-feedback">{{$errors->first('phonetic2')}}</div>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th>ジャンル</th>

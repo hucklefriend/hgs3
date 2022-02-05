@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <th>原点パッケージ</th>
-                    <td>{{ $soft?->originalPackage->name }}</td>
+                    <td>{{ $soft?->originalPackage->name ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>あらすじ</th>

@@ -5,6 +5,7 @@
 
 namespace Hgs3\Http\Controllers\Management\Master;
 
+use Hgs3\Enums\RatedR;
 use Hgs3\Http\Controllers\AbstractManagementController;
 use Hgs3\Http\Requests\Master\GamePackageRequest;
 use Hgs3\Models\Orm;
@@ -12,24 +13,53 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class PackageController extends AbstractManagementController
 {
     /**
      * インデックス
      *
+     * @param Request $request
      * @return Application|Factory|View
      */
-    public function index(): Application|Factory|View
+    public function index(Request $request): Application|Factory|View
     {
-        $packages = Orm\GamePackage::orderByDesc('id')
-            ->paginate(20);
+        $packages = Orm\GamePackage::orderByDesc('id');
+
+        $searchName = trim($request->query('name', ''));
+        $searchPlatform = $request->query('platform');
+        $searchHard = $request->query('hard');
+        $search = [];
+
+        if (!empty($searchName)) {
+            $search['name'] = $searchName;
+            $words = explode(' ', $searchName);
+
+            $packages->where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('name', operator: 'LIKE', value: '%' . $word . '%');
+                }
+            });
+        }
+
+        if (!empty($searchPlatform)) {
+            $search['platform'] = $searchPlatform;
+            $packages->where('platform_id', value: $searchPlatform);
+        }
+
+        if (!empty($searchHard)) {
+            $search['hard'] = $searchHard;
+            $packages->where('hard_id', value: $searchHard);
+        }
 
         return view('management.master.package.index', [
-            'packages' => $packages
+            'packages'  => $packages->paginate(self::ITEMS_PER_PAGE),
+            'hards'     => Orm\GameHard::getHashBy('acronym', append: ['' => '']),
+            'platforms' => Orm\GamePlatform::getHashBy('name', append: ['' => '']),
+            'search'    => $search,
         ]);
     }
-
 
     /**
      * 詳細
@@ -51,7 +81,18 @@ class PackageController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        return view('management.master.package.add');
+        $makers = Orm\GameMaker::getHashBy('name');
+        $hards = Orm\GameHard::getHashBy('acronym');
+        $platforms = Orm\GamePlatform::getHashBy('name', append: ['' => '']);
+        $softs = Orm\GameSoft::getHashBy('name', append: ['' => '']);
+
+        return view('management.master.package.add', [
+            'makers'    => $makers,
+            'hards'     => $hards,
+            'platforms' => $platforms,
+            'ratedR'    => RatedR::toTextArray(),
+            'softs'     => $softs
+        ]);
     }
 
     /**
@@ -77,8 +118,18 @@ class PackageController extends AbstractManagementController
      */
     public function edit(Orm\GamePackage $package): Application|Factory|View
     {
+        $makers = Orm\GameMaker::getHashBy('name');
+        $hards = Orm\GameHard::getHashBy('acronym');
+        $platforms = Orm\GamePlatform::getHashBy('name', append: ['' => '']);
+        $softs = Orm\GameSoft::getHashBy('name', append: ['' => '']);
+
         return view('management.master.package.edit', [
-            'package' => $package
+            'package'   => $package,
+            'makers'    => $makers,
+            'hards'     => $hards,
+            'platforms' => $platforms,
+            'ratedR'    => RatedR::toTextArray(),
+            'softs'     => $softs
         ]);
     }
 
@@ -108,5 +159,20 @@ class PackageController extends AbstractManagementController
         $package->delete();
 
         return redirect()->route('管理-マスター-パッケージ');
+    }
+
+    /**
+     * ショップ詳細
+     *
+     * @param Orm\GamePackage $package
+     * @param Orm\GamePackageShop $shop
+     * @return Application|Factory|View
+     */
+    public function shopDetail(Orm\GamePackage $package, Orm\GamePackageShop $shop): Application|Factory|View
+    {
+        return view('management.master.package.shop_detail', [
+            'package' => $package,
+            'shop'    => $shop,
+        ]);
     }
 }

@@ -5,6 +5,7 @@
 @section('content')
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">管理</a></li>
+        <li class="breadcrumb-item">マスター</li>
         <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ') }}">パッケージ</a></li>
         <li class="breadcrumb-item active">パッケージ登録</li>
     </ol>
@@ -13,33 +14,74 @@
         <div class="panel-heading">
             <h4 class="panel-title">新規登録</h4>
         </div>
-        <div class="panel-body">
-            <form method="POST" action="{{ route('管理-マスター-パッケージ登録処理') }}">
-                {{ csrf_field() }}
+        <form method="POST" action="{{ route('管理-マスター-パッケージ登録処理') }}">
+            {{ csrf_field() }}
 
+            <div class="panel-body">
                 <table class="table">
                     <tr>
                         <th>名前</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'name') }}" id="name" name="name" value="{{ old('name', '') }}" required maxlength="100"></td>
+                        <td>
+                            @include ('management.common.form.input', ['name' => 'name', 'options' => ['required', 'maxlength' => 100]])
+                        </td>
                     </tr>
                     <tr>
                         <th>略称</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'acronym') }}" id="acronym" name="acronym" value="{{ old('acronym', '') }}" required maxlength="100"></td>
+                        <td>
+                            @include ('management.common.form.input', ['name' => 'acronym', 'options' => ['required', 'maxlength' => 100]])
+                        </td>
                     </tr>
                     <tr>
-                        <th>よみがな</th>
-                        <td><input type="text" class="form-control{{ invalid($errors, 'phonetic') }}" id="phonetic" name="phonetic" value="{{ old('phonetic', '') }}" required maxlength="100"></td>
+                        <th>メーカー</th>
+                        <td>
+                            @include ('management.common.form.select', ['name' => 'maker_id', 'list' => $makers])
+                        </td>
                     </tr>
                     <tr>
-                        <th>公式サイトURL</th>
-                        <td><input type="url" class="form-control{{ invalid($errors, 'url') }}" id="url" name="url" value="{{ old('url', '') }}" required maxlength="300"></td>
+                        <th>ハード</th>
+                        <td>
+                            @include ('management.common.form.select', ['name' => 'hard_id', 'list' => $hards])
+                        </td>
                     </tr>
                     <tr>
-                        <th></th>
-                        <td><button type="submit" class="btn btn-default">更新</button></td>
+                        <th>プラットフォーム</th>
+                        <td>
+                            @include ('management.common.form.select', ['name' => 'platform_id', 'list' => $platforms])
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>リリース日(数値)</th>
+                        <td>
+                            @include ('management.common.form.input', ['type' => 'number', 'name' => 'release_at', 'options' => ['required', 'maxlength' => 20]])
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>リリース日(数値)</th>
+                        <td>
+                            @include ('management.common.form.input', ['name' => 'release_int', 'type' => 'number', 'options' => ['required', 'max' => 99999999, 'min' => 0]])
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>R-18</th>
+                        <td>
+                            @include ('management.common.form.select', ['name' => 'is_adult', 'list' => $ratedR])
+                        </td>
                     </tr>
                 </table>
-            </form>
-        </div>
+            </div>
+            <div class="panel-footer text-end">
+                <button type="submit" class="btn btn-default">登録</button>
+            </div>
+        </form>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(()=>{
+            $("#maker_id").select2();
+            $("#hard_id").select2();
+            $("#platform_id").select2();
+        });
+    </script>
 @endsection

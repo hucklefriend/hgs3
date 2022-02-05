@@ -7,9 +7,10 @@ namespace Hgs3\Models\Orm;
 
 use Hgs3\Constants\Game\Shop;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
-class GamePackage extends \Eloquent
+class GamePackage extends AbstractOrm
 {
     protected $guarded = ['id'];
 
@@ -20,7 +21,7 @@ class GamePackage extends \Eloquent
      */
     public function maker(): BelongsTo
     {
-        return $this->belongsTo(GameCompany::class, 'company_id');
+        return $this->belongsTo(GameMaker::class, 'maker_id');
     }
 
     /**
@@ -28,7 +29,7 @@ class GamePackage extends \Eloquent
      *
      * @return Collection
      */
-    public function getSofts(): Collection
+    public function softs(): Collection
     {
         $packageLinks = GamePackageLink::where('package_id', $this->id)->get();
         if ($packageLinks->isEmpty()) {
@@ -36,6 +37,45 @@ class GamePackage extends \Eloquent
         }
 
         return GameSoft::whereIn('id', $packageLinks->pluck('soft_id'))->get();
+    }
+
+    /**
+     * ショップを取得
+     * (なぜかこれで動かない)
+     *
+     * @return Collection
+     */
+    public function shops(): Collection
+    {
+        return GamePackageShop::where('package_id', $this->id)->get();
+    }
+
+    /**
+     * ショップを取得
+     * (なぜかこれで動かない)
+     *
+     * @return HasMany
+     */
+//    public function shops(): HasMany
+//    {
+//        return $this->hasMany(GamePackageShop::class, 'package_id', 'id');
+//    }
+
+    /**
+     * 保存
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = []): bool
+    {
+        $softs = $this->getSofts();
+        foreach ($softs as $soft) {
+            $soft->setOriginalPackage();
+            $soft->save();
+        }
+
+        return parent::save($options);
     }
 
     /**
@@ -104,5 +144,21 @@ class GamePackage extends \Eloquent
                     break;
             }
         }
+    }
+
+    /**
+     * 削除
+     *
+     * @return bool|null
+     */
+    public function delete(): bool|null
+    {
+        /* @var GamePackageShop $shop */
+        foreach ($this->shops() as $shop) {
+            // ショップ情報も削除
+            $shop->delete();
+        }
+
+        return parent::delete();
     }
 }

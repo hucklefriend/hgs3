@@ -314,10 +314,10 @@ class GlobalBack
     /**
      * ゲーム会社詳細
      *
-     * @param Orm\GameCompany $company
+     * @param Orm\GameMaker $company
      * @return string
      */
-    public static function companyDetail(Orm\GameCompany $company)
+    public static function companyDetail(Orm\GameMaker $company)
     {
         $before = self::beforeHas([PageId::GAME_DETAIL]);
 

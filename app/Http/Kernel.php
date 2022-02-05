@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'guest' => \Hgs3\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'goSite' => \Hgs3\Http\Middleware\GoToSite::class,
+        'management' => \Hgs3\Http\Middleware\Management::class,
     ];
 }

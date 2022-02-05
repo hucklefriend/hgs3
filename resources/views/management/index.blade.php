@@ -2,9 +2,7 @@
 
 @section('content')
     <ol class="breadcrumb float-xl-end">
-        <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-        <li class="breadcrumb-item"><a href="javascript:;">Library</a></li>
-        <li class="breadcrumb-item active">Data</li>
+        <li class="breadcrumb-item active">Home</li>
     </ol>
     <h1 class="page-header">Page Header <small>header small text goes here...</small></h1>
     <div class="panel panel-inverse">

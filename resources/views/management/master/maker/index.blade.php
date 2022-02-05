@@ -41,10 +41,8 @@
                 </tbody>
             </table>
 
-
             <div>{{ $makers->links() }}</div>
         </div>
     </div>
-    <!-- END panel -->
 
 @endsection

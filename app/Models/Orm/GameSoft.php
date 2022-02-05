@@ -5,14 +5,13 @@
 
 namespace Hgs3\Models\Orm;
 
-use Hgs3\Constants\PhoneticType;
+use Hgs3\Enums\Game\Soft\PhoneticType;
 use \Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
-class GameSoft extends \Eloquent
+class GameSoft extends AbstractOrm
 {
     protected $guarded = ['id'];
 
@@ -45,50 +44,6 @@ class GameSoft extends \Eloquent
     public function originalPackage(): HasOne
     {
         return $this->hasOne(GamePackage::class, 'id', 'original_package_id');
-    }
-
-    /**
-     * ゲームソフト名のハッシュを取得
-     *
-     * @param array $ids
-     * @return array
-     */
-    public static function getNameHash(array $ids = array()): array
-    {
-        $tbl = DB::table('game_softs')
-            ->select(['id', 'name']);
-
-        if (!empty($ids)) {
-            $tbl->whereIn('id', $ids);
-        }
-
-        return $tbl->get()->pluck('name', 'id')->toArray();
-    }
-
-    /**
-     * よみがた単位でハッシュを取得
-     *
-     * @param array $favoriteHash
-     * @return array
-     */
-    public static function getPhoneticTypeHash(array $favoriteHash): array
-    {
-        $data = self::select(['id', 'name', 'phonetic_type'])
-            ->orderBy('phonetic_order')
-            ->get();
-
-        $result = [];
-
-        foreach ($data as $game) {
-            $result[intval($game->phonetic_type)][] = $game;
-
-            if (isset($favoriteHash[$game->id])) {
-                $result[100][] = $game;
-            }
-        }
-        unset($data);
-
-        return $result;
     }
 
     /**
@@ -158,11 +113,11 @@ SQL;
      * @param array $options
      * @return bool
      */
-    public function save(array $options = [])
+    public function save(array $options = []): bool
     {
         $this->phonetic_type = PhoneticType::getTypeByPhonetic($this->phonetic);
 
-        return parent::save();
+        return parent::save($options);
     }
 
     /**
@@ -192,8 +147,7 @@ SQL;
      */
     public function getPackages(bool $all = false): Collection
     {
-        $packageLinks = GamePackageLink::where('soft_id', $this->id)
-            ->get();
+        $packageLinks = GamePackageLink::where('soft_id', $this->id)->get();
         if ($packageLinks->isEmpty()) {
             return new Collection();
         }
@@ -214,5 +168,21 @@ SQL;
     public function isReleased(): bool
     {
         return $this->first_release_int <= date('Ymd');
+    }
+
+    /**
+     * 現在設定されているパッケージ群から原点パッケージの設定
+     *
+     * @return void
+     */
+    public function setOriginalPackage(): void
+    {
+        $packages = $this->getPackages();
+        if ($packages->isEmpty()) {
+            $this->original_package_id = null;
+        } else {
+            $this->original_package_id = $packages[0]->id;
+            $this->first_release_int = $packages[0]->release_int;
+        }
     }
 }

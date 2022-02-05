@@ -51,7 +51,7 @@ class PlatformController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        $makers = Orm\GameCompany::getNameHash(prepend: ['' => '-']);
+        $makers = Orm\GameMaker::getNameHash(prepend: ['' => '-']);
 
         return view('management.master.platform.add', ['makers' => $makers]);
     }
@@ -79,7 +79,7 @@ class PlatformController extends AbstractManagementController
      */
     public function edit(Orm\GamePlatform $platform): Application|Factory|View
     {
-        $makers = Orm\GameCompany::getNameHash(prepend: ['' => '-']);
+        $makers = Orm\GameMaker::getNameHash(prepend: ['' => '-']);
 
         return view('management.master.platform.edit', [
             'platform' => $platform,
