@@ -5,6 +5,7 @@
 @section('content')
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">Home</a></li>
+        <li class="breadcrumb-item">マスター</li>
         <li class="breadcrumb-item active">ハード</li>
     </ol>
     <h1 class="page-header">ハード</h1>
@@ -24,8 +25,8 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>タイトル</th>
-                    <th>表示期間</th>
+                    <th>名前</th>
+                    <th>略称</th>
                     <td></td>
                 </tr>
                 </thead>
@@ -40,11 +41,8 @@
                 @endforeach
                 </tbody>
             </table>
-
-
             <div>{{ $hards->links() }}</div>
         </div>
     </div>
-    <!-- END panel -->
 
 @endsection

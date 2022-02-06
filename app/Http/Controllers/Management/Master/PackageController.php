@@ -5,6 +5,7 @@
 
 namespace Hgs3\Http\Controllers\Management\Master;
 
+use Hgs3\Enums\Game\Shop;
 use Hgs3\Enums\RatedR;
 use Hgs3\Http\Controllers\AbstractManagementController;
 use Hgs3\Http\Requests\Master\GamePackageRequest;
@@ -173,6 +174,21 @@ class PackageController extends AbstractManagementController
         return view('management.master.package.shop_detail', [
             'package' => $package,
             'shop'    => $shop,
+        ]);
+    }
+
+    /**
+     * ショップ追加
+     *
+     * @param Orm\GamePackage $package
+     * @return Application|Factory|View
+     */
+    public function shopAdd(Orm\GamePackage $package): Application|Factory|View
+    {
+        return view('management.master.package.shop_add', [
+            'package' => $package,
+            'shops'   => Shop::selectList(),
+            'ratedR'  => RatedR::selectList(),
         ]);
     }
 }

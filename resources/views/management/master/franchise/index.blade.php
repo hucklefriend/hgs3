@@ -5,9 +5,31 @@
 @section('content')
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">Home</a></li>
+        <li class="breadcrumb-item">マスター</li>
         <li class="breadcrumb-item active">フランチャイズ</li>
     </ol>
     <h1 class="page-header">フランチャイズ</h1>
+    <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <h4 class="panel-title">検索</h4>
+        </div>
+        <div class="panel-body">
+            <form action="{{ route('管理-マスター-フランチャイズ') }}" method="GET">
+                <div class="row mb-3">
+                    <label class="form-label col-form-label col-md-3">名前</label>
+                    <div class="col-md-9">
+                        {{ Form::text('name', $search['name'] ?? '', ['class' => 'form-control', 'placeholder' => '名前 or よみがな', 'autocomplete' => 'off']) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 offset-md-3">
+                        <button type="submit" class="btn btn-sm btn-primary w-100px me-5px">検索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="panel panel-inverse">
         <div class="panel-heading">
             <h4 class="panel-title">一覧</h4>
@@ -39,9 +61,7 @@
                 </tbody>
             </table>
 
-            <div>{{ $franchises->links() }}</div>
+            <div>{{ $franchises->appends($search)->links() }}</div>
         </div>
     </div>
-    <!-- END panel -->
-
 @endsection

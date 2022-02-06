@@ -104,11 +104,11 @@ Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin', 'm
             Route::put('{package}', [Controllers\Management\Master\PackageController::class, 'update'])->name('管理-マスター-パッケージ編集処理');
             Route::get('{package}', [Controllers\Management\Master\PackageController::class, 'detail'])->name('管理-マスター-パッケージ詳細');
             Route::delete('{package}', [Controllers\Management\Master\PackageController::class, 'delete'])->name('管理-マスター-パッケージ削除');
-            Route::get('{package}/shop/{shop}', [Controllers\Management\Master\PackageController::class, 'shopDetail'])->name('管理-マスター-パッケージショップ詳細');
             Route::get('{package}/shop/add', [Controllers\Management\Master\PackageController::class, 'shopAdd'])->name('管理-マスター-パッケージショップ追加');
             Route::post('{package}/shop/add', [Controllers\Management\Master\PackageController::class, 'shopStore'])->name('管理-マスター-パッケージショップ追加処理');
             Route::get('{package}/shop/{shop}/edit', [Controllers\Management\Master\PackageController::class, 'shopEdit'])->name('管理-マスター-パッケージショップ更新');
-            Route::put('{package}/shop/{shopd}', [Controllers\Management\Master\PackageController::class, 'shopUpdate'])->name('管理-マスター-パッケージショップ更新処理');
+            Route::get('{package}/shop/{shop}', [Controllers\Management\Master\PackageController::class, 'shopDetail'])->name('管理-マスター-パッケージショップ詳細');
+            Route::put('{package}/shop/{shop}', [Controllers\Management\Master\PackageController::class, 'shopUpdate'])->name('管理-マスター-パッケージショップ更新処理');
             Route::delete('{package}/shop/{shop}', [Controllers\Management\Master\PackageController::class, 'shopDelete'])->name('管理-マスター-パッケージショップ削除');
         });
     });

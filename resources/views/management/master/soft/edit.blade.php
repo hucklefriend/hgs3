@@ -5,9 +5,10 @@
 @section('content')
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">管理</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-ソフト') }}">ソフト</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-ソフト詳細', $soft) }}">ソフト詳細</a></li>
-        <li class="breadcrumb-item active">ソフト編集</li>
+        <li class="breadcrumb-item">マスター</li>
+        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-ソフト') . session('search_soft') }}">ソフト</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-ソフト詳細', $soft) }}">詳細</a></li>
+        <li class="breadcrumb-item active">編集</li>
     </ol>
     <h1 class="page-header">ソフト編集</h1>
     <div class="panel panel-inverse">

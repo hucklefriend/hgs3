@@ -5,6 +5,7 @@
 @section('content')
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">Home</a></li>
+        <li class="breadcrumb-item">マスター</li>
         <li class="breadcrumb-item active">プラットフォーム</li>
     </ol>
     <h1 class="page-header">プラットフォーム</h1>

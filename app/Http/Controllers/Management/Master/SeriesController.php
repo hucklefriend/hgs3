@@ -12,21 +12,40 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class SeriesController extends AbstractManagementController
 {
     /**
      * インデックス
      *
+     * @param Request $request
      * @return Application|Factory|View
      */
-    public function index(): Application|Factory|View
+    public function index(Request $request): Application|Factory|View
     {
-        $serieses = Orm\GameSeries::orderByDesc('id')
-            ->paginate(20);
+        $serieses = Orm\GameSeries::orderByDesc('id');
+
+        $searchName = trim($request->query('name', ''));
+        $search = [];
+
+        if (!empty($searchName)) {
+            $search['name'] = $searchName;
+            $words = explode(' ', $searchName);
+
+            $serieses->where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('name', operator: 'LIKE', value: '%' . $word . '%');
+                    $query->orWhere('phonetic', operator: 'LIKE', value: '%' . $word . '%');
+                }
+            });
+        }
+
+        $this->putSearchSession('search_series', $search);
 
         return view('management.master.series.index', [
-            'serieses' => $serieses
+            'search'   => $search,
+            'serieses' => $serieses->paginate(self::ITEMS_PER_PAGE),
         ]);
     }
 
@@ -39,7 +58,7 @@ class SeriesController extends AbstractManagementController
     public function detail(Orm\GameSeries $series): Application|Factory|View
     {
         return view('management.master.series.detail', [
-            'series' => $series
+            'model' => $series
         ]);
     }
 
@@ -50,10 +69,9 @@ class SeriesController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        $franchises = Orm\GameFranchise::getNameHash();
-
         return view('management.master.series.add', [
-            'franchises' => $franchises,
+            'model'      => new Orm\GameSeries(),
+            'franchises' => Orm\GameFranchise::getHashBy('name'),
         ]);
     }
 
@@ -80,13 +98,10 @@ class SeriesController extends AbstractManagementController
      */
     public function edit(Orm\GameSeries $series): Application|Factory|View
     {
-        $makers = Orm\GameMaker::getNameHash();
-        $franchises = Orm\GameFranchise::getNameHash();
-
         return view('management.master.series.edit', [
-            'series'     => $series,
-            'makers'     => $makers,
-            'franchises' => $franchises,
+            'model'      => $series,
+            'makers'     => Orm\GameMaker::getHashBy('name'),
+            'franchises' => Orm\GameFranchise::getHashBy('name'),
         ]);
     }
 

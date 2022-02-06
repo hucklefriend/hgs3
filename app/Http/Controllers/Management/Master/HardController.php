@@ -23,7 +23,7 @@ class HardController extends AbstractManagementController
     public function index(): Application|Factory|View
     {
         $hards = Orm\GameHard::orderByDesc('id')
-            ->paginate(20);
+            ->paginate(self::ITEMS_PER_PAGE);
 
         return view('management.master.hard.index', [
             'hards' => $hards
@@ -51,9 +51,10 @@ class HardController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        $makers = Orm\GameMaker::getNameHash();
-
-        return view('management.master.hard.add', ['makers' => $makers]);
+        return view('management.master.hard.add', [
+            'model'  => new Orm\GameHard(),
+            'makers' => Orm\GameMaker::getHashBy('name'),
+        ]);
     }
 
     /**
@@ -79,11 +80,9 @@ class HardController extends AbstractManagementController
      */
     public function edit(Orm\GameHard $hard): Application|Factory|View
     {
-        $makers = Orm\GameMaker::getNameHash();
-
         return view('management.master.hard.edit', [
-            'hard' => $hard,
-            'makers' => $makers
+            'model'  => $hard,
+            'makers' => Orm\GameMaker::getHashBy('name')
         ]);
     }
 

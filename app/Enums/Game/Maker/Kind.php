@@ -1,27 +1,26 @@
 <?php
 /**
- * R指定
+ * メーカーの属性
  */
 
-namespace Hgs3\Enums;
+namespace Hgs3\Enums\Game\Maker;
 
-enum RatedR: int
+
+enum Kind: int
 {
     case None = 0;
-    case R15  = 1;
-    case R18  = 2;
+    case Company = 1;
 
     /**
-     * テキストを取得
+     * テキスト
      *
      * @return string
      */
     public function text(): string
     {
         return match($this) {
-            RatedR::None => '全年齢',
-            RatedR::R15  => 'R-15',
-            RatedR::R18  => 'R-18',
+            Kind::None    => '未指定',
+            Kind::Company => '会社',
         };
     }
 

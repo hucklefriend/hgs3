@@ -28,10 +28,10 @@ class GameHardRequest extends FormRequest
     {
         return [
             'name'       => 'required|max:200',
-            'phonetic'   => 'required|max:200',
+            'phonetic'   => 'required|max:200|regex:/^[あ-ん][ぁ-んー0-9]*/u',
             'acronym'    => 'required|max:10',
             'sort_order' => 'required|integer|min:0|max:99999999',
-            'maker_id'   => 'nullable|exists:game_companies,id'
+            'maker_id'   => 'nullable|exists:game_makers,id'
         ];
     }
 }

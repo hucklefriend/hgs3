@@ -23,7 +23,7 @@ class PlatformController extends AbstractManagementController
     public function index(): Application|Factory|View
     {
         $platforms = Orm\GamePlatform::orderByDesc('id')
-            ->paginate(20);
+            ->paginate(self::ITEMS_PER_PAGE);
 
         return view('management.master.platform.index', [
             'platforms' => $platforms
@@ -40,7 +40,7 @@ class PlatformController extends AbstractManagementController
     public function detail(Orm\GamePlatform $platform): Application|Factory|View
     {
         return view('management.master.platform.detail', [
-            'platform' => $platform
+            'model' => $platform
         ]);
     }
 
@@ -51,9 +51,10 @@ class PlatformController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        $makers = Orm\GameMaker::getNameHash(prepend: ['' => '-']);
-
-        return view('management.master.platform.add', ['makers' => $makers]);
+        return view('management.master.platform.add', [
+            'model'  => new Orm\GamePlatform(),
+            'makers' => Orm\GameMaker::getHashBy('name', prepend: ['' => '-'])
+        ]);
     }
 
     /**
@@ -79,11 +80,11 @@ class PlatformController extends AbstractManagementController
      */
     public function edit(Orm\GamePlatform $platform): Application|Factory|View
     {
-        $makers = Orm\GameMaker::getNameHash(prepend: ['' => '-']);
+        $makers = Orm\GameMaker::getHashBy('name', prepend: ['' => '-']);
 
         return view('management.master.platform.edit', [
-            'platform' => $platform,
-            'makers'   => $makers
+            'model'  => $platform,
+            'makers' => $makers
         ]);
     }
 

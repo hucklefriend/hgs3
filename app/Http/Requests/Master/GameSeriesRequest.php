@@ -28,7 +28,7 @@ class GameSeriesRequest extends FormRequest
     {
         return [
             'name'         => 'required|max:200',
-            'phonetic'     => 'required|max:200',
+            'phonetic'     => 'required|max:200|regex:/^[あ-ん][ぁ-んー0-9]*/u',
             'franchise_id' => 'required|exists:game_franchises,id'
         ];
     }

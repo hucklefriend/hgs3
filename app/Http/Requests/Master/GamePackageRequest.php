@@ -8,6 +8,7 @@ namespace Hgs3\Http\Requests\Master;
 use Hgs3\Enums\RatedR;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class GamePackageRequest extends FormRequest
 {
@@ -35,7 +36,7 @@ class GamePackageRequest extends FormRequest
             'company_id'   => 'required|exists:game_companies,id',
             'release_at'   => 'required|max:100',
             'release_int'  => 'required|numeric|integer|min:0|max:99999999',
-            'is_adult'     => ['required', Rule::in(RatedR::cases())],
+            'rated_r'      => ['required', new Enum(RatedR::class)],
 
             //'series_id'    => 'nullable|exists:game_series,id',
         ];

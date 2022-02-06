@@ -5,12 +5,25 @@
 
 namespace Hgs3\Models\Orm;
 
+use Hgs3\Enums\Game\Maker\Kind;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class GameMaker extends AbstractOrm
 {
     protected $guarded = ['id'];
+
+    /**
+     * @var array デフォルト値
+     */
+    protected $attributes = [
+        'name'        => '',
+        'acronym'     => '',
+        'phonetic'    => '',
+        'kind'        => 0,
+        'url'         => '',
+        'url_rated_r' => 0
+    ];
 
     /**
      * ソフト情報を取得

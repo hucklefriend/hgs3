@@ -5,7 +5,11 @@
 
 namespace Hgs3\Http\Requests\Master;
 
+use Hgs3\Enums\Game\Maker\Kind;
+use Hgs3\Enums\RatedR;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class GameMakerRequest extends FormRequest
 {
@@ -27,10 +31,12 @@ class GameMakerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => 'required|max:100',
-            'acronym'   => 'required|max:100',
-            'phonetic'  => 'required|max:100|regex:/^[あ-ん][ぁ-んー0-9]*/',
-            'url'       => 'nullable|max:300',
+            'name'        => 'required|max:100',
+            'acronym'     => 'required|max:100',
+            'phonetic'    => 'required|max:100|regex:/^[あ-ん][ぁ-んー0-9]*/u',
+            'kind'        => ['required', new Enum(Kind::class)],
+            'url'         => 'nullable|max:300',
+            'url_rated_r' => [new Enum(RatedR::class)],
         ];
     }
 }

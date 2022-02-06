@@ -9,14 +9,14 @@
         <li class="breadcrumb-item active">パッケージ</li>
     </ol>
     <h1 class="page-header">パッケージ</h1>
-        <div class="panel panel-inverse">
+    <div class="panel panel-inverse">
             <div class="panel-heading">
                 <h4 class="panel-title">Search</h4>
             </div>
             <div class="panel-body">
                 <form action="{{ route('管理-マスター-パッケージ') }}" method="GET">
                     <div class="row mb-3">
-                        <label class="form-label col-form-label col-md-3">名前|よみがな</label>
+                        <label class="form-label col-form-label col-md-3">名前</label>
                         <div class="col-md-9">
                             {{ Form::text('name', $search['name'] ?? '', ['class' => 'form-control', 'placeholder' => '名前 or よみがな(半角スペースで単語区切り)', 'autocomplete' => 'off']) }}
                         </div>
@@ -40,7 +40,7 @@
                     </div>
                 </form>
             </div>
-    </div>
+</div>
 
     <div class="panel panel-inverse">
         <div class="panel-heading">

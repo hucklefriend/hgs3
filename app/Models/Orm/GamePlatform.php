@@ -15,6 +15,13 @@ class GamePlatform extends AbstractOrm
     protected $guarded = ['id'];
 
     /**
+     * @var array デフォルト値
+     */
+    protected $attributes = [
+        'sort_order' => 0
+    ];
+
+    /**
      * ソフト情報を取得
      *
      * @return array

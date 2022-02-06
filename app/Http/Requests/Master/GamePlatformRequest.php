@@ -5,7 +5,9 @@
 
 namespace Hgs3\Http\Requests\Master;
 
+use Hgs3\Enums\RatedR;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class GamePlatformRequest extends FormRequest
 {
@@ -30,7 +32,9 @@ class GamePlatformRequest extends FormRequest
             'name'       => 'required|max:200',
             'acronym'    => 'required|max:30',
             'sort_order' => 'required|integer|min:0|max:99999999',
-            'maker_id'   => 'nullable|exists:game_companies,id'
+            'maker_id'   => 'nullable|exists:game_makers,id',
+            'url'        => 'nullable|max:300',
+            'rated_r'    => ['required', new Enum(RatedR::class)],
         ];
     }
 }

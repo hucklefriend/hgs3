@@ -12,21 +12,40 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class FranchiseController extends AbstractManagementController
 {
     /**
      * インデックス
      *
+     * @param Request $request
      * @return Application|Factory|View
      */
-    public function index(): Application|Factory|View
+    public function index(Request $request): Application|Factory|View
     {
-        $franchises = Orm\GameFranchise::orderByDesc('id')
-            ->paginate(20);
+        $franchises = Orm\GameFranchise::orderByDesc('id');
+
+        $searchName = trim($request->query('name', ''));
+        $search = [];
+
+        if (!empty($searchName)) {
+            $search['name'] = $searchName;
+            $words = explode(' ', $searchName);
+
+            $franchises->where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('name', operator: 'LIKE', value: '%' . $word . '%');
+                    $query->orWhere('phonetic', operator: 'LIKE', value: '%' . $word . '%');
+                }
+            });
+        }
+
+        $this->putSearchSession('search_franchise', $search);
 
         return view('management.master.franchise.index', [
-            'franchises' => $franchises
+            'franchises' => $franchises->paginate(self::ITEMS_PER_PAGE),
+            'search'     => $search
         ]);
     }
 
@@ -39,7 +58,7 @@ class FranchiseController extends AbstractManagementController
     public function detail(Orm\GameFranchise $franchise): Application|Factory|View
     {
         return view('management.master.franchise.detail', [
-            'franchise' => $franchise
+            'model' => $franchise
         ]);
     }
 
@@ -50,7 +69,9 @@ class FranchiseController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        return view('management.master.franchise.add');
+        return view('management.master.franchise.add', [
+            'model' => new Orm\GameFranchise(),
+        ]);
     }
 
     /**
@@ -77,7 +98,7 @@ class FranchiseController extends AbstractManagementController
     public function edit(Orm\GameFranchise $franchise): Application|Factory|View
     {
         return view('management.master.franchise.edit', [
-            'franchise' => $franchise
+            'model' => $franchise
         ]);
     }
 

@@ -72,4 +72,20 @@ enum Shop: int
             default                => '',
         };
     }
+
+    /**
+     * input[type=select]に渡す用のリスト作成
+     *
+     * @return string[]
+     */
+    public static function selectList(): array
+    {
+        $result = [];
+
+        foreach (self::cases() as $case) {
+            $result[$case->value] = $case->name();
+        }
+
+        return $result;
+    }
 }

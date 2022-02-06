@@ -13,6 +13,11 @@
     <link href="{{ asset('admin/css/vendor.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <style>
+        .form-control {
+            background-color: rgba(0, 0, 0, 0.5) !important;
+        }
+    </style>
 </head>
 <body>
 <div class="app-cover"></div>

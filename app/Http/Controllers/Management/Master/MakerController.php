@@ -12,24 +12,43 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class MakerController extends AbstractManagementController
 {
     /**
      * インデックス
      *
+     * @param Request $request
      * @return Application|Factory|View
      */
-    public function index(): Application|Factory|View
+    public function index(Request $request): Application|Factory|View
     {
-        $makers = Orm\GameMaker::orderByDesc('id')
-            ->paginate(self::ITEMS_PER_PAGE);
+        $makers = Orm\GameMaker::orderByDesc('id');
+
+        $searchName = trim($request->query('name', ''));
+        $search = [];
+
+        if (!empty($searchName)) {
+            $search['name'] = $searchName;
+            $words = explode(' ', $searchName);
+
+            $makers->where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('name', operator: 'LIKE', value: '%' . $word . '%');
+                    $query->orWhere('phonetic', operator: 'LIKE', value: '%' . $word . '%');
+                    $query->orWhere('acronym', operator: 'LIKE', value: '%' . $word . '%');
+                }
+            });
+        }
+
+        $this->putSearchSession('search_maker', $search);
 
         return view('management.master.maker.index', [
-            'makers' => $makers
+            'search' => $search,
+            'makers' => $makers->paginate(self::ITEMS_PER_PAGE)
         ]);
     }
-
 
     /**
      * 詳細
@@ -40,7 +59,7 @@ class MakerController extends AbstractManagementController
     public function detail(Orm\GameMaker $maker): Application|Factory|View
     {
         return view('management.master.maker.detail', [
-            'maker' => $maker
+            'model' => $maker
         ]);
     }
 
@@ -51,7 +70,9 @@ class MakerController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        return view('management.master.maker.add');
+        return view('management.master.maker.add', [
+            'model' => new Orm\GameMaker(),
+        ]);
     }
 
     /**
@@ -78,7 +99,7 @@ class MakerController extends AbstractManagementController
     public function edit(Orm\GameMaker $maker): Application|Factory|View
     {
         return view('management.master.maker.edit', [
-            'maker' => $maker
+            'model' => $maker
         ]);
     }
 
