@@ -7,7 +7,7 @@ namespace Hgs3\Models\Orm;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class GamePackageLink extends \Eloquent
+class GameSoftPackage extends \Eloquent
 {
     protected $primaryKey = ['soft_id', 'package_id'];
     public $incrementing = false;

@@ -44,6 +44,10 @@
                     <td>{{ $model->series->name ?? '-' }}</td>
                 </tr>
                 <tr>
+                    <th>シリーズ内の表示順</th>
+                    <td>{{ $model->order_in_series ?? '-' }}</td>
+                </tr>
+                <tr>
                     <th>フランチャイズ</th>
                     <td>{{ $model->franchise->name }}</td>
                 </tr>
@@ -62,7 +66,7 @@
             </table>
         </div>
 
-        @if ($soft->getPackages()->count() == 0)
+        @if ($model->getPackages()->count() == 0)
         <div class="panel-footer">
             <div class="text-end">
                 <form method="POST" action="{{ route('管理-マスター-ソフト削除', $model) }}" onsubmit="return confirm('削除します');">

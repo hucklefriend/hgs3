@@ -409,7 +409,7 @@ SQL;
                 continue;
             }
 
-            $pkg = Orm\GamePackageLink::where('soft_id', $soft->id)
+            $pkg = Orm\GameSoftPackage::where('soft_id', $soft->id)
                 ->get()
                 ->pluck('package_id')
                 ->toArray();

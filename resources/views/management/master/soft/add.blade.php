@@ -18,7 +18,7 @@
             {{ csrf_field() }}
 
             <div class="panel-body">
-
+                @include('management.master.soft.form')
             </div>
             <div class="panel-footer text-end">
                 <button type="submit" class="btn btn-default">登録</button>

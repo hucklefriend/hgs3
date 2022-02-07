@@ -6,6 +6,7 @@
 namespace Hgs3\Models\Orm;
 
 use Hgs3\Enums\Game\Soft\PhoneticType;
+use Hgs3\Enums\RatedR;
 use \Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -47,6 +48,22 @@ class GameSoft extends AbstractOrm
     }
 
     /**
+     * パッケージを取得
+     *
+     * @return Collection
+     */
+    public function packages(): Collection
+    {
+        $packageLinks = GameSoftPackage::where('soft_id', $this->id)->get();
+        if ($packageLinks->isEmpty()) {
+            return new Collection();
+        }
+
+        return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
+            ->orderBy('release_int')->get();
+    }
+
+    /**
      * データをハッシュで取得
      *
      * @param array $ids
@@ -83,7 +100,7 @@ class GameSoft extends AbstractOrm
     /**
      * 表示順を更新
      */
-    public static function updateSortOrder(): void
+    public static function updatePhoneticOrder(): void
     {
         // SQL文1発でできそうだけど、複雑になるのでループ回して1つずつ更新
         // その後、複雑ではなくなったけど、このままのやりかたで
@@ -116,6 +133,30 @@ SQL;
     public function save(array $options = []): bool
     {
         $this->phonetic_type = PhoneticType::getTypeByPhonetic($this->phonetic);
+        $packages = $this->packages();
+
+        if ($packages->isEmpty()) {
+            $this->original_package_id = null;
+            $this->first_release_int = 0;
+            $this->r18_only_flag = 0;
+        } else {
+            $this->r18_only_flag = 1;
+
+            /* @var GamePackage $package */
+            foreach ($packages as $package) {
+                // 一番古い発売日をセット
+                if ($this->first_release_int == 0) {
+                    $this->first_release_int = $package->release_int;
+                } else if ($this->first_release_int < $package->release_int) {
+                    $this->first_release_int = $package->release_int;
+                }
+
+                // R18以外が1つでもあればフラグを下げる
+                if ($package->rated_r != RatedR::R18->value) {
+                    $this->r18_only_flag = 0;
+                }
+            }
+        }
 
         return parent::save($options);
     }
@@ -147,7 +188,7 @@ SQL;
      */
     public function getPackages(bool $all = false): Collection
     {
-        $packageLinks = GamePackageLink::where('soft_id', $this->id)->get();
+        $packageLinks = GameSoftPackage::where('soft_id', $this->id)->get();
         if ($packageLinks->isEmpty()) {
             return new Collection();
         }

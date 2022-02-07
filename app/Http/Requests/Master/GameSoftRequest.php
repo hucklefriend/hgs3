@@ -34,7 +34,7 @@ class GameSoftRequest extends FormRequest
             'phonetic2'                 => 'required|max:250|regex:/^[あ-ん][ぁ-んー0-9]*/',
             'genre'                     => 'nullable|max:150',
             'series_id'                 => 'nullable|exists:game_series,id',
-            'order_in_series'           => 'required|numeric|integer|min:0|max:99999999',
+            'order_in_series'           => 'nullable|numeric|integer|min:0|max:99999999',
             'franchise_id'              => 'required|exists:game_franchises,id',
             'original_package_id'       => 'nullable|exists:game_packages,id',
             'introduction'              => 'nullable|max:1000',

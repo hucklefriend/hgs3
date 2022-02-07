@@ -41,6 +41,12 @@
         </td>
     </tr>
     <tr>
+        <th>シリーズ内のソート順</th>
+        <td>
+            @include ('management.common.form.input', ['type' => 'number', 'name' => 'order_in_series', 'options' => ['min' => 0, 'max' => '99999999']])
+        </td>
+    </tr>
+    <tr>
         <th>フランチャイズ</th>
         <td>
             @include ('management.common.form.select', ['name' => 'franchise_id', 'list' => $franchises])
@@ -48,11 +54,21 @@
     </tr>
     <tr>
         <th>あらすじ</th>
-        <td><textarea class="form-control{{ invalid($errors, 'introduction') }}" id="introduction" name="introduction" rows="10">{{ old('introduction') }}</textarea></td>
+        <td>
+            @include ('management.common.form.textarea', ['name' => 'introduction'])
+        </td>
     </tr>
     <tr>
         <th>あらすじの引用元</th>
-        <td><input type="text" class="form-control{{ invalid($errors, 'introduction_from') }}" id="introduction_from" name="introduction_from" value="{{ old('introduction_from', '') }}" required maxlength="150" autocomplete="off"></td>
+        <td>
+            @include ('management.common.form.textarea', ['name' => 'introduction_from'])
+        </td>
+    </tr>
+    <tr>
+        <th>あらすじ引用元のR指定</th>
+        <td>
+            @include ('management.common.form.select', ['name' => 'introduction_from_rated_r', 'list' => \Hgs3\Enums\RatedR::selectList()])
+        </td>
     </tr>
 </table>
 

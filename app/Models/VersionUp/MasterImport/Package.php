@@ -52,7 +52,7 @@ class Package extends MasterImportAbstract
 
                 self::insert($data, $softs, $companies, $platforms);
 
-                $links = Orm\GamePackageLink::where('package_id', $data->id)
+                $links = Orm\GameSoftPackage::where('package_id', $data->id)
                     ->get();
                 foreach ($links as $link) {
                     $updateSofts[$link->soft_id] = $link->soft_id;
@@ -137,7 +137,7 @@ class Package extends MasterImportAbstract
         $package->save();
 
         foreach ($softIds as $softId) {
-            Orm\GamePackageLink::ignoreInsert($softId, $package->id, $package->release_int);
+            Orm\GameSoftPackage::ignoreInsert($softId, $package->id, $package->release_int);
         }
 
         if (isset($data->shop)) {

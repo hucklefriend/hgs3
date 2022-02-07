@@ -88,6 +88,7 @@ class SoftController extends AbstractManagementController
         $soft = new Orm\GameSoft();
         $soft->fill($request->validated());
         $soft->save();
+        Orm\GameSoft::updatePhoneticOrder();
 
         return redirect()->route('管理-マスター-ソフト詳細', $soft);
     }
@@ -119,6 +120,7 @@ class SoftController extends AbstractManagementController
     {
         $soft->fill($request->validated());
         $soft->save();
+        Orm\GameSoft::updatePhoneticOrder();
 
         return redirect()->route('管理-マスター-ソフト詳細', $soft);
     }

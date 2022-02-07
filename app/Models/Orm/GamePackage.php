@@ -31,7 +31,7 @@ class GamePackage extends AbstractOrm
      */
     public function softs(): Collection
     {
-        $packageLinks = GamePackageLink::where('package_id', $this->id)->get();
+        $packageLinks = GameSoftPackage::where('package_id', $this->id)->get();
         if ($packageLinks->isEmpty()) {
             return new Collection();
         }

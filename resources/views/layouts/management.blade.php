@@ -14,8 +14,9 @@
     <link href="{{ asset('admin/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <style>
-        .form-control {
+        .form-control, .select2.select2-container .selection .select2-selection.select2-selection--multiple, .select2.select2-container .selection .select2-selection.select2-selection--single {
             background-color: rgba(0, 0, 0, 0.5) !important;
+            color: white !important;
         }
     </style>
 </head>

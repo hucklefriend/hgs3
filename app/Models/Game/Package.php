@@ -113,7 +113,7 @@ class Package
                 ->delete();
 
             // ソフトとの関連付けを削除
-            Orm\GamePackageLink::where('soft_id', $soft->id)
+            Orm\GameSoftPackage::where('soft_id', $soft->id)
                 ->where('package_id', $package->id)
                 ->delete();
 
