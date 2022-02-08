@@ -75,5 +75,5 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell",
     run: "always",
-    inline: "make -C /var/hgs/docker up"
+    inline: "make -C /var/hgs/docker/local up"
 end

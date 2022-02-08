@@ -1,37 +1,6 @@
 version: "3.8"
 
 services:
-  https-portal:
-    container_name: https_portal
-    image: steveltn/https-portal:1
-    ports:
-#      - "80:80"
-      - "443:443"
-    environment:
-      STAGE: local
-      DOMAINS: 'hgn.test -> http://hgs_web:80'
-    restart: always
-    volumes:
-      - https-portal-data:/var/lib/https-portal
-    depends_on:
-      - hgs_web
-    networks:
-      - hgs_net
-
-  hgs_web:
-    build: web
-    container_name: hgs_web
-    hostname: hgs_web
-    ports:
-      - "80:80"
-    volumes:
-      - /var/hgs:/var/hgs
-    restart: always
-    depends_on:
-      - hgs_app
-    networks:
-      - hgs_net
-
   hgs_app:
     build: app
     container_name: hgs_app
@@ -45,23 +14,6 @@ services:
       - hgs_redis
     ports:
       - "9000:9000"
-    networks:
-      - hgs_net
-
-  hgs_db:
-    image: mariadb:10.5.9
-    container_name: hgs_db
-    volumes:
-      - hgs_db_vol:/var/lib/mysql
-      - ./db/init:/docker-entrypoint-initdb.d
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: hgs
-      MYSQL_PASSWORD: hgshgs
-      MYSQL_DATABASE: hgs3
-    ports:
-      - "3306:3306"
     networks:
       - hgs_net
 
@@ -95,7 +47,7 @@ services:
     volumes:
       - hgs_mongo_vol:/data/db
       - hgs_mongo_config_vol:/data/configdb
-      - /var/hgs/docker/mongo_backup:/tmp/backup
+      - /var/hgs/docker/dev/mongo_backup:/tmp/backup
 
   hgs_mongo_express:
     image: mongo-express
@@ -111,11 +63,9 @@ services:
       - hgs_net
 
 volumes:
-  hgs_db_vol:
   hgs_mongo_vol:
   hgs_mongo_config_vol:
   hgs_redis_vol:
-  https-portal-data:
 
 networks:
   hgs_net:
