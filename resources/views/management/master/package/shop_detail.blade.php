@@ -7,10 +7,10 @@
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">管理</a></li>
         <li class="breadcrumb-item">マスター</li>
         <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ') }}">パッケージ</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ詳細', $package) }}">パッケージ詳細</a></li>
-        <li class="breadcrumb-item active">パッケージの販売ショップ</li>
+        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ詳細', $package) }}">詳細</a></li>
+        <li class="breadcrumb-item active">販売ショップ</li>
     </ol>
-    <h1 class="page-header">パッケージの販売ショップ</h1>
+    <h1 class="page-header">販売ショップ</h1>
     <div class="panel panel-inverse">
         <div class="panel-heading">
             <h4 class="panel-title">{{ $package->name }}</h4>
@@ -31,22 +31,55 @@
                 <tr>
                     <th>画像(小)</th>
                     <td>
-                        @empty($shop->small_image_url)-@else
-                            <img src="{{ $shop->small_image_url }}">@endempty
+                        @empty($shop->small_image_url)
+                            -
+                        @else
+                            @switch ($shop->shop())
+                                @case (\Hgs3\Enums\Game\Shop::Amazon)
+                                {!! $shop->small_image_url !!}
+                                @break
+
+                                @default
+                                <img src="{{ $shop->small_image_url }}">
+                                @break
+                            @endswitch
+                        @endempty
                     </td>
                 </tr>
                 <tr>
                     <th>画像(中)</th>
                     <td>
-                        @empty($shop->medium_image_url)-@else
-                            <img src="{{ $shop->medium_image_url }}">@endempty
+                        @empty($shop->medium_image_url)
+                            -
+                        @else
+                            @switch ($shop->shop)
+                                @case (\Hgs3\Enums\Game\Shop::Amazon)
+                                {!! $shop->medium_image_url !!}
+                                @break
+
+                                @default
+                                <img src="{{ $shop->medium_image_url }}">
+                                @break
+                            @endswitch
+                        @endempty
                     </td>
                 </tr>
                 <tr>
                     <th>画像(大)</th>
                     <td>
-                        @empty($shop->large_image_url)-@else
-                            <img src="{{ $shop->large_image_url }}">@endempty
+                        @empty($shop->large_image_url)
+                            -
+                        @else
+                            @switch ($shop->shop())
+                                @case (\Hgs3\Enums\Game\Shop::Amazon)
+                                {!! $shop->large_image_url !!}
+                                @break
+
+                                @default
+                                <img src="{{ $shop->large_image_url }}">
+                                @break
+                            @endswitch
+                        @endempty
                     </td>
                 </tr>
                 <tr>

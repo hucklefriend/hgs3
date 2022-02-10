@@ -252,3 +252,9 @@ $ vagrant vbguest --status
 
 vagrant haltしてからもう一回vagrant upするといける
 バージョン違いで起きるらしい。
+
+
+
+docker用
+
+sudo a2enmod proxy_fcgi

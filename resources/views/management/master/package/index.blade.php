@@ -11,7 +11,7 @@
     <h1 class="page-header">パッケージ</h1>
     <div class="panel panel-inverse">
             <div class="panel-heading">
-                <h4 class="panel-title">Search</h4>
+                <h4 class="panel-title">検索</h4>
             </div>
             <div class="panel-body">
                 <form action="{{ route('管理-マスター-パッケージ') }}" method="GET">

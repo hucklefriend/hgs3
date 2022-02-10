@@ -19,89 +19,11 @@
             {{ csrf_field() }}
 
             <div class="panel-body">
-                <table class="table">
-                    <tr>
-                        <th>ショップ</th>
-                        <td>
-                            @include ('management.common.form.select', ['name' => 'shop_id', 'list' => $shops, 'value' => \Hgs3\Enums\Game\Shop::Amazon->value, 'options' => ['required']])
-                        </td>
-                    </tr>
-                    <tr id="asin">
-                        <th>ASIN</th>
-                        <td>
-                            @include ('management.common.form.input', ['name' => 'asin', 'options' => ['required']])
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>ショップURL</th>
-                        <td>
-                            @include ('management.common.form.input', ['name' => 'shop_url', 'options' => ['required']])
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>画像(小)</th>
-                        <td>
-                            @include ('management.common.form.input', ['name' => 'shop_url', 'options' => ['required']])
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>画像(小)</th>
-                        <td>
-                            @include ('management.common.form.input', ['name' => 'shop_url', 'options' => ['required']])
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>画像(小)</th>
-                        <td>
-                            @include ('management.common.form.input', ['name' => 'shop_url', 'options' => ['required']])
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>リリース日(数値)</th>
-                        <td>
-                            @include ('management.common.form.input', ['name' => 'release_int', 'type' => 'number', 'options' => ['required', 'max' => 99999999, 'min' => 0]])
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>R-18</th>
-                        <td>
-                            @include ('management.common.form.select', ['name' => 'is_adult', 'list' => $ratedR])
-                        </td>
-                    </tr>
-                </table>
+                @include('management.master.package.shop_form')
             </div>
             <div class="panel-footer text-end">
                 <button type="submit" class="btn btn-default">登録</button>
             </div>
         </form>
     </div>
-@endsection
-
-@section('js')
-    <script>
-        const AMAZON = {{ \Hgs3\Enums\Game\Shop::Amazon->value }};
-
-
-        $(()=>{
-            $("#shop_id").select2();
-
-            changeShop();
-
-            $("#shop_id").change(()=>{
-                changeShop();
-            });
-        });
-
-
-        function changeShop()
-        {
-            let shopId = $('#shop_id').val();
-
-            if (shopId == AMAZON) {
-                $('#asin').show();
-            } else {
-                $('#asin').hide();
-            }
-        }
-    </script>
 @endsection

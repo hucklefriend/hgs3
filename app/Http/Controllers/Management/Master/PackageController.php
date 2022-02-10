@@ -186,6 +186,7 @@ class PackageController extends AbstractManagementController
     public function shopAdd(Orm\GamePackage $package): Application|Factory|View
     {
         return view('management.master.package.shop_add', [
+            'model'   => new Orm\GamePackageShop,
             'package' => $package,
             'shops'   => Shop::selectList(),
             'ratedR'  => RatedR::selectList(),
