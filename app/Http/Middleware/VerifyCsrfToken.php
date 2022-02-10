@@ -14,4 +14,20 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         //
     ];
+
+    /**
+     * @param $request
+     * @param \Closure $next
+     * @return mixed
+     * @throws \Illuminate\Session\TokenMismatchException
+     */
+    public function handle($request, \Closure $next)
+    {
+        // テスト中はCSRF対策を無効化
+        if (env('APP_ENV') !== 'testing') {
+            return parent::handle($request, $next);
+        }
+
+        return $next($request);
+    }
 }

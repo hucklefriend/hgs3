@@ -117,7 +117,7 @@ class SoftController extends Controller
      */
     public function detailByPackage($packageId)
     {
-        $packageLink = Orm\GamePackageLink::where('package_id', $packageId)
+        $packageLink = Orm\GameSoftPackage::where('package_id', $packageId)
             ->orderBy('soft_id')
             ->first();
 

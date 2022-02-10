@@ -6,10 +6,10 @@
 namespace Hgs3\Models\VersionUp;
 
 use Hgs3\Models\Game\SoftList;
-use Hgs3\Models\Orm\GameCompany;
+use Hgs3\Models\Orm\GameMaker;
 use Hgs3\Models\Orm\GameOfficialSite;
 use Hgs3\Models\Orm\GamePackage;
-use Hgs3\Models\Orm\GamePackageLink;
+use Hgs3\Models\Orm\GameSoftPackage;
 use Hgs3\Models\Orm\GamePackageShop;
 use Hgs3\Models\Orm\GamePlatform;
 use Hgs3\Models\Orm\GameSeries;

@@ -25,7 +25,7 @@ class CompanyController extends Controller
 
         $this->network->load('game-company');
 
-        $data = Orm\GameCompany::orderBy('phonetic')
+        $data = Orm\GameMaker::orderBy('phonetic')
             ->paginate(100);
 
         $index = 0;
@@ -53,7 +53,7 @@ class CompanyController extends Controller
         return $this->result('ゲーム会社');
     }
 
-    public function detail(Orm\GameCompany $company)
+    public function detail(Orm\GameMaker $company)
     {
 
     }

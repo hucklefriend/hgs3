@@ -14,3 +14,8 @@ npm-debug.log
 /public/js/inc
 /public/vendors
 /public/phpmyadmin
+/package-lock.json
+/storage/logs/*.log
+/storage/framework/views/*
+/.phpunit.result.cache
+/public/tmp

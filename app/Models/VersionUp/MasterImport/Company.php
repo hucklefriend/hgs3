@@ -33,9 +33,9 @@ class Company extends MasterImportAbstract
                 echo 'loading ' . $filePath . PHP_EOL;
                 $data = \GuzzleHttp\json_decode(File::get($filePath), true);
 
-                $c = Orm\GameCompany::find($data['id']);
+                $c = Orm\GameMaker::find($data['id']);
                 if ($c == null) {
-                    $com = new Orm\GameCompany($data);
+                    $com = new Orm\GameMaker($data);
                     $com->save();
                     unset($com);
                 }
@@ -73,7 +73,7 @@ class Company extends MasterImportAbstract
         $companies = include($path);
 
         foreach ($companies as $c) {
-            $company = Orm\GameCompany::find($c['id']);
+            $company = Orm\GameMaker::find($c['id']);
 
             $data = $c;
             unset($data['id']);

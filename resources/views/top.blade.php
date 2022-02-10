@@ -1,19 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+
+
     <div class="content__inner">
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card card-hgn">
                     <div class="card-body">
-                        @if ($newInfoNum > 0)
+                        @if (count($newInfo) > 0)
                             <div class="d-flex justify-content-between card-title-flex">
                                 <h5 class="card-title">新着情報</h5>
                                 <div class="card-title-link">
                                     <a href="{{ route('新着情報') }}" class="and-more and-more-sm"><small>すべて見る <i class="fas fa-angle-right"></i></small></a>
                                 </div>
                             </div>
-                            @if ($newInfoNum > 1)
+                            @if (count($newInfo) > 1)
                                 <script>
                                     let swiper = null;
                                     $(function(){

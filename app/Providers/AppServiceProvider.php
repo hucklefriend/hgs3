@@ -2,6 +2,7 @@
 
 namespace Hgs3\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // すべての環境でhttps対応
+        URL::forceScheme('https');
+
+        // これもしないとページャーがhttpsにならない
+        $this->app['request']->server->set('HTTPS','on');
     }
 
     /**

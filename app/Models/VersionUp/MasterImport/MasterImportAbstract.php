@@ -30,7 +30,7 @@ abstract class MasterImportAbstract
      */
     protected static function getCompanyHash()
     {
-        return Orm\GameCompany::select(['id', 'acronym'])
+        return Orm\GameMaker::select(['id', 'acronym'])
             ->get()
             ->pluck('id', 'acronym')
             ->toArray();

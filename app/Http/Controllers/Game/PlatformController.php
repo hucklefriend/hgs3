@@ -38,7 +38,7 @@ class PlatformController extends Controller
 
         return view('game.platform.detail', [
             'platform' => $platform,
-            'company'  => Orm\GameCompany::find($platform->company_id),
+            'company'  => Orm\GameMaker::find($platform->company_id),
             'soft'     => $data['soft'],
             'packages' => $data['packages']
         ]);

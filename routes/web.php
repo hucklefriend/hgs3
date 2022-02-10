@@ -1,20 +1,120 @@
 <?php
 use Hgs3\Http\Controllers;
 
+Route::get('/haribote/{page}', function ($page) {return view('haribote.' . $page);});
 
-// 管理者のみ
-Route::group(['middleware' => ['auth', 'can:admin']], function () {
-    // 管理メニュー
-    Route::get('/admin', [Controllers\AdminController::class, 'index'])->name('管理メニュー');
 
-    // お知らせ
-    Route::get('/system/notice/add', [Controllers\System\NoticeController::class, 'System\NoticeController@add'])->name('お知らせ登録');
-    Route::post('/system/notice/add', [Controllers\System\NoticeController::class, 'insert'])->name('お知らせ登録処理');
-    Route::get('/system/notice/edit/{notice}', [Controllers\System\NoticeController::class, 'edit'])->name('お知らせ編集');
-    Route::patch('/system/notice/edit/{notice}', [Controllers\System\NoticeController::class, 'update'])->name('お知らせ編集処理');
-    Route::delete('/system/notice/{notice}', [Controllers\System\NoticeController::class, 'delete'])->name('お知らせ削除');
-    Route::get('/system/notice/future', [Controllers\System\NoticeController::class, 'future'])->name('未来のお知らせ');
-    Route::get('/system/notice/past', [Controllers\System\NoticeController::class, 'past'])->name('過去のお知らせ');
+// 管理用
+Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin', 'management']], function () {
+    // 管理
+    Route::get('/', [Controllers\Management\ManagementController::class, 'index'])->name('管理');
+
+    // システム
+    Route::group(['prefix' => 'system'], function () {
+
+        // お知らせ
+        Route::group(['prefix' => 'notice'], function () {
+            Route::get('/', [Controllers\Management\System\NoticeController::class, 'index'])->name('管理-システム-お知らせ');
+            Route::get('add', [Controllers\Management\System\NoticeController::class, 'add'])->name('管理-システム-お知らせ登録');
+            Route::post('add', [Controllers\Management\System\NoticeController::class, 'store'])->name('管理-システム-お知らせ登録処理');
+            Route::get('{notice}/edit', [Controllers\Management\System\NoticeController::class, 'edit'])->name('管理-システム-お知らせ編集');
+            Route::put('{notice}/edit', [Controllers\Management\System\NoticeController::class, 'update'])->name('管理-システム-お知らせ編集処理');
+            Route::get('{notice}', [Controllers\Management\System\NoticeController::class, 'detail'])->name('管理-システム-お知らせ詳細');
+            Route::delete('{notice}', [Controllers\Management\System\NoticeController::class, 'delete'])->name('管理-システム-お知らせ削除');
+            Route::get('future', [Controllers\Management\System\NoticeController::class, 'future'])->name('管理-システム-未来のお知らせ');
+            Route::get('past', [Controllers\Management\System\NoticeController::class, 'past'])->name('管理-システム-過去のお知らせ');
+        });
+
+    });
+
+    // マスター
+    Route::group(['prefix' => 'master'], function () {
+        // メーカー
+        Route::group(['prefix' => 'maker'], function () {
+            Route::get('/', [Controllers\Management\Master\MakerController::class, 'index'])->name('管理-マスター-メーカー');
+            Route::get('add', [Controllers\Management\Master\MakerController::class, 'add'])->name('管理-マスター-メーカー登録');
+            Route::post('add', [Controllers\Management\Master\MakerController::class, 'store'])->name('管理-マスター-メーカー登録処理');
+            Route::get('{maker}/edit', [Controllers\Management\Master\MakerController::class, 'edit'])->name('管理-マスター-メーカー編集');
+            Route::put('{maker}/edit', [Controllers\Management\Master\MakerController::class, 'update'])->name('管理-マスター-メーカー編集処理');
+            Route::get('{maker}', [Controllers\Management\Master\MakerController::class, 'detail'])->name('管理-マスター-メーカー詳細');
+            Route::delete('{maker}', [Controllers\Management\Master\MakerController::class, 'delete'])->name('管理-マスター-メーカー削除');
+        });
+        
+        // プラットフォーム
+        Route::group(['prefix' => 'platform'], function () {
+            Route::get('/', [Controllers\Management\Master\PlatformController::class, 'index'])->name('管理-マスター-プラットフォーム');
+            Route::get('add', [Controllers\Management\Master\PlatformController::class, 'add'])->name('管理-マスター-プラットフォーム登録');
+            Route::post('add', [Controllers\Management\Master\PlatformController::class, 'store'])->name('管理-マスター-プラットフォーム登録処理');
+            Route::get('{platform}/edit', [Controllers\Management\Master\PlatformController::class, 'edit'])->name('管理-マスター-プラットフォーム編集');
+            Route::put('{platform}/edit', [Controllers\Management\Master\PlatformController::class, 'update'])->name('管理-マスター-プラットフォーム編集処理');
+            Route::get('{platform}', [Controllers\Management\Master\PlatformController::class, 'detail'])->name('管理-マスター-プラットフォーム詳細');
+            Route::delete('{platform}', [Controllers\Management\Master\PlatformController::class, 'delete'])->name('管理-マスター-プラットフォーム削除');
+        });
+
+        // ハード
+        Route::group(['prefix' => 'hard'], function () {
+            Route::get('/', [Controllers\Management\Master\HardController::class, 'index'])->name('管理-マスター-ハード');
+            Route::get('add', [Controllers\Management\Master\HardController::class, 'add'])->name('管理-マスター-ハード登録');
+            Route::post('add', [Controllers\Management\Master\HardController::class, 'store'])->name('管理-マスター-ハード登録処理');
+            Route::get('{hard}/edit', [Controllers\Management\Master\HardController::class, 'edit'])->name('管理-マスター-ハード編集');
+            Route::put('{hard}/edit', [Controllers\Management\Master\HardController::class, 'update'])->name('管理-マスター-ハード編集処理');
+            Route::get('{hard}', [Controllers\Management\Master\HardController::class, 'detail'])->name('管理-マスター-ハード詳細');
+            Route::delete('{hard}', [Controllers\Management\Master\HardController::class, 'delete'])->name('管理-マスター-ハード削除');
+        });
+
+        // フランチャイズ
+        Route::group(['prefix' => 'franchise'], function () {
+            Route::get('/', [Controllers\Management\Master\FranchiseController::class, 'index'])->name('管理-マスター-フランチャイズ');
+            Route::get('add', [Controllers\Management\Master\FranchiseController::class, 'add'])->name('管理-マスター-フランチャイズ登録');
+            Route::post('add', [Controllers\Management\Master\FranchiseController::class, 'store'])->name('管理-マスター-フランチャイズ登録処理');
+            Route::get('{franchise}/edit', [Controllers\Management\Master\FranchiseController::class, 'edit'])->name('管理-マスター-フランチャイズ編集');
+            Route::put('{franchise}/edit', [Controllers\Management\Master\FranchiseController::class, 'update'])->name('管理-マスター-フランチャイズ編集処理');
+            Route::get('{franchise}', [Controllers\Management\Master\FranchiseController::class, 'detail'])->name('管理-マスター-フランチャイズ詳細');
+            Route::delete('{franchise}', [Controllers\Management\Master\FranchiseController::class, 'delete'])->name('管理-マスター-フランチャイズ削除');
+        });
+
+        // シリーズ
+        Route::group(['prefix' => 'series'], function () {
+            Route::get('/', [Controllers\Management\Master\SeriesController::class, 'index'])->name('管理-マスター-シリーズ');
+            Route::get('add', [Controllers\Management\Master\SeriesController::class, 'add'])->name('管理-マスター-シリーズ登録');
+            Route::post('add', [Controllers\Management\Master\SeriesController::class, 'store'])->name('管理-マスター-シリーズ登録処理');
+            Route::get('{series}/edit', [Controllers\Management\Master\SeriesController::class, 'edit'])->name('管理-マスター-シリーズ編集');
+            Route::put('{series}/edit', [Controllers\Management\Master\SeriesController::class, 'update'])->name('管理-マスター-シリーズ編集処理');
+            Route::get('{series}', [Controllers\Management\Master\SeriesController::class, 'detail'])->name('管理-マスター-シリーズ詳細');
+            Route::delete('{series}', [Controllers\Management\Master\SeriesController::class, 'delete'])->name('管理-マスター-シリーズ削除');
+        });
+
+        // ソフト
+        Route::group(['prefix' => 'soft'], function () {
+            Route::get('/', [Controllers\Management\Master\SoftController::class, 'index'])->name('管理-マスター-ソフト');
+            Route::get('add', [Controllers\Management\Master\SoftController::class, 'add'])->name('管理-マスター-ソフト登録');
+            Route::post('add', [Controllers\Management\Master\SoftController::class, 'store'])->name('管理-マスター-ソフト登録処理');
+            Route::get('{soft}/edit', [Controllers\Management\Master\SoftController::class, 'edit'])->name('管理-マスター-ソフト編集');
+            Route::put('{soft}/edit', [Controllers\Management\Master\SoftController::class, 'update'])->name('管理-マスター-ソフト編集処理');
+            Route::get('{soft}', [Controllers\Management\Master\SoftController::class, 'detail'])->name('管理-マスター-ソフト詳細');
+            Route::delete('{soft}', [Controllers\Management\Master\SoftController::class, 'delete'])->name('管理-マスター-ソフト削除');
+        });
+
+        // パッケージ
+        Route::group(['prefix' => 'package'], function () {
+            Route::get('/', [Controllers\Management\Master\PackageController::class, 'index'])->name('管理-マスター-パッケージ');
+            Route::get('add', [Controllers\Management\Master\PackageController::class, 'add'])->name('管理-マスター-パッケージ登録');
+            Route::post('add', [Controllers\Management\Master\PackageController::class, 'store'])->name('管理-マスター-パッケージ登録処理');
+            Route::get('{package}/edit', [Controllers\Management\Master\PackageController::class, 'edit'])->name('管理-マスター-パッケージ編集');
+            Route::put('{package}', [Controllers\Management\Master\PackageController::class, 'update'])->name('管理-マスター-パッケージ編集処理');
+            Route::get('{package}', [Controllers\Management\Master\PackageController::class, 'detail'])->name('管理-マスター-パッケージ詳細');
+            Route::delete('{package}', [Controllers\Management\Master\PackageController::class, 'delete'])->name('管理-マスター-パッケージ削除');
+            Route::get('{package}/shop/add', [Controllers\Management\Master\PackageController::class, 'shopAdd'])->name('管理-マスター-パッケージショップ追加');
+            Route::post('{package}/shop/add', [Controllers\Management\Master\PackageController::class, 'shopStore'])->name('管理-マスター-パッケージショップ追加処理');
+            Route::get('{package}/shop/{shop}/edit', [Controllers\Management\Master\PackageController::class, 'shopEdit'])->name('管理-マスター-パッケージショップ更新');
+            Route::get('{package}/shop/{shop}', [Controllers\Management\Master\PackageController::class, 'shopDetail'])->name('管理-マスター-パッケージショップ詳細');
+            Route::put('{package}/shop/{shop}', [Controllers\Management\Master\PackageController::class, 'shopUpdate'])->name('管理-マスター-パッケージショップ更新処理');
+            Route::delete('{package}/shop/{shop}', [Controllers\Management\Master\PackageController::class, 'shopDelete'])->name('管理-マスター-パッケージショップ削除');
+        });
+    });
+
+
+
 
     // 不正レビュー
     //Route::get('/admin/injustice_review', [InjusticeReviewController, 'Admin\InjusticeReviewController@index']);
@@ -37,7 +137,7 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::patch('/admin/review/url/ok', [Controllers\Site\ApprovalController::class, 'ok'])->name('レビューURL OK');
     Route::patch('/admin/review/url/ng', [Controllers\Site\ApprovalController::class, 'ng'])->name('レビューURL NG');
 
-    Route::get('/admin/hgs2site', [Controllers\AdminController::class, 'hgs2SiteChecker']);
+    Route::get('/admin/hgs2site', [Controllers\ManagementController::class, 'hgs2SiteChecker']);
 
     // 管理人メッセージ
     //Route::get('/admin/message/write/{user}/{resId}', 'User\MessageController@adminInput')->name('管理人メッセージ入力');
@@ -174,6 +274,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 // トップ
 Route::get('/', [Controllers\TopController::class, 'index'])->name('トップ');
+Route::get('/logout', [Controllers\TopController::class, 'indexLogout'])->name('login');
 
 // 認証
 Route::get('/auth/login', [Controllers\Account\LoginController::class, 'login'])->name('ログイン');
@@ -186,8 +287,8 @@ Route::post('/auth/password_reset', [Controllers\Account\ForgotController::class
 Route::get('/auth/password_reset_complete', [Controllers\Account\ForgotController::class, 'complete'])->name('パスワード再設定完了');
 
 // お知らせ
-Route::get('/notice', [Controllers\System\NoticeController::class, 'System\NoticeController@index'])->name('お知らせ');
-Route::get('/notice/{notice}', [Controllers\System\NoticeController::class, 'System\NoticeController@detail'])->name('お知らせ内容');
+Route::get('/notice', [Controllers\System\NoticeController::class, 'index'])->name('お知らせ');
+Route::get('/notice/{notice}', [Controllers\System\NoticeController::class, 'detail'])->name('お知らせ内容');
 
 // アカウント作成
 Route::get('/account/signup', [Controllers\Account\SignUpController::class, 'index'])->name('ユーザー登録');

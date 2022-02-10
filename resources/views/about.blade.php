@@ -1,7 +1,4 @@
-@extends('layouts.app')
-
-@section('title')当サイトについて@endsection
-@section('global_back_link'){{ \Hgs3\Http\GlobalBack::clearAndRoute('トップ') }}@endsection
+@extends('haribote.layout.app')
 
 @section('content')
     <div class="content__inner">

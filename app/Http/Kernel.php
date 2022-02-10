@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Hgs3\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Fruitcake\Cors\HandleCors::class,
     ];
 
     /**
@@ -57,5 +58,6 @@ class Kernel extends HttpKernel
         'guest' => \Hgs3\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'goSite' => \Hgs3\Http\Middleware\GoToSite::class,
+        'management' => \Hgs3\Http\Middleware\Management::class,
     ];
 }

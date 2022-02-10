@@ -10,7 +10,7 @@
  */
 function company_select($companyId, $withEmpty, $params = [])
 {
-    $companies = \Hgs3\Models\Orm\GameCompany::all(['id', 'name']);
+    $companies = \Hgs3\Models\Orm\GameMaker::all(['id', 'name']);
 
     $data = [];
     if ($withEmpty) {
@@ -204,7 +204,14 @@ function checked($val1, $val2)
     return '';
 }
 
-function invalid($errors, $formName)
+/**
+ * invalid判定
+ *
+ * @param $errors
+ * @param $formName
+ * @return string
+ */
+function invalid($errors, $formName): string
 {
     if ($errors->has($formName)) {
         return ' is-invalid';
@@ -315,11 +322,19 @@ function page_pluck(\Illuminate\Contracts\Pagination\LengthAwarePaginator $pager
 /**
  * 日付変換
  *
- * @param $unix_timestamp
- * @return false|string
+ * @param int|string|DateTime $date
+ * @return string
  */
-function format_date($timestamp)
+function format_date(int|string|\DateTime $date) : string
 {
+    if ($date instanceof \DateTime) {
+        $timestamp = $date->format('U');
+    } else if (is_int($date) || is_numeric($date)) {
+        $timestamp = $date;
+    } else {
+        return '';
+    }
+
     if ($GLOBALS['today_start_timestamp'] <= $timestamp && $timestamp <= $GLOBALS['today_end_timestamp']) {
         return date('今日 H:i', $timestamp);
     } else if ($GLOBALS['yesterday_start_timestamp'] <= $timestamp && $timestamp <= $GLOBALS['yesterday_end_timestamp']) {
@@ -617,4 +632,35 @@ function has_new_message()
     } else {
         return false;
     }
+}
+
+/**
+ * 管理系画面の日付フォーマット
+ *
+ * @param DateTime|null $dt
+ * @param string $default
+ * @return string
+ */
+function dt_fmt_mng(?\DateTime $dt, string $default = '') : string
+{
+    if ($dt === null) {
+        return $default;
+    }
+
+    return $dt->format('Y.m.d H:i');
+}
+
+/**
+ * DateTimeから、datetime-local用のテキスト生成
+ *
+ * @param DateTime|null $dt
+ * @return string
+ */
+function dt_2_dtl(?\DateTime $dt) : string
+{
+    if ($dt === null) {
+        return '';
+    }
+
+    return $dt->format('Y-m-d') . 'T' . $dt->format('H:i:s');
 }

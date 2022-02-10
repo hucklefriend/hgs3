@@ -5,13 +5,33 @@
 
 namespace Hgs3\Models\Orm;
 
+use Hgs3\Enums\Game\Shop;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
-class GamePackageShop extends \Eloquent
+class GamePackageShop extends AbstractOrm
 {
-    protected $primaryKey = ['package_id', 'soft_id'];
-    public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['id'];
+
+    /**
+     * パッケージを取得
+     *
+     * @return BelongsTo
+     */
+    public function package(): BelongsTo
+    {
+        return $this->belongsTo(Gamepackage::class, 'package_id');
+    }
+
+    /**
+     * ショップを取得
+     *
+     * @return Shop|null
+     */
+    public function shop(): Shop|null
+    {
+        return Shop::tryFrom($this->shop_id);
+    }
 
     /**
      * INSERTしてみて重複していたらUPDATE

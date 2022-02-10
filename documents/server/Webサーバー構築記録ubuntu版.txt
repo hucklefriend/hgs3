@@ -261,4 +261,5 @@ php artisan up
 https://blog.fileshelfplus.com/vps/280
 
 
-
+fast cgiにした
+sudo a2enmod proxy_fcgi setenvif

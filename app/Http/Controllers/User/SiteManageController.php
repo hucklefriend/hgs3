@@ -89,6 +89,9 @@ class SiteManageController extends Controller
         // 登録処理
         Site::insert(Auth::user(), $site);
 
+        // 管理できないので、承認しちゃう
+        Site\Approval::approve($site, '');
+
         return redirect()->route('サイトバナー設定', ['site' => $site->id, 'isFirst' => 1]);
     }
 

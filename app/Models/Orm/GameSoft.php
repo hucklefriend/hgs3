@@ -5,66 +5,71 @@
 
 namespace Hgs3\Models\Orm;
 
-use Hgs3\Constants\PhoneticType;
-use Hgs3\Log;
-use Illuminate\Database\Eloquent\Collection;
+use Hgs3\Enums\Game\Soft\PhoneticType;
+use Hgs3\Enums\RatedR;
+use \Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
-class GameSoft extends \Eloquent
+class GameSoft extends AbstractOrm
 {
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
-     * ゲームソフト名のハッシュを取得
+     * フランチャイズを取得
      *
-     * @param array $ids
-     * @return mixed
+     * @return BelongsTo
      */
-    public static function getNameHash(array $ids = array())
+    public function franchise(): BelongsTo
     {
-        $tbl = DB::table('game_softs')
-            ->select(['id', 'name']);
-
-        if (!empty($ids)) {
-            $tbl->whereIn('id', $ids);
-        }
-
-        return $tbl->get()->pluck('name', 'id')->toArray();
+        return $this->belongsTo(GameFranchise::class, 'franchise_id');
     }
 
     /**
-     * よみがた単位でハッシュを取得
+     * シリーズを取得
      *
-     * @param array $favoriteHash
-     * @return mixed
+     * @return BelongsTo
      */
-    public static function getPhoneticTypeHash(array $favoriteHash)
+    public function series(): BelongsTo
     {
-        $data = self::select(['id', 'name', 'phonetic_type'])
-            ->orderBy('phonetic_order')
-            ->get();
+        return $this->belongsTo(GameSeries::class, 'series_id');
+    }
 
-        $result = [];
+    /**
+     * 原点のパッケージを取得
+     * nullがありうる
+     *
+     * @return HasOne
+     */
+    public function originalPackage(): HasOne
+    {
+        return $this->hasOne(GamePackage::class, 'id', 'original_package_id');
+    }
 
-        foreach ($data as $game) {
-            $result[intval($game->phonetic_type)][] = $game;
-
-            if (isset($favoriteHash[$game->id])) {
-                $result[100][] = $game;
-            }
+    /**
+     * パッケージを取得
+     *
+     * @return Collection
+     */
+    public function packages(): Collection
+    {
+        $packageLinks = GameSoftPackage::where('soft_id', $this->id)->get();
+        if ($packageLinks->isEmpty()) {
+            return new Collection();
         }
-        unset($data);
 
-        return $result;
+        return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
+            ->orderBy('release_int')->get();
     }
 
     /**
      * データをハッシュで取得
      *
      * @param array $ids
-     * @return mixed
+     * @return array
      */
-    public static function getHash(array $ids = [])
+    public static function getHash(array $ids = []): array
     {
         if (empty($ids)) {
             $data = self::get();
@@ -95,7 +100,7 @@ class GameSoft extends \Eloquent
     /**
      * 表示順を更新
      */
-    public static function updateSortOrder()
+    public static function updatePhoneticOrder(): void
     {
         // SQL文1発でできそうだけど、複雑になるのでループ回して1つずつ更新
         // その後、複雑ではなくなったけど、このままのやりかたで
@@ -125,22 +130,35 @@ SQL;
      * @param array $options
      * @return bool
      */
-    public function save(array $options = [])
+    public function save(array $options = []): bool
     {
         $this->phonetic_type = PhoneticType::getTypeByPhonetic($this->phonetic);
+        $packages = $this->packages();
 
-        return parent::save();
-    }
+        if ($packages->isEmpty()) {
+            $this->original_package_id = null;
+            $this->first_release_int = 0;
+            $this->r18_only_flag = 0;
+        } else {
+            $this->r18_only_flag = 1;
 
-    /**
-     * オリジナルパッケージを取得
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function originalPackage()
-    {
-        return $this->hasOne('Hgs3\Models\Orm\GamePackage', 'id', 'original_package_id')
-            ->first();
+            /* @var GamePackage $package */
+            foreach ($packages as $package) {
+                // 一番古い発売日をセット
+                if ($this->first_release_int == 0) {
+                    $this->first_release_int = $package->release_int;
+                } else if ($this->first_release_int < $package->release_int) {
+                    $this->first_release_int = $package->release_int;
+                }
+
+                // R18以外が1つでもあればフラグを下げる
+                if ($package->rated_r != RatedR::R18->value) {
+                    $this->r18_only_flag = 0;
+                }
+            }
+        }
+
+        return parent::save($options);
     }
 
     /**
@@ -165,20 +183,22 @@ SQL;
     /**
      * パッケージを取得
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param bool $all
+     * @return Collection
      */
-    public function getPackages()
+    public function getPackages(bool $all = false): Collection
     {
-        $packageLinks = GamePackageLink::where('soft_id', $this->id)
-            ->get();
+        $packageLinks = GameSoftPackage::where('soft_id', $this->id)->get();
         if ($packageLinks->isEmpty()) {
             return new Collection();
         }
 
-        return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
-            ->where('release_int', '<=', date('Ymd'))
-            ->orderBy('release_int')
-            ->get();
+        $packages = GamePackage::whereIn('id', $packageLinks->pluck('package_id'));
+        if (!$all) {
+            $packages->where('release_int', '<=', date('Ymd'));
+        }
+
+        return $packages->orderBy('release_int')->get();
     }
 
     /**
@@ -186,8 +206,24 @@ SQL;
      *
      * @return bool
      */
-    public function isReleased()
+    public function isReleased(): bool
     {
         return $this->first_release_int <= date('Ymd');
+    }
+
+    /**
+     * 現在設定されているパッケージ群から原点パッケージの設定
+     *
+     * @return void
+     */
+    public function setOriginalPackage(): void
+    {
+        $packages = $this->getPackages();
+        if ($packages->isEmpty()) {
+            $this->original_package_id = null;
+        } else {
+            $this->original_package_id = $packages[0]->id;
+            $this->first_release_int = $packages[0]->release_int;
+        }
     }
 }

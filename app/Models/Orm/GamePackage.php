@@ -6,12 +6,77 @@
 namespace Hgs3\Models\Orm;
 
 use Hgs3\Constants\Game\Shop;
-use Hgs3\Log;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
-class GamePackage extends \Eloquent
+class GamePackage extends AbstractOrm
 {
-    protected $guarded = [];
-    public $incrementing = false;
+    protected $guarded = ['id'];
+
+    /**
+     * ハードに関連しているメーカーを取得
+     *
+     * @return BelongsTo
+     */
+    public function maker(): BelongsTo
+    {
+        return $this->belongsTo(GameMaker::class, 'maker_id');
+    }
+
+    /**
+     * ソフトを取得
+     *
+     * @return Collection
+     */
+    public function softs(): Collection
+    {
+        $packageLinks = GameSoftPackage::where('package_id', $this->id)->get();
+        if ($packageLinks->isEmpty()) {
+            return new Collection();
+        }
+
+        return GameSoft::whereIn('id', $packageLinks->pluck('soft_id'))->get();
+    }
+
+    /**
+     * ショップを取得
+     * (なぜかこれで動かない)
+     *
+     * @return Collection
+     */
+    public function shops(): Collection
+    {
+        return GamePackageShop::where('package_id', $this->id)->get();
+    }
+
+    /**
+     * ショップを取得
+     * (なぜかこれで動かない)
+     *
+     * @return HasMany
+     */
+//    public function shops(): HasMany
+//    {
+//        return $this->hasMany(GamePackageShop::class, 'package_id', 'id');
+//    }
+
+    /**
+     * 保存
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = []): bool
+    {
+        $softs = $this->getSofts();
+        foreach ($softs as $soft) {
+            $soft->setOriginalPackage();
+            $soft->save();
+        }
+
+        return parent::save($options);
+    }
 
     /**
      * データのハッシュを取得
@@ -19,7 +84,7 @@ class GamePackage extends \Eloquent
      * @param array $packageIds
      * @return array
      */
-    public static function getHash(array $packageIds)
+    public static function getHash(array $packageIds): array
     {
         if (empty($packageIds)) {
             return [];
@@ -43,7 +108,7 @@ class GamePackage extends \Eloquent
      *
      * @param array $item
      */
-    public function setImageByAmazon($item)
+    public function setImageByAmazon(array $item)
     {
         if (isset($item['small_image'])) {
             $this->small_image_url     = $item['small_image']['url'] ?? null;
@@ -79,5 +144,21 @@ class GamePackage extends \Eloquent
                     break;
             }
         }
+    }
+
+    /**
+     * 削除
+     *
+     * @return bool|null
+     */
+    public function delete(): bool|null
+    {
+        /* @var GamePackageShop $shop */
+        foreach ($this->shops() as $shop) {
+            // ショップ情報も削除
+            $shop->delete();
+        }
+
+        return parent::delete();
     }
 }
