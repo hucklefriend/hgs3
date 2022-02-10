@@ -9,7 +9,6 @@ services:
       - /var/hgs:/var/hgs
     restart: always
     depends_on:
-      - hgs_db
       - hgs_memcached
       - hgs_redis
     ports:
