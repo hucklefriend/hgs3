@@ -42,7 +42,7 @@ services:
     networks:
       - hgs_net
     ports:
-      - "27017:27017"
+      - "27017:27018"
     volumes:
       - hgs_mongo_vol:/data/db
       - hgs_mongo_config_vol:/data/configdb
