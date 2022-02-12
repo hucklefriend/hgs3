@@ -5,7 +5,7 @@ Route::get('/haribote/{page}', function ($page) {return view('haribote.' . $page
 
 
 // 管理用
-Route::group(['prefix' => 'management', 'middleware' => ['auth',/* 'can:admin', */'management']], function () {
+Route::group(['prefix' => 'management', 'middleware' => [/*'auth', 'can:admin', */'management']], function () {
     // 管理
     Route::get('/', [Controllers\Management\ManagementController::class, 'index'])->name('管理');
 
