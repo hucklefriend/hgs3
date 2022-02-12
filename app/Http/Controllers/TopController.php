@@ -18,6 +18,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\App;
 
 class TopController extends Controller
 {
@@ -28,7 +29,7 @@ class TopController extends Controller
      */
     public function index(): Application|Factory|View
     {
-        if (app()->isLocal()) {
+        if (!App::environment('production')) {
             \Auth::loginUsingId(1, true);
         }
 
