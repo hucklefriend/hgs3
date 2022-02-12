@@ -258,3 +258,7 @@ vagrant haltしてからもう一回vagrant upするといける
 docker用
 
 sudo a2enmod proxy_fcgi
+
+https://zenn.dev/qaynam/articles/afa59be54ddad2
+/etc/mysql/mariadb.conf.d/50-server.cnf
+bind-address=0.0.0.0
