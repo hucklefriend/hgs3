@@ -6,7 +6,7 @@
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">管理</a></li>
         <li class="breadcrumb-item">マスター</li>
-        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ') }}">パッケージ</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ') . session('search_package') }}">パッケージ</a></li>
         <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ詳細', $package) }}">詳細</a></li>
         <li class="breadcrumb-item active">販売ショップ</li>
     </ol>
@@ -52,7 +52,7 @@
                         @empty($shop->medium_image_url)
                             -
                         @else
-                            @switch ($shop->shop)
+                            @switch ($shop->shop())
                                 @case (\Hgs3\Enums\Game\Shop::Amazon)
                                 {!! $shop->medium_image_url !!}
                                 @break

@@ -6,7 +6,7 @@
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="{{ route('管理') }}">管理</a></li>
         <li class="breadcrumb-item">マスター</li>
-        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ') }}">パッケージ</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('管理-マスター-パッケージ') . session('search_package') }}">パッケージ</a></li>
         <li class="breadcrumb-item active">詳細</li>
     </ol>
     <h1 class="page-header">パッケージ詳細</h1>

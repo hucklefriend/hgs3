@@ -3,17 +3,23 @@
         width: 150px;
     }
 </style>
+
 <table class="table">
     <tr>
         <th>ショップ</th>
         <td>
-            @include ('management.common.form.select', ['name' => 'shop_id', 'list' => $shops, 'value' => \Hgs3\Enums\Game\Shop::Amazon->value, 'options' => ['required']])
+            @if ($model->id)
+                {{ $model->shop()->name() }}
+                <input type="hidden" name="shop_id" value="{{ $model->shop_id }}">
+            @else
+                @include ('management.common.form.select', ['name' => 'shop_id', 'list' => $shops, 'value' => \Hgs3\Enums\Game\Shop::Amazon->value, 'options' => ['required']])
+            @endif
         </td>
     </tr>
     <tr id="asin">
         <th>ASIN</th>
         <td>
-            @include ('management.common.form.input', ['name' => 'asin', 'options' => ['required']])
+            @include ('management.common.form.input', ['name' => 'param1', 'options' => ['required']])
         </td>
     </tr>
     <tr>
@@ -36,7 +42,7 @@
         </td>
     </tr>
     <tr>
-        <th>画像(小)</th>
+        <th>画像(中)</th>
         <td>
             <div class="input-group mb-3">
                 {{ Form::text('medium_image_url', old('medium_image_url', $model->medium_image_url),
@@ -49,7 +55,7 @@
         </td>
     </tr>
     <tr>
-        <th>画像(小)</th>
+        <th>画像(大)</th>
         <td>
             <div class="input-group mb-3">
                 {{ Form::text('large_image_url', old('large_image_url', $model->medium_image_url),
@@ -96,8 +102,10 @@
 
             if (shopId == AMAZON) {
                 $('#asin').show();
+                $('#param1').attr('required');
             } else {
                 $('#asin').hide();
+                $('#param1').removeAttr('required');
             }
         }
 
