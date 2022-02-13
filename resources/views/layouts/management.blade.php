@@ -60,7 +60,7 @@
                         <i class="fa fa-user"></i>
                     </div>
                     <span>
-							<span class="d-none d-md-inline">{{-- $user->name --}}Admin</span>
+							<span class="d-none d-md-inline">{{ $user->name }}</span>
 							<b class="caret"></b>
 						</span>
                 </a>

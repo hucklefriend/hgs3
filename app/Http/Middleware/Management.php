@@ -23,7 +23,7 @@ class Management
     {
         Paginator::useBootstrap();
 
-        //View::share('user', Auth::user());
+        View::share('user', Auth::user());
         View::share('menuPath', request()->path());
         return $next($request);
     }

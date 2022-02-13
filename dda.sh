@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd docker/local
+cd docker/dev
 docker-compose exec -u 1000 hgs_app /bin/bash
