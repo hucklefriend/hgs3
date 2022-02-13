@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 
 class Management
@@ -23,6 +24,8 @@ class Management
     {
         Paginator::useBootstrap();
 
+
+        Log::debug('tres');
         View::share('user', Auth::user());
         View::share('menuPath', request()->path());
         return $next($request);

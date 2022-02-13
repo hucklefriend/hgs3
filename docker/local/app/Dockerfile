@@ -24,4 +24,10 @@ RUN pecl install memcached && \
 
 RUN docker-php-source delete
 
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY php.ini /usr/local/etc/php/php.ini
+
+
 WORKDIR /var/hgs
+
+RUN kill -USR2 1
