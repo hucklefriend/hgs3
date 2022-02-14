@@ -31,7 +31,7 @@
     <tr>
         <th>ジャンル</th>
         <td>
-            @include ('management.common.form.input', ['name' => 'genre', 'options' => ['required', 'maxlength' => 150]])
+            @include ('management.common.form.input', ['name' => 'genre', 'options' => ['maxlength' => 150]])
         </td>
     </tr>
     <tr>
@@ -80,11 +80,10 @@
             $("#franchise_id").select2();
             $("#series_id").select2();
 
-
             $("#series_id").change(function (){
                 let seriesId = $(this).val();
                 if (seriesId.length > 0) {
-                    $("#franchise_id").val(series2Franchise[seriesId]);
+                    $("#franchise_id").val(series2Franchise[seriesId]).trigger('change');
                 }
             });
         });

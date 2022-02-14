@@ -17,6 +17,13 @@ class GameSoft extends AbstractOrm
     protected $guarded = ['id'];
 
     /**
+     * @var array デフォルト値
+     */
+    protected $attributes = [
+        'genre' => '',
+    ];
+
+    /**
      * フランチャイズを取得
      *
      * @return BelongsTo
@@ -157,6 +164,10 @@ SQL;
                 }
             }
         }
+
+        $this->genre ??= '';
+        $this->introduction ??= '';
+        $this->introduction_from ??= '';
 
         return parent::save($options);
     }

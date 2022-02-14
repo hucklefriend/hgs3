@@ -48,6 +48,7 @@
                     <th>ID</th>
                     <th>タイトル</th>
                     <th>よみがな</th>
+                    <th>フランチャイズ</th>
                     <td></td>
                 </tr>
                 </thead>
@@ -57,6 +58,7 @@
                         <td>{{ $series->id }}</td>
                         <td>{{ $series->name }}</td>
                         <td>{{ $series->phonetic }}</td>
+                        <td>{{ $series->franchise->name }}</td>
                         <td class="text-center"><a href="{{ route('管理-マスター-シリーズ詳細', $series) }}">詳細</a></td>
                     </tr>
                 @endforeach
