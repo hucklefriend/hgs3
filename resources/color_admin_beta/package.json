@@ -110,6 +110,7 @@
     "pdfmake": "^0.2.4",
     "perfect-scrollbar": "^1.5.5",
     "popper.js": "^1.16.1",
+    "postcss": "^8.2.13",
     "raphael": "^2.3.0",
     "select-picker": "^0.3.2",
     "select2": "^4.0.13",
@@ -121,5 +122,8 @@
     "switchery": "github:abpetkov/switchery",
     "tag-it": "^2.0.0",
     "x-editable-bs4": "^1.5.4"
+  },
+  "resolutions": {
+    "glob-parent": "^5.1.2"
   }
 }

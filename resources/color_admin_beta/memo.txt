@@ -20,7 +20,17 @@ npm install
 エラーがでる
 
 npm audit
+※ npm audit fixは使わない（使っても直らない）
 
-ncu
+glob-parent  <5.1.2
+のエラーが止まらない
 
-ncu
+
+npm -g install npm-force-resolutions -D
+npx npm-force-resolutions
+
+でアップデート
+
+次回以降、npm installとnpx npm-force-resolutions両方やる？
+
+gulpで実行
