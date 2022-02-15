@@ -1,6 +1,6 @@
 color adminのテンプレートをここに置く
 
-color_admin_v5.0
+color_admin
 └admin
 　└src
 　　┠html

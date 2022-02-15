@@ -1,0 +1,26 @@
+Color Admin
+DLして解凍
+color_admin_betaにコピー
+※既存データの削除はしない
+
+color_admin_beta
+├js
+├scss
+｜└transparent
+├gulpfile.js
+├memo.txt
+└package.json
+
+gulpfile.jsから不要なものをもろもろ削除して、transparentのみ
+
+
+
+npm install
+
+エラーがでる
+
+npm audit
+
+ncu
+
+ncu

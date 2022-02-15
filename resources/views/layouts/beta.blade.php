@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     @if (View::hasSection('title'))
-        <title>@yield('title')</title>
+        <title>@yield('title') | [運営]ホラーゲーム・ネットワーク</title>
     @else
-        <title>ホラーゲーム・ネットワーク</title>
+        <title>[運営]ホラーゲーム・ネットワーク</title>
     @endif
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-    <meta content="ホラーゲーム・ネットワーク" name="description">
+    <meta content="ホラーゲーム・ネットワークの管理用" name="description">
     <meta content="Yuki Takeuchi" name="author">
     <link href="{{ asset('admin/css/vendor.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/app.min.css') }}" rel="stylesheet">
@@ -54,15 +54,16 @@
                     </div>
                 </div>
             </div>
+            @isset ($user)
             <div class="navbar-item navbar-user dropdown">
                 <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                     <div class="image image-icon bg-gray-800 text-gray-600">
                         <i class="fa fa-user"></i>
                     </div>
                     <span>
-							<span class="d-none d-md-inline">{{ $user->name }}</span>
-							<b class="caret"></b>
-						</span>
+                        <span class="d-none d-md-inline">{{ $user->name }}</span>
+                        <b class="caret"></b>
+                    </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end me-1">
                     <a href="javascript:;" class="dropdown-item">Edit Profile</a>
@@ -73,8 +74,12 @@
                     <a href="javascript:;" class="dropdown-item">Log Out</a>
                 </div>
             </div>
+            @endif
         </div>
     </div>
+    {{--
+
+
     <div id="sidebar" class="app-sidebar">
         <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
             <div class="menu">
@@ -162,6 +167,8 @@
             </div>
         </div>
     </div>
+
+--}}
     <div class="app-sidebar-bg"></div>
     <div class="app-sidebar-mobile-backdrop"><a href="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a></div>
     <div id="content" class="app-content">
