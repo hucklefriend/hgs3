@@ -12,6 +12,7 @@ color_admin_beta
 └package.json
 
 gulpfile.jsから不要なものをもろもろ削除して、transparentのみ
+タスクの名前？、transparentをdefaultに変更
 
 
 
@@ -34,3 +35,6 @@ npx npm-force-resolutions
 次回以降、npm installとnpx npm-force-resolutions両方やる？
 
 gulpで実行
+
+npm install autosize
+gulp

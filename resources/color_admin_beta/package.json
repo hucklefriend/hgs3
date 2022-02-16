@@ -43,6 +43,7 @@
     "angular-ui-router": "^1.0.30",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.33.1",
+    "autosize": "^5.0.1",
     "blueimp-file-upload": "^10.32.0",
     "blueimp-gallery": "^3.4.0",
     "bootstrap": "^5.1.3",

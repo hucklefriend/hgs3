@@ -352,7 +352,7 @@ gulp.task('transparent-css-image', function(){
 gulp.task('default', gulp.series(gulp.parallel([
 	'font-fontawesome',
 	'font-bootstrap',
-	'js-demo', 
+	'plugins',
 	'js-vendor', 
 	'js-app', 
 	'css-vendor', 

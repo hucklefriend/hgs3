@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8">
     @if (View::hasSection('title'))
-        <title>@yield('title') | [運営]ホラーゲーム・ネットワーク</title>
+        <title>@yield('title') | ホラーゲーム・ネットワーク</title>
     @else
-        <title>[運営]ホラーゲーム・ネットワーク</title>
+        <title>ホラーゲームファンのためのポータルサイト</title>
     @endif
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
     <meta content="ホラーゲーム・ネットワークの管理用" name="description">
     <meta content="Yuki Takeuchi" name="author">
-    <link href="{{ asset('admin/css/vendor.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/app.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('beta/css/vendor.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('beta/css/app.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('beta/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <style>
         .form-control, .select2.select2-container .selection .select2-selection.select2-selection--multiple, .select2.select2-container .selection .select2-selection.select2-selection--single {
             background-color: rgba(0, 0, 0, 0.5) !important;
@@ -26,7 +26,7 @@
 <div id="app" class="app app-header-fixed app-sidebar-fixed">
     <div id="header" class="app-header">
         <div class="navbar-header">
-            <a href="{{ route('管理') }}" class="navbar-brand"><span class="navbar-logo"><i class="ion-ios-cloud"></i></span> <b class="me-1">hgn</b> MGR</a>
+            <a href="{{ route('管理') }}" class="navbar-brand"><span class="navbar-logo"><i class="ion-ios-cloud"></i></span> <b class="me-1">hgn</b></a>
             <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -77,110 +77,16 @@
             @endif
         </div>
     </div>
-    {{--
-
-
-    <div id="sidebar" class="app-sidebar">
-        <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
-            <div class="menu">
-                <div id="appSidebarProfileMenu" class="collapse">
-                    <div class="menu-item pt-5px">
-                        <a href="javascript:;" class="menu-link">
-                            <div class="menu-icon"><i class="fa fa-cog"></i></div>
-                            <div class="menu-text">Settings</div>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="javascript:;" class="menu-link">
-                            <div class="menu-icon"><i class="fa fa-pencil-alt"></i></div>
-                            <div class="menu-text"> Send Feedback</div>
-                        </a>
-                    </div>
-                    <div class="menu-item pb-5px">
-                        <a href="javascript:;" class="menu-link">
-                            <div class="menu-icon"><i class="fa fa-question-circle"></i></div>
-                            <div class="menu-text"> Helps</div>
-                        </a>
-                    </div>
-                    <div class="menu-divider m-0"></div>
-                </div>
-                <div class="menu-header">Navigation</div>
-                <div class="menu-item @if ($menuPath === 'management') active @endif">
-                    <a href="{{ route('管理') }}" class="menu-link">
-                        <div class="menu-icon">
-                            <i class="fa fa-th-large"></i>
-                        </div>
-                        <div class="menu-text">Home</div>
-                    </a>
-                </div>
-
-                <div class="menu-item has-sub @if (str_starts_with($menuPath, 'management/system')) active @endif">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <div class="menu-text">システム</div>
-                        <div class="menu-caret"></div>
-                    </a>
-                    <div class="menu-submenu">
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/system/notice')) active @endif"><a href="{{ route('管理-システム-お知らせ') }}" class="menu-link"><div class="menu-text">お知らせ</div></a></div>
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/system')) active @endif"><a href="javascript:;" class="menu-link"><div class="menu-text">新着情報</div></a></div>
-                    </div>
-                </div>
-
-                <div class="menu-item has-sub @if (str_starts_with($menuPath, 'management/master')) active @endif">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon">
-                            <i class="fas fa-gamepad"></i>
-                        </div>
-                        <div class="menu-text">マスター</div>
-                        <div class="menu-caret"></div>
-                    </a>
-                    <div class="menu-submenu">
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/maker')) active @endif"><a href="{{ route('管理-マスター-メーカー') }}" class="menu-link"><div class="menu-text">メーカー</div></a></div>
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/platform')) active @endif"><a href="{{ route('管理-マスター-プラットフォーム') }}" class="menu-link"><div class="menu-text">プラットフォーム</div></a></div>
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/hard')) active @endif"><a href="{{ route('管理-マスター-ハード') }}" class="menu-link"><div class="menu-text">ハード</div></a></div>
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/franchise')) active @endif"><a href="{{ route('管理-マスター-フランチャイズ') }}" class="menu-link"><div class="menu-text">フランチャイズ</div></a></div>
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/series')) active @endif"><a href="{{ route('管理-マスター-シリーズ') }}" class="menu-link"><div class="menu-text">シリーズ</div></a></div>
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/soft')) active @endif"><a href="{{ route('管理-マスター-ソフト') }}" class="menu-link"><div class="menu-text">ソフト</div></a></div>
-                        <div class="menu-item @if (str_starts_with($menuPath, 'management/master/package')) active @endif"><a href="{{ route('管理-マスター-パッケージ') }}" class="menu-link"><div class="menu-text">パッケージ</div></a></div>
-                    </div>
-                </div>
-
-                <div class="menu-item has-sub">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="menu-text">ユーザー</div>
-                        <div class="menu-caret"></div>
-                    </a>
-                    <div class="menu-submenu">
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">ユーザー</div></a></div>
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">サイト</div></a></div>
-                        <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">レビュー</div></a></div>
-                    </div>
-                </div>
-                <div class="menu-item d-flex">
-                    <a href="javascript:;" class="app-sidebar-minify-btn ms-auto" data-toggle="app-sidebar-minify"><i class="fa fa-angle-double-left"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-
---}}
-    <div class="app-sidebar-bg"></div>
-    <div class="app-sidebar-mobile-backdrop"><a href="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a></div>
     <div id="content" class="app-content">
         @yield('content')
     </div>
     <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top" data-toggle="scroll-to-top"><i class="fa fa-angle-up"></i></a>
 </div>
-<script src="{{ asset('admin/js/vendor.min.js') }}"></script>
-<script src="{{ asset('admin/plugins/autosize/dist/autosize.min.js') }}"></script>
-<script src="{{ asset('admin/plugins/select2/dist/js/select2.min.js') }}"></script>
-<script src="{{ asset('admin/js/app.min.js') }}"></script>
-<script src="{{ asset('admin/js/transparent.min.js') }}"></script>
+<script src="{{ asset('beta/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('beta/js/vendor.min.js') }}"></script>
+<script src="{{ asset('beta/plugins/autosize/dist/autosize.min.js') }}"></script>
+<script src="{{ asset('beta/plugins/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('beta/js/app.min.js') }}"></script>
 <script>
     $(()=>{
         autosize($('.textarea-autosize'));
