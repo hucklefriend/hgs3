@@ -59,8 +59,8 @@ class PackageController extends AbstractManagementController
 
         return view('management.master.package.index', [
             'packages'  => $packages->paginate(self::ITEMS_PER_PAGE),
-            'hards'     => Orm\GameHard::getHashBy('acronym', append: ['' => '']),
-            'platforms' => Orm\GamePlatform::getHashBy('name', append: ['' => '']),
+            'hards'     => Orm\GameHard::getHashBy('acronym', prepend: ['' => ' ']),
+            'platforms' => Orm\GamePlatform::getHashBy('name', prepend: ['' => ' ']),
             'search'    => $search,
         ]);
     }
@@ -129,7 +129,7 @@ class PackageController extends AbstractManagementController
         $softs = Orm\GameSoft::getHashBy('name', append: ['' => '']);
 
         return view('management.master.package.edit', [
-            'package'   => $package,
+            'model'     => $package,
             'makers'    => $makers,
             'hards'     => $hards,
             'platforms' => $platforms,

@@ -33,7 +33,7 @@ class GamePackageRequest extends FormRequest
             'name'         => 'required|max:200',
             'acronym'      => 'required|max:30',
             'platform_id'  => 'required|exists:game_platforms,id',
-            'company_id'   => 'required|exists:game_companies,id',
+            'maker_id'     => 'required|exists:game_makers,id',
             'release_at'   => 'required|max:100',
             'release_int'  => 'required|numeric|integer|min:0|max:99999999',
             'rated_r'      => ['required', new Enum(RatedR::class)],

@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SoftController extends AbstractManagementController
 {
@@ -27,6 +28,8 @@ class SoftController extends AbstractManagementController
         $softs = Orm\GameSoft::orderByDesc('id');
 
         $searchName = trim($request->query('name', ''));
+        $searchFranchise = $request->query('franchise');
+        $searchSeries = $request->query('series');
         $search = [];
 
         if (!empty($searchName)) {
@@ -41,11 +44,26 @@ class SoftController extends AbstractManagementController
             });
         }
 
+        if ($searchFranchise !== null) {
+            $search['franchise'] = $searchFranchise;
+            $softs->where('franchise_id', '=', $searchFranchise);
+        }
+
+        if ($searchSeries !== null) {
+            Log::debug($searchSeries);
+            $search['series'] = $searchSeries;
+            $softs->where('series_id', '=',  $searchSeries);
+
+            Log::debug($softs->toSql());
+        }
+
         $this->putSearchSession('search_soft', $search);
 
         return view('management.master.soft.index', [
-            'search' => $search,
-            'softs'  => $softs->paginate(self::ITEMS_PER_PAGE)
+            'search'     => $search,
+            'franchises' => Orm\GameFranchise::getHashBy('name', prepend: ['' => ' ']),
+            'series'     => Orm\GameSeries::getHashBy('name', prepend: ['' => ' ']),
+            'softs'      => $softs->paginate(self::ITEMS_PER_PAGE)
         ]);
     }
 
