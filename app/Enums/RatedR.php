@@ -28,11 +28,12 @@ enum RatedR: int
     /**
      * input[type=select]に渡す用のリスト作成
      *
+     * @param array $prepend
      * @return string[]
      */
-    public static function selectList(): array
+    public static function selectList(array $prepend = []): array
     {
-        $result = [];
+        $result = $prepend;
 
         foreach (self::cases() as $case) {
             $result[$case->value] = $case->text();

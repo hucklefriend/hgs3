@@ -49,7 +49,7 @@
     <tr>
         <th>R指定</th>
         <td>
-            @include ('management.common.form.select', ['name' => 'ratedR', 'list' => \Hgs3\Enums\RatedR::selectList()])
+            @include ('management.common.form.select', ['name' => 'rated_r', 'list' => \Hgs3\Enums\RatedR::selectList()])
         </td>
     </tr>
 </table>

@@ -24,8 +24,6 @@ class Management
     {
         Paginator::useBootstrap();
 
-
-        Log::debug('tres');
         View::share('user', Auth::user());
         View::share('menuPath', request()->path());
         return $next($request);
