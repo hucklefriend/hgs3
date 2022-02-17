@@ -8,8 +8,11 @@
         <title>ホラーゲームファンのためのポータルサイト</title>
     @endif
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-    <meta content="ホラーゲーム・ネットワークの管理用" name="description">
+    <meta content="ホラーゲーム・ネットワーク" name="description">
     <meta content="Yuki Takeuchi" name="author">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet">
     <link href="{{ asset('beta/css/vendor.min.css') }}" rel="stylesheet">
     <link href="{{ asset('beta/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('beta/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
@@ -23,10 +26,10 @@
 <body>
 <div class="app-cover"></div>
 <div id="loader" class="app-loader"><span class="spinner"></span></div>
-<div id="app" class="app app-header-fixed app-sidebar-fixed">
+<div id="app" class="app app-header-fixed app-without-sidebar">
     <div id="header" class="app-header">
         <div class="navbar-header">
-            <a href="{{ route('管理') }}" class="navbar-brand"><span class="navbar-logo"><i class="ion-ios-cloud"></i></span> <b class="me-1">hgn</b></a>
+            <a href="{{ route('トップ') }}" class="navbar-brand"><span class="navbar-logo"><i class="ion-ios-cloud"></i></span> <b class="me-1">hgn</b></a>
             <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -78,7 +81,19 @@
         </div>
     </div>
     <div id="content" class="app-content">
-        @yield('content')
+        <div class="container">
+            @hasSection('page_links') @yield('page_links') @endif
+            <h1 class="page-header">
+                @yield('page_title') @hasSection('page_sub_title')<small>@yield('page_sub_title')</small>@endif
+            </h1>
+            @hasSection('page_description')
+            <p class="mb-20px">
+                @yield('page_description')
+            </p>
+            @endif
+
+            @yield('content')
+        </div>
     </div>
     <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top" data-toggle="scroll-to-top"><i class="fa fa-angle-up"></i></a>
 </div>
