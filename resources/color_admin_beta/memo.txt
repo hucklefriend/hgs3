@@ -1,0 +1,40 @@
+Color Admin
+DLして解凍
+color_admin_betaにコピー
+※既存データの削除はしない
+
+color_admin_beta
+├js
+├scss
+｜└transparent
+├gulpfile.js
+├memo.txt
+└package.json
+
+gulpfile.jsから不要なものをもろもろ削除して、transparentのみ
+タスクの名前？、transparentをdefaultに変更
+
+
+
+npm install
+
+エラーがでる
+
+npm audit
+※ npm audit fixは使わない（使っても直らない）
+
+glob-parent  <5.1.2
+のエラーが止まらない
+
+
+npm -g install npm-force-resolutions -D
+npx npm-force-resolutions
+
+でアップデート
+
+次回以降、npm installとnpx npm-force-resolutions両方やる？
+
+gulpで実行
+
+npm install autosize
+gulp

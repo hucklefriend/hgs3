@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     @if (View::hasSection('title'))
-        <title>@yield('title') | [運営]ホラーゲーム・ネットワーク</title>
+        <title>@yield('title')</title>
     @else
-        <title>[運営]ホラーゲーム・ネットワーク</title>
+        <title>ホラーゲーム・ネットワーク</title>
     @endif
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-    <meta content="ホラーゲーム・ネットワークの管理用" name="description">
+    <meta content="ホラーゲーム・ネットワーク" name="description">
     <meta content="Yuki Takeuchi" name="author">
     <link href="{{ asset('admin/css/vendor.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/app.min.css') }}" rel="stylesheet">
