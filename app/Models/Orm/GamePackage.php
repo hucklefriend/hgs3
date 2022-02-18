@@ -69,7 +69,7 @@ class GamePackage extends AbstractOrm
      */
     public function save(array $options = []): bool
     {
-        $softs = $this->getSofts();
+        $softs = $this->softs();
         foreach ($softs as $soft) {
             $soft->setOriginalPackage();
             $soft->save();
