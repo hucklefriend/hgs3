@@ -4,7 +4,7 @@
 
 @endsection
 
-@section('page_title', 'ホラーゲームネットワーク')
+@section('page_title', 'ホラーゲーム・ネットワーク')
 @section('page_sub_title', '')
 
 @section('page_description')

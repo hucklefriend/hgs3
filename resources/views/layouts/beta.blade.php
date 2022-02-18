@@ -12,7 +12,7 @@
     <meta content="Yuki Takeuchi" name="author">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1&display=swap" rel="stylesheet">
     <link href="{{ asset('beta/css/vendor.min.css') }}" rel="stylesheet">
     <link href="{{ asset('beta/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('beta/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
