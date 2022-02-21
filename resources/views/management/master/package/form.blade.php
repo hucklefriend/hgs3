@@ -35,9 +35,13 @@
         </td>
     </tr>
     <tr>
-        <th>リリース日(数値)</th>
+        <th>リリース日</th>
         <td>
-            @include ('management.common.form.input', ['name' => 'release_at', 'options' => ['required', 'maxlength' => 20]])
+            <div class="input-group mb-3">
+                {{ Form::text('release_at', old('release_at', $model->release_at),
+                    ['id' => 'release_at', 'class' => 'form-control' . invalid($errors, 'release_at'), 'autocomplete' => 'off']) }}
+                <button class="btn btn-outline-secondary" type="button" id="release_at_convert">変換</button>
+            </div>
         </td>
     </tr>
     <tr>
@@ -60,6 +64,24 @@
             $("#maker_id").select2();
             $("#hard_id").select2();
             $("#platform_id").select2();
+
+            $('#release_at_convert').click(() => {
+                let txt = $('#release_at').val();
+
+                let arr = txt.split('/');
+                let val = parseInt(arr[0]).toString();
+                val += '年';
+                if (arr[1]) {
+                    val += parseInt(arr[1]).toString();
+                }
+                val += '月';
+                if (arr[1]) {
+                    val += parseInt(arr[2]).toString();
+                }
+                val += '日';
+
+                $('#release_at').val(val);
+            });
         });
     </script>
 @endsection
