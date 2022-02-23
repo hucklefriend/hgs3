@@ -87,8 +87,8 @@ class PackageController extends AbstractManagementController
     {
         $makers = Orm\GameMaker::getHashBy('name');
         $hards = Orm\GameHard::getHashBy('acronym');
-        $platforms = Orm\GamePlatform::getHashBy('name', append: ['' => '']);
-        $softs = Orm\GameSoft::getHashBy('name', append: ['' => '']);
+        $platforms = Orm\GamePlatform::getHashBy('name', prepend: ['' => '-']);
+        $softs = Orm\GameSoft::getHashBy('name', prepend: ['' => '']);
 
         return view('management.master.package.add', [
             'model'     => new Orm\GamePackage(),
@@ -125,8 +125,8 @@ class PackageController extends AbstractManagementController
     {
         $makers = Orm\GameMaker::getHashBy('name');
         $hards = Orm\GameHard::getHashBy('acronym');
-        $platforms = Orm\GamePlatform::getHashBy('name', append: ['' => '']);
-        $softs = Orm\GameSoft::getHashBy('name', append: ['' => '']);
+        $platforms = Orm\GamePlatform::getHashBy('name', prepend: ['' => '-']);
+        $softs = Orm\GameSoft::getHashBy('name', prepend: ['' => '']);
 
         return view('management.master.package.edit', [
             'model'     => $package,

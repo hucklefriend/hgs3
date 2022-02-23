@@ -39,9 +39,12 @@
         <td>
             <div class="input-group mb-3">
                 {{ Form::text('release_at', old('release_at', $model->release_at),
-                    ['id' => 'release_at', 'class' => 'form-control' . invalid($errors, 'release_at'), 'autocomplete' => 'off']) }}
+                    ['id' => 'release_at', 'class' => 'form-control' . invalid($errors, 'release_at'), 'autocomplete' => 'off', 'required']) }}
                 <button class="btn btn-outline-secondary" type="button" id="release_at_convert">変換</button>
             </div>
+            @if ($errors->has('release_at'))
+                <div class="invalid-feedback">{{$errors->first('release_at')}}</div>
+            @endif
         </td>
     </tr>
     <tr>
