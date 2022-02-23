@@ -33,7 +33,7 @@ class GamePackageRequest extends FormRequest
             'name'         => 'required|max:200',
             'acronym'      => 'required|max:30',
             'hard_id'      => 'exists:game_hards,id',
-            'platform_id'  => 'exists:game_platforms,id',
+            'platform_id'  => 'nullable|exists:game_platforms,id',
             'maker_id'     => 'required|exists:game_makers,id',
             'release_at'   => 'required|max:100',
             'release_int'  => 'required|numeric|integer|min:0|max:99999999',
