@@ -10,37 +10,37 @@
     </ol>
     <h1 class="page-header">パッケージ</h1>
     <div class="panel panel-inverse">
-            <div class="panel-heading">
-                <h4 class="panel-title">検索</h4>
-            </div>
-            <div class="panel-body">
-                <form action="{{ route('管理-マスター-パッケージ') }}" method="GET">
-                    <div class="row mb-3">
-                        <label class="form-label col-form-label col-md-3">名前</label>
-                        <div class="col-md-9">
-                            {{ Form::text('name', $search['name'] ?? '', ['class' => 'form-control', 'placeholder' => '名前 or よみがな(半角スペースで単語区切り)', 'autocomplete' => 'off']) }}
-                        </div>
+        <div class="panel-heading">
+            <h4 class="panel-title">検索</h4>
+        </div>
+        <div class="panel-body">
+            <form action="{{ route('管理-マスター-パッケージ') }}" method="GET">
+                <div class="row mb-3">
+                    <label class="form-label col-form-label col-md-3">名前</label>
+                    <div class="col-md-9">
+                        {{ Form::text('name', $search['name'] ?? '', ['class' => 'form-control', 'placeholder' => '名前 or よみがな(半角スペースで単語区切り)', 'autocomplete' => 'off']) }}
                     </div>
-                    <div class="row mb-3">
-                        <label class="form-label col-form-label col-md-3">ハード</label>
-                        <div class="col-md-9">
-                            {{ Form::select('hard', $hards, $search['hard'] ?? '', ['class' => 'form-control']) }}
-                        </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="form-label col-form-label col-md-3">ハード</label>
+                    <div class="col-md-9">
+                        {{ Form::select('hard', $hards, $search['hard'] ?? '', ['class' => 'form-control']) }}
                     </div>
-                    <div class="row mb-3">
-                        <label class="form-label col-form-label col-md-3">プラットフォーム</label>
-                        <div class="col-md-9">
-                            {{ Form::select('platform', $platforms, $search['platform'] ?? '', ['class' => 'form-control']) }}
-                        </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="form-label col-form-label col-md-3">プラットフォーム</label>
+                    <div class="col-md-9">
+                        {{ Form::select('platform', $platforms, $search['platform'] ?? '', ['class' => 'form-control']) }}
                     </div>
-                    <div class="row">
-                        <div class="col-md-7 offset-md-3">
-                            <button type="submit" class="btn btn-sm btn-primary w-100px me-5px">検索</button>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 offset-md-3">
+                        <button type="submit" class="btn btn-sm btn-primary w-100px me-5px">検索</button>
                     </div>
-                </form>
-            </div>
-</div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div class="panel panel-inverse">
         <div class="panel-heading">
@@ -60,6 +60,8 @@
                     <th>ID</th>
                     <th>タイトル</th>
                     <th>略称</th>
+                    <th>ハード</th>
+                    <th>PLT</th>
                     <th>発売日</th>
                     <td></td>
                 </tr>
@@ -70,6 +72,8 @@
                         <td>{{ $package->id }}</td>
                         <td>{{ $package->name }}</td>
                         <td>{{ $package->acronym }}</td>
+                        <td>{{ $package->hard->acronym ?? '' }}</td>
+                        <td>{{ $package->platform->acronym ?? '' }}</td>
                         <td>{{ $package->release_at }}</td>
                         <td class="text-center"><a href="{{ route('管理-マスター-パッケージ詳細', $package) }}">詳細</a></td>
                     </tr>
@@ -80,6 +84,4 @@
             <div>{{ $packages->appends($search)->links() }}</div>
         </div>
     </div>
-    <!-- END panel -->
-
 @endsection

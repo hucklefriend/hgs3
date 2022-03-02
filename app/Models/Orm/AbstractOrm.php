@@ -6,6 +6,7 @@
 namespace Hgs3\Models\Orm;
 
 use Carbon\Carbon;
+use Hgs3\Log;
 
 class AbstractOrm extends \Eloquent
 {
@@ -39,14 +40,32 @@ class AbstractOrm extends \Eloquent
      * @param array $search
      * @param array $prepend
      * @param array $append
+     * @param array $order
      * @return array
      */
-    public static function getHashBy(string $value, string $key = 'id', array $search = [], array $prepend = [], array $append = []): array
+    public static function getHashBy(string $value, string $key = 'id', array $search = [], array $prepend = [], array $append = [], array $order = []): array
     {
         $query = self::select([$key, $value]);
 
         if (!empty($search)) {
             $query->whereIn($key, $search);
+        }
+        Log::debug($order);
+
+        if (!empty($order)) {
+            if (!is_array($order[0])) {
+                $order = [$order];
+            }
+
+            foreach ($order as [$column, $ascOrDesc]) {
+                Log::debug($column);
+                Log::debug($ascOrDesc);
+                if (strtolower($ascOrDesc) == 'asc') {
+                    $query->orderBy($column);
+                } else {
+                    $query->orderByDesc($column);
+                }
+            }
         }
 
         $data = $query->get()

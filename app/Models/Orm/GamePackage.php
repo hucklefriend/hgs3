@@ -15,13 +15,33 @@ class GamePackage extends AbstractOrm
     protected $guarded = ['id'];
 
     /**
-     * ハードに関連しているメーカーを取得
+     * メーカーを取得
      *
      * @return BelongsTo
      */
     public function maker(): BelongsTo
     {
         return $this->belongsTo(GameMaker::class, 'maker_id');
+    }
+
+    /**
+     * ハードを取得
+     *
+     * @return BelongsTo
+     */
+    public function hard(): BelongsTo
+    {
+        return $this->belongsTo(GameHard::class, 'hard_id');
+    }
+
+    /**
+     * プラットフォームを取得
+     *
+     * @return BelongsTo
+     */
+    public function platform(): BelongsTo
+    {
+        return $this->belongsTo(GamePlatform::class, 'platform_id');
     }
 
     /**
@@ -41,7 +61,6 @@ class GamePackage extends AbstractOrm
 
     /**
      * ショップを取得
-     * (なぜかこれで動かない)
      *
      * @return Collection
      */

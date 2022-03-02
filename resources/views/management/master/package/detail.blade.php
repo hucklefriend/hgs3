@@ -16,6 +16,7 @@
         </div>
         <div class="panel-body">
             <div class="text-end">
+                <a href="{{ route('管理-マスター-パッケージ複製', $package) }}" class="btn btn-outline-info"><i class="far fa-copy"></i></a>&nbsp;
                 <a href="{{ route('管理-マスター-パッケージ編集', $package) }}" class="btn btn-default"><i class="fas fa-edit"></i></a>
             </div>
             <table class="table">
@@ -34,6 +35,14 @@
                 <tr>
                     <th>メーカー</th>
                     <td>{{ $package->maker->name }}</td>
+                </tr>
+                <tr>
+                    <th>ハード</th>
+                    <td>{{ $package->hard->name ?? '' }}</td>
+                </tr>
+                <tr>
+                    <th>プラットフォーム</th>
+                    <td>{{ $package->platform->name ?? '' }}</td>
                 </tr>
                 <tr>
                     <th>発売日</th>
