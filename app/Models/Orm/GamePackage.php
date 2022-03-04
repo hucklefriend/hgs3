@@ -7,6 +7,7 @@ namespace Hgs3\Models\Orm;
 
 use Hgs3\Constants\Game\Shop;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -47,16 +48,16 @@ class GamePackage extends AbstractOrm
     /**
      * ソフトを取得
      *
-     * @return Collection
+     * @return BelongsToMany
      */
-    public function softs(): Collection
+    public function softs(): BelongsToMany
     {
-        $packageLinks = GameSoftPackage::where('package_id', $this->id)->get();
-        if ($packageLinks->isEmpty()) {
-            return new Collection();
-        }
+        return $this->belongsToMany(GameSoft::class);
+    }
 
-        return GameSoft::whereIn('id', $packageLinks->pluck('soft_id'))->get();
+    public function getSoftsHash(): array
+    {
+        $softs = $this->softs()->get('id')->pluck('id', 'id')->toArray();
     }
 
     /**

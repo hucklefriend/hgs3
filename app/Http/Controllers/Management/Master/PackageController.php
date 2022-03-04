@@ -10,12 +10,15 @@ use Hgs3\Enums\RatedR;
 use Hgs3\Http\Controllers\AbstractManagementController;
 use Hgs3\Http\Requests\Master\GamePackageRequest;
 use Hgs3\Http\Requests\Master\GamePackageShopRequest;
+use Hgs3\Http\Requests\Master\GamePackageSoftRelationRequest;
+use Hgs3\Log;
 use Hgs3\Models\Orm;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class PackageController extends AbstractManagementController
 {
@@ -181,6 +184,35 @@ class PackageController extends AbstractManagementController
         $package = new Orm\GamePackage();
         $package->fill($request->validated());
         $package->save();
+
+        return redirect()->route('管理-マスター-パッケージ詳細', $package);
+    }
+
+    /**
+     * ソフト紐づけ画面
+     *
+     * @param Orm\GamePackage $package
+     * @return Application|Factory|View
+     */
+    public function relateSoft(Orm\GamePackage $package): Application|Factory|View
+    {
+        return view('management.master.package.relate_soft', [
+            'package'      => $package,
+            'relatedSofts' => $package->softs()->get(['id'])->pluck('id', 'id'),
+            'softs'        => Orm\GameSoft::all()
+        ]);
+    }
+
+    /**
+     * ソフト紐づけ
+     *
+     * @param GamePackageSoftRelationRequest $request
+     * @param Orm\GamePackage $package
+     * @return RedirectResponse
+     */
+    public function doRelateSoft(GamePackageSoftRelationRequest $request, Orm\GamePackage $package): RedirectResponse
+    {
+        $package->softs()->sync($request->input('soft_id'));
 
         return redirect()->route('管理-マスター-パッケージ詳細', $package);
     }

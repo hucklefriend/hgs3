@@ -52,9 +52,10 @@
                     <th>ソフト</th>
                     <td>
                         <ul class="list-group">
-                            @foreach ($package->softs() as $soft)
-                                <li class="list-group-item">{{ $soft->name }}</li>
+                            @foreach ($package->softs as $soft)
+                                <li class="list-group-item"><a href="{{ route('管理-マスター-ソフト詳細', $soft) }}">{{ $soft->name ?? '' }}</a></li>
                             @endforeach
+                            <li class="list-group-item"><a href="{{ route('管理-マスター-パッケージソフト紐づけ', $package) }}" class="btn btn-sm btn-default"><i class="fas fa-plus"></i></a></li>
                         </ul>
                     </td>
                 </tr>
