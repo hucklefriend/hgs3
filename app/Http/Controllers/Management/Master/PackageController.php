@@ -10,12 +10,15 @@ use Hgs3\Enums\RatedR;
 use Hgs3\Http\Controllers\AbstractManagementController;
 use Hgs3\Http\Requests\Master\GamePackageRequest;
 use Hgs3\Http\Requests\Master\GamePackageShopRequest;
+use Hgs3\Http\Requests\Master\GamePackageSoftRelationRequest;
+use Hgs3\Log;
 use Hgs3\Models\Orm;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class PackageController extends AbstractManagementController
 {
@@ -85,19 +88,10 @@ class PackageController extends AbstractManagementController
      */
     public function add(): Application|Factory|View
     {
-        $makers = Orm\GameMaker::getHashBy('name');
-        $hards = Orm\GameHard::getHashBy('acronym');
-        $platforms = Orm\GamePlatform::getHashBy('name', prepend: ['' => '-']);
-        $softs = Orm\GameSoft::getHashBy('name', prepend: ['' => '']);
+        $formData = self::getFormData();
+        $formData['model'] = new Orm\GamePackage();
 
-        return view('management.master.package.add', [
-            'model'     => new Orm\GamePackage(),
-            'makers'    => $makers,
-            'hards'     => $hards,
-            'platforms' => $platforms,
-            'ratedR'    => RatedR::selectList(),
-            'softs'     => $softs
-        ]);
+        return view('management.master.package.add', $formData);
     }
 
     /**
@@ -123,19 +117,31 @@ class PackageController extends AbstractManagementController
      */
     public function edit(Orm\GamePackage $package): Application|Factory|View
     {
+        $formData = self::getFormData();
+        $formData['model'] = $package;
+
+        return view('management.master.package.edit', $formData);
+    }
+
+    /**
+     * フォームに必要なデータを取得
+     *
+     * @return array
+     */
+    private static function getFormData(): array
+    {
         $makers = Orm\GameMaker::getHashBy('name');
-        $hards = Orm\GameHard::getHashBy('acronym');
-        $platforms = Orm\GamePlatform::getHashBy('name', prepend: ['' => '-']);
+        $hards = Orm\GameHard::getHashBy('acronym', order:['sort_order', 'DESC']);
+        $platforms = Orm\GamePlatform::getHashBy('name', prepend: ['' => '-'], order:['sort_order', 'DESC']);
         $softs = Orm\GameSoft::getHashBy('name', prepend: ['' => '']);
 
-        return view('management.master.package.edit', [
-            'model'     => $package,
+        return [
             'makers'    => $makers,
             'hards'     => $hards,
             'platforms' => $platforms,
             'ratedR'    => RatedR::selectList(),
             'softs'     => $softs
-        ]);
+        ];
     }
 
     /**
@@ -149,6 +155,64 @@ class PackageController extends AbstractManagementController
     {
         $package->fill($request->validated());
         $package->save();
+
+        return redirect()->route('管理-マスター-パッケージ詳細', $package);
+    }
+
+    /**
+     * 複製画面
+     *
+     * @param Orm\GamePackage $package
+     * @return Application|Factory|View
+     */
+    public function copy(Orm\GamePackage $package): Application|Factory|View
+    {
+        $formData = self::getFormData();
+        $formData['model'] = $package;
+
+        return view('management.master.package.copy', $formData);
+    }
+
+    /**
+     * データ複製
+     *
+     * @param GamePackageRequest $request
+     * @return RedirectResponse
+     */
+    public function doCopy(GamePackageRequest $request): RedirectResponse
+    {
+        $package = new Orm\GamePackage();
+        $package->fill($request->validated());
+        $package->save();
+
+        return redirect()->route('管理-マスター-パッケージ詳細', $package);
+    }
+
+    /**
+     * ソフト紐づけ画面
+     *
+     * @param Orm\GamePackage $package
+     * @return Application|Factory|View
+     */
+    public function relateSoft(Orm\GamePackage $package): Application|Factory|View
+    {
+        return view('management.master.package.relate_soft', [
+            'package'      => $package,
+            'relatedSofts' => $package->softs()->get(['id'])->pluck('id', 'id'),
+            'softs'        => Orm\GameSoft::all()
+        ]);
+    }
+
+    /**
+     * ソフト紐づけ
+     *
+     * @param GamePackageSoftRelationRequest $request
+     * @param Orm\GamePackage $package
+     * @return RedirectResponse
+     */
+    public function doRelateSoft(GamePackageSoftRelationRequest $request, Orm\GamePackage $package): RedirectResponse
+    {
+        $package->softs()->sync($request->input('soft_id'));
 
         return redirect()->route('管理-マスター-パッケージ詳細', $package);
     }
@@ -189,8 +253,11 @@ class PackageController extends AbstractManagementController
      */
     public function shopAdd(Orm\GamePackage $package): Application|Factory|View
     {
+        $model = new Orm\GamePackageShop;
+        $model->release_int = $package->release_int;
+
         return view('management.master.package.shop_add', [
-            'model'   => new Orm\GamePackageShop,
+            'model'   => $model,
             'package' => $package,
             'shops'   => Shop::selectList(),
             'ratedR'  => RatedR::selectList(),

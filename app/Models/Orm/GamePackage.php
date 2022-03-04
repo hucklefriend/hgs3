@@ -7,6 +7,7 @@ namespace Hgs3\Models\Orm;
 
 use Hgs3\Constants\Game\Shop;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -15,7 +16,7 @@ class GamePackage extends AbstractOrm
     protected $guarded = ['id'];
 
     /**
-     * ハードに関連しているメーカーを取得
+     * メーカーを取得
      *
      * @return BelongsTo
      */
@@ -25,23 +26,42 @@ class GamePackage extends AbstractOrm
     }
 
     /**
+     * ハードを取得
+     *
+     * @return BelongsTo
+     */
+    public function hard(): BelongsTo
+    {
+        return $this->belongsTo(GameHard::class, 'hard_id');
+    }
+
+    /**
+     * プラットフォームを取得
+     *
+     * @return BelongsTo
+     */
+    public function platform(): BelongsTo
+    {
+        return $this->belongsTo(GamePlatform::class, 'platform_id');
+    }
+
+    /**
      * ソフトを取得
      *
-     * @return Collection
+     * @return BelongsToMany
      */
-    public function softs(): Collection
+    public function softs(): BelongsToMany
     {
-        $packageLinks = GameSoftPackage::where('package_id', $this->id)->get();
-        if ($packageLinks->isEmpty()) {
-            return new Collection();
-        }
+        return $this->belongsToMany(GameSoft::class);
+    }
 
-        return GameSoft::whereIn('id', $packageLinks->pluck('soft_id'))->get();
+    public function getSoftsHash(): array
+    {
+        $softs = $this->softs()->get('id')->pluck('id', 'id')->toArray();
     }
 
     /**
      * ショップを取得
-     * (なぜかこれで動かない)
      *
      * @return Collection
      */

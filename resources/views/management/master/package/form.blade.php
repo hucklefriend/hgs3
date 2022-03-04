@@ -40,7 +40,7 @@
             <div class="input-group mb-3">
                 {{ Form::text('release_at', old('release_at', $model->release_at),
                     ['id' => 'release_at', 'class' => 'form-control' . invalid($errors, 'release_at'), 'autocomplete' => 'off', 'required']) }}
-                <button class="btn btn-outline-secondary" type="button" id="release_at_convert">変換</button>
+                <button class="btn btn-outline-secondary" type="button" id="release_at_convert">/から</button>
             </div>
             @if ($errors->has('release_at'))
                 <div class="invalid-feedback">{{$errors->first('release_at')}}</div>
@@ -50,7 +50,14 @@
     <tr>
         <th>リリース日(数値)</th>
         <td>
-            @include ('management.common.form.input', ['type' => 'number', 'name' => 'release_int', 'options' => ['required', 'max' => 99999999, 'min' => 0]])
+            <div class="input-group mb-3">
+                {{ Form::number('release_int', old('release_int', $model->release_int),
+                    ['id' => 'release_int', 'class' => 'form-control' . invalid($errors, 'release_int'), 'autocomplete' => 'off', 'required', 'max' => 99999999, 'min' => 0]) }}
+                <button class="btn btn-outline-secondary" type="button" id="release_int_convert">リリース日から</button>
+            </div>
+            @if ($errors->has('release_int'))
+                <div class="invalid-feedback">{{$errors->first('release_int')}}</div>
+            @endif
         </td>
     </tr>
     <tr>
@@ -85,6 +92,37 @@
 
                 $('#release_at').val(val);
             });
+
+            $('#release_int_convert').click(() => {
+                let txt = $('#release_at').val();
+
+                let arr = txt.split('年');
+                let year = '';
+                let month = '';
+                let day = '';
+
+                if (arr.length == 2) {
+                    year = arr[0];
+                    arr = arr[1].split('月');
+                    if (arr.length == 2) {
+                        month = zeroPadding(parseInt(arr[0]));
+                        day = zeroPadding(parseInt(arr[1]));
+                    }
+                }
+
+                $('#release_int').val(year + month + day);
+            });
         });
+
+        function zeroPadding(num)
+        {
+            if (num < 10) {
+                num = '0' + num.toString();
+            } else {
+                num = num.toString();
+            }
+
+            return num;
+        }
     </script>
 @endsection

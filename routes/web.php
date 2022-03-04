@@ -103,6 +103,10 @@ Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin', 'm
             Route::get('{package}/edit', [Controllers\Management\Master\PackageController::class, 'edit'])->name('管理-マスター-パッケージ編集');
             Route::put('{package}', [Controllers\Management\Master\PackageController::class, 'update'])->name('管理-マスター-パッケージ編集処理');
             Route::get('{package}', [Controllers\Management\Master\PackageController::class, 'detail'])->name('管理-マスター-パッケージ詳細');
+            Route::get('{package}/copy', [Controllers\Management\Master\PackageController::class, 'copy'])->name('管理-マスター-パッケージ複製');
+            Route::post('{package}/copy', [Controllers\Management\Master\PackageController::class, 'doCopy'])->name('管理-マスター-パッケージ複製処理');
+            Route::get('{package}/relate_soft', [Controllers\Management\Master\PackageController::class, 'relateSoft'])->name('管理-マスター-パッケージソフト紐づけ');
+            Route::post('{package}/relate_soft', [Controllers\Management\Master\PackageController::class, 'doRelateSoft'])->name('管理-マスター-パッケージソフト紐づけ処理');
             Route::delete('{package}', [Controllers\Management\Master\PackageController::class, 'delete'])->name('管理-マスター-パッケージ削除');
             Route::get('{package}/shop/add', [Controllers\Management\Master\PackageController::class, 'shopAdd'])->name('管理-マスター-パッケージショップ追加');
             Route::post('{package}/shop/add', [Controllers\Management\Master\PackageController::class, 'shopStore'])->name('管理-マスター-パッケージショップ追加処理');
