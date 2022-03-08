@@ -12,12 +12,6 @@
         </td>
     </tr>
     <tr>
-        <th>よみがな</th>
-        <td>
-            @include ('management.common.form.input', ['name' => 'phonetic', 'options' => ['required', 'maxlength' => 100]])
-        </td>
-    </tr>
-    <tr>
         <th>略称</th>
         <td>
             @include ('management.common.form.input', ['name' => 'acronym', 'options' => ['required', 'maxlength' => 100]])
@@ -32,7 +26,7 @@
     <tr>
         <th>メーカー</th>
         <td>
-            @include ('management.common.form.select', ['name' => 'maker_id', 'list' => $makers])
+            @include ('management.common.form.select', ['name' => 'maker_id', 'list' => \Hgs3\Models\Orm\GameMaker::getHashBy('name', prepend: ['' => '-'])])
         </td>
     </tr>
 </table>

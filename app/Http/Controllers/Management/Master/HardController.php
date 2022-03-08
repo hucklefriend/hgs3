@@ -52,8 +52,7 @@ class HardController extends AbstractManagementController
     public function add(): Application|Factory|View
     {
         return view('management.master.hard.add', [
-            'model'  => new Orm\GameHard(),
-            'makers' => Orm\GameMaker::getHashBy('name'),
+            'model' => new Orm\GameHard(),
         ]);
     }
 
@@ -81,8 +80,7 @@ class HardController extends AbstractManagementController
     public function edit(Orm\GameHard $hard): Application|Factory|View
     {
         return view('management.master.hard.edit', [
-            'model'  => $hard,
-            'makers' => Orm\GameMaker::getHashBy('name')
+            'model' => $hard
         ]);
     }
 

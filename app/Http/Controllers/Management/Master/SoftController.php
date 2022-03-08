@@ -50,11 +50,8 @@ class SoftController extends AbstractManagementController
         }
 
         if ($searchSeries !== null) {
-            Log::debug($searchSeries);
             $search['series'] = $searchSeries;
             $softs->where('series_id', '=',  $searchSeries);
-
-            Log::debug($softs->toSql());
         }
 
         $this->putSearchSession('search_soft', $search);

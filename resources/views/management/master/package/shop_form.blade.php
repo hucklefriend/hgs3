@@ -10,9 +10,14 @@
         <td>
             @if ($model->id)
                 {{ $model->shop()->name() }}
-                <input type="hidden" name="shop_id" value="{{ $model->shop_id }}">
+                <input type="hidden" name="shop_id" id="shop_id" value="{{ $model->shop_id }}">
             @else
-                @include ('management.common.form.select', ['name' => 'shop_id', 'list' => $shops, 'value' => \Hgs3\Enums\Game\Shop::Amazon->value, 'options' => ['required']])
+                @include ('management.common.form.select', [
+                    'name' => 'shop_id',
+                    'list' => \Hgs3\Enums\Game\Shop::selectList(),
+                    'value' => \Hgs3\Enums\Game\Shop::Amazon->value,
+                    'options' => ['required']
+                ])
             @endif
         </td>
     </tr>
@@ -76,7 +81,7 @@
     <tr>
         <th>R指定</th>
         <td>
-            @include ('management.common.form.select', ['name' => 'rated_r', 'list' => $ratedR])
+            @include ('management.common.form.select', ['name' => 'rated_r', 'list' => \Hgs3\Enums\RatedR::selectList()])
         </td>
     </tr>
 </table>

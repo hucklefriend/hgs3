@@ -14,14 +14,10 @@ class CreateGamePackageGameSoftTable extends Migration
     public function up()
     {
         Schema::create('game_package_game_soft', function (Blueprint $table) {
-            // カラムを追加
             $table->unsignedBigInteger('game_soft_id');
             $table->unsignedBigInteger('game_package_id');
-            // 複合主キーを定義
             $table->primary(['game_soft_id','game_package_id']);
-            //
             $table->index(['game_package_id']);
-            // 指定したカラムに外部キー制約を定義
             $table->foreign('game_soft_id')->references('id')->on('game_softs')->onDelete('cascade');
             $table->foreign('game_package_id')->references('id')->on('game_packages')->onDelete('cascade');
 

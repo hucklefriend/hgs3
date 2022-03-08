@@ -1,6 +1,6 @@
 <?php
 /**
- * ゲームパッケージリクエスト
+ * パッケージとハードの紐づけリクエスト
  */
 
 namespace Hgs3\Http\Requests\Master;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
-class GamePackageRequest extends FormRequest
+class GamePackageHardRelationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,13 +30,7 @@ class GamePackageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'         => 'required|max:200',
-            'acronym'      => 'required|max:30',
-            'platform_id'  => 'nullable|exists:game_platforms,id',
-            'maker_id'     => 'required|exists:game_makers,id',
-            'release_at'   => 'required|max:100',
-            'release_int'  => 'required|numeric|integer|min:0|max:99999999',
-            'rated_r'      => ['required', new Enum(RatedR::class)],
+            'hard_id' => 'nullable|array|exists:game_hards,id',
         ];
     }
 }

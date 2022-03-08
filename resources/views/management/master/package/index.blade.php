@@ -24,13 +24,13 @@
                 <div class="row mb-3">
                     <label class="form-label col-form-label col-md-3">ハード</label>
                     <div class="col-md-9">
-                        {{ Form::select('hard', $hards, $search['hard'] ?? '', ['class' => 'form-control']) }}
+                        {{ Form::select('hard', \Hgs3\Models\Orm\GameHard::getSelectList(), $search['hard'] ?? '', ['class' => 'form-control']) }}
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="form-label col-form-label col-md-3">プラットフォーム</label>
                     <div class="col-md-9">
-                        {{ Form::select('platform', $platforms, $search['platform'] ?? '', ['class' => 'form-control']) }}
+                        {{ Form::select('platform', \Hgs3\Models\Orm\GamePlatform::getSelectList(), $search['platform'] ?? '', ['class' => 'form-control']) }}
                     </div>
                 </div>
                 <div class="row">

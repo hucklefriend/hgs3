@@ -50,7 +50,6 @@ class AbstractOrm extends \Eloquent
         if (!empty($search)) {
             $query->whereIn($key, $search);
         }
-        Log::debug($order);
 
         if (!empty($order)) {
             if (!is_array($order[0])) {
@@ -58,8 +57,6 @@ class AbstractOrm extends \Eloquent
             }
 
             foreach ($order as [$column, $ascOrDesc]) {
-                Log::debug($column);
-                Log::debug($ascOrDesc);
                 if (strtolower($ascOrDesc) == 'asc') {
                     $query->orderBy($column);
                 } else {

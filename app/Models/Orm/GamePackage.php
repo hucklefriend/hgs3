@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class GamePackage extends AbstractOrm
 {
@@ -26,16 +27,6 @@ class GamePackage extends AbstractOrm
     }
 
     /**
-     * ハードを取得
-     *
-     * @return BelongsTo
-     */
-    public function hard(): BelongsTo
-    {
-        return $this->belongsTo(GameHard::class, 'hard_id');
-    }
-
-    /**
      * プラットフォームを取得
      *
      * @return BelongsTo
@@ -46,6 +37,16 @@ class GamePackage extends AbstractOrm
     }
 
     /**
+     * ハードを取得
+     *
+     * @return BelongsToMany
+     */
+    public function hards(): BelongsToMany
+    {
+        return $this->belongsToMany(GameHard::class);
+    }
+
+    /**
      * ソフトを取得
      *
      * @return BelongsToMany
@@ -53,11 +54,6 @@ class GamePackage extends AbstractOrm
     public function softs(): BelongsToMany
     {
         return $this->belongsToMany(GameSoft::class);
-    }
-
-    public function getSoftsHash(): array
-    {
-        $softs = $this->softs()->get('id')->pluck('id', 'id')->toArray();
     }
 
     /**
@@ -89,10 +85,12 @@ class GamePackage extends AbstractOrm
      */
     public function save(array $options = []): bool
     {
-        $softs = $this->softs();
-        foreach ($softs as $soft) {
-            $soft->setOriginalPackage();
-            $soft->save();
+        /* @var $soft GameSoft */
+        foreach ($this->softs as $soft) {
+            if ($soft->original_package_id === null) {
+                $soft->setOriginalPackage();
+                $soft->save();
+            }
         }
 
         return parent::save($options);
@@ -180,5 +178,33 @@ class GamePackage extends AbstractOrm
         }
 
         return parent::delete();
+    }
+
+    /**
+     * ソフト関連付けも一緒に登録
+     *
+     * @param array $softs
+     * @param array $options
+     * @return bool
+     * @throws \Throwable
+     */
+    public function saveWithSoftRelation(array $softs, array $options = []): bool
+    {
+        $result = true;
+        DB::beginTransaction();
+
+        try {
+            if (!$this->save($options)) {
+                $result = false;
+            } else {
+                $this->softs()->sync($softs);
+                DB::commit();
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $result = false;
+        }
+
+        return $result;
     }
 }
