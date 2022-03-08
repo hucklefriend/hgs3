@@ -7,6 +7,7 @@ namespace Hgs3\Models\Orm;
 
 use Hgs3\Enums\Game\Soft\PhoneticType;
 use Hgs3\Enums\RatedR;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use \Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -54,20 +55,30 @@ class GameSoft extends AbstractOrm
         return $this->hasOne(GamePackage::class, 'id', 'original_package_id');
     }
 
+//    /**
+//     * パッケージを取得
+//     *
+//     * @return Collection
+//     */
+//    public function packages(): Collection
+//    {
+//        $packageLinks = GameSoftPackage::where('soft_id', $this->id)->get();
+//        if ($packageLinks->isEmpty()) {
+//            return new Collection();
+//        }
+//
+//        return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
+//            ->orderBy('release_int')->get();
+//    }
+
     /**
      * パッケージを取得
      *
-     * @return Collection
+     * @return BelongsToMany
      */
-    public function packages(): Collection
+    public function packages(): BelongsToMany
     {
-        $packageLinks = GameSoftPackage::where('soft_id', $this->id)->get();
-        if ($packageLinks->isEmpty()) {
-            return new Collection();
-        }
-
-        return GamePackage::whereIn('id', $packageLinks->pluck('package_id'))
-            ->orderBy('release_int')->get();
+        return $this->belongsToMany(GamePackage::class);
     }
 
     /**

@@ -19,19 +19,13 @@
     <tr>
         <th>メーカー</th>
         <td>
-            @include ('management.common.form.select', ['name' => 'maker_id', 'list' => $makers])
-        </td>
-    </tr>
-    <tr>
-        <th>ハード</th>
-        <td>
-            @include ('management.common.form.select', ['name' => 'hard_id', 'list' => $hards])
+            @include ('management.common.form.select', ['name' => 'maker_id', 'list' => \Hgs3\Models\Orm\GameMaker::getHashBy('name')])
         </td>
     </tr>
     <tr>
         <th>プラットフォーム</th>
         <td>
-            @include ('management.common.form.select', ['name' => 'platform_id', 'list' => $platforms])
+            @include ('management.common.form.select', ['name' => 'platform_id', 'list' => \Hgs3\Models\Orm\GamePlatform::getSelectList()])
         </td>
     </tr>
     <tr>

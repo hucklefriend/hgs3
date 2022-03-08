@@ -27,6 +27,7 @@
                     <th>ID</th>
                     <th>名前</th>
                     <th>略称</th>
+                    <th>表示順</th>
                     <td></td>
                 </tr>
                 </thead>
@@ -36,6 +37,7 @@
                         <td>{{ $hard->id }}</td>
                         <td>{{ $hard->name }}</td>
                         <td>{{ $hard->acronym }}</td>
+                        <td>{{ $hard->sort_order }}</td>
                         <td class="text-center"><a href="{{ route('管理-マスター-ハード詳細', $hard) }}">詳細</a></td>
                     </tr>
                 @endforeach

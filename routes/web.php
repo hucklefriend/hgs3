@@ -11,7 +11,6 @@ Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin', 'm
 
     // システム
     Route::group(['prefix' => 'system'], function () {
-
         // お知らせ
         Route::group(['prefix' => 'notice'], function () {
             Route::get('/', [Controllers\Management\System\NoticeController::class, 'index'])->name('管理-システム-お知らせ');
@@ -24,7 +23,6 @@ Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin', 'm
             Route::get('future', [Controllers\Management\System\NoticeController::class, 'future'])->name('管理-システム-未来のお知らせ');
             Route::get('past', [Controllers\Management\System\NoticeController::class, 'past'])->name('管理-システム-過去のお知らせ');
         });
-
     });
 
     // マスター
@@ -105,6 +103,8 @@ Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin', 'm
             Route::get('{package}', [Controllers\Management\Master\PackageController::class, 'detail'])->name('管理-マスター-パッケージ詳細');
             Route::get('{package}/copy', [Controllers\Management\Master\PackageController::class, 'copy'])->name('管理-マスター-パッケージ複製');
             Route::post('{package}/copy', [Controllers\Management\Master\PackageController::class, 'doCopy'])->name('管理-マスター-パッケージ複製処理');
+            Route::get('{package}/relate_hard', [Controllers\Management\Master\PackageController::class, 'relateHard'])->name('管理-マスター-パッケージハード紐づけ');
+            Route::post('{package}/relate_hard', [Controllers\Management\Master\PackageController::class, 'doRelateHard'])->name('管理-マスター-パッケージハード紐づけ処理');
             Route::get('{package}/relate_soft', [Controllers\Management\Master\PackageController::class, 'relateSoft'])->name('管理-マスター-パッケージソフト紐づけ');
             Route::post('{package}/relate_soft', [Controllers\Management\Master\PackageController::class, 'doRelateSoft'])->name('管理-マスター-パッケージソフト紐づけ処理');
             Route::delete('{package}', [Controllers\Management\Master\PackageController::class, 'delete'])->name('管理-マスター-パッケージ削除');
@@ -116,9 +116,6 @@ Route::group(['prefix' => 'management', 'middleware' => ['auth', 'can:admin', 'm
             Route::delete('{package}/shop/{shop}', [Controllers\Management\Master\PackageController::class, 'shopDelete'])->name('管理-マスター-パッケージショップ削除');
         });
     });
-
-
-
 
     // 不正レビュー
     //Route::get('/admin/injustice_review', [InjusticeReviewController, 'Admin\InjusticeReviewController@index']);

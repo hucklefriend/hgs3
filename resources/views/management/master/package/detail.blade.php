@@ -38,7 +38,14 @@
                 </tr>
                 <tr>
                     <th>ハード</th>
-                    <td>{{ $package->hard->name ?? '' }}</td>
+                    <td>
+                        <ul class="list-group">
+                            @foreach ($package->hards as $hard)
+                                <li class="list-group-item"><a href="{{ route('管理-マスター-ハード詳細', $hard) }}">{{ $hard->name ?? '' }}</a></li>
+                            @endforeach
+                            <li class="list-group-item"><a href="{{ route('管理-マスター-パッケージハード紐づけ', $package) }}" class="btn btn-sm btn-default"><i class="fas fa-plus"></i></a></li>
+                        </ul>
+                    </td>
                 </tr>
                 <tr>
                     <th>プラットフォーム</th>
