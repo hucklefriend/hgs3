@@ -140,10 +140,7 @@ class PackageController extends AbstractManagementController
      */
     public function copy(Orm\GamePackage $package): Application|Factory|View
     {
-        $formData = self::getFormData();
-        $formData['model'] = $package;
-
-        return view('management.master.package.copy', $formData);
+        return view('management.master.package.copy', ['model' => $package]);
     }
 
     /**

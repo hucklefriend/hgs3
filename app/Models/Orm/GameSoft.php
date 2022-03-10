@@ -151,9 +151,8 @@ SQL;
     public function save(array $options = []): bool
     {
         $this->phonetic_type = PhoneticType::getTypeByPhonetic($this->phonetic);
-        $packages = $this->packages();
 
-        if ($packages->isEmpty()) {
+        if ($this->packages()->count() === 0) {
             $this->original_package_id = null;
             $this->first_release_int = 0;
             $this->r18_only_flag = 0;
@@ -161,7 +160,7 @@ SQL;
             $this->r18_only_flag = 1;
 
             /* @var GamePackage $package */
-            foreach ($packages as $package) {
+            foreach ($this->packages as $package) {
                 // 一番古い発売日をセット
                 if ($this->first_release_int == 0) {
                     $this->first_release_int = $package->release_int;
