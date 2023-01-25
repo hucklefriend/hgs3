@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/focal64"
+  config.vm.box = "bento/ubuntu-22.04"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -59,21 +59,21 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    apt-get update
-    apt-get upgrade
-
-    apt-get install -y apt-transport-https ca-certificates curl software-properties-common git
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-    apt-get update
-    apt-get install -y docker-ce
-    usermod -aG docker vagrant
-    apt-get install -y python3 python3-pip
-    pip3 install docker-compose
-  SHELL
-
-  config.vm.provision "shell",
-    run: "always",
-    inline: "make -C /var/hgs/docker up"
+#   config.vm.provision "shell", inline: <<-SHELL
+#     apt-get update
+#     apt-get upgrade
+#
+#     apt-get install -y apt-transport-https ca-certificates curl software-properties-common git
+#     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+#     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#     apt-get update
+#     apt-get install -y docker-ce
+#     usermod -aG docker vagrant
+#     apt-get install -y python3 python3-pip
+#     pip3 install docker-compose
+#   SHELL
+#
+#   config.vm.provision "shell",
+#     run: "always",
+#     inline: "make -C /var/hgs/docker up"
 end
