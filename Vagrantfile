@@ -49,6 +49,7 @@ Vagrant.configure("2") do |config|
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
+     vb.name = "hgs3_system_update"
      vb.memory = "4096"
      vb.cpus = 3
   end
@@ -73,7 +74,7 @@ Vagrant.configure("2") do |config|
 #     pip3 install docker-compose
 #   SHELL
 #
-#   config.vm.provision "shell",
-#     run: "always",
-#     inline: "make -C /var/hgs/docker up"
+  config.vm.provision "shell",
+    run: "always",
+    inline: "make -C /var/hgs/docker/local up"
 end

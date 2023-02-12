@@ -1,11 +1,10 @@
-FROM php:8.0.9-apache
+FROM php:8.2-fpm-bullseye
 RUN apt-get update
 RUN apt-get install -y libonig-dev zlib1g-dev libpng-dev libxml2-dev libzip-dev libmemcached-dev
-
 RUN apt-get install -y default-mysql-client
 
-RUN groupadd -g 1000 vagrant && \
-    useradd -m -s /bin/bash -u 1000 -g 1000 vagrant
+RUN groupadd -g 1000 hgs && \
+    useradd -m -s /bin/bash -u 1000 -g 1000 hgs
 
 # extension
 RUN docker-php-ext-install pdo mbstring gd xml zip pdo_mysql
@@ -25,6 +24,10 @@ RUN pecl install memcached && \
 
 RUN docker-php-source delete
 
-RUN a2enmod rewrite
-COPY apache2/000-default.conf /etc/apache2/sites-available/
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY php.ini /usr/local/etc/php/php.ini
+
+
 WORKDIR /var/hgs
+
+RUN kill -USR2 1
