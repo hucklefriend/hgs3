@@ -5,18 +5,23 @@ services:
     container_name: https_portal
     image: steveltn/https-portal:1
     ports:
-#      - "80:80"
       - "443:443"
     environment:
-      STAGE: local
-      DOMAINS: 'hgn.test -> http://hgs_web:80'
+      DOMAINS: >-
+        horrorgame.net -> http://hgs_web:80　#production,
+        dev.horrorgame.net -> http://wp:80　#production,
+        stg.horrorgame.net -> http://hgs_stg_web:80　#staging
     restart: always
     volumes:
       - https-portal-data:/var/lib/https-portal
     depends_on:
       - hgs_web
+      - wp_web
+      - hgs_stg_web
     networks:
       - hgs_net
+      - wp_net
+      - hgs_stg_net
 
   hgs_web:
     container_name: hgs_web
@@ -81,7 +86,7 @@ services:
       - hgs_net
 
   hgs_mongo:
-    image: mongo:4.4
+    image: mongo:6.0
     container_name: hgs_mongodb
     restart: always
     environment:
@@ -96,7 +101,7 @@ services:
     volumes:
       - hgs_mongo_vol:/data/db
       - hgs_mongo_config_vol:/data/configdb
-      - ./local/mongo_backup:/tmp/backup
+      - /var/hgs/docker/local/mongo_backup:/tmp/backup
 
   hgs_mongo_express:
     image: mongo-express
@@ -117,7 +122,13 @@ volumes:
   hgs_mongo_config_vol:
   hgs_redis_vol:
   https-portal-data:
+  hgs_stg_db_vol:
+  hgs_stg_mongo_vol:
+  hgs_stg_mongo_config_vol:
+  hgs_stg_redis_vol:
 
 networks:
   hgs_net:
+  wp_net:
+  hgs_stg_net:
 
