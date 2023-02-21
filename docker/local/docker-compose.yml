@@ -5,11 +5,10 @@ services:
     container_name: https_portal
     image: steveltn/https-portal:1
     ports:
-#      - "80:80"
       - "443:443"
     environment:
       STAGE: local
-      DOMAINS: 'hgn.test -> http://hgs_web:80'
+      DOMAINS: 'hgn.test -> http://hgs_web:80, hgn_wp.test -> http://hgs_web:8080'
     restart: always
     volumes:
       - https-portal-data:/var/lib/https-portal
@@ -24,14 +23,17 @@ services:
     hostname: hgs_web
     ports:
       - "80:80"
+      - "8080:8080"
     volumes:
       - /var/hgs:/var/hgs
       - ./web/httpd.conf:/usr/local/apache2/conf/httpd.conf
     restart: always
     depends_on:
       - hgs_app
+      - wp_app
     networks:
       - hgs_net
+      - wp_net
 
   hgs_app:
     build: app
@@ -111,13 +113,50 @@ services:
     networks:
       - hgs_net
 
+  wp_app:
+    image: wordpress:php8.2-fpm
+    container_name: wp_app
+    ports:
+      - "9001:9000"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: wp_db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_content_vol:/var/www/html
+    networks:
+      - wp_net
+
+  wp_db:
+    image: mariadb:10.9.5
+    container_name: wp_db
+    volumes:
+      - wp_db_vol:/var/lib/mysql
+      - ./wp_db/init:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_DATABASE: hgs3
+    ports:
+      - "3307:3306"
+    networks:
+      - wp_net
+
+
 volumes:
   hgs_db_vol:
   hgs_mongo_vol:
   hgs_mongo_config_vol:
   hgs_redis_vol:
   https-portal-data:
+  wp_content_vol:
+  wp_db_vol:
 
 networks:
   hgs_net:
+  wp_net:
 

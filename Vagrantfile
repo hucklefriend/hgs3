@@ -14,6 +14,9 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "bento/ubuntu-22.04"
 
+
+  config.vm.boot_timeout = 600
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -23,7 +26,6 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 3306, host: 3306
   config.vm.network "forwarded_port", guest: 27017, host: 27017
   config.vm.network "forwarded_port", guest: 8081, host: 8081
-
 
   # Create a private network, which allows host-#only access to the machine
   # using a specific IP.
@@ -74,7 +76,7 @@ Vagrant.configure("2") do |config|
 #     pip3 install docker-compose
 #   SHELL
 #
-  config.vm.provision "shell",
-    run: "always",
-    inline: "make -C /var/hgs/docker/local up"
+#   config.vm.provision "shell",
+#     run: "always",
+#     inline: "make -C /var/hgs/docker/local up"
 end
