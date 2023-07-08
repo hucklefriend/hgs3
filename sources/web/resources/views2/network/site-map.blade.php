@@ -1,1 +1,0 @@
-<div class="network-item" id="site-map"><a href="{{ route('c.サイトマップ') }}" class="network-open-main" data-parent-id="site-map">サイトマップ</a></div>
