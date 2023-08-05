@@ -275,17 +275,20 @@ Route::group(['middleware' => ['auth']], function () {
 
 // トップ
 Route::get('/', [Controllers\TopController::class, 'index'])->name('トップ');
-Route::get('/logout', [Controllers\TopController::class, 'indexLogout'])->name('login');
+Route::get('/logout', [Controllers\TopController::class, 'indexLogout'])->name('ログアウト');
 
 // 認証
-Route::get('/auth/login', [Controllers\Account\LoginController::class, 'login'])->name('ログイン');
-Route::post('/auth/login', [Controllers\Account\LoginController::class, 'authenticate'])->name('ログイン処理');
-Route::get('/auth/logout', [Controllers\Account\LoginController::class, 'logout'])->name('ログアウト');
-Route::get('/auth/forget', [Controllers\Account\ForgotController::class, 'index'])->name('パスワード再設定');
-Route::post('/auth/send_forget', [Controllers\Account\ForgotController::class, 'sendPasswordResetMail'])->name('パスワード再設定メール送信');
-Route::get('/auth/password_reset', [Controllers\Account\ForgotController::class, 'reset'])->name('パスワード再設定入力');
-Route::post('/auth/password_reset', [Controllers\Account\ForgotController::class, 'update'])->name('パスワード再設定処理');
-Route::get('/auth/password_reset_complete', [Controllers\Account\ForgotController::class, 'complete'])->name('パスワード再設定完了');
+// システム
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('/login', [Controllers\Account\LoginController::class, 'login'])->name('ログイン');
+    Route::post('/login', [Controllers\Account\LoginController::class, 'authenticate'])->name('ログイン処理');
+    Route::get('/logout', [Controllers\Account\LoginController::class, 'logout'])->name('ログアウト');
+    Route::get('/forget', [Controllers\Account\ForgotController::class, 'index'])->name('パスワード再設定');
+    Route::post('/send_forget', [Controllers\Account\ForgotController::class, 'sendPasswordResetMail'])->name('パスワード再設定メール送信');
+    Route::get('/password_reset', [Controllers\Account\ForgotController::class, 'reset'])->name('パスワード再設定入力');
+    Route::post('/password_reset', [Controllers\Account\ForgotController::class, 'update'])->name('パスワード再設定処理');
+    Route::get('/password_reset_complete', [Controllers\Account\ForgotController::class, 'complete'])->name('パスワード再設定完了');
+});
 
 // お知らせ
 Route::get('/notice', [Controllers\System\NoticeController::class, 'index'])->name('お知らせ');

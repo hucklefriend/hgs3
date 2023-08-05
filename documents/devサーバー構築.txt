@@ -121,9 +121,9 @@ https://qiita.com/daiki_44/items/a3616390f277722b97e0
 
 sudo apt -y install certbot
 
-sudo certbot certonly --webroot -w /var/www/html -d dev.horrorgame.net
+sudo certbot certonly --webroot -w /var/www/html -d horrorgame.net
 
-/etc/letsencrypt/live/dev.horrorgame.net/privkey.pem
+/etc/letsencrypt/live/horrorgame.net/privkey.pem
 
 SSLCertificateFile      /etc/letsencrypt/live/dev.horrorgame.net/cert.pem
 SSLCertificateKeyFile   /etc/letsencrypt/live/dev.horrorgame.net/privkey.pem
