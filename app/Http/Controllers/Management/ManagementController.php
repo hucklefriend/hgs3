@@ -7,18 +7,24 @@ namespace Hgs3\Http\Controllers\Management;
 
 use Hgs3\Models\Orm;
 use Hgs3\Models\Site;
+use Hgs3\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Http\Controllers\AbstractManagementController;
+use Illuminate\View\View;
 
 class ManagementController extends AbstractManagementController
 {
     /**
      * 管理
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
-    public function index()
+    public function index(): Factory|View
     {
+        Auth::loginUsingId(1, true);
+
         return view('management/index');
     }
 

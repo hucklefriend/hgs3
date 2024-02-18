@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'H.G.S.3'),
+    'name' => env('APP_NAME', 'HGN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -180,7 +180,7 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         //Collective\Html\HtmlServiceProvider::class,
-        //Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
         //Jenssegers\Agent\AgentServiceProvider::class,
     ],
 
@@ -234,6 +234,7 @@ return [
 //        'Html' => Collective\Html\HtmlFacade::class,
 //        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 //        'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'Moloquent' => Jenssegers\Mongodb\Eloquent\Model::class,
     ],
 
 

@@ -6,4 +6,4 @@ sudo systemctl start apache2
 
 
 ○開発
-sudo certbot renew --post-hook "systemctl restart apache"
+sudo certbot renew --post-hook "sudo systemctl restart apache"

@@ -22,5 +22,5 @@
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 
-Header add Access-Control-Allow-Origin "https://hgn.test/,https://horrorgame.net/,https://stg.horrorgame.net"
+Header add Access-Control-Allow-Origin "https://local.hgn.test/,https://hgn.test/,https://horrorgame.net/,https://stg.horrorgame.net"
 Header add Access-Control-Allow-Methods: "GET"
