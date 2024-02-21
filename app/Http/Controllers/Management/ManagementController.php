@@ -9,6 +9,7 @@ use Hgs3\Models\Orm;
 use Hgs3\Models\Site;
 use Hgs3\Models\User;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Hgs3\Http\Controllers\AbstractManagementController;
@@ -23,7 +24,10 @@ class ManagementController extends AbstractManagementController
      */
     public function index(): Factory|View
     {
-        Auth::loginUsingId(1, true);
+        // ローカル環境でのみ、id:1で自動ログインする
+        if (App::environment('local')) {
+            Auth::loginUsingId(1, true);
+        }
 
         return view('management/index');
     }

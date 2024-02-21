@@ -180,7 +180,7 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         //Collective\Html\HtmlServiceProvider::class,
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
+        //Jenssegers\Mongodb\MongodbServiceProvider::class,
         //Jenssegers\Agent\AgentServiceProvider::class,
     ],
 
